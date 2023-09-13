@@ -1,0 +1,7 @@
+{
+  "/favicon.ico/route": "/favicon.ico",
+  "/[lang]/page": "/[lang]",
+  "/[lang]/about/page": "/[lang]/about",
+  "/[lang]/nationalevent/[[...search]]/page": "/[lang]/nationalevent/[[...search]]",
+  "/[lang]/nationalevent/[id]/page": "/[lang]/nationalevent/[id]"
+}
