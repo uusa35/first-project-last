@@ -1,5 +1,5 @@
 {
-  "name": "seazen",
+  "name": "ar-expo.ru",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -25,6 +25,9 @@
     "@reduxjs/toolkit": "^1.9.1",
     "@svgr/plugin-svgo": "^7.0.0",
     "@svgr/webpack": "^7.0.0",
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@tailwindcss/forms": "^0.5.6",
+    "@tailwindcss/typography": "^0.5.10",
     "@types/cookies": "^0.7.7",
     "@types/js-cookie": "^3.0.2",
     "@types/jsonwebtoken": "^9.0.0",
@@ -44,6 +47,7 @@
     "@types/redux-saga": "0.10.5",
     "autoprefixer": "10.4.15",
     "clsx": "^1.2.1",
+    "cookie": "^0.5.0",
     "cookies": "^0.8.0",
     "cypress": "^12.6.0",
     "date-fns": "^2.29.3",

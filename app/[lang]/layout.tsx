@@ -12,8 +12,8 @@ const tajawal = Tajawal({
 });
 
 export const metadata: Metadata = {
-  title: "Seazen",
-  description: "Seazen Group",
+  title: "Ar Expo",
+  description: "Ar Expo Group",
 };
 
 export async function generateStaticParams() {

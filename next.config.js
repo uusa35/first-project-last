@@ -29,7 +29,7 @@ const nextConfig = withSvgr({
     ignoreBuildErrors: true,
   },
   images: {
-    domains: ["loremflickr.com", "visit-kwt.com", "seazengroup.com"],
+    domains: ["loremflickr.com", "visit-kwt.com", "dar-altchel.com","ar-expo.ru"],
     minimumCacheTTL: 0,
     dangerouslyAllowSVG: true,
     staticPageGenerationTimeout: 60,

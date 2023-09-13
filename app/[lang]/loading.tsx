@@ -17,7 +17,7 @@ export default function Loading() {
         <Image
           className='w-full h-auto object-contain'
           src={Logo}
-          alt='seazen'
+          alt='ar-expo'
           fill={false}
           placeholder='blur'
           loading='lazy'

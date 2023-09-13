@@ -12,8 +12,8 @@ const config: Config = {
         wiggle: 'wiggle 1s ease-in-out infinite',
       },
       colors: {
-        "seazen-dark": "#8e644d",
-        "seazen-light": "#8e644da3"
+        "expo-dark": "#8e644d",
+        "expo-light": "#8e644da3"
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

@@ -70,7 +70,7 @@ export default function SideMenu() {
               <Image
                 className='h-10 w-10'
                 src={Logo}
-                alt='seazen'
+                alt='ar-expo'
                 fill={false}
                 placeholder='blur'
                 loading='lazy'
@@ -88,11 +88,11 @@ export default function SideMenu() {
               <li className='-mx-6 mt-auto'>
                 <Link
                   href={appLinks.home(lang)}
-                  className='flex flex-row items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-black hover:bg-seazen-light'>
+                  className='flex flex-row items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-black hover:bg-expo-light'>
                   <Image
                     className='h-10 w-10 rounded-full'
                     src={Logo}
-                    alt='seazen'
+                    alt='ar-expo'
                     fill={false}
                     placeholder='blur'
                     loading='lazy'
@@ -115,14 +115,14 @@ export default function SideMenu() {
                         href={item.href}
                         className={classNames(
                           first(segments) === item.name
-                            ? "bg-seazen-dark text-white"
-                            : "text-seazen-light hover:text-white hover:bg-seazen-dark",
+                            ? "bg-expo-dark text-white"
+                            : "text-expo-light hover:text-white hover:bg-expo-dark",
                           "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                         )}>
                         <item.icon
                           className={classNames(
                             first(segments) === item.name
-                              ? "text-seazen-dark"
+                              ? "text-expo-dark"
                               : "group-hover:text-white",
                             "h-6 w-6 shrink-0"
                           )}
@@ -148,14 +148,14 @@ export default function SideMenu() {
           <Bars3Icon className='h-6 w-6' aria-hidden='true' />
         </button>
         <div className='flex-1 text-sm font-semibold leading-6 text-gray-900'>
-          Seazen
+          Ar Expo
         </div>
         <Link href={appLinks.home(lang)}>
           <span className='sr-only'>Your profile</span>
           <Image
             className='h-8 w-8 rounded-full bg-gray-50'
             src={Logo}
-            alt='seazen'
+            alt='expo'
             fill={false}
             placeholder='blur'
             loading='lazy'

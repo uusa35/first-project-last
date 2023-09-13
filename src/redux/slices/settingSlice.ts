@@ -3,7 +3,7 @@ import { appSetting } from '@/types/index';
 
 const initialState: appSetting = {
   method: 'delivery',
-  title: 'seazen',
+  title: 'Ar Expo',
   openSideMenu: false
 };
 
