@@ -2,6 +2,6 @@
   "/favicon.ico/route": "app/favicon.ico/route.js",
   "/[lang]/page": "app/[lang]/page.js",
   "/[lang]/about/page": "app/[lang]/about/page.js",
-  "/[lang]/nationalevent/[[...search]]/page": "app/[lang]/nationalevent/[[...search]]/page.js",
-  "/[lang]/nationalevent/[id]/page": "app/[lang]/nationalevent/[id]/page.js"
+  "/[lang]/nationalevent/[id]/page": "app/[lang]/nationalevent/[id]/page.js",
+  "/[lang]/nationalevent/[[...search]]/page": "app/[lang]/nationalevent/[[...search]]/page.js"
 }
