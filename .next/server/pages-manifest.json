@@ -1,11 +1,11 @@
 {
+  "/_app": "pages/_app.js",
+  "/_error": "pages/_error.js",
   "/api/delete/token": "pages/api/delete/token.js",
   "/api/get/lang": "pages/api/get/lang.js",
   "/api/get/token": "pages/api/get/token.js",
   "/api/set/lang": "pages/api/set/lang.js",
   "/api/set/token": "pages/api/set/token.js",
-  "/_app": "pages/_app.js",
-  "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/404": "pages/404.html"
 }
