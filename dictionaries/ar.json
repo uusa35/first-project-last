@@ -1,0 +1,14 @@
+{
+  "trans": {
+    "home": {
+      "main" : "الرئيسية"
+    },
+    "about": {
+      "aboutus" : "نبذة عنا"
+    },
+    "translation": "الترجمة",
+    "loading" : "جاري تحميل البيانات ..",
+    "nationalevent" : "فعالية",
+    "product" : "منتج"
+  }
+}
