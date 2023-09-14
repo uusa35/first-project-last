@@ -9,7 +9,7 @@ import { appLinks } from "../constants";
 
 export default function ComingSoon() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { home, translation, login, lang_ar, lang_en }: any =
+  const { home, translation, login, lang_ar, lang_en, soon, ar_expo_ru }: any =
     useContext(MainContext);
   const { lang }: any = useParams();
   const navigation = [
@@ -138,9 +138,12 @@ export default function ComingSoon() {
             <div className='relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600'></div>
           </div>
           <div className='text-center'>
-            <h1 className='text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl'>
-              قريبــــا
+            <h1 className='text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl capitalize'>
+              {soon}
             </h1>
+            <p className='mt-6 text-6xl font-extrabold leading-8 text-gray-600 capitalize py-16'>
+              {ar_expo_ru}
+            </p>
             <p className='mt-6 text-2xl font-extrabold leading-8 text-gray-600'>
               <span>المنتدى </span>
 

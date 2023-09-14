@@ -12,6 +12,8 @@
     "product" : "منتج",
     "login" : "تسجيل الدخول",
     "lang_en" : "الإنجليزية",
-    "lang_ar" : "arabic"
+    "lang_ar" : "arabic",
+    "soon" : "قريبا",
+    "ar_expo_ru" : "المعرض العربي الروسي"
   }
 }
