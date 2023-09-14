@@ -26,7 +26,7 @@ export default function HomeContent({
   const { home, translation }: any = useContext(MainContext);
   const { method } = useAppSelector((state) => state.setting);
   const dispatch = useAppDispatch();
-  console.log("the method", method);
+  
 
   useEffect(() => {}, [method]);
   return (

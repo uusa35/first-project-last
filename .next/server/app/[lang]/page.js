@@ -417,7 +417,7 @@ const tree = {
         '[lang]',
         {
         children: ['__PAGE__', {}, {
-          page: [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 93635)), "/Users/usama/Sites/ar-expo/app/[lang]/page.tsx"],
+          page: [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 15545)), "/Users/usama/Sites/ar-expo/app/[lang]/page.tsx"],
           
         }]
       },
@@ -478,161 +478,277 @@ const routeModule = new AppPageRouteModule({
 
 /***/ }),
 
-/***/ 50871:
+/***/ 56586:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
 Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 99201));
-Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 23704))
+Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 56593))
 
 /***/ }),
 
-/***/ 23704:
+/***/ 56593:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-// ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  "default": () => (/* binding */ HomeContent)
-});
-
-// EXTERNAL MODULE: external "next/dist/compiled/react/jsx-runtime"
-var jsx_runtime_ = __webpack_require__(56786);
-// EXTERNAL MODULE: ./node_modules/lodash/map.js
-var map = __webpack_require__(27594);
-var map_default = /*#__PURE__*/__webpack_require__.n(map);
-// EXTERNAL MODULE: ./src/components/TextTrans.tsx
-var TextTrans = __webpack_require__(62558);
-// EXTERNAL MODULE: ./src/redux/api/categoryApi.ts
-var categoryApi = __webpack_require__(38964);
-// EXTERNAL MODULE: ./src/redux/hooks.ts
-var hooks = __webpack_require__(92897);
-;// CONCATENATED MODULE: ./src/components/home/HomeSection.tsx
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ ComingSoon)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(56786);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(18038);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _headlessui_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(66530);
+/* harmony import */ var _heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(46140);
+/* harmony import */ var _heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(57048);
 /* __next_internal_client_entry_do_not_use__ default auto */ 
 
 
 
-
-const HomeSection = ({})=>{
-    const { setting } = (0,hooks/* useAppSelector */.C)((state)=>state);
-    const dispatch = (0,hooks/* useAppDispatch */.T)();
-    const { data: categories, isSuccess, error } = (0,categoryApi/* useGetCategoriesQuery */.NL)();
-    return /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
-        className: "w-full bg-blue-500 p-10 rounded-md hidden",
+const navigation = [
+    {
+        name: "Home",
+        href: "/"
+    }
+];
+function ComingSoon() {
+    const [mobileMenuOpen, setMobileMenuOpen] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+        className: "bg-white",
         children: [
-            /*#__PURE__*/ (0,jsx_runtime_.jsxs)("h1", {
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("header", {
+                className: "absolute inset-x-0 top-0 z-50",
                 children: [
-                    " from the state : ",
-                    setting.title
-                ]
-            }),
-            isSuccess && map_default()(categories.data, (c, i)=>/*#__PURE__*/ jsx_runtime_.jsx("div", {
-                    children: /*#__PURE__*/ jsx_runtime_.jsx(TextTrans["default"], {
-                        ar: c.name_ar,
-                        en: c.name_en
-                    })
-                }, i))
-        ]
-    });
-};
-/* harmony default export */ const home_HomeSection = (HomeSection);
-
-// EXTERNAL MODULE: ./src/components/MainContentLayout.tsx + 4 modules
-var MainContentLayout = __webpack_require__(99201);
-// EXTERNAL MODULE: external "next/dist/compiled/react"
-var react_ = __webpack_require__(18038);
-// EXTERNAL MODULE: ./src/redux/slices/settingSlice.ts
-var settingSlice = __webpack_require__(76254);
-;// CONCATENATED MODULE: ./src/components/home/HomeContent.tsx
-/* __next_internal_client_entry_do_not_use__ default auto */ 
-
-
-
-
-
-
-
-function HomeContent({ users, nationalEvents, nationalEvent }) {
-    const { home, translation } = (0,react_.useContext)(MainContentLayout.MainContext);
-    const { method } = (0,hooks/* useAppSelector */.C)((state)=>state.setting);
-    const dispatch = (0,hooks/* useAppDispatch */.T)();
-    console.log("the method", method);
-    (0,react_.useEffect)(()=>{}, [
-        method
-    ]);
-    return /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
-        className: "container space-y-8 flex w-full flex-col justify-center items-center",
-        children: [
-            /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
-                children: [
-                    /*#__PURE__*/ (0,jsx_runtime_.jsxs)("h1", {
-                        className: "text-3xl font-bold capitalize",
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("nav", {
+                        className: "flex items-center justify-between p-6 lg:px-8",
+                        "aria-label": "Global",
                         children: [
-                            translation,
-                            " : ",
-                            home.main
-                        ]
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime_.jsxs)("p", {
-                        className: "text-3xl font-bold capitalize",
-                        suppressHydrationWarning: true,
-                        children: [
-                            "From the state : ",
-                            method
-                        ]
-                    }),
-                    /*#__PURE__*/ jsx_runtime_.jsx("button", {
-                        onClick: ()=>dispatch((0,settingSlice/* toggleMethod */.D6)(undefined)),
-                        children: "toggle method"
-                    })
-                ]
-            }),
-            /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
-                className: "w-full p-8  bg-orange-500 rounded-md",
-                children: [
-                    /*#__PURE__*/ jsx_runtime_.jsx("h1", {
-                        children: "From SSR : users"
-                    }),
-                    map_default()(users.data, (u, i)=>/*#__PURE__*/ jsx_runtime_.jsx("div", {
-                            children: /*#__PURE__*/ jsx_runtime_.jsx(TextTrans["default"], {
-                                ar: u.name_ar,
-                                en: u.name_en
+                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                                className: "flex lg:flex-1",
+                                children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("a", {
+                                    href: "#",
+                                    className: "-m-1.5 p-1.5",
+                                    children: [
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
+                                            className: "sr-only",
+                                            children: "Your Company"
+                                        }),
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("img", {
+                                            className: "h-8 w-auto",
+                                            src: "https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600",
+                                            alt: ""
+                                        })
+                                    ]
+                                })
+                            }),
+                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                                className: "flex lg:hidden",
+                                children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", {
+                                    type: "button",
+                                    className: "-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700",
+                                    onClick: ()=>setMobileMenuOpen(true),
+                                    children: [
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
+                                            className: "sr-only",
+                                            children: "Open main menu"
+                                        }),
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Z, {
+                                            className: "h-6 w-6",
+                                            "aria-hidden": "true"
+                                        })
+                                    ]
+                                })
+                            }),
+                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                                className: "hidden lg:flex lg:gap-x-12",
+                                children: navigation.map((item)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
+                                        href: item.href,
+                                        className: "text-sm font-semibold leading-6 text-gray-900",
+                                        children: item.name
+                                    }, item.name))
+                            }),
+                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                                className: "hidden lg:flex lg:flex-1 lg:justify-end",
+                                children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("a", {
+                                    href: "#",
+                                    className: "text-sm font-semibold leading-6 text-gray-900",
+                                    children: [
+                                        "Log in ",
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
+                                            "aria-hidden": "true",
+                                            children: "→"
+                                        })
+                                    ]
+                                })
                             })
-                        }, i))
-                ]
-            }),
-            /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
-                className: "w-full p-8  bg-orange-500 rounded-md",
-                children: [
-                    /*#__PURE__*/ jsx_runtime_.jsx("h1", {
-                        children: "From SSR : National Events"
-                    }),
-                    map_default()(nationalEvents.data, (u, i)=>/*#__PURE__*/ jsx_runtime_.jsx("div", {
-                            children: /*#__PURE__*/ jsx_runtime_.jsx(TextTrans["default"], {
-                                ar: u.name_ar,
-                                en: u.name_en
-                            })
-                        }, i))
-                ]
-            }),
-            /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
-                className: "w-full p-8  bg-orange-500 rounded-md",
-                children: [
-                    /*#__PURE__*/ (0,jsx_runtime_.jsxs)("h1", {
-                        children: [
-                            "From SSR : NationalEvent Id : ",
-                            nationalEvent.id
                         ]
                     }),
-                    /*#__PURE__*/ jsx_runtime_.jsx(TextTrans["default"], {
-                        ar: nationalEvent.name_ar,
-                        en: nationalEvent.name_en
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_headlessui_react__WEBPACK_IMPORTED_MODULE_3__/* .Dialog */ .V, {
+                        as: "div",
+                        className: "lg:hidden",
+                        open: mobileMenuOpen,
+                        onClose: setMobileMenuOpen,
+                        children: [
+                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                                className: "fixed inset-0 z-50"
+                            }),
+                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_headlessui_react__WEBPACK_IMPORTED_MODULE_3__/* .Dialog */ .V.Panel, {
+                                className: "fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10",
+                                children: [
+                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                                        className: "flex items-center justify-between",
+                                        children: [
+                                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("a", {
+                                                href: "#",
+                                                className: "-m-1.5 p-1.5",
+                                                children: [
+                                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
+                                                        className: "sr-only",
+                                                        children: "Your Company"
+                                                    }),
+                                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("img", {
+                                                        className: "h-8 w-auto",
+                                                        src: "https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600",
+                                                        alt: ""
+                                                    })
+                                                ]
+                                            }),
+                                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", {
+                                                type: "button",
+                                                className: "-m-2.5 rounded-md p-2.5 text-gray-700",
+                                                onClick: ()=>setMobileMenuOpen(false),
+                                                children: [
+                                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
+                                                        className: "sr-only",
+                                                        children: "Close menu"
+                                                    }),
+                                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {
+                                                        className: "h-6 w-6",
+                                                        "aria-hidden": "true"
+                                                    })
+                                                ]
+                                            })
+                                        ]
+                                    }),
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                                        className: "mt-6 flow-root",
+                                        children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                                            className: "-my-6 divide-y divide-gray-500/10",
+                                            children: [
+                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                                                    className: "space-y-2 py-6",
+                                                    children: navigation.map((item)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
+                                                            href: item.href,
+                                                            className: "-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50",
+                                                            children: item.name
+                                                        }, item.name))
+                                                }),
+                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                                                    className: "py-6",
+                                                    children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
+                                                        href: "#",
+                                                        className: "-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50",
+                                                        children: "Log in"
+                                                    })
+                                                })
+                                            ]
+                                        })
+                                    })
+                                ]
+                            })
+                        ]
                     })
                 ]
             }),
-            /*#__PURE__*/ jsx_runtime_.jsx(home_HomeSection, {})
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                className: "relative isolate px-6 pt-14 lg:px-8",
+                children: [
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                        className: "absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80",
+                        "aria-hidden": "true",
+                        children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                            className: "relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]",
+                            style: {
+                                clipPath: "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"
+                            }
+                        })
+                    }),
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                        className: "mx-auto max-w-2xl py-32 sm:py-48 lg:py-56",
+                        children: [
+                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                                className: "hidden sm:mb-8 sm:flex sm:justify-center",
+                                children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                                    className: "relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20",
+                                    children: [
+                                        "Announcing our next round of funding.",
+                                        " ",
+                                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("a", {
+                                            href: "#",
+                                            className: "font-semibold text-indigo-600",
+                                            children: [
+                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
+                                                    className: "absolute inset-0",
+                                                    "aria-hidden": "true"
+                                                }),
+                                                "Read more ",
+                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
+                                                    "aria-hidden": "true",
+                                                    children: "→"
+                                                })
+                                            ]
+                                        })
+                                    ]
+                                })
+                            }),
+                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                                className: "text-center",
+                                children: [
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h1", {
+                                        className: "text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl",
+                                        children: "Data to enrich your online business"
+                                    }),
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("p", {
+                                        className: "mt-6 text-lg leading-8 text-gray-600",
+                                        children: "Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat fugiat aliqua."
+                                    }),
+                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                                        className: "mt-10 flex items-center justify-center gap-x-6",
+                                        children: [
+                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
+                                                href: "#",
+                                                className: "rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600",
+                                                children: "Get started"
+                                            }),
+                                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("a", {
+                                                href: "#",
+                                                className: "text-sm font-semibold leading-6 text-gray-900",
+                                                children: [
+                                                    "Learn more ",
+                                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
+                                                        "aria-hidden": "true",
+                                                        children: "→"
+                                                    })
+                                                ]
+                                            })
+                                        ]
+                                    })
+                                ]
+                            })
+                        ]
+                    }),
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                        className: "absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]",
+                        "aria-hidden": "true",
+                        children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                            className: "relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]",
+                            style: {
+                                clipPath: "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"
+                            }
+                        })
+                    })
+                ]
+            })
         ]
     });
 }
@@ -640,7 +756,7 @@ function HomeContent({ users, nationalEvents, nationalEvent }) {
 
 /***/ }),
 
-/***/ 93635:
+/***/ 15545:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -656,21 +772,6 @@ __webpack_require__.d(__webpack_exports__, {
 var jsx_runtime_ = __webpack_require__(56786);
 // EXTERNAL MODULE: ./lib/dictionary.ts
 var dictionary = __webpack_require__(19472);
-// EXTERNAL MODULE: ./node_modules/next/dist/build/webpack/loaders/next-flight-loader/module-proxy.js
-var module_proxy = __webpack_require__(61363);
-;// CONCATENATED MODULE: ./src/components/home/HomeContent.tsx
-
-const proxy = (0,module_proxy.createProxy)(String.raw`/Users/usama/Sites/ar-expo/src/components/home/HomeContent.tsx`)
-
-// Accessing the __esModule property and exporting $$typeof are required here.
-// The __esModule getter forces the proxy target to create the default export
-// and the $$typeof value is for rendering logic to determine if the module
-// is a client boundary.
-const { __esModule, $$typeof } = proxy;
-const __default__ = proxy.default;
-
-
-/* harmony default export */ const HomeContent = (__default__);
 // EXTERNAL MODULE: ./src/components/MainContentLayout.tsx
 var MainContentLayout = __webpack_require__(53698);
 // EXTERNAL MODULE: ./utils/nationalevent/index.ts
@@ -688,6 +789,21 @@ async function getUsers() {
     return res.json();
 }
 
+// EXTERNAL MODULE: ./node_modules/next/dist/build/webpack/loaders/next-flight-loader/module-proxy.js
+var module_proxy = __webpack_require__(61363);
+;// CONCATENATED MODULE: ./src/components/ComingSoon.tsx
+
+const proxy = (0,module_proxy.createProxy)(String.raw`/Users/usama/Sites/ar-expo/src/components/ComingSoon.tsx`)
+
+// Accessing the __esModule property and exporting $$typeof are required here.
+// The __esModule getter forces the proxy target to create the default export
+// and the $$typeof value is for rendering logic to determine if the module
+// is a client boundary.
+const { __esModule, $$typeof } = proxy;
+const __default__ = proxy.default;
+
+
+/* harmony default export */ const ComingSoon = (__default__);
 ;// CONCATENATED MODULE: ./app/[lang]/page.tsx
 
 
@@ -699,19 +815,44 @@ async function Home({ params: { lang } }) {
     // const test = await new Promise((resolve) => setTimeout(resolve, 20000));
     const [{ trans }, nationalEvents, users, nationalEvent] = await Promise.all([
         (0,dictionary/* getDictionary */.R)(lang),
-        (0,nationalevent/* getNationalEvents */.T)(),
+        (0,nationalevent/* getNationalEvents */.T)(""),
         getUsers(),
         (0,nationalevent/* getNationalEvent */.x)(1)
     ]);
     return /*#__PURE__*/ jsx_runtime_.jsx(MainContentLayout/* MainContextLayout */.D, {
         trans: trans,
-        children: /*#__PURE__*/ jsx_runtime_.jsx(HomeContent, {
-            nationalEvents: nationalEvents,
-            users: users,
-            lang: lang,
-            nationalEvent: nationalEvent
-        })
+        children: /*#__PURE__*/ jsx_runtime_.jsx(ComingSoon, {})
     });
+}
+
+
+/***/ }),
+
+/***/ 96656:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   T: () => (/* binding */ getNationalEvents),
+/* harmony export */   x: () => (/* binding */ getNationalEvent)
+/* harmony export */ });
+async function getNationalEvents(search) {
+    const res = await fetch(`${"https://visit-kwt.com/api/"}search/nationalevent?${search ?? ``}`, {
+        cache: "no-store"
+    });
+    if (!res.ok) {
+        throw new Error("Failed to fetch data");
+    }
+    return res.json();
+}
+async function getNationalEvent(id) {
+    const res = await fetch(`${"https://visit-kwt.com/api/"}nationalevent/${id}`, {
+        cache: "no-store"
+    });
+    if (!res.ok) {
+        throw new Error("Failed to fetch data");
+    }
+    return res.json();
 }
 
 
@@ -724,7 +865,7 @@ async function Home({ params: { lang } }) {
 var __webpack_require__ = require("../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [587,437,683,346,594,425,864,951], () => (__webpack_exec__(54945)));
+var __webpack_exports__ = __webpack_require__.X(0, [587,437,683,530,425,864], () => (__webpack_exec__(54945)));
 module.exports = __webpack_exports__;
 
 })();

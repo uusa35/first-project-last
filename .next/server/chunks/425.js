@@ -23,7 +23,7 @@ Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_
 /***/ 56975:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 21920));
+Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 12748));
 Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 81747))
 
 /***/ }),
@@ -283,82 +283,6 @@ data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAE6CAMAAACbLJ/BAAAABGdBTUEAAL
 
 /***/ }),
 
-/***/ 38964:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   NL: () => (/* binding */ useGetCategoriesQuery),
-/* harmony export */   rj: () => (/* binding */ categoryApi)
-/* harmony export */ });
-/* unused harmony export useLazyGetCategoriesQuery */
-/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(46082);
-
-const categoryApi = _index__WEBPACK_IMPORTED_MODULE_0__/* .apiSlice */ .g.injectEndpoints({
-    endpoints: (builder)=>({
-            getCategories: builder.query({
-                query: ()=>({
-                        url: `search/category`,
-                        validateStatus: (response, result)=>response.status == 200
-                    })
-            })
-        })
-});
-const { useGetCategoriesQuery, useLazyGetCategoriesQuery } = categoryApi;
-
-
-/***/ }),
-
-/***/ 46082:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   g: () => (/* binding */ apiSlice)
-/* harmony export */ });
-/* harmony import */ var _reduxjs_toolkit_query_react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(23298);
-/* harmony import */ var _reduxjs_toolkit_query_react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_reduxjs_toolkit_query_react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var next_redux_wrapper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(59556);
-/* harmony import */ var next_redux_wrapper__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(next_redux_wrapper__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _src_constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8190);
-
-
-
-const apiSlice = (0,_reduxjs_toolkit_query_react__WEBPACK_IMPORTED_MODULE_2__.createApi)({
-    reducerPath: "api",
-    baseQuery: (0,_reduxjs_toolkit_query_react__WEBPACK_IMPORTED_MODULE_2__.fetchBaseQuery)({
-        baseUrl: `${_src_constants__WEBPACK_IMPORTED_MODULE_1__/* .apiUrl */ .JW}`,
-        prepareHeaders: async (headers, { getState, type, endpoint, extra })=>{
-            const { setting } = getState();
-            headers.set("Access-Control-Allow-Headers", "X-Requested-With,Accept,Authentication,Content-Type");
-            // headers.set('lang', lang);
-            headers.set("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,PATCH,OPTIONS");
-            headers.set("Content-Type", "application/json");
-            headers.set("Accept", "application/json");
-            headers.set("Cache-Control", "no-store");
-            // if (auth.isAuth && auth.user.api_token) {
-            //   headers.set('Authorization', `Bearer ${auth.user.api_token}`);
-            //   headers.set('api_token', `${auth.user.api_token}`);
-            // }
-            return headers;
-        },
-        // credentials: 'include',
-        credentials: "same-origin"
-    }),
-    // tagTypes: ['Cart', 'Branch', 'Area', 'Product', 'Wishlist'],
-    keepUnusedDataFor: 0,
-    refetchOnReconnect: true,
-    extractRehydrationInfo (action, { reducerPath }) {
-        if (action.type === next_redux_wrapper__WEBPACK_IMPORTED_MODULE_0__.HYDRATE) {
-            return action.payload[reducerPath];
-        }
-    },
-    endpoints: (builder)=>({})
-});
-
-
-/***/ }),
-
 /***/ 92897:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -377,7 +301,7 @@ const useAppSelector = react_redux__WEBPACK_IMPORTED_MODULE_0__.useSelector;
 
 /***/ }),
 
-/***/ 21920:
+/***/ 12748:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -399,11 +323,51 @@ var redux_toolkit_cjs_production_min = __webpack_require__(91388);
 var redux_logger = __webpack_require__(71690);
 // EXTERNAL MODULE: ./src/redux/slices/localeSlice.ts
 var localeSlice = __webpack_require__(60217);
-// EXTERNAL MODULE: ./src/redux/api/index.ts
-var api = __webpack_require__(46082);
+// EXTERNAL MODULE: ./node_modules/@reduxjs/toolkit/dist/query/react/rtk-query-react.cjs.production.min.js
+var rtk_query_react_cjs_production_min = __webpack_require__(23298);
+// EXTERNAL MODULE: ./node_modules/next-redux-wrapper/lib/index.js
+var lib = __webpack_require__(59556);
+// EXTERNAL MODULE: ./src/constants.ts
+var constants = __webpack_require__(8190);
+;// CONCATENATED MODULE: ./src/redux/api/index.ts
+
+
+
+const apiSlice = (0,rtk_query_react_cjs_production_min.createApi)({
+    reducerPath: "api",
+    baseQuery: (0,rtk_query_react_cjs_production_min.fetchBaseQuery)({
+        baseUrl: `${constants/* apiUrl */.JW}`,
+        prepareHeaders: async (headers, { getState, type, endpoint, extra })=>{
+            const { setting } = getState();
+            headers.set("Access-Control-Allow-Headers", "X-Requested-With,Accept,Authentication,Content-Type");
+            // headers.set('lang', lang);
+            headers.set("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,PATCH,OPTIONS");
+            headers.set("Content-Type", "application/json");
+            headers.set("Accept", "application/json");
+            headers.set("Cache-Control", "no-store");
+            // if (auth.isAuth && auth.user.api_token) {
+            //   headers.set('Authorization', `Bearer ${auth.user.api_token}`);
+            //   headers.set('api_token', `${auth.user.api_token}`);
+            // }
+            return headers;
+        },
+        // credentials: 'include',
+        credentials: "same-origin"
+    }),
+    // tagTypes: ['Cart', 'Branch', 'Area', 'Product', 'Wishlist'],
+    keepUnusedDataFor: 0,
+    refetchOnReconnect: true,
+    extractRehydrationInfo (action, { reducerPath }) {
+        if (action.type === lib.HYDRATE) {
+            return action.payload[reducerPath];
+        }
+    },
+    endpoints: (builder)=>({})
+});
+
 ;// CONCATENATED MODULE: ./src/redux/api/productApi.ts
 
-const productApi = api/* apiSlice */.g.injectEndpoints({
+const productApi = apiSlice.injectEndpoints({
     endpoints: (builder)=>({
             getProducts: builder.query({
                 query: ({ category_id, page, limit, lang, url, destination = {} })=>({
@@ -471,13 +435,50 @@ const productApi = api/* apiSlice */.g.injectEndpoints({
 });
 const { useGetProductsQuery, useLazyGetProductsQuery, useGetProductQuery, useGetTopSearchQuery, useGetSearchProductsQuery, useLazyGetSearchProductsQuery } = productApi;
 
-// EXTERNAL MODULE: ./src/redux/slices/settingSlice.ts
-var settingSlice = __webpack_require__(76254);
-// EXTERNAL MODULE: ./src/redux/api/categoryApi.ts
-var categoryApi = __webpack_require__(38964);
+;// CONCATENATED MODULE: ./src/redux/slices/settingSlice.ts
+
+const initialState = {
+    method: "delivery",
+    title: "Ar Expo",
+    openSideMenu: false
+};
+const settingSlice = (0,redux_toolkit_cjs_production_min.createSlice)({
+    name: "setting",
+    initialState,
+    reducers: {
+        setMethod: (state, action)=>{
+            return {
+                ...state,
+                method: action.payload
+            };
+        },
+        toggleMethod: (state, action)=>{
+            return {
+                ...state,
+                method: state.method == "delivery" ? "pickup" : "delivery"
+            };
+        }
+    }
+});
+const { setMethod, toggleMethod } = settingSlice.actions;
+
+;// CONCATENATED MODULE: ./src/redux/api/categoryApi.ts
+
+const categoryApi = apiSlice.injectEndpoints({
+    endpoints: (builder)=>({
+            getCategories: builder.query({
+                query: ()=>({
+                        url: `search/category`,
+                        validateStatus: (response, result)=>response.status == 200
+                    })
+            })
+        })
+});
+const { useGetCategoriesQuery, useLazyGetCategoriesQuery } = categoryApi;
+
 ;// CONCATENATED MODULE: ./src/redux/api/authApi.ts
 
-const authApi = api/* apiSlice */.g.injectEndpoints({
+const authApi = apiSlice.injectEndpoints({
     endpoints: (builder)=>({
             checkPhone: builder.mutation({
                 query: ({ body, url })=>({
@@ -553,7 +554,7 @@ const { useCheckPhoneMutation, useVerifyCodeMutation, useSendotpMutation, useReg
 
 ;// CONCATENATED MODULE: ./src/redux/slices/toastMessageSlice.ts
 
-const initialState = {
+const toastMessageSlice_initialState = {
     title: ``,
     content: ``,
     showToast: false,
@@ -561,7 +562,7 @@ const initialState = {
 };
 const toastMessageSlice = (0,redux_toolkit_cjs_production_min.createSlice)({
     name: "toastMessage",
-    initialState,
+    initialState: toastMessageSlice_initialState,
     reducers: {
         showToastMessage: (state, action)=>{
             return {
@@ -594,16 +595,16 @@ const { showToastMessage, hideToastMessage } = toastMessageSlice.actions;
 
 const rootReducer = (0,redux_toolkit_cjs_production_min.combineReducers)({
     [localeSlice/* localeSlice */.x.name]: localeSlice/* localeSlice */.x.reducer,
-    [settingSlice/* settingSlice */.zj.name]: settingSlice/* settingSlice */.zj.reducer,
+    [settingSlice.name]: settingSlice.reducer,
     [toastMessageSlice.name]: toastMessageSlice.reducer,
-    [api/* apiSlice */.g.reducerPath]: api/* apiSlice */.g.reducer,
-    [categoryApi/* categoryApi */.rj.reducerPath]: categoryApi/* categoryApi */.rj.reducer,
+    [apiSlice.reducerPath]: apiSlice.reducer,
+    [categoryApi.reducerPath]: categoryApi.reducer,
     [productApi.reducerPath]: productApi.reducer,
     [authApi.reducerPath]: authApi.reducer
 });
 
 // EXTERNAL MODULE: ./node_modules/redux-persist/lib/index.js
-var lib = __webpack_require__(22502);
+var redux_persist_lib = __webpack_require__(22502);
 // EXTERNAL MODULE: ./node_modules/redux-saga/dist/redux-saga-core-npm-proxy.esm.js + 3 modules
 var redux_saga_core_npm_proxy_esm = __webpack_require__(19428);
 // EXTERNAL MODULE: ./node_modules/redux-persist/lib/storage/index.js
@@ -611,22 +612,18 @@ var storage = __webpack_require__(66001);
 // EXTERNAL MODULE: ./node_modules/redux-saga/dist/redux-saga-effects-npm-proxy.esm.js + 1 modules
 var redux_saga_effects_npm_proxy_esm = __webpack_require__(47726);
 // EXTERNAL MODULE: ./node_modules/redux-persist/lib/constants.js
-var constants = __webpack_require__(45563);
+var lib_constants = __webpack_require__(45563);
 ;// CONCATENATED MODULE: ./src/redux/sagas/rootSaga.ts
 
 
 function* rootSaga() {
     yield (0,redux_saga_effects_npm_proxy_esm/* all */.$6)([]);
-    yield (0,redux_saga_effects_npm_proxy_esm/* take */.qn)(constants.REHYDRATE); // Wait for rehydrate to prevent sagas from running with empty store
-    yield (0,redux_saga_effects_npm_proxy_esm/* take */.qn)(constants.PURGE);
+    yield (0,redux_saga_effects_npm_proxy_esm/* take */.qn)(lib_constants.REHYDRATE); // Wait for rehydrate to prevent sagas from running with empty store
+    yield (0,redux_saga_effects_npm_proxy_esm/* take */.qn)(lib_constants.PURGE);
 }
 
 // EXTERNAL MODULE: ./node_modules/@reduxjs/toolkit/dist/query/rtk-query.cjs.production.min.js
 var rtk_query_cjs_production_min = __webpack_require__(31011);
-// EXTERNAL MODULE: ./node_modules/next-redux-wrapper/lib/index.js
-var next_redux_wrapper_lib = __webpack_require__(59556);
-// EXTERNAL MODULE: ./src/constants.ts
-var src_constants = __webpack_require__(8190);
 ;// CONCATENATED MODULE: ./src/redux/store.ts
 
 
@@ -651,52 +648,52 @@ const persistConfig = {
     // whitelist: [
     // ],
     // stateReconciler: hardSet,
-    debug: src_constants/* isLocal */.D0
+    debug: constants/* isLocal */.D0
 };
-const persistedReducer = (0,lib.persistReducer)(persistConfig, rootReducer);
+const persistedReducer = (0,redux_persist_lib.persistReducer)(persistConfig, rootReducer);
 const sagaMiddleware = (0,redux_saga_core_npm_proxy_esm/* default */.ZP)();
 const appLogger = (0,redux_logger.createLogger)({
-    collapsed: src_constants/* isLocal */.D0,
-    duration: src_constants/* isLocal */.D0,
-    diff: src_constants/* isLocal */.D0
+    collapsed: constants/* isLocal */.D0,
+    duration: constants/* isLocal */.D0,
+    diff: constants/* isLocal */.D0
 });
 let store = (0,redux_toolkit_cjs_production_min.configureStore)({
     reducer: persistedReducer,
     // Adding the api middleware enables caching, invalidation, polling,
     // and other useful features of `rtk-query`.
-    middleware: src_constants/* isLocal */.D0 ? (gDM)=>gDM({
+    middleware: constants/* isLocal */.D0 ? (gDM)=>gDM({
             serializableCheck: {
                 ignoredActions: [
-                    lib.FLUSH,
-                    next_redux_wrapper_lib.HYDRATE,
-                    lib.REHYDRATE,
-                    lib.PAUSE,
-                    lib.PERSIST,
-                    lib.PURGE,
-                    lib.REGISTER
+                    redux_persist_lib.FLUSH,
+                    lib.HYDRATE,
+                    redux_persist_lib.REHYDRATE,
+                    redux_persist_lib.PAUSE,
+                    redux_persist_lib.PERSIST,
+                    redux_persist_lib.PURGE,
+                    redux_persist_lib.REGISTER
                 ]
             }
         }).concat([
-            api/* apiSlice */.g.middleware,
-            categoryApi/* categoryApi */.rj.middleware,
+            apiSlice.middleware,
+            categoryApi.middleware,
             productApi.middleware,
             sagaMiddleware,
             appLogger
         ]) : (gDM)=>gDM({
             serializableCheck: {
                 ignoredActions: [
-                    lib.FLUSH,
-                    next_redux_wrapper_lib.HYDRATE,
-                    lib.REHYDRATE,
-                    lib.PAUSE,
-                    lib.PERSIST,
-                    lib.PURGE,
-                    lib.REGISTER
+                    redux_persist_lib.FLUSH,
+                    lib.HYDRATE,
+                    redux_persist_lib.REHYDRATE,
+                    redux_persist_lib.PAUSE,
+                    redux_persist_lib.PERSIST,
+                    redux_persist_lib.PURGE,
+                    redux_persist_lib.REGISTER
                 ]
             }
         }).concat([
-            api/* apiSlice */.g.middleware,
-            categoryApi/* categoryApi */.rj.middleware,
+            apiSlice.middleware,
+            categoryApi.middleware,
             productApi.middleware,
             sagaMiddleware
         ])
@@ -722,9 +719,9 @@ const initializeStore = (preloadedState)=>{
 };
 (0,rtk_query_cjs_production_min.setupListeners)(store.dispatch);
 const makeStore = ()=>store;
-const persistor = (0,lib.persistStore)(store);
-const wrapper = (0,next_redux_wrapper_lib.createWrapper)(makeStore, {
-    debug: src_constants/* isLocal */.D0
+const persistor = (0,redux_persist_lib.persistStore)(store);
+const wrapper = (0,lib.createWrapper)(makeStore, {
+    debug: constants/* isLocal */.D0
 });
 const useStore = (initialState)=>useMemo(()=>initializeStore(initialState), [
         initialState
@@ -786,46 +783,6 @@ const localeSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__.createSlice
     }
 });
 const { setLocale } = localeSlice.actions;
-
-
-/***/ }),
-
-/***/ 76254:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   D6: () => (/* binding */ toggleMethod),
-/* harmony export */   zj: () => (/* binding */ settingSlice)
-/* harmony export */ });
-/* unused harmony export setMethod */
-/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(91388);
-/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__);
-
-const initialState = {
-    method: "delivery",
-    title: "Ar Expo",
-    openSideMenu: false
-};
-const settingSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__.createSlice)({
-    name: "setting",
-    initialState,
-    reducers: {
-        setMethod: (state, action)=>{
-            return {
-                ...state,
-                method: action.payload
-            };
-        },
-        toggleMethod: (state, action)=>{
-            return {
-                ...state,
-                method: state.method == "delivery" ? "pickup" : "delivery"
-            };
-        }
-    }
-});
-const { setMethod, toggleMethod } = settingSlice.actions;
 
 
 /***/ }),
