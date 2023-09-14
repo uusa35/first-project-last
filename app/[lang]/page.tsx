@@ -20,15 +20,15 @@ export default async function Home({ params: { lang } }: Props) {
   ]);
 
   return (
-    <ComingSoon />
-    // <MainContextLayout trans={trans}>
-
-    //   <HomeContent
-    //     nationalEvents={nationalEvents}
-    //     users={users}
-    //     lang={lang}
-    //     nationalEvent={nationalEvent}
-    //   />
-    // </MainContextLayout>
+    <MainContextLayout trans={trans}>
+      <ComingSoon />
+    </MainContextLayout>
   );
 }
+
+//   <HomeContent
+//     nationalEvents={nationalEvents}
+//     users={users}
+//     lang={lang}
+//     nationalEvent={nationalEvent}
+//   />

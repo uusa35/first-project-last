@@ -9,6 +9,9 @@
     "translation": "translation",
     "loading": "loading ...",
     "nationalevent": "nationalevent",
-    "product": "product"
+    "product": "product",
+    "login": "login",
+    "lang_en": "english",
+    "lang_ar": "العربية"
   }
 }

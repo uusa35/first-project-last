@@ -10,12 +10,12 @@ type Props = {
 };
 
 export default function Loading() {
-  const { lang } = useParams();
+  const { lang }: any = useParams();
   return (
     <div className='h-screen w-screen flex justify-center items-center'>
-      <div className='w-1/12 p-2 shadow-xl rounded-xl border border-gray-100'>
+      <div className='w-1/12 p-2'>
         <Image
-          className='w-full h-auto object-contain'
+          className='w-full h-auto object-contain bg-white'
           src={Logo}
           alt='ar-expo'
           fill={false}

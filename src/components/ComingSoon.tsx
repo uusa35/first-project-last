@@ -1,13 +1,27 @@
 "use client";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-
-const navigation = [{ name: "Home", href: "/" }];
+import { MainContext } from "./MainContentLayout";
+import { useParams } from "next/navigation";
+import { appLinks } from "../constants";
 
 export default function ComingSoon() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { home, translation, login, lang_ar, lang_en }: any =
+    useContext(MainContext);
+  const { lang }: any = useParams();
+  const navigation = [
+    {
+      name: home.main,
+      href: "/",
+    },
+    {
+      name: lang === "ar" ? lang_en : lang_ar,
+      href: appLinks.home(lang === "ar" ? "en" : "ar"),
+    },
+  ];
 
   return (
     <div className='bg-white'>
@@ -39,7 +53,7 @@ export default function ComingSoon() {
               <Link
                 key={item.name}
                 href={item.href}
-                className='text-sm font-semibold leading-6 text-gray-900'>
+                className='text-sm font-semibold leading-6 text-gray-900 capitalize'>
                 {item.name}
               </Link>
             ))}
@@ -48,7 +62,8 @@ export default function ComingSoon() {
             <Link
               href='/login'
               className='hidden text-sm font-semibold leading-6 text-gray-900'>
-              Log in <span aria-hidden='true'>&rarr;</span>
+              {login}
+              <span aria-hidden='true'>&rarr;</span>
             </Link>
           </div>
         </nav>
@@ -83,7 +98,7 @@ export default function ComingSoon() {
                     <Link
                       key={item.name}
                       href={item.href}
-                      className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'>
+                      className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 capitalize'>
                       {item.name}
                     </Link>
                   ))}
@@ -91,8 +106,8 @@ export default function ComingSoon() {
                 <div className='py-6'>
                   <Link
                     href='/login'
-                    className=' -mx-3 block  rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'>
-                    Log in
+                    className=' -mx-3 block  rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 capitalize'>
+                    {login}
                   </Link>
                 </div>
               </div>
@@ -101,7 +116,12 @@ export default function ComingSoon() {
         </Dialog>
       </header>
 
-      <div className='relative isolate px-6 pt-14 lg:px-8'>
+      <div className='relative isolate px-6 pt-14 lg:px-8 min-h-screen'>
+        <img
+          src='https://cloudfront-us-east-2.images.arcpublishing.com/reuters/AEYDKLXCNVJFZITMFDZULJVKRY.jpg'
+          alt=''
+          className='absolute inset-0 -z-10 h-full w-full object-cover opacity-20'
+        />
         <div
           className='absolute inset-x-0 -top-20 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80'
           aria-hidden='true'>

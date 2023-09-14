@@ -35,7 +35,7 @@ export default function SideMenu() {
     about: { aboutus },
     nationalevent,
   }: any = useContext(MainContext);
-  const { lang } = useParams();
+  const { lang }: any = useParams();
   const segments = useSelectedLayoutSegments();
 
   const navigation = [
