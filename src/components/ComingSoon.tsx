@@ -6,6 +6,8 @@ import Link from "next/link";
 import { MainContext } from "./MainContentLayout";
 import { useParams } from "next/navigation";
 import { appLinks } from "../constants";
+import Logo from "@/appImages/logo.png";
+import Image from "next/image";
 
 export default function ComingSoon() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -32,11 +34,7 @@ export default function ComingSoon() {
           <div className='flex lg:flex-1'>
             <Link href='/' className='-m-1.5 p-1.5'>
               <span className='sr-only'>Your Company</span>
-              <img
-                className='h-8 w-auto'
-                src='https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600'
-                alt=''
-              />
+              <Image src={Logo} className='h-16 w-16' alt='' fill={false} />
             </Link>
           </div>
           <div className='flex lg:hidden'>
@@ -134,8 +132,10 @@ export default function ComingSoon() {
           />
         </div>
         <div className='mx-auto max-w-2xl py-32 sm:py-48 lg:py-56'>
-          <div className='hidden sm:mb-8 sm:flex sm:justify-center'>
+          <div className=' sm:mb-8 sm:flex sm:justify-center'>
             <div className='relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600'></div>
+
+            <Image src={Logo} className='h-16 w-16' alt='' fill={false} />
           </div>
           <div className='text-center'>
             <h1 className='text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl capitalize'>
