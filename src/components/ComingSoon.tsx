@@ -144,7 +144,6 @@ export default function ComingSoon() {
         </div>
         <div className='mx-auto max-w-2xl py-32 sm:py-48 lg:py-56 min-h-screen'>
           <div className=' sm:mb-8 flex justify-center items-center'>
-            <div className='relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600'></div>
             <Image src={Logo} className='h-16 w-16' alt='' fill={false} />
           </div>
           <div className='text-center'>
