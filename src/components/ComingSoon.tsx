@@ -137,14 +137,14 @@ export default function ComingSoon() {
 
             <Image src={Logo} className='h-16 w-16' alt='' fill={false} />
           </div>
-          <div className='text-center'>
-            <h1 className='text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl capitalize'>
+          <div className='text-center leading-loose'>
+            <h1 className='text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl capitalize leading-loose'>
               {soon}
             </h1>
-            <p className='mt-6 text-6xl font-extrabold leading-8 text-gray-600 capitalize py-16'>
+            <p className='mt-6 text-6xl font-extrabold leading-loose text-gray-600 capitalize py-16'>
               {ar_expo_ru}
             </p>
-            <p className='mt-6 text-2xl font-extrabold leading-8 text-gray-600'>
+            <p className='mt-6 text-2xl font-extrabold leading-loose text-gray-600'>
               <span>المنتدى </span>
 
               <span className='text-green-600'>العربي </span>
