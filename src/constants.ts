@@ -9,18 +9,15 @@ export const imageUrl = `https://loremflickr.com/`;
 export const isLocal = process.env.NODE_ENV !== 'production';
 export const suppressText = true;
 
-
-
-
 export const appLinks = {
     home: (lang: localeType) =>
         `/${lang}`,
     about: (lang: localeType) =>
         `/${lang}/about`,
-    nationaleventIndex: (lang: localeType, search?: string) =>
-        `/${lang}/nationalevent?${search ?? ''}`,
-    nationalEventShow: (lang: localeType, id: string, slug?: string) =>
-        `/${lang}/nationalevent/${id}?slug=${slug ?? ``}`,
+    userIndex: (lang: localeType, search?: string) =>
+        `/${lang}/user?${search ?? ''}`,
+    userShow: (lang: localeType, id: string, slug?: string) =>
+        `/${lang}/user/${id}?slug=${slug ?? ``}`,
 }
 
 export const convertSearchParamsToString = (search: { [key: string]: string }): string => Object.keys(search)
