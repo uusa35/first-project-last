@@ -1,6 +1,6 @@
 import { MainContextLayout } from "@/components/MainContentLayout";
 import TextTrans from "@/components/TextTrans";
-import { Locale } from "@/i18n.config";
+import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
 import { appLinks, convertSearchParamsToString } from "@/src/constants";
 import { getUsers } from "@/utils/user";
@@ -9,7 +9,7 @@ import { map } from "lodash";
 import Link from "next/link";
 
 type Props = {
-  params: { lang: Locale };
+  params: { lang: Locale["lang"] };
   searchParams: { [key: string]: string };
 };
 export default async function UserIndex({
@@ -37,7 +37,7 @@ export default async function UserIndex({
               </div>
             ))}
         </div>
-        <Link href={appLinks.userIndex(`on_home=1`,lang)}>
+        <Link href={appLinks.userIndex(`on_home=1`, lang)}>
           {" "}
           get on Home nationalevents{" "}
         </Link>

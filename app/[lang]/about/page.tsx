@@ -1,14 +1,14 @@
 import { MainContextLayout } from "@/components/MainContentLayout";
-import { Locale } from "@/i18n.config";
+import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
 import { getSetting } from "@/utils/setting";
 
 export default async function About({
   params: { lang },
 }: {
-  params: { lang: Locale };
+  params: { lang: Locale["lang"] };
 }) {
-  const setting = await getSetting();
+  const setting = await getSetting(lang);
   const { trans } = await getDictionary(lang);
 
   return (
