@@ -31,7 +31,7 @@ export default function RootLayout({
 }) {
   return (
     <html
-      className='min-h-screen bg-white'
+      className='min-h-screen max-w-8xl mx-auto '
       lang={params.lang}
       dir={params.lang === "ar" ? "rtl" : "ltr"}>
       <body

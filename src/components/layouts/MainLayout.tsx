@@ -41,7 +41,7 @@ const MainLayout: FC<Props> = ({ lang, children }): React.ReactNode => {
   }, [lang]);
 
   return (
-    <div className={`w-full min-h-screen `}>
+    <div className={`w-full`}>
       {children}
       <ToastAppContainer />
     </div>

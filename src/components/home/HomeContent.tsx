@@ -15,20 +15,25 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setMethod, toggleMethod } from "@/redux/slices/settingSlice";
 export default function HomeContent({
   users,
-  nationalEvents,
-  nationalEvent,
+  categories,
+  slides,
+  setting,
 }: {
   users: any;
-  nationalEvents: any;
-  nationalEvent: any;
+  slides: any;
+  categories: any;
+  setting: any;
   lang: Locale;
 }) {
   const { home, translation }: any = useContext(MainContext);
   const { method } = useAppSelector((state) => state.setting);
   const dispatch = useAppDispatch();
-  
 
   useEffect(() => {}, [method]);
+  console.log("users", users);
+  console.log("categories", categories);
+  console.log("slides", slides);
+  console.log("setting", setting);
   return (
     <div className='container space-y-8 flex w-full flex-col justify-center items-center'>
       <div>
@@ -48,22 +53,11 @@ export default function HomeContent({
         <h1>From SSR : users</h1>
         {map(users.data, (u, i) => (
           <div key={i}>
-            <TextTrans ar={u.name_ar} en={u.name_en} />
+            <TextTrans ar={u.name} en={u.name} />
           </div>
         ))}
       </div>
-      <div className='w-full p-8  bg-orange-500 rounded-md'>
-        <h1>From SSR : National Events</h1>
-        {map(nationalEvents.data, (u, i) => (
-          <div key={i}>
-            <TextTrans ar={u.name_ar} en={u.name_en} />
-          </div>
-        ))}
-      </div>
-      <div className='w-full p-8  bg-orange-500 rounded-md'>
-        <h1>From SSR : NationalEvent Id : {nationalEvent.id}</h1>
-        <TextTrans ar={nationalEvent.name_ar} en={nationalEvent.name_en} />
-      </div>
+
       <HomeSection />
     </div>
   );

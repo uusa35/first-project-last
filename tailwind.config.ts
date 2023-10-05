@@ -13,12 +13,16 @@ const config: Config = {
       },
       colors: {
         "expo-dark": "#8e644d",
-        "expo-light": "#8e644da3"
+        "expo-light": "#8e644da3",
+        "expo-green": "#E6F0EB"
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      },
+      maxWidth: {
+        "8xl": "2500px",
       },
     },
     screens: {
