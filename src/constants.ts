@@ -1,3 +1,4 @@
+'use client';
 import { filter, map, toString } from 'lodash';
 import type { Locale } from '@/i18n.config';
 import { localeType } from '@/types/index';

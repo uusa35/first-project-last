@@ -58,7 +58,7 @@ const tiers = [
   },
 ];
 
-function classNames(...classes) {
+function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
 
@@ -109,6 +109,15 @@ export async function generateMetadata({ params }: Props) {
       email: false,
       address: false,
       telephone: false,
+    },
+    metadataBase: process.env.NEXT_PUBLIC_BASE_URL,
+    alternates: {
+      canonical: "/",
+      languages: {
+        "en-US": "/en",
+        "ar-SA": "/ar",
+        "ru-RU": "/ru",
+      },
     },
   };
 }

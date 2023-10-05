@@ -1,0 +1,19 @@
+{
+  "trans": {
+    "home": {
+      "main": "home"
+    },
+    "about": {
+      "aboutus": "aboutus"
+    },
+    "translation": "translation",
+    "loading": "loading ...",
+    "nationalevent": "nationalevent",
+    "product": "product",
+    "login": "login",
+    "lang_en": "english",
+    "lang_ar": "العربية",
+    "soon": "soon",
+    "ar_expo_ru": "Arabic Russian Expition"
+  }
+}
