@@ -13,6 +13,7 @@ import Image from "next/image";
 import Logo from "@/appImages/logo.png";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setMethod, toggleMethod } from "@/redux/slices/settingSlice";
+
 export default function HomeContent({
   users,
   categories,
