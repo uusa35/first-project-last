@@ -16,7 +16,7 @@ export default async function ({ slides }: Props) {
             alt='image 2'
             className='h-full w-full object-cover'
           />
-          <div className='absolute -bottom-40 rtl:right-20 ltr:left-20  grid h-full w-full items-center main-green/15'>
+          <div className='absolute -bottom-10  lg:-bottom-40 lg:rtl:right-20 lg:ltr:left-20  grid h-full w-full items-center main-green/15'>
             <div className='w-3/4 ps-12 md:w-2/4 md:ps-20 lg:ps-32'>
               <Typography
                 variant='h1'
@@ -27,7 +27,7 @@ export default async function ({ slides }: Props) {
               <Typography
                 variant='lead'
                 color='white'
-                className='mb-12 opacity-80'>
+                className='mb-12 opacity-80 hidden lg:block'>
                 {s.description}
               </Typography>
               <div className='flex gap-2 hidden'>
