@@ -4,9 +4,20 @@ import type { Locale } from "@/i18n.config";
 import { getDictionary } from "@/lib/dictionary";
 import LocaleSwitcher from "@/components/LocaleSwitcher";
 import { appLinks } from "../constants";
-import { useContext, useState } from "react";
-import { Dialog } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Fragment, useContext, useState } from "react";
+import { Dialog, Popover, Transition } from "@headlessui/react";
+import {
+  Bars3Icon,
+  ChartPieIcon,
+  ChevronDownIcon,
+  CursorArrowRaysIcon,
+  FingerPrintIcon,
+  PhoneIcon,
+  PlayCircleIcon,
+  RectangleGroupIcon,
+  SquaresPlusIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
 import { MainContext } from "./MainContentLayout";
 
 type Props = {
