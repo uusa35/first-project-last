@@ -2,7 +2,6 @@
 import Link from "next/link";
 import type { Locale } from "@/i18n.config";
 import { getDictionary } from "@/lib/dictionary";
-import LocaleSwitcher from "@/components/LocaleSwitcher";
 import { appLinks } from "../constants";
 import { Fragment, useContext, useState } from "react";
 import { Dialog, Popover, Transition } from "@headlessui/react";
@@ -23,17 +22,17 @@ import { MainContext } from "./MainContentLayout";
 type Props = {
   lang: Locale;
 };
-const navigation = [
-  { name: "Product", href: "#" },
-  { name: "Features", href: "#" },
-  { name: "Marketplace", href: "#" },
-  { name: "Company", href: "#" },
-];
 
 export default function NavHeader({ lang }: Props) {
   const { home, translation, login, lang_ar, lang_en, soon, ar_expo_ru }: any =
     useContext(MainContext);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navigation = [
+    { name: "home", href: `/${lang}` },
+    { name: "users", href: `/${lang}/user` },
+    { name: "posts", href: `/${lang}/post` },
+    { name: "Company", href: "#" },
+  ];
 
   return (
     <header className='absolute inset-x-0 top-0 z-50'>

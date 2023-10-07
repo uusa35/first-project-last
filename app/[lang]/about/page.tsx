@@ -12,7 +12,7 @@ export default async function About({
   const { trans } = await getDictionary(lang);
 
   return (
-    <MainContextLayout trans={trans}>
+    <MainContextLayout trans={trans} lang={lang}>
       <div className='container py-24'>
         <h1 className='text-3xl font-bold'>
           {trans.translation} : {trans.about.aboutus}

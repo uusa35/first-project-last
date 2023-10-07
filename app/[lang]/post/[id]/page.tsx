@@ -19,7 +19,7 @@ export default async function PostShow({
   ]);
 
   return (
-    <MainContextLayout trans={trans}>
+    <MainContextLayout trans={trans} lang={lang}>
       <NavHeader lang={lang} />
       <div>Post Name : {post.name}</div>
     </MainContextLayout>

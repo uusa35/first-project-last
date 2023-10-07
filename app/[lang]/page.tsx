@@ -254,7 +254,7 @@ export default async function Home({ params: { lang } }: Props) {
     await Promise.all([
       getDictionary(lang),
       getSlides(`on_home=1`, lang),
-      getCategories(`on_home=1`, lang),
+      getCategories(`on_home=true`, lang),
       getSetting(lang),
       getMemberships(`zones[0]=A&zones[1]=B`, lang),
       getPosts(`on_home=1`, lang),
@@ -297,8 +297,8 @@ export default async function Home({ params: { lang } }: Props) {
       <div className='py-12 sm:py-10'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
           <div className='mx-auto max-w-2xl lg:mx-0'>
-            <h2 className='text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl'>
-              Our team
+            <h2 className='text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl capitalize'>
+              {trans.categories}
             </h2>
             <p className='mt-6 text-lg leading-8 text-gray-600'>
               We’re a dynamic group of individuals who are passionate about what
@@ -309,19 +309,21 @@ export default async function Home({ params: { lang } }: Props) {
           <ul
             role='list'
             className='mx-auto mt-20 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-5'>
-            {people.map((person) => (
-              <li key={person.name}>
-                <img
-                  className='aspect-[3/2] w-full rounded-2xl object-cover'
-                  src={person.imageUrl}
-                  alt=''
-                />
-                <h3 className='mt-6 text-lg font-semibold leading-8 tracking-tight text-gray-900'>
-                  {person.name}
-                </h3>
-                <p className='text-base leading-7 text-gray-600'>
-                  {person.role}
-                </p>
+            {categories.data.map((c: any) => (
+              <li key={c.id}>
+                <Link href={`/${lang}/user?category_id=${c.id}`}>
+                  <img
+                    className='aspect-[3/2] w-full rounded-2xl object-cover'
+                    src={c.image}
+                    alt=''
+                  />
+                  <h3 className='mt-6 text-lg font-semibold leading-8 tracking-tight text-gray-900'>
+                    {c.name}
+                  </h3>
+                  <p className='text-base leading-7 text-gray-600'>
+                    {c.caption}
+                  </p>
+                </Link>
               </li>
             ))}
           </ul>
@@ -752,7 +754,7 @@ export default async function Home({ params: { lang } }: Props) {
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
           <div className='mx-auto max-w-2xl lg:mx-0'>
             <h2 className='text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl'>
-              Our team
+              {trans.categories}
             </h2>
             <p className='mt-6 text-lg leading-8 text-gray-600'>
               We’re a dynamic group of individuals who are passionate about what

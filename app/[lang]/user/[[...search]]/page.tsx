@@ -2,7 +2,8 @@ import { MainContextLayout } from "@/components/MainContentLayout";
 import TextTrans from "@/components/TextTrans";
 import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
-import { appLinks, convertSearchParamsToString } from "@/src/constants";
+import { appLinks } from "@/src/constants";
+import { convertSearchParamsToString } from "@/utils/helpers";
 import { getUsers } from "@/utils/user";
 import { getSetting } from "@/utils/setting";
 import { map } from "lodash";
@@ -18,24 +19,29 @@ export default async function UserIndex({
 }: Props) {
   const [{ trans }, users] = await Promise.all([
     getDictionary(lang),
-    getUsers(``, lang),
+    getUsers(convertSearchParamsToString(searchParams) ?? ``, lang),
   ]);
+  console.log('searchParams', searchParams)
 
   return (
-    <MainContextLayout trans={trans}>
+    <MainContextLayout trans={trans} lang={lang}>
       <div className='container py-24'>
         <h1 className='text-3xl font-bold'>
           {trans.translation} : {trans.users}
         </h1>
-        <div className='w-full p-8  bg-orange-500 rounded-md'>
-          <h1>From SSR : National Events</h1>
-          {users &&
-            map(users.data, (u, i) => (
-              <Link key={i} href={`/${lang}/user/${u.id}`}>
-                <span>{u.id} - </span>
-                <TextTrans ar={u.name} en={u.name} />
-              </Link>
-            ))}
+        <div className='w-full p-8 rounded-md'>
+          <div className='flex flex-1 flex-col space-y-6'>
+            {users &&
+              map(users.data, (u, i) => (
+                <Link
+                  key={i}
+                  href={`/${lang}/user/${u.id}`}
+                  className='border-b p-3'>
+                  <span>{u.id} - </span>
+                  <TextTrans ar={u.name} en={u.name} />
+                </Link>
+              ))}
+          </div>
         </div>
       </div>
     </MainContextLayout>

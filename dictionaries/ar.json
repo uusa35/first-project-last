@@ -1,19 +1,20 @@
 {
   "trans": {
     "home": {
-      "main" : "الرئيسية"
+      "main": "الرئيسية"
     },
     "about": {
-      "aboutus" : "نبذة عنا"
+      "aboutus": "نبذة عنا"
     },
     "translation": "الترجمة",
-    "loading" : "جاري تحميل البيانات ..",
-    "nationalevent" : "فعالية",
-    "product" : "منتج",
-    "login" : "تسجيل الدخول",
-    "lang_en" : "الإنجليزية",
-    "lang_ar" : "arabic",
-    "soon" : "قريبا",
-    "ar_expo_ru" : "المعرض العربي الروسي"
+    "loading": "جاري تحميل البيانات ..",
+    "nationalevent": "فعالية",
+    "product": "منتج",
+    "login": "تسجيل الدخول",
+    "lang_en": "الإنجليزية",
+    "lang_ar": "arabic",
+    "soon": "قريبا",
+    "ar_expo_ru": "المعرض العربي الروسي",
+    "categories": "التصنيفات"
   }
 }
