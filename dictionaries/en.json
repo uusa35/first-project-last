@@ -1,11 +1,7 @@
 {
   "trans": {
-    "home": {
-      "main": "home"
-    },
-    "about": {
-      "aboutus": "aboutus"
-    },
+    "home": "home",
+    "aboutus": "aboutus",
     "translation": "translation",
     "loading": "loading ...",
     "nationalevent": "nationalevent",

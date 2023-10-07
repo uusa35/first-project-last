@@ -1,15 +1,11 @@
 import "@/styles/globals.css";
 import type { Metadata } from "next";
 import { Locale, i18n as trans } from "@/i18n.config";
-import { Tajawal } from "next/font/google";
+import { tajawal } from "@/utils/helpers";
 import Providers from "@/src/redux/provider";
 import MainLayout from "@/src/components/layouts/MainLayout";
 
-const tajawal = Tajawal({
-  weight: "400",
-  subsets: ["latin"],
-  // display: "swap",
-});
+
 
 export const metadata: Metadata = {
   title: "Ar Expo",

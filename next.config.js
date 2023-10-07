@@ -34,7 +34,7 @@ const nextConfig = withSvgr({
       "*.ar-expo.ru",
       "ar-expo-backend.test",
       "*.ondigitalocean.app",
-      "hub-apps.ams3.digitaloceanspaces.com",
+      "*.ams3.digitaloceanspaces.com",
     ],
     minimumCacheTTL: 0,
     dangerouslyAllowSVG: true,

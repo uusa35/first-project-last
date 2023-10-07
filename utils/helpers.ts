@@ -1,4 +1,10 @@
+import { Tajawal } from "next/font/google";
 
+export const tajawal = Tajawal({
+    weight: "400",
+    subsets: ["latin"],
+    // display: "swap",
+});
 export const convertSearchParamsToString = (search: { [key: string]: string }): string => {
     if (typeof search === 'object' &&
         !Array.isArray(search) &&
