@@ -817,14 +817,14 @@ export default async function Home({ params: { lang } }: Props) {
           </p>
         </div>
       </footer>
-      <HomeContent
+      {/* <HomeContent
         lang={lang}
         categories={categories}
         slides={slides}
         setting={setting}
         memberships={memberships}
         posts={posts}
-      />
+      /> */}
     </MainContextLayout>
   );
 }
