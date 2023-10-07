@@ -1,10 +1,10 @@
 
 export interface Locale {
-    lang: 'ar' | 'en';
+    lang: 'ar' | 'en' | 'ru';
     isRTL: boolean;
     dir: 'ltr' | 'rtl';
     label: string;
-    otherLang: 'ar' | 'en';
+    otherLang: 'ar' | 'en' | 'ru';
 }
 
 export type Setting = {

@@ -1,5 +1,5 @@
 import { filter, map, toString } from 'lodash';
-import type { Locale } from '@/i18n.config';
+import { Locale } from '@/types/index';
 import { localeType } from '@/types/index';
 export const baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}`;
 export const appVersion = `0.0.1`;

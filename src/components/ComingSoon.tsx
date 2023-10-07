@@ -20,8 +20,16 @@ export default function ComingSoon() {
       href: "/",
     },
     {
-      name: lang === "ar" ? lang_en : lang_ar,
-      href: appLinks.home(lang === "ar" ? "en" : "ar"),
+      name: "ar",
+      href: appLinks.home("ar"),
+    },
+    {
+      name: "en",
+      href: appLinks.home("en"),
+    },
+    {
+      name: "ru",
+      href: appLinks.home("ru"),
     },
   ];
 
