@@ -51,11 +51,11 @@ export default function NavHeader({ lang, searchParams }: Props) {
 
   // console.log("pathname", pathName);
   // console.log("router", router?.query);
-  console.log("segment", segment);
-  console.log("segments", segments);
-  console.log("params", params);
-  console.log("searchParams", searchParams);
-  console.log("searchParams ----->", convertSearchParamsToString(searchParams));
+  // console.log("segment", segment);
+  // console.log("segments", segments);
+  // console.log("params", params);
+  // console.log("searchParams", searchParams);
+  // console.log("searchParams ----->", convertSearchParamsToString(searchParams));
 
   // console.log("url", changePathName(lang, "ar", pathName));
 
