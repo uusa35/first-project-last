@@ -28,6 +28,7 @@ const nextConfig = withSvgr({
       "loremflickr.com",
       "*.ar-expo.ru",
       "ar-expo-backend.test",
+      "cp.ar-expo.ru",
       "hammerhead-app-fhpzt.ondigitalocean.app",
       "hub-apps.ams3.cdn.digitaloceanspaces.com",
     ],
