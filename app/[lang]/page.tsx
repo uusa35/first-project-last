@@ -1,6 +1,5 @@
 import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
-import HomeContent from "@/components/home/HomeContent";
 import { MainContextLayout } from "@/components/MainContentLayout";
 import { getUsers } from "@/utils/user";
 import ComingSoon from "@/components/ComingSoon";
@@ -13,6 +12,7 @@ import NavHeader from "@/components/NavHeader";
 import { getMemberships } from "@/utils/membership";
 import { getPosts } from "@/utils/post";
 import { appLinks } from "@/src/constants";
+import Link from "next/link";
 
 const tiers = [
   {
@@ -262,9 +262,7 @@ export default async function Home({ params: { lang } }: Props) {
 
   if (!posts) return <>Loading</>;
   return (
-    <MainContextLayout trans={trans}>
-      {/* nav & slider */}
-      <NavHeader lang={lang} />
+    <MainContextLayout trans={trans} lang={lang}>
       {/* slider */}
       <div className='relative isolate'>
         <div className='lg:pb-40'>
@@ -498,28 +496,27 @@ export default async function Home({ params: { lang } }: Props) {
                   />
                   <div className='absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10' />
                 </div>
-                <div className='max-w-xl'>
-                  <div className='mt-8 flex items-center gap-x-4 text-xs'>
-                    <time dateTime={post.datetime} className='text-gray-500'>
-                      {post.date}
-                    </time>
-                    <a
-                      href={`/post/${post.id}`}
-                      className='relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100'>
+
+                <div className='mt-8 flex items-center justify-between text-xs'>
+                  <time dateTime={post.datetime} className='text-gray-500'>
+                    {post.date}
+                  </time>
+                  <Link
+                    href={`/post/${post.id}`}
+                    className='relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100'>
+                    {post.name}
+                  </Link>
+                </div>
+                <div className='group relative'>
+                  <h3 className='mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600'>
+                    <Link href={`/post/${post.id}`}>
+                      <span className='absolute inset-0' />
                       {post.name}
-                    </a>
-                  </div>
-                  <div className='group relative'>
-                    <h3 className='mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600'>
-                      <a href={post.href}>
-                        <span className='absolute inset-0' />
-                        {post.name}
-                      </a>
-                    </h3>
-                    <p className='mt-5 line-clamp-3 text-sm leading-6 text-gray-600'>
-                      {post.caption}
-                    </p>
-                  </div>
+                    </Link>
+                  </h3>
+                  <p className='mt-5 line-clamp-3 text-sm leading-6 text-gray-600'>
+                    {post.caption}
+                  </p>
                 </div>
               </article>
             ))}

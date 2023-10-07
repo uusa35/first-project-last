@@ -1,37 +1,23 @@
 "use client";
 import { FC, createContext } from "react";
-import SideMenu from "./SideMenu";
-import MainAside from "./MainAside";
+import NavHeader from "./NavHeader";
+import { Locale } from "../types";
 
 type Props = {
   children: React.ReactNode;
   trans: {};
+  lang: Locale["lang"];
 };
 
 const MainContext = createContext({});
-const MainContextLayout: FC<Props> = ({ children, trans }) => {
-  return <MainContext.Provider value={trans}>{children}</MainContext.Provider>;
+const MainContextLayout: FC<Props> = ({ children, trans , lang}) => {
+  return (
+    <MainContext.Provider value={trans}>
+      {/* nav & slider */}
+      <NavHeader lang={lang} />
+      <div>{children}</div>
+    </MainContext.Provider>
+  );
 };
 
 export { MainContextLayout, MainContext };
-
-{
-  /* <div className='flex flex-row'>
-        <SideMenu /> */
-}
-{
-  /* <NavHeader lang={params.lang} /> */
-}
-{
-  /* <main className='w-full md:w-1/2 lg:w-5/12 xl:w-1/3 min-h-screen '>
-          <section className='mx-auto flex justify-center items-center mt-14 px-4 sm:px-6 lg:px-8 lg:py-6 '> */
-}
-{
-  // children;
-}
-{
-  /* </section>
-        </main>
-        <MainAside />
-      </div> */
-}
