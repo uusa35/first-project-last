@@ -16,18 +16,17 @@ export default async function ({ slides }: Props) {
             alt='image 2'
             className='h-full w-full object-cover'
           />
-          <div className='absolute -bottom-10  lg:-bottom-40 lg:rtl:right-20 lg:ltr:left-20  grid h-full w-full items-center main-green/15'>
+          <div className='absolute -bottom-10  lg:-bottom-40 lg:rtl:right-20 lg:ltr:left-20  grid h-full w-full items-center bg-green-200/25'>
             <div className='w-3/4 ps-12 md:w-2/4 md:ps-20 lg:ps-32'>
               <Typography
-                variant='h1'
                 color='white'
-                className='mb-4 text-3xl md:text-4xl lg:text-5xl'>
+                className='mb-4 text-3xl md:text-4xl lg:text-5xl text-md'>
                 {s.name}
               </Typography>
               <Typography
                 variant='lead'
                 color='white'
-                className='mb-12 opacity-80 hidden lg:block'>
+                className='mb-12 opacity-80 hidden lg:block text-sm'>
                 {s.description}
               </Typography>
               <div className='flex gap-2 hidden'>

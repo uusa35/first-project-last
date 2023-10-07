@@ -11,8 +11,9 @@ import Link from "next/link";
 
 type Props = {
   params: { lang: Locale["lang"] };
-  searchParams: { [key: string]: string };
+  searchParams?: { [key: string]: string | string[] };
 };
+
 export default async function UserIndex({
   params: { lang },
   searchParams,
@@ -21,10 +22,9 @@ export default async function UserIndex({
     getDictionary(lang),
     getUsers(convertSearchParamsToString(searchParams) ?? ``, lang),
   ]);
-  console.log('searchParams', searchParams)
 
   return (
-    <MainContextLayout trans={trans} lang={lang}>
+    <MainContextLayout trans={trans} lang={lang} searchParams={searchParams}>
       <div className='container py-24'>
         <h1 className='text-3xl font-bold'>
           {trans.translation} : {trans.users}

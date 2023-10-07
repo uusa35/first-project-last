@@ -3,7 +3,7 @@ import Link from "next/link";
 import type { Locale } from "@/i18n.config";
 import { getDictionary } from "@/lib/dictionary";
 import { appLinks } from "../constants";
-import { Fragment, useContext, useState } from "react";
+import { Fragment, useCallback, useContext, useState } from "react";
 import { Dialog, Popover, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
@@ -21,21 +21,23 @@ import { MainContext } from "./MainContentLayout";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import {
   useSelectedLayoutSegment,
   useSelectedLayoutSegments,
 } from "next/navigation";
-import { changePathName } from "@/utils/helpers";
+import { changePathName, convertSearchParamsToString } from "@/utils/helpers";
 type Props = {
   lang: Locale;
+  searchParams?: { [key: string]: string | string[] | undefined };
 };
 
-export default function NavHeader({ lang }: Props) {
+export default function NavHeader({ lang, searchParams }: Props) {
   const { home, translation, login, lang_ar, lang_en, soon, ar_expo_ru }: any =
     useContext(MainContext);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const params = useParams();
-  const pathName = usePathname();
+  const pathName = usePathname()!;
   const router = useRouter();
   const segment = useSelectedLayoutSegment();
   const segments = useSelectedLayoutSegments();
@@ -48,10 +50,13 @@ export default function NavHeader({ lang }: Props) {
   ];
 
   // console.log("pathname", pathName);
-  // console.log("router", router);
-  // console.log("segment", segment);
-  // console.log("segments", segments);
-  // console.log("params", params);
+  // console.log("router", router?.query);
+  console.log("segment", segment);
+  console.log("segments", segments);
+  console.log("params", params);
+  console.log("searchParams", searchParams);
+  console.log("searchParams ----->", convertSearchParamsToString(searchParams));
+
   // console.log("url", changePathName(lang, "ar", pathName));
 
   return (
@@ -90,17 +95,29 @@ export default function NavHeader({ lang }: Props) {
         </div>
         <div className='hidden lg:flex lg:flex-1 lg:justify-end gap-x-4'>
           <Link
-            href={changePathName(lang, "ar", pathName)}
+            href={`${changePathName(
+              lang,
+              "ar",
+              pathName
+            )}?${convertSearchParamsToString(searchParams)}`}
             className='text-sm font-semibold leading-6 text-gray-900'>
             ar
           </Link>
           <Link
-            href={changePathName(lang, "ru", pathName)}
+            href={`${changePathName(
+              lang,
+              "ru",
+              pathName
+            )}?${convertSearchParamsToString(searchParams)}`}
             className='text-sm font-semibold leading-6 text-gray-900'>
             ru
           </Link>
           <Link
-            href={changePathName(lang, "en", pathName)}
+            href={`${changePathName(
+              lang,
+              "en",
+              pathName
+            )}?${convertSearchParamsToString(searchParams)}`}
             className='text-sm font-semibold leading-6 text-gray-900'>
             en
           </Link>

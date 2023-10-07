@@ -14,15 +14,21 @@ type Props = {
   children: React.ReactNode;
   trans: {};
   lang: Locale["lang"];
+  searchParams?: { [key: string]: string | string[] };
 };
 
 const MainContext = createContext({});
-const MainContextLayout: FC<Props> = ({ children, trans, lang }) => {
+const MainContextLayout: FC<Props> = ({
+  children,
+  trans,
+  lang,
+  searchParams,
+}) => {
   return (
     <MainContext.Provider value={trans}>
       <ThemeProvider>
         {/* nav & slider */}
-        <NavHeader lang={lang} />
+        <NavHeader lang={lang} searchParams={searchParams} />
         <div>{children}</div>
       </ThemeProvider>
     </MainContext.Provider>
