@@ -11,6 +11,7 @@ type Props = {
 
 export default function Loading() {
   const { lang }: any = useParams();
+
   return (
     <div className='h-screen w-screen flex justify-center items-center'>
       <div className='w-1/12 p-2'>

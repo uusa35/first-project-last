@@ -20,7 +20,6 @@ export default async function UserShow({
 
   return (
     <MainContextLayout trans={trans} lang={lang}>
-      <NavHeader lang={lang} />
       <div>Post Name : {user.name}</div>
     </MainContextLayout>
   );

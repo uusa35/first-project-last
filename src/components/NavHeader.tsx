@@ -18,7 +18,14 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { MainContext } from "./MainContentLayout";
-
+import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
+import {
+  useSelectedLayoutSegment,
+  useSelectedLayoutSegments,
+} from "next/navigation";
+import { changePathName } from "@/utils/helpers";
 type Props = {
   lang: Locale;
 };
@@ -27,6 +34,12 @@ export default function NavHeader({ lang }: Props) {
   const { home, translation, login, lang_ar, lang_en, soon, ar_expo_ru }: any =
     useContext(MainContext);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const params = useParams();
+  const pathName = usePathname();
+  const router = useRouter();
+  const segment = useSelectedLayoutSegment();
+  const segments = useSelectedLayoutSegments();
+
   const navigation = [
     { name: "home", href: `/${lang}` },
     { name: "users", href: `/${lang}/user` },
@@ -34,8 +47,15 @@ export default function NavHeader({ lang }: Props) {
     { name: "Company", href: "#" },
   ];
 
+  // console.log("pathname", pathName);
+  // console.log("router", router);
+  // console.log("segment", segment);
+  // console.log("segments", segments);
+  // console.log("params", params);
+  // console.log("url", changePathName(lang, "ar", pathName));
+
   return (
-    <header className='absolute inset-x-0 top-0 z-50'>
+    <header className='top-0 z-50'>
       <nav
         className='flex items-center justify-between p-6 lg:px-8'
         aria-label='Global'>
@@ -68,7 +88,22 @@ export default function NavHeader({ lang }: Props) {
             </a>
           ))}
         </div>
-        <div className='hidden lg:flex lg:flex-1 lg:justify-end'>
+        <div className='hidden lg:flex lg:flex-1 lg:justify-end gap-x-4'>
+          <Link
+            href={changePathName(lang, "ar", pathName)}
+            className='text-sm font-semibold leading-6 text-gray-900'>
+            ar
+          </Link>
+          <Link
+            href={changePathName(lang, "ru", pathName)}
+            className='text-sm font-semibold leading-6 text-gray-900'>
+            ru
+          </Link>
+          <Link
+            href={changePathName(lang, "en", pathName)}
+            className='text-sm font-semibold leading-6 text-gray-900'>
+            en
+          </Link>
           <a href='#' className='text-sm font-semibold leading-6 text-gray-900'>
             Log in <span aria-hidden='true'>&rarr;</span>
           </a>
