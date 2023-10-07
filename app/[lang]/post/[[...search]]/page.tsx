@@ -6,6 +6,7 @@ import { map } from "lodash";
 import Link from "next/link";
 import { getPosts } from "@/utils/post";
 import { convertSearchParamsToString } from "@/utils/helpers";
+import Image from "next/image";
 
 type Props = {
   params: { lang: Locale["lang"] };
@@ -31,9 +32,16 @@ export default async function PostIndex({
             {users &&
               map(users.data, (p, i) => (
                 <Link
-                key={i}
+                  key={i}
                   href={`/${lang}/post/${p.id}`}
-                  className='border-b p-3'>
+                  className='border-b p-3 flex flex-row items-center'>
+                  <Image
+                    alt={p.name}
+                    src={p.image}
+                    width={100}
+                    height={100}
+                    className='w-20 h-auto p-4'
+                  />
                   <span>{p.id} - </span>
                   <TextTrans ar={p.name} en={p.name} />
                 </Link>

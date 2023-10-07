@@ -18,6 +18,7 @@ import { getPosts } from "@/utils/post";
 import { appLinks } from "@/src/constants";
 import Link from "next/link";
 import MainSlider from "@/components/MainSlider";
+import Image from "next/image";
 
 const tiers = [
   {
@@ -265,7 +266,6 @@ export default async function Home({ params: { lang } }: Props) {
       getPosts(`on_home=1`, lang),
     ]);
 
-  if (!posts) return <>Loading</>;
   return (
     <MainContextLayout trans={trans} lang={lang}>
       {/* slider */}
@@ -290,9 +290,11 @@ export default async function Home({ params: { lang } }: Props) {
             {categories.data.map((c: any) => (
               <li key={c.id}>
                 <Link href={`/${lang}/user?category_id=${c.id}`}>
-                  <img
+                  <Image
                     className='aspect-[3/2] w-full rounded-2xl object-cover'
                     src={c.image}
+                    width={100}
+                    height={100}
                     alt=''
                   />
                   <h3 className='mt-6 text-lg font-semibold leading-8 tracking-tight text-gray-900'>
@@ -469,7 +471,9 @@ export default async function Home({ params: { lang } }: Props) {
                 key={post.id}
                 className='flex flex-col items-start justify-between'>
                 <div className='relative w-full'>
-                  <img
+                  <Image
+                    width={100}
+                    height={100}
                     src={post.image}
                     alt=''
                     className='aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2]'

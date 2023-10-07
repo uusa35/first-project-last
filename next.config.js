@@ -3,11 +3,6 @@ const withSvgr = require("next-plugin-svgr");
 
 const nextConfig = withSvgr({
   reactStrictMode: false,
-  // i18n: {
-  //   locales: ["en", "ar"],
-  //   defaultLocale: "en",
-  //   localeDetection: true,
-  // },
   async rewrites() {
     return [
       {
@@ -33,8 +28,8 @@ const nextConfig = withSvgr({
       "loremflickr.com",
       "*.ar-expo.ru",
       "ar-expo-backend.test",
-      "*.ondigitalocean.app",
-      "*.ams3.digitaloceanspaces.com",
+      "hammerhead-app-fhpzt.ondigitalocean.app",
+      "hub-apps.ams3.cdn.digitaloceanspaces.com",
     ],
     minimumCacheTTL: 0,
     dangerouslyAllowSVG: true,

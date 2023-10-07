@@ -8,6 +8,7 @@ import { getUsers } from "@/utils/user";
 import { getSetting } from "@/utils/setting";
 import { map } from "lodash";
 import Link from "next/link";
+import Image from "next/image";
 
 type Props = {
   params: { lang: Locale["lang"] };
@@ -36,7 +37,14 @@ export default async function UserIndex({
                 <Link
                   key={i}
                   href={`/${lang}/user/${u.id}`}
-                  className='border-b p-3'>
+                  className='border-b p-3 flex flex-row items-center'>
+                  <Image
+                    alt={u.name}
+                    src={u.image}
+                    width={100}
+                    height={100}
+                    className='w-20 h-auto p-4'
+                  />
                   <span>{u.id} - </span>
                   <TextTrans ar={u.name} en={u.name} />
                 </Link>
