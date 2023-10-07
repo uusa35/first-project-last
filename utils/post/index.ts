@@ -1,8 +1,8 @@
 import { Locale } from '@/types/index';
 import { NextResponse } from 'next/server'
 
-export async function getUsers(search: string, lang: Locale['lang']) {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}user?${search}`, {
+export async function getPosts(search: string, lang: Locale['lang']) {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}post?${search}`, {
         cache: "no-store",
         headers: {
             'Accept-Language': lang
@@ -14,8 +14,8 @@ export async function getUsers(search: string, lang: Locale['lang']) {
     return res.json()
 }
 
-export async function getUser(id: string, lang: Locale['lang']) {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}user/${id}`, {
+export async function getPost(id: string, lang: Locale['lang']) {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}post/${id}`, {
         cache: "no-store",
         headers: {
             'Accept-Language': lang

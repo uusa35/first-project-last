@@ -1,6 +1,6 @@
 "use client";
 import SideMenu from "@/components/SideMenu";
-import type { Locale } from "@/i18n.config";
+import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
 import { imageUrl, logoBlured, suppressText } from "@/src/constants";
 import { useTranslation } from "react-i18next";
@@ -19,12 +19,16 @@ export default function HomeContent({
   categories,
   slides,
   setting,
+  memberships,
+  posts,
 }: {
-  users: any;
-  slides: any;
-  categories: any;
-  setting: any;
-  lang: Locale;
+  users?: any;
+  slides?: any;
+  categories?: any;
+  setting?: any;
+  memberships?: any;
+  posts?: any;
+  lang: Locale["lang"];
 }) {
   const { home, translation }: any = useContext(MainContext);
   const { method } = useAppSelector((state) => state.setting);
@@ -35,6 +39,8 @@ export default function HomeContent({
   console.log("categories", categories);
   console.log("slides", slides);
   console.log("setting", setting);
+  console.log("memberships", memberships);
+  console.log("posts", posts);
   return (
     <div className='container space-y-8 flex w-full flex-col justify-center items-center'>
       <div>
@@ -52,11 +58,12 @@ export default function HomeContent({
       {/* Dont remove any code below plz. leave (it's hidden already and wont affect ur work) */}
       <div className='w-full p-8  bg-orange-500 rounded-md'>
         <h1>From SSR : users</h1>
-        {map(users.data, (u, i) => (
-          <div key={i}>
-            <TextTrans ar={u.name} en={u.name} />
-          </div>
-        ))}
+        {users &&
+          map(users.data, (u, i) => (
+            <div key={i}>
+              <TextTrans ar={u.name} en={u.name} />
+            </div>
+          ))}
       </div>
 
       <HomeSection />

@@ -2,38 +2,36 @@ import { MainContextLayout } from "@/components/MainContentLayout";
 import TextTrans from "@/components/TextTrans";
 import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
-import { appLinks, convertSearchParamsToString } from "@/src/constants";
-import { getUsers } from "@/utils/user";
-import { getSetting } from "@/utils/setting";
 import { map } from "lodash";
 import Link from "next/link";
+import { getPosts } from "@/utils/post";
 
 type Props = {
   params: { lang: Locale["lang"] };
   searchParams: { [key: string]: string };
 };
-export default async function UserIndex({
+export default async function PostIndex({
   params: { lang },
   searchParams,
 }: Props) {
   const [{ trans }, users] = await Promise.all([
     getDictionary(lang),
-    getUsers(``, lang),
+    getPosts(``, lang),
   ]);
 
   return (
     <MainContextLayout trans={trans}>
       <div className='container py-24'>
         <h1 className='text-3xl font-bold'>
-          {trans.translation} : {trans.users}
+          {trans.translation} : {trans.posts}
         </h1>
         <div className='w-full p-8  bg-orange-500 rounded-md'>
-          <h1>From SSR : National Events</h1>
+          <h1>From SSR : posts</h1>
           {users &&
-            map(users.data, (u, i) => (
-              <Link key={i} href={`/${lang}/user/${u.id}`}>
-                <span>{u.id} - </span>
-                <TextTrans ar={u.name} en={u.name} />
+            map(users.data, (p, i) => (
+              <Link key={i} href={`/${lang}/post/${p.id}`}>
+                <span>{p.id} - </span>
+                <TextTrans ar={p.name} en={p.name} />
               </Link>
             ))}
         </div>
