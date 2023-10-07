@@ -45,7 +45,7 @@ export default function NavHeader({ lang, searchParams }: Props) {
     { name: trans.home, href: `/${lang}` },
     { name: trans.users, href: `/${lang}/user` },
     { name: trans.posts, href: `/${lang}/post` },
-    { name: trans.aboutus, href: "#" },
+    { name: trans.aboutus, href: "/" },
   ];
 
   // console.log("pathname", pathName);

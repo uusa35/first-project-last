@@ -15,10 +15,10 @@ export default async function About({
     <MainContextLayout trans={trans} lang={lang}>
       <div className='container py-24'>
         <h1 className='text-3xl font-bold'>
-          {trans.translation} : {trans.about.aboutus}
+          {trans.translation} : {trans.aboutus}
         </h1>
-        <h1>{setting.name_en}</h1>
-        <h1>{setting.name_ar}</h1>
+        <h1>{setting.name}</h1>
+        <h1>{setting.description}</h1>
       </div>
     </MainContextLayout>
   );
