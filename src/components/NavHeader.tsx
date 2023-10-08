@@ -45,7 +45,7 @@ export default function NavHeader({ lang, searchParams }: Props) {
     { name: trans.home, href: `/${lang}` },
     { name: trans.users, href: `/${lang}/user` },
     { name: trans.posts, href: `/${lang}/post` },
-    { name: trans.aboutus, href: "/" },
+    { name: trans.aboutus, href: "/aboutus" },
   ];
 
   // console.log("pathname", pathName);
@@ -57,7 +57,6 @@ export default function NavHeader({ lang, searchParams }: Props) {
   // console.log("searchParams ----->", convertSearchParamsToString(searchParams));
 
   // console.log("url", changePathName(lang, "ar", pathName));
-  console.log("trans", trans);
 
   return (
     <header className='top-0 z-50'>
