@@ -2,7 +2,7 @@
 import { filter, map, toString, kebabCase } from 'lodash';
 import { localeType } from '@/types/index';
 import { Locale } from '@/types/index';
-export const baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}`;
+export const baseUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}`;
 export const appVersion = `0.0.1`;
 export const apiUrl = `${baseUrl}/api/`;
 export const imageUrl = `https://loremflickr.com/`;

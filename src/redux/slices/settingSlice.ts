@@ -1,9 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { appSetting } from '@/types/index';
 
-const initialState: appSetting = {
-  method: 'delivery',
-  title: 'Ar Expo',
+const initialState: any = {
   openSideMenu: false
 };
 

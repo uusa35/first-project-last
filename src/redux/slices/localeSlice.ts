@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Locale } from '../../types';
+import { Locale } from '@/types/index';
 
 const initialState: Locale = {
   isRTL: false,

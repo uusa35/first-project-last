@@ -27,6 +27,7 @@ import {
   useSelectedLayoutSegments,
 } from "next/navigation";
 import { changePathName, convertSearchParamsToString } from "@/utils/helpers";
+import { useGetSettingQuery } from "@/redux/api";
 type Props = {
   lang: Locale;
   searchParams?: { [key: string]: string | string[] | undefined };
@@ -35,6 +36,7 @@ type Props = {
 export default function NavHeader({ lang, searchParams }: Props) {
   const trans: any = useContext(MainContext);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { data: setting, isSuccess } = useGetSettingQuery({});
   const params = useParams();
   const pathName = usePathname()!;
   const router = useRouter();
@@ -55,9 +57,9 @@ export default function NavHeader({ lang, searchParams }: Props) {
   // console.log("params", params);
   // console.log("searchParams", searchParams);
   // console.log("searchParams ----->", convertSearchParamsToString(searchParams));
-
   // console.log("url", changePathName(lang, "ar", pathName));
 
+  if (!isSuccess) return <div className='h-24'></div>;
   return (
     <header className='top-0 z-50'>
       <nav
@@ -66,11 +68,7 @@ export default function NavHeader({ lang, searchParams }: Props) {
         <div className='flex lg:flex-1'>
           <a href='#' className='-m-1.5 p-1.5'>
             <span className='sr-only'>Your Company</span>
-            <img
-              className='h-8 w-auto'
-              src='https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600'
-              alt=''
-            />
+            <img className='h-8 w-auto' src={setting.image} alt='' />
           </a>
         </div>
         <div className='flex lg:hidden'>

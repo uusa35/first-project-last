@@ -2,7 +2,8 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { HYDRATE } from 'next-redux-wrapper';
 import { apiUrl, isLocal } from '@/src/constants';
 import { RootState } from '@/redux/store';
-import { isNull } from 'lodash';
+import { isNull, isUndefined } from 'lodash';
+import { Setting, Locale } from '@/types/index';
 
 export const apiSlice = createApi({
   reducerPath: 'api',
@@ -13,14 +14,15 @@ export const apiSlice = createApi({
       { getState, type, endpoint, extra }: RootState
     ) => {
       const {
-        setting
+        setting,
+        locale
       } = getState() as RootState;
 
       headers.set(
         'Access-Control-Allow-Headers',
         'X-Requested-With,Accept,Authentication,Content-Type',
       );
-      // headers.set('lang', lang);
+      headers.set('Accept-Language', locale.lang);
       headers.set(
         'Access-Control-Allow-Methods',
         'GET,PUT,POST,DELETE,PATCH,OPTIONS',
@@ -45,5 +47,19 @@ export const apiSlice = createApi({
       return action.payload[reducerPath];
     }
   },
-  endpoints: (builder) => ({}),
+  endpoints: (builder) => ({
+    getSetting: builder.query<
+      Setting,
+      { lang?: Locale['lang'] | string | undefined; }
+    >({
+      query: ({ lang }) => ({
+        url: `setting`,
+        headers: {
+          ...(!isUndefined(lang) && lang && { 'Accept-Language': lang })
+        }
+      }),
+    }),
+  }),
 });
+
+export const { useGetSettingQuery } = apiSlice;
