@@ -67,6 +67,15 @@ export async function generateMetadata({ params }: Props) {
         "ru-RU": "/ru",
       },
     },
+    icons: {
+      icon: setting.image,
+      shortcut: setting.image,
+      apple: setting.image,
+      other: {
+        rel: "apple-touch-icon-precomposed",
+        url: setting.image,
+      },
+    },
   };
 }
 // const trans = async () =>
