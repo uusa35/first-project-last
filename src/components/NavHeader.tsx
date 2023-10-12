@@ -3,20 +3,9 @@ import Link from "next/link";
 import type { Locale } from "@/i18n.config";
 import { getDictionary } from "@/lib/dictionary";
 import { appLinks } from "../constants";
-import { Fragment, useCallback, useContext, useState } from "react";
-import { Dialog, Popover, Transition } from "@headlessui/react";
-import {
-  Bars3Icon,
-  ChartPieIcon,
-  ChevronDownIcon,
-  CursorArrowRaysIcon,
-  FingerPrintIcon,
-  PhoneIcon,
-  PlayCircleIcon,
-  RectangleGroupIcon,
-  SquaresPlusIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
+import { useContext, useState } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { MainContext } from "./MainContentLayout";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";

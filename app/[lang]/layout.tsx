@@ -76,10 +76,17 @@ export async function generateMetadata({ params }: Props) {
         url: setting.image,
       },
     },
+    twitter: {
+      card: setting.name,
+      title: setting.name,
+      description: setting.description,
+      // siteId: "1467726470533754880",
+      creator: "@nextjs",
+      // creatorId: "1467726470533754880",
+      images: [setting.image],
+    },
   };
 }
-// const trans = async () =>
-//   await getDictionary(params.lang).then((r: any) => r.data);
 
 export default function RootLayout({
   children,
@@ -88,7 +95,6 @@ export default function RootLayout({
   children: React.ReactNode;
   params: { lang: Locale["lang"]; setting: any };
 }) {
-  console.log("setting from root", params.setting);
   return (
     <html
       className='min-h-screen max-w-8xl mx-auto '

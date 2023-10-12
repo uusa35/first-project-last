@@ -204,7 +204,7 @@ export default async function Home({ params: { lang } }: Props) {
     await Promise.all([
       getDictionary(lang),
       getSlides(`on_home=1`, lang),
-      getCategories(`on_home=true`, lang),
+      getCategories(`on_home=1`, lang),
       getSetting(lang),
       getMemberships(`zones[0]=A&zones[1]=B`, lang),
       getPosts(`on_home=1`, lang),
@@ -214,12 +214,41 @@ export default async function Home({ params: { lang } }: Props) {
     <MainContextLayout trans={trans} lang={lang}>
       {/* slider */}
       <MainSlider slides={slides} />
+      {/* search */}
+      <div className='bg-white sm:py-8'>
+        <div className='mx-auto max-w-7xl'>
+          <div className='relative isolate overflow-hidden  px-6 py-14 sm:rounded-3xl sm:px-24 xl:py-32'>
+            <h2 className='mx-auto max-w-2xl text-center text-3xl font-bold tracking-tight text-black sm:text-4xl'>
+              Get notified when we’re launching.
+            </h2>
 
+            <form className='mx-auto mt-10 flex max-w-2xl gap-x-4'>
+              <label htmlFor='email-address' className='sr-only'>
+                Email address
+              </label>
+              <input
+                id='email-address'
+                name='email'
+                type='email'
+                autoComplete='email'
+                required
+                className='min-w-0 flex-auto rounded-md border-0 px-3.5 py-2 h-14 text-black bg-gray-100 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-white sm:text-sm sm:leading-6'
+                placeholder='Enter your email'
+              />
+              <button
+                type='submit'
+                className='flex-none rounded-md bg-green-900 text-white px-3.5 py-2.5 text-sm font-semibold  shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'>
+                Search Now
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
       {/* categories */}
       <div className='py-12 sm:py-10'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
           <div className='mx-auto max-w-2xl lg:mx-0'>
-            <h2 className='text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl capitalize'>
+            <h2 className='text-3xl text-center font-bold tracking-tight text-gray-900 sm:text-4xl capitalize'>
               {trans.categories}
             </h2>
             <p className='mt-6 text-lg leading-8 text-gray-600'>
@@ -236,7 +265,7 @@ export default async function Home({ params: { lang } }: Props) {
                 <Link href={`/${lang}/user?category_id=${c.id}`}>
                   <Image
                     className='aspect-[3/2] w-full rounded-2xl object-cover'
-                    src={c.image}
+                    src={c.imageLarge}
                     width={100}
                     height={100}
                     alt=''
@@ -256,8 +285,8 @@ export default async function Home({ params: { lang } }: Props) {
 
       {/* subscriptions */}
 
-      <div className='relative bg-gray-900'>
-        <div className='relative h-80 overflow-hidden bg-indigo-600 md:absolute md:left-0 md:h-full md:w-1/3 lg:w-1/2'>
+      <div className='relative bg-expo-green'>
+        <div className='relative h-80 overflow-hidden bg-expo-green md:absolute md:left-0 md:h-full md:w-1/3 lg:w-1/2'>
           <img
             className='h-full w-full object-cover'
             src='https://images.unsplash.com/photo-1525130413817-d45c1d127c42?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1920&q=60&blend=6366F1&sat=-100&blend-mode=multiply'
@@ -288,13 +317,13 @@ export default async function Home({ params: { lang } }: Props) {
         </div>
         <div className='relative mx-auto max-w-7xl py-24 sm:py-32 lg:px-8 lg:py-40'>
           <div className='pl-6 pr-6 md:ml-auto md:w-2/3 md:pl-16 lg:w-1/2 lg:pl-24 lg:pr-0 xl:pl-32'>
-            <h2 className='text-base font-semibold leading-7 text-indigo-400'>
+            <h2 className='text-base font-semibold leading-7 text-green-400'>
               Award winning support
             </h2>
             <p className='mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl'>
               We’re here to help
             </p>
-            <p className='mt-6 text-base leading-7 text-gray-300'>
+            <p className='mt-6 text-base leading-7 text-gray-800'>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et,
               egestas tempus tellus etiam sed. Quam a scelerisque amet
               ullamcorper eu enim et fermentum, augue. Aliquet amet volutpat
@@ -303,7 +332,7 @@ export default async function Home({ params: { lang } }: Props) {
             <div className='mt-8'>
               <a
                 href='#'
-                className='inline-flex rounded-md bg-white/10 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'>
+                className='inline-flex rounded-md bg-green-800 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'>
                 Visit the help center
               </a>
             </div>
@@ -342,7 +371,7 @@ export default async function Home({ params: { lang } }: Props) {
       {/* newsletter */}
       <div className='bg-white  sm:py-14'>
         <div className='mx-auto max-w-7xl sm:px-6 lg:px-8'>
-          <div className='relative isolate overflow-hidden bg-gray-900 px-6 py-24 shadow-2xl sm:rounded-3xl sm:px-24 xl:py-32'>
+          <div className='relative isolate overflow-hidden bg-green-900 px-6 py-24 shadow-2xl sm:rounded-3xl sm:px-24 xl:py-32'>
             <h2 className='mx-auto max-w-2xl text-center text-3xl font-bold tracking-tight text-white sm:text-4xl'>
               Get notified when we’re launching.
             </h2>
@@ -456,7 +485,7 @@ export default async function Home({ params: { lang } }: Props) {
       <div className='expo-green sm:py-32'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
           <div className='mx-auto max-w-4xl text-center'>
-            <h2 className='text-base font-semibold leading-7 text-indigo-600'>
+            <h2 className='text-base font-semibold leading-7 text-green-600'>
               Pricing
             </h2>
             <p className='mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl'>
@@ -482,13 +511,13 @@ export default async function Home({ params: { lang } }: Props) {
                     <h3
                       id={tier.id}
                       className={classNames(
-                        tier.mostPopular ? "text-indigo-600" : "text-gray-900",
+                        tier.mostPopular ? "text-green-600" : "text-gray-900",
                         "text-lg font-semibold leading-8"
                       )}>
                       {tier.name}
                     </h3>
                     {tier.mostPopular ? (
-                      <p className='rounded-full bg-indigo-600/10 px-2.5 py-1 text-xs font-semibold leading-5 text-indigo-600'>
+                      <p className='rounded-full bg-green-600/10 px-2.5 py-1 text-xs font-semibold leading-5 text-green-600'>
                         Most popular
                       </p>
                     ) : null}
@@ -510,7 +539,7 @@ export default async function Home({ params: { lang } }: Props) {
                     {tier.features.map((feature) => (
                       <li key={feature} className='flex gap-x-3'>
                         <CheckIcon
-                          className='h-6 w-5 flex-none text-indigo-600'
+                          className='h-6 w-5 flex-none text-green-600'
                           aria-hidden='true'
                         />
                         {feature}
@@ -523,9 +552,9 @@ export default async function Home({ params: { lang } }: Props) {
                   aria-describedby={tier.id}
                   className={classNames(
                     tier.mostPopular
-                      ? "bg-indigo-600 text-white shadow-sm hover:bg-indigo-500"
-                      : "text-indigo-600 ring-1 ring-inset ring-indigo-200 hover:ring-indigo-300",
-                    "mt-8 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                      ? "bg-green-600 text-white shadow-sm hover:bg-green-500"
+                      : "text-green-600 ring-1 ring-inset ring-green-200 hover:ring-green-300",
+                    "mt-8 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
                   )}>
                   Buy plan
                 </a>
@@ -585,7 +614,7 @@ export default async function Home({ params: { lang } }: Props) {
       <div className='expo-green py-24 sm:py-32'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
           <div className='mx-auto max-w-4xl text-center'>
-            <h2 className='text-base font-semibold leading-7 text-indigo-600'>
+            <h2 className='text-base font-semibold leading-7 text-green-600'>
               Pricing
             </h2>
             <p className='mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl'>
@@ -644,7 +673,7 @@ export default async function Home({ params: { lang } }: Props) {
                   className={classNames(
                     tier.featured
                       ? "bg-white/10 text-white hover:bg-white/20 focus-visible:outline-white"
-                      : "bg-indigo-600 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline-indigo-600",
+                      : "bg-green-600 text-white shadow-sm hover:bg-green-500 focus-visible:outline-green-600",
                     "mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                   )}>
                   {tier.cta}
@@ -659,7 +688,7 @@ export default async function Home({ params: { lang } }: Props) {
                     <li key={feature} className='flex gap-x-3'>
                       <CheckIcon
                         className={classNames(
-                          tier.featured ? "text-white" : "text-indigo-600",
+                          tier.featured ? "text-white" : "text-green-600",
                           "h-6 w-5 flex-none"
                         )}
                         aria-hidden='true'
