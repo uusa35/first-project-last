@@ -1,21 +1,12 @@
 import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
-import {
-  MainContextLayout,
-  Carousel,
-  Typography,
-} from "@/components/MainContentLayout";
-import { getUsers } from "@/utils/user";
-import ComingSoon from "@/components/ComingSoon";
+import { MainContextLayout } from "@/components/MainContentLayout";
 import { getSlides } from "@/utils/slide";
 import { getCategories } from "@/utils/category";
 import { getSetting } from "@/utils/setting";
-import { Metadata } from "next";
 import { CheckIcon } from "@heroicons/react/20/solid";
-import NavHeader from "@/components/NavHeader";
 import { getMemberships } from "@/utils/membership";
 import { getPosts } from "@/utils/post";
-import { appLinks } from "@/src/constants";
 import Link from "next/link";
 import MainSlider from "@/components/MainSlider";
 import Image from "next/image";
@@ -217,8 +208,6 @@ export default async function Home({ params: { lang } }: Props) {
     getMemberships(`sort=sponsorship&on_home=true`, lang),
     getPosts(`on_home=true`, lang),
   ]);
-
-  console.log("posts", posts);
 
   return (
     <MainContextLayout trans={trans} lang={lang}>
