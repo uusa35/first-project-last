@@ -245,9 +245,9 @@ export default async function Home({ params: { lang } }: Props) {
         </div>
       </div>
       {/* categories */}
-      <div className='py-12 sm:py-10'>
+      <div className='bg-white py-10 sm:py-12'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
-          <div className='mx-auto max-w-2xl lg:mx-0'>
+          <div className='mx-auto max-w-2xl lg:max-w-none'>
             <h2 className='text-3xl text-center font-bold tracking-tight text-gray-900 sm:text-4xl capitalize'>
               {trans.categories}
             </h2>
@@ -259,7 +259,7 @@ export default async function Home({ params: { lang } }: Props) {
           </div>
           <ul
             role='list'
-            className='mx-auto mt-20 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-5'>
+            className='mx-auto mt-20 grid  grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-5'>
             {categories.data.map((c: any) => (
               <li key={c.id}>
                 <Link href={`/${lang}/user?category_id=${c.id}`}>
