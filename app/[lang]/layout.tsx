@@ -6,11 +6,6 @@ import Providers from "@/src/redux/provider";
 import MainLayout from "@/src/components/layouts/MainLayout";
 import { getSetting } from "@/utils/setting";
 
-// export const metadata: Metadata = {
-//   title: "Ar Expo",
-//   description: "Ar Expo Group",
-// };
-
 type Props = {
   params: { lang: Locale["lang"] };
 };

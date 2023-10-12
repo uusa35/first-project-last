@@ -200,15 +200,25 @@ type Props = {
 };
 
 export default async function Home({ params: { lang } }: Props) {
-  const [{ trans }, slides, categories, setting, memberships, posts] =
-    await Promise.all([
-      getDictionary(lang),
-      getSlides(`on_home=1`, lang),
-      getCategories(`on_home=1`, lang),
-      getSetting(lang),
-      getMemberships(`zones[0]=A&zones[1]=B`, lang),
-      getPosts(`on_home=1`, lang),
-    ]);
+  const [
+    { trans },
+    slides,
+    categories,
+    setting,
+    subscriptions,
+    sponsorships,
+    posts,
+  ] = await Promise.all([
+    getDictionary(lang),
+    getSlides(`on_home=true`, lang),
+    getCategories(`on_home=true`, lang),
+    getSetting(lang),
+    getMemberships(`sort=subscription&on_home=true`, lang),
+    getMemberships(`sort=sponsorship&on_home=true`, lang),
+    getPosts(`on_home=true`, lang),
+  ]);
+
+  console.log("posts", posts);
 
   return (
     <MainContextLayout trans={trans} lang={lang}>
@@ -427,7 +437,6 @@ export default async function Home({ params: { lang } }: Props) {
       </div>
 
       {/* posts */}
-
       <div className='bg-white py-14'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
           <div className='mx-auto max-w-2xl text-center'>
