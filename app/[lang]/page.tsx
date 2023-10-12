@@ -201,12 +201,12 @@ export default async function Home({ params: { lang } }: Props) {
     posts,
   ] = await Promise.all([
     getDictionary(lang),
-    getSlides(`on_home=true`, lang),
-    getCategories(`on_home=true`, lang),
+    getSlides(`on_home=1`, lang),
+    getCategories(`on_home=1`, lang),
     getSetting(lang),
-    getMemberships(`sort=subscription&on_home=true`, lang),
-    getMemberships(`sort=sponsorship&on_home=true`, lang),
-    getPosts(`on_home=true`, lang),
+    getMemberships(`sort=subscription&on_home=1`, lang),
+    getMemberships(`sort=sponsorship&on_home=1`, lang),
+    getPosts(`on_home=1`, lang),
   ]);
 
   return (
