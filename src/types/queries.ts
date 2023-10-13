@@ -25,7 +25,21 @@ export type Category = {
 export type AppQueryResult<T> = {
     data: T;
     links: any;
-    meta : any
+    meta: any
 };
+
+export type Slide = {
+    id: string;
+    name: string;
+    description: string;
+    active: boolean;
+    order: string;
+    image: string;
+    file?: string;
+    url?: string;
+    on_home: boolean;
+    user_id?: string;
+    thumb: string;
+}
 
 

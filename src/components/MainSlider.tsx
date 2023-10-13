@@ -2,8 +2,9 @@ import { Carousel, Typography, Button } from "@/components/MainContentLayout";
 import { tajawal } from "@/utils/helpers";
 import Image from "next/image";
 import { Locale } from "@/types/index";
+import { Slide } from "@/types/queries";
 type Props = {
-  slides: any;
+  slides: Slide[];
   lang: Locale["lang"];
 };
 export default async function ({ slides, lang }: Props) {
@@ -11,7 +12,7 @@ export default async function ({ slides, lang }: Props) {
     <Carousel
       dir={lang === "ar" ? "rtl" : "ltr"}
       className={`border-4 max-h-[500px] xl:max-h-[750px]  overflow-hidden `}>
-      {slides.map((s: any, i: number) => (
+      {slides.map((s: Slide, i: number) => (
         <div className='relative h-full w-full' key={i}>
           <Image
             width='1000'
