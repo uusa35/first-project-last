@@ -215,7 +215,7 @@ export default async function Home({ params: { lang } }: Props) {
   return (
     <MainContextLayout trans={trans} lang={lang}>
       {/* slider */}
-      <MainSlider slides={slides} />
+      <MainSlider slides={slides} lang={lang} />
       {/* search */}
       <div className='bg-white sm:py-8'>
         <div className='mx-auto max-w-7xl'>
