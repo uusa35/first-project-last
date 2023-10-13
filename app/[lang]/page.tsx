@@ -10,6 +10,7 @@ import { getPosts } from "@/utils/post";
 import Link from "next/link";
 import MainSlider from "@/components/MainSlider";
 import Image from "next/image";
+import { getImages } from "@/utils/image";
 
 const tiers = [
   {
@@ -199,6 +200,7 @@ export default async function Home({ params: { lang } }: Props) {
     subscriptions,
     sponsorships,
     posts,
+    images,
   ] = await Promise.all([
     getDictionary(lang),
     getSlides(`on_home=1`, lang),
@@ -207,6 +209,7 @@ export default async function Home({ params: { lang } }: Props) {
     getMemberships(`sort=subscription&on_home=1`, lang),
     getMemberships(`sort=sponsorship&on_home=1`, lang),
     getPosts(`on_home=1`, lang),
+    getImages(`on_home=1`, lang),
   ]);
 
   return (
@@ -701,8 +704,7 @@ export default async function Home({ params: { lang } }: Props) {
         </div>
       </div>
 
-      {/* Gallery & downloads */}
-      {/* categories */}
+      {/* OnHome Images with Url if exist */}
       <div className='py-12 sm:py-10'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
           <div className='mx-auto max-w-2xl lg:mx-0'>
