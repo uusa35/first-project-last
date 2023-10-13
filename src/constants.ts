@@ -1,5 +1,5 @@
 'use client';
-import { filter, map, toString, kebabCase } from 'lodash';
+import { kebabCase } from 'lodash';
 import { localeType } from '@/types/index';
 import { Locale } from '@/types/index';
 export const baseUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}`;

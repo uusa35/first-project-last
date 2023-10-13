@@ -3,6 +3,7 @@ import { tajawal } from "@/utils/helpers";
 import Image from "next/image";
 import { Locale } from "@/types/index";
 import { Slide } from "@/types/queries";
+
 type Props = {
   slides: Slide[];
   lang: Locale["lang"];
@@ -18,7 +19,7 @@ export default async function ({ slides, lang }: Props) {
             width='1000'
             height='500'
             src={s.image}
-            alt='image 2'
+            alt={`${process.env.NEXT_PUBLIC_BASE_URL}`}
             className='h-full w-full object-contain'
           />
           <div className='absolute -bottom-20  lg:-bottom-40 lg:rtl:right-20 lg:ltr:left-20  grid h-full w-full items-center'>
