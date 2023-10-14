@@ -704,7 +704,7 @@ export default async function Home({ params: { lang } }: Props) {
         </div>
       </div>
 
-      {/* OnHome Images with Url if exist */}
+      {/* OnHome Images with Url if exist (this will be a slider) */}
       <div className='py-12 sm:py-10'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
           <div className='mx-auto max-w-2xl lg:mx-0'>

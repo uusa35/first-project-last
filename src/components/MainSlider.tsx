@@ -12,7 +12,7 @@ export default async function ({ slides, lang }: Props) {
   return (
     <Carousel
       dir={lang === "ar" ? "rtl" : "ltr"}
-      className={`border-4 max-h-[500px] xl:max-h-[750px]  overflow-hidden `}>
+      className={`border-4 max-h-[500px] xl:max-h-[750px]  overflow-hidden`}>
       {slides.map((s: Slide, i: number) => (
         <div className='relative h-full w-full' key={i}>
           <Image
