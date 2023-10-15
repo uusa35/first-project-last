@@ -11,16 +11,17 @@ type Props = {
 export default async function ({ slides, lang }: Props) {
   return (
     <Carousel
+      loop
       dir={lang === "ar" ? "rtl" : "ltr"}
-      className={`border-4 max-h-[500px] xl:max-h-[750px]  overflow-hidden`}>
+      className={`max-h-[500px] xl:max-h-[750px]  overflow-hidden `}>
       {slides.map((s: Slide, i: number) => (
-        <div className='relative h-full w-full' key={i}>
+        <div className='relative ' key={i} dir={lang === "ar" ? "rtl" : "ltr"}>
           <Image
             width='1000'
             height='500'
             src={s.image}
             alt={`${process.env.NEXT_PUBLIC_BASE_URL}`}
-            className='h-full w-full object-contain'
+            className='h-full w-full object-cover'
           />
           <div className='absolute -bottom-20  lg:-bottom-40 lg:rtl:right-20 lg:ltr:left-20  grid h-full w-full items-center'>
             <div className='w-3/4 ps-12 md:w-2/4 md:ps-20 lg:ps-32'>
