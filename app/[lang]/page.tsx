@@ -217,11 +217,11 @@ export default async function Home({ params: { lang } }: Props) {
       {/* slider */}
       <MainSlider slides={slides} lang={lang} />
       {/* search */}
-      <div className='bg-white sm:py-8'>
+      <div className='bg-white py-12 sm:py-12'>
         <div className='mx-auto max-w-7xl'>
           <div className='relative isolate overflow-hidden  px-6 py-14 sm:rounded-3xl sm:px-24 xl:py-32'>
             <h2 className='mx-auto max-w-2xl text-center text-3xl font-bold tracking-tight text-black sm:text-4xl'>
-              Get notified when we’re launching.
+              {trans.search}
             </h2>
 
             <form className='mx-auto mt-10 flex max-w-2xl gap-x-4'>
@@ -247,7 +247,7 @@ export default async function Home({ params: { lang } }: Props) {
         </div>
       </div>
       {/* categories */}
-      <div className='bg-white py-10 sm:py-12'>
+      <div className='bg-white py-12 sm:py-12'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
           <div className='mx-auto max-w-2xl lg:max-w-none'>
             <h2 className='text-3xl text-center font-bold tracking-tight text-gray-900 sm:text-4xl capitalize'>
@@ -261,21 +261,21 @@ export default async function Home({ params: { lang } }: Props) {
           </div>
           <ul
             role='list'
-            className='mx-auto mt-20 grid  grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-5'>
+            className='mx-auto mt-10 grid  grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-5'>
             {categories.data.map((c: any) => (
               <li key={c.id}>
                 <Link href={`/${lang}/user?category_id=${c.id}`}>
                   <Image
-                    className='aspect-[3/2] w-full rounded-2xl object-cover'
+                    className='aspect-[3/2] w-full rounded-2xl object-cover hover:scale-105 duration-200 shadow-lg'
                     src={c.imageLarge}
                     width={100}
                     height={100}
                     alt=''
                   />
-                  <h3 className='mt-6 text-lg font-semibold leading-8 tracking-tight text-gray-900'>
+                  <h3 className='mt-6 text-lg text-center font-semibold leading-8 tracking-tight text-gray-900'>
                     {c.name}
                   </h3>
-                  <p className='text-base leading-7 text-gray-600'>
+                  <p className='text-base leading-7 text-gray-600 hidden'>
                     {c.caption}
                   </p>
                 </Link>
@@ -320,7 +320,7 @@ export default async function Home({ params: { lang } }: Props) {
         <div className='relative mx-auto max-w-7xl py-24 sm:py-32 lg:px-8 lg:py-40'>
           <div className='pl-6 pr-6 md:ml-auto md:w-2/3 md:pl-16 lg:w-1/2 lg:pl-24 lg:pr-0 xl:pl-32'>
             <h2 className='text-base font-semibold leading-7 text-green-400'>
-              Award winning support
+              {trans.subscriptions}
             </h2>
             <p className='mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl'>
               We’re here to help
@@ -343,20 +343,12 @@ export default async function Home({ params: { lang } }: Props) {
       </div>
 
       {/*  figures  */}
-      <div className='bg-white py-24 sm:py-32'>
+      <div className='bg-white py-12 sm:py-12'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
           <div className='mx-auto max-w-2xl lg:max-w-none'>
-            <div className='text-center'>
-              <h2 className='text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl'>
-                Trusted by creators worldwide
-              </h2>
-              <p className='mt-4 text-lg leading-8 text-gray-600'>
-                Lorem ipsum dolor sit amet consect adipisicing possimus.
-              </p>
-            </div>
             <dl className='mt-16 grid grid-cols-1 gap-0.5 overflow-hidden rounded-2xl text-center sm:grid-cols-2 lg:grid-cols-4'>
               {stats.map((stat) => (
-                <div key={stat.id} className='flex flex-col bg-gray-400/5 p-8'>
+                <div key={stat.id} className='flex flex-col bg-expo-green p-8'>
                   <dt className='text-sm font-semibold leading-6 text-gray-600'>
                     {stat.name}
                   </dt>
@@ -371,7 +363,7 @@ export default async function Home({ params: { lang } }: Props) {
       </div>
 
       {/* newsletter */}
-      <div className='bg-white  sm:py-14'>
+      <div className='bg-white py-12 sm:py-12'>
         <div className='mx-auto max-w-7xl sm:px-6 lg:px-8'>
           <div className='relative isolate overflow-hidden bg-green-900 px-6 py-24 shadow-2xl sm:rounded-3xl sm:px-24 xl:py-32'>
             <h2 className='mx-auto max-w-2xl text-center text-3xl font-bold tracking-tight text-white sm:text-4xl'>
@@ -433,15 +425,16 @@ export default async function Home({ params: { lang } }: Props) {
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
           <div className='mx-auto max-w-2xl text-center'>
             <h2 className='text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl'>
-              From the blog
+              {trans.news}
             </h2>
             <p className='mt-2 text-lg leading-8 text-gray-600'>
               Learn how to grow your business with our expert advice.
             </p>
           </div>
-          <div className='mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3'>
+          <div className='mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-3'>
             {posts.data.map((post: any) => (
-              <article
+              <Link
+                href={`/post/${post.id}`}
                 key={post.id}
                 className='flex flex-col items-start justify-between'>
                 <div className='relative w-full'>
@@ -461,36 +454,36 @@ export default async function Home({ params: { lang } }: Props) {
                   </time>
                   <Link
                     href={`/post/${post.id}`}
-                    className='relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100'>
+                    className='hidden relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100'>
                     {post.name}
                   </Link>
                 </div>
                 <div className='group relative'>
-                  <h3 className='mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600'>
+                  <h3 className=' text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600'>
                     <Link href={`/post/${post.id}`}>
                       <span className='absolute inset-0' />
                       {post.name}
                     </Link>
                   </h3>
-                  <p className='mt-5 line-clamp-3 text-sm leading-6 text-gray-600'>
+                  <p className='mt-2 line-clamp-3 text-sm leading-6 text-gray-600'>
                     {post.caption}
                   </p>
                 </div>
-              </article>
+              </Link>
             ))}
           </div>
         </div>
       </div>
 
       {/* subscription prices */}
-      <div className='expo-green sm:py-32'>
+      <div className='expo-green py-12 sm:py-12'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
           <div className='mx-auto max-w-4xl text-center'>
             <h2 className='text-base font-semibold leading-7 text-green-600'>
               Pricing
             </h2>
             <p className='mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl'>
-              Pricing plans for teams of&nbsp;all&nbsp;sizes
+              {trans.subscriptions}
             </p>
           </div>
           <p className='mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-600'>
@@ -566,10 +559,10 @@ export default async function Home({ params: { lang } }: Props) {
       </div>
 
       {/* sponsors logos */}
-      <div className='bg-white py-24 sm:py-32'>
+      <div className='bg-white py-12 sm:py-12'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
           <h2 className='text-center text-lg font-semibold leading-8 text-gray-900'>
-            Trusted by the world’s most innovative teams
+            {trans.sponsors}
           </h2>
           <div className='mx-auto mt-10 grid max-w-lg grid-cols-4 items-center gap-x-8 gap-y-10 sm:max-w-xl sm:grid-cols-6 sm:gap-x-10 lg:mx-0 lg:max-w-none lg:grid-cols-5'>
             <img
@@ -612,14 +605,14 @@ export default async function Home({ params: { lang } }: Props) {
       </div>
 
       {/* sponsorship prices */}
-      <div className='expo-green py-24 sm:py-32'>
+      <div className='expo-green py-12 sm:py-12'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
           <div className='mx-auto max-w-4xl text-center'>
             <h2 className='text-base font-semibold leading-7 text-green-600'>
-              Pricing
+              {trans.sponsors}
             </h2>
             <p className='mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl'>
-              Pricing plans for teams of all sizes
+              {trans.sponsorships}
             </p>
           </div>
           <p className='mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-600'>
@@ -707,9 +700,9 @@ export default async function Home({ params: { lang } }: Props) {
       {/* OnHome Images with Url if exist (this will be a slider) */}
       <div className='py-12 sm:py-10'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
-          <div className='mx-auto max-w-2xl lg:mx-0'>
-            <h2 className='text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl'>
-              {trans.categories}
+          <div className='mx-auto  lg:mx-0'>
+            <h2 className='text-center text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl'>
+              {trans.gallery}
             </h2>
             <p className='mt-6 text-lg leading-8 text-gray-600'>
               We’re a dynamic group of individuals who are passionate about what
@@ -719,7 +712,7 @@ export default async function Home({ params: { lang } }: Props) {
           </div>
           <ul
             role='list'
-            className='mx-auto mt-20 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3'>
+            className='mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3'>
             {people.slice(0, 3).map((person) => (
               <li key={person.name}>
                 <img
@@ -741,9 +734,9 @@ export default async function Home({ params: { lang } }: Props) {
 
       {/* footer */}
       <footer className='bg-white'>
-        <div className='mx-auto max-w-7xl overflow-hidden px-6 py-20 sm:py-24 lg:px-8'>
+        <div className='mx-auto max-w-7xl overflow-hidden px-6 py-12 sm:py-12 lg:px-8'>
           <nav
-            className='-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12'
+            className='-mb-6 columns-2 sm:flex sm:justify-center sm:gap-x-12'
             aria-label='Footer'>
             {navigation.main.map((item) => (
               <div key={item.name} className='pb-6'>
@@ -755,7 +748,7 @@ export default async function Home({ params: { lang } }: Props) {
               </div>
             ))}
           </nav>
-          <div className='mt-10 flex justify-center space-x-10'>
+          <div className='mt-10 flex justify-center gap-x-10'>
             {navigation.social.map((item) => (
               <a
                 key={item.name}

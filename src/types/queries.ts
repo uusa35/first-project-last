@@ -42,4 +42,15 @@ export type Slide = {
     thumb: string;
 }
 
+export type Setting = {
+    id: number;
+    name: string;
+    description: string;
+    aboutus: string;
+    services: string;
+    address: string;
+    country: string;
+    [key: string]: any;
+}
+
 

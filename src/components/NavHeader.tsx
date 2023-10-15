@@ -1,8 +1,5 @@
-"use client";
 import Link from "next/link";
 import type { Locale } from "@/i18n.config";
-import { getDictionary } from "@/lib/dictionary";
-import { appLinks } from "../constants";
 import { useContext, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
@@ -17,6 +14,7 @@ import {
 } from "next/navigation";
 import { changePathName, convertSearchParamsToString } from "@/utils/helpers";
 import { useGetSettingQuery } from "@/redux/api";
+import AppLogo from "./AppLogo";
 type Props = {
   lang: Locale;
   searchParams?: { [key: string]: string | string[] | undefined };
@@ -25,7 +23,6 @@ type Props = {
 export default function NavHeader({ lang, searchParams }: Props) {
   const trans: any = useContext(MainContext);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { data: setting, isSuccess } = useGetSettingQuery({});
   const params = useParams();
   const pathName = usePathname()!;
   const router = useRouter();
@@ -48,17 +45,13 @@ export default function NavHeader({ lang, searchParams }: Props) {
   // console.log("searchParams ----->", convertSearchParamsToString(searchParams));
   // console.log("url", changePathName(lang, "ar", pathName));
 
-  if (!isSuccess) return <div className='h-24'></div>;
   return (
     <header className='top-0 z-50'>
       <nav
         className='flex items-center justify-between p-6 lg:px-8'
         aria-label='Global'>
         <div className='flex lg:flex-1'>
-          <a href='#' className='-m-1.5 p-1.5'>
-            <span className='sr-only'>Your Company</span>
-            <img className='h-8 w-auto' src={setting.image} alt='' />
-          </a>
+          <AppLogo />
         </div>
         <div className='flex lg:hidden'>
           <button

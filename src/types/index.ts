@@ -7,16 +7,7 @@ export interface Locale {
     otherLang: 'ar' | 'en';
 }
 
-export type Setting = {
-    id: number;
-    name: string;
-    description: string;
-    aboutus: string;
-    services: string;
-    address: string;
-    country: string;
-    [key: string]: any;
-}
+
 
 export type toastMessage = {
     content: string;

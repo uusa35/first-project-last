@@ -13,6 +13,12 @@
     "ar_expo_ru": "Arabic Russian Expition",
     "posts": "posts",
     "users": "users",
-    "categories": "categories"
+    "categories": "categories",
+    "search": "search",
+    "subscriptions": "subscriptions",
+    "news": "news",
+    "sponsors": "sponsors",
+    "sponsorships": "sponsorships",
+    "gallery": "gallery"
   }
 }
