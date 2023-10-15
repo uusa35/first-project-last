@@ -11,6 +11,7 @@ import Link from "next/link";
 import MainSlider from "@/components/MainSlider";
 import Image from "next/image";
 import { getImages } from "@/utils/image";
+import { getUsers } from "@/utils/user";
 
 const tiers = [
   {
@@ -209,6 +210,7 @@ export default async function Home({ params: { lang } }: Props) {
     getMemberships(`sort=subscription&on_home=1`, lang),
     getMemberships(`sort=sponsorship&on_home=1`, lang),
     getPosts(`on_home=1`, lang),
+    getUsers(`membership=sponsorship`, lang),
     getImages(`on_home=1`, lang),
   ]);
 
