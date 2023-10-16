@@ -44,33 +44,14 @@ export default function NavHeader({
   // console.log("searchParams ----->", convertSearchParamsToString(searchParams));
   // console.log("url", changePathName(lang, "ar", pathName));
   return (
-    <header className='top-0 z-50 mx-auto max-w-7xl'>
+    <header className='top-0 z-50 mx-auto max-w-7xl py-4 px-2'>
       <nav
-        className='flex items-center justify-between p-6 lg:px-8 capitalize'
+        className='flex items-center justify-between  capitalize'
         aria-label='Global'>
-        <div className='flex lg:flex-1'>
+        <div className=' lg:hidden lg:flex-1'>
           <AppLogo />
         </div>
-        <div className='flex lg:hidden'>
-          <button
-            type='button'
-            className='-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700'
-            onClick={() => setMobileMenuOpen(true)}>
-            <span className='sr-only'>Open main menu</span>
-            <Bars3Icon className='h-6 w-6' aria-hidden='true' />
-          </button>
-        </div>
-        <div className='hidden lg:flex lg:gap-x-8'>
-          {mainPages.map((item, i) => (
-            <Link
-              key={i}
-              href={item.href}
-              className='text-sm font-semibold leading-6 text-gray-900'>
-              {item.name}
-            </Link>
-          ))}
-        </div>
-        <div className='hidden lg:flex lg:flex-1 lg:justify-end gap-x-4'>
+        <div className='hidden lg:flex lg:flex-1 xl:hidden gap-x-4'>
           <Link
             href={`${changePathName(
               lang,
@@ -98,11 +79,20 @@ export default function NavHeader({
             className='text-sm font-semibold leading-6 text-gray-900'>
             en
           </Link>
-          <Link
-            href={`/${lang}/login`}
-            className='text-sm font-semibold leading-6 text-gray-900'>
-            {trans.login} <span aria-hidden='true'>&rarr;</span>
-          </Link>
+        </div>
+        <div className='flex lg:hidden'>
+          <button
+            type='button'
+            className='-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700'
+            onClick={() => setMobileMenuOpen(true)}>
+            <span className='sr-only'>Open main menu</span>
+            <Bars3Icon className='h-6 w-6' aria-hidden='true' />
+          </button>
+        </div>
+        <div className='hidden lg:flex lg:gap-x-8'>
+          <AppLogo />
+        </div>
+        <div className='hidden lg:flex lg:flex-1 lg:justify-end gap-x-4'>
           <Link
             href={`/${lang}/register/visitor`}
             className='text-sm font-semibold leading-6 text-gray-900'>
@@ -112,6 +102,37 @@ export default function NavHeader({
             href={`/${lang}/register/company`}
             className='text-sm font-semibold leading-6 text-gray-900'>
             {trans.register} company
+          </Link>
+        </div>
+      </nav>
+      <nav
+        className='hidden lg:flex items-center justify-between  capitalize my-8'
+        aria-label='Global'>
+        <div className='flex lg:flex-1'></div>
+        <div className='flex lg:hidden'>
+          <button
+            type='button'
+            className='-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700'
+            onClick={() => setMobileMenuOpen(true)}>
+            <span className='sr-only'>Open main menu</span>
+            <Bars3Icon className='h-6 w-6' aria-hidden='true' />
+          </button>
+        </div>
+        <div className='hidden lg:flex lg:gap-x-8 '>
+          {mainPages.map((item, i) => (
+            <Link
+              key={i}
+              href={item.href}
+              className='text-sm font-semibold leading-6 text-gray-900'>
+              {item.name}
+            </Link>
+          ))}
+        </div>
+        <div className='hidden lg:flex lg:flex-1 lg:justify-end gap-x-4'>
+          <Link
+            href={`/${lang}/login`}
+            className='text-sm font-semibold leading-6 text-gray-900'>
+            {trans.login} <span aria-hidden='true'>&rarr;</span>
           </Link>
         </div>
       </nav>
