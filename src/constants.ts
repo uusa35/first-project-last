@@ -8,6 +8,8 @@ export const apiUrl = `${baseUrl}/api/`;
 export const imageUrl = `https://loremflickr.com/`;
 export const isLocal = process.env.NODE_ENV !== 'production';
 export const suppressText = true;
+import { PersonOutlineOutlined } from "@mui/icons-material";
+export { PersonOutlineOutlined };
 
 export const appLinks = {
     home: (lang: Locale['lang']) =>

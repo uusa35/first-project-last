@@ -58,7 +58,7 @@
         "./src/*"
       ],
       "@/pages/*": [
-        "./pages/app/*"
+        "./pages/*"
       ],
       "@/utils/*": [
         "./utils/*"

@@ -61,4 +61,22 @@ export type Post = {
     [key: string]: any;
 }
 
+export type Country = {
+    id: number;
+    name: any;
+    [key: string]: any;
+}
+
+export type User = {
+    id: number;
+    name: any;
+    description: any;
+    aboutus: any;
+    services: any;
+    address: any;
+    country_id: string;
+    country: Country;
+    [key: string]: any;
+}
+
 

@@ -14,10 +14,7 @@ import { getImages } from "@/utils/image";
 import { getUsers } from "@/utils/user";
 import { Category, Post, User } from "@/types/queries";
 import Loading from "./loading";
-import { Suspense } from "react";
-import { UserIcon } from "@heroicons/react/24/outline";
-import { UserCircleIcon } from "@heroicons/react/24/solid";
-import { PersonOutlineOutlined } from "@mui/icons-material";
+import { PersonOutlineOutlined } from "@/src/constants";
 
 const tiers = [
   {
@@ -301,14 +298,26 @@ export default async function Home({ params: { lang } }: Props) {
       <div className='bg-white py-12 sm:py-12'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
           <div className='mx-auto max-w-2xl lg:max-w-none'>
-            <dl className='mt-16 grid grid-cols-1 gap-0.5 overflow-hidden rounded-2xl text-center sm:grid-cols-2 lg:grid-cols-4'>
-              <div className='flex flex-row p-8 justify-evenly items-center gap-4 gap-x-0 bg-expo-green'>
+            <dl className='mt-16 grid grid-cols-1 p-8 bg-expo-green  overflow-hidden rounded-2xl text-center sm:grid-cols-2 lg:grid-cols-4'>
+              <div className='flex  flex-row  justify-evenly items-center h-40 border-b border-gray-400 md:border-none'>
                 <PersonOutlineOutlined className='material-icon-lg border-blue-800 text-expo-dark ' />
-                <div className='flex flex-col  p-2 '>
-                  <dt className='text-sm font-semibold leading-6 text-gray-600'>
+                <div className='flex flex-col  p-2 pe-8 border-none lg:ltr:border-r lg:rtl:border-l border-gray-400 '>
+                  <dt className='text-sm font-semibold break-all  leading-6 text-gray-600'>
                     {trans.subscribers}
                   </dt>
                   <dd className='order-first text-3xl font-semibold tracking-tight text-gray-900'>
+                    {100}
+                  </dd>
+                </div>
+              </div>
+
+              <div className='flex  flex-row  justify-evenly items-center h-40 border-b border-gray-400 md:border-none'>
+                <PersonOutlineOutlined className='material-icon-lg border-blue-800 text-expo-dark ' />
+                <div className='flex flex-col  p-2 pe-8 border-none lg:ltr:border-r lg:rtl:border-l border-gray-400 '>
+                  <dt className='text-sm font-semibold break-all leading-6 text-gray-600'>
+                    {trans.investment_opportunity}
+                  </dt>
+                  <dd className='order-first  text-3xl font-semibold tracking-tight text-gray-900'>
                     {100}
                   </dd>
                 </div>
