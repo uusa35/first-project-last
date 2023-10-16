@@ -103,6 +103,16 @@ export default function NavHeader({
             className='text-sm font-semibold leading-6 text-gray-900'>
             {trans.login} <span aria-hidden='true'>&rarr;</span>
           </Link>
+          <Link
+            href={`/${lang}/register/visitor`}
+            className='text-sm font-semibold leading-6 text-gray-900'>
+            {trans.register} visitor
+          </Link>
+          <Link
+            href={`/${lang}/register/company`}
+            className='text-sm font-semibold leading-6 text-gray-900'>
+            {trans.register} company
+          </Link>
         </div>
       </nav>
       <Dialog

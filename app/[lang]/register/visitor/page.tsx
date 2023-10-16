@@ -3,7 +3,7 @@ import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
 import { getSetting } from "@/utils/setting";
 
-export default async function Aboutus({
+export default async function ({
   params: { lang, type },
 }: {
   params: { lang: Locale["lang"]; type: "company" | "visitor" };
@@ -15,7 +15,7 @@ export default async function Aboutus({
 
   return (
     <MainContextLayout trans={trans} lang={lang} searchParams={``}>
-      <div>register</div>
+      <div>register visitors</div>
     </MainContextLayout>
   );
 }
