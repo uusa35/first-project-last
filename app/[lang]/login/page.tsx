@@ -2,6 +2,7 @@ import { MainContextLayout } from "@/components/MainContentLayout";
 import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
 import { getSetting } from "@/utils/setting";
+import Image from "next/image";
 
 export default async function Aboutus({
   params: { lang },
@@ -17,12 +18,14 @@ export default async function Aboutus({
     <MainContextLayout trans={trans} lang={lang} searchParams={``}>
       <div className='flex min-h-full flex-1 mx-auto max-w-7xl'>
         <div className='flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24'>
-          <div className='mx-auto w-full max-w-sm lg:w-96'>
+          <div className='mx-auto w-full min-h-screen max-w-sm lg:w-96'>
             <div>
-              <img
-                className='h-10 w-auto'
-                src='https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600'
-                alt='Your Company'
+              <Image
+                width={200}
+                height={200}
+                className='h-22 w-auto object-contain'
+                src={setting.image}
+                alt={setting.name}
               />
               <h2 className='mt-8 text-2xl font-bold leading-9 tracking-tight text-gray-900'>
                 Sign in to your account
