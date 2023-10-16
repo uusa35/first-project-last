@@ -27,7 +27,7 @@ export default async function Aboutus({
           <div className='px-6 lg:px-8'>
             <div className='mx-auto max-w-xl lg:mx-0 lg:max-w-lg'>
               <h2 className='text-3xl font-bold tracking-tight text-gray-900'>
-                Let's work together
+                {trans.aboutus}
               </h2>
               <p className='mt-2 text-lg leading-8 text-gray-600'>
                 Proin volutpat consequat porttitor cras nullam gravida at orci
