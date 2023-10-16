@@ -382,6 +382,7 @@ export default async function Home({ params: { lang } }: Props) {
           </div>
         </div>
       </div>
+
       {/* posts */}
       <div className='bg-white py-14'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
@@ -396,13 +397,13 @@ export default async function Home({ params: { lang } }: Props) {
           <div className='mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-3'>
             {posts.data.map((post: Post, i: number) => (
               <Link
-                href={`/${lang}/post/${post.id}`}
+                href={`/${lang}/post/${post.id}?slug=${post.name}`}
                 key={i}
                 className='flex flex-col items-start justify-between'>
                 <div className='relative w-full'>
                   <Image
-                    width={100}
-                    height={100}
+                    width={400}
+                    height={400}
                     src={post.image}
                     alt={post.name}
                     className='aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2]'
