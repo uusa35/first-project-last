@@ -26,7 +26,7 @@ export default async function UserIndex({
 
   return (
     <MainContextLayout trans={trans} lang={lang} searchParams={searchParams}>
-      <div className='container py-24'>
+      <div className='container py-24 mx-auto max-w-7xl'>
         <h1 className='text-3xl font-bold'>
           {trans.translation} : {trans.users}
         </h1>
