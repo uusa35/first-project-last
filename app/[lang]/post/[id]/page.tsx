@@ -19,7 +19,7 @@ export default async function PostShow({
   ]);
 
   return (
-    <MainContextLayout trans={trans} lang={lang}>
+    <MainContextLayout trans={trans} lang={lang} searchParams={``}>
       <div>Post Name : {post.name}</div>
     </MainContextLayout>
   );

@@ -12,7 +12,7 @@ import Image from "next/image";
 
 type Props = {
   params: { lang: Locale["lang"] };
-  searchParams?: { [key: string]: string | string[] };
+  searchParams: { [key: string]: string } | string;
 };
 
 export default async function UserIndex({

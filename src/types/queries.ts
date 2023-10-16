@@ -15,11 +15,12 @@ export interface Product {
     image: string;
 }
 export type Category = {
-    id: number;
-    name_ar: string;
-    name_en: string;
+    id: string;
+    name: string;
+    caption: string;
     image: string;
-    items?: Product[];
+    imageLarge: string;
+    [key: string]: string;
 };
 
 export type AppQueryResult<T> = {
@@ -50,6 +51,13 @@ export type Setting = {
     services: string;
     address: string;
     country: string;
+    [key: string]: any;
+}
+
+export type Post = {
+    id: number;
+    name: string;
+    description: string;
     [key: string]: any;
 }
 

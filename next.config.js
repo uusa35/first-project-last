@@ -32,18 +32,6 @@ const nextConfig = withSvgr({
       "hammerhead-app-fhpzt.ondigitalocean.app",
       "hub-apps.ams3.cdn.digitaloceanspaces.com",
     ],
-    minimumCacheTTL: 0,
-    dangerouslyAllowSVG: true,
-    staticPageGenerationTimeout: 60,
-    webpack(config) {
-      config.module.rules.push({
-        test: /\.svg$/,
-        issuer: /\.[jt]sx?$/,
-        use: ["@svgr/webpack"],
-      });
-      config.resolve.fallback = { fs: false };
-      return config;
-    },
   },
 });
 

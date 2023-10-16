@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import type { Locale } from "@/i18n.config";
 import { useContext, useState } from "react";
@@ -17,10 +18,10 @@ import { useGetSettingQuery } from "@/redux/api";
 import AppLogo from "./AppLogo";
 type Props = {
   lang: Locale;
-  searchParams?: { [key: string]: string | string[] | undefined };
+  searchParams: { [key: string]: string } | string;
 };
 
-export default function NavHeader({ lang, searchParams }: Props) {
+export default function NavHeader({ lang, searchParams = `` }: Props) {
   const trans: any = useContext(MainContext);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const params = useParams();
@@ -33,7 +34,8 @@ export default function NavHeader({ lang, searchParams }: Props) {
     { name: trans.home, href: `/${lang}` },
     { name: trans.users, href: `/${lang}/user` },
     { name: trans.posts, href: `/${lang}/post` },
-    { name: trans.aboutus, href: "/aboutus" },
+    { name: trans.aboutus, href: `/${lang}/aboutus` },
+    { name: trans.contactus, href: `/${lang}/contactus` },
   ];
 
   // console.log("pathname", pathName);
@@ -62,14 +64,14 @@ export default function NavHeader({ lang, searchParams }: Props) {
             <Bars3Icon className='h-6 w-6' aria-hidden='true' />
           </button>
         </div>
-        <div className='hidden lg:flex lg:gap-x-12'>
+        <div className='hidden lg:flex lg:gap-x-8'>
           {navigation.map((item) => (
-            <a
+            <Link
               key={item.name}
               href={item.href}
               className='text-sm font-semibold leading-6 text-gray-900'>
               {item.name}
-            </a>
+            </Link>
           ))}
         </div>
         <div className='hidden lg:flex lg:flex-1 lg:justify-end gap-x-4'>
@@ -113,14 +115,14 @@ export default function NavHeader({ lang, searchParams }: Props) {
         <div className='fixed inset-0 z-50' />
         <Dialog.Panel className='fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10'>
           <div className='flex items-center justify-between'>
-            <a href='#' className='-m-1.5 p-1.5'>
+            <Link href='/' className='-m-1.5 p-1.5'>
               <span className='sr-only'>Your Company</span>
               <img
                 className='h-8 w-auto'
                 src='https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600'
                 alt=''
               />
-            </a>
+            </Link>
             <button
               type='button'
               className='-m-2.5 rounded-md p-2.5 text-gray-700'
@@ -133,20 +135,20 @@ export default function NavHeader({ lang, searchParams }: Props) {
             <div className='-my-6 divide-y divide-gray-500/10'>
               <div className='space-y-2 py-6'>
                 {navigation.map((item) => (
-                  <a
+                  <Link
                     key={item.name}
                     href={item.href}
                     className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'>
                     {item.name}
-                  </a>
+                  </Link>
                 ))}
               </div>
               <div className='py-6'>
-                <a
-                  href='#'
+                <Link
+                  href={`/${lang}/login`}
                   className='-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'>
-                  Log in
-                </a>
+                  {trans.login}
+                </Link>
               </div>
             </div>
           </div>

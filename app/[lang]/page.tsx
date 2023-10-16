@@ -12,7 +12,9 @@ import MainSlider from "@/components/MainSlider";
 import Image from "next/image";
 import { getImages } from "@/utils/image";
 import { getUsers } from "@/utils/user";
-import { User } from "@/types/queries";
+import { Category, Post, User } from "@/types/queries";
+import Loading from "./loading";
+import { Suspense } from "react";
 
 const tiers = [
   {
@@ -217,9 +219,9 @@ export default async function Home({ params: { lang } }: Props) {
   ]);
 
   return (
-    <MainContextLayout trans={trans} lang={lang}>
+    <MainContextLayout trans={trans} lang={lang} searchParams={``}>
       {/* slider */}
-      <MainSlider slides={slides} lang={lang} />
+      {/* <MainSlider slides={slides} lang={lang} /> */}
       {/* search */}
       <div className='bg-white py-12 sm:py-12'>
         <div className='mx-auto max-w-7xl'>
@@ -266,7 +268,7 @@ export default async function Home({ params: { lang } }: Props) {
           <ul
             role='list'
             className='mx-auto mt-10 grid  grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-5'>
-            {categories.data.map((c: any) => (
+            {categories.data.map((c: Category) => (
               <li key={c.id}>
                 <Link href={`/${lang}/user?category_id=${c.id}`}>
                   <Image
@@ -290,7 +292,6 @@ export default async function Home({ params: { lang } }: Props) {
       </div>
 
       {/* subscriptions */}
-
       <div className='relative bg-expo-green'>
         <div className='relative h-80 overflow-hidden bg-expo-green md:absolute md:left-0 md:h-full md:w-1/3 lg:w-1/2'>
           <img
@@ -336,11 +337,11 @@ export default async function Home({ params: { lang } }: Props) {
               quisque ut interdum tincidunt duis.
             </p>
             <div className='mt-8'>
-              <a
+              <Link
                 href='#'
                 className='inline-flex rounded-md bg-green-800 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'>
                 Visit the help center
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -423,7 +424,6 @@ export default async function Home({ params: { lang } }: Props) {
           </div>
         </div>
       </div>
-
       {/* posts */}
       <div className='bg-white py-14'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
@@ -436,39 +436,36 @@ export default async function Home({ params: { lang } }: Props) {
             </p>
           </div>
           <div className='mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-3'>
-            {posts.data.map((post: any) => (
+            {posts.data.map((post: Post, i: number) => (
               <Link
-                href={`/post/${post.id}`}
-                key={post.id}
+                href={`/${lang}/post/${post.id}`}
+                key={i}
                 className='flex flex-col items-start justify-between'>
                 <div className='relative w-full'>
                   <Image
                     width={100}
                     height={100}
                     src={post.image}
-                    alt=''
+                    alt={post.name}
                     className='aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2]'
                   />
                   <div className='absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10' />
                 </div>
-
                 <div className='mt-8 flex items-center justify-between text-xs'>
                   <time dateTime={post.datetime} className='text-gray-500'>
                     {post.date}
                   </time>
-                  <Link
-                    href={`/post/${post.id}`}
-                    className='hidden relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100'>
+                  <h4 className='hidden relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100'>
                     {post.name}
-                  </Link>
+                  </h4>
                 </div>
+
                 <div className='group relative'>
                   <h3 className=' text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600'>
-                    <Link href={`/post/${post.id}`}>
-                      <span className='absolute inset-0' />
-                      {post.name}
-                    </Link>
+                    <span className='absolute inset-0' />
+                    {post.name}
                   </h3>
+
                   <p className='mt-2 line-clamp-3 text-sm leading-6 text-gray-600'>
                     {post.caption}
                   </p>
@@ -478,7 +475,6 @@ export default async function Home({ params: { lang } }: Props) {
           </div>
         </div>
       </div>
-
       {/* subscription prices */}
       <div className='expo-green py-12 sm:py-12'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
@@ -545,7 +541,7 @@ export default async function Home({ params: { lang } }: Props) {
                     ))}
                   </ul>
                 </div>
-                <a
+                <Link
                   href={tier.href}
                   aria-describedby={tier.id}
                   className={classNames(
@@ -555,13 +551,12 @@ export default async function Home({ params: { lang } }: Props) {
                     "mt-8 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
                   )}>
                   Buy plan
-                </a>
+                </Link>
               </div>
             ))}
           </div>
         </div>
       </div>
-
       {/* sponsors logos */}
       <div className='bg-white py-12 sm:py-12'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
@@ -570,7 +565,7 @@ export default async function Home({ params: { lang } }: Props) {
           </h2>
           <div className='mx-auto mt-10 grid max-w-lg grid-cols-4 items-center gap-x-8 gap-y-10 sm:max-w-xl sm:grid-cols-6 sm:gap-x-10 lg:mx-0 lg:max-w-none lg:grid-cols-5'>
             {sponsors.data.map((s: User, i: string) => (
-              <Link href={`/user/${s.id}?slug=${s.name}`}>
+              <Link key={s.id} href={`/user/${s.id}?slug=${s.name}`}>
                 <img
                   key={i}
                   className='col-span-2 max-h-12 w-full object-contain lg:col-span-1'
@@ -642,7 +637,7 @@ export default async function Home({ params: { lang } }: Props) {
                     </span>
                   ) : null}
                 </p>
-                <a
+                <Link
                   href={tier.href}
                   aria-describedby={tier.id}
                   className={classNames(
@@ -652,7 +647,7 @@ export default async function Home({ params: { lang } }: Props) {
                     "mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                   )}>
                   {tier.cta}
-                </a>
+                </Link>
                 <ul
                   role='list'
                   className={classNames(
@@ -721,23 +716,23 @@ export default async function Home({ params: { lang } }: Props) {
             aria-label='Footer'>
             {navigation.main.map((item) => (
               <div key={item.name} className='pb-6'>
-                <a
+                <Link
                   href={item.href}
                   className='text-sm leading-6 text-gray-600 hover:text-gray-900'>
                   {item.name}
-                </a>
+                </Link>
               </div>
             ))}
           </nav>
           <div className='mt-10 flex justify-center gap-x-10'>
             {navigation.social.map((item) => (
-              <a
+              <Link
                 key={item.name}
                 href={item.href}
                 className='text-gray-400 hover:text-gray-500'>
                 <span className='sr-only'>{item.name}</span>
                 <item.icon className='h-6 w-6' aria-hidden='true' />
-              </a>
+              </Link>
             ))}
           </div>
           <p className='mt-10 text-center text-xs leading-5 text-gray-500'>

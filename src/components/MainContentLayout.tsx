@@ -14,7 +14,7 @@ type Props = {
   children: React.ReactNode;
   trans: {};
   lang: Locale["lang"];
-  searchParams?: { [key: string]: string | string[] };
+  searchParams: { [key: string]: string } | string;
 };
 
 const MainContext = createContext({});
@@ -22,7 +22,7 @@ const MainContextLayout: FC<Props> = ({
   children,
   trans,
   lang,
-  searchParams,
+  searchParams = ``,
 }) => {
   return (
     <MainContext.Provider value={trans}>

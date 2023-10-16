@@ -12,7 +12,7 @@ export default async function Contactus({
   const { trans } = await getDictionary(lang);
 
   return (
-    <MainContextLayout trans={trans} lang={lang}>
+    <MainContextLayout trans={trans} lang={lang} searchParams={``}>
       <div className='relative bg-white'>
         <div className='lg:absolute lg:inset-0 lg:left-1/2'>
           <img

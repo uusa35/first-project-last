@@ -5,7 +5,7 @@ export const tajawal = Tajawal({
     subsets: ["latin"],
     // display: "swap",
 });
-export const convertSearchParamsToString = (search: { [key: string]: string }): string => {
+export const convertSearchParamsToString = (search: { [key: string]: string } | string): string => {
     if (typeof search === 'object' &&
         !Array.isArray(search) &&
         search !== null) {
@@ -16,8 +16,6 @@ export const convertSearchParamsToString = (search: { [key: string]: string }): 
             .join("&");
     }
     return ``;
-
-
 }
 
 

@@ -23,11 +23,24 @@ export const appLinks = {
     postShow: (lang: Locale['lang'], id: string, slug?: string) => `/${lang}/post/${id}?slug=${kebabCase(slug) ?? ``}`,
 }
 
-export const convertSearchParamsToString = (search: { [key: string]: string }): string => Object.keys(search)
-    .map((key) => {
-        return `${key}=${encodeURIComponent(search[key])}`;
-    })
-    .join("&");
+// export const convertSearchParamsToString = (search: { [key: string]: string }): string => Object.keys(search)
+//     .map((key) => {
+//         return `${key}=${encodeURIComponent(search[key])}`;
+//     })
+//     .join("&");
+
+export const convertSearchParamsToString = (search: { [key: string]: string } | string): string => {
+    if (typeof search === 'object' &&
+        !Array.isArray(search) &&
+        search !== null) {
+        return Object.keys(search)
+            .map((key) => {
+                return `${key}=${encodeURIComponent(search[key])}`;
+            })
+            .join("&");
+    }
+    return ``;
+}
 
 export const setLang = (lang: localeType) =>
     fetch(`/api/set/lang`, {

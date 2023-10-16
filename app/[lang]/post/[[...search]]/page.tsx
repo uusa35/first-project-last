@@ -22,7 +22,7 @@ export default async function PostIndex({
   ]);
 
   return (
-    <MainContextLayout trans={trans} lang={lang}>
+    <MainContextLayout trans={trans} lang={lang} searchParams={``}>
       <div className='container py-24'>
         <h1 className='text-3xl font-bold'>
           {trans.translation} : {trans.posts}
