@@ -15,7 +15,7 @@ export default async function Aboutus({
 
   return (
     <MainContextLayout trans={trans} lang={lang} searchParams={``}>
-      <div className='relative bg-white'>
+      <div className='relative bg-white mx-auto max-w-7xl'>
         <div className='lg:absolute lg:inset-0 ltr:lg:left-1/2 rtl:lg:right-1/2'>
           <img
             className='h-64 w-full bg-gray-50 object-cover sm:h-80 lg:absolute lg:h-full'
