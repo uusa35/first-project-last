@@ -48,10 +48,10 @@ export default function NavHeader({
       <nav
         className='flex items-center justify-between  capitalize'
         aria-label='Global'>
-        <div className=' lg:hidden lg:flex-1'>
+        <div className=' lg:hidden xl:flex-1'>
           <AppLogo />
         </div>
-        <div className='hidden lg:flex lg:flex-1 xl:hidden gap-x-4'>
+        <div className='hidden lg:flex lg:flex-1  gap-x-4'>
           <Link
             href={`${changePathName(
               lang,
