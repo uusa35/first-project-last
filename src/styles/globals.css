@@ -2,11 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-/* :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-} */
+@font-face {
+  font-family: "Expo-Medium";
+  src: url("../../public/fonts/alfont_com_AlFont_com_ExpoArabic-Medium.ttf")
+    format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 
 @media (prefers-color-scheme: dark) {
   /* :root {
@@ -30,4 +33,8 @@ body {
   .btn-color-default {
     @apply bg-expo-dark hover:bg-green-700;
   }
+}
+
+.font-expo-medium {
+  font-family: "Expo-Medium", "sans-serif" !important;
 }

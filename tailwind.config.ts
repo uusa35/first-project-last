@@ -26,6 +26,9 @@ const config: Config = {
       maxWidth: {
         "8xl": "2500px",
       },
+      fontFamily: {
+        'Expo-Medium': ['Expo-Medium', 'sans-serif'],
+      }
     },
     screens: {
       'sm': '640px',

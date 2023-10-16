@@ -96,7 +96,8 @@ export default function RootLayout({
       lang={params.lang}
       dir={params.lang === "ar" ? "rtl" : "ltr"}>
       <body
-        className={`${tajawal.className}`}
+        // className={`${tajawal.className}`}
+        className={`font-expo-medium`}
         dir={params.lang === "ar" ? "rtl" : "ltr"}>
         <Providers>
           <MainLayout lang={params.lang}>{children}</MainLayout>
