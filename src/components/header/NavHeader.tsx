@@ -3,7 +3,7 @@ import Link from "next/link";
 import type { Locale } from "@/i18n.config";
 import { useContext, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, UserIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { MainContext } from "../MainContentLayout";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
@@ -131,8 +131,9 @@ export default function NavHeader({
         <div className='hidden lg:flex lg:flex-1 lg:justify-end gap-x-4'>
           <Link
             href={`/${lang}/login`}
-            className='text-sm font-semibold leading-6 text-gray-900'>
-            {trans.login} <span aria-hidden='true'>&rarr;</span>
+            className='text-sm font-semibold text-gray-900 flex flex-row w-30 justify-center items-center '>
+            <UserIcon className='w-8 me-2' />
+            <span className='flex w-full pt-1'>{trans.login}</span>
           </Link>
         </div>
       </nav>
