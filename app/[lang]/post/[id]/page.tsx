@@ -3,7 +3,7 @@ import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
 import Link from "next/link";
 import { getPost } from "@/utils/post";
-import NavHeader from "@/components/NavHeader";
+import NavHeader from "@/components/header/NavHeader";
 
 type Props = {
   params: { lang: Locale["lang"]; id: string };

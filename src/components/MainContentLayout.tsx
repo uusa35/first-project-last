@@ -1,6 +1,6 @@
 "use client";
 import { FC, createContext } from "react";
-import NavHeader from "./NavHeader";
+import NavHeader from "./header/NavHeader";
 import { Locale } from "@/types/index";
 import {
   ThemeProvider,
@@ -8,7 +8,7 @@ import {
   Carousel,
   Typography,
 } from "@material-tailwind/react";
-import AppFooter from "./AppFooter";
+import AppFooter from "./footer/AppFooter";
 export { Button, Carousel, Typography };
 
 type Props = {

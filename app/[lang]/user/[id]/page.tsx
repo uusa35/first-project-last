@@ -2,7 +2,7 @@ import { MainContextLayout } from "@/components/MainContentLayout";
 import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
 import Link from "next/link";
-import NavHeader from "@/components/NavHeader";
+import NavHeader from "@/components/header/NavHeader";
 import { getUser } from "@/utils/user";
 
 type Props = {

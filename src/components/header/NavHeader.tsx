@@ -4,7 +4,7 @@ import type { Locale } from "@/i18n.config";
 import { useContext, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { MainContext } from "./MainContentLayout";
+import { MainContext } from "../MainContentLayout";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
