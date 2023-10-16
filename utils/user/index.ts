@@ -3,8 +3,8 @@ import { NextResponse } from 'next/server'
 
 export async function getUsers(search: string, lang: Locale['lang']) {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}user?${search}`, {
-        // cache: "no-store",
-        next: { revalidate: 3600 },
+        cache: "no-store",
+        // next: { revalidate: 3600 },
         headers: {
             'Accept-Language': lang
         }
