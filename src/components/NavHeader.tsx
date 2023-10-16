@@ -46,11 +46,10 @@ export default function NavHeader({ lang, searchParams = `` }: Props) {
   // console.log("searchParams", searchParams);
   // console.log("searchParams ----->", convertSearchParamsToString(searchParams));
   // console.log("url", changePathName(lang, "ar", pathName));
-
   return (
     <header className='top-0 z-50'>
       <nav
-        className='flex items-center justify-between p-6 lg:px-8'
+        className='flex items-center justify-between p-6 lg:px-8 capitalize'
         aria-label='Global'>
         <div className='flex lg:flex-1'>
           <AppLogo />
@@ -102,9 +101,11 @@ export default function NavHeader({ lang, searchParams = `` }: Props) {
             className='text-sm font-semibold leading-6 text-gray-900'>
             en
           </Link>
-          <a href='#' className='text-sm font-semibold leading-6 text-gray-900'>
-            Log in <span aria-hidden='true'>&rarr;</span>
-          </a>
+          <Link
+            href={`/${lang}/login`}
+            className='text-sm font-semibold leading-6 text-gray-900'>
+            {trans.login} <span aria-hidden='true'>&rarr;</span>
+          </Link>
         </div>
       </nav>
       <Dialog
@@ -143,7 +144,7 @@ export default function NavHeader({ lang, searchParams = `` }: Props) {
                   </Link>
                 ))}
               </div>
-              <div className='py-6'>
+              <div className='py-6 bg-blue-800'>
                 <Link
                   href={`/${lang}/login`}
                   className='-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'>
