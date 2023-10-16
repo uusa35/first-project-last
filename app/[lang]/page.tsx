@@ -12,9 +12,10 @@ import MainSlider from "@/components/MainSlider";
 import Image from "next/image";
 import { getImages } from "@/utils/image";
 import { getUsers } from "@/utils/user";
-import { Category, Post, User } from "@/types/queries";
+import { Category, Membership, Post, User } from "@/types/queries";
 import Loading from "./loading";
 import { PersonOutlineOutlined } from "@/src/constants";
+import { getCountry } from "@/utils/country";
 
 const tiers = [
   {
@@ -106,13 +107,6 @@ const people = [
   },
 ];
 
-const stats = [
-  { id: 1, name: "Creators on the platform", value: "8,000+" },
-  { id: 2, name: "Flat platform fee", value: "3%" },
-  { id: 3, name: "Uptime guarantee", value: "99.9%" },
-  { id: 4, name: "Paid out to creators", value: "$70M" },
-];
-
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
@@ -132,22 +126,24 @@ export default async function Home({ params: { lang } }: Props) {
     posts,
     sponsors,
     images,
+    country,
   ] = await Promise.all([
     getDictionary(lang),
     getSlides(`on_home=1`, lang),
     getCategories(`on_home=1`, lang),
     getSetting(lang),
-    getMemberships(`sort=subscription&on_home=1`, lang),
-    getMemberships(`sort=sponsorship&on_home=1`, lang),
+    getMemberships(`sort=subscription&on_home=1&limit=3`, lang),
+    getMemberships(`sort=sponsorship&limit=3`, lang),
     getPosts(`on_home=1`, lang),
-    getUsers(`membership=sponsorship&on_home=1`, lang),
+    getUsers(`membership=sponsorship`, lang),
     getImages(`on_home=1`, lang),
+    getCountry(lang),
   ]);
 
-  console.log("images", images);
-  console.log("subscriptions", subscriptions);
-  console.log("sponsorships", sponsorships);
-  console.log("posts", posts);
+  console.log("images", images.data[0]);
+  console.log("subscriptions", subscriptions[0]);
+  console.log("sponsorships", sponsorships[0]);
+  console.log("posts", posts.data[0]);
 
   return (
     <MainContextLayout trans={trans} lang={lang} searchParams={``}>
@@ -519,27 +515,29 @@ export default async function Home({ params: { lang } }: Props) {
         </div>
       </div>
       {/* sponsors logos */}
-      <div className='bg-white py-12 sm:py-12'>
-        <div className='mx-auto max-w-7xl px-6 lg:px-8'>
-          <h2 className='text-center text-lg font-semibold leading-8 text-gray-900'>
-            {trans.sponsors}
-          </h2>
-          <div className='mx-auto mt-10 grid max-w-lg grid-cols-4 items-center gap-x-8 gap-y-10 sm:max-w-xl sm:grid-cols-6 sm:gap-x-10 lg:mx-0 lg:max-w-none lg:grid-cols-5'>
-            {sponsors.data.map((s: User, i: string) => (
-              <Link key={s.id} href={`/user/${s.id}?slug=${s.name}`}>
-                <img
-                  key={i}
-                  className='col-span-2 max-h-12 w-full object-contain lg:col-span-1'
-                  src={s.image}
-                  alt='Transistor'
-                  width={100}
-                  height={100}
-                />
-              </Link>
-            ))}
+      {sponsors.data && (
+        <div className='bg-white py-12 sm:py-12'>
+          <div className='mx-auto max-w-7xl px-6 lg:px-8'>
+            <h2 className='text-center text-lg font-semibold leading-8 text-gray-900'>
+              {trans.sponsors}
+            </h2>
+            <div className='mx-auto mt-10 grid max-w-lg grid-cols-4 items-center gap-x-8 gap-y-10 sm:max-w-xl sm:grid-cols-6 sm:gap-x-10 lg:mx-0 lg:max-w-none lg:grid-cols-5'>
+              {sponsors.data.map((s: User, i: string) => (
+                <Link key={s.id} href={`/user/${s.id}?slug=${s.name}`}>
+                  <Image
+                    key={i}
+                    className='col-span-2 max-h-[100px] w-full object-contain lg:col-span-1'
+                    src={s.image}
+                    alt={s.name}
+                    width={200}
+                    height={200}
+                  />
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* sponsorship prices */}
       <div className='expo-green py-12 sm:py-12'>
@@ -558,75 +556,46 @@ export default async function Home({ params: { lang } }: Props) {
           </p>
 
           <div className='isolate mx-auto mt-10 grid max-w-md grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3'>
-            {tiers.map((tier) => (
+            {sponsorships.map((s: Membership, i: number) => (
               <div
-                key={tier.id}
-                className={classNames(
-                  tier.featured ? "bg-gray-900 ring-gray-900" : "ring-gray-200",
-                  "rounded-3xl p-8 ring-1 xl:p-10"
-                )}>
-                <h3
-                  id={tier.id}
-                  className={classNames(
-                    tier.featured ? "text-white" : "text-gray-900",
-                    "text-lg font-semibold leading-8"
-                  )}>
-                  {tier.name}
+                key={i}
+                className={"ring-gray-400 rounded-3xl p-8 ring-1 xl:p-10"}>
+                <h3 className={"text-gray-900 text-lg font-semibold leading-8"}>
+                  {s.name}
                 </h3>
-                <p
-                  className={classNames(
-                    tier.featured ? "text-gray-300" : "text-gray-600",
-                    "mt-4 text-sm leading-6"
-                  )}>
-                  {tier.description}
+                <p className={"text-gray-600 mt-4 text-sm leading-6"}>
+                  {s.description}
                 </p>
                 <p className='mt-6 flex items-baseline gap-x-1'>
                   <span
-                    className={classNames(
-                      tier.featured ? "text-white" : "text-gray-900",
-                      "text-4xl font-bold tracking-tight"
-                    )}>
-                    {tier.price}
+                    className={
+                      "text-gray-900 text-4xl font-bold tracking-tight"
+                    }>
+                    {s.price}
                   </span>
-                  {typeof tier.price !== "string" ? (
-                    <span
-                      className={classNames(
-                        tier.featured ? "text-gray-300" : "text-gray-600",
-                        "text-sm font-semibold leading-6"
-                      )}>
-                      87878
-                    </span>
-                  ) : null}
+
+                  <span
+                    className={"text-gray-600 text-sm font-semibold leading-6"}>
+                    87878
+                  </span>
                 </p>
-                <Link
-                  href={tier.href}
-                  aria-describedby={tier.id}
+                <div
+                  href={s.href}
                   className={classNames(
-                    tier.featured
+                    s.on_home
                       ? "bg-white/10 text-white hover:bg-white/20 focus-visible:outline-white"
                       : "bg-green-600 text-white shadow-sm hover:bg-green-500 focus-visible:outline-green-600",
                     "mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                   )}>
-                  {tier.cta}
-                </Link>
+                  {s.price}
+                </div>
                 <ul
                   role='list'
                   className={classNames(
-                    tier.featured ? "text-gray-300" : "text-gray-600",
+                    s.on_home ? "text-gray-300" : "text-gray-600",
                     "mt-8 space-y-3 text-sm leading-6 xl:mt-10"
                   )}>
-                  {tier.features.map((feature) => (
-                    <li key={feature} className='flex gap-x-3'>
-                      <CheckIcon
-                        className={classNames(
-                          tier.featured ? "text-white" : "text-green-600",
-                          "h-6 w-5 flex-none"
-                        )}
-                        aria-hidden='true'
-                      />
-                      {feature}
-                    </li>
-                  ))}
+                  <p>{s.description}</p>
                 </ul>
               </div>
             ))}

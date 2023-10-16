@@ -80,3 +80,12 @@ export type User = {
 }
 
 
+export type Membership = {
+    id: number;
+    name: any;
+    description: any;
+    [key: string]: any;
+}
+
+
+
