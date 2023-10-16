@@ -87,5 +87,12 @@ export type Membership = {
     [key: string]: any;
 }
 
+export type Order = {
+    id: number;
+    name: any;
+
+    [key: string]: any;
+}
+
 
 
