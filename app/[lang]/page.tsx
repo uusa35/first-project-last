@@ -268,7 +268,7 @@ export default async function Home({ params: { lang } }: Props) {
             <p className='mt-2 text-3xl font-bold tracking-tight text-black break-words sm:text-4xl'>
               {trans.joinus_and_get_many_features}
             </p>
-            <p className='mt-6 text-base leading-7 text-gray-800'>
+            <p className='mt-6 text-base leading-7 break-all text-gray-800'>
               {trans.get_to_know_all_kind_of_subscriptions_and_sponsorships}
             </p>
             <div className='mt-8'>
@@ -298,10 +298,10 @@ export default async function Home({ params: { lang } }: Props) {
       <div className='bg-white py-12 sm:py-12'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
           <div className='mx-auto max-w-2xl lg:max-w-none'>
-            <dl className='mt-16 grid grid-cols-1 p-8 bg-expo-green  overflow-hidden rounded-2xl text-center sm:grid-cols-2 lg:grid-cols-4'>
-              <div className='flex  flex-row  justify-evenly items-center h-40 border-b border-gray-400 md:border-none'>
+            <dl className='mt-16 grid grid-cols-2 p-2 md:p-8 bg-expo-green  overflow-hidden rounded-2xl text-center lg:grid-cols-4'>
+              <div className='col-span-1 flex flex-1 flex-row  justify-evenly items-center h-40 px-4 md:px-8 border-gray-400 ltr:border-r rtl:border-l '>
                 <PersonOutlineOutlined className='material-icon-lg border-blue-800 text-expo-dark ' />
-                <div className='flex flex-col  p-2 pe-8 border-none lg:ltr:border-r lg:rtl:border-l border-gray-400 '>
+                <div className='flex flex-col  p-2  border-gray-400 '>
                   <dt className='text-sm font-semibold break-all  leading-6 text-gray-600'>
                     {trans.subscribers}
                   </dt>
@@ -311,13 +311,13 @@ export default async function Home({ params: { lang } }: Props) {
                 </div>
               </div>
 
-              <div className='flex  flex-row  justify-evenly items-center h-40 border-b border-gray-400 md:border-none'>
+              <div className='col-span-1 flex flex-1 flex-row  justify-evenly items-center h-40 border-gray-400 border-hidden lg:border-solid md:ltr:border-r md:rtl:border-l'>
                 <PersonOutlineOutlined className='material-icon-lg border-blue-800 text-expo-dark ' />
-                <div className='flex flex-col  p-2 pe-8 border-none lg:ltr:border-r lg:rtl:border-l border-gray-400 '>
-                  <dt className='text-sm font-semibold break-all leading-6 text-gray-600'>
-                    {trans.investment_opportunity}
+                <div className='flex flex-col  p-2 pe-8  border-gray-400 '>
+                  <dt className='text-sm font-semibold break-all  leading-6 text-gray-600'>
+                    {trans.subscribers}
                   </dt>
-                  <dd className='order-first  text-3xl font-semibold tracking-tight text-gray-900'>
+                  <dd className='order-first text-3xl font-semibold tracking-tight text-gray-900'>
                     {100}
                   </dd>
                 </div>
@@ -331,7 +331,7 @@ export default async function Home({ params: { lang } }: Props) {
       <div className='bg-white py-12 sm:py-12'>
         <div className='mx-auto max-w-7xl sm:px-6 lg:px-8'>
           <div className='relative isolate overflow-hidden bg-green-900 px-6 py-24 shadow-2xl sm:rounded-3xl sm:px-24 xl:py-32'>
-            <h2 className='mx-auto max-w-2xl text-center text-3xl font-bold tracking-tight text-white sm:text-4xl'>
+            <h2 className='mx-auto max-w-2xl break-all text-center text-3xl font-bold tracking-tight text-white sm:text-4xl'>
               {trans.register_to_receive_latest_expo_news}
             </h2>
             <p className='mx-auto mt-2 max-w-xl break-words text-center text-lg leading-8 text-gray-300'>
@@ -392,7 +392,7 @@ export default async function Home({ params: { lang } }: Props) {
             <h2 className='text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl'>
               {trans.latest_news}
             </h2>
-            <p className='mt-2 text-lg leading-8 text-gray-600'>
+            <p className='mt-2 text-lg break-all leading-8 text-gray-600'>
               {trans.through_this_section_get_latest_news_related}
             </p>
           </div>
