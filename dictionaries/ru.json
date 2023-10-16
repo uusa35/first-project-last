@@ -23,6 +23,20 @@
     "gallery": "gallery",
     "subscribers": "subscribers",
     "visitors": "visitors",
-    "visitor": "visitor"
+    "visitor": "visitor",
+    "joinus_and_get_many_features": "joinus_and_get_many_features",
+    "joinus": "joinus",
+    "get_to_know_all_kind_of_subscriptions_and_sponsorships": "get_to_know_all_kind_of_subscriptions_and_sponsorships",
+    "register_as_subscription": "register_as_subscription",
+    "register_as_sponsorship": "register_as_sponsorship",
+    "register_as_visitor": "register_as_visitor",
+    "register_to_receive_latest_expo_news": "register_to_receive_latest_expo_news",
+    "through_this_section_u_can_follow_up_all_news_related_to_this_expo_and_even_more": "through_this_section_u_can_follow_up_all_news_related_to_this_expo_and_even_more",
+    "enter_ur_email": "enter_ur_email",
+    "notify_me": "notify_me",
+    "latest_news": "latest_news",
+    "through_this_section_get_latest_news_related": "through_this_section_get_latest_news_related",
+    "through_this_section_find_out_all_companies_related_to_your_interested_field": "through_this_section_find_out_all_companies_related_to_your_interested_field",
+    "navigate_to_more": "navigate_to_more"
   }
 }

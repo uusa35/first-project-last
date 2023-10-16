@@ -15,7 +15,7 @@ const config: Config = {
       },
       colors: {
         "expo-dark": "#006838",
-        "expo-light": "#8e644da3",
+        "expo-light": "#E6F0EB",
         "expo-green": "#E6F0EB"
       },
       backgroundImage: {

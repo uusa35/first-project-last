@@ -1,8 +1,7 @@
 /** @type {import('next').NextConfig} */
-const withSvgr = require("next-plugin-svgr");
 
-const nextConfig = withSvgr({
-  reactStrictMode: false,
+const nextConfig = {
+  reactStrictMode: true,
   async rewrites() {
     return [
       {
@@ -11,7 +10,6 @@ const nextConfig = withSvgr({
       },
     ];
   },
-
   async redirects() {
     return [];
   },
@@ -21,7 +19,13 @@ const nextConfig = withSvgr({
     PUBLIC_URL: "/",
   },
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false,
+  },
+  swcMinify: true,
+  modularizeImports: {
+    "@mui/icons-material": {
+      transform: "@mui/icons-material/{{member}}",
+    },
   },
   images: {
     domains: [
@@ -31,8 +35,17 @@ const nextConfig = withSvgr({
       "cp.ar-expo.ru",
       "hammerhead-app-fhpzt.ondigitalocean.app",
       "hub-apps.ams3.cdn.digitaloceanspaces.com",
+      "images.unsplash.com",
+    ],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "source.unsplash.com",
+        port: "",
+        pathname: "/random",
+      },
     ],
   },
-});
+};
 
 module.exports = nextConfig;

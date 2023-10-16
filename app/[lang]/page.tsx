@@ -15,6 +15,9 @@ import { getUsers } from "@/utils/user";
 import { Category, Post, User } from "@/types/queries";
 import Loading from "./loading";
 import { Suspense } from "react";
+import { UserIcon } from "@heroicons/react/24/outline";
+import { UserCircleIcon } from "@heroicons/react/24/solid";
+import { PersonOutlineOutlined } from "@mui/icons-material";
 
 const tiers = [
   {
@@ -140,9 +143,14 @@ export default async function Home({ params: { lang } }: Props) {
     getMemberships(`sort=subscription&on_home=1`, lang),
     getMemberships(`sort=sponsorship&on_home=1`, lang),
     getPosts(`on_home=1`, lang),
-    getUsers(`membership=sponsorship`, lang),
+    getUsers(`membership=sponsorship&on_home=1`, lang),
     getImages(`on_home=1`, lang),
   ]);
+
+  console.log("images", images);
+  console.log("subscriptions", subscriptions);
+  console.log("sponsorships", sponsorships);
+  console.log("posts", posts);
 
   return (
     <MainContextLayout trans={trans} lang={lang} searchParams={``}>
@@ -185,10 +193,10 @@ export default async function Home({ params: { lang } }: Props) {
             <h2 className='text-3xl text-center font-bold tracking-tight text-gray-900 sm:text-4xl capitalize'>
               {trans.categories}
             </h2>
-            <p className='mt-6 text-lg leading-8 text-gray-600'>
-              We’re a dynamic group of individuals who are passionate about what
-              we do and dedicated to delivering the best results for our
-              clients.
+            <p className='mt-6 text-lg text-center break-words leading-8 text-gray-600'>
+              {
+                trans.through_this_section_find_out_all_companies_related_to_your_interested_field
+              }
             </p>
           </div>
           <ul
@@ -204,26 +212,33 @@ export default async function Home({ params: { lang } }: Props) {
                     height={100}
                     alt=''
                   />
-                  <h3 className='mt-6 text-lg text-center font-semibold leading-8 tracking-tight text-gray-900'>
+                  <h3 className='truncate mt-6 text-lg text-center font-semibold leading-8 tracking-tight text-gray-900'>
                     {c.name}
                   </h3>
-                  <p className='text-base leading-7 text-gray-600 hidden'>
+                  <p className=' text-base leading-7 text-gray-600 hidden'>
                     {c.caption}
                   </p>
                 </Link>
               </li>
             ))}
           </ul>
+          <div className='pt-12 pb-2 w-full text-center text-expo-dark'>
+            <Link href={`${lang}/user?membership=subscription`}>
+              {trans.navigate_to_more}
+            </Link>
+          </div>
         </div>
       </div>
 
       {/* subscriptions */}
       <div className='relative bg-expo-green'>
         <div className='relative h-80 overflow-hidden bg-expo-green md:absolute md:left-0 md:h-full md:w-1/3 lg:w-1/2'>
-          <img
+          <Image
             className='h-full w-full object-cover'
             src='https://images.unsplash.com/photo-1525130413817-d45c1d127c42?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1920&q=60&blend=6366F1&sat=-100&blend-mode=multiply'
             alt=''
+            width={300}
+            height={300}
           />
           <svg
             viewBox='0 0 926 676'
@@ -250,23 +265,32 @@ export default async function Home({ params: { lang } }: Props) {
         </div>
         <div className='relative mx-auto max-w-7xl py-24 sm:py-32 lg:px-8 lg:py-40'>
           <div className='pl-6 pr-6 md:ml-auto md:w-2/3 md:pl-16 lg:w-1/2 lg:pl-24 lg:pr-0 xl:pl-32'>
-            <h2 className='text-base font-semibold leading-7 text-green-400'>
-              {trans.subscriptions}
+            <h2 className=' font-semibold leading-7 text-lg text-black'>
+              {trans.joinus}
             </h2>
-            <p className='mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl'>
-              We’re here to help
+            <p className='mt-2 text-3xl font-bold tracking-tight text-black break-words sm:text-4xl'>
+              {trans.joinus_and_get_many_features}
             </p>
             <p className='mt-6 text-base leading-7 text-gray-800'>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et,
-              egestas tempus tellus etiam sed. Quam a scelerisque amet
-              ullamcorper eu enim et fermentum, augue. Aliquet amet volutpat
-              quisque ut interdum tincidunt duis.
+              {trans.get_to_know_all_kind_of_subscriptions_and_sponsorships}
             </p>
             <div className='mt-8'>
               <Link
-                href='#'
-                className='inline-flex rounded-md bg-green-800 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'>
-                Visit the help center
+                href={`/${lang}/register/company`}
+                className='inline-flex  btn-color-default break-words text-sm  '>
+                {trans.register_as_subscription}
+              </Link>
+            </div>
+            <div className='flex flex-row gap-4 mt-2'>
+              <Link
+                className='inline-flex  btn-color-default  bg-transparent text-expo-dark border border-expo-dark hover:bg-expo-dark hover:text-white text-sm  '
+                href={`/${lang}/register/company`}>
+                {trans.register_as_sponsorship}
+              </Link>
+              <Link
+                className='inline-flex  btn-color-default  bg-transparent text-expo-dark border border-expo-dark hover:bg-expo-dark hover:text-white text-sm  '
+                href={`/${lang}/register/visitor`}>
+                {trans.register_as_visitor}
               </Link>
             </div>
           </div>
@@ -278,16 +302,17 @@ export default async function Home({ params: { lang } }: Props) {
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
           <div className='mx-auto max-w-2xl lg:max-w-none'>
             <dl className='mt-16 grid grid-cols-1 gap-0.5 overflow-hidden rounded-2xl text-center sm:grid-cols-2 lg:grid-cols-4'>
-              {stats.map((stat) => (
-                <div key={stat.id} className='flex flex-col bg-expo-green p-8'>
+              <div className='flex flex-row p-8 justify-evenly items-center gap-4 gap-x-0 bg-expo-green'>
+                <PersonOutlineOutlined className='material-icon-lg border-blue-800 text-expo-dark ' />
+                <div className='flex flex-col  p-2 '>
                   <dt className='text-sm font-semibold leading-6 text-gray-600'>
-                    {stat.name}
+                    {trans.subscribers}
                   </dt>
                   <dd className='order-first text-3xl font-semibold tracking-tight text-gray-900'>
-                    {stat.value}
+                    {100}
                   </dd>
                 </div>
-              ))}
+              </div>
             </dl>
           </div>
         </div>
@@ -298,15 +323,16 @@ export default async function Home({ params: { lang } }: Props) {
         <div className='mx-auto max-w-7xl sm:px-6 lg:px-8'>
           <div className='relative isolate overflow-hidden bg-green-900 px-6 py-24 shadow-2xl sm:rounded-3xl sm:px-24 xl:py-32'>
             <h2 className='mx-auto max-w-2xl text-center text-3xl font-bold tracking-tight text-white sm:text-4xl'>
-              Get notified when we’re launching.
+              {trans.register_to_receive_latest_expo_news}
             </h2>
-            <p className='mx-auto mt-2 max-w-xl text-center text-lg leading-8 text-gray-300'>
-              Reprehenderit ad esse et non officia in nulla. Id proident tempor
-              incididunt nostrud nulla et culpa.
+            <p className='mx-auto mt-2 max-w-xl break-words text-center text-lg leading-8 text-gray-300'>
+              {
+                trans.through_this_section_u_can_follow_up_all_news_related_to_this_expo_and_even_more
+              }
             </p>
             <form className='mx-auto mt-10 flex max-w-md gap-x-4'>
               <label htmlFor='email-address' className='sr-only'>
-                Email address
+                {trans.enter_ur_email}
               </label>
               <input
                 id='email-address'
@@ -315,12 +341,12 @@ export default async function Home({ params: { lang } }: Props) {
                 autoComplete='email'
                 required
                 className='min-w-0 flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-white sm:text-sm sm:leading-6'
-                placeholder='Enter your email'
+                placeholder={trans.enter_ur_email}
               />
               <button
                 type='submit'
-                className='flex-none rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'>
-                Notify me
+                className='flex-none rounded-md bg-expo-light px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'>
+                {trans.notify_me}
               </button>
             </form>
             <svg
@@ -355,10 +381,10 @@ export default async function Home({ params: { lang } }: Props) {
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
           <div className='mx-auto max-w-2xl text-center'>
             <h2 className='text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl'>
-              {trans.news}
+              {trans.latest_news}
             </h2>
             <p className='mt-2 text-lg leading-8 text-gray-600'>
-              Learn how to grow your business with our expert advice.
+              {trans.through_this_section_get_latest_news_related}
             </p>
           </div>
           <div className='mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-3'>
