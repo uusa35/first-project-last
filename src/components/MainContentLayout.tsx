@@ -27,7 +27,7 @@ const MainContextLayout: FC<Props> = ({
 }) => {
   const navigation = [
     { name: trans.home, href: `/${lang}` },
-    { name: trans.users, href: `/${lang}/user` },
+    { name: trans.subscribers, href: `/${lang}/user?membership=subscription` },
     { name: trans.posts, href: `/${lang}/post` },
     { name: trans.aboutus, href: `/${lang}/aboutus` },
     { name: trans.contactus, href: `/${lang}/contactus` },
