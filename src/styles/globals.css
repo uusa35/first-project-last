@@ -26,10 +26,8 @@ body {
     rgb(var(--background-start-rgb));
 }
 
-.main-bg {
-  background-image: linear-gradient(
-      rgba(226, 226, 226, 0.9),
-      rgba(255, 255, 255, 0.9)
-    ),
-    url("../../public/images/bg.jpg");
+@layer components {
+  .btn-color-default {
+    @apply bg-expo-dark hover:bg-green-700;
+  }
 }

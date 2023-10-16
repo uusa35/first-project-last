@@ -9,13 +9,12 @@ const config: Config = {
     "node_modules/@material-tailwind/react/theme/components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-
     extend: {
       animation: {
         wiggle: 'wiggle 1s ease-in-out infinite',
       },
       colors: {
-        "expo-dark": "#8e644d",
+        "expo-dark": "#006838",
         "expo-light": "#8e644da3",
         "expo-green": "#E6F0EB"
       },

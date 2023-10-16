@@ -21,6 +21,8 @@
     "sponsors": "sponsors",
     "sponsorships": "sponsorships",
     "gallery": "gallery",
-    "subscribers" : "subscribers"
+    "subscribers": "subscribers",
+    "visitors": "visitors",
+    "visitor": "visitor"
   }
 }
