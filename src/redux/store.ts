@@ -15,7 +15,6 @@ import {
 import createSagaMiddleware from "redux-saga";
 import storage from "redux-persist/lib/storage";
 import rootSaga from "./sagas/rootSaga";
-import { productApi } from "./api/productApi";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { HYDRATE, createWrapper } from "next-redux-wrapper";
 import { apiSlice } from "./api";
@@ -60,7 +59,7 @@ let store: any = configureStore({
       }).concat([
         apiSlice.middleware,
         categoryApi.middleware,
-        productApi.middleware,
+
         sagaMiddleware,
         appLogger,
       ])
@@ -80,7 +79,7 @@ let store: any = configureStore({
       }).concat([
         apiSlice.middleware,
         categoryApi.middleware,
-        productApi.middleware,
+
         sagaMiddleware,
       ]),
 });
