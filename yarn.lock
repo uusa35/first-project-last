@@ -1997,6 +1997,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/cookie@^0.5.2":
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/@types/cookie/-/cookie-0.5.2.tgz#9bf9d62c838c85a07c92fdf2334c2c14fd9c59a9"
+  integrity sha512-DBpRoJGKJZn7RY92dPrgoMew8xCWc2P71beqsjyhEI/Ds9mOyVmBwtekyfhpwFIVt1WrxTonFifiOZ62V8CnNA==
+
 "@types/cookies@^0.7.7":
   version "0.7.8"
   resolved "https://registry.yarnpkg.com/@types/cookies/-/cookies-0.7.8.tgz#16fccd6d58513a9833c527701a90cc96d216bc18"
