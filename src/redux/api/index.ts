@@ -1,9 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { HYDRATE } from 'next-redux-wrapper';
-import { apiUrl, isLocal } from '@/src/constants';
+import { apiUrl } from '@/src/constants';
 import { RootState } from '@/redux/store';
-import { isNull, isUndefined } from 'lodash';
-import { Setting, Locale } from '@/types/index';
+import { isUndefined } from 'lodash';
+import { Locale } from '@/types/index';
+import { Setting } from '@/types/queries';
 
 export const apiSlice = createApi({
   reducerPath: 'api',
