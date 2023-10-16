@@ -15,7 +15,7 @@ import { getUsers } from "@/utils/user";
 import { Category, Membership, Post, User } from "@/types/queries";
 import Loading from "./loading";
 import { PersonOutlineOutlined } from "@/src/constants";
-import { getCountry } from "@/utils/country";
+import { getCountries } from "@/utils/country";
 
 const tiers = [
   {
@@ -137,7 +137,7 @@ export default async function Home({ params: { lang } }: Props) {
     getPosts(`on_home=1`, lang),
     getUsers(`membership=sponsorship`, lang),
     getImages(`on_home=1`, lang),
-    getCountry(lang),
+    getCountries(`lang=${lang}&limit=1`, lang),
   ]);
 
   console.log("images", images.data[0]);
@@ -559,28 +559,29 @@ export default async function Home({ params: { lang } }: Props) {
             {sponsorships.map((s: Membership, i: number) => (
               <div
                 key={i}
-                className={"ring-gray-400 rounded-3xl p-8 ring-1 xl:p-10"}>
+                className={" ring-gray-400 rounded-3xl p-8 ring-1 xl:p-10"}>
                 <h3 className={"text-gray-900 text-lg font-semibold leading-8"}>
                   {s.name}
                 </h3>
-                <p className={"text-gray-600 mt-4 text-sm leading-6"}>
+                <p
+                  className={
+                    "min-h-[60px] line-clamp-3 text-gray-600 mt-4 text-sm leading-6"
+                  }>
                   {s.description}
                 </p>
-                <p className='mt-6 flex items-baseline gap-x-1'>
+                <p className='mt-6  h-[80px] flex items-baseline gap-x-1'>
                   <span
                     className={
                       "text-gray-900 text-4xl font-bold tracking-tight"
                     }>
                     {s.price}
                   </span>
-
                   <span
-                    className={"text-gray-600 text-sm font-semibold leading-6"}>
-                    87878
+                    className={"text-gray-600 text-lg font-semibold leading-6"}>
+                    {country[0].currency_symbol}
                   </span>
                 </p>
                 <div
-                  href={s.href}
                   className={classNames(
                     s.on_home
                       ? "bg-white/10 text-white hover:bg-white/20 focus-visible:outline-white"
