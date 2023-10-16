@@ -44,7 +44,7 @@ export default function NavHeader({
   // console.log("searchParams ----->", convertSearchParamsToString(searchParams));
   // console.log("url", changePathName(lang, "ar", pathName));
   return (
-    <header className='top-0 z-50'>
+    <header className='top-0 z-50 mx-auto max-w-7xl'>
       <nav
         className='flex items-center justify-between p-6 lg:px-8 capitalize'
         aria-label='Global'>
