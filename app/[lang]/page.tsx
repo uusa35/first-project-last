@@ -16,6 +16,7 @@ import { Category, Membership, Post, User } from "@/types/queries";
 import Loading from "./loading";
 import { PersonOutlineOutlined } from "@/src/constants";
 import { getCountries } from "@/utils/country";
+import DOMPurify from "isomorphic-dompurify";
 
 const tiers = [
   {
@@ -563,13 +564,14 @@ export default async function Home({ params: { lang } }: Props) {
                 <h3 className={"text-gray-900 text-lg font-semibold leading-8"}>
                   {s.name}
                 </h3>
-                <p
-                  className={
-                    "min-h-[60px] line-clamp-3 text-gray-600 mt-4 text-sm leading-6"
-                  }>
-                  {s.description}
-                </p>
-                <p className='mt-6  h-[80px] flex items-baseline gap-x-1'>
+
+                <div
+                  className='  h-[200px] overflow-hidden text-gray-600 mt-4 text-sm leading-6'
+                  dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(s.description),
+                  }}
+                />
+                <p className='mt-6  flex items-baseline gap-x-1'>
                   <span
                     className={
                       "text-gray-900 text-4xl font-bold tracking-tight"
@@ -582,21 +584,17 @@ export default async function Home({ params: { lang } }: Props) {
                   </span>
                 </p>
                 <div
-                  className={classNames(
-                    s.on_home
-                      ? "bg-white/10 text-white hover:bg-white/20 focus-visible:outline-white"
-                      : "bg-green-600 text-white shadow-sm hover:bg-green-500 focus-visible:outline-green-600",
-                    "mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-                  )}>
-                  {s.price}
+                  className={
+                    "bg-green-600 text-white shadow-sm hover:bg-green-500 focus-visible:outline-green-600 mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                  }>
+                  {trans.subscribe_now}
                 </div>
                 <ul
                   role='list'
-                  className={classNames(
-                    s.on_home ? "text-gray-300" : "text-gray-600",
-                    "mt-8 space-y-3 text-sm leading-6 xl:mt-10"
-                  )}>
-                  <p>{s.description}</p>
+                  className={
+                    "text-gray-600 mt-8 space-y-3 text-sm leading-6 xl:mt-10"
+                  }>
+                  <p>{s.caption}</p>
                 </ul>
               </div>
             ))}
