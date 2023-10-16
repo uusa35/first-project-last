@@ -8,11 +8,12 @@ import {
   Carousel,
   Typography,
 } from "@material-tailwind/react";
+import AppFooter from "./AppFooter";
 export { Button, Carousel, Typography };
 
 type Props = {
   children: React.ReactNode;
-  trans: {};
+  trans: { [key: string]: string };
   lang: Locale["lang"];
   searchParams: { [key: string]: string } | string;
 };
@@ -24,12 +25,24 @@ const MainContextLayout: FC<Props> = ({
   lang,
   searchParams = ``,
 }) => {
+  const navigation = [
+    { name: trans.home, href: `/${lang}` },
+    { name: trans.users, href: `/${lang}/user` },
+    { name: trans.posts, href: `/${lang}/post` },
+    { name: trans.aboutus, href: `/${lang}/aboutus` },
+    { name: trans.contactus, href: `/${lang}/contactus` },
+  ];
   return (
     <MainContext.Provider value={trans}>
       <ThemeProvider>
         {/* nav & slider */}
-        <NavHeader lang={lang} searchParams={searchParams} />
+        <NavHeader
+          lang={lang}
+          searchParams={searchParams}
+          mainPages={navigation}
+        />
         <div>{children}</div>
+        <AppFooter mainPages={navigation} />
       </ThemeProvider>
     </MainContext.Provider>
   );

@@ -39,7 +39,7 @@ export default async function Aboutus({
         </div>
 
         {/* Content section */}
-        <div className='mx-auto mt-8 max-w-7xl px-6 lg:px-8'>
+        <div className='mx-auto mt-8 max-w-7xl px-6 lg:px-8 pb-16'>
           <div className='mx-auto max-w-2xl lg:mx-0 lg:max-w-none'>
             <div className='grid max-w-xl grid-cols-1 gap-8 text-base leading-7 text-gray-800 lg:max-w-none lg:grid-cols-2'>
               <div>
@@ -74,16 +74,6 @@ export default async function Aboutus({
                 </p>
               </div>
             </div>
-            <dl className='mt-16 grid grid-cols-1 gap-x-8 gap-y-12 sm:mt-20 sm:grid-cols-2 sm:gap-y-16 lg:mt-28 lg:grid-cols-4'>
-              <div
-                // key={statIdx}
-                className='flex flex-col-reverse gap-y-3 border-l border-white/20 pl-6'>
-                <dt className='text-base leading-7 text-gray-800'>test</dt>
-                <dd className='text-3xl font-semibold tracking-tight text-black'>
-                  test
-                </dd>
-              </div>
-            </dl>
           </div>
         </div>
       </main>

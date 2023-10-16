@@ -19,9 +19,14 @@ import AppLogo from "./AppLogo";
 type Props = {
   lang: Locale;
   searchParams: { [key: string]: string } | string;
+  mainPages: { href: string; name: string }[];
 };
 
-export default function NavHeader({ lang, searchParams = `` }: Props) {
+export default function NavHeader({
+  lang,
+  searchParams = ``,
+  mainPages,
+}: Props) {
   const trans: any = useContext(MainContext);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const params = useParams();
@@ -29,14 +34,6 @@ export default function NavHeader({ lang, searchParams = `` }: Props) {
   const router = useRouter();
   const segment = useSelectedLayoutSegment();
   const segments = useSelectedLayoutSegments();
-
-  const navigation = [
-    { name: trans.home, href: `/${lang}` },
-    { name: trans.users, href: `/${lang}/user` },
-    { name: trans.posts, href: `/${lang}/post` },
-    { name: trans.aboutus, href: `/${lang}/aboutus` },
-    { name: trans.contactus, href: `/${lang}/contactus` },
-  ];
 
   // console.log("pathname", pathName);
   // console.log("router", router?.query);
@@ -64,7 +61,7 @@ export default function NavHeader({ lang, searchParams = `` }: Props) {
           </button>
         </div>
         <div className='hidden lg:flex lg:gap-x-8'>
-          {navigation.map((item, i) => (
+          {mainPages.map((item, i) => (
             <Link
               key={i}
               href={item.href}
@@ -135,7 +132,7 @@ export default function NavHeader({ lang, searchParams = `` }: Props) {
           <div className='mt-6 flow-root'>
             <div className='-my-6 divide-y divide-gray-500/10'>
               <div className='space-y-2 py-6'>
-                {navigation.map((item, i) => (
+                {mainPages.map((item, i) => (
                   <Link
                     key={i}
                     href={item.href}
