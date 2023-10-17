@@ -44,7 +44,7 @@ export default function ({ lang, searchParams = ``, mainPages }: Props) {
   const stickNavbar = () => {
     if (window !== undefined) {
       let windowHeight = window.scrollY;
-      windowHeight > 500
+      windowHeight > 300
         ? setStickyClass(
             "fixed w-full transition-opacity opacity-80 duration-200 border-b border-gray-400 bg-white pb-0 max-w-full"
           )

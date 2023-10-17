@@ -16,6 +16,8 @@ import {
 } from "@heroicons/react/24/outline";
 import LoginImage from "@/appImages/login/section.jpg";
 import SearchBar from "@/components/user/SearchBar";
+import Pagination from "@/components/Pagination";
+
 
 type Props = {
   params: { lang: Locale["lang"] };
@@ -110,6 +112,7 @@ export default async function UserIndex({
             </li>
           ))}
         </ul>
+        {users.data.length > 0 && <Pagination links={users.meta.links} />}
       </div>
     </MainContextLayout>
   );

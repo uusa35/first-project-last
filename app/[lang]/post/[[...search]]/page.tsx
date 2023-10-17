@@ -10,6 +10,7 @@ import Image from "next/image";
 import { Post } from "@/types/queries";
 import { getSetting } from "@/utils/setting";
 import LoginImage from "@/appImages/login/section.jpg";
+import Pagination from "@/components/Pagination";
 
 type Props = {
   params: { lang: Locale["lang"] };
@@ -79,6 +80,7 @@ export default async function PostIndex({
             </Link>
           ))}
         </div>
+        {posts.data.length > 0 && <Pagination links={posts.meta.links} />}
       </div>
     </MainContextLayout>
   );

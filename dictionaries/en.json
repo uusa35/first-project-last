@@ -45,6 +45,10 @@
     "search_now": "search_now",
     "ar": "ar",
     "en": "en",
-    "ru": "ru"
+    "ru": "ru",
+    "description": "description",
+    "services": "services",
+    "terms": "terms",
+    "address": "address"
   }
 }

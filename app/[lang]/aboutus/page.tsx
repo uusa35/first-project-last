@@ -2,6 +2,9 @@ import { MainContextLayout } from "@/components/MainContentLayout";
 import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
 import { getSetting } from "@/utils/setting";
+import LoginImage from "@/appImages/login/section.jpg";
+import Image from "next/image";
+import DOMPurify from "isomorphic-dompurify";
 
 export default async function Aboutus({
   params: { lang },
@@ -18,61 +21,51 @@ export default async function Aboutus({
       <main className='relative isolate mx-auto max-w-7xl'>
         {/* Image section */}
         <div className='mt-8 sm:mt-8 xl:mx-auto xl:max-w-7xl xl:px-8'>
-          <img
-            src='https://images.unsplash.com/photo-1521737852567-6949f3f9f2b5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2894&q=80'
-            alt=''
+          <Image
             className='aspect-[9/4] w-full object-cover xl:rounded-3xl'
+            width={600}
+            height={1000}
+            src={LoginImage.src}
+            alt={setting.name}
           />
         </div>
         {/* Header section */}
         <div className='px-6 pt-12 lg:px-8'>
-          <div className='mx-auto max-w-2xl text-center '>
-            <h2 className='text-4xl font-bold tracking-tight text-black sm:text-6xl'>
-              We love creators
+          <div className='mx-auto max-w-7xl text-center py-10'>
+            <h2 className='text-4xl font-bold tracking-tight text-black sm:text-4xl'>
+              {setting.name}
             </h2>
             <p className='mt-6 text-lg leading-8 text-gray-800'>
-              Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui
-              lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat
-              fugiat aliqua.
+              {setting.caption}
             </p>
           </div>
         </div>
 
         {/* Content section */}
         <div className='mx-auto mt-8 max-w-7xl px-6 lg:px-8 pb-16'>
-          <div className='mx-auto max-w-2xl lg:mx-0 lg:max-w-none'>
-            <div className='grid max-w-xl grid-cols-1 gap-8 text-base leading-7 text-gray-800 lg:max-w-none lg:grid-cols-2'>
-              <div>
-                <p>
-                  Faucibus commodo massa rhoncus, volutpat. Dignissim sed eget
-                  risus enim. Mattis mauris semper sed amet vitae sed turpis id.
-                  Id dolor praesent donec est. Odio penatibus risus viverra
-                  tellus varius sit neque erat velit. Faucibus commodo massa
-                  rhoncus, volutpat. Dignissim sed eget risus enim. Mattis
-                  mauris semper sed amet vitae sed turpis id.
-                </p>
-                <p className='mt-8'>
-                  Et vitae blandit facilisi magna lacus commodo. Vitae sapien
-                  duis odio id et. Id blandit molestie auctor fermentum
-                  dignissim. Lacus diam tincidunt ac cursus in vel. Mauris
-                  varius vulputate et ultrices hac adipiscing egestas.
-                </p>
-              </div>
-              <div>
-                <p>
-                  Erat pellentesque dictumst ligula porttitor risus eget et
-                  eget. Ultricies tellus felis id dignissim eget. Est augue
-                  maecenas risus nulla ultrices congue nunc tortor. Enim et
-                  nesciunt doloremque nesciunt voluptate.
-                </p>
-                <p className='mt-8'>
-                  Et vitae blandit facilisi magna lacus commodo. Vitae sapien
-                  duis odio id et. Id blandit molestie auctor fermentum
-                  dignissim. Lacus diam tincidunt ac cursus in vel. Mauris
-                  varius vulputate et ultrices hac adipiscing egestas. Iaculis
-                  convallis ac tempor et ut. Ac lorem vel integer orci.
-                </p>
-              </div>
+          <div className='mx-auto  lg:mx-0 lg:max-w-none'>
+            <div className='grid grid-cols-1 gap-8 text-base leading-7 text-gray-800 lg:max-w-7xl capitalize'>
+              <h3>{trans.description}</h3>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(setting.description),
+                }}></div>
+              <h3>{trans.aboutus}</h3>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(setting.aboutus),
+                }}></div>
+              <h3>{trans.services}</h3>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(setting.services),
+                }}></div>
+              <h3>{trans.address}</h3>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(setting.address),
+                }}></div>
+              <div></div>
             </div>
           </div>
         </div>
