@@ -33,7 +33,7 @@ export default async function PostIndex({
               map(users.data, (p, i) => (
                 <Link
                   key={i}
-                  href={`/${lang}/post/${p.id}`}
+                  href={`/${lang}/post/${p.id}?slug=${p.caption}`}
                   className='border-b p-3 flex flex-row items-center'>
                   <Image
                     alt={p.name}
@@ -43,7 +43,7 @@ export default async function PostIndex({
                     className='w-20 h-auto p-4'
                   />
                   <span>{p.id} - </span>
-                  <TextTrans ar={p.name} en={p.name} />
+                  <div>{p.name}</div>
                 </Link>
               ))}
           </div>
