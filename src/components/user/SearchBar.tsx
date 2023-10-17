@@ -66,7 +66,7 @@ export default function ({ trans }: Props) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className='bg-gray-50'>
+    <div className='bg-gray-50 px-4'>
       {/* Mobile filter dialog */}
       <Transition.Root show={open} as={Fragment}>
         <Dialog as='div' className='relative z-40 sm:hidden' onClose={setOpen}>
@@ -95,7 +95,7 @@ export default function ({ trans }: Props) {
                   <h2 className='text-lg font-medium text-gray-900'>Filters</h2>
                   <button
                     type='button'
-                    className='-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500'
+                    className='-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500'
                     onClick={() => setOpen(false)}>
                     <span className='sr-only'>Close menu</span>
                     <XMarkIcon className='h-6 w-6' aria-hidden='true' />
@@ -137,7 +137,7 @@ export default function ({ trans }: Props) {
                                     name={`${section.id}[]`}
                                     defaultValue={option.value}
                                     type='checkbox'
-                                    className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
+                                    className='h-4 w-4 rounded border-gray-300 text-gray-600 focus:ring-gray-500'
                                   />
                                   <label
                                     htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
@@ -253,7 +253,7 @@ export default function ({ trans }: Props) {
                               name={`${section.id}[]`}
                               defaultValue={option.value}
                               type='checkbox'
-                              className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
+                              className='h-4 w-4 rounded border-gray-300 text-gray-600 focus:ring-gray-500'
                             />
                             <label
                               htmlFor={`filter-${section.id}-${optionIdx}`}
