@@ -49,6 +49,8 @@
     "description": "description",
     "services": "services",
     "terms": "terms",
-    "address": "address"
+    "address": "address",
+    "previous": "previous",
+    "next": "next"
   }
 }
