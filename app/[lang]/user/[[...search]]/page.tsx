@@ -34,7 +34,7 @@ export default async function UserIndex({
 
   return (
     <MainContextLayout trans={trans} lang={lang} searchParams={searchParams}>
-      <div className='container   mx-auto max-w-7xl'>
+      <div className='container mx-auto max-w-7xl'>
         <Image
           className='h-80 w-full object-cover'
           width={600}
