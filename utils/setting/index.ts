@@ -11,7 +11,6 @@ export async function getSetting(lang: Locale['lang']) {
             'Accept-Language': lang
         }
     });
-    console.log('req', res)
     if (!res.ok) {
         throw new Error("Failed to fetch data");
     }

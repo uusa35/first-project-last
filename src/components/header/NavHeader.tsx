@@ -17,7 +17,7 @@ import { changePathName, convertSearchParamsToString } from "@/utils/helpers";
 import { useGetSettingQuery } from "@/redux/api";
 import AppLogo from "@/components/header/AppLogo";
 import ActiveLink from "@/components/ActiveLink";
-import { toString } from "lodash";
+import { last, split, toString } from "lodash";
 import { setCurrentPath } from "@/redux/slices/settingSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
@@ -66,6 +66,18 @@ export default function ({ lang, searchParams = ``, mainPages }: Props) {
   // console.log("searchParams", searchParams);
   // console.log("searchParams ----->", convertSearchParamsToString(searchParams));
   // console.log("url", changePathName(lang, "ar", pathName));
+  useEffect(() => {
+    if (typeof searchParams === "object") {
+      dispatch(setCurrentPath(searchParams.membership));
+    } else {
+      const url: string = toString(last(split(pathName, "/")));
+      if (url === "en" || url === "ar") {
+        dispatch(setCurrentPath("home"));
+      } else {
+        dispatch(setCurrentPath(url));
+      }
+    }
+  }, [pathName]);
   return (
     <header
       className={` top-0 z-50 mx-auto max-w-7xl py-4 px-2  ${stickyClass}`}>
@@ -159,7 +171,7 @@ export default function ({ lang, searchParams = ``, mainPages }: Props) {
                   ? `text-expo-dark text-underline`
                   : `text-gray-900`
               }
-              text-sm font-semibold leading-6  `}>
+              text-sm font-semibold leading-6  hover:text-expo-dark`}>
               {item.name}
             </Link>
           ))}
