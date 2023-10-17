@@ -52,7 +52,7 @@ export default function ({ lang, searchParams = ``, mainPages }: Props) {
       let windowHeight = window.scrollY;
       windowHeight > 300
         ? setStickyClass(
-            "fixed w-full transition-opacity opacity-80 duration-200 border-b border-gray-400 bg-white pb-0 max-w-full"
+            "sticky w-full transition-opacity opacity-80 duration-200 border-b border-gray-400 bg-white pb-0 max-w-full"
           )
         : setStickyClass("relative");
     }

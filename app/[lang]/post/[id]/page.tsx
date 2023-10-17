@@ -20,7 +20,7 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
 
   return (
     <MainContextLayout trans={trans} lang={lang} searchParams={``}>
-      <main className='relative isolate mx-auto max-w-7xl'>
+      <main className='relative isolate mx-auto max-w-7xl h-screen'>
         {/* Image section */}
         <div className='mt-8 sm:mt-8 xl:mx-auto xl:max-w-7xl xl:px-8'>
           <div className='absolute left-10 top-10'>
