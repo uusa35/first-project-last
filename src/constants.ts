@@ -1,5 +1,5 @@
 'use client';
-import { kebabCase } from 'lodash';
+import { kebabCase, truncate } from 'lodash';
 import { localeType } from '@/types/index';
 import { Locale } from '@/types/index';
 export const baseUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}`;
@@ -9,7 +9,8 @@ export const imageUrl = `https://loremflickr.com/`;
 export const isLocal = process.env.NODE_ENV !== 'production';
 export const suppressText = true;
 import { PersonOutlineOutlined } from "@mui/icons-material";
-export { PersonOutlineOutlined };
+export { PersonOutlineOutlined, truncate };
+
 
 export const appLinks = {
     home: (lang: Locale['lang']) =>

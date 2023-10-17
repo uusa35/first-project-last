@@ -1,8 +1,6 @@
 import { MainContextLayout } from "@/components/MainContentLayout";
-import TextTrans from "@/components/TextTrans";
 import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
-import { appLinks } from "@/src/constants";
 import { convertSearchParamsToString } from "@/utils/helpers";
 import { getUsers } from "@/utils/user";
 import { getSetting } from "@/utils/setting";
@@ -18,7 +16,6 @@ import {
 } from "@heroicons/react/24/outline";
 import LoginImage from "@/appImages/login/section.jpg";
 import SearchBar from "@/components/user/SearchBar";
-
 
 type Props = {
   params: { lang: Locale["lang"] };
@@ -81,8 +78,8 @@ export default async function UserIndex({
                     {u.categories.map((u: Category, i: number) => (
                       <span
                         key={u.id}
-                        className='truncate col-span-1 text-[10px] xl:text-[12px] inline-flex items-center rounded-full bg-expo-light px-2 py-1 font-medium text-green-700 ring-1 ring-inset ring-green-600/20'>
-                        {u.name}
+                        className='truncate col-span-1 text-[8px] xl:text-[12px] inline-flex items-center rounded-full bg-expo-light hover:bg-expo-dark hover:text-white px-2 py-1 font-medium text-green-700 ring-1 ring-inset ring-green-600/20'>
+                        {u.name.slice(0, 12)}..
                       </span>
                     ))}
                   </dd>
