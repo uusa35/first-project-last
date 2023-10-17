@@ -28,7 +28,7 @@ export default async function PostIndex({
 
   return (
     <MainContextLayout trans={trans} lang={lang} searchParams={``}>
-      <div className='container mx-auto max-w-7xl'>
+      <div className='container mx-auto max-w-7xl min-h-screen'>
         <Image
           className='h-80 w-full object-cover'
           width={600}

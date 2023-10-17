@@ -13,7 +13,7 @@ export default async function Contactus({
 
   return (
     <MainContextLayout trans={trans} lang={lang} searchParams={``}>
-      <div className='relative bg-white mx-auto max-w-7xl'>
+      <div className='relative bg-white mx-auto max-w-7xl min-h-screen'>
         <div className='lg:absolute lg:inset-0 lg:ltr:left-1/2 lg:rtl:right-1/2'>
           <img
             className='h-64 w-full bg-gray-50 object-cover sm:h-80 lg:absolute lg:h-full'

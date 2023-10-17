@@ -18,7 +18,7 @@ export default async function Aboutus({
 
   return (
     <MainContextLayout trans={trans} lang={lang} searchParams={``}>
-      <main className='relative isolate mx-auto max-w-7xl'>
+      <main className='relative isolate mx-auto max-w-7xl min-h-screen'>
         {/* Image section */}
         <div className='mt-8 sm:mt-8 xl:mx-auto xl:max-w-7xl xl:px-8'>
           <Image
