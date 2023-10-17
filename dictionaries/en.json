@@ -42,6 +42,9 @@
     "subscribe_now": "subscribe_now",
     "view_company_details": "view_company_details",
     "sort": "sort",
-    "search_now": "search_now"
+    "search_now": "search_now",
+    "ar": "ar",
+    "en": "en",
+    "ru": "ru"
   }
 }

@@ -22,11 +22,7 @@ type Props = {
   mainPages: { href: string; name: string }[];
 };
 
-export default function NavHeader({
-  lang,
-  searchParams = ``,
-  mainPages,
-}: Props) {
+export default function ({ lang, searchParams = ``, mainPages }: Props) {
   const trans: any = useContext(MainContext);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const params = useParams();
@@ -66,7 +62,7 @@ export default function NavHeader({
   // console.log("url", changePathName(lang, "ar", pathName));
   return (
     <header
-      className={` top-0 z-50 mx-auto max-w-7xl py-4 px-2 ${stickyClass}`}>
+      className={` top-0 z-50 mx-auto max-w-7xl py-4 px-2  ${stickyClass}`}>
       <nav className={`flex items-center justify-between`} aria-label='Global'>
         <div className=' lg:hidden xl:flex-1'>
           <AppLogo />
@@ -79,16 +75,7 @@ export default function NavHeader({
               pathName
             )}?${convertSearchParamsToString(searchParams)}`}
             className='text-sm font-semibold leading-6 text-gray-900'>
-            ar
-          </Link>
-          <Link
-            href={`${changePathName(
-              lang,
-              "ru",
-              pathName
-            )}?${convertSearchParamsToString(searchParams)}`}
-            className='text-sm font-semibold leading-6 text-gray-900'>
-            ru
+            {trans.ar}
           </Link>
           <Link
             href={`${changePathName(
@@ -97,7 +84,16 @@ export default function NavHeader({
               pathName
             )}?${convertSearchParamsToString(searchParams)}`}
             className='text-sm font-semibold leading-6 text-gray-900'>
-            en
+            {trans.en}
+          </Link>
+          <Link
+            href={`${changePathName(
+              lang,
+              "ru",
+              pathName
+            )}?${convertSearchParamsToString(searchParams)}`}
+            className='text-sm font-semibold leading-6 text-gray-900'>
+            {trans.ru}
           </Link>
         </div>
         <div className='flex lg:hidden capitalize'>
@@ -179,7 +175,7 @@ export default function NavHeader({
           </div>
           <div className='mt-6 flow-root'>
             <div className='-my-6 divide-y divide-gray-500/10'>
-              <div className='space-y-2 py-6'>
+              <div className='space-y-2 py-6 capitalize'>
                 {mainPages.map((item, i) => (
                   <Link
                     key={i}
@@ -189,12 +185,48 @@ export default function NavHeader({
                   </Link>
                 ))}
               </div>
-              <div className='py-6 '>
+              <div className='py-6 capitalize'>
                 <Link
                   href={`/${lang}/login`}
-                  className='-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'>
+                  className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'>
                   {trans.login}
                 </Link>
+                <div className='flex flex-row justify-between items-center px-8 ps-12'>
+                  <Link
+                    href={`${changePathName(
+                      lang,
+                      "ar",
+                      pathName
+                    )}?${convertSearchParamsToString(searchParams)}`}
+                    className={`${
+                      lang === "ar" && `bg-gray-200 rounded-md`
+                    } -mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50`}>
+                    {trans.ar}
+                  </Link>
+
+                  <Link
+                    href={`${changePathName(
+                      lang,
+                      "en",
+                      pathName
+                    )}?${convertSearchParamsToString(searchParams)}`}
+                    className={`${
+                      lang === "en" && `bg-gray-200 rounded-md`
+                    } -mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50`}>
+                    {trans.en}
+                  </Link>
+                  <Link
+                    href={`${changePathName(
+                      lang,
+                      "ru",
+                      pathName
+                    )}?${convertSearchParamsToString(searchParams)}`}
+                    className={`${
+                      lang === "ru" && `bg-gray-200 rounded-md`
+                    } -mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50`}>
+                    {trans.ru}
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
