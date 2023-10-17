@@ -7,9 +7,5 @@ const dictionaries = {
     ru: () => import('@/dictionaries/ru.json').then(module => module.default)
 }
 
-// export const getDictionary = async (locale: Locale) => {
-//     return locale == 'ar' ? dictionaries.ar() : dictionaries.en();
-// };
-
 export const getDictionary = async (locale: Locale) => dictionaries[i18n.locales.includes(locale) ? locale : i18n.defaultLocale]();
 

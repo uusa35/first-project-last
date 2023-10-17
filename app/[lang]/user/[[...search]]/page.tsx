@@ -19,6 +19,7 @@ import {
 import LoginImage from "@/appImages/login/section.jpg";
 import SearchBar from "@/components/user/SearchBar";
 
+
 type Props = {
   params: { lang: Locale["lang"] };
   searchParams: { [key: string]: string } | string;
