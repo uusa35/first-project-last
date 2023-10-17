@@ -17,16 +17,21 @@ import { changePathName, convertSearchParamsToString } from "@/utils/helpers";
 import { useGetSettingQuery } from "@/redux/api";
 import AppLogo from "@/components/header/AppLogo";
 import ActiveLink from "@/components/ActiveLink";
+import { toString } from "lodash";
+import { setCurrentPath } from "@/redux/slices/settingSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
 type Props = {
   lang: Locale;
   searchParams: { [key: string]: string } | string;
-  mainPages: { href: string; name: string }[];
+  mainPages: { href: string; name: string; label: string }[];
 };
 
 export default function ({ lang, searchParams = ``, mainPages }: Props) {
   const trans: any = useContext(MainContext);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { currentPath } = useAppSelector((state) => state.appSetting);
+  const dispatch = useAppDispatch();
   const params = useParams();
   const pathName = usePathname()!;
   const router = useRouter();
@@ -53,10 +58,10 @@ export default function ({ lang, searchParams = ``, mainPages }: Props) {
     }
   };
 
-  console.log("pathname", pathName);
-  console.log("router", router);
-  console.log("segment", segment);
-  console.log("segments", segments);
+  // console.log("pathname", pathName);
+  // console.log("router", router);
+  // console.log("segment", segment);
+  // console.log("segments", segments);
   // console.log("params", params);
   // console.log("searchParams", searchParams);
   // console.log("searchParams ----->", convertSearchParamsToString(searchParams));
@@ -146,9 +151,15 @@ export default function ({ lang, searchParams = ``, mainPages }: Props) {
         <div className='hidden lg:flex lg:gap-x-8 '>
           {mainPages.map((item, i) => (
             <Link
+              onClick={() => dispatch(setCurrentPath(item.label))}
               key={i}
               href={item.href}
-              className='text-sm font-semibold leading-6 text-gray-900'>
+              className={`${
+                currentPath === item.label
+                  ? `text-expo-dark text-underline`
+                  : `text-gray-900`
+              }
+              text-sm font-semibold leading-6  `}>
               {item.name}
             </Link>
           ))}

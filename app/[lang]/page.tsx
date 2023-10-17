@@ -619,7 +619,7 @@ export default async function Home({ params: { lang } }: Props) {
           </div>
           <ul
             role='list'
-            className='mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-4 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3'>
+            className='mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-4 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-4'>
             {images.data.map((img: any, i: number) => (
               <li key={i}>
                 <Image
@@ -629,12 +629,16 @@ export default async function Home({ params: { lang } }: Props) {
                   width={200}
                   height={200}
                 />
-                <h3 className='mt-6 text-lg font-semibold leading-8 tracking-tight text-gray-900'>
-                  {img.name}
-                </h3>
-                <p className='text-base leading-7 text-gray-600'>
-                  {img.caption}
-                </p>
+                {img.name && (
+                  <>
+                    <h3 className='mt-6 text-lg font-semibold leading-8 tracking-tight text-gray-900'>
+                      {img.name}
+                    </h3>
+                    <p className='text-base leading-7 text-gray-600'>
+                      {img.caption}
+                    </p>
+                  </>
+                )}
               </li>
             ))}
           </ul>

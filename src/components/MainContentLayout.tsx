@@ -26,12 +26,20 @@ const MainContextLayout: FC<Props> = ({
   searchParams = ``,
 }) => {
   const navigation = [
-    { name: trans.home, href: `/${lang}` },
-    { name: trans.subscribers, href: `/${lang}/user?membership=subscription` },
-    { name: trans.sponsors, href: `/${lang}/user?membership=sponsorship` },
-    { name: trans.posts, href: `/${lang}/post` },
-    { name: trans.aboutus, href: `/${lang}/aboutus` },
-    { name: trans.contactus, href: `/${lang}/contactus` },
+    { name: trans.home, href: `/${lang}`, label: `home` },
+    {
+      name: trans.subscribers,
+      href: `/${lang}/user?membership=subscription`,
+      label: "subscription",
+    },
+    {
+      name: trans.sponsors,
+      href: `/${lang}/user?membership=sponsorship`,
+      label: "sponsorship",
+    },
+    { name: trans.posts, href: `/${lang}/post`, label: "post" },
+    { name: trans.aboutus, href: `/${lang}/aboutus`, label: "aboutus" },
+    { name: trans.contactus, href: `/${lang}/contactus`, label: "contactus" },
   ];
   return (
     <MainContext.Provider value={trans}>
