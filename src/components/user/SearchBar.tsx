@@ -66,7 +66,7 @@ export default function ({ trans }: Props) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className='bg-gray-50 px-4'>
+    <div className='bg-gray-50 px-4 capitalize'>
       {/* Mobile filter dialog */}
       <Transition.Root show={open} as={Fragment}>
         <Dialog as='div' className='relative z-40 sm:hidden' onClose={setOpen}>
@@ -167,10 +167,10 @@ export default function ({ trans }: Props) {
             Product filters
           </h2>
 
-          <div className='flex items-center justify-between'>
+          <div className='flex items-center justify-between '>
             <Menu as='div' className='relative inline-block text-left'>
               <div>
-                <Menu.Button className='group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900'>
+                <Menu.Button className='group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900 capitalize'>
                   {trans.sort}
                   <ChevronDownIcon
                     className='-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500'

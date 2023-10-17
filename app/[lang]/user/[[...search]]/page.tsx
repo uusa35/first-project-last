@@ -54,7 +54,7 @@ export default async function UserIndex({
 
         <ul
           role='list'
-          className='grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 py-12 after:px-8 xl:px-0'>
+          className='grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 py-12 after:px-8 px-4 xl:px-0'>
           {users.data.map((u: User, i: number) => (
             <li
               key={i}
@@ -76,11 +76,11 @@ export default async function UserIndex({
                   <dt className='sr-only'>Title</dt>
                   <dd className='text-sm text-gray-500'>{u.caption}</dd>
                   <dt className='sr-only'>Role</dt>
-                  <dd className='mt-3 text-center grid grid-cols-3 justify-center items-center gap-2'>
+                  <dd className='mt-3 text-center grid grid-cols-3 justify-center items-center gap-1'>
                     {u.categories.map((u: Category, i: number) => (
                       <span
                         key={u.id}
-                        className='truncate col-span-1 text-[10px] inline-flex items-center rounded-full bg-expo-light px-2 py-1 font-medium text-green-700 ring-1 ring-inset ring-green-600/20'>
+                        className='truncate col-span-1 text-[10px] xl:text-[12px] inline-flex items-center rounded-full bg-expo-light px-2 py-1 font-medium text-green-700 ring-1 ring-inset ring-green-600/20'>
                         {u.name}
                       </span>
                     ))}
@@ -93,7 +93,8 @@ export default async function UserIndex({
                     <Link
                       href={`/${lang}/user/${u.id}?slug=${u.name}`}
                       className='relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900'>
-                      {lang === "ar" ? (
+                      {trans.view_company_details}
+                      {lang !== "ar" ? (
                         <ArrowRightIcon
                           className='h-5 w-5 text-gray-400'
                           aria-hidden='true'
@@ -104,8 +105,6 @@ export default async function UserIndex({
                           aria-hidden='true'
                         />
                       )}
-
-                      {trans.view_company_details}
                     </Link>
                   </div>
                 </div>
