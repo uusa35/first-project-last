@@ -169,12 +169,12 @@ export default async function Home({ params: { lang } }: Props) {
                 autoComplete='email'
                 required
                 className='min-w-0 flex-auto rounded-md border-0 px-3.5 py-2 h-14 text-black bg-gray-100 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-white sm:text-sm sm:leading-6'
-                placeholder='Enter your email'
+                placeholder={trans.enter_ur_email}
               />
               <button
                 type='submit'
                 className='flex-none rounded-md bg-green-900 text-white px-3.5 py-2.5 text-sm font-semibold  shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'>
-                Search Now
+                {trans.search_now}
               </button>
             </form>
           </div>
@@ -198,7 +198,8 @@ export default async function Home({ params: { lang } }: Props) {
             className='mx-auto mt-10 grid  grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-5'>
             {categories.data.map((c: Category) => (
               <li key={c.id}>
-                <Link href={`/${lang}/user?category_id=${c.id}`}>
+                <Link
+                  href={`/${lang}/user?category_id=${c.id}&membership=subscription`}>
                   <Image
                     className='aspect-[3/2] w-full rounded-2xl object-cover hover:scale-105 duration-200 shadow-lg'
                     src={c.imageLarge}

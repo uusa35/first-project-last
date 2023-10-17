@@ -3,6 +3,7 @@ import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
 import { getSetting } from "@/utils/setting";
 import Image from "next/image";
+import LoginImage from "@/appImages/login/section.jpg";
 
 export default async function Aboutus({
   params: { lang },
@@ -18,12 +19,12 @@ export default async function Aboutus({
     <MainContextLayout trans={trans} lang={lang} searchParams={``}>
       <div className='flex min-h-full flex-1 mx-auto max-w-7xl'>
         <div className='flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24'>
-          <div className='mx-auto w-full min-h-screen max-w-sm lg:w-96'>
+          <div className='mx-auto w-full  max-w-sm lg:w-96 '>
             <div>
               <Image
                 width={200}
                 height={200}
-                className='h-22 w-auto object-contain'
+                className=' w-auto object-contain'
                 src={setting.image}
                 alt={setting.name}
               />
@@ -34,7 +35,7 @@ export default async function Aboutus({
                 Not a member?{" "}
                 <a
                   href='#'
-                  className='font-semibold text-indigo-600 hover:text-indigo-500'>
+                  className='font-semibold text-gray-600 hover:text-gray-500'>
                   Start a 14 day free trial
                 </a>
               </p>
@@ -56,7 +57,7 @@ export default async function Aboutus({
                         type='email'
                         autoComplete='email'
                         required
-                        className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                        className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6'
                       />
                     </div>
                   </div>
@@ -74,7 +75,7 @@ export default async function Aboutus({
                         type='password'
                         autoComplete='current-password'
                         required
-                        className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                        className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6'
                       />
                     </div>
                   </div>
@@ -85,7 +86,7 @@ export default async function Aboutus({
                         id='remember-me'
                         name='remember-me'
                         type='checkbox'
-                        className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600'
+                        className='h-4 w-4 rounded border-gray-300 text-gray-600 focus:ring-gray-600'
                       />
                       <label
                         htmlFor='remember-me'
@@ -97,7 +98,7 @@ export default async function Aboutus({
                     <div className='text-sm leading-6'>
                       <a
                         href='#'
-                        className='font-semibold text-indigo-600 hover:text-indigo-500'>
+                        className='font-semibold text-gray-600 hover:text-gray-500'>
                         Forgot password?
                       </a>
                     </div>
@@ -106,7 +107,7 @@ export default async function Aboutus({
                   <div>
                     <button
                       type='submit'
-                      className='flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'>
+                      className='flex w-full justify-center btn-color-default'>
                       Sign in
                     </button>
                   </div>
@@ -167,10 +168,12 @@ export default async function Aboutus({
           </div>
         </div>
         <div className='relative hidden w-0 flex-1 lg:block'>
-          <img
+          <Image
             className='absolute inset-0 h-full w-full object-cover'
-            src='https://images.unsplash.com/photo-1496917756835-20cb06e75b4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1908&q=80'
-            alt=''
+            width={600}
+            height={1000}
+            src={LoginImage.src}
+            alt={setting.name}
           />
         </div>
       </div>

@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import type { Locale } from "@/i18n.config";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Bars3Icon, UserIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { MainContext } from "../MainContentLayout";
@@ -35,6 +35,27 @@ export default function NavHeader({
   const segment = useSelectedLayoutSegment();
   const segments = useSelectedLayoutSegments();
 
+  const [stickyClass, setStickyClass] = useState("");
+
+  useEffect(() => {
+    window.addEventListener("scroll", stickNavbar);
+
+    return () => {
+      window.removeEventListener("scroll", stickNavbar);
+    };
+  }, []);
+
+  const stickNavbar = () => {
+    if (window !== undefined) {
+      let windowHeight = window.scrollY;
+      windowHeight > 500
+        ? setStickyClass(
+            "fixed w-full transition-opacity opacity-80 duration-200 border-b border-gray-400 bg-white pb-0 max-w-full"
+          )
+        : setStickyClass("relative");
+    }
+  };
+
   // console.log("pathname", pathName);
   // console.log("router", router?.query);
   // console.log("segment", segment);
@@ -44,14 +65,13 @@ export default function NavHeader({
   // console.log("searchParams ----->", convertSearchParamsToString(searchParams));
   // console.log("url", changePathName(lang, "ar", pathName));
   return (
-    <header className='top-0 z-50 mx-auto max-w-7xl py-4 px-2'>
-      <nav
-        className='flex items-center justify-between  capitalize'
-        aria-label='Global'>
+    <header
+      className={` top-0 z-50 mx-auto max-w-7xl py-4 px-2 ${stickyClass}`}>
+      <nav className={`flex items-center justify-between`} aria-label='Global'>
         <div className=' lg:hidden xl:flex-1'>
           <AppLogo />
         </div>
-        <div className='hidden lg:flex lg:flex-1  gap-x-4'>
+        <div className='hidden lg:flex lg:flex-1  gap-x-4 capitalize'>
           <Link
             href={`${changePathName(
               lang,
@@ -80,7 +100,7 @@ export default function NavHeader({
             en
           </Link>
         </div>
-        <div className='flex lg:hidden'>
+        <div className='flex lg:hidden capitalize'>
           <button
             type='button'
             className='-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700'
@@ -92,7 +112,7 @@ export default function NavHeader({
         <div className='hidden lg:flex lg:gap-x-8'>
           <AppLogo />
         </div>
-        <div className='hidden lg:flex lg:flex-1 lg:justify-end items-center gap-x-4'>
+        <div className='hidden lg:flex lg:flex-1 lg:justify-end items-center gap-x-4 capitalize'>
           <Link
             href={`/${lang}/register/visitor`}
             className='text-sm font-semibold leading-6 text-white p-2 px-4 btn-color-default '>
@@ -147,11 +167,7 @@ export default function NavHeader({
           <div className='flex items-center justify-between'>
             <Link href='/' className='-m-1.5 p-1.5'>
               <span className='sr-only'>Your Company</span>
-              <img
-                className='h-8 w-auto'
-                src='https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600'
-                alt=''
-              />
+              <AppLogo />
             </Link>
             <button
               type='button'
@@ -173,7 +189,7 @@ export default function NavHeader({
                   </Link>
                 ))}
               </div>
-              <div className='py-6 bg-blue-800'>
+              <div className='py-6 '>
                 <Link
                   href={`/${lang}/login`}
                   className='-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'>
