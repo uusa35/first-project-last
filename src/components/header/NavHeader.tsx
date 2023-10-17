@@ -15,7 +15,9 @@ import {
 } from "next/navigation";
 import { changePathName, convertSearchParamsToString } from "@/utils/helpers";
 import { useGetSettingQuery } from "@/redux/api";
-import AppLogo from "./AppLogo";
+import AppLogo from "@/components/header/AppLogo";
+import ActiveLink from "@/components/ActiveLink";
+
 type Props = {
   lang: Locale;
   searchParams: { [key: string]: string } | string;
@@ -30,7 +32,6 @@ export default function ({ lang, searchParams = ``, mainPages }: Props) {
   const router = useRouter();
   const segment = useSelectedLayoutSegment();
   const segments = useSelectedLayoutSegments();
-
   const [stickyClass, setStickyClass] = useState("");
 
   useEffect(() => {
@@ -52,10 +53,10 @@ export default function ({ lang, searchParams = ``, mainPages }: Props) {
     }
   };
 
-  // console.log("pathname", pathName);
-  // console.log("router", router?.query);
-  // console.log("segment", segment);
-  // console.log("segments", segments);
+  console.log("pathname", pathName);
+  console.log("router", router);
+  console.log("segment", segment);
+  console.log("segments", segments);
   // console.log("params", params);
   // console.log("searchParams", searchParams);
   // console.log("searchParams ----->", convertSearchParamsToString(searchParams));
@@ -67,6 +68,7 @@ export default function ({ lang, searchParams = ``, mainPages }: Props) {
         <div className=' lg:hidden xl:flex-1'>
           <AppLogo />
         </div>
+        {/* top bar */}
         <div className='hidden lg:flex lg:flex-1  gap-x-4 capitalize'>
           <Link
             href={`${changePathName(
@@ -105,9 +107,16 @@ export default function ({ lang, searchParams = ``, mainPages }: Props) {
             <Bars3Icon className='h-6 w-6' aria-hidden='true' />
           </button>
         </div>
+        {/* menu */}
         <div className='hidden lg:flex lg:gap-x-8'>
           <AppLogo />
         </div>
+        {/* <ActiveLink
+          activeClassName='active'
+          className='border-4 bg-green-800 active:bg-blue-700'
+          href='/'>
+          Home
+        </ActiveLink> */}
         <div className='hidden lg:flex lg:flex-1 lg:justify-end items-center gap-x-4 capitalize'>
           <Link
             href={`/${lang}/register/visitor`}

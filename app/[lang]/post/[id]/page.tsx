@@ -24,7 +24,7 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
         {/* Image section */}
         <div className='mt-8 sm:mt-8 xl:mx-auto xl:max-w-7xl xl:px-8'>
           <div className='absolute left-10 top-10'>
-            <span className={` text-gray-400 bg-white/50 p-4 rounded-md`}>
+            <span className={` text-gray-800 bg-white/50 p-4 rounded-md`}>
               {post.created_at}
             </span>
           </div>
