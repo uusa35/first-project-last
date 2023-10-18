@@ -9,6 +9,8 @@ import { useContext } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setMembership } from "@/redux/slices/cartSlice";
 import { isNull } from "lodash";
+import { useRouter } from "next/navigation";
+
 type Props = {
   element: Membership;
   country: Country;
@@ -18,8 +20,12 @@ export default async function ({ element, country, lang }: Props) {
   const trans: { [key: string]: string } = useContext(MainContext);
   const dispatch = useAppDispatch();
   const {
-    payment: { queryString, paymentUrl },
-  } = useAppSelector((state) => state.cart);
+    cart: {
+      payment: { queryString, paymentUrl },
+    },
+    auth: { isAuth },
+  } = useAppSelector((state) => state);
+  const router = useRouter();
   // const messageId = "1";
   // const transactionId = random(999999, 9999999);
   // const merchantId = `RB0000002`;
@@ -39,7 +45,11 @@ export default async function ({ element, country, lang }: Props) {
   const handleSubscribe = (e: Membership) => {
     // will check auth first ==> go to company register
     // else set to cart
-    dispatch(setMembership({ membership: e, country, lang }));
+    if (isAuth) {
+      dispatch(setMembership({ membership: e, country, lang }));
+    } else {
+      router.push(`/login`);
+    }
   };
 
   return (
@@ -67,14 +77,14 @@ export default async function ({ element, country, lang }: Props) {
         className={
           "bg-green-600 text-white shadow-sm hover:bg-green-500 focus-visible:outline-green-600 mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
         }>
-        {trans.subscribe_now}
+        {isAuth ? trans.register_now_to_subscribe : trans.subscribe_now}
       </button>
       <ul
         role='list'
         className={"text-gray-600 mt-8 space-y-3 text-sm leading-6 xl:mt-10"}>
         <p>{element.caption}</p>
       </ul>
-      {!isNull(queryString) && (
+      {!isNull(queryString) && isAuth && (
         <form
           action={`${paymentUrl}${queryString}`}
           className={"border-4 bg-blue-600"}

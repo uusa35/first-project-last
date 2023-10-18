@@ -59,7 +59,6 @@ let store: any = configureStore({
       }).concat([
         apiSlice.middleware,
         categoryApi.middleware,
-
         sagaMiddleware,
         appLogger,
       ])
@@ -79,7 +78,6 @@ let store: any = configureStore({
       }).concat([
         apiSlice.middleware,
         categoryApi.middleware,
-
         sagaMiddleware,
       ]),
 });
