@@ -17,14 +17,19 @@ type Props = {
   searchParams: { [key: string]: string };
 };
 export default async function ({ params: { lang, id }, searchParams }: Props) {
-  const [{ trans }, membership, country] = await Promise.all([
+  const [{ trans }, membership, country, setting] = await Promise.all([
     getDictionary(lang),
     getMembership(id, lang),
     getCountries(`lang=${lang}&limit=1`, lang),
+    getSetting(lang),
   ]);
 
   return (
-    <MainContextLayout trans={trans} lang={lang} searchParams={``}>
+    <MainContextLayout
+      trans={trans}
+      lang={lang}
+      searchParams={``}
+      setting={setting}>
       <h1>subscriptions</h1>
       <div className='isolate mx-auto mt-10 grid max-w-md grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3'>
         <MembershipCard element={membership} lang={lang} country={country[0]} />

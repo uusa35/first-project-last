@@ -10,7 +10,6 @@ import {
 } from "@material-tailwind/react";
 import AppFooter from "./footer/AppFooter";
 import { Setting } from "@/types/queries";
-import { useGetSettingQuery } from "@/redux/api";
 export { Button, Carousel, Typography };
 
 type Props = {
@@ -18,6 +17,7 @@ type Props = {
   trans: { [key: string]: string };
   lang: Locale["lang"];
   searchParams: { [key: string]: string } | string;
+  setting: Setting;
 };
 
 const MainContext = createContext({});
@@ -26,6 +26,7 @@ const MainContextLayout: FC<Props> = ({
   trans,
   lang,
   searchParams = ``,
+  setting
 }) => {
   const navigation = [
     { name: trans.home, href: `/${lang}`, label: `home` },
@@ -47,14 +48,16 @@ const MainContextLayout: FC<Props> = ({
     <MainContext.Provider value={trans}>
       <ThemeProvider>
         {/* nav & slider */}
-        <NavHeader
-          lang={lang}
-          searchParams={searchParams}
-          mainPages={navigation}
-        />
-        <div>{children}</div>
         <Suspense>
-          <AppFooter mainPages={navigation} lang={lang} trans={trans} />
+          <NavHeader
+            lang={lang}
+            searchParams={searchParams}
+            mainPages={navigation}
+            setting={setting}
+          />
+          <div>{children}</div>
+
+          <AppFooter mainPages={navigation} lang={lang} trans={trans} setting={setting} />
         </Suspense>
       </ThemeProvider>
     </MainContext.Provider>

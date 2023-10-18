@@ -6,6 +6,7 @@ import ToastAppContainer from "@/components/ToastAppContainer";
 import moment from "moment";
 import * as yup from "yup";
 import type { Locale } from "@/i18n.config";
+import { Setting } from "@/types/queries";
 
 type Props = {
   children: ReactNode | undefined;

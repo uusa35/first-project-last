@@ -4,21 +4,17 @@ import Link from "next/link";
 import { Setting } from "@/types/queries";
 import Image from "next/image";
 
-export default function () {
-  const { data: setting, isSuccess } = useGetSettingQuery<{
-    data: Setting;
-    isSuccess: boolean;
-  }>({});
-  if (!isSuccess) return null;
+export default function ({ logo , name } : { logo : string , name : string}) {
+  
   return (
     <Link href='/' className='-m-1.5 p-1.5'>
-      <span className='sr-only'>{setting.name}</span>
+      <span className='sr-only'>{name}</span>
       <Image
         width={100}
         height={100}
-        alt={setting.name}
+        alt={name}
         className='h-8 w-auto'
-        src={setting.image}
+        src={logo}
       />
     </Link>
   );

@@ -17,7 +17,7 @@ type Props = {
   country: Country;
   lang: Locale["lang"];
 };
-export default async function ({ element, country, lang }: Props) {
+export default function ({ element, country, lang }: Props) {
   const trans: { [key: string]: string } = useContext(MainContext);
   const dispatch = useAppDispatch();
   const {

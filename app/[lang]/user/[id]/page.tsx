@@ -21,7 +21,11 @@ export default async function UserShow({
   ]);
 
   return (
-    <MainContextLayout trans={trans} lang={lang} searchParams={``}>
+    <MainContextLayout
+      trans={trans}
+      lang={lang}
+      searchParams={``}
+      setting={setting}>
       <div>Post Name : {user.name}</div>
     </MainContextLayout>
   );

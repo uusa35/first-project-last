@@ -147,7 +147,7 @@ export default async function Home({ params: { lang } }: Props) {
   ]);
 
   return (
-    <MainContextLayout trans={trans} lang={lang} searchParams={``}>
+    <MainContextLayout trans={trans} lang={lang} searchParams={``} setting={setting}>
       {/* slider */}
       {/* <MainSlider slides={slides} lang={lang} /> */}
       {/* search */}

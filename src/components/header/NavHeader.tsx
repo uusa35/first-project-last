@@ -14,20 +14,25 @@ import {
   useSelectedLayoutSegments,
 } from "next/navigation";
 import { changePathName, convertSearchParamsToString } from "@/utils/helpers";
-import { useGetSettingQuery } from "@/redux/api";
 import AppLogo from "@/components/header/AppLogo";
-import ActiveLink from "@/components/ActiveLink";
 import { last, split, toString } from "lodash";
 import { setCurrentPath } from "@/redux/slices/settingSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { Setting } from "@/types/queries";
 
 type Props = {
   lang: Locale;
   searchParams: { [key: string]: string } | string;
   mainPages: { href: string; name: string; label: string }[];
+  setting: Setting;
 };
 
-export default function ({ lang, searchParams = ``, mainPages }: Props) {
+export default function ({
+  lang,
+  searchParams = ``,
+  mainPages,
+  setting,
+}: Props) {
   const trans: { [key: string]: string } = useContext(MainContext);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { currentPath } = useAppSelector((state) => state.appSetting);
@@ -83,7 +88,7 @@ export default function ({ lang, searchParams = ``, mainPages }: Props) {
       className={` top-0 z-50 mx-auto max-w-7xl py-4 px-2  ${stickyClass}`}>
       <nav className={`flex items-center justify-between`} aria-label='Global'>
         <div className=' lg:hidden xl:flex-1'>
-          <AppLogo />
+          <AppLogo logo={setting.image} name={setting.name} />
         </div>
         {/* top bar */}
         <div className='hidden lg:flex lg:flex-1  gap-x-4 capitalize'>
