@@ -7,6 +7,7 @@ type Props = {
   name: string;
   lang: Locale["lang"];
 };
+
 export default function ({ logo, name, lang }: Props) {
   return (
     <Link href={`/${lang}`} className='-m-1.5 p-1.5'>

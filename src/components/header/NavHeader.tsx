@@ -54,9 +54,9 @@ export default function ({
   const stickNavbar = () => {
     if (window !== undefined) {
       let windowHeight = window.scrollY;
-      windowHeight >= 300
+      windowHeight >= 250
         ? setStickyClass(
-            "sticky w-full transition-opacity opacity-80 duration-200 border-b border-gray-400 bg-white pb-0 max-w-full"
+            "sticky top-0 bg-white/80 w-full border-b border-gray-400"
           )
         : setStickyClass("relative");
     }
