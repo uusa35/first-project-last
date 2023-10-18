@@ -173,11 +173,11 @@ export default async function Home({ params: { lang } }: Props) {
                 autoComplete='email'
                 required
                 className='min-w-0 flex-auto rounded-md border-0 px-3.5 py-2 h-14 text-black bg-gray-100 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-white sm:text-sm sm:leading-6'
-                placeholder={trans.enter_ur_email}
+                placeholder={trans.search_now}
               />
               <button
                 type='submit'
-                className='flex-none rounded-md bg-green-900 text-white px-3.5 py-2.5 text-sm font-semibold  shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'>
+                className='flex-none btn-color-default px-3.5 py-2.5 text-sm font-semibold '>
                 {trans.search_now}
               </button>
             </form>
