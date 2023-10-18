@@ -134,7 +134,7 @@ export default function ({
         </div>
         {/* menu */}
         <div className='hidden lg:flex lg:gap-x-8'>
-          <AppLogo />
+          <AppLogo logo={setting.image} name={setting.name} />
         </div>
         {/* <ActiveLink
           activeClassName='active'
