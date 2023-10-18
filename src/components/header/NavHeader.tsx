@@ -164,7 +164,7 @@ export default function ({ lang, searchParams = ``, mainPages }: Props) {
           {mainPages.map((item, i) => (
             <Link
               onClick={() => dispatch(setCurrentPath(item.label))}
-              key={i}
+              key={item.label}
               href={item.href}
               className={`${
                 currentPath === item.label

@@ -18,6 +18,7 @@ import { PersonOutlineOutlined } from "@/src/constants";
 import { getCountries } from "@/utils/country";
 import DOMPurify from "isomorphic-dompurify";
 import PostCard from "@/components/post/PostCard";
+import CategoryCard from "@/components/category/CategoryCard";
 
 const tiers = [
   {
@@ -197,25 +198,8 @@ export default async function Home({ params: { lang } }: Props) {
           <ul
             role='list'
             className='mx-auto mt-10 grid  grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-5'>
-            {categories.data.map((c: Category) => (
-              <li key={c.id}>
-                <Link
-                  href={`/${lang}/user?category_id=${c.id}&membership=subscription`}>
-                  <Image
-                    className='aspect-[3/2] w-full rounded-2xl object-cover hover:scale-105 duration-200 shadow-lg'
-                    src={c.imageLarge}
-                    width={100}
-                    height={100}
-                    alt=''
-                  />
-                  <h3 className='truncate mt-6 text-lg text-center font-semibold leading-8 tracking-tight text-gray-900'>
-                    {c.name}
-                  </h3>
-                  <p className=' text-base leading-7 text-gray-600 hidden'>
-                    {c.caption}
-                  </p>
-                </Link>
-              </li>
+            {categories.data.map((c: Category, i: number) => (
+              <CategoryCard element={c} key={c.name} lang={lang} />
             ))}
           </ul>
           <div className='pt-12 pb-2 w-full text-center text-expo-dark'>
@@ -397,8 +381,8 @@ export default async function Home({ params: { lang } }: Props) {
             </p>
           </div>
           <div className='mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3'>
-            {posts.data.map((post: Post, i: number) => (
-              <PostCard element={post} lang={lang} />
+            {posts.data.map((p: Post, i: number) => (
+              <PostCard element={p} lang={lang} key={p.name} />
             ))}
           </div>
         </div>

@@ -51,6 +51,7 @@
     "terms": "terms",
     "address": "address",
     "previous": "previous",
-    "next": "next"
+    "next": "next",
+    "all_rights_reserved": "all_rights_reserved"
   }
 }

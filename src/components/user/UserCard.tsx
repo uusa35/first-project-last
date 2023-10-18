@@ -7,7 +7,7 @@ import Link from "next/link";
 type Props = {
   element: User;
   lang: Locale["lang"];
-  trans: string[];
+  trans: { [key: string]: string };
 };
 export default async function ({ element, lang, trans }: Props) {
   return (

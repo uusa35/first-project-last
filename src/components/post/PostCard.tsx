@@ -11,7 +11,6 @@ export default async function ({ element, lang }: Props) {
   return (
     <Link
       href={`/${lang}/post/${element.id}?slug=${element.name}`}
-      key={element.name}
       className='flex flex-col items-start justify-between'>
       <div className='relative w-full'>
         <Image

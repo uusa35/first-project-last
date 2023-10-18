@@ -1,11 +1,19 @@
+"use client";
 import Link from "next/link";
 import SocialIcons from "./SocialIcons";
+import { getDictionary } from "@/lib/dictionary";
+import { getSetting } from "@/utils/setting";
+import { Locale } from "@/types/index";
+import moment from "moment";
 
 type Props = {
   mainPages: { href: string; name: string }[];
+  lang: Locale["lang"];
+  trans: { [key: string]: string };
 };
 
-export default function ({ mainPages }: Props) {
+export default async function ({ mainPages, lang, trans }: Props) {
+  const [setting] = await Promise.all([getSetting(lang)]);
   return (
     <footer className='bg-white'>
       <div className='mx-auto max-w-7xl overflow-hidden px-6 py-12 sm:py-12 lg:px-8'>
@@ -24,7 +32,9 @@ export default function ({ mainPages }: Props) {
         </nav>
         <SocialIcons />
         <p className='mt-10 text-center text-xs leading-5 text-gray-500'>
-          &copy; 2020 Your Company, Inc. All rights reserved.
+          {`&copy; ${moment().format("y")} ${setting.name}, ${
+            trans.all_rights_reserved
+          }.`}
         </p>
       </div>
     </footer>

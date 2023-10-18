@@ -4,6 +4,7 @@ import { getDictionary } from "@/lib/dictionary";
 import Link from "next/link";
 import NavHeader from "@/components/header/NavHeader";
 import { getUser } from "@/utils/user";
+import { getSetting } from "@/utils/setting";
 
 type Props = {
   params: { lang: Locale["lang"]; id: string };
@@ -13,8 +14,9 @@ export default async function UserShow({
   params: { lang, id },
   searchParams,
 }: Props) {
-  const [{ trans }, user] = await Promise.all([
+  const [{ trans }, setting, user] = await Promise.all([
     getDictionary(lang),
+    getSetting(lang),
     getUser(id, lang),
   ]);
 
