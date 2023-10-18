@@ -91,13 +91,35 @@ export type Membership = {
     id: number;
     name: any;
     description: any;
+    price: number;
+    sale_price: number;
+    on_sale: boolean;
+    sort: 'subscription' | 'sponsorship';
+    zone: 'A' | 'B' | 'C' | 'D' | 'E';
     [key: string]: any;
 }
 
-export type Order = {
-    id: number;
-    name: any;
+export type PaymentFields = {
+    token: string;
+    messageId: 1;
+    transactionId: string;
+    merchantId: string;
+    amount: number | string;
+    currenyCode: '682' | '840' | '643';
+    redirectUrl: string;
+    queryString: string | null;
+    paymentUrl: string;
+}
 
+export type Order = {
+    id: string;
+    status: 'pending' | 'paid' | 'failed';
+    paid: boolean;
+    total: number;
+    net_total: number;
+    discount: number;
+    reference_id: string;
+    membership_id: string;
     [key: string]: any;
 }
 

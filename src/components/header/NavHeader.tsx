@@ -28,7 +28,7 @@ type Props = {
 };
 
 export default function ({ lang, searchParams = ``, mainPages }: Props) {
-  const trans: any = useContext(MainContext);
+  const trans: { [key: string]: string } = useContext(MainContext);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { currentPath } = useAppSelector((state) => state.appSetting);
   const dispatch = useAppDispatch();

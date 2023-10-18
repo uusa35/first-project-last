@@ -19,6 +19,7 @@ import { getCountries } from "@/utils/country";
 import DOMPurify from "isomorphic-dompurify";
 import PostCard from "@/components/post/PostCard";
 import CategoryCard from "@/components/category/CategoryCard";
+import MembershipCard from "@/components/membership/MembershipCard";
 
 const tiers = [
   {
@@ -142,11 +143,6 @@ export default async function Home({ params: { lang } }: Props) {
     getImages(`on_home=1`, lang),
     getCountries(`lang=${lang}&limit=1`, lang),
   ]);
-
-  console.log("images", images.data[0]);
-  console.log("subscriptions", subscriptions[0]);
-  console.log("sponsorships", sponsorships[0]);
-  console.log("posts", posts.data[0]);
 
   return (
     <MainContextLayout trans={trans} lang={lang} searchParams={``}>
@@ -512,45 +508,12 @@ export default async function Home({ params: { lang } }: Props) {
 
           <div className='isolate mx-auto mt-10 grid max-w-md grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3'>
             {sponsorships.map((s: Membership, i: number) => (
-              <div
+              <MembershipCard
+                element={s}
                 key={i}
-                className={" ring-gray-400 rounded-3xl p-8 ring-1 xl:p-10"}>
-                <h3 className={"text-gray-900 text-lg font-semibold leading-8"}>
-                  {s.name}
-                </h3>
-
-                <div
-                  className='  h-[200px] overflow-hidden text-gray-600 mt-4 text-sm leading-6'
-                  dangerouslySetInnerHTML={{
-                    __html: DOMPurify.sanitize(s.description),
-                  }}
-                />
-                <p className='mt-6  flex items-baseline gap-x-1'>
-                  <span
-                    className={
-                      "text-gray-900 text-4xl font-bold tracking-tight"
-                    }>
-                    {s.price}
-                  </span>
-                  <span
-                    className={"text-gray-600 text-lg font-semibold leading-6"}>
-                    {country[0].currency_symbol}
-                  </span>
-                </p>
-                <div
-                  className={
-                    "bg-green-600 text-white shadow-sm hover:bg-green-500 focus-visible:outline-green-600 mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-                  }>
-                  {trans.subscribe_now}
-                </div>
-                <ul
-                  role='list'
-                  className={
-                    "text-gray-600 mt-8 space-y-3 text-sm leading-6 xl:mt-10"
-                  }>
-                  <p>{s.caption}</p>
-                </ul>
-              </div>
+                lang={lang}
+                country={country[0]}
+              />
             ))}
           </div>
         </div>

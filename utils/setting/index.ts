@@ -9,6 +9,7 @@ export async function getSetting(lang: Locale['lang']) {
         }
     });
     if (!res.ok) {
+        console.log('res ===>', res);
         throw new Error("Failed to fetch data");
     }
     return res.json()

@@ -27,8 +27,6 @@ const MainContextLayout: FC<Props> = ({
   lang,
   searchParams = ``,
 }) => {
-  
-
   const navigation = [
     { name: trans.home, href: `/${lang}`, label: `home` },
     {

@@ -25,8 +25,8 @@ export default async function ({ mainPages, lang, trans }: Props) {
         <nav
           className='-mb-6 columns-2 sm:flex sm:justify-center sm:gap-x-12'
           aria-label='Footer'>
-          {mainPages.map((item) => (
-            <div key={item.name} className='pb-6'>
+          {mainPages.map((item, i: number) => (
+            <div key={i} className='pb-6'>
               <Link
                 href={item.href}
                 className='text-sm leading-6 text-gray-600 hover:text-gray-900'>

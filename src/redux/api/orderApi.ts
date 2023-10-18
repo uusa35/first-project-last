@@ -13,6 +13,17 @@ export const orderApi = apiSlice.injectEndpoints({
             response.status == 200,
         }),
       }),
+      createOrder: builder.mutation<
+        AppQueryResult<[Order]>, Omit<Order, 'id' | 'status' | 'paid'>
+      >({
+        query: ({ body }) => ({
+          url: `order`,
+          method: 'post',
+          body,
+          validateStatus: (response, result) =>
+            response.status == 200,
+        }),
+      }),
 
     };
   },

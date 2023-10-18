@@ -45,7 +45,6 @@ const nextConfig = {
         pathname: "/random",
       },
     ],
-    quality : 100
   },
 };
 

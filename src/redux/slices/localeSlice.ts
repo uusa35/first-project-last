@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Locale } from '@/types/index';
+import { cartSlice } from './cartSlice';
 
 const initialState: Locale = {
   isRTL: false,
