@@ -158,7 +158,7 @@ export default async function Home({ params: { lang } }: Props) {
       <div className='bg-white py-12 sm:py-12 capitalize'>
         <div className='mx-auto max-w-7xl'>
           <div className='relative isolate overflow-hidden  px-6 sm:rounded-3xl sm:px-24 '>
-            <h2 className='mx-auto max-w-2xl text-center leading-8 line-clamp-2 text-2xl font-bold tracking-tight text-black sm:text-4xl'>
+            <h2 className='mx-auto max-w-3xl text-center leading-loose line-clamp-2 text-2xl font-bold tracking-tight text-black sm:text-4xl'>
               {trans.search_all_subscribed_companies}
             </h2>
 
@@ -249,13 +249,13 @@ export default async function Home({ params: { lang } }: Props) {
         </div>
         <div className='relative mx-auto max-w-7xl py-24 sm:py-32 lg:px-8 lg:py-40'>
           <div className='pl-6 pr-6 md:ml-auto md:w-2/3 md:pl-16 lg:w-1/2 lg:pl-24 lg:pr-0 xl:pl-32'>
-            <h2 className=' font-semibold leading-7 text-lg text-black'>
+            <h2 className=' font-semibold leading-8 text-lg text-black'>
               {trans.joinus}
             </h2>
             <p className='mt-2 text-3xl font-bold leading-8 tracking-tight text-black line-clamp-2 sm:text-4xl'>
               {trans.joinus_and_get_many_features}
             </p>
-            <p className='mt-6 text-base leading-7 line-clamp-2 text-gray-800'>
+            <p className='mt-6 text-base leading-8 line-clamp-2 text-gray-800'>
               {trans.get_to_know_all_kind_of_subscriptions_and_sponsorships}
             </p>
             <div className='mt-8'>
@@ -318,7 +318,7 @@ export default async function Home({ params: { lang } }: Props) {
       <div className='bg-white py-12 sm:py-12 capitalize'>
         <div className='mx-auto max-w-7xl sm:px-6 lg:px-8'>
           <div className='relative isolate overflow-hidden bg-green-900 px-6 py-24 shadow-2xl sm:rounded-3xl sm:px-24 xl:py-32'>
-            <h2 className='mx-auto max-w-2xl line-clamp-2 text-center text-3xl font-bold tracking-tight text-white sm:text-4xl'>
+            <h2 className='mx-auto max-w-3xl line-clamp-2 text-center text-3xl font-bold tracking-tight text-white sm:text-4xl pb-4'>
               {trans.register_to_receive_latest_expo_news}
             </h2>
             <p className='mx-auto mt-2 max-w-xl  line-clamp-2 text-center text-lg leading-8 text-gray-300'>
@@ -396,7 +396,7 @@ export default async function Home({ params: { lang } }: Props) {
       <div className='bg-expo-green py-12 sm:py-12 capitalize'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
           <div className='mx-auto max-w-4xl text-center'>
-            <h2 className='text-base font-semibold leading-7 text-green-600'>
+            <h2 className='text-base font-semibold leading-8 text-green-600'>
               Pricing
             </h2>
             <p className='mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl'>
@@ -504,7 +504,7 @@ export default async function Home({ params: { lang } }: Props) {
       <div className='bg-expo-green py-12 sm:py-12 capitalize'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
           <div className='mx-auto max-w-4xl text-center'>
-            <h2 className='text-base font-semibold leading-7 text-green-600'>
+            <h2 className='text-base font-semibold leading-8 text-green-600'>
               {trans.sponsors}
             </h2>
             <p className='mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl'>
@@ -560,7 +560,7 @@ export default async function Home({ params: { lang } }: Props) {
                     <h3 className='mt-6 text-lg font-semibold leading-8 tracking-tight text-gray-900'>
                       {img.name}
                     </h3>
-                    <p className='text-base leading-7 text-gray-600'>
+                    <p className='text-base leading-8 text-gray-600'>
                       {img.caption}
                     </p>
                   </>
