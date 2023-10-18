@@ -11,7 +11,7 @@ import {
 } from "@mui/icons-material";
 import Link from "next/link";
 
-export default function ({ setting }: Setting) {
+export default function ({ setting }: any) {
   return (
     <div className='mt-10 flex justify-center gap-x-10'>
       {setting.facebook && (
