@@ -155,7 +155,7 @@ export default async function Home({ params: { lang } }: Props) {
       {/* slider */}
       {/* <MainSlider slides={slides} lang={lang} /> */}
       {/* search */}
-      <div className='bg-white py-12 sm:py-12'>
+      <div className='bg-white py-12 sm:py-12 capitalize'>
         <div className='mx-auto max-w-7xl'>
           <div className='relative isolate overflow-hidden  px-6 py-14 sm:rounded-3xl sm:px-24 xl:py-32'>
             <h2 className='mx-auto max-w-2xl text-center text-3xl font-bold tracking-tight text-black sm:text-4xl'>
@@ -185,7 +185,7 @@ export default async function Home({ params: { lang } }: Props) {
         </div>
       </div>
       {/* categories */}
-      <div className='bg-white py-12 sm:py-12'>
+      <div className='bg-white py-12 sm:py-12 capitalize'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
           <div className='mx-auto max-w-2xl lg:max-w-none'>
             <h2 className='text-3xl text-center font-bold tracking-tight text-gray-900 sm:text-4xl capitalize'>
@@ -215,7 +215,7 @@ export default async function Home({ params: { lang } }: Props) {
       </div>
 
       {/* subscriptions */}
-      <div className='relative bg-expo-green'>
+      <div className='relative bg-expo-green capitalize'>
         <div className='relative h-80 overflow-hidden bg-expo-green md:absolute md:left-0 md:h-full md:w-1/3 lg:w-1/2'>
           <Image
             className='h-full w-full object-cover'
@@ -282,7 +282,7 @@ export default async function Home({ params: { lang } }: Props) {
       </div>
 
       {/*  figures  */}
-      <div className='bg-white py-12 sm:py-12'>
+      <div className='bg-white py-12 sm:py-12 capitalize'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
           <div className='mx-auto max-w-2xl lg:max-w-none'>
             <dl className='mt-16 grid grid-cols-2 p-2 md:p-8 bg-expo-green  overflow-hidden rounded-2xl text-center lg:grid-cols-4'>
@@ -315,7 +315,7 @@ export default async function Home({ params: { lang } }: Props) {
       </div>
 
       {/* newsletter */}
-      <div className='bg-white py-12 sm:py-12'>
+      <div className='bg-white py-12 sm:py-12 capitalize'>
         <div className='mx-auto max-w-7xl sm:px-6 lg:px-8'>
           <div className='relative isolate overflow-hidden bg-green-900 px-6 py-24 shadow-2xl sm:rounded-3xl sm:px-24 xl:py-32'>
             <h2 className='mx-auto max-w-2xl break-all text-center text-3xl font-bold tracking-tight text-white sm:text-4xl'>
@@ -374,7 +374,7 @@ export default async function Home({ params: { lang } }: Props) {
       </div>
 
       {/* posts */}
-      <div className='bg-white py-14'>
+      <div className='bg-white py-14 capitalize'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
           <div className='mx-auto max-w-2xl text-center'>
             <h2 className='text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl'>
@@ -393,7 +393,7 @@ export default async function Home({ params: { lang } }: Props) {
         </div>
       </div>
       {/* subscription prices */}
-      <div className='expo-green py-12 sm:py-12'>
+      <div className='expo-green py-12 sm:py-12 capitalize'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
           <div className='mx-auto max-w-4xl text-center'>
             <h2 className='text-base font-semibold leading-7 text-green-600'>
@@ -477,7 +477,7 @@ export default async function Home({ params: { lang } }: Props) {
       {/* sponsors logos */}
 
       {sponsors.data && (
-        <div className='bg-white py-12 sm:py-12'>
+        <div className='bg-white py-12 sm:py-12 capitalize'>
           <div className='mx-auto max-w-7xl px-6 lg:px-8'>
             <h2 className='text-center text-lg font-semibold leading-8 text-gray-900'>
               {trans.sponsors}
@@ -501,7 +501,7 @@ export default async function Home({ params: { lang } }: Props) {
       )}
 
       {/* sponsorship prices */}
-      <div className='expo-green py-12 sm:py-12'>
+      <div className='expo-green py-12 sm:py-12 capitalize'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
           <div className='mx-auto max-w-4xl text-center'>
             <h2 className='text-base font-semibold leading-7 text-green-600'>
@@ -530,7 +530,7 @@ export default async function Home({ params: { lang } }: Props) {
       </div>
 
       {/* OnHome Images with Url if exist (this will be a slider) */}
-      <div className='py-12 sm:py-10'>
+      <div className='py-12 sm:py-10 capitalize'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
           <div className='mx-auto  lg:mx-0'>
             <h2 className='text-center text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl'>
