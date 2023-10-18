@@ -53,14 +53,12 @@ const MainContextLayout: FC<Props> = ({
           mainPages={navigation}
         />
         <div>{children}</div>
-        
-          <AppFooter
+        {/* <AppFooter
             mainPages={navigation}
             lang={lang}
             trans={trans}
         
-          />
-        
+          /> */}
       </ThemeProvider>
     </MainContext.Provider>
   );

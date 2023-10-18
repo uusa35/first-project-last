@@ -64,33 +64,35 @@ export default async function ({ element, country, lang }: Props) {
           __html: DOMPurify.sanitize(element.description),
         }}
       />
-      {element.on_sale && (
+      <div className='flex flex-1 flex-row gap-x-3 justify-start items-end'>
+        {element.on_sale && (
+          <p className='mt-6  flex items-baseline gap-x-1'>
+            <span className={"text-red-800 text-4xl font-bold tracking-tight"}>
+              {getPrice(element.sale_price, country).toFixed(2)}
+            </span>
+            <span className={"text-red-900 text-lg font-semibold leading-6"}>
+              {country.currency_symbol}
+            </span>
+          </p>
+        )}
         <p className='mt-6  flex items-baseline gap-x-1'>
-          <span className={"text-gray-900 text-4xl font-bold tracking-tight"}>
-            {getPrice(element.sale_price, country).toFixed(2)}
+          <span
+            className={`text-gray-900 ${
+              element.on_sale ? `text-xl line-through` : `text-4xl`
+            }  font-bold tracking-tight`}>
+            {getPrice(element.price, country).toFixed(2)}
           </span>
           <span className={"text-gray-600 text-lg font-semibold leading-6"}>
             {country.currency_symbol}
           </span>
         </p>
-      )}
-      <p className='mt-6  flex items-baseline gap-x-1'>
-        <span
-          className={`text-gray-900 ${
-            element.on_sale ? `text-xl line-through` : `text-4xl`
-          }  font-bold tracking-tight`}>
-          {getPrice(element.price, country).toFixed(2)}
-        </span>
-        <span className={"text-gray-600 text-lg font-semibold leading-6"}>
-          {country.currency_symbol}
-        </span>
-      </p>
+      </div>
 
       <button
         type='button'
         onClick={() => handleSubscribe(element)}
         className={
-          "bg-green-600 text-white shadow-sm hover:bg-green-500 focus-visible:outline-green-600 mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+          "w-full btn-color-default focus-visible:outline-green-600 mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
         }>
         {isAuth ? trans.register_now_to_subscribe : trans.subscribe_now}
       </button>
