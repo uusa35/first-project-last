@@ -158,7 +158,7 @@ export default async function Home({ params: { lang } }: Props) {
       <div className='bg-white py-12 sm:py-12 capitalize'>
         <div className='mx-auto max-w-7xl'>
           <div className='relative isolate overflow-hidden  px-6 sm:rounded-3xl sm:px-24 '>
-            <h2 className='mx-auto max-w-2xl text-center line-clamp-2 text-2xl font-bold tracking-tight text-black sm:text-4xl'>
+            <h2 className='mx-auto max-w-2xl text-center leading-8 line-clamp-2 text-2xl font-bold tracking-tight text-black sm:text-4xl'>
               {trans.search_all_subscribed_companies}
             </h2>
 
@@ -252,10 +252,10 @@ export default async function Home({ params: { lang } }: Props) {
             <h2 className=' font-semibold leading-7 text-lg text-black'>
               {trans.joinus}
             </h2>
-            <p className='mt-2 text-3xl font-bold tracking-tight text-black break-words sm:text-4xl'>
+            <p className='mt-2 text-3xl font-bold leading-8 tracking-tight text-black line-clamp-2 sm:text-4xl'>
               {trans.joinus_and_get_many_features}
             </p>
-            <p className='mt-6 text-base leading-7 break-all text-gray-800'>
+            <p className='mt-6 text-base leading-7 line-clamp-2 text-gray-800'>
               {trans.get_to_know_all_kind_of_subscriptions_and_sponsorships}
             </p>
             <div className='mt-8'>
@@ -321,7 +321,7 @@ export default async function Home({ params: { lang } }: Props) {
             <h2 className='mx-auto max-w-2xl line-clamp-2 text-center text-3xl font-bold tracking-tight text-white sm:text-4xl'>
               {trans.register_to_receive_latest_expo_news}
             </h2>
-            <p className='mx-auto mt-2 max-w-xl break-words line-clamp-2 text-center text-lg leading-8 text-gray-300'>
+            <p className='mx-auto mt-2 max-w-xl  line-clamp-2 text-center text-lg leading-8 text-gray-300'>
               {
                 trans.through_this_section_u_can_follow_up_all_news_related_to_this_expo_and_even_more
               }
