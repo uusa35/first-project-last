@@ -27,10 +27,7 @@ const MainContextLayout: FC<Props> = ({
   lang,
   searchParams = ``,
 }) => {
-  const { data: setting, isSuccess } = useGetSettingQuery<{
-    data: Setting;
-    isSuccess: boolean;
-  }>({ lang });
+  
 
   const navigation = [
     { name: trans.home, href: `/${lang}`, label: `home` },
@@ -58,14 +55,14 @@ const MainContextLayout: FC<Props> = ({
           mainPages={navigation}
         />
         <div>{children}</div>
-        {isSuccess && (
+        
           <AppFooter
             mainPages={navigation}
             lang={lang}
             trans={trans}
-            setting={setting}
+        
           />
-        )}
+        
       </ThemeProvider>
     </MainContext.Provider>
   );
