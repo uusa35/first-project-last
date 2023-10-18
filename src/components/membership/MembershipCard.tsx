@@ -49,7 +49,7 @@ export default function ({ element, country, lang }: Props) {
     if (isAuth) {
       dispatch(setMembership({ membership: e, country, lang }));
     } else {
-      router.push(`/login`);
+      router.push(`/${lang}/login`);
     }
   };
 
