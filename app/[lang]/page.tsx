@@ -147,7 +147,11 @@ export default async function Home({ params: { lang } }: Props) {
   ]);
 
   return (
-    <MainContextLayout trans={trans} lang={lang} searchParams={``} setting={setting}>
+    <MainContextLayout
+      trans={trans}
+      lang={lang}
+      searchParams={``}
+      setting={setting}>
       {/* slider */}
       {/* <MainSlider slides={slides} lang={lang} /> */}
       {/* search */}
@@ -193,15 +197,15 @@ export default async function Home({ params: { lang } }: Props) {
               }
             </p>
           </div>
-          <Suspense fallback={<Loading />}>
-            <ul
-              role='list'
-              className='mx-auto mt-10 grid  grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-5'>
-              {categories.data.map((c: Category, i: number) => (
-                <CategoryCard element={c} key={c.name} lang={lang} />
-              ))}
-            </ul>
-          </Suspense>
+
+          <ul
+            role='list'
+            className='mx-auto mt-10 grid  grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-5'>
+            {categories.data.map((c: Category, i: number) => (
+              <CategoryCard element={c} key={c.name} lang={lang} />
+            ))}
+          </ul>
+
           <div className='pt-12 pb-2 w-full text-center text-expo-dark'>
             <Link href={`${lang}/user?membership=subscription`}>
               {trans.navigate_to_more}
@@ -380,13 +384,12 @@ export default async function Home({ params: { lang } }: Props) {
               {trans.through_this_section_get_latest_news_related}
             </p>
           </div>
-          <Suspense fallback={<Loading />}>
-            <div className='mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3'>
-              {posts.data.map((p: Post, i: number) => (
-                <PostCard element={p} lang={lang} key={p.name} />
-              ))}
-            </div>
-          </Suspense>
+
+          <div className='mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3'>
+            {posts.data.map((p: Post, i: number) => (
+              <PostCard element={p} lang={lang} key={p.name} />
+            ))}
+          </div>
         </div>
       </div>
       {/* subscription prices */}
@@ -472,31 +475,30 @@ export default async function Home({ params: { lang } }: Props) {
         </div>
       </div>
       {/* sponsors logos */}
-      <Suspense fallback={<Loading />}>
-        {sponsors.data && (
-          <div className='bg-white py-12 sm:py-12'>
-            <div className='mx-auto max-w-7xl px-6 lg:px-8'>
-              <h2 className='text-center text-lg font-semibold leading-8 text-gray-900'>
-                {trans.sponsors}
-              </h2>
-              <div className='mx-auto mt-10 grid max-w-lg grid-cols-4 items-center gap-x-8 gap-y-10 sm:max-w-xl sm:grid-cols-6 sm:gap-x-10 lg:mx-0 lg:max-w-none lg:grid-cols-5'>
-                {sponsors.data.map((s: User, i: string) => (
-                  <Link key={s.id} href={`/user/${s.id}?slug=${s.name}`}>
-                    <Image
-                      key={i}
-                      className='col-span-2 max-h-[100px] w-full object-contain lg:col-span-1'
-                      src={s.image}
-                      alt={s.name}
-                      width={200}
-                      height={200}
-                    />
-                  </Link>
-                ))}
-              </div>
+
+      {sponsors.data && (
+        <div className='bg-white py-12 sm:py-12'>
+          <div className='mx-auto max-w-7xl px-6 lg:px-8'>
+            <h2 className='text-center text-lg font-semibold leading-8 text-gray-900'>
+              {trans.sponsors}
+            </h2>
+            <div className='mx-auto mt-10 grid max-w-lg grid-cols-4 items-center gap-x-8 gap-y-10 sm:max-w-xl sm:grid-cols-6 sm:gap-x-10 lg:mx-0 lg:max-w-none lg:grid-cols-5'>
+              {sponsors.data.map((s: User, i: string) => (
+                <Link key={s.id} href={`/user/${s.id}?slug=${s.name}`}>
+                  <Image
+                    key={i}
+                    className='col-span-2 max-h-[100px] w-full object-contain lg:col-span-1'
+                    src={s.image}
+                    alt={s.name}
+                    width={200}
+                    height={200}
+                  />
+                </Link>
+              ))}
             </div>
           </div>
-        )}
-      </Suspense>
+        </div>
+      )}
 
       {/* sponsorship prices */}
       <div className='expo-green py-12 sm:py-12'>
@@ -514,18 +516,16 @@ export default async function Home({ params: { lang } }: Props) {
             quasi iusto modi velit ut non voluptas in. Explicabo id ut laborum.
           </p>
 
-          <Suspense fallback={<Loading />}>
-            <div className='isolate mx-auto mt-10 grid max-w-md grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3'>
-              {sponsorships.map((s: Membership, i: number) => (
-                <MembershipCard
-                  element={s}
-                  key={i}
-                  lang={lang}
-                  country={country[0]}
-                />
-              ))}
-            </div>
-          </Suspense>
+          <div className='isolate mx-auto mt-10 grid max-w-md grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3'>
+            {sponsorships.map((s: Membership, i: number) => (
+              <MembershipCard
+                element={s}
+                key={i}
+                lang={lang}
+                country={country[0]}
+              />
+            ))}
+          </div>
         </div>
       </div>
 
@@ -542,33 +542,32 @@ export default async function Home({ params: { lang } }: Props) {
               clients.
             </p>
           </div>
-          <Suspense fallback={<Loading />}>
-            <ul
-              role='list'
-              className='mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-4 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-4'>
-              {images.data.map((img: any, i: number) => (
-                <li key={i}>
-                  <Image
-                    className='aspect-[3/2] w-full rounded-2xl object-cover'
-                    src={img.image}
-                    alt={setting.name}
-                    width={200}
-                    height={200}
-                  />
-                  {img.name && (
-                    <>
-                      <h3 className='mt-6 text-lg font-semibold leading-8 tracking-tight text-gray-900'>
-                        {img.name}
-                      </h3>
-                      <p className='text-base leading-7 text-gray-600'>
-                        {img.caption}
-                      </p>
-                    </>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </Suspense>
+
+          <ul
+            role='list'
+            className='mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-4 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-4'>
+            {images.data.map((img: any, i: number) => (
+              <li key={i}>
+                <Image
+                  className='aspect-[3/2] w-full rounded-2xl object-cover'
+                  src={img.image}
+                  alt={setting.name}
+                  width={200}
+                  height={200}
+                />
+                {img.name && (
+                  <>
+                    <h3 className='mt-6 text-lg font-semibold leading-8 tracking-tight text-gray-900'>
+                      {img.name}
+                    </h3>
+                    <p className='text-base leading-7 text-gray-600'>
+                      {img.caption}
+                    </p>
+                  </>
+                )}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
 
