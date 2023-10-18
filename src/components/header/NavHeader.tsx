@@ -203,7 +203,7 @@ export default function ({
           <div className='flex items-center justify-between'>
             <Link href='/' className='-m-1.5 p-1.5'>
               <span className='sr-only'>Your Company</span>
-              <AppLogo />
+              <AppLogo logo={setting.image} name={setting.name} />
             </Link>
             <button
               type='button'
