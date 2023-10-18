@@ -321,7 +321,7 @@ export default async function Home({ params: { lang } }: Props) {
             <h2 className='mx-auto max-w-2xl break-all text-center text-3xl font-bold tracking-tight text-white sm:text-4xl'>
               {trans.register_to_receive_latest_expo_news}
             </h2>
-            <p className='mx-auto mt-2 max-w-xl break-words text-center text-lg leading-8 text-gray-300'>
+            <p className='mx-auto mt-2 max-w-xl break-words line-clamp-2 text-center text-lg leading-8 text-gray-300'>
               {
                 trans.through_this_section_u_can_follow_up_all_news_related_to_this_expo_and_even_more
               }
