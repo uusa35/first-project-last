@@ -54,12 +54,12 @@ export default function ({ element, country, lang }: Props) {
   };
 
   return (
-    <div className={" ring-gray-400 rounded-3xl p-8 ring-1 xl:p-10"}>
+    <div className={" ring-gray-200 rounded-md p-8 ring-1 xl:p-10 bg-white"}>
       <h3 className={"text-gray-900 text-lg font-semibold leading-8"}>
         {element.name}
       </h3>
       <div
-        className='  h-[200px] overflow-hidden text-gray-600 mt-4 text-sm leading-6'
+        className='  h-[200px] overflow-hidden text-gray-600 mt-4 text-sm leading-6 '
         dangerouslySetInnerHTML={{
           __html: DOMPurify.sanitize(element.description),
         }}

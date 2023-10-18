@@ -393,7 +393,7 @@ export default async function Home({ params: { lang } }: Props) {
         </div>
       </div>
       {/* subscription prices */}
-      <div className='expo-green py-12 sm:py-12 capitalize'>
+      <div className='bg-expo-green py-12 sm:py-12 capitalize'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
           <div className='mx-auto max-w-4xl text-center'>
             <h2 className='text-base font-semibold leading-7 text-green-600'>
@@ -501,7 +501,7 @@ export default async function Home({ params: { lang } }: Props) {
       )}
 
       {/* sponsorship prices */}
-      <div className='expo-green py-12 sm:py-12 capitalize'>
+      <div className='bg-expo-green py-12 sm:py-12 capitalize'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
           <div className='mx-auto max-w-4xl text-center'>
             <h2 className='text-base font-semibold leading-7 text-green-600'>
