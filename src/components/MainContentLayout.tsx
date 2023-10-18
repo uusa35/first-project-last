@@ -1,5 +1,5 @@
 "use client";
-import { FC, createContext } from "react";
+import { FC, Suspense, createContext } from "react";
 import NavHeader from "./header/NavHeader";
 import { Locale } from "@/types/index";
 import {
@@ -53,12 +53,9 @@ const MainContextLayout: FC<Props> = ({
           mainPages={navigation}
         />
         <div>{children}</div>
-        {/* <AppFooter
-            mainPages={navigation}
-            lang={lang}
-            trans={trans}
-        
-          /> */}
+        <Suspense>
+          <AppFooter mainPages={navigation} lang={lang} trans={trans} />
+        </Suspense>
       </ThemeProvider>
     </MainContext.Provider>
   );
