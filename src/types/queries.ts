@@ -51,6 +51,12 @@ export type Setting = {
     services: string;
     address: string;
     country: string;
+    facebook?: string;
+    instagram?: string;
+    twitter?: string;
+    linkedin?: string;
+    youtube?: string;
+    whatsapp?: string;
     [key: string]: any;
 }
 

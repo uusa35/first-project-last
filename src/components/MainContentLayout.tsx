@@ -9,6 +9,8 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import AppFooter from "./footer/AppFooter";
+import { Setting } from "@/types/queries";
+import { useGetSettingQuery } from "@/redux/api";
 export { Button, Carousel, Typography };
 
 type Props = {
@@ -25,6 +27,11 @@ const MainContextLayout: FC<Props> = ({
   lang,
   searchParams = ``,
 }) => {
+  const { data: setting, isSuccess } = useGetSettingQuery<{
+    data: Setting;
+    isSuccess: boolean;
+  }>({ lang });
+
   const navigation = [
     { name: trans.home, href: `/${lang}`, label: `home` },
     {
@@ -51,7 +58,14 @@ const MainContextLayout: FC<Props> = ({
           mainPages={navigation}
         />
         <div>{children}</div>
-        <AppFooter mainPages={navigation} lang={lang} trans={trans} />
+        {isSuccess && (
+          <AppFooter
+            mainPages={navigation}
+            lang={lang}
+            trans={trans}
+            setting={setting}
+          />
+        )}
       </ThemeProvider>
     </MainContext.Provider>
   );
