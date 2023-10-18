@@ -72,9 +72,9 @@ export default async function UserIndex({
                   {u.name}
                 </h3>
                 <dl className='mt-1 flex flex-grow flex-col justify-between'>
-                  <dt className='sr-only'>Title</dt>
+                  <dt className='sr-only'>{u.name}</dt>
                   <dd className='text-sm text-gray-500'>{u.caption}</dd>
-                  <dt className='sr-only'>Role</dt>
+                  <dt className='sr-only'>{u.caption}</dt>
                   <dd className='mt-3 text-center grid grid-cols-3 justify-center items-center gap-1'>
                     {u.categories.map((u: Category, i: number) => (
                       <span
