@@ -56,7 +56,7 @@ export default function ({
       let windowHeight = window.scrollY;
       windowHeight >= 250
         ? setStickyClass(
-            "sticky top-0 bg-white/80 w-full border-b border-gray-400"
+            "sticky top-0 bg-white/80 w-full border-b border-gray-400 max-w-full"
           )
         : setStickyClass("relative");
     }
