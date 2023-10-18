@@ -9,6 +9,8 @@ export const imageUrl = `https://loremflickr.com/`;
 export const isLocal = process.env.NODE_ENV !== 'production';
 export const suppressText = true;
 import { PersonOutlineOutlined } from "@mui/icons-material";
+import { Country } from './types/queries';
+import { number } from 'yup';
 export { PersonOutlineOutlined, truncate };
 
 
@@ -88,3 +90,5 @@ data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAE6CAMAAACbLJ/BAAAABGdBTUEAAL
 `
 
 export const whatsappUrl = (phone: string) => `https://api.whatsapp.com/send?phone=${phone}`;
+export const getPrice: (element: number, country: Country) => number = (element, country) => (element * country.exchange_rate);
+

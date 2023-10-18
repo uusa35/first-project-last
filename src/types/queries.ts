@@ -71,6 +71,7 @@ export type Post = {
 export type Country = {
     id: number;
     name: any;
+    exchange_rate: number;
     [key: string]: any;
 }
 

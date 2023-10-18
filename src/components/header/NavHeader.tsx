@@ -88,6 +88,7 @@ export default function ({ lang, searchParams = ``, mainPages }: Props) {
         {/* top bar */}
         <div className='hidden lg:flex lg:flex-1  gap-x-4 capitalize'>
           <Link
+            scroll={true}
             href={`${changePathName(
               lang,
               "ar",
@@ -97,6 +98,7 @@ export default function ({ lang, searchParams = ``, mainPages }: Props) {
             {trans.ar}
           </Link>
           <Link
+            scroll={true}
             href={`${changePathName(
               lang,
               "en",
@@ -106,6 +108,7 @@ export default function ({ lang, searchParams = ``, mainPages }: Props) {
             {trans.en}
           </Link>
           <Link
+            scroll={true}
             href={`${changePathName(
               lang,
               "ru",

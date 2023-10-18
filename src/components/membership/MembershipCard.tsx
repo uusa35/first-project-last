@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setMembership } from "@/redux/slices/cartSlice";
 import { isNull } from "lodash";
 import { useRouter } from "next/navigation";
+import { getPrice } from "@/src/constants";
 
 type Props = {
   element: Membership;
@@ -63,14 +64,28 @@ export default async function ({ element, country, lang }: Props) {
           __html: DOMPurify.sanitize(element.description),
         }}
       />
+      {element.on_sale && (
+        <p className='mt-6  flex items-baseline gap-x-1'>
+          <span className={"text-gray-900 text-4xl font-bold tracking-tight"}>
+            {getPrice(element.sale_price, country).toFixed(2)}
+          </span>
+          <span className={"text-gray-600 text-lg font-semibold leading-6"}>
+            {country.currency_symbol}
+          </span>
+        </p>
+      )}
       <p className='mt-6  flex items-baseline gap-x-1'>
-        <span className={"text-gray-900 text-4xl font-bold tracking-tight"}>
-          {element.price}
+        <span
+          className={`text-gray-900 ${
+            element.on_sale ? `text-xl line-through` : `text-4xl`
+          }  font-bold tracking-tight`}>
+          {getPrice(element.price, country).toFixed(2)}
         </span>
         <span className={"text-gray-600 text-lg font-semibold leading-6"}>
           {country.currency_symbol}
         </span>
       </p>
+
       <button
         type='button'
         onClick={() => handleSubscribe(element)}

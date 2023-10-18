@@ -4,6 +4,7 @@ import { Country, Membership, PaymentFields } from '@/types/queries';
 import { capitalize, random, round, toString } from 'lodash';
 import { sha256, sha224 } from "js-sha256";
 import { localeSlice } from './localeSlice';
+import { getPrice } from '@/src/constants';
 
 const initialState: { membership: Membership, payment: PaymentFields } = {
   membership: {
@@ -39,7 +40,8 @@ export const cartSlice = createSlice({
       const { lang, country, membership } = action.payload;
       const { merchantId, messageId, token } = state.payment;
       const amountValues = country.lang === 'ar' ? '000' : (country.lang === 'ru') ? '000' : '00';
-      const amount = `${round(membership.on_sale ? membership.sale_price : membership.price)}${amountValues}`;
+      const currentPrice = round(getPrice(membership.on_sale ? membership.sale_price : membership.price, country));
+      const amount = `${currentPrice}${amountValues}`;
       const currencyCode = country.lang === 'ar' ? '682' : (country.lang === 'ru') ? '643' : '840';
       const redirectUrl = `https://dev.ar-expo.ru/${lang}/order/result/${transactionId}`;
       const toBeHashed = `${token}${amount}${currencyCode}${capitalize(
