@@ -11,11 +11,14 @@ export default async function Contactus({
   const [{ trans }, setting] = await Promise.all([
     getDictionary(lang),
     getSetting(lang),
-  }
-  
+  ]);
 
   return (
-    <MainContextLayout trans={trans} lang={lang} searchParams={``} setting={setting}>
+    <MainContextLayout
+      trans={trans}
+      lang={lang}
+      searchParams={``}
+      setting={setting}>
       <div className='relative bg-white mx-auto max-w-7xl min-h-screen'>
         <div className='lg:absolute lg:inset-0 lg:ltr:left-1/2 lg:rtl:right-1/2'>
           <img
