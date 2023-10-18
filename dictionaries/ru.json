@@ -52,6 +52,7 @@
     "previous": "предыдущий",
     "next": "следующий",
     "all_rights_reserved": "все права защищены",
-    "register_now_to_subscribe": "зарегистрируйтесь сейчас, чтобы подписаться"
+    "register_now_to_subscribe": "зарегистрируйтесь сейчас, чтобы подписаться",
+    "search_all_subscribed_companies": "search all subscribed companies"
   }
 }

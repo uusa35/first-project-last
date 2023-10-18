@@ -157,9 +157,9 @@ export default async function Home({ params: { lang } }: Props) {
       {/* search */}
       <div className='bg-white py-12 sm:py-12 capitalize'>
         <div className='mx-auto max-w-7xl'>
-          <div className='relative isolate overflow-hidden  px-6 py-14 sm:rounded-3xl sm:px-24 xl:py-32'>
+          <div className='relative isolate overflow-hidden  px-6 sm:rounded-3xl sm:px-24 '>
             <h2 className='mx-auto max-w-2xl text-center text-3xl font-bold tracking-tight text-black sm:text-4xl'>
-              {trans.search}
+              {trans.search_all_subscribed_companies}
             </h2>
 
             <form className='mx-auto mt-10 flex max-w-2xl gap-x-4'>
