@@ -18,16 +18,24 @@ export default async function ({ element, lang }: Props) {
           height={400}
           src={element.image}
           alt={element.name}
-          className='aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2]'
+          className='aspect-[16/9] w-full rounded-lg bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2]'
         />
-        <div className='absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10' />
+        <div className='absolute inset-0 rounded-lg ring-1 ring-inset ring-gray-900/10' />
       </div>
 
-      <div className='group relative my-2 mt-3'>
-        <h3 className=' text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600'>
-          <span className='absolute inset-0' />
-          {element.name}
-        </h3>
+      <div className='group relative my-2 mt-3 w-full'>
+        <div className={`flex flex-row flex-1 justify-between items-center`}>
+          <div className={``}>
+            <h3 className=' text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600'>
+              <span className='absolute inset-0' />
+              {element.name}
+            </h3>
+          </div>
+          <div className='flex-none text-xs text-expo-dark'>
+            {element.created_at}
+          </div>
+        </div>
+
         <p className='mt-2 line-clamp-3 text-sm leading-6 text-gray-600'>
           {element.caption}
         </p>

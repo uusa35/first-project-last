@@ -42,11 +42,10 @@ export default function ({
   const router = useRouter();
   const segment = useSelectedLayoutSegment();
   const segments = useSelectedLayoutSegments();
-  const [stickyClass, setStickyClass] = useState("");
+  const [stickyClass, setStickyClass] = useState("relative");
 
   useEffect(() => {
     window.addEventListener("scroll", stickNavbar);
-
     return () => {
       window.removeEventListener("scroll", stickNavbar);
     };
@@ -55,7 +54,7 @@ export default function ({
   const stickNavbar = () => {
     if (window !== undefined) {
       let windowHeight = window.scrollY;
-      windowHeight > 300
+      windowHeight >= 300
         ? setStickyClass(
             "sticky w-full transition-opacity opacity-80 duration-200 border-b border-gray-400 bg-white pb-0 max-w-full"
           )
@@ -88,7 +87,7 @@ export default function ({
       className={` top-0 z-50 mx-auto max-w-7xl py-4 px-2  ${stickyClass}`}>
       <nav className={`flex items-center justify-between`} aria-label='Global'>
         <div className=' lg:hidden xl:flex-1'>
-          <AppLogo logo={setting.image} name={setting.name} />
+          <AppLogo lang={lang} logo={setting.image} name={setting.name} />
         </div>
         {/* top bar */}
         <div className='hidden lg:flex lg:flex-1  gap-x-4 capitalize'>
@@ -134,7 +133,7 @@ export default function ({
         </div>
         {/* menu */}
         <div className='hidden lg:flex lg:gap-x-8'>
-          <AppLogo logo={setting.image} name={setting.name} />
+          <AppLogo lang={lang} logo={setting.image} name={setting.name} />
         </div>
         {/* <ActiveLink
           activeClassName='active'
@@ -203,7 +202,7 @@ export default function ({
           <div className='flex items-center justify-between'>
             <Link href='/' className='-m-1.5 p-1.5'>
               <span className='sr-only'>{setting.name}</span>
-              <AppLogo logo={setting.image} name={setting.name} />
+              <AppLogo lang={lang} logo={setting.image} name={setting.name} />
             </Link>
             <button
               type='button'

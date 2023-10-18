@@ -1,13 +1,15 @@
-"use client";
-import { useGetSettingQuery } from "@/redux/api";
 import Link from "next/link";
-import { Setting } from "@/types/queries";
 import Image from "next/image";
+import { Locale } from "@/types/index";
 
-export default function ({ logo , name } : { logo : string , name : string}) {
-  
+type Props = {
+  logo: string;
+  name: string;
+  lang: Locale["lang"];
+};
+export default function ({ logo, name, lang }: Props) {
   return (
-    <Link href='/' className='-m-1.5 p-1.5'>
+    <Link href={`/${lang}`} className='-m-1.5 p-1.5'>
       <span className='sr-only'>{name}</span>
       <Image
         width={100}
