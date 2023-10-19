@@ -1,4 +1,5 @@
-import { Carousel, Typography, Button } from "@/components/MainContentLayout";
+"use client";
+import { Carousel, Typography, Button } from "@material-tailwind/react";
 import { tajawal } from "@/utils/helpers";
 import Image from "next/image";
 import { Locale } from "@/types/index";
@@ -13,7 +14,7 @@ export default async function ({ slides, lang }: Props) {
     <Carousel
       loop
       dir={lang === "ar" ? "rtl" : "ltr"}
-      className={`max-h-[500px] xl:max-h-[750px]  overflow-hidden `}>
+      className={`max-h-[500px] xl:max-h-[750px]  overflow-hidden`}>
       {slides.map((s: Slide, i: number) => (
         <div className='relative ' key={i} dir={lang === "ar" ? "rtl" : "ltr"}>
           <Image
@@ -36,7 +37,7 @@ export default async function ({ slides, lang }: Props) {
                 className={`mb-12 opacity-80 hidden lg:block text-sm ${tajawal.className}`}>
                 {s.description}
               </Typography>
-              <div className='flex gap-2 hidden'>
+              <div className=' gap-2 hidden'>
                 <Button size='lg' color='white'>
                   Explore
                 </Button>

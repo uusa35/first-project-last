@@ -153,7 +153,7 @@ export default async function Home({ params: { lang } }: Props) {
       searchParams={``}
       setting={setting}>
       {/* slider */}
-      <MainSlider slides={slides} lang={lang} />
+      {/* <MainSlider slides={slides} lang={lang} /> */}
       {/* search */}
       <div className='bg-white py-12 sm:py-12 capitalize'>
         <div className='mx-auto max-w-7xl'>

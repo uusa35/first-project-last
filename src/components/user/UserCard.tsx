@@ -1,5 +1,5 @@
 import { Locale } from "@/types/index";
-import { Category, Post, User } from "@/types/queries";
+import { Category, User } from "@/types/queries";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,9 +11,7 @@ type Props = {
 };
 export default async function ({ element, lang, trans }: Props) {
   return (
-    <li
-      key={element.name}
-      className='col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow'>
+    <li className='col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow'>
       <Link
         href={`/${lang}/user/${element.id}?slug=${element.name}`}
         className='flex flex-1 flex-col p-8'>
