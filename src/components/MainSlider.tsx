@@ -16,9 +16,10 @@ type Props = {
 export default async function ({ slides, lang }: Props) {
   return (
     <Swiper
-      // modules={[Navigation, Pagination, Scrollbar, A11y]}
+      modules={[Navigation, Pagination, Scrollbar, A11y]}
       // spaceBetween={0}
-      // slidesPerView={1}
+      autoplay
+      slidesPerView={1}
       dir={`${lang === "ar" ? "ltr" : "rtl"}`}
       navigation
       pagination={{ clickable: true }}
