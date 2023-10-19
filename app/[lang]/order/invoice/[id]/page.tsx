@@ -2,23 +2,22 @@ import { MainContextLayout } from "@/components/MainContentLayout";
 import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
 import { getSetting } from "@/utils/setting";
-import { getOrderByReferenceId } from "@/utils/order";
+import { getOrder, getOrderByReferenceId } from "@/utils/order";
 import Image from "next/image";
 import { getCountries } from "@/utils/country";
 import OrderDetails from "@/components/order/OrderDetails";
 import Link from "next/link";
 
-
 export default async function ({
-  params: { lang, reference_id },
+  params: { lang, id },
 }: {
-  params: { lang: Locale["lang"]; reference_id: string };
+  params: { lang: Locale["lang"]; id: string };
 }) {
   const [{ trans }, setting, country, order] = await Promise.all([
     getDictionary(lang),
     getSetting(lang),
     getCountries(`lang=${lang}&limit=1`, lang),
-    getOrderByReferenceId(reference_id, lang),
+    getOrder(id, lang),
   ]);
 
   return (
