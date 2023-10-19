@@ -9,6 +9,9 @@
     "login": "авторизоваться",
     "lang_en": "английский",
     "lang_ar": "العربية",
+    "english": "english",
+    "arabic": "arabic",
+    "russian": "russian",
     "soon": "скоро",
     "ar_expo_ru": "Арабско-русская экспедиция",
     "posts": "посты",
@@ -67,6 +70,7 @@
     "sponsorship": "sponsorship",
     "membership_type": "membership_type",
     "beneficiary_name": "beneficiary_name",
-    "continue": "continue"
+    "continue": "continue",
+    "choose_language": "language"
   }
 }

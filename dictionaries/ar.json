@@ -9,7 +9,11 @@
     "product": "منتج",
     "login": "تسجيل الدخول",
     "lang_en": "الإنجليزية",
-    "lang_ar": "arabic",
+    "lang_ar": "العربية",
+    "lang_ru": "الروسية",
+    "english": "english",
+    "arabic": "العربية",
+    "russian": "russian",
     "soon": "قريبا",
     "ar_expo_ru": "المعرض العربي الروسي",
     "posts": "الاخبار",
@@ -70,6 +74,7 @@
     "sponsorship": "الرعاية",
     "membership_type": "نوع العضوية",
     "beneficiary_name": "اسم المستفيد",
-    "continue": "متابعة"
+    "continue": "متابعة",
+    "choose_language": "اللغة"
   }
 }

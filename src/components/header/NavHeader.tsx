@@ -19,7 +19,7 @@ import { last, split, toString } from "lodash";
 import { setCurrentPath } from "@/redux/slices/settingSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { Setting } from "@/types/queries";
-import { showToastMessage } from "@/redux/slices/toastMessageSlice";
+import LanguagesList from "./LanguagesList";
 
 type Props = {
   lang: Locale;
@@ -57,7 +57,7 @@ export default function ({
       let windowHeight = window.scrollY;
       windowHeight >= 250
         ? setStickyClass(
-            "sticky top-0 bg-white/80 w-full border-b border-gray-400 max-w-full"
+            "sticky top-0 bg-white lg:bg-white/80 w-full border-b border-gray-400 max-w-full"
           )
         : setStickyClass("relative");
     }
@@ -85,43 +85,14 @@ export default function ({
   }, [pathName]);
   return (
     <header
-      className={` top-0 z-50 mx-auto max-w-7xl py-4 px-2  ${stickyClass}`}>
+      className={` top-0 z-50 mx-auto max-w-7xl lg:py-4 px-2  ${stickyClass}`}>
       <nav className={`flex items-center justify-between`} aria-label='Global'>
         <div className=' lg:hidden xl:flex-1'>
           <AppLogo lang={lang} logo={setting.image} name={setting.name} />
         </div>
         {/* top bar */}
         <div className='hidden lg:flex lg:flex-1  gap-x-4 capitalize'>
-          <Link
-            scroll={true}
-            href={`${changePathName(
-              lang,
-              "ar",
-              pathName
-            )}?${convertSearchParamsToString(searchParams)}`}
-            className='text-sm font-semibold leading-6 text-gray-900'>
-            {trans.ar}
-          </Link>
-          <Link
-            scroll={true}
-            href={`${changePathName(
-              lang,
-              "en",
-              pathName
-            )}?${convertSearchParamsToString(searchParams)}`}
-            className='text-sm font-semibold leading-6 text-gray-900'>
-            {trans.en}
-          </Link>
-          <Link
-            scroll={true}
-            href={`${changePathName(
-              lang,
-              "ru",
-              pathName
-            )}?${convertSearchParamsToString(searchParams)}`}
-            className='text-sm font-semibold leading-6 text-gray-900'>
-            {trans.ru}
-          </Link>
+          <LanguagesList lang={lang} searchParams={searchParams} />
         </div>
         <div className='flex lg:hidden capitalize'>
           <button
@@ -184,7 +155,7 @@ export default function ({
             </Link>
           ))}
         </div>
-        <div className='hidden lg:flex lg:flex-1 lg:justify-end gap-x-4'>
+        <div className='hidden  lg:flex lg:flex-1 lg:justify-end gap-x-4'>
           <Link
             href={`/${lang}/login`}
             className='text-sm font-semibold text-gray-900 flex flex-row w-30 justify-center items-center '>
@@ -231,7 +202,7 @@ export default function ({
                   className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'>
                   {trans.login}
                 </Link>
-                <div className='flex flex-row justify-between items-center px-8 ps-12'>
+                <div className='flex flex-row justify-between items-center py-4 lg:py-0 px-8 ps-12'>
                   <Link
                     href={`${changePathName(
                       lang,
