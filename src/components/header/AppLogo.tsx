@@ -18,6 +18,7 @@ export default function ({ logo, name, lang }: Props) {
         alt={name}
         className='h-8 w-auto'
         src={logo}
+        onError={() => console.log('error image logo')}
       />
     </Link>
   );

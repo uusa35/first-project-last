@@ -1,9 +1,10 @@
 "use client";
-import { Carousel, Typography, Button } from "@material-tailwind/react";
+import { Carousel, Typography, Button } from "@/src/constants";
 import { tajawal } from "@/utils/helpers";
 import Image from "next/image";
 import { Locale } from "@/types/index";
 import { Slide } from "@/types/queries";
+import { baseUrl } from "@/src/constants";
 
 type Props = {
   slides: Slide[];
@@ -21,7 +22,8 @@ export default async function ({ slides, lang }: Props) {
             width='1000'
             height='500'
             src={s.image}
-            alt={`${process.env.NEXT_PUBLIC_BASE_URL}`}
+            // alt={`${process.env.NEXT_PUBLIC_BASE_URL}`}
+            alt={baseUrl}
             className='h-full w-full object-cover'
           />
           <div className='absolute -bottom-20  lg:-bottom-40 lg:rtl:right-20 lg:ltr:left-20  grid h-full w-full items-center'>

@@ -11,7 +11,8 @@ export const suppressText = true;
 import { PersonOutlineOutlined } from "@mui/icons-material";
 import { Country } from './types/queries';
 import { number } from 'yup';
-export { PersonOutlineOutlined, truncate };
+import { Carousel, Typography, Button } from "@material-tailwind/react";
+export { PersonOutlineOutlined, truncate , Carousel, Typography, Button};
 
 
 export const appLinks = {
