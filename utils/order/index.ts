@@ -1,5 +1,6 @@
 import { Locale } from '@/types/index';
 import { NextResponse } from 'next/server'
+import { sha256 } from "js-sha256";
 
 export async function getOrders(search: string, lang: Locale['lang']) {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}order?${search}`, {
@@ -46,4 +47,22 @@ export async function getOrder(id: string, lang: Locale['lang']) {
         throw new Error("Failed to fetch data");
     }
     return res.json()
+}
+
+export async function checkOrderPayment(reference_id: string, lang: Locale['lang']) {
+    const toBeHashed = `${process.env.PAYMENT_TOKEN}${process.env.MERCHANT_ID}${process.env.MERCHANT_ID}${reference_id}`;
+    const hashed = sha256(toBeHashed);
+    const query = `?MerchantID=${process.env.MERCHANT_ID}&MessageID=2&OriginalTransactionID=${reference_id}&SecureHash=${hashed}`;
+    const res = await fetch(`${process.env.PAYMENT_URL}${query}`, {
+        cache: "no-store",
+        method: "POST",
+        headers: {
+            'Accept-Language': lang,
+        }
+    });
+
+    if (!res.ok) {
+        throw new Error("Failed to fetch data");
+    }
+    return JSON.stringify(`${process.env.PAYMENT_URL}${query}`)
 }

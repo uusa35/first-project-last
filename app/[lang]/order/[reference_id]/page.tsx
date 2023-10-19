@@ -2,7 +2,7 @@ import { MainContextLayout } from "@/components/MainContentLayout";
 import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
 import { getSetting } from "@/utils/setting";
-import { getOrderByReferenceId } from "@/utils/order";
+import { checkOrderPayment, getOrderByReferenceId } from "@/utils/order";
 import Image from "next/image";
 import { getCountries } from "@/utils/country";
 import OrderDetails from "@/components/order/OrderDetails";
@@ -13,11 +13,12 @@ export default async function ({
 }: {
   params: { lang: Locale["lang"]; reference_id: string };
 }) {
-  const [{ trans }, setting, country, order] = await Promise.all([
+  const [{ trans }, setting, country, order, result] = await Promise.all([
     getDictionary(lang),
     getSetting(lang),
     getCountries(`lang=${lang}&limit=1`, lang),
     getOrderByReferenceId(reference_id, lang),
+    checkOrderPayment(reference_id, lang),
   ]);
 
   return (
@@ -26,6 +27,11 @@ export default async function ({
       lang={lang}
       searchParams={``}
       setting={setting}>
+      <form
+        method='post'
+        action={`https://srstaging.stspayone.com/SmartRoutePaymentWeb/SRPayMsgHandler?MerchantID=RB0000002&MessageID=2&OriginalTransactionID=5235603&SecureHash=4c3c25e13fda50736a413e7792b9b6b175bf0e35218aaee74846d17b465043db`}>
+        <button type='submit'>submit test</button>
+      </form>
       <main className='relative bg-white mx-auto max-w-7xl min-h-screen'>
         <div className='h-80 overflow-hidden lg:absolute lg:h-full lg:w-1/2 lg:px-4 xl:px-8'>
           <Image
