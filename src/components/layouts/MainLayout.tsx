@@ -2,15 +2,11 @@
 import React, { FC, ReactNode, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setLocale } from "@/redux/slices/localeSlice";
-import ToastAppContainer from "@/components/ToastAppContainer";
 import moment from "moment";
 import * as yup from "yup";
 import type { Locale } from "@/i18n.config";
 import { Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import "@/i18n/i18next.d";
-// import i18next from "i18next";
-// import { useTranslation } from "react-i18next";
 
 type Props = {
   children: ReactNode | undefined;
