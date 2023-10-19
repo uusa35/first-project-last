@@ -16,7 +16,8 @@ export const apiSlice = createApi({
     ) => {
       const {
         setting,
-        locale
+        locale,
+        auth: { api_token }
       } = getState() as RootState;
 
       headers.set(
@@ -31,10 +32,10 @@ export const apiSlice = createApi({
       headers.set('Content-Type', 'application/json');
       headers.set('Accept', 'application/json');
       headers.set('Cache-Control', 'no-store');
-      // if (auth && auth.api_token) {
-      //   headers.set('Authorization', `Bearer ${auth.user.api_token}`);
-      //   headers.set('api_token', `${auth.user.api_token}`);
-      // }
+      if (api_token) {
+        headers.set('Authorization', `Bearer ${api_token}`);
+        // headers.set('api_token', `${api_token}`);
+      }
       return headers;
     },
     // credentials: 'include',

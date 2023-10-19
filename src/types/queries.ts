@@ -126,10 +126,10 @@ export type Order = {
     total: number;
     net_total: number;
     discount: number;
-    reference_id: string;
-    membership_id: string;
+    reference_id: string | number;
+    membership_id: string | number;
     user_id?: string | number;
-    created_at: string;
-    user: Auth;
+    created_at?: string;
+    user?: Auth;
     [key: string]: any;
 }

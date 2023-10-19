@@ -37,15 +37,6 @@ const initialState: { membership: Membership, payment: PaymentFields, order: Ord
     reference_id: '0',
     status: 'pending',
     membership_id: '0',
-    created_at: '',
-    user: {
-      id: 0,
-      name: '',
-      caption: '',
-      image: '',
-      email: '',
-      api_token: null
-    }
   }
 
 };
@@ -59,8 +50,9 @@ export const cartSlice = createSlice({
       const { lang, country, membership } = action.payload;
       const { merchantId, messageId, token } = state.payment;
       const amountValues = country.lang === 'ar' ? '000' : (country.lang === 'ru') ? '000' : '00'; // now Price is already converted.
-      const currentPrice = round(getPrice(membership.on_sale ? membership.sale_price : membership.price, country));
-      const amount = `${currentPrice}${amountValues}`;
+      const finalPrice = membership.on_sale ? membership.sale_price : membership.price;
+      const convertedPrice = round(getPrice(finalPrice, country));
+      const amount = `${convertedPrice}${amountValues}`;
       const currencyCode = country.lang === 'ar' ? '682' : (country.lang === 'ru') ? '643' : '840';
       const redirectUrl = `https://dev.ar-expo.ru/${lang}/order/result/${transactionId}`;
       const toBeHashed = `${token}${amount}${currencyCode}${capitalize(
@@ -68,7 +60,6 @@ export const cartSlice = createSlice({
       )}${merchantId}${messageId}${redirectUrl}${transactionId}`;
       const hashed: string = sha256(toBeHashed);
       return {
-        ...state,
         membership: action.payload.membership,
         payment: {
           ...state.payment,
@@ -81,10 +72,11 @@ export const cartSlice = createSlice({
           )}&CurrencyISOCode=${currencyCode}&ResponseBackURL=${redirectUrl}&SecureHash=${hashed}`
         },
         order: {
-          ...state.order,
-          total: currentPrice,
-          net_total: currentPrice,
-          discount: membership.price - membership.sale_price,
+          paid: false,
+          status: 'pending',
+          total: membership.price,
+          net_total: finalPrice,
+          discount: membership.on_sale ? membership.price - membership.sale_price : 0,
           membership_id: membership.id,
           reference_id: transactionId,
         }

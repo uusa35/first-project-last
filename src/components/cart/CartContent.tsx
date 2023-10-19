@@ -1,11 +1,12 @@
 "use client";
 import { useCreateOrUpdateOrderMutation } from "@/redux/api/orderApi";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { setMembership } from "@/redux/slices/cartSlice";
+import { resetMembership, setMembership } from "@/redux/slices/cartSlice";
+import { showErrorToastMessage } from "@/redux/slices/toastMessageSlice";
 import { Locale } from "@/types/index";
 import { Country, Membership } from "@/types/queries";
-import { isNull } from "lodash";
-import { useEffect } from "react";
+import { first, isNull } from "lodash";
+import { useEffect, useRef } from "react";
 
 type Props = {
   membership: Membership;
@@ -16,18 +17,33 @@ export default function ({ membership, country, lang }: Props) {
   const {
     cart: {
       payment: { queryString, paymentUrl },
+      order,
     },
     auth: { isAuth },
   } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
-  const [triggerCreateOrUpdateOrderQuery, { data, isSuccess }] =
+  const fromRef = useRef<any>();
+  const [triggerCreateOrUpdateOrderQuery, { data, isSuccess, error }] =
     useCreateOrUpdateOrderMutation();
 
   useEffect(() => {
     dispatch(setMembership({ membership, country, lang }));
-    
   }, []);
-  console.log("queryString", queryString);
+
+  const createOrder = async () =>
+    await triggerCreateOrUpdateOrderQuery({ ...order }).then((r: any) => {
+      if (r.error) {
+        dispatch(
+          showErrorToastMessage({
+            content: `${first(r.error.data.message)}`,
+          })
+        );
+      } else {
+        dispatch(resetMembership());
+        fromRef.current && fromRef.current.submit();
+      }
+    });
+
   return (
     <>
       {!isNull(queryString) && (
@@ -35,8 +51,10 @@ export default function ({ membership, country, lang }: Props) {
           action={`${paymentUrl}${queryString}`}
           className={"border-4 bg-blue-600"}
           method='post'
-          target='_blank'>
-          <button type='submit'>submit</button>
+          ref={fromRef}>
+          <button type='submit' onClick={() => createOrder()}>
+            submit
+          </button>
         </form>
       )}
     </>

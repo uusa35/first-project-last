@@ -5,7 +5,7 @@ export const orderApi = apiSlice.injectEndpoints({
   endpoints: (builder) => {
     return {
       getOrders: builder.query<
-        AppQueryResult<[Order]>, void | undefined
+        Order, void | undefined
       >({
         query: () => ({
           url: `order`,
@@ -14,9 +14,9 @@ export const orderApi = apiSlice.injectEndpoints({
         }),
       }),
       createOrUpdateOrder: builder.mutation<
-        AppQueryResult<[Order]>, Omit<Order, 'id' | 'status' | 'paid'>
+        AppQueryResult<[Order]>, Omit<Order, 'id'>
       >({
-        query: ({ body }) => ({
+        query: (body) => ({
           url: `order`,
           method: 'post',
           body,
