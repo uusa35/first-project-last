@@ -46,7 +46,7 @@ export default async function ({ element, lang }: Props) {
           <dd className='text-center grid grid-cols-3 justify-center items-center gap-1'>
             {element.categories.map((u: Category, i: number) => (
               <span
-                key={element.id}
+                key={i}
                 className='truncate col-span-1 text-[12px] xl:text-[12px] inline-flex items-center rounded-full bg-expo-light hover:bg-expo-dark hover:text-white px-2 py-1 font-medium text-green-700 ring-1 ring-inset ring-green-600/20'>
                 {element.name.slice(0, 12)}..
               </span>
