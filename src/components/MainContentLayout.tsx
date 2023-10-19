@@ -26,7 +26,7 @@ const MainContextLayout: FC<Props> = ({
   trans,
   lang,
   searchParams = ``,
-  setting
+  setting,
 }) => {
   const navigation = [
     { name: trans.home, href: `/${lang}`, label: `home` },
@@ -46,20 +46,24 @@ const MainContextLayout: FC<Props> = ({
   ];
   return (
     <MainContext.Provider value={trans}>
-      <ThemeProvider>
-        {/* nav & slider */}
-        <Suspense>
-          <NavHeader
-            lang={lang}
-            searchParams={searchParams}
-            mainPages={navigation}
-            setting={setting}
-          />
-          <div>{children}</div>
+      {/* <ThemeProvider> */}
+      {/* nav & slider */}
 
-          <AppFooter mainPages={navigation} lang={lang} trans={trans} setting={setting} />
-        </Suspense>
-      </ThemeProvider>
+      <NavHeader
+        lang={lang}
+        searchParams={searchParams}
+        mainPages={navigation}
+        setting={setting}
+      />
+      <div>{children}</div>
+
+      {/* <AppFooter
+          mainPages={navigation}
+          lang={lang}
+          trans={trans}
+          setting={setting}
+        /> */}
+      {/* </ThemeProvider> */}
     </MainContext.Provider>
   );
 };

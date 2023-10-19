@@ -12,13 +12,13 @@ export default async function ({ element, lang }: Props) {
     <Link
       href={`/${lang}/post/${element.id}?slug=${element.name}`}
       className='flex flex-col items-start justify-between'>
-      <div className='relative w-full'>
+      <div className='relative w-full hover:opacity-80'>
         <Image
           width={400}
           height={400}
           src={element.image}
           alt={element.name}
-          className='aspect-[16/9] w-full rounded-lg bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2]'
+          className='aspect-[16/9] w-full rounded-lg bg-gray-100  object-cover sm:aspect-[2/1] lg:aspect-[3/2]'
         />
         <div className='absolute inset-0 rounded-lg ring-1 ring-inset ring-gray-900/10' />
       </div>

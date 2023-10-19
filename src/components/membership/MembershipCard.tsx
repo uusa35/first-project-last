@@ -11,6 +11,9 @@ import { setMembership } from "@/redux/slices/cartSlice";
 import { isNull } from "lodash";
 import { useRouter } from "next/navigation";
 import { getPrice } from "@/src/constants";
+import { useCreateOrUpdateOrderMutation } from "@/redux/api/orderApi";
+import { useTranslation } from "react-i18next";
+import { showToastMessage } from "@/redux/slices/toastMessageSlice";
 
 type Props = {
   element: Membership;
@@ -27,6 +30,11 @@ export default function ({ element, country, lang }: Props) {
     auth: { isAuth },
   } = useAppSelector((state) => state);
   const router = useRouter();
+  const { t } = useTranslation();
+
+  const [triggerCreateOrUpdateOrderQuery, { data, isSuccess }] =
+    useCreateOrUpdateOrderMutation();
+
   // const messageId = "1";
   // const transactionId = random(999999, 9999999);
   // const merchantId = `RB0000002`;
@@ -48,6 +56,9 @@ export default function ({ element, country, lang }: Props) {
     // else set to cart
     if (isAuth) {
       dispatch(setMembership({ membership: e, country, lang }));
+      dispatch(
+        showToastMessage({ content: trans.process_success, type: "success" })
+      );
     } else {
       router.push(`/${lang}/login`);
     }

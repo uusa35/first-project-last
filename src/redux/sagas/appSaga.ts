@@ -2,9 +2,10 @@ import { call, put, delay, select, all } from 'redux-saga/effects';
 import { PayloadAction } from '@reduxjs/toolkit';
 import i18n from 'i18next';
 import { toast, TypeOptions } from 'react-toastify';
-import { lowerCase, snakeCase } from 'lodash';
-
+import { lowerCase, snakeCase, startCase } from 'lodash';
 import { persistor } from '@/redux/store';
+import { orderApi } from '../api/orderApi';
+import { toastMessageSlice } from '../slices/toastMessageSlice';
 
 export function* startResetEnireAppSceanrio() {
   persistor.purge();
@@ -24,6 +25,7 @@ export function* startUpdateCartProductScenario(action: PayloadAction<any>) {
   }
 }
 
+
 export function* startChangeLangScenario(action: PayloadAction<string>) {
   try {
 
@@ -35,17 +37,14 @@ export function* startChangeLangScenario(action: PayloadAction<string>) {
   }
 }
 
-export function* startShowToastMessageScenario(
-  action: PayloadAction<{
-    content: string;
-    type: TypeOptions | undefined;
-    title?: string;
-  }>
-) {
+export function* startShowToastMessageScenario(action: PayloadAction<any>) {
   try {
-    const content = i18n.t(snakeCase(lowerCase(action.payload.content)));
-    toast(content, { type: action.payload.type });
-  } catch (e: any) {
-
+    const { toastMessage } = yield select();
+    console.log('toaastMessage', toastMessage);
+    toast(startCase(toastMessage.content), { type: toastMessage.type });
+    yield delay(2000);
+    yield put({ type: `${toastMessageSlice.actions.hideToastMessage}` });
+  } catch (e) {
+  } finally {
   }
 }
