@@ -58,6 +58,18 @@
     "search_all_subscribed_companies": "search all subscribed companies",
     "process_success": "successful process",
     "process_failure": "unsuccessful process",
-    "confirm_payment" : "confirm payment"
+    "confirm_payment": "confirm payment",
+    "total": "total",
+    "net_total": "net total",
+    "discount": "discount",
+    "order_success_message": "order success message",
+    "order_failure_message": "order failure message",
+    "order_status": "order status",
+    "order_id": "order id",
+    "subscription": "subscription",
+    "sponsorship": "sponsorship",
+    "membership_type": "membership_type",
+    "beneficiary_name": "beneficiary_name",
+    "continue": "continue"
   }
 }

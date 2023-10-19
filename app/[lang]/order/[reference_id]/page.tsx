@@ -3,6 +3,10 @@ import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
 import { getSetting } from "@/utils/setting";
 import { getOrderByReferenceId } from "@/utils/order";
+import Image from "next/image";
+import { getCountries } from "@/utils/country";
+import OrderDetails from "@/components/order/OrderDetails";
+import Link from "next/link";
 
 const products = [
   {
@@ -23,9 +27,10 @@ export default async function ({
 }: {
   params: { lang: Locale["lang"]; reference_id: string };
 }) {
-  const [{ trans }, setting, order] = await Promise.all([
+  const [{ trans }, setting, country, order] = await Promise.all([
     getDictionary(lang),
     getSetting(lang),
+    getCountries(`lang=${lang}&limit=1`, lang),
     getOrderByReferenceId(reference_id, lang),
   ]);
 
@@ -36,98 +41,114 @@ export default async function ({
       searchParams={``}
       setting={setting}>
       <main className='relative bg-white mx-auto max-w-7xl min-h-screen'>
-        <div className='h-80 overflow-hidden lg:absolute lg:h-full lg:w-1/2 lg:pr-4 xl:pr-12'>
-          <img
-            src='https://tailwindui.com/img/ecommerce-images/confirmation-page-06-hero.jpg'
-            alt='TODO'
+        <div className='h-80 overflow-hidden lg:absolute lg:h-full lg:w-1/2 lg:px-4 xl:px-8'>
+          <Image
+            width={200}
+            height={200}
+            src={order.membership.image}
+            alt={order.membership.name}
             className='h-full w-full object-cover object-center'
           />
         </div>
 
         <div>
-          <div className='mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8 lg:py-32 xl:gap-x-24'>
-            <div className='lg:col-start-2'>
-              <h1 className='text-sm font-medium text-indigo-600'>
-                Status : {order.status}
-              </h1>
-              <p className='mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl'>
-                Thanks for ordering
+          <div className='mx-auto max-w-2xl px-4 py-8 sm:px-6  lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8  xl:gap-x-24'>
+            <div className='lg:col-start-2 space-y-3'>
+              <div className='capitalize border-b border-gray-100 pb-2 flex flex-row justify-between items-center text-sm font-medium text-gray-600'>
+                <div>{trans.order_status} </div>
+                <div
+                  className={`p-2 w-1/5 text-center text-white rounded-md bg-${
+                    order.paid ? `green` : `red`
+                  }-500`}>
+                  {order.status}
+                </div>
+              </div>
+              <p
+                className={`mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl`}>
+                {order.paid
+                  ? trans.order_success_title
+                  : trans.order_failure_title}
               </p>
-              <p className='mt-2 text-base text-gray-500'>
-                We appreciate your order, we’re currently processing it. So hang
-                tight and we’ll send you confirmation very soon!
+              <p
+                className={`mt-2 text-base text-${
+                  order.paid ? `green` : `red`
+                }-500 leading-loose line-clamp-2`}>
+                {order.paid
+                  ? trans.order_success_message
+                  : trans.order_failure_message}
               </p>
 
               <dl className='mt-16 text-sm font-medium'>
-                <dt className='text-gray-900'>Order Id</dt>
-                <dd className='mt-2 text-indigo-600'>#{order.id}</dd>
+                <dt className='text-gray-900'>{trans.order_id}</dt>
+                <dd className='mt-2 text-gray-600'>#{order.id}</dd>
               </dl>
 
               <ul
                 role='list'
                 className='mt-6 divide-y divide-gray-200 border-t border-gray-200 text-sm font-medium text-gray-500'>
-                <li key={order.membership.id} className='flex space-x-6 py-6'>
-                  <img
+                <li
+                  key={order.membership.id}
+                  className='flex justify-start items-center gap-6 py-6'>
+                  <Image
+                    width={50}
+                    height={50}
                     src={order.membership.image}
                     alt={order.membership.name}
-                    className='h-24 w-24 flex-none rounded-md bg-gray-100 object-cover object-center'
+                    className='h-full w-40 object-cover object-center rounded-lg'
                   />
-                  <div className='flex-auto space-y-1'>
+                  <div className='flex-auto space-y-2'>
                     <h3 className='text-gray-900'>
-                      <a href={order.membership.href}>
-                        {order.membership.name}
-                      </a>
+                      <div>{order.membership.name}</div>
                     </h3>
-                    <p>{order.membership.color}</p>
+                    <div className='flex w-full flex-row justify-between items-center capitalize'>
+                      <div>
+                        <p>
+                          {trans.membership_type}{" "}
+                          {order.membership.sort === "subscription"
+                            ? trans.subscription
+                            : trans.sponsorships}
+                        </p>
+                      </div>
+                      <div
+                        className={`w-8 h-8 p-2 rounded-md justify-center items-center text-center text-white`}
+                        style={{
+                          backgroundColor: `${order.membership.color}`,
+                        }}>
+                        {order.membership.zone}
+                      </div>
+                    </div>
+
                     <p>{order.membership.caption}</p>
                   </div>
-                  <p className='flex-none font-medium text-gray-900'>
-                    {order.membership.price}
-                  </p>
+                  {/* <p className='flex-none font-medium text-gray-900'>
+                    {getPrice(order.membership.price, country[0])}
+                  </p> */}
                 </li>
               </ul>
 
-              <dl className='space-y-6 border-t border-gray-200 pt-6 text-sm font-medium text-gray-500 capitalize'>
-                <div className='flex justify-between'>
-                  <dt>total</dt>
-                  <dd className='text-gray-900'>{order.total}</dd>
-                </div>
+              <OrderDetails order={order} country={country} lang={lang} />
 
-                <div className='flex justify-between'>
-                  <dt>discount</dt>
-                  <dd className='text-gray-900'>{order.discount}</dd>
-                </div>
-
-                <div className='flex justify-between'>
-                  <dt>net total</dt>
-                  <dd className='text-gray-900'>{order.net_total}</dd>
-                </div>
-
-                <div className='flex items-center justify-between border-t border-gray-200 pt-6 text-gray-900'>
-                  <dt className='text-base'>Net Total</dt>
-                  <dd className='text-base'>{order.net_total}</dd>
-                </div>
-              </dl>
-
-              <dl className='mt-16 grid grid-cols-2 gap-x-4 text-sm text-gray-600'>
-                <div>
+              <dl className='mt-16 grid grid-cols-2 py-8 gap-x-4 text-sm text-gray-600'>
+                <div className=''>
                   <dt className='font-medium text-gray-900'>
-                    Shipping Address
+                    {trans.beneficiary_name}
                   </dt>
                   <dd className='mt-2'>
-                    <address className='not-italic'>
-                      <span className='block'>Kristin Watson</span>
-                      <span className='block'>7363 Cynthia Pass</span>
-                      <span className='block'>Toronto, ON N3Y 4H8</span>
+                    <address className='not-italic space-y-2'>
+                      <span className='block'>{order.user.name}</span>
+                      <span className='block'></span>
+                      <span className='block'>
+                        {order.user.area} {order.user.country?.name}
+                      </span>
                     </address>
                   </dd>
                 </div>
                 <div>
-                  <dt className='font-medium text-gray-900'>
+                  <dt className='font-medium text-gray-900 hidden'>
                     Payment Information
                   </dt>
-                  <dd className='mt-2 space-y-2 sm:flex sm:space-x-4 sm:space-y-0'>
-                    <div className='flex-none'>
+                  <dd className='mt-2 space-y-2 sm:flex sm:space-x-4 sm:space-y-0 hidden'>
+                    <div className='flex-none hidden'>
                       <svg
                         aria-hidden='true'
                         width={36}
@@ -142,7 +163,7 @@ export default async function ({
                       </svg>
                       <p className='sr-only'>Visa</p>
                     </div>
-                    <div className='flex-auto'>
+                    <div className='flex-auto hidden'>
                       <p className='text-gray-900'>Ending with 4242</p>
                       <p>Expires 12 / 21</p>
                     </div>
@@ -150,13 +171,12 @@ export default async function ({
                 </div>
               </dl>
 
-              <div className='mt-16 border-t border-gray-200 py-6 text-right'>
-                <a
-                  href='#'
-                  className='text-sm font-medium text-indigo-600 hover:text-indigo-500'>
-                  Continue Shopping
-                  <span aria-hidden='true'> &rarr;</span>
-                </a>
+              <div className='mt-16 border-t border-gray-200 py-6 ltr:text-right rtl:text-left capitalize'>
+                <Link
+                  href={`/${lang}`}
+                  className='text-sm font-medium text-gray-600 hover:text-gray-500'>
+                  {trans.continue}
+                </Link>
               </div>
             </div>
           </div>
