@@ -1,18 +1,12 @@
 "use client";
 import { Locale } from "@/types/index";
 import { Country, Membership } from "@/types/queries";
-import Image from "next/image";
-import Link from "next/link";
 import DOMPurify from "isomorphic-dompurify";
 import { MainContext } from "../MainContentLayout";
 import { useContext } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { setMembership } from "@/redux/slices/cartSlice";
-import { isNull } from "lodash";
 import { useRouter } from "next/navigation";
 import { getPrice } from "@/src/constants";
-import { useCreateOrUpdateOrderMutation } from "@/redux/api/orderApi";
-import { showToastMessage } from "@/redux/slices/toastMessageSlice";
 
 type Props = {
   element: Membership;
@@ -30,36 +24,12 @@ export default function ({ element, country, lang }: Props) {
   } = useAppSelector((state) => state);
   const router = useRouter();
 
-  
-
-  // const messageId = "1";
-  // const transactionId = random(999999, 9999999);
-  // const merchantId = `RB0000002`;
-  // const amount = element.price.toFixed(2);
-  // const currencyCode = `840`;
-  // const redirectUrl = `https://dev.ar-expo.ru/${lang}/order/result/${transactionId}`;
-  // const toBeHashed = `ZGFiMzdmNGZhOWIxZDJjOTljOWZiMGE1${amount}${currencyCode}${capitalize(
-  //   lang
-  // )}${merchantId}${messageId}${redirectUrl}${transactionId}`;
-  // const hashed: string = sha256(toBeHashed);
-  // const query = `MessageID=${messageId}&TransactionID=${transactionId}&MerchantID=${merchantId}&Amount=${amount}&Language=${capitalize(
-  //   lang
-  // )}&CurrencyISOCode=${currencyCode}&ResponseBackURL=${redirectUrl}&SecureHash=${hashed}
-  //   `;
-  // console.log("price", amount);
-
   const handleSubscribe = (e: Membership) => {
-    // will check auth first ==> go to company register
-    // else set to cart
-    // if (isAuth) {
-    
-    dispatch(
-      showToastMessage({ content: trans.process_success, type: "success" })
-    );
-    router.push(`/${lang}/cart/${e.id}`);
-    // } else {
-    //   router.push(`/${lang}/login`);
-    // }
+    if (isAuth) {
+      router.push(`/${lang}/cart/${e.id}`);
+    } else {
+      router.push(`/${lang}/login`);
+    }
   };
 
   return (
