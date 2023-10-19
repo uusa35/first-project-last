@@ -12,7 +12,6 @@ import { isNull } from "lodash";
 import { useRouter } from "next/navigation";
 import { getPrice } from "@/src/constants";
 import { useCreateOrUpdateOrderMutation } from "@/redux/api/orderApi";
-import { useTranslation } from "react-i18next";
 import { showToastMessage } from "@/redux/slices/toastMessageSlice";
 
 type Props = {
@@ -30,10 +29,8 @@ export default function ({ element, country, lang }: Props) {
     auth: { isAuth },
   } = useAppSelector((state) => state);
   const router = useRouter();
-  const { t } = useTranslation();
 
-  const [triggerCreateOrUpdateOrderQuery, { data, isSuccess }] =
-    useCreateOrUpdateOrderMutation();
+  
 
   // const messageId = "1";
   // const transactionId = random(999999, 9999999);
@@ -54,14 +51,15 @@ export default function ({ element, country, lang }: Props) {
   const handleSubscribe = (e: Membership) => {
     // will check auth first ==> go to company register
     // else set to cart
-    if (isAuth) {
-      dispatch(setMembership({ membership: e, country, lang }));
-      dispatch(
-        showToastMessage({ content: trans.process_success, type: "success" })
-      );
-    } else {
-      router.push(`/${lang}/login`);
-    }
+    // if (isAuth) {
+    
+    dispatch(
+      showToastMessage({ content: trans.process_success, type: "success" })
+    );
+    router.push(`/${lang}/cart/${e.id}`);
+    // } else {
+    //   router.push(`/${lang}/login`);
+    // }
   };
 
   return (
@@ -112,15 +110,6 @@ export default function ({ element, country, lang }: Props) {
         className={"text-gray-600 mt-8 space-y-3 text-sm leading-6 xl:mt-10"}>
         <p>{element.caption}</p>
       </ul>
-      {!isNull(queryString) && isAuth && (
-        <form
-          action={`${paymentUrl}${queryString}`}
-          className={"border-4 bg-blue-600"}
-          method='post'
-          target='_blank'>
-          <button type='submit'>submit</button>
-        </form>
-      )}
     </div>
   );
 }

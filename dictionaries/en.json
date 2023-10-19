@@ -55,6 +55,9 @@
     "all_rights_reserved": "all rights reserved",
     "register_now_to_subscribe": "register now to subscribe",
     "enter_ur_email": "enter ur email",
-    "search_all_subscribed_companies": "search all subscribed companies"
+    "search_all_subscribed_companies": "search all subscribed companies",
+    "process_success": "successful process",
+    "process_failure": "unsuccessful process",
+    "confirm_payment" : "confirm payment"
   }
 }

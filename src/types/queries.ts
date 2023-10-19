@@ -87,7 +87,14 @@ export type User = {
     [key: string]: any;
 }
 
-
+export type Auth = {
+    id: number | string;
+    name: string;
+    caption: string;
+    email: string;
+    image: string;
+    api_token: string | null;
+}
 export type Membership = {
     id: number;
     name: any;
@@ -113,7 +120,7 @@ export type PaymentFields = {
 }
 
 export type Order = {
-    id: string;
+    id?: string;
     status: 'pending' | 'paid' | 'failed';
     paid: boolean;
     total: number;
@@ -121,8 +128,8 @@ export type Order = {
     discount: number;
     reference_id: string;
     membership_id: string;
+    user_id?: string | number;
+    created_at: string;
+    user: Auth;
     [key: string]: any;
 }
-
-
-

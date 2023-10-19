@@ -40,7 +40,6 @@ export function* startChangeLangScenario(action: PayloadAction<string>) {
 export function* startShowToastMessageScenario(action: PayloadAction<any>) {
   try {
     const { toastMessage } = yield select();
-    console.log('toaastMessage', toastMessage);
     toast(startCase(toastMessage.content), { type: toastMessage.type });
     yield delay(2000);
     yield put({ type: `${toastMessageSlice.actions.hideToastMessage}` });

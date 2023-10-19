@@ -56,13 +56,12 @@ const MainContextLayout: FC<Props> = ({
         setting={setting}
       />
       <div>{children}</div>
-
-      {/* <AppFooter
-          mainPages={navigation}
-          lang={lang}
-          trans={trans}
-          setting={setting}
-        /> */}
+      <AppFooter
+        mainPages={navigation}
+        lang={lang}
+        trans={trans}
+        setting={setting}
+      />
       {/* </ThemeProvider> */}
     </MainContext.Provider>
   );

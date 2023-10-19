@@ -54,6 +54,8 @@
     "next": "التالي",
     "all_rights_reserved": "جميع الحقوق محفوظة",
     "register_now_to_subscribe": "سجل الآن واشترك معنا",
-    "search_all_subscribed_companies" : "ابحث الآن في جميع الشركات المشاركة بالمعرض"
+    "search_all_subscribed_companies" : "ابحث الآن في جميع الشركات المشاركة بالمعرض",
+    "process_success" : "عملية ناجحة",
+    "process_failure" : "عملية غير ناجحة"
   }
 }
