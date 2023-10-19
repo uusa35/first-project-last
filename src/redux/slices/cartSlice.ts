@@ -25,7 +25,7 @@ const initialState: { membership: Membership, payment: PaymentFields, order: Ord
     merchantId: `RB0000002`,
     amount: 0,
     currenyCode: '840',
-    redirectUrl: `https://dev.ar-expo.ru/`,
+    redirectUrl: `https://dev.ar-expo.ru/order/`,
     queryString: null,
     paymentUrl: `https://srstaging.stspayone.com/SmartRoutePaymentWeb/SRPayMsgHandler?`
   },
@@ -54,7 +54,7 @@ export const cartSlice = createSlice({
       const convertedPrice = round(getPrice(finalPrice, country));
       const amount = `${convertedPrice}${amountValues}`;
       const currencyCode = country.lang === 'ar' ? '682' : (country.lang === 'ru') ? '643' : '840';
-      const redirectUrl = `https://dev.ar-expo.ru/${lang}/order/result/${transactionId}`;
+      const redirectUrl = `https://dev.ar-expo.ru/${lang}/order/${transactionId}`;
       const toBeHashed = `${token}${amount}${currencyCode}${capitalize(
         lang
       )}${merchantId}${messageId}${redirectUrl}${transactionId}`;

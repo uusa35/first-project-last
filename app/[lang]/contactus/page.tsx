@@ -3,7 +3,7 @@ import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
 import { getSetting } from "@/utils/setting";
 
-export default async function Contactus({
+export default async function ({
   params: { lang },
 }: {
   params: { lang: Locale["lang"] };
