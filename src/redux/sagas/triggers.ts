@@ -15,6 +15,8 @@ import {
   startUpdateCartProductScenario,
 } from './appSaga';
 import { localeSlice } from '@/redux/slices/localeSlice';
+import { cartSlice } from '../slices/cartSlice';
+import { toastMessageSlice } from '../slices/toastMessageSlice';
 
 export function* triggerResetEntireApp() {
   yield takeLatest(`resetEntireApp`, startResetEnireAppSceanrio);
@@ -32,12 +34,15 @@ export function* triggerChangeLang() {
   yield takeLatest(`${localeSlice.actions.setLocale}`, startChangeLangScenario);
 }
 
+
 export function* triggerShowToastMessage() {
-  // yield takeLatest(
-  // yield debounce(
-  // 1000,
-  // `${appSettingSlice.actions.showToastMessage}`,
-  // `appSetting/showToastMessage`,
-  // startShowToastMessageScenario
-  // );
+  yield takeLatest(
+    [
+      `${toastMessageSlice.actions.showToastMessage}`,
+      `${toastMessageSlice.actions.showSuccessToastMessage}`,
+      `${toastMessageSlice.actions.showErrorToastMessage}`,
+      `${toastMessageSlice.actions.showWarningToastMessage}`,
+    ],
+    startShowToastMessageScenario,
+  );
 }

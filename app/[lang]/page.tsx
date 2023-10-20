@@ -17,7 +17,11 @@ import Loading from "./loading";
 import { PersonOutlineOutlined } from "@/src/constants";
 import { getCountries } from "@/utils/country";
 import DOMPurify from "isomorphic-dompurify";
-import { SearchBar } from "@/components/Home/SearchBar";
+import PostCard from "@/components/post/PostCard";
+import CategoryCard from "@/components/category/CategoryCard";
+import MembershipCard from "@/components/membership/MembershipCard";
+import { Spinner } from "@material-tailwind/react";
+import { Suspense } from "react";
 
 const tiers = [
   {
@@ -142,22 +146,46 @@ export default async function Home({ params: { lang } }: Props) {
     getCountries(`lang=${lang}&limit=1`, lang),
   ]);
 
-  console.log("images", images.data[0]);
-  console.log("subscriptions", subscriptions[0]);
-  console.log("sponsorships", sponsorships[0]);
-  console.log("posts", posts.data[0]);
-
   return (
-    <MainContextLayout trans={trans} lang={lang} searchParams={``}>
+    <MainContextLayout
+      trans={trans}
+      lang={lang}
+      searchParams={``}
+      setting={setting}>
       {/* slider */}
       {/* <MainSlider slides={slides} lang={lang} /> */}
-      
       {/* search */}
-      <SearchBar trans={trans}/>
-
-      
-      {/* categories */}
       <div className='bg-white py-12 sm:py-12'>
+        <div className='mx-auto max-w-7xl'>
+          <div className='relative isolate overflow-hidden  px-6 py-14 sm:rounded-3xl sm:px-24 xl:py-32'>
+            <h2 className='mx-auto max-w-2xl text-center text-3xl font-bold tracking-tight text-black sm:text-4xl'>
+              {trans.search}
+            </h2>
+
+            <form className='mx-auto mt-10 flex max-w-2xl gap-x-4'>
+              <label htmlFor='email-address' className='sr-only'>
+                Email address
+              </label>
+              <input
+                id='email-address'
+                name='email'
+                type='email'
+                autoComplete='email'
+                required
+                className='min-w-0 flex-auto rounded-md border-0 px-3.5 py-2 h-14 text-black bg-gray-100 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-white sm:text-sm sm:leading-6'
+                placeholder='Enter your email'
+              />
+              <button
+                type='submit'
+                className='flex-none rounded-md bg-green-900 text-white px-3.5 py-2.5 text-sm font-semibold  shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'>
+                Search Now
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+      {/* categories */}
+      <div className='bg-white py-12 sm:py-12 capitalize'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
           <div className='mx-auto max-w-2xl lg:max-w-none'>
             <h2 className='text-3xl text-center font-bold tracking-tight text-gray-900 sm:text-4xl capitalize'>
@@ -169,29 +197,15 @@ export default async function Home({ params: { lang } }: Props) {
               }
             </p>
           </div>
+
           <ul
             role='list'
             className='mx-auto mt-10 grid  grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-5'>
-            {categories.data.map((c: Category) => (
-              <li key={c.id}>
-                <Link href={`/${lang}/user?category_id=${c.id}`}>
-                  <Image
-                    className='aspect-[3/2] w-full rounded-2xl object-cover hover:scale-105 duration-200 shadow-lg'
-                    src={c.imageLarge}
-                    width={100}
-                    height={100}
-                    alt=''
-                  />
-                  <h3 className='truncate mt-6 text-lg text-center font-semibold leading-8 tracking-tight text-gray-900'>
-                    {c.name}
-                  </h3>
-                  <p className=' text-base leading-7 text-gray-600 hidden'>
-                    {c.caption}
-                  </p>
-                </Link>
-              </li>
+            {categories.data.map((c: Category, i: number) => (
+              <CategoryCard element={c} key={c.name} lang={lang} />
             ))}
           </ul>
+
           <div className='pt-12 pb-2 w-full text-center text-expo-dark'>
             <Link href={`${lang}/user?membership=subscription`}>
               {trans.navigate_to_more}
@@ -201,7 +215,7 @@ export default async function Home({ params: { lang } }: Props) {
       </div>
 
       {/* subscriptions */}
-      <div className='relative bg-expo-green'>
+      <div className='relative bg-expo-green capitalize'>
         <div className='relative h-80 overflow-hidden bg-expo-green md:absolute md:left-0 md:h-full md:w-1/3 lg:w-1/2'>
           <Image
             className='h-full w-full object-cover'
@@ -235,13 +249,13 @@ export default async function Home({ params: { lang } }: Props) {
         </div>
         <div className='relative mx-auto max-w-7xl py-24 sm:py-32 lg:px-8 lg:py-40'>
           <div className='pl-6 pr-6 md:ml-auto md:w-2/3 md:pl-16 lg:w-1/2 lg:pl-24 lg:pr-0 xl:pl-32'>
-            <h2 className=' font-semibold leading-7 text-lg text-black'>
+            <h2 className=' font-semibold leading-8 text-lg text-black'>
               {trans.joinus}
             </h2>
-            <p className='mt-2 text-3xl font-bold tracking-tight text-black break-words sm:text-4xl'>
+            <p className='mt-2 text-3xl font-bold leading-8 tracking-tight text-black line-clamp-2 sm:text-4xl'>
               {trans.joinus_and_get_many_features}
             </p>
-            <p className='mt-6 text-base leading-7 break-all text-gray-800'>
+            <p className='mt-6 text-base leading-8 line-clamp-2 text-gray-800'>
               {trans.get_to_know_all_kind_of_subscriptions_and_sponsorships}
             </p>
             <div className='mt-8'>
@@ -268,7 +282,7 @@ export default async function Home({ params: { lang } }: Props) {
       </div>
 
       {/*  figures  */}
-      <div className='bg-white py-12 sm:py-12'>
+      <div className='bg-white py-12 sm:py-12 capitalize'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
           <div className='mx-auto max-w-2xl lg:max-w-none'>
             <dl className='mt-16 grid grid-cols-2 p-2 md:p-8 bg-expo-green  overflow-hidden rounded-2xl text-center lg:grid-cols-4'>
@@ -301,13 +315,13 @@ export default async function Home({ params: { lang } }: Props) {
       </div>
 
       {/* newsletter */}
-      <div className='bg-white py-12 sm:py-12'>
+      <div className='bg-white py-12 sm:py-12 capitalize'>
         <div className='mx-auto max-w-7xl sm:px-6 lg:px-8'>
           <div className='relative isolate overflow-hidden bg-green-900 px-6 py-24 shadow-2xl sm:rounded-3xl sm:px-24 xl:py-32'>
-            <h2 className='mx-auto max-w-2xl break-all text-center text-3xl font-bold tracking-tight text-white sm:text-4xl'>
+            <h2 className='mx-auto max-w-3xl line-clamp-2 text-center text-3xl font-bold tracking-tight text-white sm:text-4xl pb-4'>
               {trans.register_to_receive_latest_expo_news}
             </h2>
-            <p className='mx-auto mt-2 max-w-xl break-words text-center text-lg leading-8 text-gray-300'>
+            <p className='mx-auto mt-2 max-w-xl  line-clamp-2 text-center text-lg leading-8 text-gray-300'>
               {
                 trans.through_this_section_u_can_follow_up_all_news_related_to_this_expo_and_even_more
               }
@@ -358,8 +372,9 @@ export default async function Home({ params: { lang } }: Props) {
           </div>
         </div>
       </div>
+
       {/* posts */}
-      <div className='bg-white py-14'>
+      <div className='bg-white py-14 capitalize'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
           <div className='mx-auto max-w-2xl text-center'>
             <h2 className='text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl'>
@@ -369,51 +384,19 @@ export default async function Home({ params: { lang } }: Props) {
               {trans.through_this_section_get_latest_news_related}
             </p>
           </div>
-          <div className='mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-3'>
-            {posts.data.map((post: Post, i: number) => (
-              <Link
-                href={`/${lang}/post/${post.id}`}
-                key={i}
-                className='flex flex-col items-start justify-between'>
-                <div className='relative w-full'>
-                  <Image
-                    width={100}
-                    height={100}
-                    src={post.image}
-                    alt={post.name}
-                    className='aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2]'
-                  />
-                  <div className='absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10' />
-                </div>
-                <div className='mt-8 flex items-center justify-between text-xs'>
-                  <time dateTime={post.datetime} className='text-gray-500'>
-                    {post.date}
-                  </time>
-                  <h4 className='hidden relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100'>
-                    {post.name}
-                  </h4>
-                </div>
 
-                <div className='group relative'>
-                  <h3 className=' text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600'>
-                    <span className='absolute inset-0' />
-                    {post.name}
-                  </h3>
-
-                  <p className='mt-2 line-clamp-3 text-sm leading-6 text-gray-600'>
-                    {post.caption}
-                  </p>
-                </div>
-              </Link>
+          <div className='mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3'>
+            {posts.data.map((p: Post, i: number) => (
+              <PostCard element={p} lang={lang} key={p.name} />
             ))}
           </div>
         </div>
       </div>
       {/* subscription prices */}
-      <div className='expo-green py-12 sm:py-12'>
+      <div className='bg-expo-green py-12 sm:py-12 capitalize'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
           <div className='mx-auto max-w-4xl text-center'>
-            <h2 className='text-base font-semibold leading-7 text-green-600'>
+            <h2 className='text-base font-semibold leading-8 text-green-600'>
               Pricing
             </h2>
             <p className='mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl'>
@@ -492,8 +475,9 @@ export default async function Home({ params: { lang } }: Props) {
         </div>
       </div>
       {/* sponsors logos */}
+
       {sponsors.data && (
-        <div className='bg-white py-12 sm:py-12'>
+        <div className='bg-white py-12 sm:py-12 capitalize'>
           <div className='mx-auto max-w-7xl px-6 lg:px-8'>
             <h2 className='text-center text-lg font-semibold leading-8 text-gray-900'>
               {trans.sponsors}
@@ -517,10 +501,10 @@ export default async function Home({ params: { lang } }: Props) {
       )}
 
       {/* sponsorship prices */}
-      <div className='expo-green py-12 sm:py-12'>
+      <div className='bg-expo-green py-12 sm:py-12 capitalize'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
           <div className='mx-auto max-w-4xl text-center'>
-            <h2 className='text-base font-semibold leading-7 text-green-600'>
+            <h2 className='text-base font-semibold leading-8 text-green-600'>
               {trans.sponsors}
             </h2>
             <p className='mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl'>
@@ -534,79 +518,53 @@ export default async function Home({ params: { lang } }: Props) {
 
           <div className='isolate mx-auto mt-10 grid max-w-md grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3'>
             {sponsorships.map((s: Membership, i: number) => (
-              <div
+              <MembershipCard
+                element={s}
                 key={i}
-                className={" ring-gray-400 rounded-3xl p-8 ring-1 xl:p-10"}>
-                <h3 className={"text-gray-900 text-lg font-semibold leading-8"}>
-                  {s.name}
-                </h3>
-
-                <div
-                  className='  h-[200px] overflow-hidden text-gray-600 mt-4 text-sm leading-6'
-                  dangerouslySetInnerHTML={{
-                    __html: DOMPurify.sanitize(s.description),
-                  }}
-                />
-                <p className='mt-6  flex items-baseline gap-x-1'>
-                  <span
-                    className={
-                      "text-gray-900 text-4xl font-bold tracking-tight"
-                    }>
-                    {s.price}
-                  </span>
-                  <span
-                    className={"text-gray-600 text-lg font-semibold leading-6"}>
-                    {country[0].currency_symbol}
-                  </span>
-                </p>
-                <div
-                  className={
-                    "bg-green-600 text-white shadow-sm hover:bg-green-500 focus-visible:outline-green-600 mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-                  }>
-                  {trans.subscribe_now}
-                </div>
-                <ul
-                  role='list'
-                  className={
-                    "text-gray-600 mt-8 space-y-3 text-sm leading-6 xl:mt-10"
-                  }>
-                  <p>{s.caption}</p>
-                </ul>
-              </div>
+                lang={lang}
+                country={country[0]}
+              />
             ))}
           </div>
         </div>
       </div>
 
       {/* OnHome Images with Url if exist (this will be a slider) */}
-      <div className='py-12 sm:py-10'>
+      <div className='py-12 sm:py-10 capitalize'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
           <div className='mx-auto  lg:mx-0'>
             <h2 className='text-center text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl'>
               {trans.gallery}
             </h2>
-            <p className='mt-6 text-lg leading-8 text-gray-600'>
+            <p className='mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-600'>
               We’re a dynamic group of individuals who are passionate about what
               we do and dedicated to delivering the best results for our
               clients.
             </p>
           </div>
+
           <ul
             role='list'
-            className='mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3'>
-            {people.slice(0, 3).map((person) => (
-              <li key={person.name}>
-                <img
+            className='mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-4 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-4'>
+            {images.data.map((img: any, i: number) => (
+              <li key={i}>
+                <Image
                   className='aspect-[3/2] w-full rounded-2xl object-cover'
-                  src={person.imageUrl}
-                  alt=''
+                  src={img.image}
+                  alt={setting.name}
+                  width={200}
+                  height={200}
                 />
-                <h3 className='mt-6 text-lg font-semibold leading-8 tracking-tight text-gray-900'>
-                  {person.name}
-                </h3>
-                <p className='text-base leading-7 text-gray-600'>
-                  {person.role}
-                </p>
+                {img.name && (
+                  <>
+                    <h3 className='mt-6 text-lg font-semibold leading-8 tracking-tight text-gray-900'>
+                      {img.name}
+                    </h3>
+                    <p className='text-base leading-8 text-gray-600'>
+                      {img.caption}
+                    </p>
+                  </>
+                )}
               </li>
             ))}
           </ul>

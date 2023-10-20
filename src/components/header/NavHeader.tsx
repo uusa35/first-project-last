@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import type { Locale } from "@/i18n.config";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Bars3Icon, UserIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { MainContext } from "../MainContentLayout";
@@ -14,78 +14,87 @@ import {
   useSelectedLayoutSegments,
 } from "next/navigation";
 import { changePathName, convertSearchParamsToString } from "@/utils/helpers";
-import { useGetSettingQuery } from "@/redux/api";
-import AppLogo from "./AppLogo";
+import AppLogo from "@/components/header/AppLogo";
+import { last, split, toString } from "lodash";
+import { setCurrentPath } from "@/redux/slices/settingSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { Setting } from "@/types/queries";
+import LanguagesList from "./LanguagesList";
+
 type Props = {
   lang: Locale;
   searchParams: { [key: string]: string } | string;
-  mainPages: { href: string; name: string }[];
+  mainPages: { href: string; name: string; label: string }[];
+  setting: Setting;
 };
 
-export default function NavHeader({
+export default function ({
   lang,
   searchParams = ``,
   mainPages,
+  setting,
 }: Props) {
-  const trans: any = useContext(MainContext);
+  const trans: { [key: string]: string } = useContext(MainContext);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { currentPath } = useAppSelector((state) => state.appSetting);
+  const dispatch = useAppDispatch();
   const params = useParams();
   const pathName = usePathname()!;
   const router = useRouter();
   const segment = useSelectedLayoutSegment();
   const segments = useSelectedLayoutSegments();
+  const [stickyClass, setStickyClass] = useState("relative");
+
+  useEffect(() => {
+    window.addEventListener("scroll", stickNavbar);
+    return () => {
+      window.removeEventListener("scroll", stickNavbar);
+    };
+  }, []);
+
+  const stickNavbar = () => {
+    if (window !== undefined) {
+      let windowHeight = window.scrollY;
+      windowHeight >= 250
+        ? setStickyClass(
+            "sticky top-0 bg-white lg:bg-white/80 w-full border-b border-gray-400 max-w-full"
+          )
+        : setStickyClass("relative");
+    }
+  };
 
   // console.log("pathname", pathName);
-  // console.log("router", router?.query);
+  // console.log("router", router);
   // console.log("segment", segment);
   // console.log("segments", segments);
   // console.log("params", params);
   // console.log("searchParams", searchParams);
   // console.log("searchParams ----->", convertSearchParamsToString(searchParams));
   // console.log("url", changePathName(lang, "ar", pathName));
+  useEffect(() => {
+    if (typeof searchParams === "object") {
+      dispatch(setCurrentPath(searchParams.membership));
+    } else {
+      const url: string = toString(last(split(pathName, "/")));
+      if (url === "en" || url === "ar") {
+        dispatch(setCurrentPath("home"));
+      } else {
+        dispatch(setCurrentPath(url));
+      }
+    }
+  }, [pathName]);
   return (
-    <header className='top-0 z-50 mx-auto max-w-7xl py-4 px-2'>
-      <AppLogo/>
-      <nav
-        className='flex items-center justify-between  capitalize'
-        aria-label='Global'>
+    <header
+      className={` top-0 z-50 mx-auto max-w-7xl lg:py-4 px-2  ${stickyClass}`}>
+      <nav className={`flex items-center justify-between`} aria-label='Global'>
         <div className=' lg:hidden xl:flex-1'>
-          <AppLogo />
+          <AppLogo lang={lang} logo={setting.image} name={setting.name} />
         </div>
-
-        {/* lang dropdown */}
-        <div className='hidden lg:flex  gap-x-4'>
-          <Link
-            href={`${changePathName(
-              lang,
-              "ar",
-              pathName
-            )}?${convertSearchParamsToString(searchParams)}`}
-            className='text-sm font-semibold leading-6 text-gray-900'>
-            ar
-          </Link>
-          <Link
-            href={`${changePathName(
-              lang,
-              "ru",
-              pathName
-            )}?${convertSearchParamsToString(searchParams)}`}
-            className='text-sm font-semibold leading-6 text-gray-900'>
-            ru
-          </Link>
-          <Link
-            href={`${changePathName(
-              lang,
-              "en",
-              pathName
-            )}?${convertSearchParamsToString(searchParams)}`}
-            className='text-sm font-semibold leading-6 text-gray-900'>
-            en
-          </Link>
+        {/* top bar */}
+        <div className='hidden lg:flex lg:flex-1  gap-x-4 capitalize'>
+          <LanguagesList lang={lang} searchParams={searchParams} />
         </div>
-
-        {/* burger menue icon */}
-        <div className='flex lg:hidden'>
+        <div className='flex lg:hidden capitalize'>
           <button
             type='button'
             className='-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700'
@@ -94,14 +103,17 @@ export default function NavHeader({
             <Bars3Icon className='h-6 w-6' aria-hidden='true' />
           </button>
         </div>
-
-        {/* logo in lg screens */}
+        {/* menu */}
         <div className='hidden lg:flex lg:gap-x-8'>
-          <AppLogo />
+          <AppLogo lang={lang} logo={setting.image} name={setting.name} />
         </div>
-
-        {/* subscription or visitor */}
-        <div className='hidden lg:flex  lg:justify-end items-center gap-x-4'>
+        {/* <ActiveLink
+          activeClassName='active'
+          className='border-4 bg-green-800 active:bg-blue-700'
+          href='/'>
+          Home
+        </ActiveLink> */}
+        <div className='hidden lg:flex lg:flex-1 lg:justify-end items-center gap-x-4 capitalize'>
           <Link
             href={`/${lang}/register/visitor`}
             className='text-sm font-semibold leading-6 text-white p-2 px-4 btn-color-default '>
@@ -130,14 +142,20 @@ export default function NavHeader({
         <div className='hidden lg:flex lg:gap-x-8 '>
           {mainPages.map((item, i) => (
             <Link
-              key={i}
+              onClick={() => dispatch(setCurrentPath(item.label))}
+              key={item.label}
               href={item.href}
-              className='text-sm font-semibold leading-6 text-gray-900'>
+              className={`${
+                currentPath === item.label
+                  ? `text-expo-dark text-underline`
+                  : `text-gray-900`
+              }
+              text-sm font-semibold leading-6  hover:text-expo-dark`}>
               {item.name}
             </Link>
           ))}
         </div>
-        <div className='hidden lg:flex lg:flex-1 lg:justify-end gap-x-4'>
+        <div className='hidden  lg:flex lg:flex-1 lg:justify-end gap-x-4'>
           <Link
             href={`/${lang}/login`}
             className='text-sm font-semibold text-expo-dark flex flex-row w-30 justify-center items-center '>
@@ -155,12 +173,8 @@ export default function NavHeader({
         <Dialog.Panel className='fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10'>
           <div className='flex items-center justify-between'>
             <Link href='/' className='-m-1.5 p-1.5'>
-              <span className='sr-only'>Your Company</span>
-              <img
-                className='h-8 w-auto'
-                src='https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600'
-                alt=''
-              />
+              <span className='sr-only'>{setting.name}</span>
+              <AppLogo lang={lang} logo={setting.image} name={setting.name} />
             </Link>
             <button
               type='button'
@@ -172,7 +186,7 @@ export default function NavHeader({
           </div>
           <div className='mt-6 flow-root'>
             <div className='-my-6 divide-y divide-gray-500/10'>
-              <div className='space-y-2 py-6'>
+              <div className='space-y-2 py-6 capitalize'>
                 {mainPages.map((item, i) => (
                   <Link
                     key={i}
@@ -182,12 +196,48 @@ export default function NavHeader({
                   </Link>
                 ))}
               </div>
-              <div className='py-6 bg-blue-800'>
+              <div className='py-6 capitalize'>
                 <Link
                   href={`/${lang}/login`}
-                  className='-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'>
+                  className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'>
                   {trans.login}
                 </Link>
+                <div className='flex flex-row justify-between items-center py-4 lg:py-0 px-8 ps-12'>
+                  <Link
+                    href={`${changePathName(
+                      lang,
+                      "ar",
+                      pathName
+                    )}?${convertSearchParamsToString(searchParams)}`}
+                    className={`${
+                      lang === "ar" && `bg-gray-200 rounded-md`
+                    } -mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50`}>
+                    {trans.ar}
+                  </Link>
+
+                  <Link
+                    href={`${changePathName(
+                      lang,
+                      "en",
+                      pathName
+                    )}?${convertSearchParamsToString(searchParams)}`}
+                    className={`${
+                      lang === "en" && `bg-gray-200 rounded-md`
+                    } -mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50`}>
+                    {trans.en}
+                  </Link>
+                  <Link
+                    href={`${changePathName(
+                      lang,
+                      "ru",
+                      pathName
+                    )}?${convertSearchParamsToString(searchParams)}`}
+                    className={`${
+                      lang === "ru" && `bg-gray-200 rounded-md`
+                    } -mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50`}>
+                    {trans.ru}
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

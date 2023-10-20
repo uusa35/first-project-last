@@ -51,6 +51,12 @@ export type Setting = {
     services: string;
     address: string;
     country: string;
+    facebook?: string;
+    instagram?: string;
+    twitter?: string;
+    linkedin?: string;
+    youtube?: string;
+    whatsapp?: string;
     [key: string]: any;
 }
 
@@ -58,12 +64,14 @@ export type Post = {
     id: number;
     name: string;
     description: string;
+    categories: Category[];
     [key: string]: any;
 }
 
 export type Country = {
     id: number;
     name: any;
+    exchange_rate: number;
     [key: string]: any;
 }
 
@@ -79,20 +87,49 @@ export type User = {
     [key: string]: any;
 }
 
-
+export type Auth = {
+    id: number | string;
+    name: string;
+    caption: string;
+    email: string;
+    image: string;
+    api_token: string | null;
+}
 export type Membership = {
     id: number;
     name: any;
     description: any;
+    price: number;
+    sale_price: number;
+    on_sale: boolean;
+    sort: 'subscription' | 'sponsorship';
+    zone: 'A' | 'B' | 'C' | 'D' | 'E';
     [key: string]: any;
+}
+
+export type PaymentFields = {
+    token: string;
+    messageId: 1;
+    transactionId: string;
+    merchantId: string;
+    amount: number | string;
+    currenyCode: '682' | '840' | '643';
+    redirectUrl: string;
+    queryString: string | null;
+    paymentUrl: string;
 }
 
 export type Order = {
-    id: number;
-    name: any;
-
+    id?: string;
+    status: 'pending' | 'paid' | 'failed';
+    paid: boolean;
+    total: number;
+    net_total: number;
+    discount: number;
+    reference_id: string | number;
+    membership_id: string | number;
+    user_id?: string | number;
+    created_at?: string;
+    user?: Auth;
     [key: string]: any;
 }
-
-
-

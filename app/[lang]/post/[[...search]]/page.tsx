@@ -7,6 +7,11 @@ import Link from "next/link";
 import { getPosts } from "@/utils/post";
 import { convertSearchParamsToString } from "@/utils/helpers";
 import Image from "next/image";
+import { Post } from "@/types/queries";
+import { getSetting } from "@/utils/setting";
+import LoginImage from "@/appImages/login/section.jpg";
+import Pagination from "@/components/Pagination";
+import PostCard from "@/components/post/PostCard";
 
 type Props = {
   params: { lang: Locale["lang"] };
@@ -16,38 +21,38 @@ export default async function PostIndex({
   params: { lang },
   searchParams,
 }: Props) {
-  const [{ trans }, users] = await Promise.all([
+  const [{ trans }, posts, setting] = await Promise.all([
     getDictionary(lang),
     getPosts(convertSearchParamsToString(searchParams) ?? ``, lang),
+    getSetting(lang),
   ]);
 
   return (
-    <MainContextLayout trans={trans} lang={lang} searchParams={``}>
-      <div className='container py-24 mx-auto max-w-7xl'>
-        <h1 className='text-3xl font-bold'>
-          {trans.translation} : {trans.posts}
-        </h1>
-        <div className='w-full p-8  rounded-md'>
-          <div className='flex flex-1 flex-col space-y-6'>
-            {users &&
-              map(users.data, (p, i) => (
-                <Link
-                  key={i}
-                  href={`/${lang}/post/${p.id}`}
-                  className='border-b p-3 flex flex-row items-center'>
-                  <Image
-                    alt={p.name}
-                    src={p.image}
-                    width={100}
-                    height={100}
-                    className='w-20 h-auto p-4'
-                  />
-                  <span>{p.id} - </span>
-                  <TextTrans ar={p.name} en={p.name} />
-                </Link>
-              ))}
+    <MainContextLayout
+      trans={trans}
+      lang={lang}
+      searchParams={``}
+      setting={setting}>
+      <div className='container mx-auto max-w-7xl min-h-screen'>
+        <Image
+          className='h-80 w-full object-cover'
+          width={600}
+          height={1000}
+          src={LoginImage.src}
+          alt={setting.name}
+        />
+        {posts.data.length < 0 && (
+          <div className='text-center text-2xl py-20'>
+            No Result Component here
           </div>
+        )}
+
+        <div className='mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-10 px-3 xl:px-0 lg:max-w-none lg:grid-cols-3'>
+          {posts.data.map((p: Post, i: number) => (
+            <PostCard element={p} lang={lang} />
+          ))}
         </div>
+        {posts.data.length > 0 && <Pagination links={posts.meta.links} />}
       </div>
     </MainContextLayout>
   );

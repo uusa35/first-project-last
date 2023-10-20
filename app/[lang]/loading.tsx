@@ -14,7 +14,7 @@ export default function Loading() {
 
   return (
     <div className='h-screen w-screen flex justify-center items-center'>
-      <div className='w-1/12 p-2'>
+      <div className='w-1/3 md:w-20 xl:w-24 p-2'>
         <Image
           className='w-full h-auto object-contain bg-white'
           src={Logo}

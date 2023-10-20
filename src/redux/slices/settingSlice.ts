@@ -1,35 +1,28 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const initialState: any = {
-  openSideMenu: false
+type Props = {
+  currentPath: string;
+}
+const initialState: Props = {
+  currentPath: ``
 };
 
 export const settingSlice = createSlice({
-  name: 'setting',
+  name: 'appSetting',
   initialState,
   reducers: {
-    setMethod: (
+    setCurrentPath: (
       state: typeof initialState,
-      action: PayloadAction<'delivery' | 'pickup'>
+      action: PayloadAction<string>
     ) => {
       return {
-        ...state,
-        method: action.payload
+        currentPath: action.payload
       };
     },
-    toggleMethod: (
-      state: typeof initialState,
-      action: PayloadAction<undefined | void>
-    ) => {
-      return {
-        ...state,
-        method: state.method == 'delivery' ? 'pickup' : 'delivery'
-      };
-    },
+
   }
 });
 
 export const {
-  setMethod,
-  toggleMethod
+  setCurrentPath
 } = settingSlice.actions;

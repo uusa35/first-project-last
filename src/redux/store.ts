@@ -25,7 +25,7 @@ import { isLocal } from "@/src/constants";
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["api"],
+  blacklist: ["api", 'appSetting', 'cart'],
   // whitelist: [
   // ],
   // stateReconciler: hardSet,
@@ -59,7 +59,6 @@ let store: any = configureStore({
       }).concat([
         apiSlice.middleware,
         categoryApi.middleware,
-
         sagaMiddleware,
         appLogger,
       ])
@@ -79,7 +78,6 @@ let store: any = configureStore({
       }).concat([
         apiSlice.middleware,
         categoryApi.middleware,
-
         sagaMiddleware,
       ]),
 });

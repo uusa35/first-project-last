@@ -11,8 +11,9 @@ export default function* rootSaga() {
   yield all([
     // fork(triggerEnableLoading),
     // fork(triggerChangeLang),
-    // fork(triggerShowToastMessage),
+    fork(triggerShowToastMessage),
     // fork(triggerResetEntireApp),
+
   ]);
   yield take(REHYDRATE); // Wait for rehydrate to prevent sagas from running with empty store
   yield take(PURGE);
