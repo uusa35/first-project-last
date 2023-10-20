@@ -9,6 +9,7 @@ type Props = {
   lang: Locale["lang"];
 };
 export default async function ({ slides, lang }: Props) {
+//  console.log({slides}) 
   return (
     <Carousel
       loop
@@ -16,6 +17,7 @@ export default async function ({ slides, lang }: Props) {
       className={`max-h-[500px] xl:max-h-[750px]  overflow-hidden `}>
       {slides.map((s: Slide, i: number) => (
         <div className='relative ' key={i} dir={lang === "ar" ? "rtl" : "ltr"}>
+
           <Image
             width='1000'
             height='500'

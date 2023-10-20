@@ -39,6 +39,13 @@
     "through_this_section_find_out_all_companies_related_to_your_interested_field": "through_this_section_find_out_all_companies_related_to_your_interested_field",
     "navigate_to_more": "navigate_to_more",
     "investment_opportunity": "investment_opportunity",
-    "subscribe_now": "اشترك الآن"
+    "subscribe_now": "اشترك الآن",
+    "browse_the_companies_participating_in_the_exhibition":"استعرض الشركات المشاركة في المعرض",
+    "find_the_interface":"ابحث عن الواجهة",
+    "welcome_back":"أهلا بعودتك",
+    "welcome_back_Please_enter_the_following_information":"أهلا بعودتك! من فضلك ادخل المعلومات التالية",
+    "email_address":"البريد الإلكتروني",
+    "password":"كلمة المرور",
+    "remember_me_for_days":"تذكرني لمدة 30 يوم"
   }
 }

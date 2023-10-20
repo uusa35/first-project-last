@@ -9,7 +9,9 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import AppFooter from "./footer/AppFooter";
+import { usePathname } from "next/navigation";
 export { Button, Carousel, Typography };
+
 
 type Props = {
   children: React.ReactNode;
@@ -25,6 +27,8 @@ const MainContextLayout: FC<Props> = ({
   lang,
   searchParams = ``,
 }) => {
+  const pathName = usePathname();
+  console.log(pathName)
   const navigation = [
     { name: trans.home, href: `/${lang}` },
     { name: trans.subscribers, href: `/${lang}/user?membership=subscription` },
@@ -43,7 +47,8 @@ const MainContextLayout: FC<Props> = ({
           mainPages={navigation}
         />
         <div>{children}</div>
-        <AppFooter mainPages={navigation} />
+        {!pathName?.includes("login")&& <AppFooter mainPages={navigation} />}
+        
       </ThemeProvider>
     </MainContext.Provider>
   );

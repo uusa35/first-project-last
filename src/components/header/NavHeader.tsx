@@ -45,13 +45,16 @@ export default function NavHeader({
   // console.log("url", changePathName(lang, "ar", pathName));
   return (
     <header className='top-0 z-50 mx-auto max-w-7xl py-4 px-2'>
+      <AppLogo/>
       <nav
         className='flex items-center justify-between  capitalize'
         aria-label='Global'>
         <div className=' lg:hidden xl:flex-1'>
           <AppLogo />
         </div>
-        <div className='hidden lg:flex lg:flex-1  gap-x-4'>
+
+        {/* lang dropdown */}
+        <div className='hidden lg:flex  gap-x-4'>
           <Link
             href={`${changePathName(
               lang,
@@ -80,6 +83,8 @@ export default function NavHeader({
             en
           </Link>
         </div>
+
+        {/* burger menue icon */}
         <div className='flex lg:hidden'>
           <button
             type='button'
@@ -89,10 +94,14 @@ export default function NavHeader({
             <Bars3Icon className='h-6 w-6' aria-hidden='true' />
           </button>
         </div>
+
+        {/* logo in lg screens */}
         <div className='hidden lg:flex lg:gap-x-8'>
           <AppLogo />
         </div>
-        <div className='hidden lg:flex lg:flex-1 lg:justify-end items-center gap-x-4'>
+
+        {/* subscription or visitor */}
+        <div className='hidden lg:flex  lg:justify-end items-center gap-x-4'>
           <Link
             href={`/${lang}/register/visitor`}
             className='text-sm font-semibold leading-6 text-white p-2 px-4 btn-color-default '>
@@ -131,7 +140,7 @@ export default function NavHeader({
         <div className='hidden lg:flex lg:flex-1 lg:justify-end gap-x-4'>
           <Link
             href={`/${lang}/login`}
-            className='text-sm font-semibold text-gray-900 flex flex-row w-30 justify-center items-center '>
+            className='text-sm font-semibold text-expo-dark flex flex-row w-30 justify-center items-center '>
             <UserIcon className='w-8 me-2' />
             <span className='flex w-full pt-1'>{trans.login}</span>
           </Link>

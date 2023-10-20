@@ -28,15 +28,10 @@ export default async function Aboutus({
                 alt={setting.name}
               />
               <h2 className='mt-8 text-2xl font-bold leading-9 tracking-tight text-gray-900'>
-                Sign in to your account
+              {trans.welcome_back}
               </h2>
               <p className='mt-2 text-sm leading-6 text-gray-500'>
-                Not a member?{" "}
-                <a
-                  href='#'
-                  className='font-semibold text-indigo-600 hover:text-indigo-500'>
-                  Start a 14 day free trial
-                </a>
+                {trans.welcome_back_Please_enter_the_following_information}
               </p>
             </div>
 
@@ -47,7 +42,7 @@ export default async function Aboutus({
                     <label
                       htmlFor='email'
                       className='block text-sm font-medium leading-6 text-gray-900'>
-                      Email address
+                      {trans.email_address}
                     </label>
                     <div className='mt-2'>
                       <input
@@ -65,7 +60,7 @@ export default async function Aboutus({
                     <label
                       htmlFor='password'
                       className='block text-sm font-medium leading-6 text-gray-900'>
-                      Password
+                      {trans.password}
                     </label>
                     <div className='mt-2'>
                       <input
@@ -80,17 +75,17 @@ export default async function Aboutus({
                   </div>
 
                   <div className='flex items-center justify-between'>
-                    <div className='flex items-center'>
+                    <div className='flex gap-x-4 items-center'>
                       <input
                         id='remember-me'
                         name='remember-me'
                         type='checkbox'
-                        className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600'
+                        className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-0'
                       />
                       <label
                         htmlFor='remember-me'
                         className='ml-3 block text-sm leading-6 text-gray-700'>
-                        Remember me
+                        {trans.remember_me_for_days}
                       </label>
                     </div>
 
@@ -113,7 +108,7 @@ export default async function Aboutus({
                 </form>
               </div>
 
-              <div className='mt-10 hidden'>
+              {/* <div className='mt-10 hidden'>
                 <div className='relative'>
                   <div
                     className='absolute inset-0 flex items-center'
@@ -162,7 +157,7 @@ export default async function Aboutus({
                     </span>
                   </a>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
