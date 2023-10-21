@@ -50,8 +50,7 @@ export default function ({ lang }: Props) {
       .then((r: any) => {
         if (r.error && r.error.data) {
           dispatch(showErrorToastMessage({ content: r.error.data.message }));
-        } else {
-          console.log("r data", r.data.messsage);
+        } else if (r.data && r.data.messsage) {
           dispatch(showSuccessToastMessage({ content: r.data?.message }));
           form.reset();
         }
