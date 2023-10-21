@@ -4,19 +4,35 @@ import { useAppDispatch } from "@/redux/hooks";
 import {
   showErrorToastMessage,
   showSuccessToastMessage,
+  showWarningToastMessage,
 } from "@/redux/slices/toastMessageSlice";
-import { apiUrl, baseUrl } from "@/src/constants";
 import { Locale } from "@/types/index";
-import { FormEvent } from "react";
+import { FormEvent, useContext } from "react";
+import { MainContext } from "../MainContentLayout";
 
 type Props = {
   lang: Locale["lang"];
 };
 
 export default function ({ lang }: Props) {
+  const {
+    ur_request_is_pending_processed_plz_wait,
+    email,
+    name,
+    required,
+    message,
+    phone,
+  }: any = useContext(MainContext);
+
   const dispatch = useAppDispatch();
   const [triggerSendContactus, { data, error }] = useLazySendContactusQuery();
+
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    dispatch(
+      showWarningToastMessage({
+        content: ur_request_is_pending_processed_plz_wait,
+      })
+    );
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
@@ -40,8 +56,9 @@ export default function ({ lang }: Props) {
           <label
             htmlFor='name'
             className='block text-sm font-semibold leading-6 text-gray-900'>
-            First name
+            {name}*
           </label>
+
           <div className='mt-2.5'>
             <input
               type='text'
@@ -57,8 +74,9 @@ export default function ({ lang }: Props) {
           <label
             htmlFor='email'
             className='block text-sm font-semibold leading-6 text-gray-900'>
-            Email
+            {email}*
           </label>
+
           <div className='mt-2.5'>
             <input
               id='email'
@@ -75,11 +93,8 @@ export default function ({ lang }: Props) {
             <label
               htmlFor='phone'
               className='block font-semibold text-gray-900'>
-              Phone
+              {phone}*
             </label>
-            <p id='phone-description' className='text-gray-400'>
-              Optional
-            </p>
           </div>
           <div className='mt-2.5'>
             <input
@@ -97,7 +112,7 @@ export default function ({ lang }: Props) {
             <label
               htmlFor='message'
               className='block text-sm font-semibold leading-6 text-gray-900'>
-              How can we help you?
+              {message}*
             </label>
             <p id='message-description' className='text-gray-400'>
               Max 500 characters

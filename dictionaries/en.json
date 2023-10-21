@@ -76,7 +76,13 @@
     "membership_type": "membership_type",
     "beneficiary_name": "beneficiary_name",
     "continue": "continue",
-    "choose_language" : "language",
-    "post_index": "post_index"
+    "choose_language": "language",
+    "post_index": "post_index",
+    "ur_request_is_pending_processed_plz_wait": "ur_request_is_pending_processed_plz_wait",
+    "name": "name",
+    "email": "email",
+    "message": "message",
+    "phone": "phone",
+    "required": "required"
   }
 }

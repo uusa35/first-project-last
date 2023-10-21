@@ -47,8 +47,9 @@ const MainLayout: FC<Props> = ({ lang, children }): React.ReactNode => {
       <ToastContainer
         position={locale.isRTL ? "top-left" : "top-right"}
         bodyClassName={() =>
-          "flex flex-1 flex-row font-tajwal-medium items-center"
+          "flex flex-1 flex-row font-expo-medium items-center"
         }
+        toastClassName={`font-expo-medium`}
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={true}
