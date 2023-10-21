@@ -5,6 +5,7 @@ import { getSetting } from "@/utils/setting";
 import Image from "next/image";
 import { FormEvent } from "react";
 import type { Metadata } from "next";
+import ContactusContent from "@/components/contactus/ContactusContent";
 
 type Props = {
   params: { lang: Locale["lang"] };
@@ -49,6 +50,7 @@ export default async function ({ params: { lang } }: Props) {
                 molestie a eu arcu sed ut tincidunt magna.
               </p>
             </div>
+            <ContactusContent lang={lang} />
           </div>
         </div>
       </div>

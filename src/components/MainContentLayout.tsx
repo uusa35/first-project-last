@@ -44,6 +44,7 @@ const MainContextLayout: FC<Props> = ({
     { name: trans.aboutus, href: `/${lang}/aboutus`, label: "aboutus" },
     { name: trans.contactus, href: `/${lang}/contactus`, label: "contactus" },
   ];
+
   return (
     <MainContext.Provider value={trans}>
       <ThemeProvider>
