@@ -45,7 +45,7 @@ export default function ({ lang }: Props) {
     register,
     reset,
     formState: { errors },
-  }: any = useForm<Inputs>({
+  }: any = useForm<any>({
     resolver: yupResolver(contactusSchema),
     defaultValues: {
       name: ``,
@@ -64,7 +64,7 @@ export default function ({ lang }: Props) {
         content: ur_request_is_pending_processed_plz_wait,
       })
     );
-    console.log("the url", apiUrl);
+    // console.log("the url", apiUrl);
     dispatch(enableLoading());
     triggerSendContactus({ lang, body })
       .then((r: any) => {
@@ -74,12 +74,15 @@ export default function ({ lang }: Props) {
           dispatch(showErrorToastMessage({ content: r.error.data.message }));
         }
       })
-      .then(() => dispatch(disableLoading()));
+      .then(() => {
+        dispatch(disableLoading());
+        reset();
+      });
   };
 
   return (
     <>
-      {isLoading && <LoadingSpinner />}
+      {/* {isLoading && <LoadingSpinner />} */}
       <form
         onSubmit={handleSubmit(onSubmit)}
         className={`mt-16 ${isLoading && "hidden"}`}>
@@ -88,7 +91,7 @@ export default function ({ lang }: Props) {
             <label
               htmlFor='name'
               className='block text-sm font-semibold leading-6 text-gray-900'>
-              {/* {name}* */}
+              {name}*
             </label>
 
             <div className='mt-2.5'>
