@@ -2,9 +2,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type Props = {
   currentPath: string;
+  isLoading: boolean;
 }
 const initialState: Props = {
-  currentPath: ``
+  currentPath: ``,
+  isLoading: false
 };
 
 export const settingSlice = createSlice({
@@ -16,7 +18,26 @@ export const settingSlice = createSlice({
       action: PayloadAction<string>
     ) => {
       return {
+        ...state,
         currentPath: action.payload
+      };
+    },
+    enableLoading: (
+      state: typeof initialState,
+      action: PayloadAction<void>
+    ) => {
+      return {
+        ...state,
+        isLoading: true
+      };
+    },
+    disableLoading: (
+      state: typeof initialState,
+      action: PayloadAction<void>
+    ) => {
+      return {
+        ...state,
+        isLoading: false
       };
     },
 
@@ -24,5 +45,7 @@ export const settingSlice = createSlice({
 });
 
 export const {
-  setCurrentPath
+  setCurrentPath,
+  enableLoading,
+  disableLoading
 } = settingSlice.actions;

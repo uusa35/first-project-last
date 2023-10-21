@@ -6,11 +6,18 @@ import LoginImage from "@/appImages/login/section.jpg";
 import Image from "next/image";
 import DOMPurify from "isomorphic-dompurify";
 
-export default async function Aboutus({
-  params: { lang },
-}: {
+type Props = {
   params: { lang: Locale["lang"] };
-}) {
+};
+
+export async function generateMetadata({ params }: Props) {
+  const { trans } = await getDictionary(params.lang);
+  return {
+    title: trans.aboutus,
+  };
+}
+
+export default async function Aboutus({ params: { lang } }: Props) {
   const [{ trans }, setting] = await Promise.all([
     getDictionary(lang),
     getSetting(lang),

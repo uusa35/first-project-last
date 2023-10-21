@@ -2,17 +2,10 @@
 import { FC, createContext } from "react";
 import NavHeader from "./header/NavHeader";
 import { Locale } from "@/types/index";
-import {
-  ThemeProvider,
-  Button,
-  Carousel,
-  Typography,
-} from "@material-tailwind/react";
+import { ThemeProvider } from "@material-tailwind/react";
 import AppFooter from "./footer/AppFooter";
 import { usePathname } from "next/navigation";
 import { Setting } from "@/types/queries";
-export { Button, Carousel, Typography };
-
 
 type Props = {
   children: React.ReactNode;
@@ -47,6 +40,7 @@ const MainContextLayout: FC<Props> = ({
     { name: trans.aboutus, href: `/${lang}/aboutus`, label: "aboutus" },
     { name: trans.contactus, href: `/${lang}/contactus`, label: "contactus" },
   ];
+
   return (
     <MainContext.Provider value={trans}>
       <ThemeProvider>
@@ -58,13 +52,14 @@ const MainContextLayout: FC<Props> = ({
           setting={setting}
         />
         <div>{children}</div>
-        {!pathName?.includes("login")&& <AppFooter
-          mainPages={navigation}
-          lang={lang}
-          trans={trans}
-          setting={setting}
-        />}
-        
+        {!pathName?.includes("login") && (
+          <AppFooter
+            mainPages={navigation}
+            lang={lang}
+            trans={trans}
+            setting={setting}
+          />
+        )}
       </ThemeProvider>
     </MainContext.Provider>
   );
