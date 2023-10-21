@@ -2,16 +2,9 @@
 import { FC, createContext } from "react";
 import NavHeader from "./header/NavHeader";
 import { Locale } from "@/types/index";
-import {
-  ThemeProvider,
-  Button,
-  Carousel,
-  Typography,
-} from "@material-tailwind/react";
+import { ThemeProvider } from "@material-tailwind/react";
 import AppFooter from "./footer/AppFooter";
 import { Setting } from "@/types/queries";
-import { useAppSelector } from "@/redux/hooks";
-export { Button, Carousel, Typography };
 
 type Props = {
   children: React.ReactNode;
