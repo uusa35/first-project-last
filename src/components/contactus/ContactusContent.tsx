@@ -42,6 +42,7 @@ export default function ({ lang }: Props) {
       })
     );
     e.preventDefault();
+    console.log("the url", apiUrl);
     const form = e.currentTarget;
     const formData = new FormData(form);
     const formDataObject = Object.fromEntries(formData);
@@ -58,7 +59,6 @@ export default function ({ lang }: Props) {
       .then(() => dispatch(disableLoading()));
   };
 
-  console.log("the url", apiUrl);
   if (isLoading) return <LoadingSpinner />;
 
   return (
