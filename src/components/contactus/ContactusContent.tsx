@@ -81,7 +81,6 @@ export default function ({ lang }: Props) {
       });
   };
 
-  // if (isLoading) return <LoadingSpinner />;
   return (
     <>
       <LoadingSpinner isLoading={isLoading} />

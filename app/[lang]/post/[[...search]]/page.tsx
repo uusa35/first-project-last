@@ -49,13 +49,12 @@ export default async function PostIndex({
             <Image
               width={400}
               height={400}
-              src={posts.data[0].image}
+              src={posts.data[0].large}
               alt={posts.data[0].name}
               className='aspect-[16/9] w-full rounded-lg bg-gray-100  object-cover sm:aspect-[2/1] lg:aspect-[4/1.5]'
             />
             <div className='absolute inset-0 rounded-lg ring-1 ring-inset ring-gray-900/10' />
           </div>
-
           <div className='group relative my-2 mt-3 w-full'>
             <div
               className={`flex flex-row flex-1 justify-between items-center`}>
