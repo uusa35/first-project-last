@@ -10,6 +10,7 @@ import {
 } from "@material-tailwind/react";
 import AppFooter from "./footer/AppFooter";
 import { Setting } from "@/types/queries";
+import { useAppSelector } from "@/redux/hooks";
 export { Button, Carousel, Typography };
 
 type Props = {
