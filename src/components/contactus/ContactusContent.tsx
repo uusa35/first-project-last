@@ -82,7 +82,7 @@ export default function ({ lang }: Props) {
 
   return (
     <>
-      {isLoading ? <LoadingSpinner /> : null}
+      {/* {isLoading ? <LoadingSpinner /> : null} */}
       <form
         onSubmit={handleSubmit(onSubmit)}
         className={`mt-16 ${isLoading && "hidden"}`}>
