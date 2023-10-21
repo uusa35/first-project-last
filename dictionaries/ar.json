@@ -76,12 +76,13 @@
     "beneficiary_name": "اسم المستفيد",
     "continue": "متابعة",
     "choose_language": "اللغة",
-    "post_index": "post_index",
+    "post_index": "قائمة الاخبار",
     "ur_request_is_pending_processed_plz_wait": "جاري العمل على طلبك .. يرجى الانتظار قليلا ..",
-    "name": "name",
-    "email": "email",
-    "message": "message",
-    "phone": "phone",
-    "required": "required"
+    "name": "الاسم",
+    "email": "البريد الالكتروني",
+    "message": "الرسالة",
+    "phone": "الهاتف",
+    "required": "مطلوب",
+    "send": "ارسال"
   }
 }
