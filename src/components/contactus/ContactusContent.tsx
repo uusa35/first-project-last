@@ -16,7 +16,6 @@ import { apiUrl } from "@/src/constants";
 import { contactusSchema } from "@/src/validations";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useRouter } from "next/router";
 
 type Props = {
   lang: Locale["lang"];
@@ -55,7 +54,7 @@ export default function ({ lang }: Props) {
       message: ``,
     },
   });
-  const router = useRouter();
+
   const dispatch = useAppDispatch();
   const [triggerSendContactus, { data, error }] = useLazySendContactusQuery();
 
@@ -84,7 +83,7 @@ export default function ({ lang }: Props) {
 
   return (
     <>
-      {isLoading ? <LoadingSpinner /> : null}
+      {/* {isLoading ? <LoadingSpinner /> : null} */}
       <form
         onSubmit={handleSubmit(onSubmit)}
         className={`mt-16 ${isLoading && "hidden"}`}>
