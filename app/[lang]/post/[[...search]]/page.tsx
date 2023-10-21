@@ -17,6 +17,13 @@ type Props = {
   params: { lang: Locale["lang"] };
   searchParams: { [key: string]: string };
 };
+export async function generateMetadata({ params }: Props) {
+  const { trans } = await getDictionary(params.lang);
+  return {
+    title: trans.post_index,
+  };
+}
+
 export default async function PostIndex({
   params: { lang },
   searchParams,

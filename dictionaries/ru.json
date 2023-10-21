@@ -71,6 +71,7 @@
     "membership_type": "membership_type",
     "beneficiary_name": "beneficiary_name",
     "continue": "continue",
-    "choose_language": "language"
+    "choose_language": "language",
+    "post_index": "post_index"
   }
 }

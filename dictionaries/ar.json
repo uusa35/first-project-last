@@ -75,6 +75,7 @@
     "membership_type": "نوع العضوية",
     "beneficiary_name": "اسم المستفيد",
     "continue": "متابعة",
-    "choose_language": "اللغة"
+    "choose_language": "اللغة",
+    "post_index" : "post_index"
   }
 }
