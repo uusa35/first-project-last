@@ -93,6 +93,7 @@
     "email": "email",
     "message": "message",
     "phone": "phone",
-    "required": "required"
+    "required": "required",
+    "send" : "send"
   }
 }

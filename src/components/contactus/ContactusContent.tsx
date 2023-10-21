@@ -26,6 +26,7 @@ export default function ({ lang }: Props) {
     required,
     message,
     phone,
+    send,
   }: any = useContext(MainContext);
   const {
     appSetting: { isLoading },
@@ -131,9 +132,7 @@ export default function ({ lang }: Props) {
                 className='block text-sm font-semibold leading-6 text-gray-900'>
                 {message}*
               </label>
-              <p id='message-description' className='text-gray-400'>
-                Max 500 characters
-              </p>
+              <p id='message-description' className='text-gray-400'></p>
             </div>
             <div className='mt-2.5'>
               <textarea
@@ -152,7 +151,7 @@ export default function ({ lang }: Props) {
           <button
             type='submit'
             className='rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'>
-            Send message
+            {send}
           </button>
         </div>
       </form>
