@@ -14,7 +14,6 @@ type Props = {
   lang: Locale["lang"];
 };
 export default async function ({ slides, lang }: Props) {
-//  console.log({slides}) 
   return (
     <Swiper
       modules={[Navigation, Pagination, Scrollbar, A11y]}
