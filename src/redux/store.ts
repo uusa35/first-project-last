@@ -25,7 +25,7 @@ import { isLocal } from "@/src/constants";
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["api", 'appSetting', 'cart'],
+  blacklist: ["api", 'cart'],
   // whitelist: [
   // ],
   // stateReconciler: hardSet,
