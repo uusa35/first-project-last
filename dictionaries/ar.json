@@ -82,6 +82,11 @@
     "membership_type": "نوع العضوية",
     "beneficiary_name": "اسم المستفيد",
     "continue": "متابعة",
-    "choose_language": "اللغة"
+    "choose_language": "اللغة",
+    "forgot_password":"نسيت كلمة المرور؟",
+    "sign_in":"تسجيل الدخول",
+    "Dont_have_an_account":"لا تمتلك حساب ؟",
+    "create_an_account":"إنشاء حساب"
+    
   }
 }

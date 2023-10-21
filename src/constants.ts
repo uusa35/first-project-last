@@ -4,7 +4,7 @@ import { localeType } from '@/types/index';
 import { Locale } from '@/types/index';
 export const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}`;
 export const appVersion = `0.0.1`;
-export const apiUrl = `${baseUrl}/api/`;
+export const apiUrl = `${baseUrl}`;
 export const imageUrl = `https://loremflickr.com/`;
 export const isLocal = process.env.NODE_ENV !== 'production';
 export const suppressText = true;
@@ -27,6 +27,8 @@ export const appLinks = {
     postIndex: (lang: Locale['lang'], search?: string) =>
         `/${lang}/post?${search ?? ''}`,
     postShow: (lang: Locale['lang'], id: string, slug?: string) => `/${lang}/post/${id}?slug=${kebabCase(slug) ?? ``}`,
+    registerVisitor:(lang: Locale['lang']) =>
+    `/${lang}/register/visitor`,
 }
 
 // export const convertSearchParamsToString = (search: { [key: string]: string }): string => Object.keys(search)

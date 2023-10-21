@@ -31,7 +31,6 @@ const MainContextLayout: FC<Props> = ({
   setting,
 }) => {
   const pathName = usePathname();
-  console.log(pathName)
   const navigation = [
     { name: trans.home, href: `/${lang}`, label: `home` },
     {

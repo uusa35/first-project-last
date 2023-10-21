@@ -82,6 +82,10 @@
     "membership_type": "membership_type",
     "beneficiary_name": "beneficiary_name",
     "continue": "continue",
-    "choose_language" : "language"
+    "choose_language" : "language",
+    "forgot_password":"forgot password?",
+    "sign_in":"sign in",
+    "Dont_have_an_account":"Don't have an account",
+    "create_an_account":"Create an account"
   }
 }

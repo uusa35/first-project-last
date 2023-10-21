@@ -78,6 +78,10 @@
     "welcome_back_Please_enter_the_following_information":"Добро пожаловать! Пожалуйста, введите следующую информацию",
     "email_address":"Электронная почта",
     "password":"пароль",
-    "remember_me_for_days":"Помни меня 30 дней"
+    "remember_me_for_days":"Помни меня 30 дней",
+    "forgot_password":"Забыли пароль",
+    "sign_in":"войти",
+    "Dont_have_an_account":"У вас нет учетной записи?",
+    "create_an_account":"Завести аккаунт"
   }
 }

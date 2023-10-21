@@ -5,11 +5,13 @@ import {
 
 export const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getLogin: builder.query<
+    login: builder.mutation<
       User, { email: string; password: string }
     >({
-      query: () => ({
+      query: ({email, password}) => ({
         url: `login`,
+        params:{email:"company3@example.com",password:"password"},
+        method:"post",
         validateStatus: (response, result) =>
           response.status == 200,
       }),
@@ -19,5 +21,5 @@ export const authApi = apiSlice.injectEndpoints({
 });
 
 export const {
-  useGetLoginQuery
+  useLoginMutation
 } = authApi;
