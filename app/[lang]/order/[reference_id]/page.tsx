@@ -63,12 +63,6 @@ export default async function ({
       lang={lang}
       searchParams={``}
       setting={setting}>
-      <form
-        method='post'
-        action={`https://srstaging.stspayone.com/SmartRoutePaymentWeb/SRPayMsgHandler?MerchantID=RB0000002&MessageID=2&OriginalTransactionID=4016176&SecureHash=842d0659f88699a002228e06e959992061a0d0b837d0e9aa1cca2bc89612f8e4`}>
-        <button type='submit'>submit test</button>
-      </form>
-
       <main className='relative bg-white mx-auto max-w-7xl min-h-screen'>
         <div className='h-80 overflow-hidden lg:absolute lg:h-full lg:w-1/2 lg:px-4 xl:px-8'>
           <Image
