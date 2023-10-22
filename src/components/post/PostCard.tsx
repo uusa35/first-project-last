@@ -1,6 +1,5 @@
 import { Locale } from "@/types/index";
 import { Category, Post } from "@/types/queries";
-import { ArrowUpLeftIcon } from "@heroicons/react/20/solid";
 import { ArrowUpRightIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Link from "next/link";
