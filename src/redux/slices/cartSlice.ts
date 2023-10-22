@@ -7,7 +7,7 @@ import { localeSlice } from './localeSlice';
 import { getPrice } from '@/src/constants';
 import { Pending } from '@mui/icons-material';
 
-const initialState: { membership: Membership, payment: PaymentFields, order: Order } = {
+const initialState: { membership: Membership, payment: PaymentFields, order: Omit<Order, 'membership' | 'user'> } = {
   membership: {
     id: 0,
     name: ``,
