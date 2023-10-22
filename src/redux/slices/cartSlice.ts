@@ -54,8 +54,7 @@ export const cartSlice = createSlice({
       const convertedPrice = round(getPrice(finalPrice, country));
       const amount = `${convertedPrice}${amountValues}`;
       const currencyCode = country.lang === 'ar' ? '682' : (country.lang === 'ru') ? '643' : '840';
-      const redirectUrl = `https://dev.ar-expo.ru/${lang}/order/${transactionId}`;
-      // const redirectUrl = `http://localhost:3000/${lang}/order/${transactionId}`;
+      const redirectUrl = process.env.production === "production" ? `https://dev.ar-expo.ru/${lang}/order/${transactionId}` : `http://localhost:3000/${lang}/order/${transactionId}`;
       const toBeHashed = `${token}${amount}${currencyCode}${capitalize(
         lang
       )}${merchantId}${messageId}${redirectUrl}${transactionId}`;
