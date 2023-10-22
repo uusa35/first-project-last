@@ -2,7 +2,7 @@
 import { FC, createContext, useEffect } from "react";
 import NavHeader from "@/components/header/NavHeader";
 import { Locale } from "@/types/index";
-import { ThemeProvider } from "@material-tailwind/react";
+
 import AppFooter from "@/components/footer/AppFooter";
 import { usePathname } from "next/navigation";
 import { Setting } from "@/types/queries";
@@ -71,24 +71,22 @@ const MainContextLayout: FC<Props> = ({
 
   return (
     <MainContext.Provider value={trans}>
-      <ThemeProvider>
-        {/* nav & slider */}
-        <NavHeader
-          lang={lang}
-          searchParams={searchParams}
+      {/* nav & slider */}
+      <NavHeader
+        lang={lang}
+        searchParams={searchParams}
+        mainPages={navigation}
+        setting={setting}
+      />
+      <div>{children}</div>
+      {!pathName?.includes("login") && (
+        <AppFooter
           mainPages={navigation}
+          lang={lang}
+          trans={trans}
           setting={setting}
         />
-        <div>{children}</div>
-        {!pathName?.includes("login") && (
-          <AppFooter
-            mainPages={navigation}
-            lang={lang}
-            trans={trans}
-            setting={setting}
-          />
-        )}
-      </ThemeProvider>
+      )}
     </MainContext.Provider>
   );
 };

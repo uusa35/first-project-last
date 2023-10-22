@@ -31,7 +31,7 @@ export default async function ({
       searchParams={``}
       setting={setting}>
       <main className='relative bg-white mx-auto max-w-7xl min-h-screen'>
-        <div className='h-80 overflow-hidden lg:absolute lg:h-full lg:w-1/2 lg:px-4 xl:px-8'>
+        <div className='print:hidden h-80 overflow-hidden lg:absolute lg:h-full lg:w-1/2 lg:px-4 xl:px-8'>
           <Image
             width={200}
             height={200}
@@ -47,22 +47,22 @@ export default async function ({
               <div className='capitalize border-b border-gray-100 pb-2 flex flex-row justify-between items-center text-sm font-medium text-gray-600'>
                 <div>{trans.order_status} </div>
                 <div
-                  className={`p-2 w-1/5 text-center text-white rounded-md bg-${
-                    order.paid ? `green` : `red`
-                  }-500`}>
+                  className={`p-2 w-1/5 text-center text-white rounded-md ${
+                    order.paid ? `bg-green-600` : `bg-red-600`
+                  }`}>
                   {order.status}
                 </div>
               </div>
               <p
-                className={`mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl`}>
+                className={`mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl capitlaize`}>
                 {order.paid
                   ? trans.order_success_title
                   : trans.order_failure_title}
               </p>
               <p
-                className={`mt-2 text-base text-${
-                  order.paid ? `green` : `red`
-                }-500 leading-loose line-clamp-2`}>
+                className={`mt-2 text-base ${
+                  order.paid ? `text-green-600` : `text-red-600`
+                } leading-loose line-clamp-2 capitalize`}>
                 {order.paid
                   ? trans.order_success_message
                   : trans.order_failure_message}
@@ -171,9 +171,14 @@ export default async function ({
                 </li>
               </ul>
 
-              <OrderDetails order={order} country={country} lang={lang} />
+              <OrderDetails order={order} country={country[0]} lang={lang} />
 
-              <div className='mt-16 border-t border-gray-200 py-6 ltr:text-right rtl:text-left capitalize'>
+              <div className='print:hidden flex flex-row justify-between items-center mt-16 border-t border-gray-200 py-6 ltr:text-right rtl:text-left capitalize'>
+                <button
+                  onClick={() => window.print()}
+                  className='text-sm font-medium text-gray-600 hover:text-gray-500'>
+                  {trans.print}
+                </button>
                 <Link
                   href={`/${lang}`}
                   className='text-sm font-medium text-gray-600 hover:text-gray-500'>

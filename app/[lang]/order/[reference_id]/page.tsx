@@ -7,6 +7,7 @@ import Image from "next/image";
 import { getCountries } from "@/utils/country";
 import OrderDetails from "@/components/order/OrderDetails";
 import Link from "next/link";
+import { convertToJson } from "@/utils/helpers";
 
 export default async function ({
   params: { lang, reference_id },
@@ -21,6 +22,19 @@ export default async function ({
     checkOrderPayment(reference_id, lang),
   ]);
 
+  const resultJson = convertToJson(result);
+
+  if (typeof resultJson === "object" && Object.keys(resultJson).length !== 0) {
+    console.log("from inside ====>");
+    if (
+      resultJson["Response.GatewayStatusDescription"] === "APPROVED" &&
+      resultJson["Response.TransactionID"] === reference_id &&
+      resultJson["Response.MerchantID"] === process.env.MERCHANT_ID
+    ) {
+      await updateOrder(order.id,lang)
+    }
+  }
+
   return (
     <MainContextLayout
       trans={trans}
@@ -29,9 +43,10 @@ export default async function ({
       setting={setting}>
       <form
         method='post'
-        action={`https://srstaging.stspayone.com/SmartRoutePaymentWeb/SRPayMsgHandler?MerchantID=RB0000002&MessageID=2&OriginalTransactionID=5235603&SecureHash=4c3c25e13fda50736a413e7792b9b6b175bf0e35218aaee74846d17b465043db`}>
+        action={`https://srstaging.stspayone.com/SmartRoutePaymentWeb/SRPayMsgHandler?MerchantID=RB0000002&MessageID=2&OriginalTransactionID=4016176&SecureHash=842d0659f88699a002228e06e959992061a0d0b837d0e9aa1cca2bc89612f8e4`}>
         <button type='submit'>submit test</button>
       </form>
+
       <main className='relative bg-white mx-auto max-w-7xl min-h-screen'>
         <div className='h-80 overflow-hidden lg:absolute lg:h-full lg:w-1/2 lg:px-4 xl:px-8'>
           <Image

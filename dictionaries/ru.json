@@ -98,6 +98,11 @@
       "max": "must be at less than  {{max}}",
       "matches": "enter a valid format"
     },
-    "contactus_message": "contactus_message"
+    "contactus_message": "contactus_message",
+    "payment_confirmation": "payment_confirmation",
+    "plz_confirm_membership_selected_and_ur_company_information": "plz_confirm_membership_selected_and_ur_company_information",
+    "membership_selected": "membership_selected",
+    "go_to_payment_page": "go_to_payment_page",
+    "print": "print"
   }
 }

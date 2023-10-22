@@ -54,7 +54,9 @@ export const cartSlice = createSlice({
       const convertedPrice = round(getPrice(finalPrice, country));
       const amount = `${convertedPrice}${amountValues}`;
       const currencyCode = country.lang === 'ar' ? '682' : (country.lang === 'ru') ? '643' : '840';
-      const redirectUrl = `https://dev.ar-expo.ru/${lang}/order/${transactionId}`;
+      // https://srstaging.stspayone.com/SmartRoutePaymentWeb/Submit3DSPayMsgServlet?PARAMETER_ONE=frjxERNRJ0vyKzmM4V0Xc1pOC%2B8ENOJdv2HyjAjoe98j80WxnZ8EO3%2BKINGP06FC%2C6cqQlt1yfcb0RwXVFtYB%2BGTasvLVXFocKW7Vvi7g%2F%2Bg%3D%2C81
+      // const redirectUrl = `https://dev.ar-expo.ru/${lang}/order/${transactionId}`;
+      const redirectUrl = `http://localhost:3000/${lang}/order/${transactionId}`;
       const toBeHashed = `${token}${amount}${currencyCode}${capitalize(
         lang
       )}${merchantId}${messageId}${redirectUrl}${transactionId}`;

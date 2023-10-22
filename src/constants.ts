@@ -10,8 +10,7 @@ export const isLocal = process.env.NODE_ENV !== 'production';
 export const suppressText = true;
 import { PersonOutlineOutlined } from "@mui/icons-material";
 import { Country } from './types/queries';
-import { Carousel, Typography, Button } from "@material-tailwind/react";
-export { PersonOutlineOutlined, truncate, Carousel, Typography, Button };
+export { PersonOutlineOutlined, truncate };
 
 
 export const appLinks = {

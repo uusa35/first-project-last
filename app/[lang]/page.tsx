@@ -20,8 +20,6 @@ import DOMPurify from "isomorphic-dompurify";
 import PostCard from "@/components/post/PostCard";
 import CategoryCard from "@/components/category/CategoryCard";
 import MembershipCard from "@/components/membership/MembershipCard";
-import { Spinner } from "@material-tailwind/react";
-import { Suspense } from "react";
 
 const tiers = [
   {
