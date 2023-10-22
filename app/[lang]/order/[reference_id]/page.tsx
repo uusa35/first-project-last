@@ -25,6 +25,7 @@ export default async function ({
     getCountries(`lang=${lang}&limit=1`, lang),
     getOrderByReferenceId(reference_id, lang),
   ]);
+
   const order: Order = await Promise.allSettled([
     checkOrderPayment(reference_id, lang),
   ]).then((result: any) => {
@@ -45,15 +46,15 @@ export default async function ({
             "paid",
             lang
           );
+        } else {
+          return updateOrder(
+            currentOrder.id,
+            currentOrder.reference_id,
+            "failed",
+            lang
+          );
         }
       }
-    } else {
-      return updateOrder(
-        currentOrder.id,
-        currentOrder.reference_id,
-        "failed",
-        lang
-      );
     }
   });
 

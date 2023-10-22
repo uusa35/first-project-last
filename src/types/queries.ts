@@ -132,5 +132,6 @@ export type Order = {
     user_id?: string | number;
     created_at?: string;
     user?: Auth;
+    membership: Membership;
     [key: string]: any;
 }
