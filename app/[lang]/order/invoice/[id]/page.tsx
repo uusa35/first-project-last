@@ -2,11 +2,7 @@ import { MainContextLayout } from "@/layouts/MainContentLayout";
 import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
 import { getSetting } from "@/utils/setting";
-import {
-  checkOrderPayment,
-  getOrder,
-  getOrderByReferenceId,
-} from "@/utils/order";
+import { getOrder } from "@/utils/order";
 import Image from "next/image";
 import { getCountries } from "@/utils/country";
 import OrderDetails from "@/components/order/OrderDetails";
