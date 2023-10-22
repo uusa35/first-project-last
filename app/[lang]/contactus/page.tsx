@@ -1,4 +1,4 @@
-import { MainContextLayout } from "@/components/MainContentLayout";
+import { MainContextLayout } from "@/layouts/MainContentLayout";
 import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
 import { getSetting } from "@/utils/setting";
@@ -16,7 +16,6 @@ export async function generateMetadata({ params }: Props) {
     title: trans.contactus,
   };
 }
-
 export default async function ({ params: { lang } }: Props) {
   const [{ trans }, setting] = await Promise.all([
     getDictionary(lang),
@@ -45,9 +44,8 @@ export default async function ({ params: { lang } }: Props) {
               <h2 className='text-3xl font-bold tracking-tight text-gray-900'>
                 {trans.contactus}
               </h2>
-              <p className='mt-2 text-lg leading-8 text-gray-600'>
-                Proin volutpat consequat porttitor cras nullam gravida at orci
-                molestie a eu arcu sed ut tincidunt magna.
+              <p className='mt-2 text-lg leading-extra-loose text-gray-600'>
+                {trans.contactus_message}
               </p>
             </div>
             <ContactusContent lang={lang} />

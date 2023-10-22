@@ -1,7 +1,7 @@
 "use client";
 import { has, isEmpty, isNull, map } from "lodash";
 import Link from "next/link";
-import { MainContext } from "./MainContentLayout";
+import { MainContext } from "@/layouts/MainContentLayout";
 import { useContext } from "react";
 
 type Props = {

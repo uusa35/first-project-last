@@ -13,7 +13,7 @@ type Props = {
   setting: Setting;
 };
 
-export default async function ({ mainPages, lang, trans, setting }: Props) {
+export default function ({ mainPages, lang, trans, setting }: Props) {
   return (
     <footer className='bg-white'>
       <div className='mx-auto max-w-7xl overflow-hidden px-6 py-12 sm:py-12 lg:px-8'>

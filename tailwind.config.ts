@@ -28,6 +28,9 @@ const config: Config = {
       },
       fontFamily: {
         'Expo-Medium': ['Expo-Medium', 'sans-serif'],
+      },
+      lineHeight: {
+        'extra-loose': '2.5',
       }
     },
     screens: {

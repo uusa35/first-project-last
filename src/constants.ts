@@ -10,9 +10,8 @@ export const isLocal = process.env.NODE_ENV !== 'production';
 export const suppressText = true;
 import { PersonOutlineOutlined } from "@mui/icons-material";
 import { Country } from './types/queries';
-import { number } from 'yup';
 import { Carousel, Typography, Button } from "@material-tailwind/react";
-export { PersonOutlineOutlined, truncate , Carousel, Typography, Button};
+export { PersonOutlineOutlined, truncate, Carousel, Typography, Button };
 
 
 export const appLinks = {
@@ -27,8 +26,8 @@ export const appLinks = {
     postIndex: (lang: Locale['lang'], search?: string) =>
         `/${lang}/post?${search ?? ''}`,
     postShow: (lang: Locale['lang'], id: string, slug?: string) => `/${lang}/post/${id}?slug=${kebabCase(slug) ?? ``}`,
-    registerVisitor:(lang: Locale['lang']) =>
-    `/${lang}/register/visitor`,
+    registerVisitor: (lang: Locale['lang']) =>
+        `/${lang}/register/visitor`,
 }
 
 // export const convertSearchParamsToString = (search: { [key: string]: string }): string => Object.keys(search)

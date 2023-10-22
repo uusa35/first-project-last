@@ -1,6 +1,6 @@
 import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
-import { MainContextLayout } from "@/components/MainContentLayout";
+import { MainContextLayout } from "@/layouts/MainContentLayout";
 import { getSlides } from "@/utils/slide";
 import { getCategories } from "@/utils/category";
 import { getSetting } from "@/utils/setting";

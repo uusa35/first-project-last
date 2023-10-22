@@ -1,4 +1,4 @@
-import { MainContextLayout } from "@/components/MainContentLayout";
+import { MainContextLayout } from "@/layouts/MainContentLayout";
 import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
 import { convertSearchParamsToString } from "@/utils/helpers";
@@ -60,7 +60,7 @@ export default async function UserIndex({
           role='list'
           className='grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 py-12 after:px-8 px-4 xl:px-0'>
           {users.data.map((u: User, i: number) => (
-            <UserCard element={u} lang={lang} trans={trans} key={u.name} />
+            <UserCard element={u} lang={lang} key={u.name} />
           ))}
         </ul>
         {users.data.length > 0 && <Pagination links={users.meta.links} />}

@@ -2,7 +2,7 @@
 import { Locale } from "@/types/index";
 import { Country, Membership } from "@/types/queries";
 import DOMPurify from "isomorphic-dompurify";
-import { MainContext } from "@/components/MainContentLayout";
+import { MainContext } from "@/layouts/MainContentLayout";
 import { useContext } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useRouter } from "next/navigation";

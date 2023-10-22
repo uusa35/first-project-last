@@ -8,7 +8,7 @@ import {
 } from "@/redux/slices/toastMessageSlice";
 import { Locale } from "@/types/index";
 import { FormEvent, Suspense, useContext } from "react";
-import { MainContext } from "../MainContentLayout";
+import { MainContext } from "@/layouts/MainContentLayout";
 import { disableLoading, enableLoading } from "@/redux/slices/settingSlice";
 import { Spinner } from "@material-tailwind/react";
 import LoadingSpinner from "../LoadingSpinner";
@@ -28,15 +28,7 @@ type Inputs = {
 };
 
 export default function ({ lang }: Props) {
-  const {
-    ur_request_is_pending_processed_plz_wait,
-    email,
-    name,
-    required,
-    message,
-    phone,
-    send,
-  }: any = useContext(MainContext);
+  const trans: { [key: string]: string } = useContext(MainContext);
   const {
     appSetting: { isLoading },
   } = useAppSelector((state) => state);
@@ -54,14 +46,13 @@ export default function ({ lang }: Props) {
       message: ``,
     },
   });
-
   const dispatch = useAppDispatch();
   const [triggerSendContactus, { data, error }] = useLazySendContactusQuery();
 
   const onSubmit: SubmitHandler<Inputs> = (body: any) => {
     dispatch(
       showWarningToastMessage({
-        content: ur_request_is_pending_processed_plz_wait,
+        content: trans.ur_request_is_pending_processed_plz_wait,
       })
     );
     // console.log("the url", apiUrl);
@@ -92,7 +83,7 @@ export default function ({ lang }: Props) {
             <label
               htmlFor='name'
               className='block text-sm font-semibold leading-6 text-gray-900'>
-              {name}*
+              {trans.name}*
             </label>
 
             <div className='mt-2.5'>
@@ -115,7 +106,7 @@ export default function ({ lang }: Props) {
             <label
               htmlFor='email'
               className='block text-sm font-semibold leading-6 text-gray-900'>
-              {email}*
+              {trans.email}*
             </label>
 
             <div className='mt-2.5'>
@@ -139,7 +130,7 @@ export default function ({ lang }: Props) {
               <label
                 htmlFor='phone'
                 className='block font-semibold text-gray-900'>
-                {phone}*
+                {trans.phone}*
               </label>
             </div>
             <div className='mt-2.5'>
@@ -163,7 +154,7 @@ export default function ({ lang }: Props) {
               <label
                 htmlFor='message'
                 className='block text-sm font-semibold leading-6 text-gray-900'>
-                {message}*
+                {trans.message}*
               </label>
               <p id='message-description' className='text-gray-400'></p>
             </div>
@@ -188,7 +179,7 @@ export default function ({ lang }: Props) {
           <button
             type='submit'
             className='rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'>
-            {send}
+            {trans.send}
           </button>
         </div>
       </form>

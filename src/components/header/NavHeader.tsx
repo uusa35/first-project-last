@@ -4,7 +4,7 @@ import type { Locale } from "@/i18n.config";
 import { useContext, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Bars3Icon, UserIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { MainContext } from "../MainContentLayout";
+import { MainContext } from "@/layouts/MainContentLayout";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
@@ -19,7 +19,10 @@ import { last, split, toString } from "lodash";
 import { setCurrentPath } from "@/redux/slices/settingSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { Setting } from "@/types/queries";
-import LanguagesList from "./LanguagesList";
+import LanguagesList from "@/components/header/LanguagesList";
+import moment from "moment";
+
+import { setLocale } from "@/redux/slices/localeSlice";
 
 type Props = {
   lang: Locale;
@@ -36,7 +39,10 @@ export default function ({
 }: Props) {
   const trans: { [key: string]: string } = useContext(MainContext);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { currentPath } = useAppSelector((state) => state.appSetting);
+  const {
+    appSetting: { currentPath },
+    locale,
+  } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
   const params = useParams();
   const pathName = usePathname()!;

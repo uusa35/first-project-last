@@ -2,7 +2,7 @@
 import { getPrice } from "@/src/constants";
 import { Locale } from "@/types/index";
 import { Country, Order } from "@/types/queries";
-import { MainContext } from "../MainContentLayout";
+import { MainContext } from "@/layouts/MainContentLayout";
 import { useContext } from "react";
 
 type Props = {

@@ -1,4 +1,4 @@
-import { MainContextLayout } from "@/components/MainContentLayout";
+import { MainContextLayout } from "@/layouts/MainContentLayout";
 import TextTrans from "@/components/TextTrans";
 import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";

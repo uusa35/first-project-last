@@ -1,15 +1,17 @@
+import { MainContext } from "@/layouts/MainContentLayout";
 import { Locale } from "@/types/index";
 import { Category, User } from "@/types/queries";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Link from "next/link";
+import { useContext } from "react";
 
 type Props = {
   element: User;
   lang: Locale["lang"];
-  trans: { [key: string]: string };
 };
-export default async function ({ element, lang, trans }: Props) {
+export default async function ({ element, lang }: Props) {
+  const trans: { [key: string]: string } = useContext(MainContext);
   return (
     <li className='col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow'>
       <Link

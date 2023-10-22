@@ -5,7 +5,6 @@
     "contactus": "contactus",
     "translation": "translation",
     "loading": "loading ...",
-    "nationalevent": "nationalevent",
     "product": "product",
     "login": "login",
     "lang_en": "english",
@@ -94,6 +93,14 @@
     "message": "message",
     "phone": "phone",
     "required": "required",
-    "send" : "send"
+    "send": "send",
+    "validation": {
+      "required": "this field is required",
+      "email": "ُemail is not in a correct form.",
+      "min": "must be at least {{min}}",
+      "max": "must be at less than {{max}}",
+      "matches": "enter a valid format"
+    },
+    "contactus_message": "contactus_message"
   }
 }

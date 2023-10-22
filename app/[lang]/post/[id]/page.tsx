@@ -1,4 +1,4 @@
-import { MainContextLayout } from "@/components/MainContentLayout";
+import { MainContextLayout } from "@/layouts/MainContentLayout";
 import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
 import { getSetting } from "@/utils/setting";
@@ -19,7 +19,11 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
   ]);
 
   return (
-    <MainContextLayout trans={trans} lang={lang} searchParams={``} setting={setting}>
+    <MainContextLayout
+      trans={trans}
+      lang={lang}
+      searchParams={``}
+      setting={setting}>
       <main className='relative isolate mx-auto max-w-7xl min-h-screen'>
         {/* Image section */}
         <div className='mt-8 sm:mt-8 xl:mx-auto xl:max-w-7xl xl:px-8'>
@@ -33,7 +37,7 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
             height={500}
             src={post.image}
             alt={post.name}
-            className='aspect-[9/4] w-full object-cover xl:rounded-3xl'
+            className='aspect-[9/4] w-full object-cover xl:rounded-xl'
           />
         </div>
         {/* Header section */}
