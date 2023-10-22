@@ -7,9 +7,8 @@ import { Locale } from "@/types/index";
 import { Auth, Country, Membership } from "@/types/queries";
 import { first, isNull } from "lodash";
 import Image from "next/image";
-import Link from "next/link";
 import { useContext, useEffect, useRef } from "react";
-import OrderDetails from "../order/OrderDetails";
+import OrderDetails from "@/components/order/OrderDetails";
 import { MainContext } from "@/layouts/MainContentLayout";
 
 type Props = {
@@ -61,7 +60,6 @@ export default function ({ membership, country, lang, user }: Props) {
           className='h-full w-full object-cover object-center'
         />
       </div>
-
       <div>
         <div className='mx-auto max-w-2xl px-4 py-8 sm:px-6  lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8  xl:gap-x-24'>
           <div className='lg:col-start-2 space-y-3'>

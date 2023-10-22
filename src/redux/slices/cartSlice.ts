@@ -2,10 +2,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Locale } from '@/types/index';
 import { Country, Membership, Order, PaymentFields } from '@/types/queries';
 import { capitalize, random, round, toString } from 'lodash';
-import { sha256, sha224 } from "js-sha256";
-import { localeSlice } from './localeSlice';
+import { sha256 } from "js-sha256";
 import { getPrice } from '@/src/constants';
-import { Pending } from '@mui/icons-material';
 
 const initialState: { membership: Membership, payment: PaymentFields, order: Omit<Order, 'membership' | 'user'> } = {
   membership: {
