@@ -49,14 +49,13 @@ export const cartSlice = createSlice({
       const transactionId = toString(random(999999, 9999999));
       const { lang, country, membership } = action.payload;
       const { merchantId, messageId, token } = state.payment;
-      const amountValues = country.lang === 'ar' ? '000' : (country.lang === 'ru') ? '000' : '00'; // now Price is already converted.
+      const amountValues = country.lang === 'ar' ? '00' : (country.lang === 'ru') ? '000' : '00'; // now Price is already converted.
       const finalPrice = membership.on_sale ? membership.sale_price : membership.price;
       const convertedPrice = round(getPrice(finalPrice, country));
       const amount = `${convertedPrice}${amountValues}`;
       const currencyCode = country.lang === 'ar' ? '682' : (country.lang === 'ru') ? '643' : '840';
-      // https://srstaging.stspayone.com/SmartRoutePaymentWeb/Submit3DSPayMsgServlet?PARAMETER_ONE=frjxERNRJ0vyKzmM4V0Xc1pOC%2B8ENOJdv2HyjAjoe98j80WxnZ8EO3%2BKINGP06FC%2C6cqQlt1yfcb0RwXVFtYB%2BGTasvLVXFocKW7Vvi7g%2F%2Bg%3D%2C81
-      // const redirectUrl = `https://dev.ar-expo.ru/${lang}/order/${transactionId}`;
-      const redirectUrl = `http://localhost:3000/${lang}/order/${transactionId}`;
+      const redirectUrl = `https://dev.ar-expo.ru/${lang}/order/${transactionId}`;
+      // const redirectUrl = `http://localhost:3000/${lang}/order/${transactionId}`;
       const toBeHashed = `${token}${amount}${currencyCode}${capitalize(
         lang
       )}${merchantId}${messageId}${redirectUrl}${transactionId}`;
@@ -76,9 +75,9 @@ export const cartSlice = createSlice({
         order: {
           paid: false,
           status: 'pending',
-          total: membership.price,
-          net_total: finalPrice,
-          discount: membership.on_sale ? membership.price - membership.sale_price : 0,
+          total: round(membership.price),
+          net_total: round(finalPrice),
+          discount: round(membership.on_sale ? membership.price - membership.sale_price : 0),
           membership_id: membership.id,
           reference_id: transactionId,
         }

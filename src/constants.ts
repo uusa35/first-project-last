@@ -1,5 +1,5 @@
 'use client';
-import { kebabCase, truncate } from 'lodash';
+import { kebabCase, round, truncate } from 'lodash';
 import { localeType } from '@/types/index';
 import { Locale } from '@/types/index';
 export const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}`;
@@ -91,5 +91,5 @@ data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAE6CAMAAACbLJ/BAAAABGdBTUEAAL
 `
 
 export const whatsappUrl = (phone: string) => `https://api.whatsapp.com/send?phone=${phone}`;
-export const getPrice: (element: number, country: Country) => number = (element, country) => (element * country.exchange_rate);
+export const getPrice: (element: number, country: Country) => number = (element, country) => (round(element * country.exchange_rate));
 

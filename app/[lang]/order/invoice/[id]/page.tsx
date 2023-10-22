@@ -17,6 +17,7 @@ export default async function ({
 }: {
   params: { lang: Locale["lang"]; id: string };
 }) {
+  // const print = () => window.print();
   const [{ trans }, setting, country, order] = await Promise.all([
     getDictionary(lang),
     getSetting(lang),
@@ -173,15 +174,15 @@ export default async function ({
 
               <OrderDetails order={order} country={country[0]} lang={lang} />
 
-              <div className='print:hidden flex flex-row justify-between items-center mt-16 border-t border-gray-200 py-6 ltr:text-right rtl:text-left capitalize'>
-                <button
-                  onClick={() => window.print()}
-                  className='text-sm font-medium text-gray-600 hover:text-gray-500'>
+              <div className='print:hidden flex flex-row justify-between items-center mt-16 border-t border-gray-200 py-6 ltr:text-right rtl:text-left '>
+                {/* <button
+                  onClick={() => print}
+                  className='capitalize text-sm font-medium text-gray-600 hover:text-gray-500'>
                   {trans.print}
-                </button>
+                </button> */}
                 <Link
                   href={`/${lang}`}
-                  className='text-sm font-medium text-gray-600 hover:text-gray-500'>
+                  className='capitalize text-sm font-medium text-gray-600 hover:text-gray-500'>
                   {trans.continue}
                 </Link>
               </div>

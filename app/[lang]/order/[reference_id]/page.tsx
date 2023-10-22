@@ -2,38 +2,60 @@ import { MainContextLayout } from "@/layouts/MainContentLayout";
 import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
 import { getSetting } from "@/utils/setting";
-import { checkOrderPayment, getOrderByReferenceId } from "@/utils/order";
+import {
+  checkOrderPayment,
+  getOrderByReferenceId,
+  updateOrder,
+} from "@/utils/order";
 import Image from "next/image";
 import { getCountries } from "@/utils/country";
 import OrderDetails from "@/components/order/OrderDetails";
 import Link from "next/link";
 import { convertToJson } from "@/utils/helpers";
-
+import { Order } from "@/types/queries";
+//  this page will appear after redirection from Payment (will update the order with failed / paid)
 export default async function ({
   params: { lang, reference_id },
 }: {
   params: { lang: Locale["lang"]; reference_id: string };
 }) {
-  const [{ trans }, setting, country, order, result] = await Promise.all([
+  const [{ trans }, setting, country, currentOrder] = await Promise.all([
     getDictionary(lang),
     getSetting(lang),
     getCountries(`lang=${lang}&limit=1`, lang),
     getOrderByReferenceId(reference_id, lang),
-    checkOrderPayment(reference_id, lang),
   ]);
-
-  const resultJson = convertToJson(result);
-
-  if (typeof resultJson === "object" && Object.keys(resultJson).length !== 0) {
-    console.log("from inside ====>");
-    if (
-      resultJson["Response.GatewayStatusDescription"] === "APPROVED" &&
-      resultJson["Response.TransactionID"] === reference_id &&
-      resultJson["Response.MerchantID"] === process.env.MERCHANT_ID
-    ) {
-      await updateOrder(order.id,lang)
+  const order: Order = await Promise.allSettled([
+    checkOrderPayment(reference_id, lang),
+  ]).then((result: any) => {
+    if (result[0].status === "fulfilled") {
+      const resultJson = convertToJson(result[0].value);
+      if (
+        typeof resultJson === "object" &&
+        Object.keys(resultJson).length !== 0
+      ) {
+        if (
+          resultJson["Response.GatewayStatusDescription"] === "APPROVED" &&
+          resultJson["Response.TransactionID"] === reference_id &&
+          resultJson["Response.MerchantID"] === process.env.MERCHANT_ID
+        ) {
+          return updateOrder(
+            currentOrder.id,
+            currentOrder.reference_id,
+            "paid",
+            lang
+          );
+        }
+      }
+    } else {
+      return updateOrder(
+        currentOrder.id,
+        currentOrder.reference_id,
+        "failed",
+        lang
+      );
     }
-  }
+  });
 
   return (
     <MainContextLayout
@@ -64,22 +86,22 @@ export default async function ({
               <div className='capitalize border-b border-gray-100 pb-2 flex flex-row justify-between items-center text-sm font-medium text-gray-600'>
                 <div>{trans.order_status} </div>
                 <div
-                  className={`p-2 w-1/5 text-center text-white rounded-md bg-${
-                    order.paid ? `green` : `red`
-                  }-500`}>
+                  className={`p-2 w-1/5 text-center text-white rounded-md ${
+                    order.paid ? `bg-green-600` : `bg-red-600`
+                  }`}>
                   {order.status}
                 </div>
               </div>
               <p
-                className={`mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl`}>
+                className={`mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl capitlaize`}>
                 {order.paid
                   ? trans.order_success_title
                   : trans.order_failure_title}
               </p>
               <p
-                className={`mt-2 text-base text-${
-                  order.paid ? `green` : `red`
-                }-500 leading-loose line-clamp-2`}>
+                className={`mt-2 text-base ${
+                  order.paid ? `text-green-600` : `text-red-600`
+                } leading-loose line-clamp-2 capitalize`}>
                 {order.paid
                   ? trans.order_success_message
                   : trans.order_failure_message}
@@ -188,12 +210,17 @@ export default async function ({
                 </li>
               </ul>
 
-              <OrderDetails order={order} country={country} lang={lang} />
+              <OrderDetails order={order} country={country[0]} lang={lang} />
 
-              <div className='mt-16 border-t border-gray-200 py-6 ltr:text-right rtl:text-left capitalize'>
+              <div className='print:hidden flex flex-row justify-between items-center mt-16 border-t border-gray-200 py-6 ltr:text-right rtl:text-left '>
+                {/* <button
+                  onClick={() => print}
+                  className='capitalize text-sm font-medium text-gray-600 hover:text-gray-500'>
+                  {trans.print}
+                </button> */}
                 <Link
                   href={`/${lang}`}
-                  className='text-sm font-medium text-gray-600 hover:text-gray-500'>
+                  className='capitalize text-sm font-medium text-gray-600 hover:text-gray-500'>
                   {trans.continue}
                 </Link>
               </div>

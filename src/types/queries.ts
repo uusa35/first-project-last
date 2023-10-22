@@ -94,6 +94,7 @@ export type Auth = {
     email: string;
     image: string;
     api_token: string | null;
+    [key: string]: any;
 }
 export type Membership = {
     id: number;
