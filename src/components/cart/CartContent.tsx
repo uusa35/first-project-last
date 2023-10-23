@@ -137,7 +137,9 @@ export default function ({
                 </dd>
               </div>
             </dl>
-            <h3>{trans.membership_selected}</h3>
+            <h3 className='capitalize text-lg border-b border-gray-100'>
+              {trans.membership_selected}
+            </h3>
             <ul
               role='list'
               className='mt-2 divide-y divide-gray-200  text-sm font-medium text-gray-500'>

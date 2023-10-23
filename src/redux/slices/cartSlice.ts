@@ -52,7 +52,7 @@ export const cartSlice = createSlice({
       const convertedPrice = round(getPrice(finalPrice, country));
       const amount = `${convertedPrice}${amountValues}`;
       const currencyCode = country.lang === 'ar' ? '682' : country.lang === 'ru' ? '643' : '840';
-      const redirectUrl = process.env.NODE_ENV === "production" ? `https://cp.ar-expo.ru/order/redirect/${lang}?reference_id=${transactionId}` : `http://ar-expo-backend.test/order/redirect/${lang}?reference_id=${transactionId}`;
+      const redirectUrl = process.env.NODE_ENV === "production" ? `https://cp.ar-expo.ru/api/redirect/redirect/${lang}?reference_id=${transactionId}` : `http://ar-expo-backend.test/api/redirect/order/${lang}?reference_id=${transactionId}`;
       const toBeHashed = `${token}${amount}${currencyCode}${capitalize(
         lang
       )}${merchantId}${messageId}${redirectUrl}${transactionId}`;
