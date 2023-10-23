@@ -49,7 +49,7 @@ export function middleware(request: NextRequest) {
       console.log('=====the url hostname=====', url.hostname);
       console.log('=====the url origin=====', url.hostname);
       const finalPath = `https://${host}${request.nextUrl.pathname}`;
-      console.log('====final Path=====', `http://${host}${request.nextUrl.pathname}`)
+      console.log('====final Path=====', `https://${host}${request.nextUrl.pathname}`)
       // return NextResponse.redirect(new URL(url.pathname, `https://${url.hostname}`));
       // return NextResponse.redirect(
       //   `http://${host}${request.nextUrl.pathname}`
