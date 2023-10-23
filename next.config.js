@@ -11,20 +11,10 @@ const nextConfig = {
         source: "/:lang/home",
         destination: "/:lang",
       },
-      // {
-      //   source: "/:lang/order/result/:reference_id",
-      //   destination: "/:lang/order/:reference_id",
-      // },
     ];
   },
   async redirects() {
-    return [
-      {
-        source: "/:lang/order/result/:reference_id",
-        destination: "/:lang/order/:reference_id",
-        permanent: true,
-      },
-    ];
+    return [];
   },
   async headers() {
     return [];
