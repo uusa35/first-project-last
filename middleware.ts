@@ -23,20 +23,14 @@ export function middleware(request: NextRequest) {
   )
 
   // Redirect if there is no locale
-  if (pathnameIsMissingLocale) {
-    const locale = getLocale(request)
-    return NextResponse.redirect(
-      new URL(
-        `/${locale}${pathName.startsWith('/') ? '' : '/'}${pathName}`,
-        request.url
-      )
-    )
-  }
+  console.log('=====pathnameIsMissingLocale=====', pathnameIsMissingLocale)
+  console.log('====req url', request.url);
   // `x-forwarded-host` and `host` headers do not match`origin` header from a forwarded Server Action
   const url = request.nextUrl.clone();
   // console.log('=======url======', url);
   const isProduction = process.env.NODE_ENV === 'production' // redirect only in production
   if (url.pathname.includes('order') && isProduction) {
+    console.log('=======if======');
     request.headers.append('x-forwarded-host', 'stspayone.com');
     const requestedHost = request.headers.get('x-forwarded-host');
     // https://srstaging.stspayone.com
@@ -54,19 +48,29 @@ export function middleware(request: NextRequest) {
       console.log('=====the url host=====', url.host);
       console.log('=====the url hostname=====', url.hostname);
       console.log('=====the url origin=====', url.hostname);
-      console.log('====final Path=====', `https://${host}${request.nextUrl.pathname}`)
+      const finalPath = `https://${host}${request.nextUrl.pathname}`;
+      console.log('====final Path=====', `http://${host}${request.nextUrl.pathname}`)
       // return NextResponse.redirect(new URL(url.pathname, `https://${url.hostname}`));
-      return NextResponse.redirect(
-        `https://${host}${request.nextUrl.pathname}`,
-        301
-      );
+      // return NextResponse.redirect(
+      //   `http://${host}${request.nextUrl.pathname}`
+      // );
+      console.log('====path name====', pathName);
+      return NextResponse.rewrite(new URL(`${pathName}`, finalPath));
     } else {
-      return NextResponse.next();
+
     }
   } else {
-    return NextResponse.next();
-  }
 
+    if (pathnameIsMissingLocale) {
+      const locale = getLocale(request)
+      return NextResponse.redirect(
+        new URL(
+          `/${locale}${pathName.startsWith('/') ? '' : '/'}${pathName}`,
+          request.url
+        )
+      )
+    }
+  }
 }
 
 export const config = {
