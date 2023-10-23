@@ -18,10 +18,11 @@ type Props = {
   searchParams: { [key: string]: string };
 };
 export default async function ({ params: { lang, id }, searchParams }: Props) {
-  const [{ trans }, membership, country, setting, user] = await Promise.all([
+  const [{ trans }, membership, country, dollarCountry, setting, user] = await Promise.all([
     getDictionary(lang),
     getMembership(id, lang),
     getCountries(`lang=${lang}&limit=1`, lang),
+    getCountries(`lang=en&limit=1`, lang),
     getSetting(lang),
     getUser("3", lang),
   ]);
@@ -32,13 +33,13 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
       lang={lang}
       searchParams={``}
       setting={setting}>
-        <CartContent
-          membership={membership}
-          country={country[0]}
-          lang={lang}
-          user={user}
-        />
-      
+      <CartContent
+        membership={membership}
+        country={country[0]}
+        lang={lang}
+        user={user}
+        dollarCountry={dollarCountry}
+      />
     </MainContextLayout>
   );
 }

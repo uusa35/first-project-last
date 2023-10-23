@@ -14,10 +14,17 @@ import { MainContext } from "@/layouts/MainContentLayout";
 type Props = {
   membership: Membership;
   country: Country;
+  dollarCountry: Country;
   lang: Locale["lang"];
   user: Auth;
 };
-export default function ({ membership, country, lang, user }: Props) {
+export default function ({
+  membership,
+  country,
+  dollarCountry,
+  lang,
+  user,
+}: Props) {
   const trans: { [key: string]: string } = useContext(MainContext);
   const {
     cart: {
@@ -172,7 +179,12 @@ export default function ({ membership, country, lang, user }: Props) {
               </li>
             </ul>
 
-            <OrderDetails order={order} country={country} lang={lang} />
+            <OrderDetails
+              order={order}
+              country={country}
+              lang={lang}
+              dollarCountry={dollarCountry}
+            />
 
             {!isNull(queryString) && (
               <form
