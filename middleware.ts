@@ -54,16 +54,19 @@ export function middleware(request: NextRequest) {
       console.log('=====the url host=====', url.host);
       console.log('=====the url hostname=====', url.hostname);
       console.log('=====the url origin=====', url.hostname);
-      console.log('====final Path=====', `https://${url.host}${request.nextUrl.pathname}`)
+      console.log('====final Path=====', `https://${host}${request.nextUrl.pathname}`)
       // return NextResponse.redirect(new URL(url.pathname, `https://${url.hostname}`));
       return NextResponse.redirect(
         `https://${host}${request.nextUrl.pathname}`,
         301
       );
+    } else {
+      return NextResponse.next();
     }
+  } else {
     return NextResponse.next();
   }
-  return NextResponse.next();
+
 }
 
 export const config = {
