@@ -114,7 +114,7 @@ export type PaymentFields = {
     transactionId: string;
     merchantId: string;
     amount: number | string;
-    currenyCode: '682' | '840' | '643';
+    currencyCode: '682' | '840' | '643';
     redirectUrl: string;
     queryString: string | null;
     paymentUrl: string;

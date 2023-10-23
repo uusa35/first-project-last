@@ -22,7 +22,7 @@ const initialState: { membership: Membership, payment: PaymentFields, order: Omi
     transactionId: ``,
     merchantId: `RB0000002`,
     amount: 0,
-    currenyCode: '840',
+    currencyCode: '840',
     redirectUrl: `https://dev.ar-expo.ru/order/result/`,
     queryString: null,
     paymentUrl: `https://srstaging.stspayone.com/SmartRoutePaymentWeb/SRPayMsgHandler?`
@@ -60,7 +60,7 @@ export const cartSlice = createSlice({
       return {
         membership: action.payload.membership,
         payment: {
-          ...state.payment,
+          ...initialState.payment,
           transactionId,
           amount,
           currencyCode,
