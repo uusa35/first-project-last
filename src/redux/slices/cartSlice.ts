@@ -23,7 +23,7 @@ const initialState: { membership: Membership, payment: PaymentFields, order: Omi
     merchantId: `RB0000002`,
     amount: 0,
     currenyCode: '840',
-    redirectUrl: `https://dev.ar-expo.ru/order/`,
+    redirectUrl: `https://dev.ar-expo.ru/order/result/`,
     queryString: null,
     paymentUrl: `https://srstaging.stspayone.com/SmartRoutePaymentWeb/SRPayMsgHandler?`
   },
@@ -52,7 +52,7 @@ export const cartSlice = createSlice({
       const convertedPrice = round(getPrice(finalPrice, country));
       const amount = `${convertedPrice}${amountValues}`;
       const currencyCode = country.lang === 'ar' ? '682' : country.lang === 'ru' ? '643' : '840';
-      const redirectUrl = process.env.NODE_ENV === "production" ? `https://dev.ar-expo.ru/${lang}/order/${transactionId}` : `http://localhost:3000/${lang}/order/${transactionId}`;
+      const redirectUrl = process.env.NODE_ENV === "production" ? `https://dev.ar-expo.ru/${lang}/order/result/${transactionId}` : `http://localhost:3000/${lang}/order/result/${transactionId}`;
       const toBeHashed = `${token}${amount}${currencyCode}${capitalize(
         lang
       )}${merchantId}${messageId}${redirectUrl}${transactionId}`;

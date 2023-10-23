@@ -11,23 +11,23 @@ const nextConfig = {
         source: "/:lang/home",
         destination: "/:lang",
       },
+      // {
+      //   source: "/:lang/order/result/:reference_id",
+      //   destination: "/:lang/order/:reference_id",
+      // },
     ];
   },
   async redirects() {
-    return [];
-  },
-  async headers() {
     return [
       {
-        source: "/:lang/:path*",
-        headers: [
-          {
-            key: "x-lang",
-            value: ":lang",
-          },
-        ],
+        source: "/:lang/order/result/:reference_id",
+        destination: "/:lang/order/:reference_id",
+        permanent: true,
       },
     ];
+  },
+  async headers() {
+    return [];
   },
   env: {
     SECRET_APP_KEY: "",
