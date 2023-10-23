@@ -32,6 +32,31 @@ export function middleware(request: NextRequest) {
       )
     )
   }
+
+  // `x-forwarded-host` and `host` headers do not match`origin` header from a forwarded Server Action
+  const url = request.nextUrl.clone();
+
+  // const isProduction = process.env.NODE_ENV === 'production' // redirect only in production
+  const requestedHost = request.headers.get('X-Forwarded-Host');
+
+  // https://srstaging.stspayone.com
+  console.log('====the x-forward host=====', requestedHost);
+
+  if (requestedHost && requestedHost.match(/stspayone.com/)) {
+    console.log('=====inside here middleware=======');
+    const host = `ar-expo.ru`; // set your main domain
+    const requestedPort = request.headers.get('X-Forwarded-Port');
+    const requestedProto = request.headers.get('X-Forwarded-Proto');
+    url.host = host;
+    url.protocol = requestedProto || url.protocol;
+    url.port = requestedPort || url.port;
+
+    return NextResponse.redirect(url);
+  }
+
+
+  return NextResponse.next();
+
 }
 
 export const config = {

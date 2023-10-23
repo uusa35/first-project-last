@@ -16,6 +16,19 @@ const nextConfig = {
   async redirects() {
     return [];
   },
+  async headers() {
+    return [
+      {
+        source: "/:lang/order/:reference_id",
+        headers: [
+          {
+            key: "X-Forwarded-Host",
+            value: "stspayone.com",
+          },
+        ],
+      },
+    ];
+  },
   env: {
     SECRET_APP_KEY: "",
     NEXT_PUBLIC_URL: "/",
