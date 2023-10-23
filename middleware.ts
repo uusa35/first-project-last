@@ -34,9 +34,9 @@ export function middleware(request: NextRequest) {
   }
   // `x-forwarded-host` and `host` headers do not match`origin` header from a forwarded Server Action
   const url = request.nextUrl.clone();
+  // console.log('=======url======', url);
   const isProduction = process.env.NODE_ENV === 'production' // redirect only in production
   if (url.pathname.includes('order') && isProduction) {
-    // console.log('=====the url=====', url);
     request.headers.append('x-forwarded-host', 'stspayone.com');
     const requestedHost = request.headers.get('x-forwarded-host');
     // https://srstaging.stspayone.com
@@ -51,10 +51,13 @@ export function middleware(request: NextRequest) {
       url.protocol = requestedProto || url.protocol;
       url.port = requestedPort || url.port;
       // console.log('the url', url);
+      console.log('=====the url host=====', url.host);
+      console.log('=====the url hostname=====', url.hostname);
+      console.log('=====the url origin=====', url.hostname);
       console.log('====final Path=====', `https://${url.host}${request.nextUrl.pathname}`)
       // return NextResponse.redirect(new URL(url.pathname, `https://${url.hostname}`));
       return NextResponse.redirect(
-        `https://${url.host}${request.nextUrl.pathname}`,
+        `https://${host}${request.nextUrl.pathname}`,
         301
       );
     }
