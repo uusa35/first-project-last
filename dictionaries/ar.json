@@ -68,7 +68,7 @@
     "process_success": "عملية ناجحة",
     "process_failure": "عملية غير ناجحة",
     "total": "الإجمالي",
-    "net_total": "إجمالي المبلغ",
+    "net_total": "صافي المبلغ",
     "discount": "الخصم",
     "order_success_message": "تمت عملية الدفع بنجاح تم تفعيل عضويتكم بنجاح",
     "order_success_title": "امر عمل مكتمل",
@@ -104,6 +104,6 @@
     "plz_confirm_membership_selected_and_ur_company_information": "يرجى التأكد من المعلومات قبل إجراء عملية الدفع للتأكيد .. ",
     "membership_selected": "العضوية المطلوبة",
     "go_to_payment_page": "تأكيد المعلومات والذهاب لصفحة الدفع",
-    "print" : "print"
+    "print": "print"
   }
 }

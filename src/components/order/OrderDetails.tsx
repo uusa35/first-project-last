@@ -8,9 +8,15 @@ import { useContext } from "react";
 type Props = {
   order: Order;
   country: Country;
+  dollarCountry: Country;
   lang: Locale["lang"];
 };
-export default function ({ order, country, lang }: Props): React.ReactNode {
+export default function ({
+  order,
+  country,
+  lang,
+  dollarCountry,
+}: Props): React.ReactNode {
   const { total, net_total, discount }: any = useContext(MainContext);
 
   return (
@@ -37,6 +43,17 @@ export default function ({ order, country, lang }: Props): React.ReactNode {
           {country.currency_symbol}
         </dd>
       </div>
+      {lang !== "en" && (
+        <div className='flex items-center justify-between border-t border-gray-200 pt-6 text-gray-900'>
+          <dt className='text-base'>
+            {net_total} ({dollarCountry.name})
+          </dt>
+          <dd className='text-base'>
+            {getPrice(order.net_total, dollarCountry).toFixed(2)}{" "}
+            {dollarCountry.currency_symbol}
+          </dd>
+        </div>
+      )}
     </dl>
   );
 }

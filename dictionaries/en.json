@@ -87,7 +87,7 @@
     "Dont_have_an_account": "Don't have an account",
     "create_an_account": "Create an account",
     "post_index": "post_index",
-    "ur_request_is_pending_processed_plz_wait": "ur_request_is_pending_processed_plz_wait",
+    "ur_request_is_pending_processed_plz_wait": "your request is pending processed plz wait",
     "name": "name",
     "email": "email",
     "message": "message",
@@ -101,11 +101,11 @@
       "max": "must be at less than {{max}}",
       "matches": "enter a valid format"
     },
-    "contactus_message": "contactus_message",
-    "payment_confirmation": "payment_confirmation",
-    "plz_confirm_membership_selected_and_ur_company_information": "plz_confirm_membership_selected_and_ur_company_information",
-    "membership_selected" : "membership_selected",
-    "go_to_payment_page": "go_to_payment_page",
+    "contactus_message": "contactus message",
+    "payment_confirmation": "payment confirmation",
+    "plz_confirm_membership_selected_and_ur_company_information": "plz confirm membership selected and ur company information",
+    "membership_selected" : "membership selected",
+    "go_to_payment_page": "go to payment page",
     "print": "print"
   }
 }

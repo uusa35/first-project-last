@@ -14,12 +14,15 @@ export default async function ({
   params: { lang: Locale["lang"]; id: string };
 }) {
   // const print = () => window.print();
-  const [{ trans }, setting, country, order] = await Promise.all([
-    getDictionary(lang),
-    getSetting(lang),
-    getCountries(`lang=${lang}&limit=1`, lang),
-    getOrder(id, lang),
-  ]);
+  const [{ trans }, setting, country, dollarCountry, order] = await Promise.all(
+    [
+      getDictionary(lang),
+      getSetting(lang),
+      getCountries(`lang=${lang}&limit=1`, lang),
+      getCountries(`lang=en&limit=1`, lang),
+      getOrder(id, lang),
+    ]
+  );
 
   return (
     <MainContextLayout
@@ -170,7 +173,12 @@ export default async function ({
                 </li>
               </ul>
 
-              <OrderDetails order={order} country={country[0]} lang={lang} />
+              <OrderDetails
+                order={order}
+                country={country[0]}
+                dollarCountry={dollarCountry[0]}
+                lang={lang}
+              />
 
               <div className='print:hidden flex flex-row justify-between items-center mt-16 border-t border-gray-200 py-6 ltr:text-right rtl:text-left '>
                 {/* <button
