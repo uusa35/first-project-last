@@ -17,17 +17,7 @@ const nextConfig = {
     return [];
   },
   async headers() {
-    return [
-      {
-        source: "/:lang/order/:reference_id",
-        headers: [
-          {
-            key: "x-forwarded-host",
-            value: "stspayone.com",
-          },
-        ],
-      },
-    ];
+    return [];
   },
   env: {
     SECRET_APP_KEY: "",
