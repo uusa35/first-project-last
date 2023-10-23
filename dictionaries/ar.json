@@ -104,6 +104,13 @@
     "plz_confirm_membership_selected_and_ur_company_information": "يرجى التأكد من المعلومات قبل إجراء عملية الدفع للتأكيد .. ",
     "membership_selected": "العضوية المطلوبة",
     "go_to_payment_page": "تأكيد المعلومات والذهاب لصفحة الدفع",
-    "print": "print"
+    "print": "print",
+    "not_found": "هذه الصفحة غير متاحة",
+    "element_u_looking_for_does_not_exist": "العنصر او الصفحة التي تبحث عنها غير موجودة ...",
+    "return_home": "العودة إلى الرئيسية",
+    "empty_results" : "لا توجد نتائج",
+    "empty_results_messsage" : "لا توجد نتائح طبقا لمعايير البحث يمكنك المحاولة مرة أخرى",
+    "reset" : "إعادة تعيين"
+
   }
 }

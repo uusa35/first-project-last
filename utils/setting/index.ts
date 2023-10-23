@@ -9,10 +9,7 @@ export async function getSetting(lang: Locale['lang']) {
             'Accept-Language': lang
         }
     });
-    if (!res.ok) {
-        console.log('res ===>', res);
-        throw new Error("Failed to fetch data");
-    }
+    if (!res.ok) return undefined
     return res.json()
 }
 
@@ -26,8 +23,6 @@ export async function getLightSetting(lang: Locale['lang']) {
             'Accept-Language': lang
         }
     });
-    if (!res.ok) {
-        throw new Error("Failed to fetch data");
-    }
+    if (!res.ok) return undefined
     return res.json()
 }

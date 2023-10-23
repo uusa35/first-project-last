@@ -7,6 +7,7 @@ import { getSetting } from "@/utils/setting";
 import Image from "next/image";
 import LoginImage from "@/appImages/login/section.jpg";
 import DOMPurify from "isomorphic-dompurify";
+import { notFound } from "next/navigation";
 
 type Props = {
   params: { lang: Locale["lang"]; id: string };
@@ -22,6 +23,9 @@ export default async function UserShow({
     getUser(id, lang),
   ]);
 
+  if ("status" in user && (user.status === 404 || user.status === 500))
+    notFound();
+
   return (
     <MainContextLayout
       trans={trans}
@@ -36,8 +40,8 @@ export default async function UserShow({
               {user.deals.membership.sort}
             </span>
           </div>
-          
-          <div className='absolute max-w-4xl flex flex-row  justify-center items-center top-52 lg:top-70 bg-stone/60 right-10 p-8 text-white  gap-4  rounded-md'>
+
+          <div className='absolute max-w-4xl flex flex-row  justify-center items-center top-52 lg:top-70 bg-stone/60 rtl:right-10 ltr:left-10 p-8 text-white  gap-4  rounded-md'>
             <div>
               <Image
                 width={100}

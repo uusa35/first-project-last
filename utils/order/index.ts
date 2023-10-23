@@ -10,9 +10,7 @@ export async function getOrders(search: string, lang: Locale['lang']) {
             'Accept-Language': lang
         }
     });
-    if (!res.ok) {
-        throw new Error("Failed to fetch data");
-    }
+    if (!res.ok) return undefined
     return res.json()
 }
 
@@ -25,9 +23,7 @@ export async function getOrderByReferenceId(reference_id: string, lang: Locale['
             'Authorization': `Bearer ${token}`,
         }
     });
-    if (!res.ok) {
-        throw new Error("Failed to fetch data");
-    }
+    if (!res.ok) return undefined
     return res.json()
 }
 
@@ -39,9 +35,7 @@ export async function getOrder(id: string, lang: Locale['lang']) {
             'Authorization': `Bearer ${token}`,
         }
     });
-    if (!res.ok) {
-        throw new Error("Failed to fetch data");
-    }
+    if (!res.ok) return undefined
     return res.json()
 }
 
@@ -57,9 +51,7 @@ export async function checkOrderPayment(reference_id: string, lang: Locale['lang
             'Authorization': `Bearer ${token}`,
         }
     });
-    if (!res.ok) {
-        throw new Error("Failed to fetch data");
-    }
+    if (!res.ok) return undefined
     return res.text();
 }
 
@@ -74,8 +66,6 @@ export async function updateOrder(id: string, reference_id: string, status: 'pen
         }
     });
 
-    if (!res.ok) {
-        throw new Error("Failed to fetch data");
-    }
+    if (!res.ok) return undefined
     return res.json()
 }

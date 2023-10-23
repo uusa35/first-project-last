@@ -9,9 +9,6 @@ export async function getPosts(search: string, lang: Locale['lang']) {
             'Accept-Language': lang
         }
     });
-    if (!res.ok) {
-        throw new Error("Failed to fetch data");
-    }
     return res.json()
 }
 
@@ -22,9 +19,5 @@ export async function getPost(id: string, lang: Locale['lang']) {
             'Accept-Language': lang
         }
     });
-    // if (!res.ok) return undefined
-    // if (!res.ok) {
-    //     throw new Error("Failed to fetch data");
-    // }
     return res.json()
 }

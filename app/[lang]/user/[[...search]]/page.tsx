@@ -18,6 +18,8 @@ import LoginImage from "@/appImages/login/section.jpg";
 import SearchBar from "@/components/user/SearchBar";
 import Pagination from "@/components/Pagination";
 import UserCard from "@/components/user/UserCard";
+import NoResults from "@/components/NoResults";
+import { notFound } from "next/navigation";
 
 type Props = {
   params: { lang: Locale["lang"] };
@@ -33,6 +35,20 @@ export default async function UserIndex({
     getUsers(convertSearchParamsToString(searchParams) ?? ``, lang),
     getSetting(lang),
   ]);
+
+  if ("status" in users && (users.status === 404 || users.status === 500))
+    notFound();
+
+  if (users.data && users.data.length === 0)
+    return (
+      <NoResults
+        setting={setting}
+        lang={lang}
+        trans={trans}
+        showSearchBar={false}
+        currentModule={`post`}
+      />
+    );
 
   return (
     <MainContextLayout

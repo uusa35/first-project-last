@@ -33,7 +33,7 @@
     "register_as_sponsorship": "register as sponsorship",
     "register_as_visitor": "register as visitor",
     "register_to_receive_latest_expo_news": "register to receive latest expo news",
-    "through_this_section_u_can_follow_up_all_news_related_to_this_expo_and_even_more": "through this section u can follow up all news related to this expo and even more",
+    "through_this_section_u_can_follow_up_all_news_related_to_this_expo_and_even_more": "through this section you can follow up all news related to this expo and even more",
     "enter_ur_email": "enter ur email",
     "notify_me": "notify me",
     "latest_news": "latest news",
@@ -87,7 +87,7 @@
     "Dont_have_an_account": "Don't have an account",
     "create_an_account": "Create an account",
     "post_index": "post_index",
-    "ur_request_is_pending_processed_plz_wait": "your request is pending processed plz wait",
+    "ur_request_is_pending_processed_plz_wait": "your request is pending processed please wait",
     "name": "name",
     "email": "email",
     "message": "message",
@@ -103,9 +103,15 @@
     },
     "contactus_message": "contactus message",
     "payment_confirmation": "payment confirmation",
-    "plz_confirm_membership_selected_and_ur_company_information": "plz confirm membership selected and ur company information",
-    "membership_selected" : "membership selected",
+    "plz_confirm_membership_selected_and_ur_company_information": "please confirm membership selected and ur company information",
+    "membership_selected": "membership selected",
     "go_to_payment_page": "go to payment page",
-    "print": "print"
+    "print": "print",
+    "not_found": "not found",
+    "element_u_looking_for_does_not_exist": "element you looking for does not exist",
+    "return_home": "return home",
+    "empty_results": "empty results",
+    "empty_results_messsage": "empty results messsage",
+    "reset": "reset"
   }
 }

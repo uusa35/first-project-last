@@ -9,8 +9,6 @@ export async function getCategories(search: string, lang: Locale['lang']) {
             'Accept-Language': lang
         }
     });
-    if (!res.ok) {
-        throw new Error("Failed to fetch data");
-    }
+    if (!res.ok) return undefined
     return res.json()
 }

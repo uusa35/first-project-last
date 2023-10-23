@@ -5,6 +5,7 @@ import { getSetting } from "@/utils/setting";
 import { getPost } from "@/utils/post";
 import Image from "next/image";
 import DOMPurify from "isomorphic-dompurify";
+import { notFound } from "next/navigation";
 
 type Props = {
   params: { lang: Locale["lang"]; id: string };
@@ -17,6 +18,9 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
     getSetting(lang),
     getPost(id, lang),
   ]);
+
+  if ("status" in post && (post.status === 404 || post.status === 500))
+    notFound();
 
   return (
     <MainContextLayout

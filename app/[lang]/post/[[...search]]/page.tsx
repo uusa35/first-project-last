@@ -13,6 +13,8 @@ import LoginImage from "@/appImages/login/section.jpg";
 import Pagination from "@/components/Pagination";
 import PostCard from "@/components/post/PostCard";
 import { ArrowUpRightIcon } from "@heroicons/react/24/outline";
+import { notFound } from "next/navigation";
+import NoResults from "@/components/NoResults";
 
 type Props = {
   params: { lang: Locale["lang"] };
@@ -34,6 +36,20 @@ export default async function PostIndex({
     getPosts(convertSearchParamsToString(searchParams) ?? ``, lang),
     getSetting(lang),
   ]);
+
+  if ("status" in posts && (posts.status === 404 || posts.status === 500))
+    notFound();
+
+  if (posts.data && posts.data.length === 0)
+    return (
+      <NoResults
+        setting={setting}
+        lang={lang}
+        trans={trans}
+        showSearchBar={false}
+        currentModule={`post`}
+      />
+    );
 
   return (
     <MainContextLayout

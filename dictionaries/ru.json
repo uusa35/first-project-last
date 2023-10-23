@@ -103,6 +103,12 @@
     "plz_confirm_membership_selected_and_ur_company_information": "Пожалуйста, подтвердите выбранное членство и информацию о вашей компании",
     "membership_selected": "членство выбрано",
     "go_to_payment_page": "перейти на страницу оплаты",
-    "print": "Распечатать"
+    "print": "Распечатать",
+    "not_found": "not found",
+    "element_u_looking_for_does_not_exist": "element u looking for does not exist",
+    "return_home": "return home",
+    "empty_results": "empty results",
+    "empty_results_messsage": "empty results messsage",
+    "reset": "reset"
   }
 }

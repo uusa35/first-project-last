@@ -17,7 +17,17 @@ const nextConfig = {
     return [];
   },
   async headers() {
-    return [];
+    return [
+      {
+        source: "/:lang/:path*",
+        headers: [
+          {
+            key: "x-lang",
+            value: ":lang",
+          },
+        ],
+      },
+    ];
   },
   env: {
     SECRET_APP_KEY: "",
