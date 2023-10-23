@@ -8,8 +8,8 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: "/home",
-        destination: "/",
+        source: "/:lang/home",
+        destination: "/:lang",
       },
     ];
   },

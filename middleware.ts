@@ -48,11 +48,12 @@ export function middleware(request: NextRequest) {
       const requestedPort = request.headers.get('x-forwarded-port');
       const requestedProto = request.headers.get('x-forwarded-proto');
       url.host = host;
-      // url.protocol = requestedProto || url.protocol;
-      // url.port = requestedPort || url.port;
+      url.protocol = requestedProto || url.protocol;
+      url.port = requestedPort || url.port;
       console.log('the url', url);
       // return NextResponse.next();
-      return NextResponse.redirect(new URL(url.pathname));
+      // return NextResponse.redirect(new URL('/home', url.hostname))
+      return NextResponse.redirect(new URL(url.pathname, `https://${url.hostname}`));
     }
     return NextResponse.next();
   }
