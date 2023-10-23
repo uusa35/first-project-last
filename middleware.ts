@@ -49,7 +49,7 @@ export function middleware(request: NextRequest) {
       const requestedProto = request.headers.get('x-forwarded-proto');
       url.host = host;
       url.protocol = requestedProto || url.protocol;
-      url.port = requestedPort || url.port;
+      // url.port = requestedPort || url.port;
       console.log('the url', url);
       // return NextResponse.next();
       return NextResponse.redirect(url);
