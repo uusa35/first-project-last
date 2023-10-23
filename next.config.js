@@ -22,7 +22,7 @@ const nextConfig = {
         source: "/:lang/order/:reference_id",
         headers: [
           {
-            key: "X-Forwarded-Host",
+            key: "x-forwarded-host",
             value: "stspayone.com",
           },
         ],
