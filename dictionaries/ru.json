@@ -109,6 +109,9 @@
     "return_home": "return home",
     "empty_results": "empty results",
     "empty_results_messsage": "empty results messsage",
-    "reset": "reset"
+    "reset": "reset",
+    "KSA": "saudi ryial",
+    "USA": "american dollars",
+    "RU": "russian ruble"
   }
 }
