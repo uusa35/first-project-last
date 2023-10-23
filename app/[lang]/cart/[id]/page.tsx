@@ -38,7 +38,7 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
         country={country[0]}
         lang={lang}
         user={user}
-        dollarCountry={dollarCountry}
+        dollarCountry={dollarCountry[0]}
       />
     </MainContextLayout>
   );
