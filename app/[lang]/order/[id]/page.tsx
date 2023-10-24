@@ -20,45 +20,15 @@ export default async function ({
 }: {
   params: { lang: Locale["lang"]; id: string };
 }) {
-  const [{ trans }, setting, country, dollarCountry, order] = await Promise.all([
-    getDictionary(lang),
-    getSetting(lang),
-    getCountries(`lang=${lang}&limit=1`, lang),
-    getCountries(`lang=en&limit=1`, lang),
-    getOrder(id, lang),
-  ]);
-
-  // const order: Order = await Promise.allSettled([
-  //   checkOrderPayment(reference_id, lang),
-  // ]).then((result: any) => {
-  //   if (result[0].status === "fulfilled") {
-  //     const resultJson = convertToJson(result[0].value);
-  //     if (
-  //       typeof resultJson === "object" &&
-  //       Object.keys(resultJson).length !== 0
-  //     ) {
-  //       if (
-  //         resultJson["Response.GatewayStatusDescription"] === "APPROVED" &&
-  //         resultJson["Response.TransactionID"] === reference_id &&
-  //         resultJson["Response.MerchantID"] === process.env.MERCHANT_ID
-  //       ) {
-  //         return updateOrder(
-  //           currentOrder.id,
-  //           currentOrder.reference_id,
-  //           "paid",
-  //           lang
-  //         );
-  //       } else {
-  //         return updateOrder(
-  //           currentOrder.id,
-  //           currentOrder.reference_id,
-  //           "failed",
-  //           lang
-  //         );
-  //       }
-  //     }
-  //   }
-  // });
+  const [{ trans }, setting, country, dollarCountry, order] = await Promise.all(
+    [
+      getDictionary(lang),
+      getSetting(lang),
+      getCountries(`lang=${lang}&limit=1`, lang),
+      getCountries(`lang=en&limit=1`, lang),
+      getOrder(id, lang),
+    ]
+  );
 
   return (
     <MainContextLayout
@@ -83,14 +53,14 @@ export default async function ({
               <div className='capitalize border-b border-gray-100 pb-2 flex flex-row justify-between items-center text-sm font-medium text-gray-600'>
                 <div>{trans.order_status} </div>
                 <div
-                  className={`p-2 w-1/5 text-center text-white rounded-md ${
+                  className={`p-2 w-1/5 text-center text-white capitlaize rounded-md ${
                     order.paid ? `bg-green-600` : `bg-red-600`
                   }`}>
                   {order.status}
                 </div>
               </div>
               <p
-                className={`mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl capitlaize`}>
+                className={`mt-2 text-3xl font-bold tracking-tight text-gray-900 md:text-4xl capitlaize`}>
                 {order.paid
                   ? trans.order_success_title
                   : trans.order_failure_title}
@@ -209,7 +179,12 @@ export default async function ({
                 </li>
               </ul>
 
-              <OrderDetails order={order} country={country[0]} dollarCountry={dollarCountry[0]} lang={lang} />
+              <OrderDetails
+                order={order}
+                country={country[0]}
+                dollarCountry={dollarCountry[0]}
+                lang={lang}
+              />
 
               <div className='print:hidden flex flex-row justify-between items-center mt-16 border-t border-gray-200 py-6 ltr:text-right rtl:text-left '>
                 {/* <button

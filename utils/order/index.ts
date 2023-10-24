@@ -56,7 +56,6 @@ export async function checkOrderPayment(reference_id: string, lang: Locale['lang
 }
 
 export async function updateOrder(id: string, reference_id: string, status: 'pending' | 'paid' | 'failed', lang: Locale['lang']) {
-    // http://ar-expo-backend.test/api/order/30?status=paid&reference_id=5235603
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}order/${id}?reference_id=${reference_id}&status=${status}`, {
         cache: "no-store",
         method: 'PUT',
