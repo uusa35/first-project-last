@@ -119,7 +119,7 @@ export default function ({
           href='/'>
           Home
         </ActiveLink> */}
-        <div className='hidden lg:flex lg:flex-1 lg:justify-end items-center gap-x-4 capitalize'>
+        <div className='hidden lg:flex lg:flex-1 lg:justify-end items-center space-x-4 capitalize'>
           <Link
             href={`/${lang}/register/visitor`}
             className='text-sm font-semibold leading-6 text-white p-2 px-4 btn-color-default '>

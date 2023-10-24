@@ -31,7 +31,7 @@ export default async function Aboutus({ params: { lang } }: Props) {
       setting={setting}>
       <main className='relative isolate mx-auto max-w-7xl min-h-screen'>
         {/* Image section */}
-        <div className='mt-8 sm:mt-8 xl:mx-auto xl:max-w-7xl xl:px-8'>
+        <div className='mt-8 sm:mt-8 xl:mx-auto xl:max-w-7xl'>
           <Image
             className='aspect-[9/4] w-full object-cover lg:rounded-lg'
             width={600}
