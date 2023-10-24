@@ -57,14 +57,14 @@ export default async function UserIndex({
           <div className='absolute left-10 top-10'></div>
           <div className='absolute w-full lg:max-w-4xl flex flex-col lg:flex-row  justify-center lg:justify-start items-center top-0 lg:top-32 bg-stone/60 lg:rtl:right-10 lg:ltr:left-10 p-8 text-white  gap-4  rounded-md'>
             <div className='flex flex-col justify-center lg:justify-start items-center lg:items-start gap-4 text-center rtl:text-right ltr:text-left'>
-              <div className='text-2xl lg:text-6xl '>
+              <div className='text-2xl lg:text-6xl capitalize '>
                 {searchParams &&
                 searchParams.membership &&
                 searchParams.membership === "sponsorship"
                   ? trans.sponsorships
                   : trans.subscriptions}
               </div>
-              <div className='text-lg lg:text-xl'>
+              <div className='text-lg lg:text-xl capitalize'>
                 {searchParams &&
                 searchParams.membership &&
                 searchParams.membership === "sponsorship"
@@ -84,7 +84,7 @@ export default async function UserIndex({
         {users.data.length > 0 ? (
           <SearchBar trans={trans} />
         ) : (
-          <div className='text-center text-2xl py-20'>
+          <div className='text-center text-2xl py-20 capitalize'>
             No Result Component here
           </div>
         )}
