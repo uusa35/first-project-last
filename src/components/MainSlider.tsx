@@ -29,12 +29,12 @@ export default async function ({ slides, lang }: Props) {
         <SwiperSlide key={i}>
           <Image
             width='1000'
-            height='500'
+            height='200'
             src={s.image}
             alt={`${process.env.NEXT_PUBLIC_BASE_URL}`}
             className='h-full w-full object-cover'
           />
-          <div className='absolute -bottom-20  lg:-bottom-40 lg:rtl:right-20 lg:ltr:left-20  grid h-full w-full items-center'>
+          <div className='absolute -bottom-10  lg:-bottom-32 lg:rtl:right-20 lg:ltr:left-20  grid h-full w-full items-center'>
             <div className='w-3/4 ps-12 md:w-2/4 md:ps-20 lg:ps-32'>
               <div>{s.name}</div>
               <div>{s.description}</div>
