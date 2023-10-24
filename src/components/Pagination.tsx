@@ -35,7 +35,8 @@ export default function ({ links }: Props): React.ReactNode {
                     : link.label}
                 </div>
               ) : (
-                <Link
+                  <Link
+                    scroll={false}
                   key={i}
                   className={getClassName(link.active)}
                   href={link.url}>
