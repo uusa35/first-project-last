@@ -16,7 +16,7 @@ export default async function ({ element, lang, trans }: Props) {
     <li className='col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow transform transition duration-500 hover:scale-110'>
       <Link
         href={`/${lang}/user/${element.id}?slug=${element.name}`}
-        className='flex flex-1 flex-col p-8'>
+        className='flex flex-1 flex-col p-4'>
         <Image
           className='mx-auto h-32 w-32 flex-shrink-0 rounded-full'
           src={element.image}
@@ -27,11 +27,11 @@ export default async function ({ element, lang, trans }: Props) {
         <h3 className='mt-6 text-sm font-medium text-gray-900'>
           {element.name}
         </h3>
-        <dl className='mt-1 flex flex-grow flex-col justify-between'>
+        <dl className='mt-4 flex flex-grow flex-col justify-between gap-y-4'>
           <dt className='sr-only'>{element.name}</dt>
           <dd className='text-sm text-gray-500'>{element.caption}</dd>
           <dt className='sr-only'>{element.caption}</dt>
-          <dd className='text-center grid grid-cols-2 justify-center items-center gap-1 pe-6'>
+          <dd className='text-center grid grid-cols-2 justify-center items-center gap-1'>
             {element.categories.slice(0, 2).map((u: Category, i: number) => (
               <span
                 key={i}

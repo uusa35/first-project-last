@@ -34,10 +34,12 @@ export default async function ({ slides, lang }: Props) {
             alt={`${process.env.NEXT_PUBLIC_BASE_URL}`}
             className='h-full w-full object-cover'
           />
-          <div className='absolute -bottom-10  lg:-bottom-32 lg:rtl:right-20 lg:ltr:left-20  grid h-full w-full items-center'>
-            <div className='w-3/4 ps-12 md:w-2/4 md:ps-20 lg:ps-32'>
-              <div>{s.name}</div>
-              <div>{s.description}</div>
+          <div className='relative '>
+            <div className=' absolute ms-6 xl:ms-24 inset-x-0 bottom-12 xl:bottom-20 '>
+              <h1 className='text-xl lg:text-2xl xl:text-4xl'>{s.name}</h1>
+              <h4 className='text-base lg:text-xl xl:text-2xl mt-6'>
+                {s.description}
+              </h4>
             </div>
           </div>
         </SwiperSlide>

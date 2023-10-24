@@ -156,13 +156,12 @@ export default async function Home({ params: { lang } }: Props) {
       {/* slider */}
       <MainSlider slides={slides} lang={lang} />
       {/* search */}
-      <div className='bg-white py-12 sm:py-12'>
+      <div className='bg-white'>
         <div className='mx-auto max-w-7xl'>
-          <div className='relative isolate overflow-hidden  px-6 sm:rounded-3xl sm:px-24 xl:py-32'>
-            <h2 className='mx-auto max-w-2xl text-center text-3xl font-bold tracking-tight text-black sm:text-4xl'>
+          <div className='relative isolate overflow-hidden  px-6 sm:rounded-3xl sm:px-14 xl:py-14'>
+            <h2 className='text-3xl text-center font-bold tracking-tight text-gray-900 sm:text-4xl capitalize'>
               {trans.search}
             </h2>
-
             <form className='mx-auto mt-10 flex max-w-2xl gap-x-4'>
               <label htmlFor='email-address' className='sr-only'>
                 Email address
