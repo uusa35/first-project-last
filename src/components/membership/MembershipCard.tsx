@@ -33,7 +33,10 @@ export default function ({ element, country, lang }: Props) {
   };
 
   return (
-    <div className={" ring-gray-200 rounded-md p-8 ring-1 xl:p-10 bg-white"}>
+    <div
+      className={
+        " ring-gray-200 rounded-md p-8 ring-1 xl:p-10 bg-white transform transition duration-500 hover:scale-110"
+      }>
       <h3 className={"text-gray-900 text-lg font-semibold leading-8"}>
         {element.name}
       </h3>
