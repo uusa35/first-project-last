@@ -16,6 +16,9 @@ import {
   LinkedIn,
   WhatsApp,
   YouTube,
+  Email,
+  Android,
+  Apple,
 } from "@mui/icons-material";
 import SocialIcons from "@/components/footer/SocialIcons";
 
@@ -83,7 +86,9 @@ export default async function ({ params: { lang } }: Props) {
                     <div>
                       <PhoneIcon className='w-6 h-auto text-white' />
                     </div>
-                    <a href={`tel:${setting.phone}`}>{setting.phone}</a>
+                    <a target='_blank' href={`tel:${setting.phone}`}>
+                      {setting.phone}
+                    </a>
                   </div>
                 )}
                 {/* mobile */}
@@ -92,7 +97,9 @@ export default async function ({ params: { lang } }: Props) {
                     <div>
                       <DevicePhoneMobileIcon className='w-6 h-auto text-white' />
                     </div>
-                    <a href={`tel:${setting.mobile}`}>{setting.mobile}</a>
+                    <a target='_blank' href={`tel:${setting.mobile}`}>
+                      {setting.mobile}
+                    </a>
                   </div>
                 )}
                 {/* whatsapp */}
@@ -103,11 +110,42 @@ export default async function ({ params: { lang } }: Props) {
                     </div>
 
                     <a
+                      target='_blank'
                       href={`https://api.whatsapp.com/send?phone=${setting.whatsapp}`}>
                       {setting.whatsapp}
                     </a>
                   </div>
                 )}
+                {/* email */}
+                {setting.email && (
+                  <div className='flex flex-row justify-start gap-x-4 items-center'>
+                    <div>
+                      <Email className='w-6 h-auto text-white' />
+                    </div>
+                    <a target='_blank' href={`mailto: ${setting.email}`}>
+                      {setting.email}
+                    </a>
+                  </div>
+                )}
+                <div className='flex flex-row justify-evenly items-center gap-x-4'>
+                  {/* android */}
+                  {setting.android && (
+                    <div className='flex flex-row justify-start gap-x-4 items-center'>
+                      <a target='_blank' href={`${setting.android}`}>
+                        <Android className='w-6 h-auto text-white' />
+                      </a>
+                    </div>
+                  )}
+                  {/* apple */}
+                  {setting.apple && (
+                    <div className='flex flex-row justify-start gap-x-4 items-center'>
+                      <a target='_blank' href={`${setting.apple}`}>
+                        <Apple className='w-6 h-auto text-white' />
+                      </a>
+                    </div>
+                  )}
+                </div>
+
                 <SocialIcons setting={setting} color={`white`} />
               </div>
             </div>

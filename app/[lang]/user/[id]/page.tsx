@@ -5,9 +5,9 @@ import Link from "next/link";
 import { getUser } from "@/utils/user";
 import { getSetting } from "@/utils/setting";
 import Image from "next/image";
-import LoginImage from "@/appImages/login/section.jpg";
 import DOMPurify from "isomorphic-dompurify";
 import { notFound } from "next/navigation";
+import UserIndexBanner from "@/appImages/user/banner.jpg";
 
 type Props = {
   params: { lang: Locale["lang"]; id: string };
@@ -40,15 +40,14 @@ export default async function UserShow({
               {user.deals.membership.sort}
             </span>
           </div>
-
-          <div className='absolute max-w-4xl flex flex-row  justify-center items-center top-52 lg:top-70 bg-stone/60 rtl:right-10 ltr:left-10 p-8 text-white  gap-4  rounded-md'>
+          <div className='absolute w-full lg:max-w-4xl flex flex-col lg:flex-row  justify-center lg:justify-start items-center top-0 lg:top-52 bg-stone/60 lg:rtl:right-10 lg:ltr:left-10 p-8 text-white  gap-4  rounded-md'>
             <div>
               <Image
                 width={100}
                 height={100}
                 src={user.image}
                 alt={user.name}
-                className='w-20 h-20 object-cover rounded-full border border-gray-200'
+                className='w-20 h-20 object-cover rounded-full border border-gray-400 shadow-lg'
               />
             </div>
             <div className='flex flex-col gap-4'>
@@ -59,54 +58,60 @@ export default async function UserShow({
           <Image
             width={1000}
             height={500}
-            src={user.image}
+            src={UserIndexBanner}
             alt={user.name}
             className='aspect-[9/4] w-full object-cover xl:rounded-xl'
           />
         </div>
-        {/* aboutus section */}
-        {user.aboutus && (
-          <div className='px-6 pt-12 lg:px-8'>
-            <div className='mx-auto max-w-2xl text-center '>
-              <h2 className='text-xl font-bold tracking-tight text-black sm:text-6xl'>
-                {trans.aboutus}
-              </h2>
-              <p className='mt-6 text-lg leading-8 text-gray-800'>
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: DOMPurify.sanitize(user.aboutus),
-                  }}></div>
-              </p>
-            </div>
-          </div>
-        )}
 
-        {user.description && (
-          <div className='px-6 pt-12 lg:px-8'>
-            <div className='mx-auto max-w-2xl text-center '>
-              <h2 className='text-xl font-bold tracking-tight text-black sm:text-6xl'>
-                {trans.description}
-              </h2>
-              <p className='mt-6 text-lg leading-8 text-gray-800'>
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: DOMPurify.sanitize(user.description),
-                  }}></div>
-              </p>
+        <div className='flex flex-col w-full min-h-screen justify-start items-center gap-y-12'>
+          {/* aboutus section */}
+          {user.aboutus && (
+            <div className='px-6 pt-12 lg:px-8'>
+              <div className='mx-auto max-w-2xl text-center '>
+                <h2 className='text-xl font-bold tracking-tight text-black sm:text-6xl'>
+                  {trans.aboutus}
+                </h2>
+                <p className='mt-6 text-lg leading-8 text-gray-800'>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: DOMPurify.sanitize(user.aboutus),
+                    }}></div>
+                </p>
+              </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* Content section */}
-        <div className='mx-auto mt-8 max-w-7xl px-6 lg:px-8 pb-16'>
-          <div className='flex flex-row mx-auto max-w-7xl lg:mx-0 lg:max-w-none'>
-            <div className='grid max-w-7xl grid-cols-1 text-justified gap-8 text-base leading-8 text-gray-800'>
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: DOMPurify.sanitize(user.description),
-                }}></div>
+          {/* contactus section */}
+
+          <div className='px-6 py-12 lg:px-8 bg-gray-100 w-full h-auto'>
+            <div className='grid grid-cols-1 lg:grid-cols-3'>
+              <div className='flex flex-col gap-y-4 leading-8'>
+                <h1>{trans.contactus_information}</h1>
+                <p>
+                  {user.address} - {user.country.name}
+                </p>
+              </div>
+              <div>{trans.contactus}</div>
+              <div>{trans.contactus}</div>
             </div>
           </div>
+
+          {user.description && (
+            <div className='px-6 pt-12 lg:px-8'>
+              <div className='mx-auto max-w-2xl text-center '>
+                <h2 className='text-xl font-bold tracking-tight text-black sm:text-6xl'>
+                  {trans.description}
+                </h2>
+                <p className='mt-6 text-lg leading-8 text-gray-800'>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: DOMPurify.sanitize(user.description),
+                    }}></div>
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       </main>
     </MainContextLayout>
