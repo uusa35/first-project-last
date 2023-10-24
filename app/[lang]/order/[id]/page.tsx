@@ -4,6 +4,7 @@ import { getDictionary } from "@/lib/dictionary";
 import { getSetting } from "@/utils/setting";
 import {
   checkOrderPayment,
+  getOrder,
   getOrderByReferenceId,
   updateOrder,
 } from "@/utils/order";
@@ -15,49 +16,49 @@ import { convertToJson } from "@/utils/helpers";
 import { Order } from "@/types/queries";
 //  this page will appear after redirection from Payment (will update the order with failed / paid)
 export default async function ({
-  params: { lang, reference_id },
+  params: { lang, id },
 }: {
-  params: { lang: Locale["lang"]; reference_id: string };
+  params: { lang: Locale["lang"]; id: string };
 }) {
-  const [{ trans }, setting, country, dollarCountry, currentOrder] = await Promise.all([
+  const [{ trans }, setting, country, dollarCountry, order] = await Promise.all([
     getDictionary(lang),
     getSetting(lang),
     getCountries(`lang=${lang}&limit=1`, lang),
     getCountries(`lang=en&limit=1`, lang),
-    getOrderByReferenceId(reference_id, lang),
+    getOrder(id, lang),
   ]);
 
-  const order: Order = await Promise.allSettled([
-    checkOrderPayment(reference_id, lang),
-  ]).then((result: any) => {
-    if (result[0].status === "fulfilled") {
-      const resultJson = convertToJson(result[0].value);
-      if (
-        typeof resultJson === "object" &&
-        Object.keys(resultJson).length !== 0
-      ) {
-        if (
-          resultJson["Response.GatewayStatusDescription"] === "APPROVED" &&
-          resultJson["Response.TransactionID"] === reference_id &&
-          resultJson["Response.MerchantID"] === process.env.MERCHANT_ID
-        ) {
-          return updateOrder(
-            currentOrder.id,
-            currentOrder.reference_id,
-            "paid",
-            lang
-          );
-        } else {
-          return updateOrder(
-            currentOrder.id,
-            currentOrder.reference_id,
-            "failed",
-            lang
-          );
-        }
-      }
-    }
-  });
+  // const order: Order = await Promise.allSettled([
+  //   checkOrderPayment(reference_id, lang),
+  // ]).then((result: any) => {
+  //   if (result[0].status === "fulfilled") {
+  //     const resultJson = convertToJson(result[0].value);
+  //     if (
+  //       typeof resultJson === "object" &&
+  //       Object.keys(resultJson).length !== 0
+  //     ) {
+  //       if (
+  //         resultJson["Response.GatewayStatusDescription"] === "APPROVED" &&
+  //         resultJson["Response.TransactionID"] === reference_id &&
+  //         resultJson["Response.MerchantID"] === process.env.MERCHANT_ID
+  //       ) {
+  //         return updateOrder(
+  //           currentOrder.id,
+  //           currentOrder.reference_id,
+  //           "paid",
+  //           lang
+  //         );
+  //       } else {
+  //         return updateOrder(
+  //           currentOrder.id,
+  //           currentOrder.reference_id,
+  //           "failed",
+  //           lang
+  //         );
+  //       }
+  //     }
+  //   }
+  // });
 
   return (
     <MainContextLayout
