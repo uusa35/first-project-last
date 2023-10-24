@@ -6,6 +6,7 @@ import Image from "next/image";
 import { FormEvent } from "react";
 import type { Metadata } from "next";
 import ContactusContent from "@/components/contactus/ContactusContent";
+import ContactusImage from "@/appImages/contactus/contactus_bg.jpg";
 
 type Props = {
   params: { lang: Locale["lang"] };
@@ -30,11 +31,17 @@ export default async function ({ params: { lang } }: Props) {
       setting={setting}>
       <div className='relative bg-white mx-auto max-w-7xl min-h-screen'>
         <div className='lg:absolute lg:inset-0 lg:ltr:left-1/2 lg:rtl:right-1/2'>
+          <div className='absolute top-0 p-10 lg:p-24 text-white z-40'>
+            <div className='flex flex-col gap-y-4'>
+              <h4>{setting.name}</h4>
+              <h4>{setting.caption}test</h4>
+            </div>
+          </div>
           <Image
             width={1000}
             height={1000}
             className='h-64 w-full bg-gray-50 object-cover sm:h-80 lg:absolute lg:h-full'
-            src='https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&crop=focalpoint&fp-x=.4&w=2560&h=3413&&q=80'
+            src={ContactusImage}
             alt={setting.name}
           />
         </div>
