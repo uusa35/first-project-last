@@ -8,6 +8,7 @@ import Image from "next/image";
 import DOMPurify from "isomorphic-dompurify";
 import { notFound } from "next/navigation";
 import UserIndexBanner from "@/appImages/user/banner.jpg";
+import SocialIcons from "@/components/footer/SocialIcons";
 
 type Props = {
   params: { lang: Locale["lang"]; id: string };
@@ -72,28 +73,39 @@ export default async function UserShow({
                 <h2 className='text-xl font-bold tracking-tight text-black sm:text-6xl'>
                   {trans.aboutus}
                 </h2>
-                <p className='mt-6 text-lg leading-8 text-gray-800'>
+                <div className='mt-6 text-lg leading-8 text-gray-800'>
                   <div
                     dangerouslySetInnerHTML={{
                       __html: DOMPurify.sanitize(user.aboutus),
                     }}></div>
-                </p>
+                </div>
               </div>
             </div>
           )}
 
           {/* contactus section */}
-
           <div className='px-6 py-12 lg:px-8 bg-gray-100 w-full h-auto'>
-            <div className='grid grid-cols-1 lg:grid-cols-3'>
+            <div className='grid grid-cols-1 gap-y-10 text-center ltr:lg:text-left rtl:lg:text-right lg:gap-y-0 lg:grid-cols-3'>
               <div className='flex flex-col gap-y-4 leading-8'>
                 <h1>{trans.contactus_information}</h1>
                 <p>
                   {user.address} - {user.country.name}
                 </p>
               </div>
-              <div>{trans.contactus}</div>
-              <div>{trans.contactus}</div>
+              <div className='flex flex-col gap-y-4 leading-8'>
+                <h1>{trans.email}</h1>
+                <div>
+                  <a target='_blank' href={`mailto: ${user.email}`}>
+                    {user.email}
+                  </a>
+                </div>
+              </div>
+              <div className='flex flex-col gap-y-4 leading-8'>
+                <h1>{trans.contactus_information}</h1>
+                <div className='flex flex-wrap justify-center items-center lg:justify-start'>
+                  <SocialIcons setting={user} />
+                </div>
+              </div>
             </div>
           </div>
 
@@ -103,12 +115,28 @@ export default async function UserShow({
                 <h2 className='text-xl font-bold tracking-tight text-black sm:text-6xl'>
                   {trans.description}
                 </h2>
-                <p className='mt-6 text-lg leading-8 text-gray-800'>
+                <div className='mt-6 text-lg leading-8 text-gray-800'>
                   <div
                     dangerouslySetInnerHTML={{
                       __html: DOMPurify.sanitize(user.description),
                     }}></div>
-                </p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {user.services && (
+            <div className='px-6 pt-12 lg:px-8'>
+              <div className='mx-auto max-w-2xl text-center '>
+                <h2 className='text-xl font-bold tracking-tight text-black sm:text-6xl'>
+                  {trans.services}
+                </h2>
+                <div className='mt-6 text-lg leading-8 text-gray-800'>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: DOMPurify.sanitize(user.services),
+                    }}></div>
+                </div>
               </div>
             </div>
           )}
