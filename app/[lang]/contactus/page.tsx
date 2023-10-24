@@ -55,7 +55,7 @@ export default async function ({ params: { lang } }: Props) {
                   </div>
                   <div>
                     <Image
-                      src={setting.logo}
+                      src={setting.image}
                       alt={setting.name}
                       width={100}
                       height={100}
