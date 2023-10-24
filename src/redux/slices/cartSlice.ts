@@ -38,13 +38,12 @@ const initialState: { membership: Membership, payment: PaymentFields, order: Omi
   }
 
 };
-
+const transactionId = toString(random(9999, 99999));
 export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
     setMembership: (state, action: PayloadAction<{ membership: Membership, country: Country, lang: Locale['lang'] }>) => {
-      const transactionId = toString(random(999999, 9999999));
       const { lang, country, membership } = action.payload;
       const { merchantId, messageId, token } = state.payment;
       const amountValues = country.lang === 'ar' ? '00' : (country.lang === 'ru') ? '000' : '00'; // now Price is already converted.
@@ -53,11 +52,13 @@ export const cartSlice = createSlice({
       const amount = `${convertedPrice}${amountValues}`;
       const currencyCode = country.lang === 'ar' ? '682' : country.lang === 'ru' ? '643' : '840';
       // { { apiUrl } } redirect / order ? reference_id = 9372395 & lang=ar
-      const redirectUrl = process.env.NODE_ENV === "production" ? `https://cp.ar-expo.ru/redirect/order?lang=${lang}&reference_id=${transactionId}` : `http://ar-expo-backend.test/redirect/order?lang=${lang}&reference_id=${transactionId}`;
+      const redirectUrl = process.env.NODE_ENV === "production" ? `https://cp.ar-expo.ru/redirect/order?lang=${lang}` : `http://ar-expo-backend.test/redirect/order?lang=${lang}`;
       const toBeHashed = `${token}${amount}${currencyCode}${capitalize(
         lang
       )}${merchantId}${messageId}${redirectUrl}${transactionId}`;
       const hashed: string = sha256(toBeHashed);
+      console.log('tobehashed', toBeHashed);
+      console.log('hashed', hashed);
       return {
         membership: action.payload.membership,
         payment: {
