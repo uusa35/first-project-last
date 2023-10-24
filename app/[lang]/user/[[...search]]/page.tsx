@@ -41,7 +41,7 @@ export default async function UserIndex({
         lang={lang}
         trans={trans}
         showSearchBar={false}
-        currentModule={`post`}
+        currentModule={`user`}
       />
     );
 
