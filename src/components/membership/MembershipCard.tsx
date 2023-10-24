@@ -41,7 +41,7 @@ export default function ({ element, country, lang }: Props) {
         {element.name}
       </h3>
       <div
-        className='  h-[200px] overflow-hidden text-gray-600 mt-4 text-sm leading-6 '
+        className='h-[200px] max-w-xs sm:max-w-xl md:max-w-full whitespace-pre-line text-ellipsis overflow-hidden'
         dangerouslySetInnerHTML={{
           __html: DOMPurify.sanitize(element.description),
         }}

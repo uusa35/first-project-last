@@ -61,6 +61,7 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
           <div className='flex flex-row mx-auto max-w-7xl lg:mx-0 lg:max-w-none'>
             <div className='grid max-w-7xl grid-cols-1 text-justified gap-8 text-base leading-8 text-gray-800'>
               <div
+                className='max-w-xs sm:max-w-xl md:max-w-full whitespace-pre-line text-ellipsis overflow-hidden'
                 dangerouslySetInnerHTML={{
                   __html: DOMPurify.sanitize(post.description),
                 }}></div>

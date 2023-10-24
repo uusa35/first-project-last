@@ -36,8 +36,9 @@ export default async function UserShow({
       <main className='relative isolate mx-auto max-w-7xl min-h-screen'>
         {/* Image section */}
         <div className='mt-8 sm:mt-8 xl:mx-auto xl:max-w-7xl xl:px-8'>
-          <div className='absolute left-10 top-10'>
-            <span className={` text-gray-800 bg-white/50 p-4 rounded-md`}>
+          <div className='absolute left-5 sm:left-10 top-10'>
+            <span
+              className={` text-gray-800 bg-white/50 p-1 sm:p-4 rounded-md`}>
               {user.deals.membership.sort}
             </span>
           </div>
@@ -61,7 +62,7 @@ export default async function UserShow({
             height={500}
             src={UserIndexBanner}
             alt={user.name}
-            className='aspect-[9/3] w-full object-cover xl:rounded-xl'
+            className='aspect-[9/5] sm:aspect-[9/3] w-full object-cover xl:rounded-xl'
           />
         </div>
 
@@ -75,7 +76,7 @@ export default async function UserShow({
                 </h2>
                 <div className='mt-6 text-lg leading-8 text-gray-800 '>
                   <div
-                    className='max-w-md sm:max-w-xl md:max-w-full whitespace-pre-line text-ellipsis overflow-hidden'
+                    className='max-w-xs sm:max-w-xl md:max-w-full whitespace-pre-line text-ellipsis overflow-hidden'
                     dangerouslySetInnerHTML={{
                       __html: DOMPurify.sanitize(user.aboutus),
                     }}></div>

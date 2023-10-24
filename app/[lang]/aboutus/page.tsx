@@ -58,21 +58,25 @@ export default async function Aboutus({ params: { lang } }: Props) {
             <div className='grid grid-cols-1 gap-8 text-base leading-7 text-gray-800 lg:max-w-7xl capitalize'>
               <h3>{trans.description}</h3>
               <div
+                className='max-w-xs sm:max-w-xl md:max-w-full whitespace-pre-line text-ellipsis overflow-hidden'
                 dangerouslySetInnerHTML={{
                   __html: DOMPurify.sanitize(setting.description),
                 }}></div>
               <h3>{trans.aboutus}</h3>
               <div
+                className='max-w-xs sm:max-w-xl md:max-w-full whitespace-pre-line text-ellipsis overflow-hidden'
                 dangerouslySetInnerHTML={{
                   __html: DOMPurify.sanitize(setting.aboutus),
                 }}></div>
               <h3>{trans.services}</h3>
               <div
+                className='max-w-xs sm:max-w-xl md:max-w-full whitespace-pre-line text-ellipsis overflow-hidden'
                 dangerouslySetInnerHTML={{
                   __html: DOMPurify.sanitize(setting.services),
                 }}></div>
               <h3>{trans.address}</h3>
               <div
+                className='max-w-xs sm:max-w-xl md:max-w-full whitespace-pre-line text-ellipsis overflow-hidden'
                 dangerouslySetInnerHTML={{
                   __html: DOMPurify.sanitize(setting.address),
                 }}></div>
