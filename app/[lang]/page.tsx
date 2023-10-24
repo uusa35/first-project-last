@@ -158,7 +158,7 @@ export default async function Home({ params: { lang } }: Props) {
       {/* search */}
       <div className='bg-white'>
         <div className='mx-auto max-w-7xl'>
-          <div className='relative isolate overflow-hidden  px-6 sm:rounded-3xl sm:px-14 xl:py-14'>
+          <div className='relative isolate overflow-hidden  px-6 sm:rounded-3xl sm:px-14 py-12 xl:py-14'>
             <h2 className='text-3xl text-center font-bold tracking-tight text-gray-900 sm:text-4xl capitalize'>
               {trans.search}
             </h2>
