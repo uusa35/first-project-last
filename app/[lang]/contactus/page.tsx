@@ -73,11 +73,10 @@ export default async function ({ params: { lang } }: Props) {
                     src='https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d6743.434929230318!2d46.682385832908714!3d24.711382293458314!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e2f03280e046f99%3A0x37737eab160a212!2sKingdom%20Centre!5e0!3m2!1sen!2skw!4v1698144416000!5m2!1sen!2skw'
                     width='600'
                     height='450'
-                    className='border-none w-full h-60 rounded-md'
+                    className='opacity-80 border-none w-full h-60 rounded-md'
                     loading='lazy'></iframe>
                 )}
               </div>
-
               <div className='flex flex-col gap-y-6  w-full h-full'>
                 <p className=''>{trans.contactus_information}</p>
                 {/* phone */}
