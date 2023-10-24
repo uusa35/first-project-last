@@ -77,7 +77,7 @@ export default function ({ lang }: Props) {
       <form
         onSubmit={handleSubmit(onSubmit)}
         className={`mt-16 ${isLoading && "hidden"}`}>
-        <div className='grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2'>
+        <div className='grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2 capitalize'>
           <div className='sm:col-span-2'>
             <label
               htmlFor='name'
