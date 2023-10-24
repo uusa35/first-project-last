@@ -119,6 +119,7 @@ export default function ({
             className='text-sm font-semibold leading-6 text-white p-2 px-4 btn-color-default '>
             {trans.visitors}
           </Link>
+
           <Link
             href={`/${lang}/register/company`}
             className='text-sm font-semibold leading-6 text-white p-2 px-4 btn-color-default '>

@@ -39,10 +39,11 @@ export default async function UserIndex({
       trans={trans}
       lang={lang}
       searchParams={searchParams}
-      setting={setting}>
-      <div className='container mx-auto max-w-7xl min-h-screen'>
+      setting={setting}
+    >
+      <div className="container mx-auto max-w-7xl min-h-screen">
         <Image
-          className='h-80 w-full object-cover'
+          className="h-80 w-full object-cover"
           width={600}
           height={1000}
           src={LoginImage.src}
@@ -51,14 +52,15 @@ export default async function UserIndex({
         {users.data.length > 0 ? (
           <SearchBar trans={trans} />
         ) : (
-          <div className='text-center text-2xl py-20'>
+          <div className="text-center text-2xl py-20">
             No Result Component here
           </div>
         )}
 
         <ul
-          role='list'
-          className='grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 py-12 after:px-8 px-4 xl:px-0'>
+          role="list"
+          className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 py-12 after:px-8 px-4 xl:px-0"
+        >
           {users.data.map((u: User, i: number) => (
             <UserCard element={u} lang={lang} trans={trans} key={u.name} />
           ))}

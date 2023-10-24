@@ -2,22 +2,23 @@
 import { useLoginMutation } from "@/redux/api/authApi";
 import { useAppDispatch } from "@/redux/hooks";
 import { setUser } from "@/redux/slices/authSlice";
-import { appLinks, setToken } from "@/src/constants";
+import { showErrorToastMessage } from "@/redux/slices/toastMessageSlice";
+import { appLinks } from "@/src/constants";
 import { Locale } from "@/types/index";
-import { login } from "@/utils/auth";
+import { first } from "lodash";
 import Link from "next/link";
 import * as React from "react";
 
-export interface IAppProps {
+type LoginProps = {
   lang: Locale["lang"];
   trans: { [key: string]: string };
-}
+};
 
-export function LoginContent({ lang, trans }: IAppProps) {
+export function LoginContent({ lang, trans }: LoginProps) {
   const dispatch = useAppDispatch();
   const [triggerLoginQuery, { data, isSuccess, error }] = useLoginMutation();
 
-  const createAccountFun = async (formData: FormData) => {
+  const loginFun = async (formData: FormData) => {
     const email = formData.get("email")?.toString();
     const password = formData.get("password")?.toString();
 
@@ -25,14 +26,14 @@ export function LoginContent({ lang, trans }: IAppProps) {
       console.log(password, email);
       await triggerLoginQuery({ password, email }).then((r: any) => {
         if (r.error) {
-          // dispatch(
-          //   showErrorToastMessage({
-          //     content: `${first(r.error.data.message)}`,
-          //   })
-          // );
+          dispatch(
+            showErrorToastMessage({
+              content: `${first(r.error.data.message)}`,
+            })
+          );
         } else {
           dispatch(setUser(r.data));
-          setToken(r.data.api_token);
+          //   navigate based on role coming back from be
         }
       });
     }
@@ -40,7 +41,7 @@ export function LoginContent({ lang, trans }: IAppProps) {
 
   return (
     <div className="space-y-6">
-      <form action={createAccountFun} className="space-y-6">
+      <form action={loginFun} className="space-y-6">
         <div>
           <label
             htmlFor="email"
@@ -121,7 +122,7 @@ export function LoginContent({ lang, trans }: IAppProps) {
         </p>
         <Link
           className=" text-sm leading-6 text-expo-dark"
-          href={appLinks.registerVisitor(lang)}
+          href={appLinks.register(lang, "visitor")}
         >
           <p>{trans.create_an_account}</p>
         </Link>

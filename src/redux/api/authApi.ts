@@ -17,9 +17,29 @@ export const authApi = apiSlice.injectEndpoints({
       }),
     }),
 
+    registerVisitor: builder.mutation<
+      User, { 
+        name:string
+        email: string; 
+        password: string ,
+        password_confirmation:string,
+        country_id:number,
+        role:"visitor"|"company"
+      }
+    >({
+      query: ({name,email, password,password_confirmation,country_id,role}) => ({
+        url: `register`,
+        params:{name,email,password,password_confirmation,country_id,role},
+        method:"post",
+        validateStatus: (response, result) =>
+          response.status == 200,
+      }),
+    }),
+
   }),
 });
 
 export const {
-  useLoginMutation
+  useLoginMutation,
+  useRegisterVisitorMutation
 } = authApi;

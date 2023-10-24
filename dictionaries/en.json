@@ -86,6 +86,16 @@
     "forgot_password":"forgot password?",
     "sign_in":"sign in",
     "Dont_have_an_account":"Don't have an account",
-    "create_an_account":"Create an account"
+    "create_an_account":"Create an account",
+    "welcome":"welcome",
+    "confirm_password":"confirm password",
+     "agree_to":"agree to",
+   "the_terms_and_conditions":"the terms and conditions",
+   "already_have_an_account":"already have an account?",
+    "Welcome_Register_now_and_join_us":"Welcome ! Register now and join us !",
+    "registered_successfully":"registered successfully",
+    "name":"name"
+
+
   }
 }

@@ -13,7 +13,6 @@ import { usePathname } from "next/navigation";
 import { Setting } from "@/types/queries";
 export { Button, Carousel, Typography };
 
-
 type Props = {
   children: React.ReactNode;
   trans: { [key: string]: string };
@@ -58,13 +57,14 @@ const MainContextLayout: FC<Props> = ({
           setting={setting}
         />
         <div>{children}</div>
-        {!pathName?.includes("login")&& <AppFooter
-          mainPages={navigation}
-          lang={lang}
-          trans={trans}
-          setting={setting}
-        />}
-        
+        {!pathName?.includes("login") && !pathName?.includes("register") && (
+          <AppFooter
+            mainPages={navigation}
+            lang={lang}
+            trans={trans}
+            setting={setting}
+          />
+        )}
       </ThemeProvider>
     </MainContext.Provider>
   );

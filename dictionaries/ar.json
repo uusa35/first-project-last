@@ -86,7 +86,16 @@
     "forgot_password":"نسيت كلمة المرور؟",
     "sign_in":"تسجيل الدخول",
     "Dont_have_an_account":"لا تمتلك حساب ؟",
-    "create_an_account":"إنشاء حساب"
+    "create_an_account":"إنشاء حساب",
+    "welcome":"مرحبًا بك",
+   "confirm_password":"تأكيد كلمة المرور",
+   "agree_to":"الموافقة على",
+   "the_terms_and_conditions":"الشروط والأحكام",
+    "already_have_an_account":"تمتلك حساب بالفعل ؟",
+    "Welcome_Register_now_and_join_us":"!مرحبا بك ! قم بالتسجيل الان وانضم إلينا",
+    "registered_successfully":"تم التسجيل بنجاح",
+    "name":"الاسم"
+
     
   }
 }

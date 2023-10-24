@@ -27,8 +27,10 @@ export const appLinks = {
     postIndex: (lang: Locale['lang'], search?: string) =>
         `/${lang}/post?${search ?? ''}`,
     postShow: (lang: Locale['lang'], id: string, slug?: string) => `/${lang}/post/${id}?slug=${kebabCase(slug) ?? ``}`,
-    registerVisitor:(lang: Locale['lang']) =>
-    `/${lang}/register/visitor`,
+    login:(lang: Locale['lang']) =>
+    `/${lang}/login`,
+    register:(lang: Locale['lang'],role:"visitor"|"company") =>
+    `/${lang}/register/${role}`,
 }
 
 // export const convertSearchParamsToString = (search: { [key: string]: string }): string => Object.keys(search)
