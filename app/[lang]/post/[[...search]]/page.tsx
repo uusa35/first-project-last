@@ -97,8 +97,8 @@ export default async function PostIndex({
                 {posts.data[0].categories.map((u: Category, i: number) => (
                   <span
                     key={i}
-                    className='text-center truncate col-span-1 text-[12px] lg:text-[14px] inline-flex items-center rounded-full bg-expo-light hover:bg-expo-dark hover:text-white px-2 py-1 font-medium text-green-700 ring-1 ring-inset ring-green-600/20'>
-                    {u.name.slice(0, 12)}..
+                    className='truncate col-span-1 text-sm text-center rounded-full bg-expo-light hover:bg-expo-dark hover:text-white px-2 py-1 font-medium text-green-700 ring-1 ring-inset ring-green-600/20'>
+                    {u.name}
                   </span>
                 ))}
               </dd>

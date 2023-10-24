@@ -41,7 +41,7 @@ export default async function UserShow({
               {user.deals.membership.sort}
             </span>
           </div>
-          <div className='absolute w-full lg:max-w-4xl flex flex-col lg:flex-row  justify-center lg:justify-start items-center top-0 lg:top-52 bg-stone/60 lg:rtl:right-10 lg:ltr:left-10 p-8 text-white  gap-4  rounded-md'>
+          <div className='absolute w-full lg:max-w-4xl flex flex-col lg:flex-row  justify-center lg:justify-start items-center top-0 lg:top-32 bg-stone/60 lg:rtl:right-10 lg:ltr:left-10 p-8 text-white  gap-4  rounded-md'>
             <div>
               <Image
                 width={100}
@@ -51,9 +51,9 @@ export default async function UserShow({
                 className='w-20 h-20 object-cover rounded-full border border-gray-400 shadow-lg'
               />
             </div>
-            <div className='flex flex-col gap-4'>
-              <div className='text-6xl '>{user.name}</div>
-              <div className='text-2xl'>{user.caption}</div>
+            <div className='flex flex-col justify-center lg:justify-start items-center lg:items-start gap-4 text-center rtl:text-right ltr:text-left'>
+              <div className='text-2xl lg:text-6xl '>{user.name}</div>
+              <div className='text-lg lg:text-xl'>{user.caption}</div>
             </div>
           </div>
           <Image
@@ -61,7 +61,7 @@ export default async function UserShow({
             height={500}
             src={UserIndexBanner}
             alt={user.name}
-            className='aspect-[9/4] w-full object-cover xl:rounded-xl'
+            className='aspect-[9/3] w-full object-cover xl:rounded-xl'
           />
         </div>
 
