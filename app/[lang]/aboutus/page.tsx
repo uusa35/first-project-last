@@ -33,7 +33,7 @@ export default async function Aboutus({ params: { lang } }: Props) {
         {/* Image section */}
         <div className='mt-8 sm:mt-8 xl:mx-auto xl:max-w-7xl xl:px-8'>
           <Image
-            className='aspect-[9/4] w-full object-cover xl:rounded-3xl'
+            className='aspect-[9/4] w-full object-cover lg:rounded-lg'
             width={600}
             height={1000}
             src={LoginImage.src}
