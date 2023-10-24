@@ -65,16 +65,17 @@ export default async function UserShow({
           />
         </div>
 
-        <div className='flex flex-col w-full min-h-screen justify-start items-center gap-y-12'>
+        <div className='flex flex-col w-full min-h-screen justify-start items-center gap-y-12 '>
           {/* aboutus section */}
           {user.aboutus && (
-            <div className='px-6 pt-12 lg:px-8'>
-              <div className='mx-auto max-w-2xl text-center '>
-                <h2 className='text-xl font-bold tracking-tight text-black sm:text-6xl'>
+            <div className='px-2 pt-12 lg:px-8'>
+              <div className='mx-auto text-center'>
+                <h2 className='text-2xl font-bold tracking-tight text-black sm:text-4xl'>
                   {trans.aboutus}
                 </h2>
-                <div className='mt-6 text-lg leading-8 text-gray-800'>
+                <div className='mt-6 text-lg leading-8 text-gray-800 '>
                   <div
+                    className='max-w-md sm:max-w-xl md:max-w-full whitespace-pre-line text-ellipsis overflow-hidden'
                     dangerouslySetInnerHTML={{
                       __html: DOMPurify.sanitize(user.aboutus),
                     }}></div>
@@ -112,11 +113,12 @@ export default async function UserShow({
           {user.description && (
             <div className='px-6 pt-12 lg:px-8'>
               <div className='mx-auto max-w-2xl text-center '>
-                <h2 className='text-xl font-bold tracking-tight text-black sm:text-6xl'>
+                <h2 className=' capitalize text-xl font-bold tracking-tight text-black sm:text-4xl'>
                   {trans.description}
                 </h2>
                 <div className='mt-6 text-lg leading-8 text-gray-800'>
                   <div
+                    className='max-w-md sm:max-w-xl md:max-w-full whitespace-pre-line text-ellipsis overflow-hidden'
                     dangerouslySetInnerHTML={{
                       __html: DOMPurify.sanitize(user.description),
                     }}></div>
@@ -128,11 +130,12 @@ export default async function UserShow({
           {user.services && (
             <div className='px-6 pt-12 lg:px-8'>
               <div className='mx-auto max-w-2xl text-center '>
-                <h2 className='text-xl font-bold tracking-tight text-black sm:text-6xl'>
+                <h2 className=' capitalize text-xl font-bold tracking-tight text-black sm:text-4xl'>
                   {trans.services}
                 </h2>
                 <div className='mt-6 text-lg leading-8 text-gray-800'>
                   <div
+                    className='max-w-md sm:max-w-xl md:max-w-full whitespace-pre-line text-ellipsis overflow-hidden'
                     dangerouslySetInnerHTML={{
                       __html: DOMPurify.sanitize(user.services),
                     }}></div>
