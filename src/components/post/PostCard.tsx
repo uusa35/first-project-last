@@ -12,7 +12,7 @@ export default async function ({ element, lang }: Props) {
   return (
     <Link
       href={`/${lang}/post/${element.id}?slug=${element.name}`}
-      className='flex flex-col items-start justify-between transform transition duration-500 hover:scale-90'>
+      className='flex flex-col items-start justify-between transform transition duration-500 hover:scale-105'>
       <div className='relative w-full hover:opacity-80'>
         <Image
           width={400}
