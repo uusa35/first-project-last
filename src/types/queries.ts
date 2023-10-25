@@ -94,9 +94,24 @@ export type Auth = {
     caption: string;
     email: string;
     image: string;
+    hasValidDeal: false;
     api_token: string | undefined;
-    role? : {},
+    role: Role,
+    deals: Deal[];
     [key: string]: any;
+}
+export type Role = {
+    id: string;
+    name: 'visitor' | 'company';
+}
+
+export type Deal = {
+    id: number;
+    order_id: number;
+    user_id: number;
+    membership_id: number;
+    active: number;
+    order: Order
 }
 export type Membership = {
     id: number;

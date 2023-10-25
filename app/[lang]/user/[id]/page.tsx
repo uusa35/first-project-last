@@ -10,7 +10,7 @@ import { notFound } from "next/navigation";
 import UserIndexBanner from "@/appImages/user/banner.jpg";
 import SocialIcons from "@/components/footer/SocialIcons";
 import { Email, EmailOutlined, InsertLink } from "@mui/icons-material";
-import { GlobeAltIcon } from "@heroicons/react/24/outline";
+import { Setting, User } from "@/types/queries";
 
 type Props = {
   params: { lang: Locale["lang"]; id: string };
@@ -20,11 +20,12 @@ export default async function UserShow({
   params: { lang, id },
   searchParams,
 }: Props) {
-  const [{ trans }, setting, user] = await Promise.all([
-    getDictionary(lang),
-    getSetting(lang),
-    getUser(id, lang),
-  ]);
+  const [{ trans }, setting, user]: [{ trans: any }, Setting, User] =
+    await Promise.all([
+      getDictionary(lang),
+      getSetting(lang),
+      getUser(id, lang),
+    ]);
 
   if ("status" in user && (user.status === 404 || user.status === 500))
     notFound();

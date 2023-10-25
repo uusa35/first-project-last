@@ -20,7 +20,9 @@ import { setCurrentPath } from "@/redux/slices/settingSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { Setting } from "@/types/queries";
 import LanguagesList from "@/components/header/LanguagesList";
-import { isAuthenticated } from "@/redux/slices/authSlice";
+import { isAuthenticated, resetAuth } from "@/redux/slices/authSlice";
+import { appLinks, deleteToken } from "@/src/constants";
+import MyProfileList from "./MyProfileList";
 
 type Props = {
   lang: Locale;
@@ -40,6 +42,7 @@ export default function ({
   const {
     appSetting: { currentPath },
     locale,
+    auth,
   } = useAppSelector((state) => state);
   const isAuth = useAppSelector(isAuthenticated);
   const dispatch = useAppDispatch();
@@ -56,6 +59,12 @@ export default function ({
       window.removeEventListener("scroll", stickNavbar);
     };
   }, []);
+
+  const handleLogout = () => {
+    dispatch(resetAuth());
+    deleteToken();
+    router.replace(appLinks.home(lang));
+  };
 
   const stickNavbar = () => {
     if (window !== undefined) {
@@ -120,17 +129,22 @@ export default function ({
           Home
         </ActiveLink> */}
         <div className='hidden lg:flex lg:flex-1 lg:justify-end items-center capitalize'>
-          <Link
-            href={`/${lang}/register/visitor`}
-            className='text-sm font-semibold leading-6 text-white p-2 px-4 btn-color-default me-4 '>
-            {trans.visitors}
-          </Link>
-
-          <Link
-            href={`/${lang}/register/company`}
-            className='text-sm font-semibold leading-6 text-white p-2 px-4 btn-color-default '>
-            {trans.subscriptions}
-          </Link>
+          {isAuth ? (
+            <MyProfileList lang={lang} />
+          ) : (
+            <>
+              <Link
+                href={appLinks.register(lang, "company")}
+                className='text-sm font-semibold leading-6 text-white p-2 px-4 btn-color-default '>
+                {trans.subscriptions}
+              </Link>
+              <Link
+                href={appLinks.register(lang, "visitor")}
+                className='text-sm font-semibold leading-6 text-white p-2 px-4 btn-color-default me-4 '>
+                {trans.visitors}
+              </Link>
+            </>
+          )}
         </div>
       </nav>
       <nav
@@ -206,19 +220,46 @@ export default function ({
                   </Link>
                 ))}
               </div>
-              <div className='py-6 capitalize'>
+              <div className='py-6 capitalize flex flex-1 flex-col'>
                 {!isAuth ? (
-                  <Link
-                    href={`/${lang}/login`}
-                    className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'>
-                    {trans.login}
-                  </Link>
+                  <div className='flex flex-col'>
+                    <Link
+                      href={`/${lang}/login`}
+                      className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'>
+                      {trans.login}
+                    </Link>
+                    <Link
+                      href={appLinks.register(lang, "company")}
+                      className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'>
+                      {trans.register_as_subscription}
+                    </Link>
+                    <Link
+                      href={appLinks.register(lang, "visitor")}
+                      className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'>
+                      {trans.register_as_visitor}
+                    </Link>
+                  </div>
                 ) : (
-                  <Link
-                    href={`/${lang}/register`}
-                    className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'>
-                    {trans.register}
-                  </Link>
+                  <div className='p-3 ring ring-gray-50'>
+                    <div className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 '>
+                      {trans.welcome}, {auth.username}
+                    </div>
+                    <Link
+                      className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'
+                      href={appLinks.account(lang, auth.role.name, auth.id)}>
+                      {trans.control_account_information}
+                    </Link>
+                    <Link
+                      className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'
+                      href={appLinks.home(lang)}>
+                      {trans.back_to_home}
+                    </Link>
+                    <button
+                      className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'
+                      onClick={() => handleLogout()}>
+                      {trans.logout}
+                    </button>
+                  </div>
                 )}
                 <div className='flex flex-row justify-between items-center py-4 lg:py-0 px-8 ps-12'>
                   <Link

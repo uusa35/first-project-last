@@ -9,7 +9,7 @@ export const imageUrl = `https://loremflickr.com/`;
 export const isLocal = process.env.NODE_ENV !== 'production';
 export const suppressText = true;
 import { PersonOutlineOutlined } from "@mui/icons-material";
-import { Country } from './types/queries';
+import { Country, Role } from './types/queries';
 export { PersonOutlineOutlined, truncate };
 
 
@@ -27,10 +27,10 @@ export const appLinks = {
     postShow: (lang: Locale['lang'], id: string, slug?: string) => `/${lang}/post/${id}?slug=${kebabCase(slug) ?? ``}`,
     login: (lang: Locale['lang']) =>
         `/${lang}/login`,
-    register: (lang: Locale['lang'], role: "visitor" | "company") =>
+    register: (lang: Locale['lang'], role: Role['name']) =>
         `/${lang}/register/${role}`,
-    registerVisitor: (lang: Locale['lang']) =>
-        `/${lang}/register/visitor`,
+    account: (lang: Locale['lang'], role: Role['name'], id: string, active_tab?: string) =>
+        `/${lang}/account/${role}/${id}?active_tab=${active_tab ?? 1}`,
 }
 
 // export const convertSearchParamsToString = (search: { [key: string]: string }): string => Object.keys(search)

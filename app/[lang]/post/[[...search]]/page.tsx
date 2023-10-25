@@ -1,13 +1,13 @@
 import { MainContextLayout } from "@/layouts/MainContentLayout";
 import TextTrans from "@/components/TextTrans";
-import { Locale } from "@/types/index";
+import { Locale, TranslationType } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
 import { map } from "lodash";
 import Link from "next/link";
 import { getPosts } from "@/utils/post";
 import { convertSearchParamsToString } from "@/utils/helpers";
 import Image from "next/image";
-import { Category, Post } from "@/types/queries";
+import { Category, Post, AppQueryResult, Setting } from "@/types/queries";
 import { getSetting } from "@/utils/setting";
 import LoginImage from "@/appImages/login/section.jpg";
 import Pagination from "@/components/Pagination";
@@ -27,11 +27,12 @@ export async function generateMetadata({ params }: Props) {
   };
 }
 
-export default async function PostIndex({
-  params: { lang },
-  searchParams,
-}: Props) {
-  const [{ trans }, posts, setting] = await Promise.all([
+export default async function ({ params: { lang }, searchParams }: Props) {
+  const [{ trans }, posts, setting]: [
+    { trans: any },
+    AppQueryResult<Post[]>,
+    Setting
+  ] = await Promise.all([
     getDictionary(lang),
     getPosts(convertSearchParamsToString(searchParams) ?? ``, lang),
     getSetting(lang),

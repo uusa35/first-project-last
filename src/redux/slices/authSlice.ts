@@ -13,7 +13,9 @@ const initialState: Auth = {
   caption: ``,
   email: ``,
   image: ``,
-  role: {},
+  hasValidDeal: false,
+  role: { id: ``, name: 'vistor' },
+  deals: [],
   api_token: undefined,
 
 };
@@ -23,7 +25,7 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action: PayloadAction<Auth>) => action.payload,
-    resetAuth: (state, action: PayloadAction<boolean>) => {
+    resetAuth: (state, action: PayloadAction<void>) => {
       return {
         ...initialState,
       };

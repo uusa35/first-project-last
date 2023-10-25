@@ -126,6 +126,10 @@
     "subscribers_description": "subscribers_description",
     "sponsors_description": "sponsors_description",
     "website": "website",
-    "social_media_links": "social media links"
+    "social_media_links": "social media links",
+    "my_account": "my_account",
+    "control_account_information": "control_account_information",
+    "back_to_home": "back to home",
+    "logout": "logout"
   }
 }

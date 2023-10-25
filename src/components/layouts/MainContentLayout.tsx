@@ -13,7 +13,7 @@ import * as yup from "yup";
 
 type Props = {
   children: React.ReactNode;
-  trans: { [key: string]: string } | any;
+  trans: { [key: string]: string };
   lang: Locale["lang"];
   searchParams: { [key: string]: string } | string;
   setting: Setting;
