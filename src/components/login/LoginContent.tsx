@@ -6,7 +6,7 @@ import {
   showErrorToastMessage,
   showSuccessToastMessage,
 } from "@/redux/slices/toastMessageSlice";
-import { appLinks } from "@/src/constants";
+import { appLinks, setToken } from "@/src/constants";
 import { Locale } from "@/types/index";
 import { first } from "lodash";
 import Link from "next/link";
@@ -49,27 +49,23 @@ export default function ({ lang }: Props) {
   });
 
   const onSubmit: SubmitHandler<Inputs> = (body) => {
-    console.log("body", body);
     dispatch(enableLoading());
     const { email, password } = body;
-    if (email && password) {
-      triggerLogin({ password, email }).then((r: any) => {
-        console.log("r", r);
-        if (r && r.data) {
-          dispatch(showSuccessToastMessage({ content: trans.process_success }));
-          dispatch(setUser(r.data));
-          // return router.back();
-          return router.push(`/${lang}`);
-        } else if (r && r.error && r.error.data) {
-          dispatch(
-            showErrorToastMessage({
-              content: `${r.error.data.message}`,
-            })
-          );
-        }
-        dispatch(disableLoading());
-      });
-    }
+    triggerLogin({ password, email }).then((r: any) => {
+      if (r && r.data) {
+        dispatch(showSuccessToastMessage({ content: trans.process_success }));
+        dispatch(setUser(r.data));
+        setToken(r.data.api_token);
+        return router.push(`/${lang}`);
+      } else if (r && r.error && r.error.data) {
+        dispatch(
+          showErrorToastMessage({
+            content: `${r.error.data.message}`,
+          })
+        );
+      }
+      dispatch(disableLoading());
+    });
   };
 
   return (

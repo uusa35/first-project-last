@@ -20,6 +20,11 @@ export function middleware(request: NextRequest) {
   const pathnameIsMissingLocale = i18n.locales.every(
     locale => !pathName.startsWith(`/${locale}/`) && pathName !== `/${locale}`
   )
+  const token = request.cookies.get('token');
+  if (token && (request.nextUrl.pathname.includes('login') || request.nextUrl.pathname.includes('register'))) {
+    return NextResponse.redirect(new URL('/', request.url))
+  }
+
   if (pathnameIsMissingLocale) {
     const locale = getLocale(request)
     return NextResponse.redirect(
@@ -28,6 +33,7 @@ export function middleware(request: NextRequest) {
         request.url
       ))
   }
+
 
 }
 

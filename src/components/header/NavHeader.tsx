@@ -20,9 +20,7 @@ import { setCurrentPath } from "@/redux/slices/settingSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { Setting } from "@/types/queries";
 import LanguagesList from "@/components/header/LanguagesList";
-import moment from "moment";
-
-import { setLocale } from "@/redux/slices/localeSlice";
+import { isAuthenticated } from "@/redux/slices/authSlice";
 
 type Props = {
   lang: Locale;
@@ -43,6 +41,7 @@ export default function ({
     appSetting: { currentPath },
     locale,
   } = useAppSelector((state) => state);
+  const isAuth = useAppSelector(isAuthenticated);
   const dispatch = useAppDispatch();
   const params = useParams();
   const pathName = usePathname()!;
@@ -89,6 +88,7 @@ export default function ({
       }
     }
   }, [pathName]);
+
   return (
     <header
       className={` top-0 z-50 mx-auto max-w-7xl lg:py-4 px-2  ${stickyClass}`}>
@@ -162,14 +162,16 @@ export default function ({
             </Link>
           ))}
         </div>
-        <div className='hidden  lg:flex lg:flex-1 lg:justify-end gap-x-4'>
-          <Link
-            replace
-            href={`/${lang}/login`}
-            className='text-sm font-semibold text-expo-dark flex flex-row w-30 justify-center items-center '>
-            <UserIcon className='w-8 me-2' />
-            <span className='flex w-full pt-1'>{trans.login}</span>
-          </Link>
+        <div className='hidden lg:flex lg:flex-1 lg:justify-end gap-x-4'>
+          {!isAuth && (
+            <Link
+              replace
+              href={`/${lang}/login`}
+              className='text-sm font-semibold text-expo-dark flex flex-row w-30 justify-center items-center '>
+              <UserIcon className='w-8 me-2' />
+              <span className='flex w-full pt-1'>{trans.login}</span>
+            </Link>
+          )}
         </div>
       </nav>
       <Dialog
@@ -205,11 +207,19 @@ export default function ({
                 ))}
               </div>
               <div className='py-6 capitalize'>
-                <Link
-                  href={`/${lang}/login`}
-                  className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'>
-                  {trans.login}
-                </Link>
+                {!isAuth ? (
+                  <Link
+                    href={`/${lang}/login`}
+                    className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'>
+                    {trans.login}
+                  </Link>
+                ) : (
+                  <Link
+                    href={`/${lang}/register`}
+                    className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'>
+                    {trans.register}
+                  </Link>
+                )}
                 <div className='flex flex-row justify-between items-center py-4 lg:py-0 px-8 ps-12'>
                   <Link
                     href={`${changePathName(

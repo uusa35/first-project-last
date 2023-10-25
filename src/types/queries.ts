@@ -94,7 +94,8 @@ export type Auth = {
     caption: string;
     email: string;
     image: string;
-    api_token: string | null;
+    api_token: string | undefined;
+    role? : {},
     [key: string]: any;
 }
 export type Membership = {
