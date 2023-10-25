@@ -1,7 +1,5 @@
 import Link from "next/link";
 import SocialIcons from "./SocialIcons";
-import { getDictionary } from "@/lib/dictionary";
-import { getSetting } from "@/utils/setting";
 import { Locale } from "@/types/index";
 import moment from "moment";
 import { Setting } from "@/types/queries";

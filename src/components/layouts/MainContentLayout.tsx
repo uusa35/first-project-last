@@ -79,14 +79,12 @@ const MainContextLayout: FC<Props> = ({
         setting={setting}
       />
       <div>{children}</div>
-      {!pathName?.includes("login") && (
-        <AppFooter
-          mainPages={navigation}
-          lang={lang}
-          trans={trans}
-          setting={setting}
-        />
-      )}
+      <AppFooter
+        mainPages={navigation}
+        lang={lang}
+        trans={trans}
+        setting={setting}
+      />
     </MainContext.Provider>
   );
 };

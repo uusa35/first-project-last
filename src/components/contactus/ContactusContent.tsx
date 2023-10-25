@@ -55,16 +55,13 @@ export default function ({ lang }: Props) {
         content: trans.ur_request_is_pending_processed_plz_wait,
       })
     );
-    // console.log("the url", apiUrl);
     dispatch(enableLoading());
     triggerSendContactus({ lang, body })
       .then((r: any) => {
         if (r && r.data && r.data.message) {
           dispatch(showSuccessToastMessage({ content: r.data.message }));
         } else if (r && r.error && r.error.data) {
-          dispatch(
-            showErrorToastMessage({ content: `${first(r.error.data.message)}` })
-          );
+          dispatch(showErrorToastMessage({ content: r.error.data.message }));
         }
       })
       .then(() => {

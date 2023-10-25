@@ -1,8 +1,11 @@
 "use client";
-import { useLoginMutation } from "@/redux/api/authApi";
+import { useLazyLoginQuery } from "@/redux/api/authApi";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setUser } from "@/redux/slices/authSlice";
-import { showErrorToastMessage } from "@/redux/slices/toastMessageSlice";
+import {
+  showErrorToastMessage,
+  showSuccessToastMessage,
+} from "@/redux/slices/toastMessageSlice";
 import { appLinks } from "@/src/constants";
 import { Locale } from "@/types/index";
 import { first } from "lodash";
@@ -13,26 +16,25 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "@/src/validations";
 import { disableLoading, enableLoading } from "@/redux/slices/settingSlice";
-import { MainContext } from "../MainContentLayout";
-import LoadingSpinner from "../LoadingSpinner";
+import { MainContext } from "@/layouts/MainContentLayout";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
-type LoginProps = {
+type Props = {
   lang: Locale["lang"];
-  trans: { [key: string]: string };
 };
 type Inputs = {
   email: string;
   password: string;
 };
 
-export function LoginContent({ lang }: LoginProps) {
+export default function ({ lang }: Props) {
   const trans: { [key: string]: string } = useContext(MainContext);
   const router = useRouter();
   const dispatch = useAppDispatch();
   const {
     appSetting: { isLoading },
   } = useAppSelector((state) => state);
-  const [triggerLoginQuery, { data, isSuccess, error }] = useLoginMutation();
+  const [triggerLogin, { data, isSuccess, error }] = useLazyLoginQuery();
   const {
     handleSubmit,
     register,
@@ -46,22 +48,24 @@ export function LoginContent({ lang }: LoginProps) {
     },
   });
 
-  const onSubmit: SubmitHandler<Inputs> = async (body: any) => {
+  const onSubmit: SubmitHandler<Inputs> = (body) => {
+    console.log("body", body);
     dispatch(enableLoading());
     const { email, password } = body;
     if (email && password) {
-      console.log(password, email);
-      await triggerLoginQuery({ password, email }).then((r: any) => {
-        if (r.error) {
+      triggerLogin({ password, email }).then((r: any) => {
+        console.log("r", r);
+        if (r && r.data) {
+          dispatch(showSuccessToastMessage({ content: trans.process_success }));
+          dispatch(setUser(r.data));
+          // return router.back();
+          return router.push(`/${lang}`);
+        } else if (r && r.error && r.error.data) {
           dispatch(
             showErrorToastMessage({
-              content: `${first(r.error.data.message)}`,
+              content: `${r.error.data.message}`,
             })
           );
-        } else {
-          dispatch(setUser(r.data));
-          reset();
-          router.back();
         }
         dispatch(disableLoading());
       });
@@ -69,62 +73,56 @@ export function LoginContent({ lang }: LoginProps) {
   };
 
   return (
-    <div className='space-y-6'>
+    <div>
       <LoadingSpinner isLoading={isLoading} />
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className={`space-y-6 ${isLoading && "hidden"}`}>
+        className={`space-y-4 ${isLoading && "hidden"}`}>
         <div>
           <label
             htmlFor='email'
-            className='block text-sm font-medium leading-6 text-gray-900'>
+            className='block text-sm font-medium leading-6 text-gray-900 capitalize'>
             {trans.email_address}
           </label>
           <div className='mt-2'>
             <input
               id='email'
-              {...register("name")}
+              {...register("email")}
               type='email'
               autoComplete='email'
-              required
               className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6'
             />
+            {errors?.email?.message && (
+              <span className={`text-red-700 text-xs capitalize`}>
+                {errors?.email?.message}
+              </span>
+            )}
           </div>
         </div>
 
         <div>
           <label
             htmlFor='password'
-            className='block text-sm font-medium leading-6 text-gray-900'>
+            className='block text-sm font-medium leading-6 text-gray-900 capitalize'>
             {trans.password}
           </label>
           <div className='mt-2'>
             <input
               id='password'
-              {...register("name")}
+              {...register("password")}
               type='password'
               autoComplete='current-password'
-              required
               className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6'
             />
+            {errors?.password?.message && (
+              <span className={`text-red-700 text-xs capitalize`}>
+                {errors?.password?.message}
+              </span>
+            )}
           </div>
         </div>
 
         <div className='flex items-center justify-between'>
-          <div className='flex gap-x-3 items-center'>
-            <input
-              id='remember-me'
-              name='remember-me'
-              type='checkbox'
-              className='h-4 w-4 rounded border-gray-300 checked:!bg-expo-dark focus:ring-0'
-            />
-            <label
-              htmlFor='remember-me'
-              className='block text-sm leading-6 text-gray-700'>
-              {trans.remember_me_for_days}
-            </label>
-          </div>
-
           <div className='text-sm leading-6'>
             <Link
               href='#'
@@ -143,10 +141,13 @@ export function LoginContent({ lang }: LoginProps) {
         </div>
       </form>
 
-      <div className='flex justify-center gap-x-1'>
-        <p className=' text-sm leading-6 text-gray-700'>
-          {trans.Dont_have_an_account}
-        </p>
+      <div className='flex justify-center gap-x-1 mt-4'>
+        <div>
+          <p className=' text-sm leading-6 text-gray-700'>
+            {trans.Dont_have_an_account}
+          </p>
+        </div>
+
         <Link
           className=' text-sm leading-6 text-expo-dark'
           href={appLinks.register(lang, "visitor")}>
