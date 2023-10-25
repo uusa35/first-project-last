@@ -90,7 +90,8 @@
     "already_have_an_account":"У вас уже есть аккаунт?",
     "Welcome_Register_now_and_join_us":"Добро пожаловать ! Зарегистрируйтесь сейчас и присоединяйтесь к нам !",
     "registered_successfully":"Регистрация прошла успешно",
-    "name":"имя"
+    "name":"имя",
+    "all_participants":"Все участники"
 
   }
 }

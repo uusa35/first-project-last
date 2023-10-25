@@ -29,7 +29,7 @@ export default async function ({ element, lang, trans }: Props) {
           <dt className='sr-only'>{element.name}</dt>
           <dd className='text-sm text-gray-500'>{element.caption}</dd>
           <dt className='sr-only'>{element.caption}</dt>
-          <dd className='mt-3 text-center grid grid-cols-3 justify-center items-center gap-1'>
+          {/* <dd className='mt-3 text-center grid grid-cols-3 justify-center items-center gap-1'>
             {element.categories.map((u: Category, i: number) => (
               <span
                 key={i}
@@ -37,7 +37,7 @@ export default async function ({ element, lang, trans }: Props) {
                 {element.name.slice(0, 12)}..
               </span>
             ))}
-          </dd>
+          </dd> */}
         </dl>
       </Link>
       <div>
