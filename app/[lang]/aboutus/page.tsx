@@ -55,32 +55,39 @@ export default async function Aboutus({ params: { lang } }: Props) {
         {/* Content section */}
         <div className='mx-auto mt-8 max-w-7xl px-6 lg:px-8 pb-16'>
           <div className='mx-auto  lg:mx-0 lg:max-w-none'>
-            <div className='grid grid-cols-1 gap-8 text-base leading-7 text-gray-800 lg:max-w-7xl capitalize'>
-              <h3>{trans.description}</h3>
+            <div className='grid grid-cols-1 gap-8 text-base leading-7 text-gray-800 max-w-xs md:max-w-md lg:max-w-7xl capitalize'>
+              <h3 className='text-xl lg:text-2xl text-center'>
+                {trans.description}
+              </h3>
               <div
                 className='max-w-xs sm:max-w-xl md:max-w-full whitespace-pre-line text-ellipsis overflow-hidden'
                 dangerouslySetInnerHTML={{
                   __html: DOMPurify.sanitize(setting.description),
                 }}></div>
-              <h3>{trans.aboutus}</h3>
+              <h3 className='text-xl lg:text-2xl text-center'>
+                {trans.aboutus}
+              </h3>
               <div
                 className='max-w-xs sm:max-w-xl md:max-w-full whitespace-pre-line text-ellipsis overflow-hidden'
                 dangerouslySetInnerHTML={{
                   __html: DOMPurify.sanitize(setting.aboutus),
                 }}></div>
-              <h3>{trans.services}</h3>
+              <h3 className='text-xl lg:text-2xl text-center'>
+                {trans.services}
+              </h3>
               <div
                 className='max-w-xs sm:max-w-xl md:max-w-full whitespace-pre-line text-ellipsis overflow-hidden'
                 dangerouslySetInnerHTML={{
                   __html: DOMPurify.sanitize(setting.services),
                 }}></div>
-              <h3>{trans.address}</h3>
+              <h3 className='text-xl lg:text-2xl text-center'>
+                {trans.address}
+              </h3>
               <div
                 className='max-w-xs sm:max-w-xl md:max-w-full whitespace-pre-line text-ellipsis overflow-hidden'
                 dangerouslySetInnerHTML={{
                   __html: DOMPurify.sanitize(setting.address),
                 }}></div>
-              <div></div>
             </div>
           </div>
         </div>

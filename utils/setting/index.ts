@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server'
 export async function getSetting(lang: Locale['lang']) {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}setting`, {
         // cache: "no-store",
-        next: { revalidate: 180 },
+        next: { revalidate: 60 },
         headers: {
             'Accept-Language': lang
         }
