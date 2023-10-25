@@ -1,29 +1,54 @@
 "use client";
 import { useLoginMutation } from "@/redux/api/authApi";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setUser } from "@/redux/slices/authSlice";
 import { showErrorToastMessage } from "@/redux/slices/toastMessageSlice";
 import { appLinks } from "@/src/constants";
 import { Locale } from "@/types/index";
 import { first } from "lodash";
 import Link from "next/link";
-import { router, useRouter } from "next/navigation";
-import * as React from "react";
+import { useRouter } from "next/navigation";
+import { useContext } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { loginSchema } from "@/src/validations";
+import { disableLoading, enableLoading } from "@/redux/slices/settingSlice";
+import { MainContext } from "../MainContentLayout";
+import LoadingSpinner from "../LoadingSpinner";
 
 type LoginProps = {
   lang: Locale["lang"];
   trans: { [key: string]: string };
 };
+type Inputs = {
+  email: string;
+  password: string;
+};
 
-export function LoginContent({ lang, trans }: LoginProps) {
+export function LoginContent({ lang }: LoginProps) {
+  const trans: { [key: string]: string } = useContext(MainContext);
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const {
+    appSetting: { isLoading },
+  } = useAppSelector((state) => state);
   const [triggerLoginQuery, { data, isSuccess, error }] = useLoginMutation();
+  const {
+    handleSubmit,
+    register,
+    reset,
+    formState: { errors },
+  }: any = useForm<any>({
+    resolver: yupResolver(loginSchema),
+    defaultValues: {
+      email: ``,
+      password: ``,
+    },
+  });
 
-  const loginFun = async (formData: FormData) => {
-    const email = formData.get("email")?.toString();
-    const password = formData.get("password")?.toString();
-
+  const onSubmit: SubmitHandler<Inputs> = async (body: any) => {
+    dispatch(enableLoading());
+    const { email, password } = body;
     if (email && password) {
       console.log(password, email);
       await triggerLoginQuery({ password, email }).then((r: any) => {
@@ -35,15 +60,20 @@ export function LoginContent({ lang, trans }: LoginProps) {
           );
         } else {
           dispatch(setUser(r.data));
-          return router.back();
+          reset();
+          router.back();
         }
+        dispatch(disableLoading());
       });
     }
   };
 
   return (
     <div className='space-y-6'>
-      <form action={loginFun} className='space-y-6'>
+      <LoadingSpinner isLoading={isLoading} />
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className={`space-y-6 ${isLoading && "hidden"}`}>
         <div>
           <label
             htmlFor='email'
@@ -53,7 +83,7 @@ export function LoginContent({ lang, trans }: LoginProps) {
           <div className='mt-2'>
             <input
               id='email'
-              name='email'
+              {...register("name")}
               type='email'
               autoComplete='email'
               required
@@ -71,7 +101,7 @@ export function LoginContent({ lang, trans }: LoginProps) {
           <div className='mt-2'>
             <input
               id='password'
-              name='password'
+              {...register("name")}
               type='password'
               autoComplete='current-password'
               required

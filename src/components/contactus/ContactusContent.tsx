@@ -15,6 +15,7 @@ import { apiUrl } from "@/src/constants";
 import { contactusSchema } from "@/src/validations";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { first } from "lodash";
 
 type Props = {
   lang: Locale["lang"];
@@ -61,7 +62,9 @@ export default function ({ lang }: Props) {
         if (r && r.data && r.data.message) {
           dispatch(showSuccessToastMessage({ content: r.data.message }));
         } else if (r && r.error && r.error.data) {
-          dispatch(showErrorToastMessage({ content: r.error.data.message }));
+          dispatch(
+            showErrorToastMessage({ content: `${first(r.error.data.message)}` })
+          );
         }
       })
       .then(() => {
