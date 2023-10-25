@@ -1,4 +1,4 @@
-import { MainContextLayout } from "@/components/MainContentLayout";
+import { MainContextLayout } from "@/layouts/MainContentLayout";
 import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
 import Link from "next/link";
@@ -18,11 +18,13 @@ type Props = {
   searchParams: { [key: string]: string };
 };
 export default async function ({ params: { lang, id }, searchParams }: Props) {
-  const [{ trans }, membership, country, setting] = await Promise.all([
+  const [{ trans }, membership, country, dollarCountry, setting, user] = await Promise.all([
     getDictionary(lang),
     getMembership(id, lang),
     getCountries(`lang=${lang}&limit=1`, lang),
+    getCountries(`lang=en&limit=1`, lang),
     getSetting(lang),
+    getUser("3", lang),
   ]);
 
   return (
@@ -31,10 +33,13 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
       lang={lang}
       searchParams={``}
       setting={setting}>
-      <h1>subscriptions</h1>
-      <div className='isolate mx-auto mt-10 grid max-w-md grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3'>
-        <CartContent membership={membership} country={country[0]} lang={lang} />
-      </div>
+      <CartContent
+        membership={membership}
+        country={country[0]}
+        lang={lang}
+        user={user}
+        dollarCountry={dollarCountry[0]}
+      />
     </MainContextLayout>
   );
 }

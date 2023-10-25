@@ -9,11 +9,11 @@ type Props = {
 };
 export default async function ({ element, lang }: Props) {
   return (
-    <li>
+    <li className='transform transition duration-500 hover:scale-110'>
       <Link
         href={`/${lang}/user?category_id=${element.id}&membership=subscription`}>
         <Image
-          className='aspect-[3/2] w-full rounded-2xl object-cover hover:scale-105 duration-200 shadow-lg'
+          className='aspect-[3/2] w-full rounded-2xl object-cover  shadow-lg '
           src={element.imageLarge}
           width={100}
           height={100}

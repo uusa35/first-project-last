@@ -5,7 +5,7 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { Locale } from "@/types/index";
 import { changePathName, convertSearchParamsToString } from "@/utils/helpers";
 import { usePathname } from "next/navigation";
-import { MainContext } from "../MainContentLayout";
+import { MainContext } from "@/layouts/MainContentLayout";
 import Link from "next/link";
 
 type Props = {

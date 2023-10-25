@@ -11,14 +11,14 @@ import {
 import Link from "next/link";
 import { Suspense } from "react";
 
-export default function ({ setting }: any) {
+export default function ({ setting, color = "text-gray-400" }: any) {
   return (
     <Suspense>
-      <div className='mt-10 flex justify-center gap-x-10'>
+      <div className='flex flex-wrap justify-center gap-6'>
         {setting.facebook && (
           <Link
             href={setting.facebook}
-            className='text-gray-400 hover:text-gray-500'>
+            className={`${color} hover:text-gray-500`}>
             <span className='sr-only'>facebook</span>
             <Facebook className='w-6 h-auto' />
           </Link>
@@ -26,7 +26,7 @@ export default function ({ setting }: any) {
         {setting.twitter && (
           <Link
             href={setting.twitter}
-            className='text-gray-400 hover:text-gray-500'>
+            className={`${color} hover:text-gray-500`}>
             <span className='sr-only'>twitter</span>
             <Twitter className='w-6 h-auto' />
           </Link>
@@ -34,7 +34,7 @@ export default function ({ setting }: any) {
         {setting.youtube && (
           <Link
             href={setting.youtube}
-            className='text-gray-400 hover:text-gray-500'>
+            className={`${color} hover:text-gray-500`}>
             <span className='sr-only'>linked</span>
             <YouTube className='w-6 h-auto' />
           </Link>
@@ -42,7 +42,7 @@ export default function ({ setting }: any) {
         {setting.instagram && (
           <Link
             href={setting.instagram}
-            className='text-gray-400 hover:text-gray-500'>
+            className={`${color} hover:text-gray-500`}>
             <span className='sr-only'>linked</span>
             <Instagram className='w-6 h-auto' />
           </Link>
@@ -50,7 +50,7 @@ export default function ({ setting }: any) {
         {setting.linked && (
           <Link
             href={setting.linked}
-            className='text-gray-400 hover:text-gray-500'>
+            className={`${color} hover:text-gray-500`}>
             <span className='sr-only'>linked</span>
             <LinkedIn className='w-6 h-auto' />
           </Link>
@@ -58,7 +58,7 @@ export default function ({ setting }: any) {
         {setting.whatsapp && (
           <Link
             href={`${whatsappUrl(setting.whatsapp)}`}
-            className='text-gray-400 hover:text-gray-500'>
+            className={`${color} hover:text-gray-500`}>
             <span className='sr-only'>whatsapp</span>
             <WhatsApp className='w-6 h-auto' />
           </Link>

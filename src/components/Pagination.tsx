@@ -1,7 +1,7 @@
 "use client";
 import { has, isEmpty, isNull, map } from "lodash";
 import Link from "next/link";
-import { MainContext } from "./MainContentLayout";
+import { MainContext } from "@/layouts/MainContentLayout";
 import { useContext } from "react";
 
 type Props = {
@@ -35,7 +35,8 @@ export default function ({ links }: Props): React.ReactNode {
                     : link.label}
                 </div>
               ) : (
-                <Link
+                  <Link
+                    scroll={false}
                   key={i}
                   className={getClassName(link.active)}
                   href={link.url}>

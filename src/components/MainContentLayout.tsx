@@ -2,20 +2,13 @@
 import { FC, createContext } from "react";
 import NavHeader from "./header/NavHeader";
 import { Locale } from "@/types/index";
-import {
-  ThemeProvider,
-  Button,
-  Carousel,
-  Typography,
-} from "@material-tailwind/react";
 import AppFooter from "./footer/AppFooter";
 import { usePathname } from "next/navigation";
 import { Setting } from "@/types/queries";
-export { Button, Carousel, Typography };
 
 type Props = {
   children: React.ReactNode;
-  trans: { [key: string]: string };
+  trans: { [key: string]: string } | any;
   lang: Locale["lang"];
   searchParams: { [key: string]: string } | string;
   setting: Setting;
@@ -48,24 +41,22 @@ const MainContextLayout: FC<Props> = ({
   ];
   return (
     <MainContext.Provider value={trans}>
-      <ThemeProvider>
-        {/* nav & slider */}
-        <NavHeader
-          lang={lang}
-          searchParams={searchParams}
+      {/* nav & slider */}
+      <NavHeader
+        lang={lang}
+        searchParams={searchParams}
+        mainPages={navigation}
+        setting={setting}
+      />
+      <div>{children}</div>
+      {!pathName?.includes("login") && !pathName?.includes("register") && (
+        <AppFooter
           mainPages={navigation}
+          lang={lang}
+          trans={trans}
           setting={setting}
         />
-        <div>{children}</div>
-        {!pathName?.includes("login") && !pathName?.includes("register") && (
-          <AppFooter
-            mainPages={navigation}
-            lang={lang}
-            trans={trans}
-            setting={setting}
-          />
-        )}
-      </ThemeProvider>
+      )}
     </MainContext.Provider>
   );
 };

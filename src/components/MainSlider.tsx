@@ -14,7 +14,6 @@ type Props = {
   lang: Locale["lang"];
 };
 export default async function ({ slides, lang }: Props) {
-//  console.log({slides}) 
   return (
     <Swiper
       modules={[Navigation, Pagination, Scrollbar, A11y]}
@@ -35,10 +34,14 @@ export default async function ({ slides, lang }: Props) {
             alt={`${process.env.NEXT_PUBLIC_BASE_URL}`}
             className='h-full w-full object-cover'
           />
-          <div className='absolute -bottom-20  lg:-bottom-40 lg:rtl:right-20 lg:ltr:left-20  grid h-full w-full items-center'>
-            <div className='w-3/4 ps-12 md:w-2/4 md:ps-20 lg:ps-32'>
-              <div>{s.name}</div>
-              <div>{s.description}</div>
+          <div className='relative '>
+            <div className='bg-white/30 p-4 w-auto md:w-1/3 rounded-md absolute mx-6 xl:mx-24 inset-x-0 bottom-4 sm:bottom-12 xl:bottom-20 '>
+              <h1 className='rtl:text-right ltr:text-left text-md lg:text-2xl xl:text-4xl'>
+                {s.name}
+              </h1>
+              <h4 className='rtl:text-right ltr:text-left text-sm lg:text-xl xl:text-2xl mt-1 lg:mt-6'>
+                {s.description}
+              </h4>
             </div>
           </div>
         </SwiperSlide>

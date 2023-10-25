@@ -4,7 +4,7 @@ import type { Locale } from "@/i18n.config";
 import { useContext, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Bars3Icon, UserIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { MainContext } from "../MainContentLayout";
+import { MainContext } from "@/layouts/MainContentLayout";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
@@ -19,7 +19,10 @@ import { last, split, toString } from "lodash";
 import { setCurrentPath } from "@/redux/slices/settingSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { Setting } from "@/types/queries";
-import LanguagesList from "./LanguagesList";
+import LanguagesList from "@/components/header/LanguagesList";
+import moment from "moment";
+
+import { setLocale } from "@/redux/slices/localeSlice";
 
 type Props = {
   lang: Locale;
@@ -36,7 +39,10 @@ export default function ({
 }: Props) {
   const trans: { [key: string]: string } = useContext(MainContext);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { currentPath } = useAppSelector((state) => state.appSetting);
+  const {
+    appSetting: { currentPath },
+    locale,
+  } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
   const params = useParams();
   const pathName = usePathname()!;
@@ -113,10 +119,10 @@ export default function ({
           href='/'>
           Home
         </ActiveLink> */}
-        <div className='hidden lg:flex lg:flex-1 lg:justify-end items-center gap-x-4 capitalize'>
+        <div className='hidden lg:flex lg:flex-1 lg:justify-end items-center capitalize'>
           <Link
             href={`/${lang}/register/visitor`}
-            className='text-sm font-semibold leading-6 text-white p-2 px-4 btn-color-default '>
+            className='text-sm font-semibold leading-6 text-white p-2 px-4 btn-color-default me-4 '>
             {trans.visitors}
           </Link>
 
@@ -158,6 +164,7 @@ export default function ({
         </div>
         <div className='hidden  lg:flex lg:flex-1 lg:justify-end gap-x-4'>
           <Link
+            replace
             href={`/${lang}/login`}
             className='text-sm font-semibold text-expo-dark flex flex-row w-30 justify-center items-center '>
             <UserIcon className='w-8 me-2' />
