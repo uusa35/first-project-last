@@ -7,7 +7,7 @@ import { getSetting } from "@/utils/setting";
 import { map } from "lodash";
 import Link from "next/link";
 import Image from "next/image";
-import { User } from "@/types/queries";
+import { AppQueryResult, Setting, User } from "@/types/queries";
 import LoginImage from "@/appImages/login/section.jpg";
 import SearchBar from "@/components/user/SearchBar";
 import Pagination from "@/components/Pagination";
@@ -25,7 +25,11 @@ export default async function UserIndex({
   params: { lang },
   searchParams,
 }: Props) {
-  const [{ trans }, users, setting] = await Promise.all([
+  const [{ trans }, users, setting]: [
+    { trans: any },
+    AppQueryResult<User[]>,
+    Setting
+  ] = await Promise.all([
     getDictionary(lang),
     getUsers(convertSearchParamsToString(searchParams) ?? ``, lang),
     getSetting(lang),
@@ -82,7 +86,7 @@ export default async function UserIndex({
           />
         </div>
         {users.data.length > 0 ? (
-          <SearchBar trans={trans} />
+          <SearchBar  />
         ) : (
           <div className='text-center text-2xl py-20 capitalize'>
             No Result Component here

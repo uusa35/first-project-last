@@ -132,18 +132,18 @@ export default function ({
           {isAuth ? (
             <MyProfileList lang={lang} />
           ) : (
-            <>
+            <div className='flex flex-row  gap-x-4'>
               <Link
                 href={appLinks.register(lang, "company")}
-                className='text-sm font-semibold leading-6 text-white p-2 px-4 btn-color-default '>
+                className='text-sm font-semibold leading-6 w-28 text-center text-white p-2  btn-color-default '>
                 {trans.subscriptions}
               </Link>
               <Link
                 href={appLinks.register(lang, "visitor")}
-                className='text-sm font-semibold leading-6 text-white p-2 px-4 btn-color-default me-4 '>
+                className='text-sm font-semibold leading-6 w-28 text-center text-white p-2  btn-color-default '>
                 {trans.visitors}
               </Link>
-            </>
+            </div>
           )}
         </div>
       </nav>

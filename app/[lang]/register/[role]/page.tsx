@@ -26,9 +26,9 @@ export default async function ({
       searchParams={``}
       setting={setting}>
       <div className='flex flex-1 mx-auto max-w-7xl min-h-screen'>
-        <div className='flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24'>
-          <div className='mx-auto w-full  max-w-sm lg:w-96 '>
-            <div>
+        <div className='flex flex-1 flex-col justify-start px-4 py-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24'>
+          <div className='mx-auto w-full  max-w-sm  lg:w-96  '>
+            <div className='flex flex-col justify-center'>
               <Image
                 width={200}
                 height={200}
@@ -43,7 +43,7 @@ export default async function ({
                 {trans.Welcome_Register_now_and_join_us}
               </p>
             </div>
-            <RegisterContent trans={trans} lang={lang} role={role} />
+            <RegisterContent  role={role} />
           </div>
         </div>
         <div className='relative hidden w-0 flex-1 lg:block'>

@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: Props) {
   };
 }
 export default async function ({ params: { lang } }: Props) {
-  const [{ trans }, setting] = await Promise.all([
+  const [{ trans }, setting] : [{ trans : any}, Setting] = await Promise.all([
     getDictionary(lang),
     getSetting(lang),
   ]);

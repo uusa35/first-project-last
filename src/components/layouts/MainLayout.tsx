@@ -18,8 +18,6 @@ const MainLayout: FC<Props> = ({ lang, children }): React.ReactNode => {
   const { locale } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
 
-  
-
   return (
     <div className={`w-full`}>
       {children}
@@ -28,7 +26,7 @@ const MainLayout: FC<Props> = ({ lang, children }): React.ReactNode => {
         bodyClassName={() =>
           "flex flex-1 flex-row font-expo-medium items-center"
         }
-        toastClassName={`font-expo-medium`}
+        toastClassName={`font-expo-medium opacity-90`}
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={true}

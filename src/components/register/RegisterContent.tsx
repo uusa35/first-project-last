@@ -1,23 +1,27 @@
 "use client";
+import { MainContext } from "@/layouts/MainContentLayout";
 import { useRegisterVisitorMutation } from "@/redux/api/authApi";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import {
   showErrorToastMessage,
   showSuccessToastMessage,
 } from "@/redux/slices/toastMessageSlice";
 import { appLinks, setToken } from "@/src/constants";
 import { Locale } from "@/types/index";
+import { Role } from "@/types/queries";
 import { first } from "lodash";
 import Link from "next/link";
-import * as React from "react";
+import { useContext } from "react";
 
-type RegisterProps = {
-  lang: Locale["lang"];
-  trans: { [key: string]: string };
-  role: "company" | "visitor";
+type Props = {
+  role: Role["name"];
 };
 
-export function RegisterContent({ lang, trans, role }: RegisterProps) {
+export function RegisterContent({ role }: Props) {
+  const trans: { [key: string]: string } = useContext(MainContext);
+  const {
+    locale: { lang },
+  } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
   const [triggerRegisterVisitorQuery, { data, isSuccess, error }] =
     useRegisterVisitorMutation();

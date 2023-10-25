@@ -14,7 +14,7 @@ const initialState: Auth = {
   email: ``,
   image: ``,
   hasValidDeal: false,
-  role: { id: ``, name: 'vistor' },
+  role: { id: ``, name: 'visitor' },
   deals: [],
   api_token: undefined,
 
