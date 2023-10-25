@@ -51,6 +51,7 @@ export type Setting = {
     services: string;
     address: string;
     country: string;
+    caption: string;
     facebook?: string;
     instagram?: string;
     twitter?: string;
@@ -93,7 +94,24 @@ export type Auth = {
     caption: string;
     email: string;
     image: string;
-    api_token: string | null;
+    hasValidDeal: false;
+    api_token: string | undefined;
+    role: Role,
+    deals: Deal[];
+    [key: string]: any;
+}
+export type Role = {
+    id: string;
+    name: 'visitor' | 'company';
+}
+
+export type Deal = {
+    id: number;
+    order_id: number;
+    user_id: number;
+    membership_id: number;
+    active: number;
+    order: Order
 }
 export type Membership = {
     id: number;
@@ -113,7 +131,7 @@ export type PaymentFields = {
     transactionId: string;
     merchantId: string;
     amount: number | string;
-    currenyCode: '682' | '840' | '643';
+    currencyCode: '682' | '840' | '643';
     redirectUrl: string;
     queryString: string | null;
     paymentUrl: string;
@@ -131,5 +149,6 @@ export type Order = {
     user_id?: string | number;
     created_at?: string;
     user?: Auth;
+    membership: Membership;
     [key: string]: any;
 }

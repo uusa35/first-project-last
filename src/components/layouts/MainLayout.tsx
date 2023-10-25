@@ -7,39 +7,16 @@ import * as yup from "yup";
 import type { Locale } from "@/i18n.config";
 import { Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+// import { ErrorBoundary } from "react-error-boundary";
 
 type Props = {
   children: ReactNode | undefined;
   lang: Locale;
 };
 
-type Handler = (...evts: any[]) => void;
-
 const MainLayout: FC<Props> = ({ lang, children }): React.ReactNode => {
   const { locale } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    if (lang !== locale.lang) {
-      dispatch(setLocale(lang));
-      moment.locale(lang);
-      yup.setLocale({
-        mixed: {
-          required: "validation.required",
-        },
-        number: {
-          min: ({ min }) => ({ key: "validation.min", values: { min } }),
-          max: ({ max }) => ({ key: "validation.max", values: { max } }),
-        },
-        string: {
-          email: "validation.email",
-          min: ({ min }) => ({ key: `validation.min`, values: min }),
-          max: ({ max }) => ({ key: "validation.max", values: max }),
-          matches: "validation.matches",
-        },
-      });
-    }
-  }, [lang]);
 
   return (
     <div className={`w-full`}>
@@ -47,8 +24,9 @@ const MainLayout: FC<Props> = ({ lang, children }): React.ReactNode => {
       <ToastContainer
         position={locale.isRTL ? "top-left" : "top-right"}
         bodyClassName={() =>
-          "flex flex-1 flex-row font-tajwal-medium items-center"
+          "flex flex-1 flex-row font-expo-medium items-center"
         }
+        toastClassName={`font-expo-medium opacity-90`}
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={true}

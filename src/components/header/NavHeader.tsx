@@ -4,7 +4,7 @@ import type { Locale } from "@/i18n.config";
 import { useContext, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Bars3Icon, UserIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { MainContext } from "../MainContentLayout";
+import { MainContext } from "@/layouts/MainContentLayout";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
@@ -19,7 +19,10 @@ import { last, split, toString } from "lodash";
 import { setCurrentPath } from "@/redux/slices/settingSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { Setting } from "@/types/queries";
-import LanguagesList from "./LanguagesList";
+import LanguagesList from "@/components/header/LanguagesList";
+import { isAuthenticated, resetAuth } from "@/redux/slices/authSlice";
+import { appLinks, deleteToken } from "@/src/constants";
+import MyProfileList from "./MyProfileList";
 
 type Props = {
   lang: Locale;
@@ -36,7 +39,12 @@ export default function ({
 }: Props) {
   const trans: { [key: string]: string } = useContext(MainContext);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { currentPath } = useAppSelector((state) => state.appSetting);
+  const {
+    appSetting: { currentPath },
+    locale,
+    auth,
+  } = useAppSelector((state) => state);
+  const isAuth = useAppSelector(isAuthenticated);
   const dispatch = useAppDispatch();
   const params = useParams();
   const pathName = usePathname()!;
@@ -51,6 +59,12 @@ export default function ({
       window.removeEventListener("scroll", stickNavbar);
     };
   }, []);
+
+  const handleLogout = () => {
+    dispatch(resetAuth());
+    deleteToken();
+    router.replace(appLinks.home(lang));
+  };
 
   const stickNavbar = () => {
     if (window !== undefined) {
@@ -83,6 +97,7 @@ export default function ({
       }
     }
   }, [pathName]);
+
   return (
     <header
       className={` top-0 z-50 mx-auto max-w-7xl lg:py-4 px-2  ${stickyClass}`}>
@@ -113,18 +128,23 @@ export default function ({
           href='/'>
           Home
         </ActiveLink> */}
-        <div className='hidden lg:flex lg:flex-1 lg:justify-end items-center gap-x-4 capitalize'>
-          <Link
-            href={`/${lang}/register/visitor`}
-            className='text-sm font-semibold leading-6 text-white p-2 px-4 btn-color-default '>
-            {trans.visitors}
-          </Link>
-
-          <Link
-            href={`/${lang}/register/company`}
-            className='text-sm font-semibold leading-6 text-white p-2 px-4 btn-color-default '>
-            {trans.subscriptions}
-          </Link>
+        <div className='hidden lg:flex lg:flex-1 lg:justify-end items-center capitalize'>
+          {isAuth ? (
+            <MyProfileList lang={lang} />
+          ) : (
+            <div className='flex flex-row  gap-x-4'>
+              <Link
+                href={appLinks.register(lang, "company")}
+                className='text-sm font-semibold leading-6 w-28 text-center text-white p-2  btn-color-default '>
+                {trans.subscriptions}
+              </Link>
+              <Link
+                href={appLinks.register(lang, "visitor")}
+                className='text-sm font-semibold leading-6 w-28 text-center text-white p-2  btn-color-default '>
+                {trans.visitors}
+              </Link>
+            </div>
+          )}
         </div>
       </nav>
       <nav
@@ -156,13 +176,16 @@ export default function ({
             </Link>
           ))}
         </div>
-        <div className='hidden  lg:flex lg:flex-1 lg:justify-end gap-x-4'>
-          <Link
-            href={`/${lang}/login`}
-            className='text-sm font-semibold text-expo-dark flex flex-row w-30 justify-center items-center '>
-            <UserIcon className='w-8 me-2' />
-            <span className='flex w-full pt-1'>{trans.login}</span>
-          </Link>
+        <div className='hidden lg:flex lg:flex-1 lg:justify-end gap-x-4'>
+          {!isAuth && (
+            <Link
+              replace
+              href={`/${lang}/login`}
+              className='text-sm font-semibold text-expo-dark flex flex-row w-30 justify-center items-center '>
+              <UserIcon className='w-8 me-2' />
+              <span className='flex w-full pt-1'>{trans.login}</span>
+            </Link>
+          )}
         </div>
       </nav>
       <Dialog
@@ -197,12 +220,47 @@ export default function ({
                   </Link>
                 ))}
               </div>
-              <div className='py-6 capitalize'>
-                <Link
-                  href={`/${lang}/login`}
-                  className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'>
-                  {trans.login}
-                </Link>
+              <div className='py-6 capitalize flex flex-1 flex-col'>
+                {!isAuth ? (
+                  <div className='flex flex-col'>
+                    <Link
+                      href={`/${lang}/login`}
+                      className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'>
+                      {trans.login}
+                    </Link>
+                    <Link
+                      href={appLinks.register(lang, "company")}
+                      className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'>
+                      {trans.register_as_subscription}
+                    </Link>
+                    <Link
+                      href={appLinks.register(lang, "visitor")}
+                      className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'>
+                      {trans.register_as_visitor}
+                    </Link>
+                  </div>
+                ) : (
+                  <div className='p-3 ring ring-gray-50'>
+                    <div className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 '>
+                      {trans.welcome}, {auth.username}
+                    </div>
+                    <Link
+                      className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'
+                      href={appLinks.account(lang, auth.role.name, auth.id)}>
+                      {trans.control_account_information}
+                    </Link>
+                    <Link
+                      className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'
+                      href={appLinks.home(lang)}>
+                      {trans.back_to_home}
+                    </Link>
+                    <button
+                      className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'
+                      onClick={() => handleLogout()}>
+                      {trans.logout}
+                    </button>
+                  </div>
+                )}
                 <div className='flex flex-row justify-between items-center py-4 lg:py-0 px-8 ps-12'>
                   <Link
                     href={`${changePathName(

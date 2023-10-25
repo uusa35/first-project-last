@@ -3,14 +3,12 @@ import { NextResponse } from 'next/server'
 
 export async function getSlides(search: string, lang: Locale['lang']) {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}slide?${search}`, {
-        next: { revalidate: 180 },
-        // cache: "no-store",
+        next: { revalidate: 60 },
         headers: {
-            'Accept-Language': lang
-        }
+            'Accept-Language': lang,
+        },
+
     });
-    if (!res.ok) {
-        throw new Error("Failed to fetch data");
-    }
+    if (!res.ok) return undefined
     return res.json()
 }

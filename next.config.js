@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
+  // experimental: {
+  //   serverActions : true
+  // },
   reactStrictMode: true,
   experimental: {
     serverActions: true,
@@ -16,12 +19,15 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: "/home",
-        destination: "/",
+        source: "/:lang/home",
+        destination: "/:lang",
       },
     ];
   },
   async redirects() {
+    return [];
+  },
+  async headers() {
     return [];
   },
   env: {

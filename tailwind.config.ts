@@ -1,21 +1,28 @@
 import type { Config } from 'tailwindcss'
-const withMT = require("@material-tailwind/react/utils/withMT");
 
 const config: Config = {
   content: [
     './src/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
-    "node_modules/@material-tailwind/react/components/**/*.{js,ts,jsx,tsx}",
-    "node_modules/@material-tailwind/react/theme/components/**/*.{js,ts,jsx,tsx}",
+
   ],
   theme: {
     extend: {
+      keyframes: {
+        wiggle: {
+          '0%, 100%': { transform: 'rotate(-3deg)' },
+          '50%': { transform: 'rotate(3deg)' },
+        }
+      },
       animation: {
         wiggle: 'wiggle 1s ease-in-out infinite',
+        spin: 'spin 1s linear infinite',
+
       },
       colors: {
         "expo-dark": "#006838",
         "expo-light": "#E6F0EB",
+        "expo-medium": "#80B49C",
         "expo-green": "#E6F0EB"
       },
       backgroundImage: {
@@ -28,6 +35,9 @@ const config: Config = {
       },
       fontFamily: {
         'Expo-Medium': ['Expo-Medium', 'sans-serif'],
+      },
+      lineHeight: {
+        'extra-loose': '2.5',
       }
     },
     screens: {
@@ -47,4 +57,4 @@ const config: Config = {
     require("tailwindcss-dir")(),
   ],
 }
-export default withMT(config);
+export default config;

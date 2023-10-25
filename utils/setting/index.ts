@@ -4,15 +4,12 @@ import { NextResponse } from 'next/server'
 export async function getSetting(lang: Locale['lang']) {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}setting`, {
         // cache: "no-store",
-        next: { revalidate: 180 },
+        next: { revalidate: 60 },
         headers: {
             'Accept-Language': lang
         }
     });
-    if (!res.ok) {
-        console.log('res ===>', res);
-        throw new Error("Failed to fetch data");
-    }
+    if (!res.ok) return undefined
     return res.json()
 }
 
@@ -26,8 +23,6 @@ export async function getLightSetting(lang: Locale['lang']) {
             'Accept-Language': lang
         }
     });
-    if (!res.ok) {
-        throw new Error("Failed to fetch data");
-    }
+    if (!res.ok) return undefined
     return res.json()
 }

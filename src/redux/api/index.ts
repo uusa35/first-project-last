@@ -61,7 +61,22 @@ export const apiSlice = createApi({
         }
       }),
     }),
+    sendContactus: builder.query<
+      Setting,
+      { lang?: Locale['lang'] | string | undefined; body: any }
+    >({
+      query: ({ lang, body }) => ({
+        url: `send/contactus`,
+        method: 'POST',
+        body,
+        headers: {
+          ...(!isUndefined(lang) && lang && { 'Accept-Language': lang }),
+        },
+        // validateStatus: (response, result) =>
+        //   response.status == 200,
+      }),
+    }),
   }),
 });
 
-export const { useGetSettingQuery } = apiSlice;
+export const { useGetSettingQuery, useLazySendContactusQuery } = apiSlice;

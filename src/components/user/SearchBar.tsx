@@ -1,5 +1,5 @@
 "use client";
-import { Fragment, useState } from "react";
+import { Fragment, useContext, useState } from "react";
 import {
   Dialog,
   Disclosure,
@@ -10,7 +10,7 @@ import {
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { Locale } from "@/types/index";
-import { stringify } from "querystring";
+import { MainContext } from "@/layouts/MainContentLayout";
 
 const sortOptions = [
   { name: "Most Popular", href: "#" },
@@ -60,13 +60,10 @@ function classNames(...classes: [any]) {
   return classes.filter(Boolean).join(" ");
 }
 
-type Props = {
-  trans: any;
-  cats: any;
-};
-export default function ({ trans, cats }: Props) {
+export default function () {
   const [open, setOpen] = useState(false);
-  // console.log({ cats, params });
+  const trans: { [key: string]: string } = useContext(MainContext);
+
   return (
     <div className="bg-gray-50 px-4 capitalize">
       {/* Mobile filter dialog */}

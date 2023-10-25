@@ -1,5 +1,5 @@
 'use client';
-import { kebabCase, truncate } from 'lodash';
+import { kebabCase, round, truncate } from 'lodash';
 import { localeType } from '@/types/index';
 import { Locale } from '@/types/index';
 export const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}`;
@@ -9,10 +9,8 @@ export const imageUrl = `https://loremflickr.com/`;
 export const isLocal = process.env.NODE_ENV !== 'production';
 export const suppressText = true;
 import { PersonOutlineOutlined } from "@mui/icons-material";
-import { Country } from './types/queries';
-import { number } from 'yup';
-import { Carousel, Typography, Button } from "@material-tailwind/react";
-export { PersonOutlineOutlined, truncate , Carousel, Typography, Button};
+import { Country, Role } from './types/queries';
+export { PersonOutlineOutlined, truncate };
 
 
 export const appLinks = {
@@ -27,10 +25,12 @@ export const appLinks = {
     postIndex: (lang: Locale['lang'], search?: string) =>
         `/${lang}/post?${search ?? ''}`,
     postShow: (lang: Locale['lang'], id: string, slug?: string) => `/${lang}/post/${id}?slug=${kebabCase(slug) ?? ``}`,
-    login:(lang: Locale['lang']) =>
-    `/${lang}/login`,
-    register:(lang: Locale['lang'],role:"visitor"|"company") =>
-    `/${lang}/register/${role}`,
+    login: (lang: Locale['lang']) =>
+        `/${lang}/login`,
+    register: (lang: Locale['lang'], role: Role['name']) =>
+        `/${lang}/register/${role}`,
+    account: (lang: Locale['lang'], role: Role['name'], id: string, active_tab?: string) =>
+        `/${lang}/account/${role}/${id}?active_tab=${active_tab ?? 1}`,
 }
 
 // export const convertSearchParamsToString = (search: { [key: string]: string }): string => Object.keys(search)
@@ -95,5 +95,5 @@ data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAE6CAMAAACbLJ/BAAAABGdBTUEAAL
 `
 
 export const whatsappUrl = (phone: string) => `https://api.whatsapp.com/send?phone=${phone}`;
-export const getPrice: (element: number, country: Country) => number = (element, country) => (element * country.exchange_rate);
+export const getPrice: (element: number, country: Country) => number = (element, country) => (round(element * country.exchange_rate));
 

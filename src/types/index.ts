@@ -16,4 +16,6 @@ export type toastMessage = {
     showToast: boolean;
 }
 
+export type TranslationType = { [key: string]: string };
+
 export type localeType = Locale | string | string[];

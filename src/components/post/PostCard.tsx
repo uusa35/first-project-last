@@ -1,5 +1,6 @@
 import { Locale } from "@/types/index";
 import { Category, Post } from "@/types/queries";
+import { ArrowUpRightIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -11,7 +12,7 @@ export default async function ({ element, lang }: Props) {
   return (
     <Link
       href={`/${lang}/post/${element.id}?slug=${element.name}`}
-      className='flex flex-col items-start justify-between'>
+      className='flex flex-col items-start justify-between transform transition duration-500 hover:scale-105'>
       <div className='relative w-full hover:opacity-80'>
         <Image
           width={400}
@@ -31,6 +32,7 @@ export default async function ({ element, lang }: Props) {
               {element.name}
             </h3>
           </div>
+
           <div className='flex-none text-xs text-expo-dark'>
             {element.created_at}
           </div>
@@ -41,18 +43,21 @@ export default async function ({ element, lang }: Props) {
         </p>
       </div>
       {/* post categories */}
-      <div className='flex flex-1 flex-col items-center justify-between text-xs'>
+      <div className='flex w-full flex-row items-center justify-between text-xs'>
         <dl className='flex flex-grow flex-col justify-between'>
-          <dd className='text-center grid grid-cols-3 justify-center items-center gap-1'>
-            {element.categories.map((u: Category, i: number) => (
+          <dd className='text-center grid grid-cols-2 justify-center items-center gap-1 pe-6'>
+            {element.categories.slice(0, 2).map((u: Category, i: number) => (
               <span
                 key={i}
-                className='truncate col-span-1 text-[12px] xl:text-[12px] inline-flex items-center rounded-full bg-expo-light hover:bg-expo-dark hover:text-white px-2 py-1 font-medium text-green-700 ring-1 ring-inset ring-green-600/20'>
-                {element.name.slice(0, 12)}..
+                className='truncate col-span-1 text-sm text-center rounded-full bg-expo-light hover:bg-expo-dark hover:text-white px-2 py-1 font-medium text-green-700 ring-1 ring-inset ring-green-600/20'>
+                {element.name}
               </span>
             ))}
           </dd>
         </dl>
+        <ArrowUpRightIcon
+          className={`w-6 h-6 ${lang === "ar" && "-rotate-90"} font-extrabold`}
+        />
       </div>
     </Link>
   );

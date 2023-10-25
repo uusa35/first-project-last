@@ -2,12 +2,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Locale } from '@/types/index';
 import { Country, Membership, Order, PaymentFields } from '@/types/queries';
 import { capitalize, random, round, toString } from 'lodash';
-import { sha256, sha224 } from "js-sha256";
-import { localeSlice } from './localeSlice';
+import { sha256 } from "js-sha256";
 import { getPrice } from '@/src/constants';
-import { Pending } from '@mui/icons-material';
 
-const initialState: { membership: Membership, payment: PaymentFields, order: Order } = {
+const initialState: { membership: Membership, payment: PaymentFields, order: Omit<Order, 'membership' | 'user'> } = {
   membership: {
     id: 0,
     name: ``,
@@ -24,8 +22,8 @@ const initialState: { membership: Membership, payment: PaymentFields, order: Ord
     transactionId: ``,
     merchantId: `RB0000002`,
     amount: 0,
-    currenyCode: '840',
-    redirectUrl: `https://dev.ar-expo.ru/order/`,
+    currencyCode: '840',
+    redirectUrl: `https://dev.ar-expo.ru/order/result/`,
     queryString: null,
     paymentUrl: `https://srstaging.stspayone.com/SmartRoutePaymentWeb/SRPayMsgHandler?`
   },
@@ -40,29 +38,30 @@ const initialState: { membership: Membership, payment: PaymentFields, order: Ord
   }
 
 };
-
+const transactionId = toString(random(9999, 99999));
 export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
     setMembership: (state, action: PayloadAction<{ membership: Membership, country: Country, lang: Locale['lang'] }>) => {
-      const transactionId = toString(random(999999, 9999999));
       const { lang, country, membership } = action.payload;
       const { merchantId, messageId, token } = state.payment;
-      const amountValues = country.lang === 'ar' ? '000' : (country.lang === 'ru') ? '000' : '00'; // now Price is already converted.
+      const amountValues = country.lang === 'ar' ? '00' : (country.lang === 'ru') ? '000' : '00'; // now Price is already converted.
       const finalPrice = membership.on_sale ? membership.sale_price : membership.price;
       const convertedPrice = round(getPrice(finalPrice, country));
       const amount = `${convertedPrice}${amountValues}`;
-      const currencyCode = country.lang === 'ar' ? '682' : (country.lang === 'ru') ? '643' : '840';
-      const redirectUrl = `https://dev.ar-expo.ru/${lang}/order/${transactionId}`;
+      const currencyCode = country.lang === 'ar' ? '682' : country.lang === 'ru' ? '643' : '840';
+      const redirectUrl = process.env.NODE_ENV === "production" ? `https://cp.ar-expo.ru/redirect/order?lang=${lang}` : `http://ar-expo-backend.test/redirect/order?lang=${lang}`;
       const toBeHashed = `${token}${amount}${currencyCode}${capitalize(
         lang
       )}${merchantId}${messageId}${redirectUrl}${transactionId}`;
       const hashed: string = sha256(toBeHashed);
+      console.log('tobehashed', toBeHashed);
+      console.log('hashed', hashed);
       return {
         membership: action.payload.membership,
         payment: {
-          ...state.payment,
+          ...initialState.payment,
           transactionId,
           amount,
           currencyCode,
@@ -74,9 +73,9 @@ export const cartSlice = createSlice({
         order: {
           paid: false,
           status: 'pending',
-          total: membership.price,
-          net_total: finalPrice,
-          discount: membership.on_sale ? membership.price - membership.sale_price : 0,
+          total: round(membership.price),
+          net_total: round(finalPrice),
+          discount: round(membership.on_sale ? membership.price - membership.sale_price : 0),
           membership_id: membership.id,
           reference_id: transactionId,
         }

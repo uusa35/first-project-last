@@ -1,20 +1,22 @@
+import { MainContext } from "@/layouts/MainContentLayout";
 import { Locale } from "@/types/index";
 import { Category, User } from "@/types/queries";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Link from "next/link";
+import { useContext } from "react";
 
 type Props = {
   element: User;
   lang: Locale["lang"];
-  trans: { [key: string]: string };
+  trans: any;
 };
 export default async function ({ element, lang, trans }: Props) {
   return (
-    <li className='col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow'>
+    <li className='col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow transform transition duration-500 hover:scale-110'>
       <Link
         href={`/${lang}/user/${element.id}?slug=${element.name}`}
-        className='flex flex-1 flex-col p-8'>
+        className='flex flex-1 flex-col p-4'>
         <Image
           className='mx-auto h-32 w-32 flex-shrink-0 rounded-full'
           src={element.image}
@@ -25,7 +27,7 @@ export default async function ({ element, lang, trans }: Props) {
         <h3 className='mt-6 text-sm font-medium text-gray-900'>
           {element.name}
         </h3>
-        <dl className='mt-1 flex flex-grow flex-col justify-between'>
+        <dl className='mt-4 flex flex-grow flex-col justify-between gap-y-4'>
           <dt className='sr-only'>{element.name}</dt>
           <dd className='text-sm text-gray-500'>{element.caption}</dd>
           <dt className='sr-only'>{element.caption}</dt>
@@ -33,8 +35,8 @@ export default async function ({ element, lang, trans }: Props) {
             {element.categories.map((u: Category, i: number) => (
               <span
                 key={i}
-                className='truncate col-span-1 text-[12px] xl:text-[12px] inline-flex items-center rounded-full bg-expo-light hover:bg-expo-dark hover:text-white px-2 py-1 font-medium text-green-700 ring-1 ring-inset ring-green-600/20'>
-                {element.name.slice(0, 12)}..
+                className='truncate col-span-1 text-sm text-center rounded-full bg-expo-light hover:bg-expo-dark hover:text-white px-2 py-1 font-medium text-green-700 ring-1 ring-inset ring-green-600/20'>
+                {element.name}
               </span>
             ))}
           </dd> */}

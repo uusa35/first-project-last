@@ -1,10 +1,11 @@
-import { MainContextLayout } from "@/components/MainContentLayout";
+import { MainContextLayout } from "@/layouts/MainContentLayout";
 import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
 import { getSetting } from "@/utils/setting";
 import { getPost } from "@/utils/post";
 import Image from "next/image";
 import DOMPurify from "isomorphic-dompurify";
+import { notFound } from "next/navigation";
 
 type Props = {
   params: { lang: Locale["lang"]; id: string };
@@ -18,8 +19,15 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
     getPost(id, lang),
   ]);
 
+  if ("status" in post && (post.status === 404 || post.status === 500))
+    notFound();
+
   return (
-    <MainContextLayout trans={trans} lang={lang} searchParams={``} setting={setting}>
+    <MainContextLayout
+      trans={trans}
+      lang={lang}
+      searchParams={``}
+      setting={setting}>
       <main className='relative isolate mx-auto max-w-7xl min-h-screen'>
         {/* Image section */}
         <div className='mt-8 sm:mt-8 xl:mx-auto xl:max-w-7xl xl:px-8'>
@@ -33,7 +41,7 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
             height={500}
             src={post.image}
             alt={post.name}
-            className='aspect-[9/4] w-full object-cover xl:rounded-3xl'
+            className='aspect-[9/4] w-full object-cover xl:rounded-xl'
           />
         </div>
         {/* Header section */}
@@ -53,6 +61,7 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
           <div className='flex flex-row mx-auto max-w-7xl lg:mx-0 lg:max-w-none'>
             <div className='grid max-w-7xl grid-cols-1 text-justified gap-8 text-base leading-8 text-gray-800'>
               <div
+                className='max-w-xs sm:max-w-xl md:max-w-full whitespace-pre-line text-ellipsis overflow-hidden'
                 dangerouslySetInnerHTML={{
                   __html: DOMPurify.sanitize(post.description),
                 }}></div>

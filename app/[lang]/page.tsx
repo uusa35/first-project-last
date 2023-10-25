@@ -1,6 +1,6 @@
 import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
-import { MainContextLayout } from "@/components/MainContentLayout";
+import { MainContextLayout } from "@/layouts/MainContentLayout";
 import { getSlides } from "@/utils/slide";
 import { getCategories } from "@/utils/category";
 import { getSetting } from "@/utils/setting";
@@ -20,8 +20,9 @@ import DOMPurify from "isomorphic-dompurify";
 import PostCard from "@/components/post/PostCard";
 import CategoryCard from "@/components/category/CategoryCard";
 import MembershipCard from "@/components/membership/MembershipCard";
-import { Spinner } from "@material-tailwind/react";
-import { Suspense } from "react";
+import NewsletterBg from "@/appImages/home/newsletter_bg.jpg";
+import DotPattern from "@/appImages/home/dot_pattern.png";
+import JoinusBg from "@/appImages/home/joinus.jpg";
 
 const tiers = [
   {
@@ -154,17 +155,16 @@ export default async function Home({ params: { lang } }: Props) {
       setting={setting}
     >
       {/* slider */}
-      {/* <MainSlider slides={slides} lang={lang} /> */}
+      <MainSlider slides={slides} lang={lang} />
       {/* search */}
-      <div className="bg-white py-12 sm:py-12">
-        <div className="mx-auto max-w-7xl">
-          <div className="relative isolate overflow-hidden  px-6 py-14 sm:rounded-3xl sm:px-24 xl:py-32">
-            <h2 className="mx-auto max-w-2xl text-center text-3xl font-bold tracking-tight text-black sm:text-4xl">
+      <div className='bg-white'>
+        <div className='mx-auto max-w-7xl'>
+          <div className='relative isolate overflow-hidden  px-6 sm:rounded-3xl sm:px-14 py-12 xl:py-14'>
+            <h2 className='text-3xl text-center font-bold tracking-tight text-gray-900 sm:text-4xl capitalize'>
               {trans.search}
             </h2>
-
-            <form className="mx-auto mt-10 flex max-w-2xl gap-x-4">
-              <label htmlFor="email-address" className="sr-only">
+            <form className='mx-auto mt-10 flex max-w-2xl gap-x-4'>
+              <label htmlFor='email-address' className='sr-only'>
                 Email address
               </label>
               <input
@@ -221,9 +221,9 @@ export default async function Home({ params: { lang } }: Props) {
       <div className="relative bg-expo-green capitalize">
         <div className="relative h-80 overflow-hidden bg-expo-green md:absolute md:left-0 md:h-full md:w-1/3 lg:w-1/2">
           <Image
-            className="h-full w-full object-cover"
-            src="https://images.unsplash.com/photo-1525130413817-d45c1d127c42?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1920&q=60&blend=6366F1&sat=-100&blend-mode=multiply"
-            alt=""
+            className='h-full w-full object-cover brightness-50  saturate-150 '
+            src={JoinusBg}
+            alt=''
             width={300}
             height={300}
           />
@@ -323,10 +323,17 @@ export default async function Home({ params: { lang } }: Props) {
       </div>
 
       {/* newsletter */}
-      <div className="bg-white py-12 sm:py-12 capitalize">
-        <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-          <div className="relative isolate overflow-hidden bg-green-900 px-6 py-24 shadow-2xl sm:rounded-3xl sm:px-24 xl:py-32">
-            <h2 className="mx-auto max-w-3xl line-clamp-2 text-center text-3xl font-bold tracking-tight text-white sm:text-4xl pb-4">
+      <div className=' py-12 sm:py-12 capitalize '>
+        <div className='mx-auto max-w-7xl sm:px-6 lg:px-8 bg-local'>
+          <div
+            className='bg-local  relative isolate overflow-hidden  px-6 py-24 shadow-2xl sm:rounded-3xl sm:px-24 xl:py-32'
+            style={{
+              backgroundImage: `url(${NewsletterBg.src})`,
+              backgroundPosition: "center",
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
+            }}>
+            <h2 className='mx-auto max-w-3xl line-clamp-2 text-center text-3xl font-bold tracking-tight text-white sm:text-4xl pb-4'>
               {trans.register_to_receive_latest_expo_news}
             </h2>
             <p className="mx-auto mt-2 max-w-xl  line-clamp-2 text-center text-lg leading-8 text-gray-300">
@@ -344,42 +351,15 @@ export default async function Home({ params: { lang } }: Props) {
                 type="email"
                 autoComplete="email"
                 required
-                className="min-w-0 flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-white sm:text-sm sm:leading-6"
+                className='min-w-0 flex-auto rounded-md border-0 bg-white/80 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-white sm:text-sm sm:leading-6'
                 placeholder={trans.enter_ur_email}
               />
               <button
-                type="submit"
-                className="flex-none rounded-md bg-expo-light px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-              >
+                type='submit'
+                className='flex-none rounded-md bg-expo-medium px-3.5 py-2.5 text-sm font-semibold text-white capitalize shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'>
                 {trans.notify_me}
               </button>
             </form>
-            <svg
-              viewBox="0 0 1024 1024"
-              className="absolute left-1/2 top-1/2 -z-10 h-[64rem] w-[64rem] -translate-x-1/2"
-              aria-hidden="true"
-            >
-              <circle
-                cx={512}
-                cy={512}
-                r={512}
-                fill="url(#759c1415-0410-454c-8f7c-9a820de03641)"
-                fillOpacity="0.7"
-              />
-              <defs>
-                <radialGradient
-                  id="759c1415-0410-454c-8f7c-9a820de03641"
-                  cx={0}
-                  cy={0}
-                  r={1}
-                  gradientUnits="userSpaceOnUse"
-                  gradientTransform="translate(512 512) rotate(90) scale(512)"
-                >
-                  <stop stopColor="#7775D6" />
-                  <stop offset={1} stopColor="#E935C1" stopOpacity={0} />
-                </radialGradient>
-              </defs>
-            </svg>
           </div>
         </div>
       </div>
