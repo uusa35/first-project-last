@@ -18,7 +18,7 @@ export default function ({ mainPages, lang, trans, setting }: Props) {
     <footer className='bg-white'>
       <div className='mx-auto max-w-7xl overflow-hidden px-6 py-12 sm:py-12 lg:px-8'>
         <nav
-          className='-mb-6 columns-2 sm:flex sm:justify-center sm:gap-x-12'
+          className='mb-4 columns-2 sm:flex sm:justify-center sm:gap-x-12'
           aria-label='Footer'>
           {mainPages.map((item, i: number) => (
             <div key={i} className='pb-6'>

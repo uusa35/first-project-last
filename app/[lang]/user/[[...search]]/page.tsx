@@ -78,7 +78,7 @@ export default async function UserIndex({
             height={500}
             src={UserIndexBanner}
             alt={setting.name}
-            className='aspect-[9/3] w-full object-cover lg:rounded-lg'
+            className='aspect-[9/3] w-full object-cover xl:rounded-lg'
           />
         </div>
         {users.data.length > 0 ? (

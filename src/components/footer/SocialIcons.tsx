@@ -14,7 +14,7 @@ import { Suspense } from "react";
 export default function ({ setting, color = "text-gray-400" }: any) {
   return (
     <Suspense>
-      <div className='mt-10 flex flex-wrap justify-center gap-6'>
+      <div className='flex flex-wrap justify-center gap-6'>
         {setting.facebook && (
           <Link
             href={setting.facebook}

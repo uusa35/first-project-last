@@ -44,8 +44,15 @@ export default async function ({ params: { lang } }: Props) {
       searchParams={``}
       setting={setting}>
       <div className='relative bg-white mx-auto max-w-7xl min-h-screen capitalize'>
-        <div className='lg:absolute lg:inset-0 lg:ltr:left-1/2 lg:rtl:right-1/2'>
-          <div className='absolute top-0 p-10 lg:p-16 text-white z-40 w-full'>
+        <div
+          className='h-full bg-local relative lg:absolute lg:inset-0 lg:ltr:left-1/2 lg:rtl:right-1/2'
+          style={{
+            backgroundImage: `url(${ContactusImage.src})`,
+            backgroundPosition: "center",
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+          }}>
+          <div className='h-full lg:absolute top-0 p-10 lg:p-16 text-white z-40 w-full'>
             <div className='flex flex-col justify-between items-center w-full h-full gap-y-4 lg:gap-y-48'>
               <div className='flex flex-col gap-y-6  w-full h-full'>
                 <div className='flex flex-row justify-between items-center'>
@@ -126,7 +133,7 @@ export default async function ({ params: { lang } }: Props) {
                     </a>
                   </div>
                 )}
-                <div className='flex flex-row justify-evenly items-center gap-x-4'>
+                <div className='flex flex-row justify-center lg:justify-evenly items-center gap-x-4'>
                   {/* android */}
                   {setting.android && (
                     <div className='flex flex-row justify-start gap-x-4 items-center'>
@@ -149,13 +156,6 @@ export default async function ({ params: { lang } }: Props) {
               </div>
             </div>
           </div>
-          <Image
-            width={1000}
-            height={1000}
-            className='h-64 w-full bg-gray-50 object-cover sm:h-80 lg:absolute lg:h-full'
-            src={ContactusImage}
-            alt={setting.name}
-          />
         </div>
         <div className='pb-24 pt-16 sm:pb-32 sm:pt-24 lg:mx-auto lg:grid lg:max-w-7xl lg:grid-cols-2 lg:pt-32 '>
           <div className='px-6 lg:px-8'>

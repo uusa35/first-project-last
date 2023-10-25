@@ -9,6 +9,8 @@ import DOMPurify from "isomorphic-dompurify";
 import { notFound } from "next/navigation";
 import UserIndexBanner from "@/appImages/user/banner.jpg";
 import SocialIcons from "@/components/footer/SocialIcons";
+import { Email, EmailOutlined, InsertLink } from "@mui/icons-material";
+import { GlobeAltIcon } from "@heroicons/react/24/outline";
 
 type Props = {
   params: { lang: Locale["lang"]; id: string };
@@ -35,7 +37,7 @@ export default async function UserShow({
       setting={setting}>
       <main className='relative isolate mx-auto max-w-7xl min-h-screen'>
         {/* Image section */}
-        <div className='mt-8 sm:mt-8 xl:mx-auto xl:max-w-7xl xl:px-8'>
+        <div className='mt-8 sm:mt-8 xl:mx-auto xl:max-w-7xl'>
           <div className='absolute left-5 sm:left-10 top-10'>
             <span
               className={` text-gray-800 bg-white/50 p-1 sm:p-4 rounded-md`}>
@@ -76,7 +78,7 @@ export default async function UserShow({
                 </h2>
                 <div className='mt-6 text-lg leading-8 text-gray-800 '>
                   <div
-                    className='max-w-xs sm:max-w-xl md:max-w-full whitespace-pre-line text-ellipsis overflow-hidden'
+                    className='max-w-xs sm:max-w-xl md:max-w-full  whitespace-pre-line text-ellipsis overflow-hidden'
                     dangerouslySetInnerHTML={{
                       __html: DOMPurify.sanitize(user.aboutus),
                     }}></div>
@@ -89,23 +91,60 @@ export default async function UserShow({
           <div className='px-6 py-12 lg:px-8 bg-gray-100 w-full h-auto'>
             <div className='grid grid-cols-1 gap-y-10 text-center ltr:lg:text-left rtl:lg:text-right lg:gap-y-0 lg:grid-cols-3'>
               <div className='flex flex-col gap-y-4 leading-8'>
-                <h1>{trans.contactus_information}</h1>
-                <p>
+                <h1 className={`text-2xl`}>{trans.contactus_information}</h1>
+                <p className='text-clamp-2 text-clip'>
                   {user.address} - {user.country.name}
                 </p>
               </div>
-              <div className='flex flex-col gap-y-4 leading-8'>
-                <h1>{trans.email}</h1>
-                <div>
-                  <a target='_blank' href={`mailto: ${user.email}`}>
-                    {user.email}
-                  </a>
+              {user.email && (
+                <div className='flex flex-col gap-y-4 leading-8'>
+                  <div className='flex flex-row justify-start items-center gap-x-3'>
+                    <div>
+                      <EmailOutlined />
+                    </div>
+                    <div>
+                      <h1>{trans.email}</h1>
+                    </div>
+                  </div>
+                  <div>
+                    <a target='_blank' href={`mailto: ${user.email}`}>
+                      {user.email}
+                    </a>
+                  </div>
                 </div>
-              </div>
-              <div className='flex flex-col gap-y-4 leading-8'>
-                <h1>{trans.contactus_information}</h1>
-                <div className='flex flex-wrap justify-center items-center lg:justify-start'>
-                  <SocialIcons setting={user} />
+              )}
+              <div className='flex flex-col gap-y-4 leading-8 '>
+                <div className='flex flex-col justify-between items-start gap-y-4'>
+                  {/* website */}
+                  {user.website && (
+                    <div className='flex flex-col gap-y-4'>
+                      <div className='flex flex-row justify-start items-center gap-x-3'>
+                        <div>
+                          <InsertLink />
+                        </div>
+                        <div>
+                          <h1>{trans.website}</h1>
+                        </div>
+                      </div>
+                      <div className='flex flex-wrap justify-center items-center lg:justify-start'>
+                        {user.website}
+                      </div>
+                    </div>
+                  )}
+                  {/* social */}
+                  <div className='flex flex-col gap-y-4'>
+                    <div className='flex flex-row justify-start items-center gap-x-3'>
+                      <div>
+                        <InsertLink />
+                      </div>
+                      <div>
+                        <h1>{trans.social_media_links}</h1>
+                      </div>
+                    </div>
+                    <div className='flex flex-wrap justify-center items-center lg:justify-start'>
+                      <SocialIcons setting={user} color='green' />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -113,13 +152,13 @@ export default async function UserShow({
 
           {user.description && (
             <div className='px-6 pt-12 lg:px-8'>
-              <div className='mx-auto max-w-2xl text-center '>
+              <div className='mx-auto  text-center '>
                 <h2 className=' capitalize text-xl font-bold tracking-tight text-black sm:text-4xl'>
                   {trans.description}
                 </h2>
                 <div className='mt-6 text-lg leading-8 text-gray-800'>
                   <div
-                    className='max-w-md sm:max-w-xl md:max-w-full whitespace-pre-line text-ellipsis overflow-hidden'
+                    className='max-w-xs sm:max-w-xl md:max-w-full  whitespace-pre-line text-ellipsis overflow-hidden'
                     dangerouslySetInnerHTML={{
                       __html: DOMPurify.sanitize(user.description),
                     }}></div>
@@ -130,13 +169,13 @@ export default async function UserShow({
 
           {user.services && (
             <div className='px-6 pt-12 lg:px-8'>
-              <div className='mx-auto max-w-2xl text-center '>
+              <div className='mx-auto  text-center '>
                 <h2 className=' capitalize text-xl font-bold tracking-tight text-black sm:text-4xl'>
                   {trans.services}
                 </h2>
                 <div className='mt-6 text-lg leading-8 text-gray-800'>
                   <div
-                    className='max-w-md sm:max-w-xl md:max-w-full whitespace-pre-line text-ellipsis overflow-hidden'
+                    className='max-w-xs sm:max-w-xl md:max-w-full  whitespace-pre-line text-ellipsis overflow-hidden'
                     dangerouslySetInnerHTML={{
                       __html: DOMPurify.sanitize(user.services),
                     }}></div>
