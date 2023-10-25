@@ -53,7 +53,7 @@ export default async function ({ params: { lang } }: Props) {
             backgroundRepeat: "no-repeat",
           }}>
           <div className='h-full lg:absolute top-0 p-10 lg:p-16 text-white z-40 w-full'>
-            <div className='flex flex-col justify-between items-center w-full h-full gap-y-4 lg:gap-y-48'>
+            <div className='flex flex-col justify-between items-center w-full h-full gap-y-4'>
               <div className='flex flex-col gap-y-6  w-full h-full'>
                 <div className='flex flex-row justify-between items-center'>
                   <div className='space-y-4'>
