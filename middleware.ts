@@ -15,18 +15,30 @@ function getLocale(request: NextRequest): string | undefined {
   return locale
 }
 
-export function middleware(request: NextRequest) {
+export function middleware(request: NextRequest, response: NextResponse) {
   const pathName = request.nextUrl.pathname
   const pathnameIsMissingLocale = i18n.locales.every(
     locale => !pathName.startsWith(`/${locale}/`) && pathName !== `/${locale}`
   )
+  // const requestHeaders = new Headers(request.headers)
+
+  // Add new request headers
+
   const token = request.cookies.get('token');
+  // console.log('=====server=====', token.value);
   if (token) {
-    request.headers.set('Authorization', `Bearer ${token}`);
+    // request.cookies.
+    // requestHeaders.set('Authentication', `Bearer ${token.value}`)
+    // requestHeaders.set('token', `${token.value}`)
+    // response.headers.set('Authentication', `Bearer ${token.value}`);
+    // response.headers.set('token', `${token.value}`);
+    // request.headers.append('Authentication', `Bearer ${token.value}`);
+    // request.headers.append('token', `${token.value}`);
   }
   if (token && (request.nextUrl.pathname.includes('login') || request.nextUrl.pathname.includes('register'))) {
     // const locale = getLocale(request)
     // return NextResponse.redirect(new URL(`/${locale}`, request.url))
+
 
     return NextResponse.redirect(new URL(`/`, request.url))
   }

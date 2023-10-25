@@ -2,33 +2,35 @@ import { MainContextLayout } from "@/layouts/MainContentLayout";
 import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
 import { getSetting } from "@/utils/setting";
-import Image from "next/image";
-import LoginImage from "@/appImages/login/section.jpg";
-import Link from "next/link";
-import { appLinks } from "@/src/constants";
-import { RegisterContent } from "@/components/register/RegisterContent";
 import { Auth, Role, Setting, User } from "@/types/queries";
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
-import { Tab } from "@headlessui/react";
 import AccountContent from "@/components/account/AccountContent";
 import { getAuth, getUser } from "@/utils/user";
+import { headers, cookies } from "next/headers";
+import { notFound } from "next/navigation";
 
 export default async function ({
   params: { lang, role, id },
 }: {
   params: { lang: Locale["lang"]; role: Role["name"]; id: string };
 }) {
-  const [{ trans }, setting, auth]: [
+  const cookieStore = cookies();
+  const token: any = cookieStore.get("token");
+  if (!token.value) notFound();
+
+  const [{ trans }, setting, auth, user]: [
     { trans: any },
     Setting,
-    Auth | { status: number },
+    Auth,
     User
   ] = await Promise.all([
     getDictionary(lang),
     getSetting(lang),
-    getAuth(),
-    getUser(id),
+    getAuth(token.value),
+    getUser(id, lang),
   ]);
+
+  if (user.id !== auth.id) notFound();
 
   return (
     <MainContextLayout
