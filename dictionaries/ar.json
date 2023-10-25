@@ -129,6 +129,7 @@
     "my_account": "حسابي",
     "control_account_information": "التحكم بمعلومات الحساب",
     "back_to_home": "العودة للرئيسية",
-    "logout": "الخروج من الحساب"
+    "logout": "الخروج من الحساب",
+    "control_my_account": "التحكم بالحساب"
   }
 }

@@ -1,16 +1,11 @@
 import { MainContextLayout } from "@/layouts/MainContentLayout";
 import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
-import Link from "next/link";
-import NavHeader from "@/components/header/NavHeader";
 import { getUser } from "@/utils/user";
 import { getSetting } from "@/utils/setting";
 import { getMembership, getMemberships } from "@/utils/membership";
-import { setMembership } from "@/redux/slices/cartSlice";
-import { Membership } from "@/types/queries";
-import MembershipCard from "@/components/membership/MembershipCard";
+import { Auth, Country, Membership, Setting, User } from "@/types/queries";
 import { getCountries } from "@/utils/country";
-import { isNull } from "lodash";
 import CartContent from "@/components/cart/CartContent";
 
 type Props = {
@@ -18,7 +13,14 @@ type Props = {
   searchParams: { [key: string]: string };
 };
 export default async function ({ params: { lang, id }, searchParams }: Props) {
-  const [{ trans }, membership, country, dollarCountry, setting, user] = await Promise.all([
+  const [{ trans }, membership, country, dollarCountry, setting, user]: [
+    { trans: any },
+    Membership,
+    Country,
+    Country,
+    Setting,
+    Auth
+  ] = await Promise.all([
     getDictionary(lang),
     getMembership(id, lang),
     getCountries(`lang=${lang}&limit=1`, lang),
@@ -36,7 +38,6 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
       <CartContent
         membership={membership}
         country={country[0]}
-        lang={lang}
         user={user}
         dollarCountry={dollarCountry[0]}
       />

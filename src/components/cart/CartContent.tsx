@@ -15,18 +15,19 @@ type Props = {
   membership: Membership;
   country: Country;
   dollarCountry: Country;
-  lang: Locale["lang"];
   user: Auth;
 };
 export default function ({
   membership,
   country,
   dollarCountry,
-  lang,
+  
   user,
 }: Props) {
+  
   const trans: { [key: string]: string } = useContext(MainContext);
   const {
+    locale : { lang }
     cart: {
       payment: { queryString, paymentUrl },
       order,

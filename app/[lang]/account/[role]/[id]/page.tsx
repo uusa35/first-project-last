@@ -7,19 +7,27 @@ import LoginImage from "@/appImages/login/section.jpg";
 import Link from "next/link";
 import { appLinks } from "@/src/constants";
 import { RegisterContent } from "@/components/register/RegisterContent";
-import { Role, Setting } from "@/types/queries";
+import { Auth, Role, Setting, User } from "@/types/queries";
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import { Tab } from "@headlessui/react";
 import AccountContent from "@/components/account/AccountContent";
+import { getAuth, getUser } from "@/utils/user";
 
 export default async function ({
-  params: { lang, role },
+  params: { lang, role, id },
 }: {
-  params: { lang: Locale["lang"]; role: Role["name"] };
+  params: { lang: Locale["lang"]; role: Role["name"]; id: string };
 }) {
-  const [{ trans }, setting]: [{ trans: any }, Setting] = await Promise.all([
+  const [{ trans }, setting, auth]: [
+    { trans: any },
+    Setting,
+    Auth | { status: number },
+    User
+  ] = await Promise.all([
     getDictionary(lang),
     getSetting(lang),
+    getAuth(),
+    getUser(id),
   ]);
 
   return (

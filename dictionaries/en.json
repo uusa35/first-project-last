@@ -130,6 +130,7 @@
     "my_account": "my_account",
     "control_account_information": "control_account_information",
     "back_to_home": "back to home",
-    "logout": "logout"
+    "logout": "logout",
+    "control_my_account": "control my account"
   }
 }
