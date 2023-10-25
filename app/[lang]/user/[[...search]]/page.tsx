@@ -107,6 +107,7 @@ export default async function UserIndex({
               No Result Component here
             </div>
           )} */}
+          </div>
 
         <ul
           role='list'
@@ -118,5 +119,5 @@ export default async function UserIndex({
         {users.data.length > 0 && <Pagination links={users.meta.links} />}
       </main>
     </MainContextLayout>
-  );
+  )
 }
