@@ -20,29 +20,10 @@ export function middleware(request: NextRequest, response: NextResponse) {
   const pathnameIsMissingLocale = i18n.locales.every(
     locale => !pathName.startsWith(`/${locale}/`) && pathName !== `/${locale}`
   )
-  // const requestHeaders = new Headers(request.headers)
-
-  // Add new request headers
-
   const token = request.cookies.get('token');
-  // console.log('=====server=====', token.value);
-  if (token) {
-    // request.cookies.
-    // requestHeaders.set('Authentication', `Bearer ${token.value}`)
-    // requestHeaders.set('token', `${token.value}`)
-    // response.headers.set('Authentication', `Bearer ${token.value}`);
-    // response.headers.set('token', `${token.value}`);
-    // request.headers.append('Authentication', `Bearer ${token.value}`);
-    // request.headers.append('token', `${token.value}`);
-  }
   if (token && (request.nextUrl.pathname.includes('login') || request.nextUrl.pathname.includes('register'))) {
-    // const locale = getLocale(request)
-    // return NextResponse.redirect(new URL(`/${locale}`, request.url))
-
-
     return NextResponse.redirect(new URL(`/`, request.url))
   }
-
   if (pathnameIsMissingLocale) {
     const locale = getLocale(request)
     return NextResponse.redirect(
@@ -51,8 +32,6 @@ export function middleware(request: NextRequest, response: NextResponse) {
         request.url
       ))
   }
-
-
 }
 
 export const config = {

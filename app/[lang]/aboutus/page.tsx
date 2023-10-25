@@ -5,6 +5,7 @@ import { getSetting } from "@/utils/setting";
 import LoginImage from "@/appImages/login/section.jpg";
 import Image from "next/image";
 import DOMPurify from "isomorphic-dompurify";
+import { Setting } from "@/types/queries";
 
 type Props = {
   params: { lang: Locale["lang"] };
@@ -18,7 +19,7 @@ export async function generateMetadata({ params }: Props) {
 }
 
 export default async function Aboutus({ params: { lang } }: Props) {
-  const [{ trans }, setting] = await Promise.all([
+  const [{ trans }, setting]: [{ trans: any }, Setting] = await Promise.all([
     getDictionary(lang),
     getSetting(lang),
   ]);

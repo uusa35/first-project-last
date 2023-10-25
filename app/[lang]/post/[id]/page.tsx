@@ -6,6 +6,7 @@ import { getPost } from "@/utils/post";
 import Image from "next/image";
 import DOMPurify from "isomorphic-dompurify";
 import { notFound } from "next/navigation";
+import { Post, Setting } from "@/types/queries";
 
 type Props = {
   params: { lang: Locale["lang"]; id: string };
@@ -13,11 +14,12 @@ type Props = {
 };
 
 export default async function ({ params: { lang, id }, searchParams }: Props) {
-  const [{ trans }, setting, post] = await Promise.all([
-    getDictionary(lang),
-    getSetting(lang),
-    getPost(id, lang),
-  ]);
+  const [{ trans }, setting, post]: [{ trans: any }, Setting, Post] =
+    await Promise.all([
+      getDictionary(lang),
+      getSetting(lang),
+      getPost(id, lang),
+    ]);
 
   if ("status" in post && (post.status === 404 || post.status === 500))
     notFound();

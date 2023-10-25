@@ -21,13 +21,12 @@ export default function ({
   membership,
   country,
   dollarCountry,
-  
+
   user,
 }: Props) {
-  
   const trans: { [key: string]: string } = useContext(MainContext);
   const {
-    locale : { lang }
+    locale: { lang },
     cart: {
       payment: { queryString, paymentUrl },
       order,

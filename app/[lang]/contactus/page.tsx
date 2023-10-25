@@ -3,36 +3,26 @@ import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
 import { getSetting } from "@/utils/setting";
 import Image from "next/image";
-import { FormEvent } from "react";
-import type { Metadata } from "next";
 import ContactusContent from "@/components/contactus/ContactusContent";
 import ContactusImage from "@/appImages/contactus/contactus_bg.jpg";
 import { DevicePhoneMobileIcon, PhoneIcon } from "@heroicons/react/24/outline";
-import { whatsappUrl } from "@/src/constants";
-import {
-  Facebook,
-  Twitter,
-  Instagram,
-  LinkedIn,
-  WhatsApp,
-  YouTube,
-  Email,
-  Android,
-  Apple,
-} from "@mui/icons-material";
+import { WhatsApp, Email, Android, Apple } from "@mui/icons-material";
 import SocialIcons from "@/components/footer/SocialIcons";
+import { Setting } from "@/types/queries";
 
 type Props = {
   params: { lang: Locale["lang"] };
 };
+
 export async function generateMetadata({ params }: Props) {
   const { trans } = await getDictionary(params.lang);
   return {
     title: trans.contactus,
   };
 }
+
 export default async function ({ params: { lang } }: Props) {
-  const [{ trans }, setting] : [{ trans : any}, Setting] = await Promise.all([
+  const [{ trans }, setting]: [{ trans: any }, Setting] = await Promise.all([
     getDictionary(lang),
     getSetting(lang),
   ]);
@@ -167,7 +157,7 @@ export default async function ({ params: { lang } }: Props) {
                 {trans.contactus_message}
               </p>
             </div>
-            <ContactusContent lang={lang} />
+            <ContactusContent />
           </div>
         </div>
       </div>

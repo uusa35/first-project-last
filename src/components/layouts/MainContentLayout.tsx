@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setLocale } from "@/redux/slices/localeSlice";
 import moment from "moment";
 import * as yup from "yup";
+import { setLang } from "@/src/constants";
 
 type Props = {
   children: React.ReactNode;
@@ -50,6 +51,7 @@ const MainContextLayout: FC<Props> = ({
   useEffect(() => {
     if (lang !== locale.lang) {
       dispatch(setLocale(lang));
+      setLang(lang);
       moment.locale(lang);
       yup.setLocale({
         mixed: {

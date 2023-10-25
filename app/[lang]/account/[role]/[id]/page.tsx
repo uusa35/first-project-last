@@ -6,7 +6,7 @@ import { Auth, Role, Setting, User } from "@/types/queries";
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import AccountContent from "@/components/account/AccountContent";
 import { getAuth, getUser } from "@/utils/user";
-import { headers, cookies } from "next/headers";
+import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 
 export default async function ({

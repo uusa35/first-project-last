@@ -4,14 +4,18 @@ import { Locale } from "@/types/index";
 import { getSetting } from "@/utils/setting";
 import Link from "next/link";
 import { headers } from "next/headers";
+import { Setting } from "@/types/queries";
+import { cookies } from "next/headers";
 
 export default async function () {
-  const headersList = headers();
-  const prepareLang: any = headers().get("referer")?.split("//");
-  const lang: any = prepareLang ? prepareLang[1]?.split("/")[1] : "en";
-  const [{ trans }, setting] = await Promise.all([
-    getDictionary(lang),
-    getSetting(lang),
+  const cookieStore = cookies();
+  const lang: any = cookieStore.get("NEXT_LOCALE");
+  // const headersList = headers();
+  // const prepareLang: any = headers().get("referer")?.split("//");
+  // const lang: any = prepareLang ? prepareLang[1]?.split("/")[1] : "en";
+  const [{ trans }, setting]: [{ trans: any }, Setting] = await Promise.all([
+    getDictionary(lang.value),
+    getSetting(lang.value),
   ]);
   return (
     <MainContextLayout

@@ -16,7 +16,6 @@ type Props = {
 
 const MainLayout: FC<Props> = ({ lang, children }): React.ReactNode => {
   const { locale } = useAppSelector((state) => state);
-  const dispatch = useAppDispatch();
 
   return (
     <div className={`w-full`}>

@@ -4,10 +4,11 @@ import { Locale } from "@/types/index";
 import { getSetting } from "@/utils/setting";
 import Link from "next/link";
 import { headers } from "next/headers";
+import { Setting } from "@/types/queries";
 
 export default async function () {
   const lang: any = headers().get("Accept-Language");
-  const [{ trans }, setting] = await Promise.all([
+  const [{ trans }, setting]: [{ trans: any }, Setting] = await Promise.all([
     getDictionary(lang),
     getSetting(lang),
   ]);

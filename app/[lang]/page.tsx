@@ -12,7 +12,17 @@ import MainSlider from "@/components/MainSlider";
 import Image from "next/image";
 import { getImages } from "@/utils/image";
 import { getUsers } from "@/utils/user";
-import { Category, Membership, Post, User } from "@/types/queries";
+import {
+  AppQueryResult,
+  Category,
+  Country,
+  ImageType,
+  Membership,
+  Post,
+  Setting,
+  Slide,
+  User,
+} from "@/types/queries";
 import Loading from "./loading";
 import { PersonOutlineOutlined } from "@/src/constants";
 import { getCountries } from "@/utils/country";
@@ -134,6 +144,17 @@ export default async function Home({ params: { lang } }: Props) {
     sponsors,
     images,
     country,
+  ]: [
+    { trans: any },
+    Slide[],
+    AppQueryResult<Category[]>,
+    Setting,
+    Membership[],
+    Membership[],
+    AppQueryResult<Post[]>,
+    AppQueryResult<User[]>,
+    AppQueryResult<ImageType[]>,
+    Country
   ] = await Promise.all([
     getDictionary(lang),
     getSlides(`on_home=1`, lang),
@@ -458,7 +479,6 @@ export default async function Home({ params: { lang } }: Props) {
         </div>
       </div>
       {/* sponsors logos */}
-
       {sponsors.data && (
         <div className='bg-white py-12 sm:py-12 capitalize'>
           <div className='mx-auto max-w-7xl px-6 lg:px-8'>
@@ -466,7 +486,7 @@ export default async function Home({ params: { lang } }: Props) {
               {trans.sponsors}
             </h2>
             <div className='mx-auto mt-10 grid max-w-lg grid-cols-4 items-center gap-x-8 gap-y-10 sm:max-w-xl sm:grid-cols-6 sm:gap-x-10 lg:mx-0 lg:max-w-none lg:grid-cols-5'>
-              {sponsors.data.map((s: User, i: string) => (
+              {sponsors.data.map((s: User, i: number) => (
                 <Link key={s.id} href={`/user/${s.id}?slug=${s.name}`}>
                   <Image
                     key={i}
@@ -482,7 +502,6 @@ export default async function Home({ params: { lang } }: Props) {
           </div>
         </div>
       )}
-
       {/* sponsorship prices */}
       <div className='bg-expo-green py-12 sm:py-12 capitalize'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
@@ -553,15 +572,6 @@ export default async function Home({ params: { lang } }: Props) {
           </ul>
         </div>
       </div>
-
-      {/* <HomeContent
-        lang={lang}
-        categories={categories}
-        slides={slides}
-        setting={setting}
-        memberships={memberships}
-        posts={posts}
-      /> */}
     </MainContextLayout>
   );
 }
