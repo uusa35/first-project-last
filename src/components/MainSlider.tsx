@@ -29,7 +29,7 @@ export default async function ({ slides, lang }: Props) {
         <SwiperSlide key={i}>
           <Image
             width='1000'
-            height='200'
+            height='500'
             src={s.image}
             alt={`${process.env.NEXT_PUBLIC_BASE_URL}`}
             className='h-full w-full object-cover'
