@@ -86,7 +86,7 @@ export default async function UserIndex({
           />
         </div>
         {users.data.length > 0 ? (
-          <SearchBar  />
+          <SearchBar />
         ) : (
           <div className='text-center text-2xl py-20 capitalize'>
             No Result Component here
