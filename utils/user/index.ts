@@ -36,3 +36,15 @@ export async function getAuth(token: string) {
 
 }
 
+export async function updateUser(id: string, lang: Locale['lang'], token : string) {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}user/${id}`, {
+        cache: "no-store",
+        method: 'put',
+        headers: {
+            'Accept-Language': lang,
+            'Authorization': `Bearer ${token}`
+        }
+    });
+    return res.json()
+}
+
