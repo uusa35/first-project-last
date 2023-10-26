@@ -13,6 +13,7 @@ import * as yup from "yup";
 import { deleteToken, setLang, setToken } from "@/src/constants";
 import { isNull } from "lodash";
 import { setLocaleCookie } from "@/app/actions";
+import { disableLoading } from "@/redux/slices/settingSlice";
 
 type Props = {
   children: React.ReactNode;
@@ -74,6 +75,7 @@ const MainContextLayout: FC<Props> = ({
           matches: trans["validation.matches"],
         },
       });
+      dispatch(disableLoading());
     }
   }, [lang]);
 

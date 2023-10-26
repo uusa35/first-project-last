@@ -16,7 +16,7 @@ import {
 import { changePathName, convertSearchParamsToString } from "@/utils/helpers";
 import AppLogo from "@/components/header/AppLogo";
 import { last, split, toString } from "lodash";
-import { setCurrentPath } from "@/redux/slices/settingSlice";
+import { disableLoading, setCurrentPath } from "@/redux/slices/settingSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { Setting } from "@/types/queries";
 import LanguagesList from "@/components/header/LanguagesList";
@@ -63,6 +63,7 @@ export default function ({
   const handleLogout = () => {
     dispatch(resetAuth());
     deleteToken();
+    dispatch(disableLoading());
     router.replace(appLinks.home(lang));
   };
 
