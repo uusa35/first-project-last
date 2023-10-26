@@ -51,7 +51,9 @@ export default async function UserIndex({
         lang={lang}
         trans={trans}
         showSearchBar={false}
-        currentModule={`user`}
+        currentModule={`user?membership=${
+          (searchParams as { [key: string]: string }).membership
+        }`}
       />
     );
 
@@ -104,7 +106,7 @@ export default async function UserIndex({
                 href={`/${lang}/user?membership=${
                   (searchParams as { [key: string]: string }).membership
                 }`}
-                className={`border rounded-full px-3 py-2 whitespace-nowrap // ${
+                className={`border rounded-full px-3 py-2 whitespace-nowrap ${
                   !(searchParams as { [key: string]: string })?.category_id
                     ? "text-white  bg-expo-dark "
                     : "text-expo-dark"
