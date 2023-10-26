@@ -17,11 +17,11 @@ export function CustomSearch({ trans, lang }: Props) {
   console.log(searchParams?.get("membership"));
 
   return (
-    <div className="flex justify-end gap-x-1 w-1/4">
+    <div className="flex justify-end gap-x-1 w-full md:w-1/4">
       <input
         value={searchKey}
         type="search"
-        className="h-fit"
+        className="h-fit w-full border-none !outline-none facus:!shadow-none bg-[#D9D9D938]"
         placeholder="search"
         onChange={(e) => setSearchKey(e.target.value)}
       />

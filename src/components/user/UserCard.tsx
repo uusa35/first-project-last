@@ -13,51 +13,54 @@ type Props = {
 };
 export default async function ({ element, lang, trans }: Props) {
   return (
-    <li className='col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow transform transition duration-500 hover:scale-110'>
+    <li className="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow transform transition duration-500 hover:scale-110">
       <Link
         href={`/${lang}/user/${element.id}?slug=${element.name}`}
-        className='flex flex-1 flex-col p-4'>
+        className="flex flex-1 flex-col p-4"
+      >
         <Image
-          className='mx-auto h-32 w-32 flex-shrink-0 rounded-full'
+          className="mx-auto h-32 w-32 flex-shrink-0 rounded-full"
           src={element.image}
           alt={element.name}
           width={100}
           height={100}
         />
-        <h3 className='mt-6 text-sm font-medium text-gray-900'>
+        <h3 className="mt-6 text-sm font-medium text-gray-900">
           {element.name}
         </h3>
-        <dl className='mt-4 flex flex-grow flex-col justify-between gap-y-4'>
-          <dt className='sr-only'>{element.name}</dt>
-          <dd className='text-sm text-gray-500'>{element.caption}</dd>
-          <dt className='sr-only'>{element.caption}</dt>
-          {/* <dd className='mt-3 text-center grid grid-cols-3 justify-center items-center gap-1'>
+        <dl className="mt-4 flex flex-grow flex-col justify-between gap-y-4">
+          <dt className="sr-only">{element.name}</dt>
+          <dd className="text-sm text-gray-500">{element.caption}</dd>
+          <dt className="sr-only">{element.caption}</dt>
+          <dd className="mt-3 text-center grid grid-cols-3 justify-center items-center gap-1">
             {element.categories.map((u: Category, i: number) => (
               <span
                 key={i}
-                className='truncate col-span-1 text-sm text-center rounded-full bg-expo-light hover:bg-expo-dark hover:text-white px-2 py-1 font-medium text-green-700 ring-1 ring-inset ring-green-600/20'>
+                className="truncate col-span-1 text-sm text-center rounded-full bg-expo-light hover:bg-expo-dark hover:text-white px-2 py-1 font-medium text-green-700 ring-1 ring-inset ring-green-600/20"
+              >
                 {element.name}
               </span>
             ))}
-          </dd> */}
+          </dd>
         </dl>
       </Link>
       <div>
-        <div className='-mt-px flex divide-x divide-gray-200'>
-          <div className='flex w-0 flex-1'>
+        <div className="-mt-px flex divide-x divide-gray-200">
+          <div className="flex w-0 flex-1">
             <Link
               href={`/${lang}/user/${element.id}?slug=${element.name}`}
-              className='relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900'>
+              className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
+            >
               {trans.view_company_details}
               {lang !== "ar" ? (
                 <ArrowRightIcon
-                  className='h-5 w-5 text-gray-400'
-                  aria-hidden='true'
+                  className="h-5 w-5 text-gray-400"
+                  aria-hidden="true"
                 />
               ) : (
                 <ArrowLeftIcon
-                  className='h-5 w-5 text-gray-400'
-                  aria-hidden='true'
+                  className="h-5 w-5 text-gray-400"
+                  aria-hidden="true"
                 />
               )}
             </Link>

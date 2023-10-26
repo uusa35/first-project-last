@@ -97,9 +97,9 @@ export default async function UserIndex({
 
         <div className="px-5">
           {/* filters */}
-          <div className="flex items-center justify-between gap-x-10 text-sm">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-x-10 text-sm">
             {/* search categories */}
-            <div className="flex gap-x-3 py-5 overflow-auto scrollbar-hide w-3/4">
+            <div className="flex gap-x-3 py-5 overflow-auto scrollbar-hide w-full md:w-3/4">
               <Link
                 href={`/${lang}/user?membership=${
                   (searchParams as { [key: string]: string }).membership
@@ -146,7 +146,7 @@ export default async function UserIndex({
 
         <ul
           role="list"
-          className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 py-12 after:px-8 px-4 xl:px-0"
+          className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 py-12 after:px-8 px-4 xl:px-0"
         >
           {users.data.map((u: User, i: number) => (
             <UserCard element={u} lang={lang} key={u.name} trans={trans} />
