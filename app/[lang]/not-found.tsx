@@ -1,28 +1,23 @@
 import { MainContextLayout } from "@/layouts/MainContentLayout";
 import { getDictionary } from "@/lib/dictionary";
-import { Locale } from "@/types/index";
 import { getSetting } from "@/utils/setting";
 import Link from "next/link";
 import { Setting } from "@/types/queries";
 import { cookies } from "next/headers";
-import NoResultImage from "@/appImages/errors/no_result.svg";
 import ErrorImage from "@/appImages/errors/404.svg";
 import Image from "next/image";
 
 export default async function () {
   const cookieStore = cookies();
   const lang: any = cookieStore.get("NEXT_LOCALE")?.value ?? "en";
-  // const headersList = headers();
-  // const prepareLang: any = headers().get("referer")?.split("//");
-  // const lang: any = prepareLang ? prepareLang[1]?.split("/")[1] : "en";
   const [{ trans }, setting]: [{ trans: any }, Setting] = await Promise.all([
-    getDictionary(lang ?? "en"),
-    getSetting(lang ?? "en"),
+    getDictionary(lang),
+    getSetting(lang),
   ]);
   return (
     <MainContextLayout
       trans={trans}
-      lang={lang ?? "en"}
+      lang={lang}
       searchParams={``}
       setting={setting}>
       <main className='relative isolate mx-auto flex flex-col gap-y-6 justify-start items-center max-w-7xl min-h-screen capitalize'>
@@ -42,7 +37,7 @@ export default async function () {
           </p>
         </div>
         <div>
-          <Link href={`/${lang ?? "en"}`} className='text-xl'>
+          <Link href={`/${lang}`} className='text-xl'>
             {trans.return_home}
           </Link>
         </div>
