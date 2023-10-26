@@ -9,9 +9,9 @@ import {
 
 export default function* rootSaga() {
   yield all([
-    // fork(triggerEnableLoading),
-    // fork(triggerChangeLang),
+    fork(triggerEnableLoading),
     fork(triggerShowToastMessage),
+    // fork(triggerChangeLang),
     // fork(triggerResetEntireApp),
 
   ]);

@@ -75,7 +75,6 @@ const MainContextLayout: FC<Props> = ({
           matches: trans["validation.matches"],
         },
       });
-      dispatch(disableLoading());
     }
   }, [lang]);
 

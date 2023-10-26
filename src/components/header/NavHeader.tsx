@@ -63,7 +63,6 @@ export default function ({
   const handleLogout = () => {
     dispatch(resetAuth());
     deleteToken();
-    dispatch(disableLoading());
     router.replace(appLinks.home(lang));
   };
 

@@ -6,6 +6,7 @@ import { lowerCase, snakeCase, startCase } from 'lodash';
 import { persistor } from '@/redux/store';
 import { orderApi } from '../api/orderApi';
 import { toastMessageSlice } from '../slices/toastMessageSlice';
+import { settingSlice } from '../slices/settingSlice';
 
 export function* startResetEnireAppSceanrio() {
   persistor.purge();
@@ -13,6 +14,8 @@ export function* startResetEnireAppSceanrio() {
 
 export function* startEnableLoadingScenario(action: PayloadAction) {
   try {
+    yield delay(5000);
+    yield put({ type: `${settingSlice.actions.disableLoading}` });
   } catch (e) {
   } finally {
   }

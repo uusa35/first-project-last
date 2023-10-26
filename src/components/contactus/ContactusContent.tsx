@@ -67,7 +67,6 @@ export default function () {
       .then(() => {
         dispatch(disableLoading());
         reset();
-        // router.back();
       });
   };
 

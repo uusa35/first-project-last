@@ -51,11 +51,11 @@ export default function ({ lang }: Props) {
     dispatch(enableLoading());
     const { email, password } = body;
     triggerLogin({ password, email }).then((r: any) => {
-      dispatch(disableLoading());
       if (r && r.data) {
         dispatch(showSuccessToastMessage({ content: trans.process_success }));
         dispatch(setUser(r.data));
         setToken(r.data.api_token);
+        dispatch(disableLoading());
         return router.push(`/${lang}`);
       } else if (r && r.error && r.error.data) {
         dispatch(
@@ -63,6 +63,7 @@ export default function ({ lang }: Props) {
             content: `${r.error.data.message}`,
           })
         );
+        dispatch(disableLoading());
       }
     });
   };

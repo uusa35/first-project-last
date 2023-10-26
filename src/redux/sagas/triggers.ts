@@ -17,6 +17,7 @@ import {
 import { localeSlice } from '@/redux/slices/localeSlice';
 import { cartSlice } from '../slices/cartSlice';
 import { toastMessageSlice } from '../slices/toastMessageSlice';
+import { settingSlice } from '../slices/settingSlice';
 
 export function* triggerResetEntireApp() {
   yield takeLatest(`resetEntireApp`, startResetEnireAppSceanrio);
@@ -24,10 +25,10 @@ export function* triggerResetEntireApp() {
 
 
 export function* triggerEnableLoading() {
-  // yield takeLatest(
-  //   `${appLoadingSlice.actions.enableAppLoading}`,
-  //   startEnableLoadingScenario
-  // );
+  yield takeLatest(
+    `${settingSlice.actions.enableLoading}`,
+    startEnableLoadingScenario
+  );
 }
 
 export function* triggerChangeLang() {
