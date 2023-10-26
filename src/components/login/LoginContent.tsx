@@ -51,6 +51,7 @@ export default function ({ lang }: Props) {
     dispatch(enableLoading());
     const { email, password } = body;
     triggerLogin({ password, email }).then((r: any) => {
+      dispatch(disableLoading());
       if (r && r.data) {
         dispatch(showSuccessToastMessage({ content: trans.process_success }));
         dispatch(setUser(r.data));
@@ -63,7 +64,6 @@ export default function ({ lang }: Props) {
           })
         );
       }
-      dispatch(disableLoading());
     });
   };
 
