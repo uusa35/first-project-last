@@ -2,12 +2,16 @@
 import { Tab } from "@headlessui/react";
 import { ArrowsPointingOutIcon } from "@heroicons/react/24/outline";
 import { ArrowBack } from "@mui/icons-material";
+import { useState } from "react";
 export default function ({}) {
+  const [selectedIndex, setSelectedIndex] = useState(0);
   return (
     <Tab.Group
       vertical={true}
       as={`div`}
-      className={`flex flex-col md:flex-row p-3 md:p-0`}>
+      className={`flex flex-col md:flex-row p-3 md:p-0`}
+      selectedIndex={selectedIndex}
+      onChange={setSelectedIndex}>
       <Tab.List
         className={`flex flex-col justify-start items-center w-full md:w-1/3 p-6 bg-expo-light gap-y-6 `}
         as={"div"}>
@@ -16,7 +20,10 @@ export default function ({}) {
             <div className='p-4 bg-white rounded-md shadow-md ring ring-gray-200'>
               <ArrowsPointingOutIcon className='w-8 h-8 text-gray-800' />
             </div>
-            <div className='flex flex-col justify-start items-start text-expo-dark'>
+            <div
+              className={`flex flex-col justify-start items-start ${
+                selectedIndex === 0 ? "text-expo-dark" : "text-gray-400"
+              } `}>
               <div>Tab Title 1</div>
               <div>Tab Description 1</div>
             </div>
@@ -27,7 +34,10 @@ export default function ({}) {
             <div className='p-4 bg-white rounded-md shadow-lg'>
               <ArrowsPointingOutIcon className='w-8 h-8 ' />
             </div>
-            <div className='flex flex-col justify-start items-start text-expo-dark'>
+            <div
+              className={`flex flex-col justify-start items-start ${
+                selectedIndex === 1 ? "text-expo-dark" : "text-gray-400"
+              } `}>
               <div>Tab Title 1</div>
               <div>Tab Description 1</div>
             </div>

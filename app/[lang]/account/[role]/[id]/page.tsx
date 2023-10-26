@@ -8,6 +8,7 @@ import AccountContent from "@/components/account/AccountContent";
 import { getAuth, getUser } from "@/utils/user";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
+import AccountSteps from "@/components/account/AccountSteps";
 
 export default async function ({
   params: { lang, role, id },
@@ -38,9 +39,10 @@ export default async function ({
       lang={lang}
       searchParams={``}
       setting={setting}>
-      <main className='relative isolate mx-auto max-w-7xl min-h-screen'>
+      <main className='relative isolate mx-auto max-w-7xl min-h-screen p-3 xl:p-0 space-y-4'>
+        <AccountSteps />
         <AccountContent />
-        <form className={`p-3 xl:p-0`}>
+        <form className={``}>
           <div className='space-y-12'>
             <div className='grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3'>
               <div>
