@@ -18,7 +18,7 @@ import {
   showErrorToastMessage,
   showSuccessToastMessage,
 } from "@/redux/slices/toastMessageSlice";
-import { each, first, get, map, omit, toString } from "lodash";
+import { get, map, omit, toString } from "lodash";
 import InputError from "@/components/InputError";
 import { TextEditor } from "@/components/TextEditor";
 import InputLabel from "@/components/InputLabel";
