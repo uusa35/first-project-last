@@ -23,8 +23,6 @@ export default function ({ lang }: Props) {
   const dispatch = useAppDispatch();
   const router = useRouter();
 
-  console.log("trans", trans);
-
   const handleLogout = () => {
     dispatch(resetAuth());
     deleteToken();
@@ -36,7 +34,6 @@ export default function ({ lang }: Props) {
         <span>{trans.control_my_account}</span>
         <ChevronDownIcon className='h-5 w-5' aria-hidden='true' />
       </Popover.Button>
-
       <Transition
         as={Fragment}
         enter='transition ease-out duration-200'

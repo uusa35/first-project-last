@@ -3,9 +3,8 @@ import { useCreateOrUpdateOrderMutation } from "@/redux/api/orderApi";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { resetMembership, setMembership } from "@/redux/slices/cartSlice";
 import { showErrorToastMessage } from "@/redux/slices/toastMessageSlice";
-import { Locale } from "@/types/index";
 import { Auth, Country, Membership } from "@/types/queries";
-import { first, isNull } from "lodash";
+import { isNull } from "lodash";
 import Image from "next/image";
 import { useContext, useEffect, useRef } from "react";
 import OrderDetails from "@/components/order/OrderDetails";
@@ -18,12 +17,7 @@ type Props = {
   dollarCountry: Country;
   user: Auth;
 };
-export default function ({
-  membership,
-  country,
-  dollarCountry,
-  user,
-}: Props) {
+export default function ({ membership, country, dollarCountry, user }: Props) {
   const trans: { [key: string]: string } = useContext(MainContext);
   const isAuth = useAppSelector(isAuthenticated);
   const {
@@ -47,7 +41,7 @@ export default function ({
       if (r.error) {
         dispatch(
           showErrorToastMessage({
-            content: `${first(r.error.data.message)}`,
+            content: `${r.error.data.message}`,
           })
         );
       } else {

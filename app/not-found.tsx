@@ -9,11 +9,13 @@ import Image from "next/image";
 
 export default async function NotFound() {
   const cookieStore = cookies();
+  console.log("=====cookie-store====", cookieStore.get("NEXT_LOCALE"));
   const lang: any = cookieStore.get("NEXT_LOCALE")?.value ?? "en";
   const [{ trans }, setting]: [{ trans: any }, Setting] = await Promise.all([
     getDictionary(lang),
     getSetting(lang),
   ]);
+  console.log("======lang========", lang);
   return (
     <MainContextLayout
       trans={trans}

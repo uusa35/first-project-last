@@ -23,7 +23,6 @@ export default function ({ lang, searchParams }: Props) {
         <span>{lang === ar ? arabic : lang === en ? english : russian}</span>
         <ChevronDownIcon className='h-5 w-5' aria-hidden='true' />
       </Popover.Button>
-
       <Transition
         as={Fragment}
         enter='transition ease-out duration-200'
