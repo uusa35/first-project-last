@@ -25,10 +25,6 @@ const initialState: { membership: Membership, payment: PaymentFields, order: Omi
     currencyCode: '840',
     redirectUrl: `https://dev.ar-expo.ru/order/result/`,
     queryString: null,
-    //     NEXT_PUBLIC_PAYMENT_TOKEN="ZGFiMzdmNGZhOWIxZDJjOTljOWZiMGE1"
-    // NEXT_PUBLIC_MERCHANT_ID="RB0000002"
-    // NEXT_PUBLIC_PAYMENT_URL="https://srstaging.stspayone.com/SmartRoutePaymentWeb/SRPayMsgHandler?"
-    // NEXT_PUBLIC_CHECK_PAYMENT_URL="https://srstaging.stspayone.com/SmartRoutePaymentWeb/SRMsgHandler"
     paymentUrl: `${process.env.NEXT_PUBLIC_PAYMENT_URL}`
   },
   order: {

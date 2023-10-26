@@ -1,5 +1,4 @@
 import { Locale } from '@/types/index';
-import { NextResponse } from 'next/server'
 
 export async function login(email: string, password: string, lang: Locale['lang']) {
     const query = `?email=${email}&password=${password}`;

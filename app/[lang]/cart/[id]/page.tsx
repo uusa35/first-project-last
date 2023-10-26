@@ -4,7 +4,7 @@ import { getDictionary } from "@/lib/dictionary";
 import { getAuth, getUser } from "@/utils/user";
 import { getSetting } from "@/utils/setting";
 import { getMembership } from "@/utils/membership";
-import { Auth, Country, Membership, Setting, User } from "@/types/queries";
+import { Auth, Country, Membership, Setting } from "@/types/queries";
 import { getCountries } from "@/utils/country";
 import CartContent from "@/components/cart/CartContent";
 import { cookies } from "next/headers";
@@ -36,7 +36,6 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
   ]);
 
   if (!membership || !country || !dollarCountry) notFound();
-
   if (!auth || auth.role.name !== "company")
     return (
       <NoResults

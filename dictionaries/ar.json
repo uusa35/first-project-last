@@ -125,12 +125,12 @@
     "subscribers_description": "قائمة الشركات المشاركة بالمعرض",
     "sponsors_description": "قائمة الرعاة المشاركين بالمعرض",
     "website": "الموقع الإلكتروني",
-    "social_media_links": "social media links",
+    "social_media_links": " مواقع التواصل الاجتماعي",
     "my_account": "حسابي",
     "control_account_information": "التحكم بمعلومات الحساب",
     "back_to_home": "العودة للرئيسية",
     "logout": "الخروج من الحساب",
     "control_my_account": "التحكم بالحساب",
-    "u_must_be_registered_as_company_register_now_or_update_ur_account"  : "يجب عليك التسجيل كشركة أو تفعيل حسابك الحالي لعضوية الشركات وتحديث البيانات المطلوبة"
+    "u_must_be_registered_as_company_register_now_or_update_ur_account": "يجب عليك التسجيل كشركة أو تفعيل حسابك الحالي لعضوية الشركات وتحديث البيانات المطلوبة"
   }
 }
