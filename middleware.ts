@@ -21,7 +21,10 @@ export function middleware(request: NextRequest, response: NextResponse) {
     locale => !pathName.startsWith(`/${locale}/`) && pathName !== `/${locale}`
   )
   const token = request.cookies.get('token');
-  if (token && (request.nextUrl.pathname.includes('login') || request.nextUrl.pathname.includes('register'))) {
+  if (token &&
+    (request.nextUrl.pathname.includes('login') ||
+      request.nextUrl.pathname.includes('register') ||
+      request.nextUrl.pathname.includes('account'))) {
     return NextResponse.redirect(new URL(`/`, request.url))
   }
   if (pathnameIsMissingLocale) {
