@@ -23,7 +23,6 @@ export function middleware(request: NextRequest, response: NextResponse) {
   const pathnameIsMissingLocale = i18n.locales.every(
     locale => !pathName.startsWith(`/${locale}/`) && pathName !== `/${locale}`
   )
-  console.log('patHNameisMisstingLocale', pathnameIsMissingLocale);
   const token = request.cookies.get('token');
   if (token &&
     (request.nextUrl.pathname.includes('login') ||

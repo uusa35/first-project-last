@@ -56,8 +56,6 @@ export const cartSlice = createSlice({
         lang
       )}${merchantId}${messageId}${redirectUrl}${transactionId}`;
       const hashed: string = sha256(toBeHashed);
-      console.log('tobehashed', toBeHashed);
-      console.log('hashed', hashed);
       return {
         membership: action.payload.membership,
         payment: {

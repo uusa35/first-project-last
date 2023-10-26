@@ -90,7 +90,6 @@ export default function RootLayout({
   children: React.ReactNode;
   params: { lang: Locale["lang"]; setting: any };
 }) {
-  console.log("params======layout", params);
   return (
     <html
       className='min-h-screen max-w-8xl mx-auto '
