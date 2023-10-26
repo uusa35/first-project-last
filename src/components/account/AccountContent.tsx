@@ -13,7 +13,7 @@ import { loginSchema, updateUserSchema } from "@/src/validations";
 import { disableLoading, enableLoading } from "@/redux/slices/settingSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { MainContext } from "@/layouts/MainContentLayout";
-import { Auth, Country, User } from "@/types/queries";
+import { Auth, Category, Country, User } from "@/types/queries";
 import {
   showErrorToastMessage,
   showSuccessToastMessage,
@@ -26,6 +26,7 @@ import TextInput from "@/components/TextInput";
 import LoadingSpinner from "../LoadingSpinner";
 import Image from "next/image";
 import { useLazyUploadImageQuery } from "@/redux/api";
+import Select from "react-select";
 
 type Inputs = {
   username: string;
@@ -42,8 +43,9 @@ type Inputs = {
 type Props = {
   user: User;
   countries: Country[];
+  categories: Category[];
 };
-export default function ({ user, countries }: Props) {
+export default function ({ user, countries, categories }: Props) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const trans: { [key: string]: string } = useContext(MainContext);
   const {
@@ -336,6 +338,40 @@ export default function ({ user, countries }: Props) {
                 />
               </div>
             </div>
+
+            {categories ? (
+              <div className='col-span-2 pt-4'>
+                <InputLabel
+                  htmlFor='categories'
+                  value={trans.categories}
+                  aria-required
+                />
+                <Select
+                  defaultValue={map(user.categories, (c) => {
+                    return {
+                      label: c.name.en,
+                      value: c.id,
+                    };
+                  })}
+                  isMulti
+                  required
+                  name='categories'
+                  options={map(categories, (c: any, i) => {
+                    return {
+                      label: c.name,
+                      value: c.id,
+                    };
+                  })}
+                  onChange={(e: any) => setValue("categories", map(e, "value"))}
+                  className='basic-multi-select'
+                  classNamePrefix='select'
+                />
+                <InputError
+                  message={get(errors, "categories")}
+                  className='mt-2'
+                />
+              </div>
+            ) : null}
 
             {/* fields  */}
             <div className='grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
