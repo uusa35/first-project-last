@@ -49,26 +49,24 @@ const MainContextLayout: FC<Props> = ({
   ];
 
   useEffect(() => {
-    if (lang !== locale.lang) {
-      dispatch(setLocale(lang));
-      setLang(lang);
-      moment.locale(lang);
-      yup.setLocale({
-        mixed: {
-          required: trans["validation.required"],
-        },
-        number: {
-          min: ({ min }) => ({ key: trans["validation.min"], values: { min } }),
-          max: ({ max }) => ({ key: trans["validation.max"], values: { max } }),
-        },
-        string: {
-          email: trans["validation.email"],
-          min: ({ min }) => ({ key: trans["validation.min"], values: min }),
-          max: ({ max }) => ({ key: trans["validation.max"], values: max }),
-          matches: trans["validation.matches"],
-        },
-      });
-    }
+    dispatch(setLocale(lang));
+    setLang(lang);
+    moment.locale(lang);
+    yup.setLocale({
+      mixed: {
+        required: trans["validation.required"],
+      },
+      number: {
+        min: ({ min }) => ({ key: trans["validation.min"], values: { min } }),
+        max: ({ max }) => ({ key: trans["validation.max"], values: { max } }),
+      },
+      string: {
+        email: trans["validation.email"],
+        min: ({ min }) => ({ key: trans["validation.min"], values: min }),
+        max: ({ max }) => ({ key: trans["validation.max"], values: max }),
+        matches: trans["validation.matches"],
+      },
+    });
   }, [lang]);
 
   return (

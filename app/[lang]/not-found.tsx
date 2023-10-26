@@ -25,13 +25,13 @@ export default async function () {
       lang={lang ?? "en"}
       searchParams={``}
       setting={setting}>
-      <main className='relative isolate mx-auto flex flex-col gap-y-6 justify-center items-center max-w-7xl min-h-screen capitalize'>
+      <main className='relative isolate mx-auto flex flex-col gap-y-6 justify-start items-center max-w-7xl min-h-screen capitalize'>
         <Image
           src={ErrorImage}
-          className={`w-80 h-auto rounded-md`}
-          alt={"error"}
-          width={100}
-          height={100}
+          className={`w-80 lg:w-1/3 h-auto rounded-md`}
+          alt={setting.name}
+          width={300}
+          height={300}
         />
         <div>
           <h2 className='text-2xl'>{trans.not_found}</h2>

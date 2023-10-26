@@ -4,6 +4,7 @@ import { getDictionary } from "@/lib/dictionary";
 import { getSetting } from "@/utils/setting";
 import Image from "next/image";
 import RegisterImage from "@/appImages/register/infrastructure.jpg";
+import LoginImage from "@/appImages/login/section.jpg";
 import Link from "next/link";
 import { appLinks } from "@/src/constants";
 import { RegisterContent } from "@/components/register/RegisterContent";
@@ -51,7 +52,7 @@ export default async function ({
             className='absolute inset-0 h-full w-full object-cover'
             width={600}
             height={1000}
-            src={RegisterImage.src}
+            src={role === "company" ? RegisterImage.src : LoginImage.src}
             alt={setting.name}
           />
         </div>

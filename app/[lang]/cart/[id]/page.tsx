@@ -3,10 +3,11 @@ import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
 import { getUser } from "@/utils/user";
 import { getSetting } from "@/utils/setting";
-import { getMembership, getMemberships } from "@/utils/membership";
+import { getMembership } from "@/utils/membership";
 import { Auth, Country, Membership, Setting, User } from "@/types/queries";
 import { getCountries } from "@/utils/country";
 import CartContent from "@/components/cart/CartContent";
+import { notFound } from "next/navigation";
 
 type Props = {
   params: { lang: Locale["lang"]; id: string };
@@ -28,6 +29,8 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
     getSetting(lang),
     getUser("3", lang),
   ]);
+
+  if (!membership || !country || !dollarCountry) notFound();
 
   return (
     <MainContextLayout
