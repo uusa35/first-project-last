@@ -2,7 +2,7 @@ import { MainContextLayout } from "@/layouts/MainContentLayout";
 import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
 import { getSetting } from "@/utils/setting";
-import { Auth, Country, Role, Setting, User } from "@/types/queries";
+import { Auth, Category, Country, Role, Setting, User } from "@/types/queries";
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import AccountContent from "@/components/account/AccountContent";
 import { getAuth, updateUser } from "@/utils/user";
@@ -10,6 +10,7 @@ import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import AccountSteps from "@/components/account/AccountSteps";
 import { getCountries } from "@/utils/country";
+import { getCategories } from "@/utils/category";
 
 export default async function ({
   params: { lang, role, id },
@@ -20,18 +21,20 @@ export default async function ({
   const token: any = cookieStore.get("token");
   if (!token || !token.value) notFound();
 
-  const [{ trans }, setting, auth, user, countries]: [
+  const [{ trans }, setting, auth, user, countries, categories]: [
     { trans: any },
     Setting,
     Auth,
     User,
-    Country[]
+    Country[],
+    Category[]
   ] = await Promise.all([
     getDictionary(lang),
     getSetting(lang),
     getAuth(token.value),
     updateUser(id, lang, token.value),
     getCountries("", lang),
+    getCategories("", lang),
   ]);
 
   if (user.id !== auth.id) notFound();
@@ -44,7 +47,11 @@ export default async function ({
       setting={setting}>
       <main className='relative isolate mx-auto max-w-7xl min-h-screen p-3 xl:p-0 space-y-4'>
         <AccountSteps />
-        <AccountContent user={user} countries={countries} />
+        <AccountContent
+          user={user}
+          countries={countries}
+          categories={categories}
+        />
         <form className={``}>
           <div className='space-y-12'>
             <div className='grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3'>

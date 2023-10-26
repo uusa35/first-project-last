@@ -28,16 +28,25 @@ export const apiSlice = createApi({
         'Access-Control-Allow-Methods',
         'GET,PUT,POST,DELETE,PATCH,OPTIONS',
       );
+      headers.set(
+        'Access-Control-Allow-Methods',
+        'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+      );
+      // headers.set(
+      //   'Access-Control-Allow-Origin',
+      //   'http://localhost',
+      // );
       headers.set('Content-Type', 'application/json');
       headers.set('Accept', 'application/json');
       headers.set('Cache-Control', 'no-store');
       if (api_token) {
         headers.set('Authorization', `Bearer ${api_token}`);
+        headers.set('api_token', `${api_token}`);
       }
       return headers;
     },
-    // credentials: 'include',
-    credentials: "same-origin",
+    credentials: 'include',
+    // credentials: "same-origin",
   }),
   tagTypes: ['User'],
   keepUnusedDataFor: 0,
@@ -74,7 +83,20 @@ export const apiSlice = createApi({
         //   response.status == 200,
       }),
     }),
+    uploadImage: builder.query<
+      Setting,
+      any
+    >({
+      query: (body) => ({
+        url: `images/upload`,
+        method: 'POST',
+        body,
+        formData: true
+        // validateStatus: (response, result) =>
+        //   response.status == 200,
+      }),
+    }),
   }),
 });
 
-export const { useGetSettingQuery, useLazySendContactusQuery } = apiSlice;
+export const { useGetSettingQuery, useLazySendContactusQuery, useLazyUploadImageQuery } = apiSlice;

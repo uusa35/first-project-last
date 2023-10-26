@@ -1,9 +1,12 @@
 "use client";
-import { useUpdateUserMutation } from "@/redux/api/authApi";
+import {
+  useUpdateUserImageMutation,
+  useUpdateUserMutation,
+} from "@/redux/api/authApi";
 import { Tab } from "@headlessui/react";
 import { ArrowsPointingOutIcon } from "@heroicons/react/24/outline";
-import { ArrowBack } from "@mui/icons-material";
-import { useContext, useState } from "react";
+import { ArrowBack, FourGMobiledataSharp } from "@mui/icons-material";
+import { ChangeEvent, FormEventHandler, useContext, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema, updateUserSchema } from "@/src/validations";
@@ -15,12 +18,14 @@ import {
   showErrorToastMessage,
   showSuccessToastMessage,
 } from "@/redux/slices/toastMessageSlice";
-import { get, map } from "lodash";
+import { each, first, get, map, omit, toString } from "lodash";
 import InputError from "@/components/InputError";
 import { TextEditor } from "@/components/TextEditor";
 import InputLabel from "@/components/InputLabel";
 import TextInput from "@/components/TextInput";
 import LoadingSpinner from "../LoadingSpinner";
+import Image from "next/image";
+import { useLazyUploadImageQuery } from "@/redux/api";
 
 type Inputs = {
   username: string;
@@ -46,78 +51,71 @@ export default function ({ user, countries }: Props) {
   } = useAppSelector((state) => state);
   const [triggerUpdateUser, { data, error, isSuccess }] =
     useUpdateUserMutation();
+  const [triggerUpdateUserImage] = useUpdateUserImageMutation();
+  const [triggerUploadImages] = useLazyUploadImageQuery();
   const dispatch = useAppDispatch();
   const {
     handleSubmit,
     register,
     reset,
-    values,
+    getValues,
     setValue,
     formState: { errors },
   }: any = useForm<User>({
     // resolver: yupResolver(updateUserSchema),
     defaultValues: {
-      ...(isSuccess ? data : user),
-      // username: user.username,
-      // email: user.email,
-      // image: user.image,
-      // name: {
-      //   ar: user.name.ar,
-      //   en: user.name.en,
-      //   ru: user.name.ru,
-      // },
-      // caption: {
-      //   ar: user.caption.ar,
-      //   en: user.caption.en,
-      //   ru: user.caption.ru,
-      // },
-      // description: {
-      //   ar: user.description.ar,
-      //   en: user.description.en,
-      //   ru: user.description.ru,
-      // },
-      // aboutus: {
-      //   ar: user.aboutus.ar,
-      //   en: user.aboutus.en,
-      //   ru: user.aboutus.ru,
-      // },
-      // services: {
-      //   ar: user.services.ar,
-      //   en: user.services.en,
-      //   ru: user.services.ru,
-      // },
+      ...(isSuccess
+        ? omit(data, [
+            "image",
+            "images",
+            "country",
+            "tags",
+            "categories",
+            "roles",
+            "orders",
+            "id",
+          ])
+        : omit(user, [
+            "image",
+            "images",
+            "country",
+            "tags",
+            "categories",
+            "role",
+            "orders",
+            "id",
+          ])),
       categories: map(user.categories, "id"),
       tags: map(user.tags, "id"),
-      // website: user.website,
-      // facebook: user.facebook,
-      // instagram: user.instagram,
-      // youtube: user.youtube,
-      // twitter: user.twitter,
-      // tiktok: user.tiktok,
-      // mobile: user.mobile,
-      // whatsapp: user.whatsapp,
-      // keywords: user.keywords,
     },
   });
 
-  const onSubmit: SubmitHandler<Inputs> = (body) => {
+  const onSubmit: SubmitHandler<Inputs> = async (body: any) => {
     dispatch(enableLoading());
-    triggerUpdateUser(body).then((r: any) => {
-      if (r && r.data) {
-        dispatch(showSuccessToastMessage({ content: trans.process_success }));
-        dispatch(disableLoading());
-      } else if (r && r.error && r.error.data) {
-        dispatch(
-          showErrorToastMessage({
-            content: `${r.error.data.message}`,
-          })
-        );
-        dispatch(disableLoading());
-      }
-    });
+    await triggerUpdateUser({ body, id: user.id })
+      .then((r: any) => {
+        if (r && r.data) {
+          dispatch(showSuccessToastMessage({ content: trans.process_success }));
+          dispatch(disableLoading());
+        } else if (r && r.error && r.error.data) {
+          dispatch(
+            showErrorToastMessage({
+              content: `${r.error.data.message}`,
+            })
+          );
+          dispatch(disableLoading());
+        }
+      })
+      .then(() => {
+        if (body.image[0]) {
+          const imageData = new FormData();
+          imageData.append("image", body.image[0]);
+          triggerUpdateUserImage({ formData: imageData, id: user.id });
+        }
+      });
   };
 
-  const handleImages = (imagesGroup: any) => {
+  const handleImages = async (imagesGroup: any) => {
     if (imagesGroup.length > 1 && imagesGroup.length <= 10 && user) {
       let formData = new FormData();
       const images: any = [];
@@ -125,6 +123,9 @@ export default function ({ user, countries }: Props) {
         formData.append(`images[${i}]`, imagesGroup[i]);
         images[`images[${i}]`] = imagesGroup[i];
       }
+      formData.append("model", "user");
+      formData.append("id", toString(user.id));
+      await triggerUploadImages(formData);
       setValue("images", images);
     }
   };
@@ -182,8 +183,7 @@ export default function ({ user, countries }: Props) {
       <Tab.Panels as={"div"} className={`flex w-full md:w-2/3 p-4 flex-col`}>
         <Tab.Panel>
           <LoadingSpinner isLoading={isLoading} />
-          {/* // @eren
-          Sample Form  */}
+          {/* // @eren i made most of items for you plz continue design and re-organize the file  */}
           <form
             onSubmit={handleSubmit(onSubmit)}
             className={`space-y-4 ${isLoading && "hidden"}`}>
@@ -243,6 +243,23 @@ export default function ({ user, countries }: Props) {
                 )}
               </div>
             </div>
+            {/* mobile */}
+            <div>
+              <InputLabel
+                htmlFor='mobile'
+                value={trans["mobile"]}
+                aria-required
+              />
+              <TextInput
+                defaultValue={user.mobile}
+                id='mobile'
+                {...register("mobile")}
+                aria-required
+                onChange={(e) => setValue("mobile", e.target.value)}
+                className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'
+              />
+              <InputError message={get(errors, "mobile")} className='mt-2' />
+            </div>
             {/* country_id */}
             <div>
               <label
@@ -271,23 +288,53 @@ export default function ({ user, countries }: Props) {
                 )}
               </div>
             </div>
-            {/* more images */}
-            <div className='col-span-1'>
-              <label
-                htmlFor='email'
-                className='block text-sm font-medium leading-6 text-gray-900 capitalize'>
-                images
-              </label>
-              <input
-                onChange={(e) => handleImages(e.target.files)}
-                type='file'
-                multiple
-                name='images'
-                id='more_images'
-                accept='image/jpg, image/jpeg , image/png'
-                autoComplete='more_images'
-                className={`pt-3.5 focus:ring-gray-500 focus:border-gray-500 block w-full border-gray-300 rounded-md`}
-              />
+            {/* image */}
+            <div className='col-span-full grid grid-cols-1 lg:grid-cols-2'>
+              <div className='col-span-1 flex-row'>
+                <InputLabel htmlFor='image' value={trans.logo} aria-required />
+                <div className='flex flex-row gap-x-4 my-4'>
+                  <div>
+                    <Image
+                      src={user.thumb}
+                      className='w-20 h-auto rounded-md'
+                      alt={user.username}
+                      width={100}
+                      height={100}
+                    />
+                  </div>
+                  <input
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                      setValue("image", e.target.files)
+                    }
+                    type='file'
+                    {...register("image")}
+                    id='image'
+                    accept='image/jpg, image/jpeg , image/png'
+                    className={`focus:ring-gray-500 focus:border-gray-500 block w-full border-gray-300 rounded-md`}
+                  />
+                </div>
+              </div>
+
+              {/* more images */}
+              <div className='col-span-1'>
+                <InputLabel
+                  htmlFor='more_images'
+                  value={trans.more_images}
+                  aria-required
+                />
+                <input
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    handleImages(e.target.files)
+                  }
+                  type='file'
+                  multiple
+                  {...register("images")}
+                  id='more_images'
+                  // accept='image/jpg, image/jpeg , image/png'
+                  autoComplete='more_images'
+                  className={`pt-3.5 focus:ring-gray-500 focus:border-gray-500 block w-full border-gray-300 rounded-md`}
+                />
+              </div>
             </div>
 
             {/* fields  */}
@@ -308,7 +355,7 @@ export default function ({ user, countries }: Props) {
                     aria-required
                     onChange={(e) =>
                       setValue("name", {
-                        ...values.name,
+                        ...getValues("name"),
                         en: e.target.value,
                       })
                     }
@@ -333,7 +380,7 @@ export default function ({ user, countries }: Props) {
                     aria-required
                     onChange={(e) =>
                       setValue("name", {
-                        ...values.name,
+                        ...getValues("name"),
                         ar: e.target.value,
                       })
                     }
@@ -359,7 +406,7 @@ export default function ({ user, countries }: Props) {
                     aria-required
                     onChange={(e) =>
                       setValue("name", {
-                        ...values.name,
+                        ...getValues("name"),
                         ru: e.target.value,
                       })
                     }
@@ -387,7 +434,7 @@ export default function ({ user, countries }: Props) {
                     aria-required
                     onChange={(e) =>
                       setValue("caption", {
-                        ...values.name,
+                        ...getValues("name"),
                         en: e.target.value,
                       })
                     }
@@ -413,7 +460,7 @@ export default function ({ user, countries }: Props) {
                     aria-required
                     onChange={(e) =>
                       setValue("caption", {
-                        ...values.name,
+                        ...getValues("name"),
                         ar: e.target.value,
                       })
                     }
@@ -439,7 +486,7 @@ export default function ({ user, countries }: Props) {
                     aria-required
                     onChange={(e) =>
                       setValue("caption", {
-                        ...values.name,
+                        ...getValues("name"),
                         ru: e.target.value,
                       })
                     }
@@ -461,7 +508,7 @@ export default function ({ user, countries }: Props) {
                   language='ar'
                   name='description'
                   setValue={setValue}
-                  values={values}
+                  values={getValues()}
                   defaultValue={user.description?.ar}
                 />
                 <InputError
@@ -480,7 +527,7 @@ export default function ({ user, countries }: Props) {
                   language='en'
                   name='description'
                   setValue={setValue}
-                  values={values}
+                  values={getValues()}
                 />
                 <InputError
                   message={get(errors, "description.en")}
@@ -498,7 +545,7 @@ export default function ({ user, countries }: Props) {
                   language='ru'
                   name='description'
                   setValue={setValue}
-                  values={values}
+                  values={getValues()}
                 />
                 <InputError
                   message={get(errors, "description.ru")}
