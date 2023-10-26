@@ -1,13 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { isUndefined } from 'lodash';
-import { RootState } from '../store';
+import { RootState } from '@/src/redux/store';
 import { Auth } from '@/types/queries';
 
 
 const initialState: Auth = {
-  // isAuth: false,
-  // api_token: '7118259ee8e3bc2dbdc0aec954cd6adbd703bc4ff5e8c07f014f8561ce3fa56f',
-  // api_token: process.env.NODE_ENV === "production" ? '01989686817' : '7118259ee8e3bc2dbdc0aec954cd6adbd703bc4ff5e8c07f014f8561ce3fa56f',
   id: ``,
   name: ``,
   caption: ``,

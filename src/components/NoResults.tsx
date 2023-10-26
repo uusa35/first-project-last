@@ -1,8 +1,10 @@
 import { Setting } from "@/types/queries";
 import { Locale } from "@/types/index";
-import LoginImage from "@/appImages/login/section.jpg";
 import { MainContextLayout } from "./layouts/MainContentLayout";
 import Link from "next/link";
+import NoResultImage from "@/appImages/errors/no_result.svg";
+import ErrorImage from "@/appImages/errors/404.svg";
+import Image from "next/image";
 
 type Props = {
   lang: Locale["lang"];
@@ -25,13 +27,18 @@ export default function ({
       searchParams={``}
       setting={setting}>
       <main className='relative isolate mx-auto flex flex-col gap-y-6 justify-center items-center max-w-7xl min-h-screen capitalize'>
+        <Image
+          src={NoResultImage}
+          className={`w-80 h-auto rounded-md`}
+          alt={"error"}
+          width={100}
+          height={100}
+        />
         <div>
           <h2 className='text-2xl'>{trans.empty_results}</h2>
         </div>
         <div>
-          <p className='text-xl'>
-            {trans.empty_results_messsage}
-          </p>
+          <p className='text-xl'>{trans.empty_results_messsage}</p>
         </div>
         <div>
           {currentModule && (

@@ -8,7 +8,6 @@ import {
 } from "@/redux/slices/toastMessageSlice";
 import { appLinks, setToken } from "@/src/constants";
 import { Locale } from "@/types/index";
-import { first } from "lodash";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
