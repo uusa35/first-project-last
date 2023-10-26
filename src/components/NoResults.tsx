@@ -12,6 +12,7 @@ type Props = {
   trans: { [key: string]: string } | any;
   currentModule: string;
   showSearchBar?: boolean;
+  message?: string | null;
 };
 export default function ({
   lang,
@@ -19,6 +20,7 @@ export default function ({
   trans,
   currentModule,
   showSearchBar = false,
+  message = null,
 }: Props) {
   return (
     <MainContextLayout
@@ -34,15 +36,27 @@ export default function ({
           width={300}
           height={300}
         />
-        <div>
-          <h2 className='text-2xl'>{trans.empty_results}</h2>
-        </div>
-        <div>
-          <p className='text-xl'>{trans.empty_results_messsage}</p>
-        </div>
+        {message !== null ? (
+          <div className='w-1/2 leading-8 mb-4'>
+            <p className='text-2xl line-clamp-2 leading-loose text-center'>
+              {message}
+            </p>
+          </div>
+        ) : (
+          <div>
+            <div>
+              <h2 className='text-2xl'>{trans.empty_results}</h2>
+            </div>
+            <div>
+              <p className='text-xl'>{trans.empty_results_messsage}</p>
+            </div>
+          </div>
+        )}
         <div>
           {currentModule && (
-            <Link href={`/${lang}/${currentModule}`} className='text-xl'>
+            <Link
+              href={`/${lang}/${currentModule}`}
+              className='text-xl p-4 bg-gray-200 rounded-md'>
               {trans.reset}
             </Link>
           )}

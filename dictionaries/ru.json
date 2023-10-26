@@ -129,6 +129,7 @@
     "control_account_information": "control_account_information",
     "back_to_home": "back to home",
     "logout": "logout",
-    "control_my_account": "control my account"
+    "control_my_account": "control my account",
+    "u_must_be_registered_as_company_register_now_or_update_ur_account": "u must be registered as company register now or update ur account"
   }
 }

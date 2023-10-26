@@ -35,7 +35,7 @@ export default async function ({ slides, lang }: Props) {
             className='h-full w-full object-cover'
           />
           <div className='relative '>
-            <div className='bg-white/30 p-4 w-auto md:w-1/3 rounded-md absolute mx-6 xl:mx-24 inset-x-0 bottom-4 sm:bottom-12 xl:bottom-20 '>
+            <div className='invisible md:visible w-auto bg-white/30 p-4  md:w-1/3 rounded-md absolute mx-6 xl:mx-24 inset-x-0 bottom-4 sm:bottom-12 xl:bottom-20 '>
               <h1 className='rtl:text-right ltr:text-left text-md lg:text-2xl xl:text-4xl'>
                 {s.name}
               </h1>

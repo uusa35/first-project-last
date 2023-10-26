@@ -16,7 +16,7 @@ export default async function ({
 }) {
   const cookieStore = cookies();
   const token: any = cookieStore.get("token");
-  if (!token.value) notFound();
+  if (!token || !token.value) notFound();
 
   const [{ trans }, setting, auth, user]: [
     { trans: any },

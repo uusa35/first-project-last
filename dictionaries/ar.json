@@ -130,6 +130,7 @@
     "control_account_information": "التحكم بمعلومات الحساب",
     "back_to_home": "العودة للرئيسية",
     "logout": "الخروج من الحساب",
-    "control_my_account": "التحكم بالحساب"
+    "control_my_account": "التحكم بالحساب",
+    "u_must_be_registered_as_company_register_now_or_update_ur_account"  : "يجب عليك التسجيل كشركة أو تفعيل حسابك الحالي لعضوية الشركات وتحديث البيانات المطلوبة"
   }
 }

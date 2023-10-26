@@ -10,6 +10,7 @@ import Image from "next/image";
 import { useContext, useEffect, useRef } from "react";
 import OrderDetails from "@/components/order/OrderDetails";
 import { MainContext } from "@/layouts/MainContentLayout";
+import { isAuthenticated } from "@/redux/slices/authSlice";
 
 type Props = {
   membership: Membership;
@@ -21,17 +22,16 @@ export default function ({
   membership,
   country,
   dollarCountry,
-
   user,
 }: Props) {
   const trans: { [key: string]: string } = useContext(MainContext);
+  const isAuth = useAppSelector(isAuthenticated);
   const {
     locale: { lang },
     cart: {
       payment: { queryString, paymentUrl },
       order,
     },
-    auth: { isAuth },
   } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
   const fromRef = useRef<any>();
