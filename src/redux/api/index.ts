@@ -15,7 +15,6 @@ export const apiSlice = createApi({
       { getState, type, endpoint, extra }: RootState
     ) => {
       const {
-        setting,
         locale,
         auth: { api_token }
       } = getState() as RootState;
@@ -34,7 +33,6 @@ export const apiSlice = createApi({
       headers.set('Cache-Control', 'no-store');
       if (api_token) {
         headers.set('Authorization', `Bearer ${api_token}`);
-        // headers.set('api_token', `${api_token}`);
       }
       return headers;
     },
