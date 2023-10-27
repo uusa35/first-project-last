@@ -14,6 +14,7 @@ export const apiSlice = createApi({
       headers,
       { getState, type, endpoint, extra }: RootState
     ) => {
+      console.log('apiUrl', apiUrl);
       const {
         locale,
         auth: { api_token }

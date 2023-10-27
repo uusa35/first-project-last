@@ -33,7 +33,7 @@ export default function ({ lang }: Props) {
   const {
     appSetting: { isLoading },
   } = useAppSelector((state) => state);
-  const [triggerLogin, { data, isSuccess, error }] = useLazyLoginQuery();
+  const [triggerLogin] = useLazyLoginQuery();
   const {
     handleSubmit,
     register,
@@ -47,10 +47,9 @@ export default function ({ lang }: Props) {
     },
   });
 
-  const onSubmit: SubmitHandler<Inputs> = (body) => {
+  const onSubmit: SubmitHandler<Inputs> = async (body) => {
     dispatch(enableLoading());
-    const { email, password } = body;
-    triggerLogin({ password, email }).then((r: any) => {
+    await triggerLogin(body, false).then((r: any) => {
       if (r && r.data) {
         dispatch(showSuccessToastMessage({ content: trans.process_success }));
         dispatch(setUser(r.data));

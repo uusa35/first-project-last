@@ -110,10 +110,10 @@ export default function ({ user, countries, categories }: Props) {
       })
       .then(() => {
         if (body.image[0]) {
-          const imageData = new FormData();
-          imageData.append("image", body.image[0]);
-          imageData.append("_method", "put");
-          triggerUpdateUserImage({ formData: imageData, id: user.id });
+          const formData = new FormData();
+          formData.append("image", body.image[0]);
+          formData.append("_method", "put");
+          triggerUpdateUserImage({ formData, id: user.id });
         }
       });
   };
