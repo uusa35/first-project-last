@@ -30,7 +30,7 @@ export default function ({ lang }: Props) {
   };
   return (
     <Popover className='relative'>
-      <Popover.Button className='inline-flex btn-color-default items-center gap-x-1 text-sm font-semibold leading-2 capitalize'>
+      <Popover.Button className='inline-flex btn-default items-center gap-x-1 text-sm font-semibold leading-2 capitalize'>
         <span>{trans.control_my_account}</span>
         <ChevronDownIcon className='h-5 w-5' aria-hidden='true' />
       </Popover.Button>

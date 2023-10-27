@@ -131,7 +131,7 @@ export default function ({ lang }: Props) {
         <div>
           <button
             type='submit'
-            className='flex w-full justify-center btn-color-default'>
+            className='flex w-full justify-center btn-default'>
             {trans.sign_in}
           </button>
         </div>

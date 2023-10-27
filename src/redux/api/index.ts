@@ -45,8 +45,8 @@ export const apiSlice = createApi({
       }
       return headers;
     },
-    credentials: 'include',
-    // credentials: "same-origin",
+    // credentials: 'include',
+    credentials: "same-origin",
   }),
   tagTypes: ['User'],
   keepUnusedDataFor: 0,

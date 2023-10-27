@@ -37,7 +37,8 @@ export default async function ({
     getCategories("", lang),
   ]);
 
-  if (user.id !== auth.id) notFound();
+  if (user.id !== auth.id || !countries || !user || !categories || !setting)
+    notFound();
 
   return (
     <MainContextLayout

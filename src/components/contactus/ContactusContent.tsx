@@ -174,7 +174,7 @@ export default function () {
           </div>
         </div>
         <div className='mt-10 flex justify-end  pt-8'>
-          <button type='submit' className='btn-color-default'>
+          <button type='submit' className='btn-default'>
             {trans.send}
           </button>
         </div>

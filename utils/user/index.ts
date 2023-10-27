@@ -10,6 +10,7 @@ export async function getUsers(search: string, lang: Locale['lang']) {
             'Accept-Language': lang
         }
     });
+    if (!res.ok) return undefined;
     return res.json()
 }
 
@@ -31,12 +32,12 @@ export async function getAuth(token: string) {
             'Authorization': `Bearer ${token}`
         }
     });
-    if (!res.ok) new Error('error');
+    if (!res.ok) return undefined;
     return res.json();
 
 }
 
-export async function updateUser(id: string, lang: Locale['lang'], token : string) {
+export async function updateUser(id: string, lang: Locale['lang'], token: string) {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}user/${id}`, {
         cache: "no-store",
         method: 'put',
@@ -45,6 +46,7 @@ export async function updateUser(id: string, lang: Locale['lang'], token : strin
             'Authorization': `Bearer ${token}`
         }
     });
-    return res.json()
+    if (!res.ok) return undefined;
+    return res.json();
 }
 

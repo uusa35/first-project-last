@@ -135,12 +135,12 @@ export default function ({
             <div className='flex flex-row  gap-x-4'>
               <Link
                 href={appLinks.register(lang, "company")}
-                className='text-sm font-semibold leading-6 w-28 text-center text-white p-2  btn-color-default '>
+                className='text-sm font-semibold leading-6 w-28 text-center text-white p-2  btn-default '>
                 {trans.subscriptions}
               </Link>
               <Link
                 href={appLinks.register(lang, "visitor")}
-                className='text-sm font-semibold leading-6 w-28 text-center text-white p-2  btn-color-default '>
+                className='text-sm font-semibold leading-6 w-28 text-center text-white p-2  btn-default '>
                 {trans.visitors}
               </Link>
             </div>

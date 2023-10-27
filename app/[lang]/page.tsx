@@ -282,18 +282,18 @@ export default async function Home({ params: { lang } }: Props) {
             <div className='mt-8'>
               <Link
                 href={`/${lang}/register/company`}
-                className='inline-flex  btn-color-default break-words text-sm  '>
+                className='inline-flex  btn-default break-words text-sm  '>
                 {trans.register_as_subscription}
               </Link>
             </div>
             <div className='flex flex-row gap-4 mt-2'>
               <Link
-                className='inline-flex  btn-color-default  bg-transparent text-expo-dark border border-expo-dark hover:bg-expo-dark hover:text-white text-sm  '
+                className='inline-flex  btn-default  bg-transparent text-expo-dark border border-expo-dark hover:bg-expo-dark hover:text-white text-sm  '
                 href={`/${lang}/register/company`}>
                 {trans.register_as_sponsorship}
               </Link>
               <Link
-                className='inline-flex  btn-color-default  bg-transparent text-expo-dark border border-expo-dark hover:bg-expo-dark hover:text-white text-sm  '
+                className='inline-flex  btn-default  bg-transparent text-expo-dark border border-expo-dark hover:bg-expo-dark hover:text-white text-sm  '
                 href={`/${lang}/register/visitor`}>
                 {trans.register_as_visitor}
               </Link>

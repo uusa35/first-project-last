@@ -9,6 +9,6 @@ export async function getCountries(search: string, lang: Locale['lang']) {
             'Accept-Language': lang
         }
     });
-    if (!res.ok) return undefined
-    return res.json()
+    if (!res.ok) return undefined;
+    return res.json();
 }
