@@ -28,7 +28,7 @@ export function CustomSearch({ trans, lang }: Props) {
       <Link
         href={`/${lang}/user?membership=${searchParams?.get(
           "membership"
-        )}/search=${searchKey}`}
+        )}&search=${searchKey}`}
       >
         <SearchIcon className="w-10 h-10" />
       </Link>

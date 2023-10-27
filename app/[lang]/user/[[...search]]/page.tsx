@@ -7,7 +7,6 @@ import { getSetting } from "@/utils/setting";
 import Image from "next/image";
 import { AppQueryResult, Category, Setting, User } from "@/types/queries";
 import LoginImage from "@/appImages/login/section.jpg";
-import SearchBar from "@/components/user/SearchBar";
 import Pagination from "@/components/Pagination";
 import UserCard from "@/components/user/UserCard";
 import NoResults from "@/components/NoResults";
