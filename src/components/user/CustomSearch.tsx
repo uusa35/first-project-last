@@ -21,7 +21,7 @@ export function CustomSearch({ trans, lang }: Props) {
       <input
         value={searchKey}
         type="search"
-        className="h-fit w-full border-none !outline-none facus:!shadow-none bg-[#D9D9D938]"
+        className="h-fit w-full border-none !outline-none focus:shadow-none focus:ring-0 bg-[#D9D9D938]"
         placeholder="search"
         onChange={(e) => setSearchKey(e.target.value)}
       />

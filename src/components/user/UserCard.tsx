@@ -45,7 +45,7 @@ export default async function ({ element, lang, trans }: Props) {
         </dl>
       </Link>
       <div>
-        <div className="-mt-px flex divide-x divide-gray-200">
+        <div className="-mt-px flex border border-gray-200 border-dotted">
           <div className="flex w-0 flex-1">
             <Link
               href={`/${lang}/user/${element.id}?slug=${element.name}`}
