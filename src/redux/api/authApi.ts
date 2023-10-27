@@ -12,10 +12,9 @@ export const authApi = apiSlice.injectEndpoints({
         url: `login`,
         body,
         method: "post",
-        validateStatus: (response, result) =>
-          response.status == 200,
+        // validateStatus: (response, result) =>
+        //   response.status == 200,
       }),
-      providesTags: ['User'],
     }),
     registerVisitor: builder.mutation<
       User, {

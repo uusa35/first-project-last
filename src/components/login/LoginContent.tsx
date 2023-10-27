@@ -1,7 +1,7 @@
 "use client";
 import { useLazyLoginQuery } from "@/redux/api/authApi";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { setUser } from "@/redux/slices/authSlice";
+import { setAuth } from "@/redux/slices/authSlice";
 import {
   showErrorToastMessage,
   showSuccessToastMessage,
@@ -49,10 +49,10 @@ export default function ({ lang }: Props) {
 
   const onSubmit: SubmitHandler<Inputs> = async (body) => {
     dispatch(enableLoading());
-    await triggerLogin(body, false).then((r: any) => {
+    await triggerLogin(body).then((r: any) => {
       if (r && r.data) {
         dispatch(showSuccessToastMessage({ content: trans.process_success }));
-        dispatch(setUser(r.data));
+        dispatch(setAuth(r.data));
         setToken(r.data.api_token);
         dispatch(disableLoading());
         return router.push(`/${lang}`);

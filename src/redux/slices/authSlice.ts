@@ -13,7 +13,7 @@ const initialState: Auth = {
   hasValidDeal: false,
   role: { id: ``, name: 'visitor' },
   deals: [],
-  api_token: undefined,
+  api_token: null,
 
 };
 
@@ -21,16 +21,12 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<Auth>) => action.payload,
-    resetAuth: (state, action: PayloadAction<void>) => {
-      return {
-        ...initialState,
-      };
-    },
+    setAuth: (state, action: PayloadAction<Auth>) => action.payload,
+    resetAuth: (state, action: PayloadAction<void>) => initialState,
   },
 });
 
-export const { resetAuth, setUser } = authSlice.actions;
+export const { resetAuth, setAuth } = authSlice.actions;
 export const isAuthenticated = (state: RootState) =>
   !isUndefined(state.auth.api_token)
 
