@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { isUndefined } from 'lodash';
+import { isNull, isUndefined } from 'lodash';
 import { RootState } from '@/src/redux/store';
 import { Auth } from '@/types/queries';
 
@@ -28,5 +28,5 @@ export const authSlice = createSlice({
 
 export const { resetAuth, setAuth } = authSlice.actions;
 export const isAuthenticated = (state: RootState) =>
-  !isUndefined(state.auth.api_token)
+  !isNull(state.auth.api_token);
 
