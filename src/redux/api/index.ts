@@ -18,7 +18,10 @@ export const apiSlice = createApi({
         locale,
         auth: { api_token }
       } = getState() as RootState;
-
+      headers.set(
+        'Access-Control-Allow-Origin',
+        '*',
+      );
       headers.set(
         'Access-Control-Allow-Headers',
         'X-Requested-With,Accept,Authentication,Content-Type',
@@ -28,14 +31,6 @@ export const apiSlice = createApi({
         'Access-Control-Allow-Methods',
         'GET,PUT,POST,DELETE,PATCH,OPTIONS',
       );
-      headers.set(
-        'Access-Control-Allow-Methods',
-        'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-      );
-      // headers.set(
-      //   'Access-Control-Allow-Origin',
-      //   'http://localhost',
-      // );
       headers.set('Content-Type', 'application/json');
       headers.set('Accept', 'application/json');
       headers.set('Cache-Control', 'no-store');
