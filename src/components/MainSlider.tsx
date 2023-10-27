@@ -24,22 +24,21 @@ export default async function ({ slides, lang }: Props) {
       navigation
       pagination={{ clickable: true }}
       onSlideChange={() => console.log("slide change")}
-      onSwiper={(swiper) => console.log(swiper)}>
+      onSwiper={(swiper) => console.log(swiper)}
+    >
       {slides.map((s: Slide, i: number) => (
         <SwiperSlide key={i}>
           <Image
-            width='1000'
-            height='500'
+            width="1000"
+            height="500"
             src={s.image}
             alt={`${process.env.NEXT_PUBLIC_BASE_URL}`}
-            className='h-full w-full object-cover'
+            className="h-full w-full object-cover relative"
           />
-          <div className='relative '>
-            <div className='bg-white/30 p-4 w-auto md:w-1/3 rounded-md absolute mx-6 xl:mx-24 inset-x-0 bottom-4 sm:bottom-12 xl:bottom-20 '>
-              <h1 className='rtl:text-right ltr:text-left text-md lg:text-2xl xl:text-4xl'>
-                {s.name}
-              </h1>
-              <h4 className='rtl:text-right ltr:text-left text-sm lg:text-xl xl:text-2xl mt-1 lg:mt-6'>
+          <div className="absolute top-0 w-full h-full bg-[#4c4c4c29] text-white px-10 py-5 flex items-end">
+            <div className="mb-10 px-5 w-full text-end">
+              <h1 className="text-md lg:text-2xl xl:text-4xl">{s.name}</h1>
+              <h4 className="text-sm lg:text-xl xl:text-2xl mt-1 lg:mt-6">
                 {s.description}
               </h4>
             </div>

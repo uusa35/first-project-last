@@ -4,7 +4,6 @@ import { MainContextLayout } from "@/layouts/MainContentLayout";
 import { getSlides } from "@/utils/slide";
 import { getCategories } from "@/utils/category";
 import { getSetting } from "@/utils/setting";
-import { CheckIcon } from "@heroicons/react/20/solid";
 import { getMemberships } from "@/utils/membership";
 import { getPosts } from "@/utils/post";
 import Link from "next/link";
@@ -20,104 +19,15 @@ import DOMPurify from "isomorphic-dompurify";
 import PostCard from "@/components/post/PostCard";
 import CategoryCard from "@/components/category/CategoryCard";
 import MembershipCard from "@/components/membership/MembershipCard";
-import NewsletterBg from "@/appImages/home/newsletter_bg.jpg";
+
 import DotPattern from "@/appImages/home/dot_pattern.png";
 import JoinusBg from "@/appImages/home/joinus.jpg";
 import ShowMore from "@/appIcons/green_left_arrow.svg";
-
-const tiers = [
-  {
-    name: "Freelancer",
-    id: "tier-freelancer",
-    href: "#",
-    priceMonthly: "$24",
-    description: "The essentials to provide your best work for clients.",
-    features: [
-      "5 products",
-      "Up to 1,000 subscribers",
-      "Basic analytics",
-      "48-hour support response time",
-    ],
-    mostPopular: false,
-  },
-  {
-    name: "Startup",
-    id: "tier-startup",
-    href: "#",
-    priceMonthly: "$32",
-    description: "A plan that scales with your rapidly growing business.",
-    features: [
-      "25 products",
-      "Up to 10,000 subscribers",
-      "Advanced analytics",
-      "24-hour support response time",
-      "Marketing automations",
-    ],
-    mostPopular: true,
-  },
-  {
-    name: "Enterprise",
-    id: "tier-enterprise",
-    href: "#",
-    priceMonthly: "$48",
-    description: "Dedicated support and infrastructure for your company.",
-    features: [
-      "Unlimited products",
-      "Unlimited subscribers",
-      "Advanced analytics",
-      "1-hour, dedicated support response time",
-      "Marketing automations",
-    ],
-    mostPopular: false,
-  },
-];
-
-const people = [
-  {
-    name: "Lindsay Walton",
-    role: "Front-end Developer",
-    imageUrl:
-      "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80",
-    twitterUrl: "#",
-    linkedinUrl: "#",
-  },
-  {
-    name: "Lindsay Walton",
-    role: "Front-end Developer",
-    imageUrl:
-      "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80",
-    twitterUrl: "#",
-    linkedinUrl: "#",
-  },
-  {
-    name: "Lindsay Walton",
-    role: "Front-end Developer",
-    imageUrl:
-      "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80",
-    twitterUrl: "#",
-    linkedinUrl: "#",
-  },
-  {
-    name: "Lindsay Walton",
-    role: "Front-end Developer",
-    imageUrl:
-      "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80",
-    twitterUrl: "#",
-    linkedinUrl: "#",
-  },
-  {
-    name: "Lindsay Walton",
-    role: "Front-end Developer",
-    imageUrl:
-      "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80",
-    twitterUrl: "#",
-    linkedinUrl: "#",
-  },
-];
-
-function classNames(...classes: any) {
-  return classes.filter(Boolean).join(" ");
-}
+import { Subscriptions } from "@/components/Home/Subscriptions";
+import { RegisterToJoin } from "@/components/Home/RegisterToJoin";
+import { LatestNews } from "@/components/Home/LatestNews";
+import { SubscriptionsPrices } from "@/components/Home/SubscriptionsPrices";
+// import Background from "@/appIcons/bg.svg";
 
 type Props = {
   params: { lang: Locale["lang"] };
@@ -150,7 +60,7 @@ export default async function Home({ params: { lang } }: Props) {
 
   return (
     <MainContextLayout
-      trans={trans}
+      trans={trans as { [key: string]: string }}
       lang={lang}
       searchParams={``}
       setting={setting}
@@ -295,187 +205,21 @@ export default async function Home({ params: { lang } }: Props) {
       </div>
 
       {/*  figures  */}
-      <div className="bg-white py-12 sm:py-12 capitalize">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl lg:max-w-none">
-            <dl className="mt-16 grid grid-cols-2 p-2 md:p-8 bg-expo-green  overflow-hidden rounded-2xl text-center lg:grid-cols-4">
-              <div className="col-span-1 flex flex-1 flex-row  justify-evenly items-center h-40 px-4 md:px-8 border-gray-400 ltr:border-r rtl:border-l ">
-                <PersonOutlineOutlined className="material-icon-lg border-blue-800 text-expo-dark " />
-                <div className="flex flex-col  p-2  border-gray-400 ">
-                  <dt className="text-sm font-semibold break-all  leading-6 text-gray-600">
-                    {trans.subscribers}
-                  </dt>
-                  <dd className="order-first text-3xl font-semibold tracking-tight text-gray-900">
-                    {100}
-                  </dd>
-                </div>
-              </div>
-
-              <div className="col-span-1 flex flex-1 flex-row  justify-evenly items-center h-40 border-gray-400 border-hidden lg:border-solid md:ltr:border-r md:rtl:border-l">
-                <PersonOutlineOutlined className="material-icon-lg border-blue-800 text-expo-dark " />
-                <div className="flex flex-col  p-2 pe-8  border-gray-400 ">
-                  <dt className="text-sm font-semibold break-all  leading-6 text-gray-600">
-                    {trans.subscribers}
-                  </dt>
-                  <dd className="order-first text-3xl font-semibold tracking-tight text-gray-900">
-                    {100}
-                  </dd>
-                </div>
-              </div>
-            </dl>
-          </div>
-        </div>
-      </div>
+      <Subscriptions trans={trans as { [key: string]: string }} />
 
       {/* newsletter */}
-      <div className=" py-12 sm:py-12 capitalize ">
-        <div className="mx-auto max-w-7xl sm:px-6 lg:px-8 bg-local">
-          <div
-            className="bg-local  relative isolate overflow-hidden  px-6 py-24 shadow-2xl sm:rounded-3xl sm:px-24 xl:py-32"
-            style={{
-              backgroundImage: `url(${NewsletterBg.src})`,
-              backgroundPosition: "center",
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat",
-            }}
-          >
-            <h2 className="mx-auto max-w-3xl line-clamp-2 text-center text-3xl font-bold tracking-tight text-white sm:text-4xl pb-4">
-              {trans.register_to_receive_latest_expo_news}
-            </h2>
-            <p className="mx-auto mt-2 max-w-xl  line-clamp-2 text-center text-lg leading-8 text-gray-300">
-              {
-                trans.through_this_section_u_can_follow_up_all_news_related_to_this_expo_and_even_more
-              }
-            </p>
-            <form className="mx-auto mt-10 flex max-w-md gap-x-4">
-              <label htmlFor="email-address" className="sr-only">
-                {trans.enter_ur_email}
-              </label>
-              <input
-                id="email-address"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                className="min-w-0 flex-auto rounded-md border-0 bg-white/80 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-white sm:text-sm sm:leading-6"
-                placeholder={trans.enter_ur_email}
-              />
-              <button
-                type="submit"
-                className="flex-none rounded-md bg-expo-medium px-3.5 py-2.5 text-sm font-semibold text-white capitalize shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-              >
-                {trans.notify_me}
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
+      <RegisterToJoin trans={trans as { [key: string]: string }} />
 
       {/* posts */}
-      <div className="bg-white py-14 capitalize">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-              {trans.latest_news}
-            </h2>
-            <p className="mt-2 text-lg break-all leading-8 text-gray-600">
-              {trans.through_this_section_get_latest_news_related}
-            </p>
-          </div>
+      <LatestNews
+        trans={trans as { [key: string]: string }}
+        lang={lang}
+        posts={posts}
+      />
 
-          <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-            {posts.data.map((p: Post, i: number) => (
-              <PostCard element={p} lang={lang} key={p.name} />
-            ))}
-          </div>
-        </div>
-      </div>
       {/* subscription prices */}
-      <div className="bg-expo-green py-12 sm:py-12 capitalize">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mx-auto max-w-4xl text-center">
-            <h2 className="text-base font-semibold leading-8 text-green-600">
-              Pricing
-            </h2>
-            <p className="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-              {trans.subscriptions}
-            </p>
-          </div>
-          <p className="mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-600">
-            Distinctio et nulla eum soluta et neque labore quibusdam. Saepe et
-            quasi iusto modi velit ut non voluptas in. Explicabo id ut laborum.
-          </p>
-          <div className="isolate mx-auto mt-16 grid max-w-md grid-cols-1 gap-y-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-            {tiers.map((tier, tierIdx) => (
-              <div
-                key={tier.id}
-                className={classNames(
-                  tier.mostPopular ? "lg:z-10 lg:rounded-b-none" : "lg:mt-8",
-                  tierIdx === 0 ? "lg:rounded-r-none" : "",
-                  tierIdx === tiers.length - 1 ? "lg:rounded-l-none" : "",
-                  "flex flex-col justify-between rounded-3xl bg-white p-8 ring-1 ring-gray-200 xl:p-10"
-                )}
-              >
-                <div>
-                  <div className="flex items-center justify-between gap-x-4">
-                    <h3
-                      id={tier.id}
-                      className={classNames(
-                        tier.mostPopular ? "text-green-600" : "text-gray-900",
-                        "text-lg font-semibold leading-8"
-                      )}
-                    >
-                      {tier.name}
-                    </h3>
-                    {tier.mostPopular ? (
-                      <p className="rounded-full bg-green-600/10 px-2.5 py-1 text-xs font-semibold leading-5 text-green-600">
-                        Most popular
-                      </p>
-                    ) : null}
-                  </div>
-                  <p className="mt-4 text-sm leading-6 text-gray-600">
-                    {tier.description}
-                  </p>
-                  <p className="mt-6 flex items-baseline gap-x-1">
-                    <span className="text-4xl font-bold tracking-tight text-gray-900">
-                      {tier.priceMonthly}
-                    </span>
-                    <span className="text-sm font-semibold leading-6 text-gray-600">
-                      /month
-                    </span>
-                  </p>
-                  <ul
-                    role="list"
-                    className="mt-8 space-y-3 text-sm leading-6 text-gray-600"
-                  >
-                    {tier.features.map((feature) => (
-                      <li key={feature} className="flex gap-x-3">
-                        <CheckIcon
-                          className="h-6 w-5 flex-none text-green-600"
-                          aria-hidden="true"
-                        />
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <Link
-                  href={tier.href}
-                  aria-describedby={tier.id}
-                  className={classNames(
-                    tier.mostPopular
-                      ? "bg-green-600 text-white shadow-sm hover:bg-green-500"
-                      : "text-green-600 ring-1 ring-inset ring-green-200 hover:ring-green-300",
-                    "mt-8 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
-                  )}
-                >
-                  Buy plan
-                </Link>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+      <SubscriptionsPrices trans={trans as { [key: string]: string }} />
+
       {/* sponsors logos */}
 
       {sponsors.data && (
