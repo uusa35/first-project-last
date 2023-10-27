@@ -2,7 +2,7 @@
 import { kebabCase, round, truncate } from 'lodash';
 import { localeType } from '@/types/index';
 import { Locale } from '@/types/index';
-export const baseUrl = process.env.NODE_ENV === 'production' ? `https://cp.ar-expo-backend.ru/` : `http://ar-expo-backend.test/`;
+export const baseUrl = process.env.NODE_ENV === 'production' ? `https://cp.ar-expo-backend.ru` : `http://ar-expo-backend.test`;
 export const appVersion = `0.0.1`;
 export const apiUrl = `${baseUrl}/api`;
 export const imageUrl = `https://loremflickr.com/`;
