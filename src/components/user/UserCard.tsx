@@ -13,7 +13,7 @@ type Props = {
 };
 export default async function ({ element, lang, trans }: Props) {
   return (
-    <li className="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow transform transition duration-500 hover:scale-110">
+    <li className="col-span-1 flex flex-col  rounded-lg bg-white text-center shadow transform transition duration-500 hover:scale-110">
       <Link
         href={`/${lang}/user/${element.id}?slug=${element.name}`}
         className="flex flex-1 flex-col p-4"
@@ -44,8 +44,8 @@ export default async function ({ element, lang, trans }: Props) {
           </dd>
         </dl>
       </Link>
-      <div>
-        <div className="-mt-px flex border border-gray-200 border-dotted">
+      <div className=" px-3">
+        <div className="-mt-px flex border-t-[1.5px] border-[#1118277D] border-dashed">
           <div className="flex w-0 flex-1">
             <Link
               href={`/${lang}/user/${element.id}?slug=${element.name}`}
