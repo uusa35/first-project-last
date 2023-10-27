@@ -74,8 +74,8 @@ export const apiSlice = createApi({
         headers: {
           ...(!isUndefined(lang) && lang && { 'Accept-Language': lang }),
         },
-        // validateStatus: (response, result) =>
-        //   response.status == 200,
+        validateStatus: (response, result) =>
+          response.status == 200,
       }),
     }),
     uploadImage: builder.query<
@@ -86,9 +86,12 @@ export const apiSlice = createApi({
         url: `images/upload`,
         method: 'POST',
         body,
-        formData: true
-        // validateStatus: (response, result) =>
-        //   response.status == 200,
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        formData: true,
+        validateStatus: (response, result) =>
+          response.status == 200,
       }),
     }),
   }),

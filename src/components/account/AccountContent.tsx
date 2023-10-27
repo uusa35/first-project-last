@@ -112,6 +112,7 @@ export default function ({ user, countries, categories }: Props) {
         if (body.image[0]) {
           const imageData = new FormData();
           imageData.append("image", body.image[0]);
+          imageData.append("_method", "put");
           triggerUpdateUserImage({ formData: imageData, id: user.id });
         }
       });
