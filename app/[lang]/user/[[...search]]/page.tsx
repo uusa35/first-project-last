@@ -89,7 +89,7 @@ export default async function UserIndex({
           <Image
             width={1000}
             height={500}
-            src={UserIndexBanner.src}
+            src={UserIndexBanner}
             alt={setting.name}
             className='aspect-[9/3] w-full object-cover xl:rounded-lg'
           />
