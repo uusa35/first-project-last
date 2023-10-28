@@ -149,7 +149,7 @@ export function RegisterContent({ role }: Props) {
               className='block text-sm leading-6 text-gray-700'>
               {trans.agree_to}
               <Link
-                href='#'
+                href={appLinks.terms(lang)}
                 className='font-semibold text-expo-dark hover:text-green-700 px-1'>
                 {trans.the_terms_and_conditions}
               </Link>
