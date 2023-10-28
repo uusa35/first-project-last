@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { isNull, isUndefined } from 'lodash';
+import { isNull } from 'lodash';
 import { RootState } from '@/src/redux/store';
 import { Auth } from '@/types/queries';
 
