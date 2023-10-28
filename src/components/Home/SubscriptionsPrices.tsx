@@ -31,10 +31,7 @@ export function SubscriptionsPrices({
           {trans.register_now_and_learn_about_the_partner_and_sponsor_packages}
         </p>
         <div className="flex justify-center mt-5">
-          <Link
-            className="text-center py-2 px-5 border border-expo-dark text-expo-dark rounded-md"
-            href={`/${lang}/register/company`}
-          >
+          <Link className="btn-dark-hover" href={`/${lang}/register/company`}>
             {trans.register_as_a_subscriper}
           </Link>
         </div>

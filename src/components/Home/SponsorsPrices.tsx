@@ -26,10 +26,7 @@ export function SponsorsPrices({ trans, sponsorships, lang, country }: Props) {
         </p>
 
         <div className="flex justify-center mt-5">
-          <Link
-            className="text-center py-2 px-5 border border-expo-dark rounded-md"
-            href={`/${lang}/register/company`}
-          >
+          <Link className="btn-dark-hover" href={`/${lang}/register/company`}>
             {trans.register_as_a_sponsor}
           </Link>
         </div>

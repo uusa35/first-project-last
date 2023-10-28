@@ -36,6 +36,9 @@ body {
   .btn-transparent{
         @apply text-center text-expo-dark border border-expo-dark hover:bg-expo-light rounded-md font-semibold shadow-sm px-3.5 py-2.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white;
   }
+  .btn-dark-hover {
+    @apply text-center text-expo-dark border border-expo-dark hover:bg-expo-dark hover:text-white rounded-md font-semibold shadow-sm px-3.5 py-2.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white;
+  }
 }
 
 .font-expo-medium {

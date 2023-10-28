@@ -163,6 +163,8 @@
     "caption.ar": "وصف مختصر بالعربية",
     "caption.en": "وصف مختصر بالإنجليزية",
     "caption.ru": "وصف مختصر بالروسية",
-    "submit": "حفظ"
+    "submit": "حفظ",
+    "download_the_exhibition_brochure":"تحميل الكتيب الخاص بالمعرض"
+
   }
 }

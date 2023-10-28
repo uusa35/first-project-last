@@ -28,8 +28,8 @@ export function SearchBar({ trans, lang }: Props) {
             />
             {/* it should search in both meberships not just sunscription????? */}
             <Link
-              className="flex items-center rounded-md bg-green-900 text-white px-3.5 py-2.5 text-sm font-semibold  shadow-sm hover:btn-color-default focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-              href={`/${lang}/user?membership=${"subscription"}/search=${searchKey}`}
+              className="btn-default flex items-center"
+              href={`/${lang}/user?membership=${"subscription"}&search=${searchKey}`}
             >
               {trans.search}
             </Link>
