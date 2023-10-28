@@ -95,7 +95,7 @@ export type Auth = {
     email: string;
     image: string;
     hasValidDeal: false;
-    api_token: string | undefined;
+    api_token: string | null | undefined;
     role: Role,
     deals: Deal[];
     [key: string]: any;
@@ -154,9 +154,9 @@ export type Order = {
 }
 
 export type ImageType = {
-   id: number,
-    name: string,
-    caption: string,
-    image: string,
-    url: string,
+    id: number;
+    name: string;
+    caption: string;
+    image: string;
+    [key: string]: any;
 }

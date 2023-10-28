@@ -3,36 +3,26 @@ import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
 import { getSetting } from "@/utils/setting";
 import Image from "next/image";
-import { FormEvent } from "react";
-import type { Metadata } from "next";
 import ContactusContent from "@/components/contactus/ContactusContent";
 import ContactusImage from "@/appImages/contactus/contactus_bg.jpg";
 import { DevicePhoneMobileIcon, PhoneIcon } from "@heroicons/react/24/outline";
-import { whatsappUrl } from "@/src/constants";
-import {
-  Facebook,
-  Twitter,
-  Instagram,
-  LinkedIn,
-  WhatsApp,
-  YouTube,
-  Email,
-  Android,
-  Apple,
-} from "@mui/icons-material";
+import { WhatsApp, Email, Android, Apple } from "@mui/icons-material";
 import SocialIcons from "@/components/footer/SocialIcons";
+import { Setting } from "@/types/queries";
 
 type Props = {
   params: { lang: Locale["lang"] };
 };
+
 export async function generateMetadata({ params }: Props) {
   const { trans } = await getDictionary(params.lang);
   return {
     title: trans.contactus,
   };
 }
+
 export default async function ({ params: { lang } }: Props) {
-  const [{ trans }, setting] : [{ trans : any}, Setting] = await Promise.all([
+  const [{ trans }, setting]: [{ trans: any }, Setting] = await Promise.all([
     getDictionary(lang),
     getSetting(lang),
   ]);
@@ -52,6 +42,7 @@ export default async function ({ params: { lang } }: Props) {
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
           }}>
+          {/* info section */}
           <div className='h-full lg:absolute top-0 p-10 lg:p-16 text-white z-40 w-full'>
             <div className='flex flex-col justify-between items-center w-full h-full gap-y-4'>
               <div className='flex flex-col gap-y-6  w-full h-full'>
@@ -157,7 +148,8 @@ export default async function ({ params: { lang } }: Props) {
             </div>
           </div>
         </div>
-        <div className='pb-24 pt-16 sm:pb-32 sm:pt-24 lg:mx-auto lg:grid lg:max-w-7xl lg:grid-cols-2 lg:pt-32 '>
+        {/* form section */}
+        <div className='lg:mx-auto lg:grid lg:max-w-7xl lg:grid-cols-2 pt-12 pb-24 sm:pt-14'>
           <div className='px-6 lg:px-8'>
             <div className='mx-auto max-w-xl lg:mx-0 lg:max-w-lg capitalize'>
               <h2 className='text-3xl font-bold tracking-tight text-gray-900'>
@@ -167,7 +159,7 @@ export default async function ({ params: { lang } }: Props) {
                 {trans.contactus_message}
               </p>
             </div>
-            <ContactusContent lang={lang} />
+            <ContactusContent />
           </div>
         </div>
       </div>

@@ -13,12 +13,11 @@ export default function ({ logo, name, lang }: Props) {
     <Link href={`/${lang}`} className='-m-1.5 p-1.5'>
       <span className='sr-only'>{name}</span>
       <Image
-        width={100}
-        height={100}
+        width={200}
+        height={200}
         alt={name}
-        className='h-8 w-auto'
+        className='h-12 w-auto object-cover'
         src={logo}
-        onError={() => console.log('error image logo')}
       />
     </Link>
   );

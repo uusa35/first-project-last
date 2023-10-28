@@ -10,6 +10,10 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setLocale } from "@/redux/slices/localeSlice";
 import moment from "moment";
 import * as yup from "yup";
+import { deleteToken, setLang, setToken } from "@/src/constants";
+import { isNull } from "lodash";
+import { setLocaleCookie } from "@/app/actions";
+import { disableLoading } from "@/redux/slices/settingSlice";
 
 type Props = {
   children: React.ReactNode;
@@ -27,7 +31,10 @@ const MainContextLayout: FC<Props> = ({
   searchParams = ``,
   setting,
 }) => {
-  const { locale } = useAppSelector((state) => state);
+  const {
+    locale,
+    auth: { api_token },
+  } = useAppSelector((state) => state);
   const pathName = usePathname();
   const dispatch = useAppDispatch();
   const navigation = [
@@ -48,8 +55,10 @@ const MainContextLayout: FC<Props> = ({
   ];
 
   useEffect(() => {
-    if (lang !== locale.lang) {
+    if (lang || lang !== locale.lang) {
       dispatch(setLocale(lang));
+      setLocaleCookie(lang);
+      setLang(lang);
       moment.locale(lang);
       yup.setLocale({
         mixed: {
@@ -68,6 +77,14 @@ const MainContextLayout: FC<Props> = ({
       });
     }
   }, [lang]);
+
+  useEffect(() => {
+    if (isNull(api_token)) {
+      deleteToken();
+    } else {
+      setToken(api_token);
+    }
+  }, [api_token]);
 
   return (
     <MainContext.Provider value={trans}>

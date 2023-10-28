@@ -17,9 +17,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { first } from "lodash";
 
-type Props = {
-  lang: Locale["lang"];
-};
 type Inputs = {
   name: string;
   email: string;
@@ -27,8 +24,11 @@ type Inputs = {
   message: string;
 };
 
-export default function ({ lang }: Props) {
+export default function () {
   const trans: { [key: string]: string } = useContext(MainContext);
+  const {
+    locale: { lang },
+  } = useAppSelector((state) => state);
   const {
     appSetting: { isLoading },
   } = useAppSelector((state) => state);
@@ -67,7 +67,6 @@ export default function ({ lang }: Props) {
       .then(() => {
         dispatch(disableLoading());
         reset();
-        // router.back();
       });
   };
 
@@ -175,7 +174,7 @@ export default function ({ lang }: Props) {
           </div>
         </div>
         <div className='mt-10 flex justify-end  pt-8'>
-          <button type='submit' className='btn-color-default'>
+          <button type='submit' className='btn-default'>
             {trans.send}
           </button>
         </div>

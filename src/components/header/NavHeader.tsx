@@ -16,7 +16,7 @@ import {
 import { changePathName, convertSearchParamsToString } from "@/utils/helpers";
 import AppLogo from "@/components/header/AppLogo";
 import { last, split, toString } from "lodash";
-import { setCurrentPath } from "@/redux/slices/settingSlice";
+import { disableLoading, setCurrentPath } from "@/redux/slices/settingSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { Setting } from "@/types/queries";
 import LanguagesList from "@/components/header/LanguagesList";
@@ -63,7 +63,7 @@ export default function ({
   const handleLogout = () => {
     dispatch(resetAuth());
     deleteToken();
-    router.replace(appLinks.home(lang));
+    return router.replace(appLinks.home(lang));
   };
 
   const stickNavbar = () => {
@@ -135,12 +135,12 @@ export default function ({
             <div className='flex flex-row  gap-x-4'>
               <Link
                 href={appLinks.register(lang, "company")}
-                className='text-sm font-semibold leading-6 w-28 text-center text-white p-2  btn-color-default '>
+                className='text-sm font-semibold leading-6 w-28 text-center text-white p-2  btn-default '>
                 {trans.subscriptions}
               </Link>
               <Link
                 href={appLinks.register(lang, "visitor")}
-                className='text-sm font-semibold leading-6 w-28 text-center text-white p-2  btn-color-default '>
+                className='text-sm font-semibold leading-6 w-28 text-center text-white p-2  btn-default '>
                 {trans.visitors}
               </Link>
             </div>
@@ -221,25 +221,7 @@ export default function ({
                 ))}
               </div>
               <div className='py-6 capitalize flex flex-1 flex-col'>
-                {!isAuth ? (
-                  <div className='flex flex-col'>
-                    <Link
-                      href={`/${lang}/login`}
-                      className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'>
-                      {trans.login}
-                    </Link>
-                    <Link
-                      href={appLinks.register(lang, "company")}
-                      className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'>
-                      {trans.register_as_subscription}
-                    </Link>
-                    <Link
-                      href={appLinks.register(lang, "visitor")}
-                      className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'>
-                      {trans.register_as_visitor}
-                    </Link>
-                  </div>
-                ) : (
+                {isAuth ? (
                   <div className='p-3 ring ring-gray-50'>
                     <div className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 '>
                       {trans.welcome}, {auth.username}
@@ -259,6 +241,24 @@ export default function ({
                       onClick={() => handleLogout()}>
                       {trans.logout}
                     </button>
+                  </div>
+                ) : (
+                  <div className='flex flex-col'>
+                    <Link
+                      href={`/${lang}/login`}
+                      className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'>
+                      {trans.login}
+                    </Link>
+                    <Link
+                      href={appLinks.register(lang, "company")}
+                      className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'>
+                      {trans.register_as_subscription}
+                    </Link>
+                    <Link
+                      href={appLinks.register(lang, "visitor")}
+                      className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'>
+                      {trans.register_as_visitor}
+                    </Link>
                   </div>
                 )}
                 <div className='flex flex-row justify-between items-center py-4 lg:py-0 px-8 ps-12'>

@@ -11,7 +11,17 @@ import MainSlider from "@/components/MainSlider";
 import Image from "next/image";
 import { getImages } from "@/utils/image";
 import { getUsers } from "@/utils/user";
-import { Category, Membership, Post, User } from "@/types/queries";
+import {
+  AppQueryResult,
+  Category,
+  Country,
+  ImageType,
+  Membership,
+  Post,
+  Setting,
+  Slide,
+  User,
+} from "@/types/queries";
 import Loading from "./loading";
 import { PersonOutlineOutlined } from "@/src/constants";
 import { getCountries } from "@/utils/country";
@@ -50,6 +60,17 @@ export default async function Home({ params: { lang } }: Props) {
     sponsors,
     images,
     country,
+  ]: [
+    { trans: any },
+    Slide[],
+    AppQueryResult<Category[]>,
+    Setting,
+    Membership[],
+    Membership[],
+    AppQueryResult<Post[]>,
+    AppQueryResult<User[]>,
+    AppQueryResult<ImageType[]>,
+    Country
   ] = await Promise.all([
     getDictionary(lang),
     getSlides(`on_home=1`, lang),

@@ -23,8 +23,8 @@ export default async function ({ slides, lang }: Props) {
       dir={`${lang === "ar" ? "ltr" : "rtl"}`}
       navigation
       pagination={{ clickable: true }}
-      onSlideChange={() => console.log("slide change")}
-      onSwiper={(swiper) => console.log(swiper)}
+      // onSlideChange={() => console.log("slide change")}
+      // onSwiper={(swiper) => console.log(swiper)}
     >
       {slides.map((s: Slide, i: number) => (
         <SwiperSlide key={i}>
