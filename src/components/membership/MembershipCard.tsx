@@ -43,7 +43,7 @@ export default function ({
   console.log({ element });
   return (
     <div
-      className={`ring-gray-200 rounded-md p-8 ring-1 xl:p-10 bg-white flex flex-col justify-between  ${
+      className={`ring-gray-200 rounded-md p-8 ring-1 xl:p-10 bg-white flex flex-col justify-between gap-y-5  ${
         scaleOnHover
           ? "transform transition duration-500 hover:scale-110 hover:z-10"
           : scaleMiddle
@@ -90,9 +90,7 @@ export default function ({
       <button
         type="button"
         onClick={() => handleSubscribe(element)}
-        className={
-          "w-full text-expo-dark border border-expo-dark focus-visible:outline-green-600 mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-        }
+        className={"w-full btn-transparent"}
       >
         {isAuth ? trans.register_now_to_subscribe : trans.subscribe_now}
       </button>
