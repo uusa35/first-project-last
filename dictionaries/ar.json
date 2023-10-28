@@ -82,10 +82,7 @@
     "beneficiary_name": "اسم المستفيد",
     "continue": "متابعة",
     "choose_language": "اللغة",
-    
-    "all_participants":"جميع المشاركين",
-
-    
+    "all_participants": "جميع المشاركين",
     "forgot_password": "نسيت كلمة المرور؟",
     "sign_in": "تسجيل الدخول",
     "Dont_have_an_account": "لا تمتلك حساب ؟",
@@ -140,7 +137,7 @@
     "register_now_and_learn_about_sponsorship_packages":"سجل الان وتعرف علي باقات الرعاة",
     "register_as_a_sponsor":"سجل كراعي",
     "through_this_section_you_can_browse_the_latest_news":"يمكنك من خلال هذا القسم تصفح آخر الأخبار والمقالات المتعلقة بالمعرض والشركات المشاركة بالمعرض",
-    "control_my_account": "التحكم بالحساب",
+   "control_my_account": "التحكم بالحساب",
     "u_must_be_registered_as_company_register_now_or_update_ur_account": "يجب عليك التسجيل كشركة أو تفعيل حسابك الحالي لعضوية الشركات وتحديث البيانات المطلوبة",
     "name.ar": "الاسم بالعربية",
     "name.en": "الاسم بالإنجليزية",

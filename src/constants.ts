@@ -18,6 +18,8 @@ export const appLinks = {
         `/${lang}`,
     about: (lang: Locale['lang']) =>
         `/${lang}/about`,
+    terms: (lang: Locale['lang']) =>
+        `/${lang}/terms`,
     userIndex: (lang: Locale['lang'], search?: string) =>
         `/${lang}/user?${search ?? ''}`,
     userShow: (lang: Locale['lang'], id: string, slug?: string) =>

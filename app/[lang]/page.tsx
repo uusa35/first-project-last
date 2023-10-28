@@ -89,8 +89,7 @@ export default async function Home({ params: { lang } }: Props) {
       trans={trans as { [key: string]: string }}
       lang={lang}
       searchParams={``}
-      setting={setting}
-    >
+      setting={setting}>
       {/* slider */}
       <MainSlider slides={slides} lang={lang} />
       {/* search */}

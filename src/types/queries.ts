@@ -154,9 +154,10 @@ export type Order = {
 }
 
 export type ImageType = {
-    id: number;
-    name: string;
-    caption: string;
-    image: string;
+    id: number,
+    name: string,
+    caption: string,
+    image: string,
+    url: string,
     [key: string]: any;
 }
