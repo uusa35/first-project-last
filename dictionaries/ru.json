@@ -129,7 +129,12 @@
     "control_account_information": "control_account_information",
     "back_to_home": "back to home",
     "logout": "logout",
-    "pricing":"pricing",
-    "":""
+    "main_subscripers":"основные подписчики",
+    "register_now_and_learn_about_the_partner_and_sponsor_packages":"Зарегистрируйтесь сейчас и узнайте о партнерских и спонсорских пакетах",
+    "register_as_a_subscriper":"Зарегистрируйтесь как партнер",
+    "register_now_and_learn_about_sponsorship_packages":"Зарегистрируйтесь сейчас и узнайте о спонсорских пакетах",
+"register_as_a_sponsor":"Зарегистрироваться в качестве спонсора",
+ "through_this_section_you_can_browse_the_latest_news":"В этом разделе вы можете просмотреть последние новости и статьи, связанные с выставкой и компаниями-участниками выставки."
+
   }
 }

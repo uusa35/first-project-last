@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/is-prop-valid": "^1.2.1",
     "@emotion/memoize": "^0.8.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
@@ -48,6 +49,7 @@
     "@types/redux-logger": "^3.0.9",
     "@types/redux-saga": "0.10.5",
     "autoprefixer": "10.4.15",
+    "better-react-carousel": "^1.1.2",
     "clsx": "^1.2.1",
     "cookie": "^0.5.0",
     "cookies": "^0.8.0",

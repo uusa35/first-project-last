@@ -152,3 +152,11 @@ export type Order = {
     membership: Membership;
     [key: string]: any;
 }
+
+export type ImageType = {
+   id: number,
+    name: string,
+    caption: string,
+    image: string,
+    url: string,
+}

@@ -133,7 +133,12 @@
     "control_account_information": "control_account_information",
     "back_to_home": "back to home",
     "logout": "logout",
-    "pricing":"pricing",
-    "":""
+    "main_subscripers":"main subscribers",
+        "register_now_and_learn_about_the_partner_and_sponsor_packages":"Register now and learn about the subscribers and sponsor packages",
+        "register_as_a_subscriper":"register as a subscriber",
+        "register_now_and_learn_about_sponsorship_packages":"register now and learn about sponsorship packages",
+"register_as_a_sponsor":"register as a sponsor",
+ "through_this_section_you_can_browse_the_latest_news":"Through this section, you can browse the latest news and articles related to the exhibition and the companies participating in the exhibition"
+
   }
 }

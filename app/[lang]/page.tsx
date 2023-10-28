@@ -29,6 +29,9 @@ import { SubscriptionsPrices } from "@/components/Home/SubscriptionsPrices";
 import { SearchBar } from "@/components/Home/SearchBar";
 import { Categories } from "@/components/Home/Categories";
 import { RegisterAs } from "@/components/Home/RegisterAs";
+import { Sponsors } from "@/components/Home/Sponsors";
+import { SponsorsPrices } from "@/components/Home/SponsorsPrices";
+import { MainGallery } from "@/components/Home/MainGallery";
 // import Background from "@/appIcons/bg.svg";
 
 type Props = {
@@ -96,104 +99,33 @@ export default async function Home({ params: { lang } }: Props) {
       />
 
       {/* subscription prices */}
-      <SubscriptionsPrices trans={trans as { [key: string]: string }} />
+      <SubscriptionsPrices
+        country={country}
+        subscriptions={subscriptions}
+        trans={trans as { [key: string]: string }}
+        lang={lang}
+      />
 
       {/* sponsors logos */}
-      {sponsors.data && (
-        <div className="bg-white py-12 sm:py-12 capitalize">
-          <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            <h2 className="text-center text-lg font-semibold leading-8 text-gray-900">
-              {trans.sponsors}
-            </h2>
-            <div className="mx-auto mt-10 grid max-w-lg grid-cols-4 items-center gap-x-8 gap-y-10 sm:max-w-xl sm:grid-cols-6 sm:gap-x-10 lg:mx-0 lg:max-w-none lg:grid-cols-5">
-              {sponsors.data.map((s: User, i: string) => (
-                <Link key={s.id} href={`/user/${s.id}?slug=${s.name}`}>
-                  <Image
-                    key={i}
-                    className="col-span-2 max-h-[100px] w-full object-contain lg:col-span-1"
-                    src={s.image}
-                    alt={s.name}
-                    width={200}
-                    height={200}
-                  />
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
+      <Sponsors
+        sponsors={sponsors}
+        trans={trans as { [key: string]: string }}
+      />
 
       {/* sponsorship prices */}
-      <div className="bg-expo-green py-12 sm:py-12 capitalize">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mx-auto max-w-4xl text-center">
-            <h2 className="text-base font-semibold leading-8 text-green-600">
-              {trans.sponsors}
-            </h2>
-            <p className="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-              {trans.sponsorships}
-            </p>
-          </div>
-          <p className="mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-600">
-            Distinctio et nulla eum soluta et neque labore quibusdam. Saepe et
-            quasi iusto modi velit ut non voluptas in. Explicabo id ut laborum.
-          </p>
-
-          <div className="isolate mx-auto mt-10 grid max-w-md grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-            {sponsorships.map((s: Membership, i: number) => (
-              <MembershipCard
-                element={s}
-                key={i}
-                lang={lang}
-                country={country[0]}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
+      <SponsorsPrices
+        country={country}
+        trans={trans as { [key: string]: string }}
+        lang={lang}
+        sponsorships={sponsorships}
+      />
 
       {/* OnHome Images with Url if exist (this will be a slider) */}
-      <div className="py-12 sm:py-10 capitalize">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mx-auto  lg:mx-0">
-            <h2 className="text-center text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-              {trans.gallery}
-            </h2>
-            <p className="mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-600">
-              We’re a dynamic group of individuals who are passionate about what
-              we do and dedicated to delivering the best results for our
-              clients.
-            </p>
-          </div>
-
-          <ul
-            role="list"
-            className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-4 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-4"
-          >
-            {images.data.map((img: any, i: number) => (
-              <li key={i}>
-                <Image
-                  className="aspect-[3/2] w-full rounded-2xl object-cover"
-                  src={img.image}
-                  alt={setting.name}
-                  width={200}
-                  height={200}
-                />
-                {img.name && (
-                  <>
-                    <h3 className="mt-6 text-lg font-semibold leading-8 tracking-tight text-gray-900">
-                      {img.name}
-                    </h3>
-                    <p className="text-base leading-8 text-gray-600">
-                      {img.caption}
-                    </p>
-                  </>
-                )}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
+      <MainGallery
+        trans={trans as { [key: string]: string }}
+        images={images}
+        setting={setting}
+      />
     </MainContextLayout>
   );
 }

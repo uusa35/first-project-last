@@ -134,7 +134,13 @@
     "control_account_information": "التحكم بمعلومات الحساب",
     "back_to_home": "العودة للرئيسية",
     "logout": "الخروج من الحساب",
-    "pricing":"",
-    "":""
+    "main_subscripers":"شركاء رئيسين",
+    "register_now_and_learn_about_the_partner_and_sponsor_packages":"سجل الان وتعرف علي باقات الشركاء والرعاة",
+    "register_as_a_subscriper":"سجل كشريك",
+    "register_now_and_learn_about_sponsorship_packages":"سجل الان وتعرف علي باقات الرعاة",
+    "register_as_a_sponsor":"سجل كراعي",
+    "through_this_section_you_can_browse_the_latest_news":"يمكنك من خلال هذا القسم تصفح آخر الأخبار والمقالات المتعلقة بالمعرض والشركات المشاركة بالمعرض"
+
+
   }
 }

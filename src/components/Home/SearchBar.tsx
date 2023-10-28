@@ -22,13 +22,13 @@ export function SearchBar({ trans, lang }: Props) {
             <input
               required
               className="min-w-0 flex-auto rounded-md border-0 px-3.5 py-2 h-14 text-black bg-gray-100 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-white sm:text-sm sm:leading-6"
-              placeholder={trans.enter_ur_email}
+              placeholder={trans.search}
               onChange={(e) => setSearchKey(e.target.value)}
               value={searchKey}
             />
             {/* it should search in both meberships not just sunscription????? */}
             <Link
-              className="flex items-center rounded-md bg-green-900 text-white px-3.5 py-2.5 text-sm font-semibold  shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              className="flex items-center rounded-md bg-green-900 text-white px-3.5 py-2.5 text-sm font-semibold  shadow-sm hover:btn-color-default focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               href={`/${lang}/user?membership=${"subscription"}/search=${searchKey}`}
             >
               {trans.search}
