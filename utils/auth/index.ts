@@ -1,8 +1,7 @@
 import { Locale } from '@/types/index';
-import { NextResponse } from 'next/server'
 
-export async function login(email: string,password:string, lang: Locale['lang']) {
-        const query = `?email=${email}&password=${password}`;
+export async function login(email: string, password: string, lang: Locale['lang']) {
+    const query = `?email=${email}&password=${password}`;
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}login${query}`, {
         cache: "no-store",
@@ -12,10 +11,8 @@ export async function login(email: string,password:string, lang: Locale['lang'])
         }
     });
     if (!res.ok) {
-        
         throw new Error("Failed to fetch data");
     }
-    // console.log(res)
     return res.json()
 }
 

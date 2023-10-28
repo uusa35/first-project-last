@@ -2,25 +2,43 @@ import { MainContextLayout } from "@/layouts/MainContentLayout";
 import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
 import { getSetting } from "@/utils/setting";
-import Image from "next/image";
-import LoginImage from "@/appImages/login/section.jpg";
-import Link from "next/link";
-import { appLinks } from "@/src/constants";
-import { RegisterContent } from "@/components/register/RegisterContent";
-import { Role, Setting } from "@/types/queries";
+import { Auth, Category, Country, Role, Setting, User } from "@/types/queries";
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
-import { Tab } from "@headlessui/react";
 import AccountContent from "@/components/account/AccountContent";
+import { getAuth, updateUser } from "@/utils/user";
+import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
+import AccountSteps from "@/components/account/AccountSteps";
+import { getCountries } from "@/utils/country";
+import { getCategories } from "@/utils/category";
 
 export default async function ({
-  params: { lang, role },
+  params: { lang, role, id },
 }: {
-  params: { lang: Locale["lang"]; role: Role["name"] };
+  params: { lang: Locale["lang"]; role: Role["name"]; id: string };
 }) {
-  const [{ trans }, setting]: [{ trans: any }, Setting] = await Promise.all([
+  const cookieStore = cookies();
+  const token: any = cookieStore.get("token");
+  if (!token || !token.value) notFound();
+
+  const [{ trans }, setting, auth, user, countries, categories]: [
+    { trans: any },
+    Setting,
+    Auth,
+    User,
+    Country[],
+    Category[]
+  ] = await Promise.all([
     getDictionary(lang),
     getSetting(lang),
+    getAuth(token.value),
+    updateUser(id, lang, token.value),
+    getCountries("", lang),
+    getCategories("", lang),
   ]);
+
+  if (user.id !== auth.id || !countries || !user || !categories || !setting)
+    notFound();
 
   return (
     <MainContextLayout
@@ -28,9 +46,14 @@ export default async function ({
       lang={lang}
       searchParams={``}
       setting={setting}>
-      <main className='relative isolate mx-auto max-w-7xl min-h-screen'>
-        <AccountContent />
-        <form className={`p-3 xl:p-0`}>
+      <main className='relative isolate mx-auto max-w-7xl min-h-screen p-3 xl:p-0 space-y-4'>
+        <AccountSteps />
+        <AccountContent
+          user={user}
+          countries={countries}
+          categories={categories}
+        />
+        <form className={``}>
           <div className='space-y-12'>
             <div className='grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3'>
               <div>

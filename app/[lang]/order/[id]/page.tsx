@@ -13,22 +13,26 @@ import { getCountries } from "@/utils/country";
 import OrderDetails from "@/components/order/OrderDetails";
 import Link from "next/link";
 import { convertToJson } from "@/utils/helpers";
-import { Order } from "@/types/queries";
+import { Country, Order, Setting } from "@/types/queries";
 //  this page will appear after redirection from Payment (will update the order with failed / paid)
 export default async function ({
   params: { lang, id },
 }: {
   params: { lang: Locale["lang"]; id: string };
 }) {
-  const [{ trans }, setting, country, dollarCountry, order] = await Promise.all(
-    [
-      getDictionary(lang),
-      getSetting(lang),
-      getCountries(`lang=${lang}&limit=1`, lang),
-      getCountries(`lang=en&limit=1`, lang),
-      getOrder(id, lang),
-    ]
-  );
+  const [{ trans }, setting, country, dollarCountry, order]: [
+    { trans: any },
+    Setting,
+    Country,
+    Country,
+    Order
+  ] = await Promise.all([
+    getDictionary(lang),
+    getSetting(lang),
+    getCountries(`lang=${lang}&limit=1`, lang),
+    getCountries(`lang=en&limit=1`, lang),
+    getOrder(id, lang),
+  ]);
 
   return (
     <MainContextLayout

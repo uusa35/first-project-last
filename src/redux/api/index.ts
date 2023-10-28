@@ -14,12 +14,15 @@ export const apiSlice = createApi({
       headers,
       { getState, type, endpoint, extra }: RootState
     ) => {
+      console.log('apiUrl', apiUrl);
       const {
-        setting,
         locale,
         auth: { api_token }
       } = getState() as RootState;
-
+      headers.set(
+        'Access-Control-Allow-Origin',
+        '*',
+      );
       headers.set(
         'Access-Control-Allow-Headers',
         'X-Requested-With,Accept,Authentication,Content-Type',
@@ -34,14 +37,14 @@ export const apiSlice = createApi({
       headers.set('Cache-Control', 'no-store');
       if (api_token) {
         headers.set('Authorization', `Bearer ${api_token}`);
-        // headers.set('api_token', `${api_token}`);
+        headers.set('api_token', `${api_token}`);
       }
       return headers;
     },
     // credentials: 'include',
     credentials: "same-origin",
   }),
-  // tagTypes: ['Cart', 'Branch', 'Area', 'Product', 'Wishlist'],
+  tagTypes: ['User'],
   keepUnusedDataFor: 0,
   refetchOnReconnect: true,
   extractRehydrationInfo(action, { reducerPath }) {
@@ -72,11 +75,27 @@ export const apiSlice = createApi({
         headers: {
           ...(!isUndefined(lang) && lang && { 'Accept-Language': lang }),
         },
-        // validateStatus: (response, result) =>
-        //   response.status == 200,
+        validateStatus: (response, result) =>
+          response.status == 200,
+      }),
+    }),
+    uploadImage: builder.query<
+      Setting,
+      any
+    >({
+      query: (body) => ({
+        url: `images/upload`,
+        method: 'POST',
+        body,
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        formData: true,
+        validateStatus: (response, result) =>
+          response.status == 200,
       }),
     }),
   }),
 });
 
-export const { useGetSettingQuery, useLazySendContactusQuery } = apiSlice;
+export const { useGetSettingQuery, useLazySendContactusQuery, useLazyUploadImageQuery } = apiSlice;

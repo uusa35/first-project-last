@@ -26,15 +26,14 @@ export default function ({ lang }: Props) {
   const handleLogout = () => {
     dispatch(resetAuth());
     deleteToken();
-    router.replace(appLinks.home(lang));
+    return router.replace(appLinks.home(lang));
   };
   return (
     <Popover className='relative'>
-      <Popover.Button className='inline-flex btn-color-default items-center gap-x-1 text-sm font-semibold leading-2 capitalize'>
-        <span>{trans.my_account}</span>
+      <Popover.Button className='inline-flex btn-default items-center gap-x-1 text-sm font-semibold leading-2 capitalize'>
+        <span>{trans.control_my_account}</span>
         <ChevronDownIcon className='h-5 w-5' aria-hidden='true' />
       </Popover.Button>
-
       <Transition
         as={Fragment}
         enter='transition ease-out duration-200'

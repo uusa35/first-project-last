@@ -3,35 +3,29 @@ import { useCreateOrUpdateOrderMutation } from "@/redux/api/orderApi";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { resetMembership, setMembership } from "@/redux/slices/cartSlice";
 import { showErrorToastMessage } from "@/redux/slices/toastMessageSlice";
-import { Locale } from "@/types/index";
 import { Auth, Country, Membership } from "@/types/queries";
-import { first, isNull } from "lodash";
+import { isNull } from "lodash";
 import Image from "next/image";
 import { useContext, useEffect, useRef } from "react";
 import OrderDetails from "@/components/order/OrderDetails";
 import { MainContext } from "@/layouts/MainContentLayout";
+import { isAuthenticated } from "@/redux/slices/authSlice";
 
 type Props = {
   membership: Membership;
   country: Country;
   dollarCountry: Country;
-  lang: Locale["lang"];
   user: Auth;
 };
-export default function ({
-  membership,
-  country,
-  dollarCountry,
-  lang,
-  user,
-}: Props) {
+export default function ({ membership, country, dollarCountry, user }: Props) {
   const trans: { [key: string]: string } = useContext(MainContext);
+  const isAuth = useAppSelector(isAuthenticated);
   const {
+    locale: { lang },
     cart: {
       payment: { queryString, paymentUrl },
       order,
     },
-    auth: { isAuth },
   } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
   const fromRef = useRef<any>();
@@ -47,7 +41,7 @@ export default function ({
       if (r.error) {
         dispatch(
           showErrorToastMessage({
-            content: `${first(r.error.data.message)}`,
+            content: `${r.error.data.message}`,
           })
         );
       } else {

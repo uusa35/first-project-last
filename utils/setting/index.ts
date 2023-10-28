@@ -9,8 +9,8 @@ export async function getSetting(lang: Locale['lang']) {
             'Accept-Language': lang
         }
     });
-    if (!res.ok) return undefined
-    return res.json()
+    if (!res.ok) return undefined;
+    return res.json();
 }
 
 export async function getLightSetting(lang: Locale['lang']) {
@@ -23,6 +23,6 @@ export async function getLightSetting(lang: Locale['lang']) {
             'Accept-Language': lang
         }
     });
-    if (!res.ok) return undefined
-    return res.json()
+    if (!res.ok) return undefined;
+    return res.json();
 }

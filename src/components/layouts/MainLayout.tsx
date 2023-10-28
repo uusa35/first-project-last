@@ -1,13 +1,9 @@
 "use client";
-import React, { FC, ReactNode, useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { setLocale } from "@/redux/slices/localeSlice";
-import moment from "moment";
-import * as yup from "yup";
+import React, { FC, ReactNode } from "react";
+import { useAppSelector } from "@/redux/hooks";
 import type { Locale } from "@/i18n.config";
 import { Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import { ErrorBoundary } from "react-error-boundary";
 
 type Props = {
   children: ReactNode | undefined;
@@ -16,7 +12,6 @@ type Props = {
 
 const MainLayout: FC<Props> = ({ lang, children }): React.ReactNode => {
   const { locale } = useAppSelector((state) => state);
-  const dispatch = useAppDispatch();
 
   return (
     <div className={`w-full`}>

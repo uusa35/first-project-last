@@ -32,25 +32,24 @@ export default function ({ element, country, lang }: Props) {
     }
   };
 
-  console.log({element})
+  console.log({ element });
   return (
     <div
       className={
         " ring-gray-200 rounded-md p-8 ring-1 xl:p-10 bg-white transform transition duration-500 hover:scale-110 hover:z-10"
-      }
-    >
+      }>
       <h3 className={"text-gray-900 text-lg font-semibold leading-8"}>
         {element.name}
       </h3>
       <div
-        className="h-[200px] max-w-xs sm:max-w-xl md:max-w-full whitespace-pre-line text-ellipsis overflow-hidden"
+        className='h-[200px] max-w-xs sm:max-w-xl md:max-w-full whitespace-pre-line text-ellipsis overflow-hidden'
         dangerouslySetInnerHTML={{
           __html: DOMPurify.sanitize(element.description),
         }}
       />
-      <div className="flex flex-1 flex-row gap-x-3 justify-start items-end">
+      <div className='flex flex-1 flex-row gap-x-3 justify-start items-end'>
         {element.on_sale && (
-          <p className="mt-6  flex items-baseline gap-x-1">
+          <p className='mt-6  flex items-baseline gap-x-1'>
             <span className={"text-red-800 text-4xl font-bold tracking-tight"}>
               {getPrice(element.sale_price, country).toFixed(2)}
             </span>
@@ -59,12 +58,11 @@ export default function ({ element, country, lang }: Props) {
             </span>
           </p>
         )}
-        <p className="mt-6  flex items-baseline gap-x-1">
+        <p className='mt-6  flex items-baseline gap-x-1'>
           <span
             className={`text-gray-900 ${
               element.on_sale ? `text-xl line-through` : `text-4xl`
-            }  font-bold tracking-tight`}
-          >
+            }  font-bold tracking-tight`}>
             {getPrice(element.price, country).toFixed(2)}
           </span>
           <span className={"text-gray-600 text-lg font-semibold leading-6"}>
@@ -74,12 +72,11 @@ export default function ({ element, country, lang }: Props) {
       </div>
 
       <button
-        type="button"
+        type='button'
         onClick={() => handleSubscribe(element)}
         className={
           "w-full text-expo-dark border border-expo-dark focus-visible:outline-green-600 mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-        }
-      >
+        }>
         {isAuth ? trans.register_now_to_subscribe : trans.subscribe_now}
       </button>
       {/* <ul

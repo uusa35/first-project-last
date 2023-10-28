@@ -15,26 +15,28 @@ function getLocale(request: NextRequest): string | undefined {
   return locale
 }
 
-export function middleware(request: NextRequest) {
-  const pathName = request.nextUrl.pathname
+export function middleware(request: NextRequest, response: NextResponse) {
+
+  const pathName = request.nextUrl.pathname;
+  // const currentRequestedLocale = pathName.split('/')[1];
   const pathnameIsMissingLocale = i18n.locales.every(
     locale => !pathName.startsWith(`/${locale}/`) && pathName !== `/${locale}`
   )
   const token = request.cookies.get('token');
-  if (token && (request.nextUrl.pathname.includes('login') || request.nextUrl.pathname.includes('register'))) {
-    return NextResponse.redirect(new URL('/', request.url))
+  if (token &&
+    (request.nextUrl.pathname.includes('login') ||
+      request.nextUrl.pathname.includes('register'))
+  ) {
+    return NextResponse.redirect(new URL(`/`, request.url))
   }
-
   if (pathnameIsMissingLocale) {
-    const locale = getLocale(request)
+    const locale = getLocale(request);
     return NextResponse.redirect(
       new URL(
         `/${locale}${pathName.startsWith('/') ? '' : '/'}${pathName}`,
         request.url
       ))
   }
-
-
 }
 
 export const config = {

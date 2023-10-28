@@ -17,15 +17,15 @@ const initialState: { membership: Membership, payment: PaymentFields, order: Omi
     zone: 'A',
   },
   payment: {
-    token: `ZGFiMzdmNGZhOWIxZDJjOTljOWZiMGE1`,
+    token: `${process.env.NEXT_PUBLIC_PAYMENT_TOKEN}`,
     messageId: 1,
     transactionId: ``,
-    merchantId: `RB0000002`,
+    merchantId: `${process.env.NEXT_PUBLIC_MERCHANT_ID}`,
     amount: 0,
     currencyCode: '840',
     redirectUrl: `https://dev.ar-expo.ru/order/result/`,
     queryString: null,
-    paymentUrl: `https://srstaging.stspayone.com/SmartRoutePaymentWeb/SRPayMsgHandler?`
+    paymentUrl: `${process.env.NEXT_PUBLIC_PAYMENT_URL}`
   },
   order: {
     paid: false,
@@ -51,13 +51,11 @@ export const cartSlice = createSlice({
       const convertedPrice = round(getPrice(finalPrice, country));
       const amount = `${convertedPrice}${amountValues}`;
       const currencyCode = country.lang === 'ar' ? '682' : country.lang === 'ru' ? '643' : '840';
-      const redirectUrl = process.env.NODE_ENV === "production" ? `https://cp.ar-expo.ru/redirect/order?lang=${lang}` : `http://ar-expo-backend.test/redirect/order?lang=${lang}`;
+      const redirectUrl = process.env.NODE_ENV === "production" ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/redirect/order?lang=${lang}` : `http://ar-expo-backend.test/redirect/order?lang=${lang}`;
       const toBeHashed = `${token}${amount}${currencyCode}${capitalize(
         lang
       )}${merchantId}${messageId}${redirectUrl}${transactionId}`;
       const hashed: string = sha256(toBeHashed);
-      console.log('tobehashed', toBeHashed);
-      console.log('hashed', hashed);
       return {
         membership: action.payload.membership,
         payment: {

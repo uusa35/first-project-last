@@ -1,14 +1,13 @@
 "use client";
 import { useLazyLoginQuery } from "@/redux/api/authApi";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { setUser } from "@/redux/slices/authSlice";
+import { setAuth } from "@/redux/slices/authSlice";
 import {
   showErrorToastMessage,
   showSuccessToastMessage,
 } from "@/redux/slices/toastMessageSlice";
 import { appLinks, setToken } from "@/src/constants";
 import { Locale } from "@/types/index";
-import { first } from "lodash";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
@@ -34,7 +33,7 @@ export default function ({ lang }: Props) {
   const {
     appSetting: { isLoading },
   } = useAppSelector((state) => state);
-  const [triggerLogin, { data, isSuccess, error }] = useLazyLoginQuery();
+  const [triggerLogin] = useLazyLoginQuery();
   const {
     handleSubmit,
     register,
@@ -48,14 +47,14 @@ export default function ({ lang }: Props) {
     },
   });
 
-  const onSubmit: SubmitHandler<Inputs> = (body) => {
+  const onSubmit: SubmitHandler<Inputs> = async (body) => {
     dispatch(enableLoading());
-    const { email, password } = body;
-    triggerLogin({ password, email }).then((r: any) => {
+    await triggerLogin(body).then((r: any) => {
       if (r && r.data) {
         dispatch(showSuccessToastMessage({ content: trans.process_success }));
-        dispatch(setUser(r.data));
+        dispatch(setAuth(r.data));
         setToken(r.data.api_token);
+        dispatch(disableLoading());
         return router.push(`/${lang}`);
       } else if (r && r.error && r.error.data) {
         dispatch(
@@ -63,8 +62,8 @@ export default function ({ lang }: Props) {
             content: `${r.error.data.message}`,
           })
         );
+        dispatch(disableLoading());
       }
-      dispatch(disableLoading());
     });
   };
 
@@ -85,7 +84,6 @@ export default function ({ lang }: Props) {
               id='email'
               {...register("email")}
               type='email'
-              autoComplete='email'
               className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6'
             />
             {errors?.email?.message && (
@@ -131,7 +129,7 @@ export default function ({ lang }: Props) {
         <div>
           <button
             type='submit'
-            className='flex w-full justify-center btn-color-default'>
+            className='flex w-full justify-center btn-default'>
             {trans.sign_in}
           </button>
         </div>

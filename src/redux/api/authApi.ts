@@ -12,8 +12,8 @@ export const authApi = apiSlice.injectEndpoints({
         url: `login`,
         body,
         method: "post",
-        validateStatus: (response, result) =>
-          response.status == 200,
+        // validateStatus: (response, result) =>
+        //   response.status == 200,
       }),
     }),
     registerVisitor: builder.mutation<
@@ -33,12 +33,42 @@ export const authApi = apiSlice.injectEndpoints({
         validateStatus: (response, result) =>
           response.status == 200,
       }),
+      invalidatesTags: ['User'],
     }),
-
+    updateUser: builder.mutation<
+      User, { body: any, id: number }
+    >({
+      query: ({ body, id }) => ({
+        url: `user/${id}`,
+        body,
+        method: "put",
+        validateStatus: (response, result) =>
+          response.status == 200,
+      }),
+      invalidatesTags: ['User'],
+    }),
+    updateUserImage: builder.mutation<
+      User, { formData: any, id: number }
+    >({
+      query: ({ formData, id }) => ({
+        url: `user/${id}`,
+        body: formData,
+        method: "post",
+        headers: {
+          'Content-Type': 'multipart/form-data;'
+        },
+        formData: true,
+        validateStatus: (response, result) =>
+          response.status == 200,
+      }),
+      invalidatesTags: ['User'],
+    }),
   }),
 });
 
 export const {
   useLazyLoginQuery,
-  useRegisterVisitorMutation
+  useRegisterVisitorMutation,
+  useUpdateUserMutation,
+  useUpdateUserImageMutation
 } = authApi;

@@ -1,31 +1,54 @@
 import { MainContextLayout } from "@/layouts/MainContentLayout";
 import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
-import Link from "next/link";
-import NavHeader from "@/components/header/NavHeader";
-import { getUser } from "@/utils/user";
+import { getAuth, getUser } from "@/utils/user";
 import { getSetting } from "@/utils/setting";
-import { getMembership, getMemberships } from "@/utils/membership";
-import { setMembership } from "@/redux/slices/cartSlice";
-import { Membership } from "@/types/queries";
-import MembershipCard from "@/components/membership/MembershipCard";
+import { getMembership } from "@/utils/membership";
+import { Auth, Country, Membership, Setting } from "@/types/queries";
 import { getCountries } from "@/utils/country";
-import { isNull } from "lodash";
 import CartContent from "@/components/cart/CartContent";
+import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
+import NoResults from "@/components/NoResults";
 
 type Props = {
   params: { lang: Locale["lang"]; id: string };
   searchParams: { [key: string]: string };
 };
 export default async function ({ params: { lang, id }, searchParams }: Props) {
-  const [{ trans }, membership, country, dollarCountry, setting, user] = await Promise.all([
+  const cookieStore = cookies();
+  const token: any = cookieStore.get("token");
+  if (!token || !token.value) notFound();
+  const [{ trans }, membership, country, dollarCountry, setting, auth]: [
+    { trans: any },
+    Membership,
+    Country,
+    Country,
+    Setting,
+    Auth
+  ] = await Promise.all([
     getDictionary(lang),
     getMembership(id, lang),
     getCountries(`lang=${lang}&limit=1`, lang),
     getCountries(`lang=en&limit=1`, lang),
     getSetting(lang),
-    getUser("3", lang),
+    getAuth(token.value),
   ]);
+
+  if (!membership || !country || !dollarCountry) notFound();
+  if (!auth || auth.role.name !== "company")
+    return (
+      <NoResults
+        setting={setting}
+        lang={lang}
+        trans={trans}
+        showSearchBar={false}
+        currentModule={`user`}
+        message={
+          trans.u_must_be_registered_as_company_register_now_or_update_ur_account
+        }
+      />
+    );
 
   return (
     <MainContextLayout
@@ -36,8 +59,7 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
       <CartContent
         membership={membership}
         country={country[0]}
-        lang={lang}
-        user={user}
+        user={auth}
         dollarCountry={dollarCountry[0]}
       />
     </MainContextLayout>
