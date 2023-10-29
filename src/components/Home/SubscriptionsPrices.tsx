@@ -39,7 +39,7 @@ export function SubscriptionsPrices({
           {subscriptions.map((subscription: Membership, i: number) => (
             <MembershipCard
               scaleOnHover={false}
-              scaleMiddle={i === 1}
+              scaleMiddle={i === 1 && subscription.is_featured}
               element={subscription}
               country={country[0]}
               lang={lang}
