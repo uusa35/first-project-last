@@ -6,7 +6,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "@/src/validations";
 import { useAppDispatch } from "@/redux/hooks";
 import { useLazyNewsletterQuery } from "@/redux/api";
-import { showSuccessToastMessage } from "@/redux/slices/toastMessageSlice";
+import {
+  showErrorToastMessage,
+  showSuccessToastMessage,
+} from "@/redux/slices/toastMessageSlice";
 
 type Props = {
   trans: { [key: string]: string };
@@ -29,6 +32,8 @@ export function NewsLetters({ trans }: Props) {
       if (r.isSuccess && r.data && r.data.message) {
         dispatch(showSuccessToastMessage({ content: r.data.message }));
         reset();
+      } else {
+        dispatch(showErrorToastMessage({ content: r.data.error.message }));
       }
     });
   };
