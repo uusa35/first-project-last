@@ -50,22 +50,36 @@ export default function ({
           : scaleMiddle
           ? "transform transition duration-500 md:scale-110 -translate-y-2 shadow-xl"
           : "shadow-md"
-      }`}
-    >
+      }`}>
       <div>
-        <h3 className={"text-gray-900 text-lg font-semibold leading-8 mb-3"}>
-          {element.name}
-        </h3>
+        <div className='flex justify-between items-center mb-3'>
+          <div className='flex flex-1 justify-start items-center'>
+            <h3 className={"text-gray-900 text-lg font-semibold leading-8"}>
+              {element.name}
+            </h3>
+          </div>
+          {element.is_featured && (
+            <div>
+              <span
+                className={
+                  "p-2 bg-expo-light text-expo-dark hover:text-white hover:bg-expo-dark text-center rounded-md text-xs"
+                }>
+                {trans.featured}
+              </span>
+            </div>
+          )}
+        </div>
+
         <div
-          className="pb-10 max-h-[300px] max-w-xs sm:max-w-xl md:max-w-full whitespace-pre-line text-ellipsis overflow-hidden"
+          className='pb-10 max-h-[300px] max-w-xs sm:max-w-xl md:max-w-full whitespace-pre-line text-ellipsis overflow-hidden'
           dangerouslySetInnerHTML={{
             __html: DOMPurify.sanitize(element.description),
           }}
         />
       </div>
-      <div className="flex flex-1 flex-row gap-x-3 justify-start items-end">
+      <div className='flex flex-1 flex-row gap-x-3 justify-start items-end'>
         {element.on_sale && (
-          <p className="mt-6  flex items-baseline gap-x-1">
+          <p className='mt-6  flex items-baseline gap-x-1'>
             <span className={"text-red-800 text-4xl font-bold tracking-tight"}>
               {getPrice(element.sale_price, country).toFixed(2)}
             </span>
@@ -74,12 +88,11 @@ export default function ({
             </span>
           </p>
         )}
-        <p className="mt-6  flex items-baseline gap-x-1">
+        <p className='mt-6  flex items-baseline gap-x-1'>
           <span
             className={`text-gray-900 ${
               element.on_sale ? `text-xl line-through` : `text-4xl`
-            }  font-bold tracking-tight`}
-          >
+            }  font-bold tracking-tight`}>
             {getPrice(element.price, country).toFixed(2)}
           </span>
           <span className={"text-gray-600 text-lg font-semibold leading-6"}>
@@ -89,10 +102,9 @@ export default function ({
       </div>
 
       <button
-        type="button"
+        type='button'
         onClick={() => handleSubscribe(element)}
-        className={"w-full btn-transparent"}
-      >
+        className={"w-full btn-transparent"}>
         {isAuth ? trans.register_now_to_subscribe : trans.subscribe_now}
       </button>
       {element.caption && (
