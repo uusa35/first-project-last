@@ -17,6 +17,7 @@ export function NewsLetters({ trans }: Props) {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(loginSchema.omit(["password"])),
@@ -27,6 +28,7 @@ export function NewsLetters({ trans }: Props) {
     await triggerNewsLetterSubscribtion(data).then((r: any) => {
       if (r.isSuccess && r.data && r.data.message) {
         dispatch(showSuccessToastMessage({ content: r.data.message }));
+        reset();
       }
     });
   };
