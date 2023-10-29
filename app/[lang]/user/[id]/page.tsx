@@ -113,7 +113,7 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
                       <h1>{trans.email}</h1>
                     </div>
                   </div>
-                  <div>
+                  <div className='ltr:text-left rtl:text-right'>
                     <a target='_blank' href={`mailto: ${user.email}`}>
                       {user.email}
                     </a>
