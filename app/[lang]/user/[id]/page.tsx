@@ -11,6 +11,7 @@ import UserIndexBanner from "@/appImages/user/banner.jpg";
 import SocialIcons from "@/components/footer/SocialIcons";
 import { Email, EmailOutlined, InsertLink } from "@mui/icons-material";
 import { Setting, User } from "@/types/queries";
+import { MainGallery } from "@/components/Home/MainGallery";
 
 type Props = {
   params: { lang: Locale["lang"]; id: string };
@@ -184,6 +185,12 @@ export default async function UserShow({
               </div>
             </div>
           )}
+
+          <MainGallery
+            trans={trans as { [key: string]: string }}
+            images={user.images}
+            setting={setting}
+          />
         </div>
       </main>
     </MainContextLayout>
