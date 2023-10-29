@@ -30,10 +30,10 @@ export default async function ({ element, lang, trans }: Props) {
           <dd className='text-sm text-gray-500'>{element.caption}</dd>
           <dt className='sr-only'>{element.caption}</dt>
           <dd className='mt-3 text-center grid grid-cols-3 justify-center items-center gap-1'>
-            {element.categories.map((u: Category, i: number) => (
+            {element.categories.slice(0, 2).map((u: Category, i: number) => (
               <span
                 key={i}
-                className='truncate col-span-1 text-sm text-center rounded-full bg-expo-light hover:bg-expo-dark hover:text-white px-2 py-1 font-medium text-green-700 ring-1 ring-inset ring-green-600/20'>
+                className='truncate col-span-1 text-xs text-center rounded-full bg-expo-light hover:bg-expo-dark hover:text-white px-2 py-1 font-medium text-green-700 ring-1 ring-inset ring-green-600/20'>
                 {element.name}
               </span>
             ))}
