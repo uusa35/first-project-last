@@ -48,7 +48,7 @@ export default function ({
         scaleOnHover
           ? "transform transition duration-500 hover:scale-110 hover:z-10"
           : scaleMiddle
-          ? "transform transition duration-500 scale-110 -translate-y-2 shadow-xl"
+          ? "transform transition duration-500 md:scale-110 -translate-y-2 shadow-xl"
           : "shadow-md"
       }`}
     >
@@ -57,7 +57,7 @@ export default function ({
           {element.name}
         </h3>
         <div
-          className="pb-10 max-h-[500px] max-w-xs sm:max-w-xl md:max-w-full whitespace-pre-line text-ellipsis overflow-hidden"
+          className="pb-10 max-h-[300px] max-w-xs sm:max-w-xl md:max-w-full whitespace-pre-line text-ellipsis overflow-hidden"
           dangerouslySetInnerHTML={{
             __html: DOMPurify.sanitize(element.description),
           }}
