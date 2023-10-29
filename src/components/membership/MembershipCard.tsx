@@ -38,11 +38,24 @@ export default function ({ element, country, lang }: Props) {
       className={
         " ring-gray-200 rounded-md p-8 ring-1 xl:p-10 bg-white transform transition duration-500 hover:scale-110 hover:z-10"
       }>
-      <h3 className={"text-gray-900 text-lg font-semibold leading-8"}>
-        {element.name}
-      </h3>
+      <div className='flex flex-1 flex-row justify-between items-center'>
+        <div className='flex w-full'>
+          <h3 className={"text-gray-900 text-lg font-semibold leading-8"}>
+            {element.name}
+          </h3>
+        </div>
+        {element.is_featured && (
+          <span
+            className={
+              "p-2 bg-expo-light text-expo-dark rounded-md w-20 text-xs text-center border border-expo-medium"
+            }>
+            {trans.featured}
+          </span>
+        )}
+      </div>
+
       <div
-        className='h-[200px] max-w-xs sm:max-w-xl md:max-w-full whitespace-pre-line text-ellipsis overflow-hidden'
+        className='h-[250px] max-w-xs sm:max-w-xl md:max-w-full whitespace-pre-line text-ellipsis overflow-hidden'
         dangerouslySetInnerHTML={{
           __html: DOMPurify.sanitize(element.description),
         }}
