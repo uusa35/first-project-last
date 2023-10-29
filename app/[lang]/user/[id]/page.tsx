@@ -1,7 +1,6 @@
 import { MainContextLayout } from "@/layouts/MainContentLayout";
 import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
-import Link from "next/link";
 import { getUser } from "@/utils/user";
 import { getSetting } from "@/utils/setting";
 import Image from "next/image";
@@ -9,7 +8,7 @@ import DOMPurify from "isomorphic-dompurify";
 import { notFound } from "next/navigation";
 import UserIndexBanner from "@/appImages/user/banner.jpg";
 import SocialIcons from "@/components/footer/SocialIcons";
-import { Email, EmailOutlined, InsertLink } from "@mui/icons-material";
+import { EmailOutlined, InsertLink } from "@mui/icons-material";
 import { ImageType, Setting, User } from "@/types/queries";
 import { MainGallery } from "@/components/Home/MainGallery";
 
@@ -17,6 +16,48 @@ type Props = {
   params: { lang: Locale["lang"]; id: string };
   searchParams: { [key: string]: string };
 };
+
+export async function generateMetadata({ params }: Props) {
+  const [user, setting]: [User, Setting] = await Promise.all([
+    getUser(params.id, params.lang),
+    getSetting(params.lang),
+  ]);
+  return {
+    title: user.name,
+    description: user.description,
+    openGraph: {
+      title: user.name,
+      description: user.description,
+      url: user.instagram ?? user.website ?? setting.website,
+      siteName: user.name,
+      images: [
+        {
+          url: user.image ?? setting.image,
+          width: 800,
+          height: 600,
+        },
+        {
+          url: user.image ?? setting.image,
+          width: 1800,
+          height: 1600,
+          alt: user.name,
+        },
+      ],
+      locale: params.lang,
+      type: "website",
+    },
+    twitter: {
+      card: user.name,
+      title: user.name,
+      description: user.description,
+      // siteId: "1467726470533754880",
+      creator: setting.name,
+      // creatorId: "1467726470533754880",
+      images: [user.image ?? setting.image],
+    },
+  };
+}
+
 export default async function ({ params: { lang, id }, searchParams }: Props) {
   const [{ trans }, setting, user]: [{ trans: any }, Setting, User] =
     await Promise.all([

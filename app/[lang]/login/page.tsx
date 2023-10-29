@@ -7,11 +7,18 @@ import LoginImage from "@/appImages/login/section.jpg";
 import LoginContent from "@/components/login/LoginContent";
 import { Setting } from "@/types/queries";
 
-export default async function ({
-  params: { lang },
-}: {
+type Props = {
   params: { lang: Locale["lang"] };
-}) {
+};
+
+export async function generateMetadata({ params }: Props) {
+  const { trans } = await getDictionary(params.lang);
+  return {
+    title: trans.login,
+  };
+}
+
+export default async function ({ params: { lang } }: Props) {
   const [{ trans }, setting]: [any, Setting] = await Promise.all([
     getDictionary(lang),
     getSetting(lang),

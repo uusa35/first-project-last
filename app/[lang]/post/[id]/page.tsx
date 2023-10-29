@@ -13,6 +13,47 @@ type Props = {
   searchParams: { [key: string]: string };
 };
 
+export async function generateMetadata({ params }: Props) {
+  const [post, setting]: [Post, Setting] = await Promise.all([
+    getPost(params.id, params.lang),
+    getSetting(params.lang),
+  ]);
+  return {
+    title: post.name,
+    description: post.caption,
+    openGraph: {
+      title: post.name,
+      description: setting.caption,
+      url: setting.website,
+      siteName: post.name,
+      images: [
+        {
+          url: post.image ?? setting.image,
+          width: 800,
+          height: 600,
+        },
+        {
+          url: post.image ?? setting.image,
+          width: 1800,
+          height: 1600,
+          alt: post.name,
+        },
+      ],
+      locale: params.lang,
+      type: "website",
+    },
+    twitter: {
+      card: post.name,
+      title: post.name,
+      description: post.caption,
+      // siteId: "1467726470533754880",
+      creator: setting.name,
+      // creatorId: "1467726470533754880",
+      images: [post.image ?? setting.image],
+    },
+  };
+}
+
 export default async function ({ params: { lang, id }, searchParams }: Props) {
   const [{ trans }, setting, post]: [{ trans: any }, Setting, Post] =
     await Promise.all([

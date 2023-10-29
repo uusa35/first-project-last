@@ -10,11 +10,18 @@ import { appLinks } from "@/src/constants";
 import { RegisterContent } from "@/components/register/RegisterContent";
 import { Role, Setting } from "@/types/queries";
 
-export default async function ({
-  params: { lang, role },
-}: {
+type Props = {
   params: { lang: Locale["lang"]; role: Role["name"] };
-}) {
+};
+
+export async function generateMetadata({ params }: Props) {
+  const { trans } = await getDictionary(params.lang);
+  return {
+    title: `${trans.registeration} ${params.role === 'visitor' ? trans.visitors : trans.subscriptions}`,
+  };
+}
+
+export default async function ({ params: { lang, role } }: Props) {
   const [{ trans }, setting]: [any, Setting] = await Promise.all([
     getDictionary(lang),
     getSetting(lang),
