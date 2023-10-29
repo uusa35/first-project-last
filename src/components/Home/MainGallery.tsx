@@ -8,9 +8,10 @@ type Props = {
   images: ImageType[];
   trans: { [key: string]: string };
   setting: Setting;
+  message?: string;
 };
 
-export function MainGallery({ trans, images, setting }: Props) {
+export function MainGallery({ trans, images, setting, message }: Props) {
   return (
     <div className='py-12 sm:py-10 capitalize'>
       <div className='mx-auto max-w-7xl px-6 lg:px-8'>
@@ -19,7 +20,8 @@ export function MainGallery({ trans, images, setting }: Props) {
             {trans.gallery}
           </h2>
           <p className='mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-600'>
-            {trans.through_this_section_you_can_browse_the_latest_news}
+            {message ??
+              trans.through_this_section_you_can_browse_the_latest_news}
           </p>
         </div>
         <Carousel cols={5} rows={1} gap={10}>

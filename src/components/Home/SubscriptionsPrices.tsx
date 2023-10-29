@@ -18,27 +18,25 @@ export function SubscriptionsPrices({
   lang,
   country,
 }: Props) {
-  console.log({ subscriptions });
   return (
-    <div className="bg-expo-green py-12 sm:py-12 capitalize">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto max-w-4xl text-center">
-          <p className="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+    <div className='bg-expo-green py-12 sm:py-12 capitalize'>
+      <div className='mx-auto max-w-7xl px-6 lg:px-8'>
+        <div className='mx-auto max-w-4xl text-center'>
+          <p className='mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl'>
             {trans.main_subscripers}
           </p>
         </div>
-        <p className="mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-600">
+        <p className='mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-600'>
           {trans.register_now_and_learn_about_the_partner_and_sponsor_packages}
         </p>
-        <div className="flex justify-center mt-5">
+        <div className='flex justify-center mt-5'>
           <Link
-            className="text-center py-2 px-5 border border-expo-dark text-expo-dark rounded-md"
-            href={`/${lang}/register/company`}
-          >
+            className='text-center py-2 px-5 border border-expo-dark text-expo-dark rounded-md'
+            href={`/${lang}/register/company`}>
             {trans.register_as_a_subscriper}
           </Link>
         </div>
-        <div className="isolate mx-auto grid max-w-md grid-cols-1 gap-y-8 lg:mx-0 lg:max-w-none lg:grid-cols-3 mt-10">
+        <div className='isolate mx-auto grid max-w-md grid-cols-1 gap-y-8 lg:mx-0 lg:max-w-none lg:grid-cols-3 mt-10'>
           {subscriptions.map(
             (subscription: Membership, subscriptionsIdx: number) => (
               <MembershipCard

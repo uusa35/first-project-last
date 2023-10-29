@@ -21,13 +21,7 @@ export default async function NotFound() {
       searchParams={``}
       setting={setting}>
       <main className='relative isolate mx-auto flex flex-col gap-y-6 justify-start items-center max-w-7xl min-h-screen capitalize'>
-        <Image
-          src={ErrorImage}
-          className={`w-80 lg:w-1/3 h-auto rounded-md`}
-          alt={setting.name}
-          width={300}
-          height={300}
-        />
+        <ErrorImage className={`w-80 lg:w-1/3 h-auto rounded-md`} />
         <div>
           <h2 className='text-2xl'>{trans.not_found}</h2>
         </div>
