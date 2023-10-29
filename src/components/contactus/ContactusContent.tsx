@@ -47,16 +47,11 @@ export default function () {
     },
   });
   const dispatch = useAppDispatch();
-  const [triggerSendContactus, { data, error }] = useLazySendContactusQuery();
+  const [triggerSendContactus] = useLazySendContactusQuery();
 
-  const onSubmit: SubmitHandler<Inputs> = (body: any) => {
-    dispatch(
-      showWarningToastMessage({
-        content: trans.ur_request_is_pending_processed_plz_wait,
-      })
-    );
+  const onSubmit: SubmitHandler<Inputs> = async (body) => {
     dispatch(enableLoading());
-    triggerSendContactus({ lang, body })
+    await triggerSendContactus({ lang, body })
       .then((r: any) => {
         if (r && r.data && r.data.message) {
           dispatch(showSuccessToastMessage({ content: r.data.message }));
@@ -65,7 +60,6 @@ export default function () {
         }
       })
       .then(() => {
-        dispatch(disableLoading());
         reset();
       });
   };

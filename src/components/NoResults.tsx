@@ -29,13 +29,7 @@ export default function ({
       searchParams={``}
       setting={setting}>
       <main className='relative isolate mx-auto flex flex-col gap-y-6 justify-center items-center max-w-7xl min-h-screen capitalize'>
-        <Image
-          src={NoResultImage}
-          className={`w-80 lg:w-1/3 h-auto rounded-md`}
-          alt={setting.name}
-          width={300}
-          height={300}
-        />
+        <NoResultImage className={`w-80 lg:w-1/3 h-auto rounded-md`} />
         {message !== null ? (
           <div className='w-1/2 leading-8 mb-4'>
             <p className='text-2xl line-clamp-2 leading-loose text-center'>
