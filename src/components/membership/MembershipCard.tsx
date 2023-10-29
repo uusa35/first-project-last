@@ -33,6 +33,8 @@ export default function ({ element, country, lang }: Props) {
     }
   };
 
+  console.log("isAuth", isAuth);
+
   return (
     <div
       className={
@@ -88,16 +90,15 @@ export default function ({ element, country, lang }: Props) {
         type='button'
         onClick={() => handleSubscribe(element)}
         className={
-          "w-full text-expo-dark border border-expo-dark focus-visible:outline-green-600 mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+          "w-full text-expo-dark hover:bg-expo-dark border hover:text-white border-expo-dark focus-visible:outline-green-600 mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 capitalize"
         }>
-        {isAuth ? trans.register_now_to_subscribe : trans.subscribe_now}
+        {isAuth ? trans.subscribe_now : trans.register_now_to_subscribe}
       </button>
-      {/* <ul
-        role="list"
-        className={"text-gray-600 mt-8 space-y-3 text-sm leading-6 xl:mt-10"}
-      >
-        <p>{element.caption}</p>
-      </ul> */}
+      {element.caption && (
+        <ul role='list' className={"text-gray-600 text-sm leading-6 mt-4"}>
+          <p>{element.caption}</p>
+        </ul>
+      )}
     </div>
   );
 }
