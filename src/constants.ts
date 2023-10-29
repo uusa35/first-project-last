@@ -33,6 +33,9 @@ export const appLinks = {
         `/${lang}/register/${role}`,
     account: (lang: Locale['lang'], role: Role['name'], id: string, active_tab?: string) =>
         `/${lang}/account/${role}/${id}?active_tab=${active_tab ?? 1}`,
+    // forgetPassword: (lang: Locale['lang']) =>
+    //     `/${lang}/forgot/password`,
+    forgetPassword: () => `https://cp.ar-expo.ru/forgot-password`,
 }
 
 // export const convertSearchParamsToString = (search: { [key: string]: string }): string => Object.keys(search)

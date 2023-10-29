@@ -12,8 +12,8 @@ export const authApi = apiSlice.injectEndpoints({
         url: `login`,
         body,
         method: "post",
-        // validateStatus: (response, result) =>
-        //   response.status == 200,
+        validateStatus: (response, result) =>
+          response.status == 200,
       }),
     }),
     registerVisitor: builder.mutation<
@@ -63,6 +63,17 @@ export const authApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['User'],
     }),
+    forgotPassword: builder.query<
+      User, { email: string }
+    >({
+      query: (body) => ({
+        url: `forgot/password`,
+        body,
+        method: "post",
+        validateStatus: (response, result) =>
+          response.status == 200,
+      }),
+    }),
   }),
 });
 
@@ -70,5 +81,6 @@ export const {
   useLazyLoginQuery,
   useRegisterVisitorMutation,
   useUpdateUserMutation,
-  useUpdateUserImageMutation
+  useUpdateUserImageMutation,
+  useLazyForgotPasswordQuery
 } = authApi;

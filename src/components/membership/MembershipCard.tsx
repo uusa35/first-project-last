@@ -33,8 +33,6 @@ export default function ({ element, country, lang }: Props) {
     }
   };
 
-  console.log("isAuth", isAuth);
-
   return (
     <div
       className={

@@ -17,9 +17,7 @@ type Props = {
 export default function ({ lang }: Props) {
   const pathName = usePathname()!;
   const trans: { [key: string]: string } = useContext(MainContext);
-  const {
-    auth: { id, role },
-  } = useAppSelector((state) => state);
+  const { auth } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
   const router = useRouter();
 
@@ -44,11 +42,14 @@ export default function ({ lang }: Props) {
         leaveTo='opacity-0 translate-y-1'>
         <Popover.Panel className='absolute rtl:left-1/2 ltr:right-1/2 z-10 mt-2 flex w-screen max-w-min rtl:-translate-x-1/4 ltr:translate-x-1/4 px-4'>
           <div className='w-60 shrink rounded-md divide-x divide-gray-100 bg-white  text-sm font-semibold leading-6 text-gray-900 shadow-lg ring-1 ring-gray-900/5'>
-            <Link
-              className='block w-full py-2 px-4  ltr:text-left rtl:text-right hover:bg-gray-200 capitalize'
-              href={appLinks.account(lang, role.name, id)}>
-              {trans.control_account_information}
-            </Link>
+            {auth.role && auth.id && (
+              <Link
+                className='block w-full py-2 px-4  ltr:text-left rtl:text-right hover:bg-gray-200 capitalize'
+                href={appLinks.account(lang, auth.role.name, auth.id)}>
+                {trans.control_account_information}
+              </Link>
+            )}
+
             <Link
               className='block w-full py-2 px-4  ltr:text-left rtl:text-right hover:bg-gray-200 capitalize'
               href={appLinks.home(lang)}>
