@@ -57,23 +57,23 @@ export function RegisterAs({ trans, lang }: Props) {
           <p className="mt-6 text-base leading-8 line-clamp-2 text-gray-800">
             {trans.get_to_know_all_kind_of_subscriptions_and_sponsorships}
           </p>
-          <div className="mt-8">
+          <div className="mt-8 w-full">
             <Link
               href={`/${lang}/register/company`}
-              className="inline-flex  btn-color-default break-words text-sm  "
+              className="inline-flex justify-center btn-default w-full"
             >
               {trans.register_as_subscription}
             </Link>
           </div>
-          <div className="flex flex-row gap-4 mt-2">
+          <div className="grid grid-cols-2 gap-4 mt-2">
             <Link
-              className="inline-flex  btn-color-default  bg-transparent text-expo-dark border border-expo-dark hover:bg-expo-dark hover:text-white text-sm  "
+              className="text-center btn-dark-hover"
               href={`/${lang}/register/company`}
             >
               {trans.register_as_sponsorship}
             </Link>
             <Link
-              className="inline-flex  btn-color-default  bg-transparent text-expo-dark border border-expo-dark hover:bg-expo-dark hover:text-white text-sm  "
+              className="text-center btn-dark-hover"
               href={`/${lang}/register/visitor`}
             >
               {trans.register_as_visitor}

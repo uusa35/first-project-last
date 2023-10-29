@@ -95,7 +95,23 @@ export const apiSlice = createApi({
           response.status == 200,
       }),
     }),
+
+    newsletter: builder.query<
+      {email:string},
+      any
+    >({
+      query: (params) => ({
+        url: `newsletter`,
+        method: 'POST',
+        params:{...params},
+        headers:{
+          "content-type":"application/json"
+        },
+        validateStatus: (response, result) =>
+          response.status == 200,
+      }),
+    }),
   }),
 });
 
-export const { useGetSettingQuery, useLazySendContactusQuery, useLazyUploadImageQuery } = apiSlice;
+export const { useGetSettingQuery, useLazySendContactusQuery, useLazyUploadImageQuery,useLazyNewsletterQuery } = apiSlice;

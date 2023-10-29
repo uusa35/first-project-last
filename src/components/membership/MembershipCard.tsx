@@ -40,7 +40,7 @@ export default function ({
     }
   };
 
-  console.log({ element });
+  // console.log({ element });
   return (
     <div
       className={`ring-gray-200 rounded-md p-8 ring-1 xl:p-10 bg-white flex flex-col justify-between gap-y-5  ${

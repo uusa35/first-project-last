@@ -18,7 +18,7 @@ export function SubscriptionsPrices({
   lang,
   country,
 }: Props) {
-  console.log({ subscriptions });
+  // console.log({ subscriptions });
   return (
     <div className="bg-expo-green py-16 capitalize">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">

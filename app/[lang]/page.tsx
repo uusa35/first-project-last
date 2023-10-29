@@ -33,7 +33,7 @@ import MembershipCard from "@/components/membership/MembershipCard";
 import DotPattern from "@/appImages/home/dot_pattern.png";
 
 import { Subscriptions } from "@/components/Home/Subscriptions";
-import { RegisterToJoin } from "@/components/Home/RegisterToJoin";
+import { NewsLetters } from "@/components/Home/NewsLetters";
 import { LatestNews } from "@/components/Home/LatestNews";
 import { SubscriptionsPrices } from "@/components/Home/SubscriptionsPrices";
 import { SearchBar } from "@/components/Home/SearchBar";
@@ -109,7 +109,7 @@ export default async function Home({ params: { lang } }: Props) {
       <Subscriptions trans={trans as { [key: string]: string }} />
 
       {/* newsletter */}
-      <RegisterToJoin trans={trans as { [key: string]: string }} />
+      <NewsLetters trans={trans as { [key: string]: string }} />
 
       {/* posts */}
       <LatestNews
