@@ -164,6 +164,8 @@
     "caption.en": "وصف مختصر بالإنجليزية",
     "caption.ru": "وصف مختصر بالروسية",
     "submit": "حفظ",
-    "featured": "مميز"
+    "featured": "مميز",
+    "profile" : "الصفحة الشخصية",
+    "control_information" : "التحكم بالمعلومات"
   }
 }

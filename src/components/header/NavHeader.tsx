@@ -96,7 +96,7 @@ export default function ({
         dispatch(setCurrentPath(url));
       }
     }
-  }, [pathName]);
+  }, [pathName, isAuth]);
 
   return (
     <header

@@ -118,8 +118,7 @@ export default function ({ lang }: Props) {
         <div className='flex items-center justify-between'>
           <div className='text-sm leading-6'>
             <Link
-              target='_blank'
-              href={appLinks.forgetPassword()}
+              href={appLinks.forgetPassword(lang)}
               className='font-semibold text-expo-dark hover:text-green-700 capitalize'>
               {trans.forgot_password}
             </Link>

@@ -162,6 +162,8 @@
     "caption.en": "caption in english",
     "caption.ru": "caption in russian",
     "submit": "submit",
-    "featured": "featured"
+    "featured": "featured",
+    "profile": "profile",
+    "control_information": "control my information"
   }
 }

@@ -52,9 +52,8 @@ export default function ({ lang }: Props) {
   const onSubmit: SubmitHandler<Inputs> = async (body) => {
     dispatch(enableLoading());
     await triggerForgotPassword(body).then((r: any) => {
-      if (r && r.data) {
+      if (r && r.data && r.data.message) {
         dispatch(showSuccessToastMessage({ content: trans.process_success }));
-        dispatch(disableLoading());
         return router.push(`/${lang}`);
       } else if (r && r.error && r.error.data) {
         dispatch(
