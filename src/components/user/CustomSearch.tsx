@@ -31,14 +31,14 @@ export function CustomSearch({ trans, lang }: Props) {
         onChange={(e) => setSearchKey(e.target.value)}
       />
       <Link
-        className='w-14 h-10 bg-gray-100 rounded-md p-1.5 flex justify-center items-center'
+        className='w-14 h-10 bg-gray-100 rounded-md p-1.5 flex justify-center items-center hover:bg-gray-200'
         href={`/${lang}/user?membership=${searchParams?.get(
           "membership"
         )}&search=${searchKey}`}>
         <MagnifyingGlassIcon className='w-6 h-6 text-expo-dark' />
       </Link>
       <Link
-        className='w-14 h-10 bg-gray-100 rounded-md p-1.5 flex justify-center items-center'
+        className='w-14 h-10 bg-gray-100 rounded-md p-1.5 flex justify-center items-center hover:bg-gray-200'
         href={`/${lang}/user?membership=${searchParams?.get("membership")}`}>
         <BackspaceOutlined className='w-6 h-6 text-expo-dark' />
       </Link>
