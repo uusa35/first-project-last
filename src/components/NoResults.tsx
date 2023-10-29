@@ -27,29 +27,32 @@ export default function ({
       trans={trans}
       lang={lang}
       searchParams={``}
-      setting={setting}
-    >
-      <main className="relative isolate mx-auto flex flex-col gap-y-6 justify-center items-center max-w-7xl min-h-screen capitalize">
-        <NoResultImage className={`w-80 lg:w-1/4 h-auto rounded-md`} />
+      setting={setting}>
+      <main className='relative isolate mx-auto flex flex-col gap-y-6 justify-start items-center max-w-7xl min-h-screen capitalize'>
+        <Link
+          href={`/${lang}/${currentModule}`}
+          className='flex w-full justify-center items-center'>
+          <NoResultImage className={`w-80 lg:w-1/3 h-auto rounded-md`} />
+        </Link>
         {message !== null ? (
-          <div className="text-center w-1/2 leading-8 mb-4">
-            <p className="text-2xl line-clamp-2 leading-loose text-center">
+          <div className='text-center w-1/2 leading-8 mb-4'>
+            <p className='text-2xl line-clamp-2 leading-loose text-center'>
               {message}
             </p>
           </div>
         ) : (
-          <div className="text-center">
+          <div className='text-center'>
             <div>
-              <h2 className="text-2xl">{trans.empty_results}</h2>
+              <h2 className='text-2xl'>{trans.empty_results}</h2>
             </div>
             <div>
-              <p className="text-xl my-2">{trans.empty_results_messsage}</p>
+              <p className='text-xl my-2'>{trans.empty_results_messsage}</p>
             </div>
           </div>
         )}
         <div>
           {currentModule && (
-            <Link href={`/${lang}/${currentModule}`} className="btn-default">
+            <Link href={`/${lang}/${currentModule}`} className='btn-default'>
               {trans.reset}
             </Link>
           )}
