@@ -71,7 +71,7 @@ export default function ({
         </div>
 
         <div
-          className='pb-10 max-h-[300px] max-w-xs sm:max-w-xl md:max-w-full whitespace-pre-line text-ellipsis overflow-hidden'
+          className='my-4 h-[300px] max-w-xs sm:max-w-xl md:max-w-full whitespace-pre-line text-ellipsis overflow-hidden'
           dangerouslySetInnerHTML={{
             __html: DOMPurify.sanitize(element.description),
           }}
