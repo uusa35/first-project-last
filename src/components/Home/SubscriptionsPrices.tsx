@@ -3,7 +3,7 @@ import Link from "next/link";
 import * as React from "react";
 import { Country, Membership } from "@/types/queries";
 import { Locale } from "@/types/index";
-import MembershipCard from "../membership/MembershipCard";
+import MembershipCard from "@/components/membership/MembershipCard";
 
 type Props = {
   trans: { [key: string]: string };
