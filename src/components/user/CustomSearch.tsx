@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState, HTMLInputElement } from "react";
+import { InputHTMLAttributes, useRef, useState } from "react";
 import SearchIcon from "@/appIcons/search.svg";
 import { Locale } from "@/types/index";
 import Link from "next/link";
@@ -17,10 +17,10 @@ type Props = {
 
 export function CustomSearch({ trans, lang }: Props) {
   const [searchKey, setSearchKey] = useState<string>("");
-  const searchRef = useRef<HTMLInputElement>();
+  const searchRef = useRef<any>();
   const path = usePathname();
   const searchParams = useSearchParams();
-  const handleReset = () => searchRef?.current?.reset();
+  const handleReset = () => searchRef.current.reset();
   return (
     <div className='flex justify-end items-center gap-x-1 w-full md:w-1/4'>
       <input
