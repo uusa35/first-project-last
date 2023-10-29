@@ -166,7 +166,9 @@
     "caption.en": "caption in english",
     "caption.ru": "caption in russian",
     "submit": "submit",
-    "download_the_exhibition_brochure":"download the exhibition brochure",
-    "featured": "featured"
+    "download_the_exhibition_brochure": "download the exhibition brochure",
+    "featured": "featured",
+    "profile": "profile",
+    "control_information": "control my information"
   }
 }

@@ -32,6 +32,7 @@ export const apiSlice = createApi({
         'Access-Control-Allow-Methods',
         'GET,PUT,POST,DELETE,PATCH,OPTIONS',
       );
+
       headers.set('Content-Type', 'application/json');
       headers.set('Accept', 'application/json');
       headers.set('Cache-Control', 'no-store');
@@ -39,6 +40,8 @@ export const apiSlice = createApi({
         headers.set('Authorization', `Bearer ${api_token}`);
         headers.set('api_token', `${api_token}`);
       }
+      console.log('from inside header ====>')
+      console.log('headers', headers);
       return headers;
     },
     // credentials: 'include',

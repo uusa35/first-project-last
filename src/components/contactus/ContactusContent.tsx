@@ -9,13 +9,11 @@ import {
 import { Locale } from "@/types/index";
 import { FormEvent, Suspense, useContext } from "react";
 import { MainContext } from "@/layouts/MainContentLayout";
-import { disableLoading, enableLoading } from "@/redux/slices/settingSlice";
+import { enableLoading } from "@/redux/slices/settingSlice";
 import LoadingSpinner from "@/components/LoadingSpinner";
-import { apiUrl } from "@/src/constants";
 import { contactusSchema } from "@/src/validations";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { first } from "lodash";
 
 type Inputs = {
   name: string;
@@ -28,8 +26,6 @@ export default function () {
   const trans: { [key: string]: string } = useContext(MainContext);
   const {
     locale: { lang },
-  } = useAppSelector((state) => state);
-  const {
     appSetting: { isLoading },
   } = useAppSelector((state) => state);
   const {
@@ -43,7 +39,7 @@ export default function () {
       name: ``,
       email: ``,
       phone: ``,
-      message: ``,
+      content: ``,
     },
   });
   const dispatch = useAppDispatch();
@@ -153,15 +149,15 @@ export default function () {
             <div className='mt-2.5'>
               <textarea
                 id='message'
-                {...register("message")}
+                {...register("content")}
                 rows={4}
                 aria-describedby='message-description'
                 className='block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                 defaultValue={""}
               />
-              {errors?.message?.message && (
+              {errors?.message?.content && (
                 <span className={`text-red-700 text-xs capitalize`}>
-                  {errors?.message?.message}
+                  {errors?.message?.content}
                 </span>
               )}
             </div>
