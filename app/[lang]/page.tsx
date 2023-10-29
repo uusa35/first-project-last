@@ -141,11 +141,13 @@ export default async function Home({ params: { lang } }: Props) {
       />
 
       {/* OnHome Images with Url if exist (this will be a slider) */}
-      <MainGallery
-        trans={trans as { [key: string]: string }}
-        images={images}
-        setting={setting}
-      />
+      {images && images.data.length > 0 && (
+        <MainGallery
+          trans={trans as { [key: string]: string }}
+          images={images.data}
+          setting={setting}
+        />
+      )}
     </MainContextLayout>
   );
 }

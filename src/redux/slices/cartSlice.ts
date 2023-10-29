@@ -15,6 +15,7 @@ const initialState: { membership: Membership, payment: PaymentFields, order: Omi
     on_sale: false,
     sort: 'subscription',
     zone: 'A',
+    is_featured : false
   },
   payment: {
     token: `${process.env.NEXT_PUBLIC_PAYMENT_TOKEN}`,

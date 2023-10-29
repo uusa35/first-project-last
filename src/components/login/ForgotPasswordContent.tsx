@@ -1,5 +1,8 @@
 "use client";
-import { useLazyLoginQuery } from "@/redux/api/authApi";
+import {
+  useLazyForgotPasswordQuery,
+  useLazyLoginQuery,
+} from "@/redux/api/authApi";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setAuth } from "@/redux/slices/authSlice";
 import {
@@ -13,7 +16,7 @@ import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { loginSchema } from "@/src/validations";
+import { forgotPasswordSchema, loginSchema } from "@/src/validations";
 import { disableLoading, enableLoading } from "@/redux/slices/settingSlice";
 import { MainContext } from "@/layouts/MainContentLayout";
 import LoadingSpinner from "@/components/LoadingSpinner";
@@ -33,28 +36,25 @@ export default function ({ lang }: Props) {
   const {
     appSetting: { isLoading },
   } = useAppSelector((state) => state);
-  const [triggerLogin] = useLazyLoginQuery();
+  const [triggerForgotPassword] = useLazyForgotPasswordQuery();
   const {
     handleSubmit,
     register,
     reset,
     formState: { errors },
   }: any = useForm<any>({
-    resolver: yupResolver(loginSchema),
+    resolver: yupResolver(forgotPasswordSchema),
     defaultValues: {
       email: ``,
-      password: ``,
     },
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (body) => {
     dispatch(enableLoading());
-    await triggerLogin(body).then((r: any) => {
+    await triggerForgotPassword(body).then((r: any) => {
       if (r && r.data) {
         dispatch(showSuccessToastMessage({ content: trans.process_success }));
-        dispatch(setAuth(r.data));
-        setToken(r.data.api_token);
-
+        dispatch(disableLoading());
         return router.push(`/${lang}`);
       } else if (r && r.error && r.error.data) {
         dispatch(
@@ -94,43 +94,10 @@ export default function ({ lang }: Props) {
         </div>
 
         <div>
-          <label
-            htmlFor='password'
-            className='block text-sm font-medium leading-6 text-gray-900 capitalize'>
-            {trans.password}
-          </label>
-          <div className='mt-2'>
-            <input
-              id='password'
-              {...register("password")}
-              type='password'
-              autoComplete='current-password'
-              className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6'
-            />
-            {errors?.password?.message && (
-              <span className={`text-red-700 text-xs capitalize`}>
-                {errors?.password?.message}
-              </span>
-            )}
-          </div>
-        </div>
-
-        <div className='flex items-center justify-between'>
-          <div className='text-sm leading-6'>
-            <Link
-              target='_blank'
-              href={appLinks.forgetPassword()}
-              className='font-semibold text-expo-dark hover:text-green-700 capitalize'>
-              {trans.forgot_password}
-            </Link>
-          </div>
-        </div>
-
-        <div>
           <button
             type='submit'
             className='flex w-full justify-center btn-default capitalize'>
-            {trans.sign_in}
+            {trans.submit}
           </button>
         </div>
       </form>

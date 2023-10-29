@@ -162,7 +162,8 @@
     "caption.en": "caption in english",
     "caption.ru": "caption in russian",
     "submit": "submit",
-    "download_the_exhibition_brochure":"Скачать брошюру выставки"
+    "download_the_exhibition_brochure":"Скачать брошюру выставки",
 
+    "featured": "featured"
   }
 }

@@ -10,16 +10,14 @@ import { notFound } from "next/navigation";
 import UserIndexBanner from "@/appImages/user/banner.jpg";
 import SocialIcons from "@/components/footer/SocialIcons";
 import { Email, EmailOutlined, InsertLink } from "@mui/icons-material";
-import { Setting, User } from "@/types/queries";
+import { ImageType, Setting, User } from "@/types/queries";
+import { MainGallery } from "@/components/Home/MainGallery";
 
 type Props = {
   params: { lang: Locale["lang"]; id: string };
   searchParams: { [key: string]: string };
 };
-export default async function UserShow({
-  params: { lang, id },
-  searchParams,
-}: Props) {
+export default async function ({ params: { lang, id }, searchParams }: Props) {
   const [{ trans }, setting, user]: [{ trans: any }, Setting, User] =
     await Promise.all([
       getDictionary(lang),
@@ -30,6 +28,14 @@ export default async function UserShow({
   if ("status" in user && (user.status === 404 || user.status === 500))
     notFound();
 
+  if (user.images.length > 0) {
+    var imagesGroup = user.images.map((img: ImageType) => {
+      return { thumbnail: img.image, original: img.image };
+    });
+  }
+
+  console.log("thumbnail", imagesGroup);
+
   return (
     <MainContextLayout
       trans={trans}
@@ -38,14 +44,14 @@ export default async function UserShow({
       setting={setting}>
       <main className='relative isolate mx-auto max-w-7xl min-h-screen'>
         {/* Image section */}
-        <div className='mt-8 sm:mt-8 xl:mx-auto xl:max-w-7xl'>
-          <div className='absolute left-5 sm:left-10 top-10'>
+        <div className='mt-8 sm:mt-8 xl:mx-auto xl:max-w-7xl '>
+          <div className='absolute left-5 sm:left-10 top-10  z-10 '>
             <span
               className={` text-gray-800 bg-white/50 p-1 sm:p-4 rounded-md`}>
               {user.deals.membership.sort}
             </span>
           </div>
-          <div className='absolute w-full lg:max-w-4xl flex flex-col lg:flex-row  justify-center lg:justify-start items-center top-0 lg:top-32 bg-stone/60 lg:rtl:right-10 lg:ltr:left-10 p-8 text-white  gap-4  rounded-md'>
+          <div className='absolute w-full  lg:max-w-4xl flex flex-col lg:flex-row  justify-center lg:justify-start items-center top-0 lg:top-32 bg-stone/60 lg:rtl:right-10 lg:ltr:left-10 p-8 text-white  gap-4  rounded-md'>
             <div>
               <Image
                 width={100}
@@ -65,7 +71,7 @@ export default async function UserShow({
             height={500}
             src={UserIndexBanner}
             alt={user.name}
-            className='aspect-[9/5] sm:aspect-[9/3] w-full object-cover xl:rounded-xl'
+            className='aspect-[9/5] sm:aspect-[9/3] w-full  object-cover xl:rounded-xl'
           />
         </div>
 
@@ -184,6 +190,13 @@ export default async function UserShow({
               </div>
             </div>
           )}
+
+          <MainGallery
+            trans={trans as { [key: string]: string }}
+            images={user.images}
+            setting={setting}
+            message={trans.home}
+          />
         </div>
       </main>
     </MainContextLayout>

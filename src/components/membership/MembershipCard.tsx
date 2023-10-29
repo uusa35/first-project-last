@@ -7,6 +7,7 @@ import { useContext } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useRouter } from "next/navigation";
 import { getPrice } from "@/src/constants";
+import { isAuthenticated } from "@/redux/slices/authSlice";
 
 type Props = {
   element: Membership;
@@ -24,11 +25,11 @@ export default function ({
 }: Props) {
   const trans: { [key: string]: string } = useContext(MainContext);
   const dispatch = useAppDispatch();
+  const isAuth = useAppSelector(isAuthenticated);
   const {
     cart: {
       payment: { queryString, paymentUrl },
     },
-    auth: { isAuth },
   } = useAppSelector((state) => state);
   const router = useRouter();
 
@@ -94,12 +95,11 @@ export default function ({
       >
         {isAuth ? trans.register_now_to_subscribe : trans.subscribe_now}
       </button>
-      {/* <ul
-        role="list"
-        className={"text-gray-600 mt-8 space-y-3 text-sm leading-6 xl:mt-10"}
-      >
-        <p>{element.caption}</p>
-      </ul> */}
+      {element.caption && (
+        <ul role='list' className={"text-gray-600 text-sm leading-6 mt-4"}>
+          <p>{element.caption}</p>
+        </ul>
+      )}
     </div>
   );
 }

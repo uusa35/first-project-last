@@ -27,7 +27,7 @@ export function SubscriptionsPrices({
             {trans.main_subscripers}
           </p>
         </div>
-        <p className="mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-600">
+        <p className='mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-600'>
           {trans.register_now_and_learn_about_the_partner_and_sponsor_packages}
         </p>
         <div className="flex justify-center mt-5">
@@ -45,8 +45,7 @@ export function SubscriptionsPrices({
                 country={country[0]}
                 lang={lang}
               />
-            )
-          )}
+          ))}
         </div>
       </div>
     </div>

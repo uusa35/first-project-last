@@ -6,6 +6,11 @@ export const loginSchema = yup.object({
     password: yup.string().min(4).max(20).required(),
 });
 
+export const forgotPasswordSchema = yup.object({
+    email: yup.string().email().required(),
+
+});
+
 export const updateUserSchema = yup.object({
     email: yup.string().email().required(),
     country_id: yup.string().required(),

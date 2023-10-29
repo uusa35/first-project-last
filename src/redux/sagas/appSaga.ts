@@ -48,7 +48,7 @@ export function* startShowToastMessageScenario(action: PayloadAction<any>) {
       type: toastMessage.type,
       toastId: toastMessage.type
     });
-    yield delay(2000);
+    yield delay(5000);
     toast.dismiss();
     yield put({ type: `${toastMessageSlice.actions.hideToastMessage}` });
   } catch (e) {

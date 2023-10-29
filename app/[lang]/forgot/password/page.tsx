@@ -6,6 +6,7 @@ import Image from "next/image";
 import LoginImage from "@/appImages/login/section.jpg";
 import LoginContent from "@/components/login/LoginContent";
 import { Setting } from "@/types/queries";
+import ForgotPasswordContent from "@/components/login/ForgotPasswordContent";
 
 export default async function ({
   params: { lang },
@@ -25,7 +26,7 @@ export default async function ({
       setting={setting}>
       <div className='flex flex-1 mx-auto max-w-7xl min-h-screen'>
         <div className='flex flex-1 flex-col justify-start px-4 py-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24'>
-          <div className='mx-auto w-full  max-w-sm  lg:w-96  space-y-6 '>
+          <div className='mx-auto w-full  max-w-sm  lg:w-96 space-y-6 '>
             <div className='flex flex-col justify-center'>
               <Image
                 width={200}
@@ -35,13 +36,13 @@ export default async function ({
                 alt={setting.name}
               />
               <h2 className='mt-8 text-2xl font-bold leading-9 tracking-tight text-gray-900 capitalize'>
-                {trans.welcome_back}
+                {trans.forgot_password}
               </h2>
               <p className='mt-2 text-sm leading-6 text-gray-500 capitalize'>
                 {trans.welcome_back_Please_enter_the_following_information}
               </p>
             </div>
-            <LoginContent lang={lang} />
+            <ForgotPasswordContent lang={lang} />
           </div>
         </div>
         <div className='relative hidden w-0 flex-1 lg:block'>
