@@ -24,11 +24,9 @@ export function NewsLetters({ trans }: Props) {
   const [triggerNewsLetterSubscribtion] = useLazyNewsletterQuery();
 
   const onSubmit = async (data: unknown) => {
-    await triggerNewsLetterSubscribtion(data).then((res) => {
-      if (res.isSuccess) {
-        dispatch(
-          showSuccessToastMessage({ content: "subscribed successfully" })
-        );
+    await triggerNewsLetterSubscribtion(data).then((r: any) => {
+      if (r.isSuccess && r.data && r.data.message) {
+        dispatch(showSuccessToastMessage({ content: r.data.message }));
       }
     });
   };
@@ -59,7 +57,7 @@ export function NewsLetters({ trans }: Props) {
               <input
                 // type="email"
                 // autoComplete="email"
-                className='min-w-0 w-full flex-auto rounded-md border-0 bg-white/80 px-3.5 py-2 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-white sm:text-sm sm:leading-6'
+                className='min-w-0 w-full flex-auto rounded-md border-0 bg-white/80 px-3.5 py-2 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-white sm:text-sm sm:leading-6 capitalize'
                 placeholder={trans.enter_ur_email}
                 {...register("email")}
               />
