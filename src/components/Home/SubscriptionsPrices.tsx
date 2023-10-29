@@ -36,11 +36,11 @@ export function SubscriptionsPrices({
           </Link>
         </div>
         <div className='isolate mx-auto grid max-w-md grid-cols-1 gap-y-8 lg:mx-0 lg:max-w-none lg:grid-cols-3 my-20'>
-          {subscriptions.map((subscription: Membership, i: number) => (
+          {subscriptions.map((s: Membership, i: number) => (
             <MembershipCard
               scaleOnHover={false}
-              scaleMiddle={i === 1 && subscription.is_featured}
-              element={subscription}
+              scaleMiddle={i === 1 && s.is_featured}
+              element={s}
               country={country[0]}
               lang={lang}
             />
