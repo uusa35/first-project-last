@@ -7,6 +7,7 @@ import { useContext } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useRouter } from "next/navigation";
 import { getPrice } from "@/src/constants";
+import { isAuthenticated } from "@/redux/slices/authSlice";
 
 type Props = {
   element: Membership;
@@ -16,11 +17,11 @@ type Props = {
 export default function ({ element, country, lang }: Props) {
   const trans: { [key: string]: string } = useContext(MainContext);
   const dispatch = useAppDispatch();
+  const isAuth = useAppSelector(isAuthenticated);
   const {
     cart: {
       payment: { queryString, paymentUrl },
     },
-    auth: { isAuth },
   } = useAppSelector((state) => state);
   const router = useRouter();
 

@@ -120,6 +120,7 @@ export type Membership = {
     price: number;
     sale_price: number;
     on_sale: boolean;
+    is_featured : boolean;
     sort: 'subscription' | 'sponsorship';
     zone: 'A' | 'B' | 'C' | 'D' | 'E';
     [key: string]: any;

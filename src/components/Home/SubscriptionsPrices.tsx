@@ -37,15 +37,15 @@ export function SubscriptionsPrices({
           </Link>
         </div>
         <div className='isolate mx-auto grid max-w-md grid-cols-1 gap-y-8 lg:mx-0 lg:max-w-none lg:grid-cols-3 mt-10'>
-          {subscriptions.map(
-            (subscription: Membership, subscriptionsIdx: number) => (
+          {subscriptions.map((element: Membership, i: number) => (
+            <div key={i} className={`${i == 1 && element.is_featured && `scale-110 z-10`}`}>
               <MembershipCard
-                element={subscription}
+                element={element}
                 country={country[0]}
                 lang={lang}
               />
-            )
-          )}
+            </div>
+          ))}
         </div>
       </div>
     </div>
