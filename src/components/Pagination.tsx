@@ -12,7 +12,7 @@ export default function ({ links }: Props): React.ReactNode {
   const { previous, next }: any = useContext(MainContext);
   function getClassName(active: boolean) {
     if (active) {
-      return "mr-1 mb-1 px-4 py-3 text-sm leading-4 border rounded hover:bg-gray-200 focus:border-primary focus:text-primary bg-gray-600 text-white hover:text-gray-900";
+      return "mr-1 mb-1 px-4 py-3 text-sm leading-4 border rounded hover:bg-gray-200 focus:border-primary focus:text-primary bg-gray-600 text-white hover:text-gray-900 ";
     } else {
       return "mr-1 mb-1 px-4 py-3 text-sm leading-4 border rounded hover:bg-white hover:text-gray-900 focus:border-primary focus:text-primary";
     }
@@ -27,7 +27,7 @@ export default function ({ links }: Props): React.ReactNode {
               has(link, "url") && isNull(link.url) ? (
                 <div
                   key={i}
-                  className='mr-1 mb-1 px-4 py-3 text-sm leading-4 text-gray-400 border rounded'>
+                  className='flex  justify-center items-center mr-1 mb-1 text-sm leading-4 text-gray-400 border rounded w-24 text-center hover:bg-gray-200'>
                   {link.label.includes("Previous")
                     ? previous
                     : link.label.includes("Next")
@@ -35,8 +35,8 @@ export default function ({ links }: Props): React.ReactNode {
                     : link.label}
                 </div>
               ) : (
-                  <Link
-                    scroll={false}
+                <Link
+                  scroll={false}
                   key={i}
                   className={getClassName(link.active)}
                   href={link.url}>
