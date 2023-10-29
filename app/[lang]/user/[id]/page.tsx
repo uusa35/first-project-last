@@ -42,7 +42,7 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
       lang={lang}
       searchParams={``}
       setting={setting}>
-      <main className='relative isolate mx-auto max-w-7xl min-h-screen'>
+      <main className='relative isolate mx-auto max-w-7xl min-h-screen '>
         {/* Image section */}
         <div className='mt-8 sm:mt-8 xl:mx-auto xl:max-w-7xl '>
           <div className='absolute left-5 sm:left-10 top-10  z-10 '>
@@ -61,7 +61,7 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
                 className='w-20 h-20 object-cover rounded-full border border-gray-400 shadow-lg'
               />
             </div>
-            <div className='flex flex-col justify-center lg:justify-start items-center lg:items-start gap-4 text-center rtl:text-right ltr:text-left'>
+            <div className='flex flex-col justify-center lg:justify-start items-center lg:items-start gap-4 text-center rtl:text-right ltr:text-left capitalize'>
               <div className='text-2xl lg:text-6xl '>{user.name}</div>
               <div className='text-lg lg:text-xl'>{user.caption}</div>
             </div>
@@ -80,7 +80,7 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
           {user.aboutus && (
             <div className='px-2 pt-12 lg:px-8'>
               <div className='mx-auto text-center'>
-                <h2 className='text-2xl font-bold tracking-tight text-black sm:text-4xl'>
+                <h2 className='text-2xl font-bold tracking-tight text-black sm:text-4xl capitalize'>
                   {trans.aboutus}
                 </h2>
                 <div className='mt-6 text-lg leading-8 text-gray-800 '>
@@ -98,7 +98,9 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
           <div className='px-6 py-12 lg:px-8 bg-gray-100 w-full h-auto'>
             <div className='grid grid-cols-1 gap-y-10 text-center ltr:lg:text-left rtl:lg:text-right lg:gap-y-0 lg:grid-cols-3'>
               <div className='flex flex-col gap-y-4 leading-8'>
-                <h1 className={`text-2xl`}>{trans.contactus_information}</h1>
+                <h1 className={`text-2xl capitalize`}>
+                  {trans.contactus_information}
+                </h1>
                 <p className='text-clamp-2 text-clip'>
                   {user.address} - {user.country.name}
                 </p>
@@ -110,7 +112,7 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
                       <EmailOutlined />
                     </div>
                     <div>
-                      <h1>{trans.email}</h1>
+                      <h1 className='capitalize'>{trans.email}</h1>
                     </div>
                   </div>
                   <div className='ltr:text-left rtl:text-right'>
