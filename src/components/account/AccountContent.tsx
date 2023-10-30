@@ -1,22 +1,29 @@
 "use client";
 import {
-  useUpdateUserImageMutation,
+  useLazyUploadImageQuery,
   useUpdateUserMutation,
 } from "@/redux/api/authApi";
 import { Tab } from "@headlessui/react";
 import { ArrowsPointingOutIcon } from "@heroicons/react/24/outline";
 import { ArrowBack, FourGMobiledataSharp } from "@mui/icons-material";
-import { ChangeEvent, FormEventHandler, useContext, useState } from "react";
+import {
+  ChangeEvent,
+  FormEventHandler,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema, updateUserSchema } from "@/src/validations";
 import { disableLoading, enableLoading } from "@/redux/slices/settingSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { MainContext } from "@/layouts/MainContentLayout";
-import { Auth, Category, Country, User } from "@/types/queries";
+import { AppQueryResult, Auth, Category, Country, User } from "@/types/queries";
 import {
   showErrorToastMessage,
   showSuccessToastMessage,
+  showToastMessage,
 } from "@/redux/slices/toastMessageSlice";
 import { get, map, omit, toString } from "lodash";
 import InputError from "@/components/InputError";
@@ -25,7 +32,7 @@ import InputLabel from "@/components/InputLabel";
 import TextInput from "@/components/TextInput";
 import LoadingSpinner from "../LoadingSpinner";
 import Image from "next/image";
-import { useLazyUploadImageQuery } from "@/redux/api";
+import { useLazyUploadImagesQuery } from "@/redux/api";
 import Select from "react-select";
 
 type Inputs = {
@@ -39,11 +46,27 @@ type Inputs = {
   caption: any;
   categories: [] | undefined;
   tags: [] | undefined;
+  mobile: string;
+  phone: string;
+  whatsapp: string;
+  facebook: string;
+  instagram: string;
+  twitter: string;
+  snap: string;
+  tiktok: string;
+  linked: string;
+  iphone: string;
+  android: string;
+  longitude: string;
+  latitude: string;
+  keywords: string;
+  website: string;
+  images: [];
 };
 type Props = {
   user: User;
   countries: Country[];
-  categories: Category[];
+  categories: AppQueryResult<Category[]>;
 };
 export default function ({ user, countries, categories }: Props) {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -53,8 +76,8 @@ export default function ({ user, countries, categories }: Props) {
   } = useAppSelector((state) => state);
   const [triggerUpdateUser, { data, error, isSuccess }] =
     useUpdateUserMutation();
-  const [triggerUpdateUserImage] = useUpdateUserImageMutation();
-  const [triggerUploadImages] = useLazyUploadImageQuery();
+  const [triggerUploadImage] = useLazyUploadImageQuery();
+  const [triggerUploadImages] = useLazyUploadImagesQuery();
   const dispatch = useAppDispatch();
   const {
     handleSubmit,
@@ -76,6 +99,11 @@ export default function ({ user, countries, categories }: Props) {
             "roles",
             "orders",
             "id",
+            "name",
+            "description",
+            "aboutus",
+            "services",
+            "address",
           ])
         : omit(user, [
             "image",
@@ -86,13 +114,53 @@ export default function ({ user, countries, categories }: Props) {
             "role",
             "orders",
             "id",
+            "name",
+            "description",
+            "aboutus",
+            "services",
+            "address",
           ])),
       categories: map(user.categories, "id"),
       tags: map(user.tags, "id"),
+      role: user.roles[0].name,
+      name: {
+        ar: user.name?.ar ?? "",
+        en: user.name?.en ?? "",
+        ru: user.name?.ru ?? "",
+      },
+      description: {
+        ar: user.description?.ar ?? "",
+        en: user.description?.en ?? "",
+        ru: user.description?.ru ?? "",
+      },
+      caption: {
+        ar: user.caption?.ar ?? "",
+        en: user.caption?.en ?? "",
+        ru: user.caption?.ru ?? "",
+      },
+      services: {
+        ar: user.services?.ar ?? "",
+        en: user.services?.en ?? "",
+        ru: user.services?.ru ?? "",
+      },
+      aboutus: {
+        ar: user.aboutus?.ar ?? "",
+        en: user.aboutus?.en ?? "",
+        ru: user.aboutus?.ru ?? "",
+      },
+      address: {
+        ar: user.address?.ar ?? "",
+        en: user.address?.en ?? "",
+        ru: user.address?.ru ?? "",
+      },
+      image: ``,
+      images: [],
     },
   });
 
+  // console.log("getValues", getValues());
   const onSubmit: SubmitHandler<Inputs> = async (body: any) => {
+    console.log("body", body);
     dispatch(enableLoading());
     await triggerUpdateUser({ body, id: user.id })
       .then((r: any) => {
@@ -110,26 +178,35 @@ export default function ({ user, countries, categories }: Props) {
       })
       .then(() => {
         if (body.image[0]) {
+          console.log("inside");
           const formData = new FormData();
           formData.append("image", body.image[0]);
-          formData.append("_method", "put");
-          triggerUpdateUserImage({ formData, id: user.id });
+          formData.append("name", "image");
+          formData.append("model", "user");
+          formData.append("id", toString(user.id));
+          triggerUploadImage(formData);
         }
       });
   };
 
   const handleImages = async (imagesGroup: any) => {
+    console.log("group", imagesGroup[0]);
     if (imagesGroup.length > 1 && imagesGroup.length <= 10 && user) {
+      console.log("inside");
       let formData = new FormData();
-      const images: any = [];
       for (let i = 0; i < imagesGroup.length; i++) {
+        console.log("i", i);
         formData.append(`images[${i}]`, imagesGroup[i]);
-        images[`images[${i}]`] = imagesGroup[i];
       }
       formData.append("model", "user");
       formData.append("id", toString(user.id));
-      await triggerUploadImages(formData);
-      setValue("images", images);
+      await triggerUploadImages(formData).then((r: any) => {
+        if (r.data && r.data.message) {
+          dispatch(showSuccessToastMessage({ content: r.data.message }));
+        } else if (r.error && r.error.data?.message) {
+          dispatch(showErrorToastMessage({ content: r.error.data.message }));
+        }
+      });
     }
   };
 
@@ -244,29 +321,13 @@ export default function ({ user, countries, categories }: Props) {
                 )}
               </div>
             </div>
-            {/* mobile */}
-            <div>
-              <InputLabel
-                htmlFor='mobile'
-                value={trans["mobile"]}
-                aria-required
-              />
-              <TextInput
-                defaultValue={user.mobile}
-                id='mobile'
-                {...register("mobile")}
-                aria-required
-                onChange={(e) => setValue("mobile", e.target.value)}
-                className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'
-              />
-              <InputError message={get(errors, "mobile")} className='mt-2' />
-            </div>
+
             {/* country_id */}
             <div>
               <label
                 htmlFor='email'
                 className='block text-sm font-medium leading-6 text-gray-900 capitalize'>
-                {trans.email}
+                {trans.country}
               </label>
               <div className='mt-2'>
                 <select
@@ -289,20 +350,24 @@ export default function ({ user, countries, categories }: Props) {
                 )}
               </div>
             </div>
-            {/* image */}
+
             <div className='col-span-full grid grid-cols-1 lg:grid-cols-2'>
+              {/* image */}
               <div className='col-span-1 flex-row'>
                 <InputLabel htmlFor='image' value={trans.logo} aria-required />
                 <div className='flex flex-row gap-x-4 my-4'>
-                  <div>
-                    <Image
-                      src={user.thumb}
-                      className='w-20 h-auto rounded-md'
-                      alt={user.username}
-                      width={100}
-                      height={100}
-                    />
-                  </div>
+                  {user.thumb && (
+                    <div>
+                      <Image
+                        src={user.thumb}
+                        className='w-20 h-auto rounded-md'
+                        alt={user.username}
+                        width={100}
+                        height={100}
+                      />
+                    </div>
+                  )}
+
                   <input
                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
                       setValue("image", e.target.files)
@@ -316,20 +381,51 @@ export default function ({ user, countries, categories }: Props) {
                 </div>
               </div>
 
+              {/* banner */}
+              <div className='col-span-1 flex-row'>
+                <InputLabel
+                  htmlFor='banner'
+                  value={trans.banner}
+                  aria-required
+                />
+                <div className='flex flex-row gap-x-4 my-4'>
+                  {/* {user.banner && (
+                    <div>
+                      <Image
+                        src={user.banner}
+                        className='w-20 h-auto rounded-md'
+                        alt={user.username}
+                        width={100}
+                        height={100}
+                      />
+                    </div>
+                  )} */}
+
+                  <input
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                      setValue("banner", e.target.files)
+                    }
+                    type='file'
+                    {...register("banner")}
+                    id='banner'
+                    accept='image/jpg, image/jpeg , image/png'
+                    className={`focus:ring-gray-500 focus:border-gray-500 block w-full border-gray-300 rounded-md`}
+                  />
+                </div>
+              </div>
+
               {/* more images */}
               <div className='col-span-1'>
                 <InputLabel
                   htmlFor='more_images'
-                  value={trans.more_images}
+                  value={trans.gallery}
                   aria-required
                 />
                 <input
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    handleImages(e.target.files)
-                  }
+                  onChange={(e: any) => handleImages(e.target.files)}
                   type='file'
                   multiple
-                  {...register("images")}
+                  name='images'
                   id='more_images'
                   // accept='image/jpg, image/jpeg , image/png'
                   autoComplete='more_images'
@@ -338,7 +434,7 @@ export default function ({ user, countries, categories }: Props) {
               </div>
             </div>
 
-            {categories ? (
+            {categories && categories.data ? (
               <div className='col-span-2 pt-4'>
                 <InputLabel
                   htmlFor='categories'
@@ -355,7 +451,7 @@ export default function ({ user, countries, categories }: Props) {
                   isMulti
                   required
                   name='categories'
-                  options={map(categories, (c: any, i) => {
+                  options={map(categories.data, (c: any, i) => {
                     return {
                       label: c.name,
                       value: c.id,
@@ -458,7 +554,7 @@ export default function ({ user, countries, categories }: Props) {
                 <div>
                   <InputLabel
                     htmlFor='caption[en]'
-                    value={trans.aption_en}
+                    value={trans["caption.en"]}
                     aria-required
                   />
                   <TextInput
@@ -484,7 +580,7 @@ export default function ({ user, countries, categories }: Props) {
                 <div>
                   <InputLabel
                     htmlFor='name'
-                    value={trans.aption_ar}
+                    value={trans["name.ar"]}
                     aria-required
                   />
                   <TextInput
@@ -510,7 +606,7 @@ export default function ({ user, countries, categories }: Props) {
                 <div>
                   <InputLabel
                     htmlFor='name'
-                    value={trans.caption_ru}
+                    value={trans["name.ar"]}
                     aria-required
                   />
                   <TextInput
@@ -587,6 +683,229 @@ export default function ({ user, countries, categories }: Props) {
                   className='mt-2'
                 />
               </div>
+            </div>
+
+            {/* mobile */}
+            <div>
+              <InputLabel
+                htmlFor='mobile'
+                value={trans["mobile"]}
+                aria-required
+              />
+              <TextInput
+                defaultValue={user.mobile}
+                id='mobile'
+                type='text'
+                {...register("mobile")}
+                aria-required
+                onChange={(e) => setValue("mobile", e.target.value)}
+                className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'
+              />
+              <InputError message={get(errors, "mobile")} className='mt-2' />
+            </div>
+            {/* phone */}
+            <div>
+              <InputLabel
+                htmlFor='phone'
+                value={trans["phone"]}
+                aria-required
+              />
+              <TextInput
+                defaultValue={user.phone}
+                id='phone'
+                type='text'
+                {...register("phone")}
+                aria-required
+                onChange={(e) => setValue("phone", e.target.value)}
+                className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'
+              />
+              <InputError message={get(errors, "phone")} className='mt-2' />
+            </div>
+
+            {/* whatsapp */}
+            <div>
+              <InputLabel
+                htmlFor='whatsapp'
+                value={trans["whatsapp"]}
+                aria-required
+              />
+              <TextInput
+                defaultValue={user.whatsapp}
+                id='whatsapp'
+                type='text'
+                {...register("whatsapp")}
+                aria-required
+                onChange={(e) => setValue("whatsapp", e.target.value)}
+                className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'
+              />
+              <InputError message={get(errors, "whatsapp")} className='mt-2' />
+            </div>
+
+            {/* twitter */}
+            <div>
+              <InputLabel
+                htmlFor='twitter'
+                value={trans["twitter"]}
+                aria-required
+              />
+              <TextInput
+                defaultValue={user.twitter}
+                id='twitter'
+                type='text'
+                {...register("twitter")}
+                aria-required
+                onChange={(e) => setValue("twitter", e.target.value)}
+                className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'
+              />
+              <InputError message={get(errors, "twitter")} className='mt-2' />
+            </div>
+
+            {/* facebook */}
+            <div>
+              <InputLabel
+                htmlFor='facebook'
+                value={trans["facebook"]}
+                aria-required
+              />
+              <TextInput
+                defaultValue={user.facebook}
+                id='facebook'
+                type='text'
+                {...register("facebook")}
+                aria-required
+                onChange={(e) => setValue("facebook", e.target.value)}
+                className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'
+              />
+              <InputError message={get(errors, "facebook")} className='mt-2' />
+            </div>
+
+            {/* instagram */}
+            <div>
+              <InputLabel
+                htmlFor='instagram'
+                value={trans["instagram"]}
+                aria-required
+              />
+              <TextInput
+                defaultValue={user.instagram}
+                id='instagram'
+                type='text'
+                {...register("instagram")}
+                aria-required
+                onChange={(e) => setValue("instagram", e.target.value)}
+                className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'
+              />
+              <InputError message={get(errors, "instagram")} className='mt-2' />
+            </div>
+
+            {/* linked */}
+            <div>
+              <InputLabel
+                htmlFor='linked'
+                value={trans["linked"]}
+                aria-required
+              />
+              <TextInput
+                defaultValue={user.linked}
+                id='linked'
+                type='text'
+                {...register("linked")}
+                aria-required
+                onChange={(e) => setValue("linked", e.target.value)}
+                className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'
+              />
+              <InputError message={get(errors, "linked")} className='mt-2' />
+            </div>
+
+            {/* iphone */}
+            <div>
+              <InputLabel
+                htmlFor='iphone'
+                value={trans["iphone"]}
+                aria-required
+              />
+              <TextInput
+                defaultValue={user.iphone}
+                id='iphone'
+                type='text'
+                {...register("iphone")}
+                aria-required
+                onChange={(e) => setValue("iphone", e.target.value)}
+                className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'
+              />
+              <InputError message={get(errors, "iphone")} className='mt-2' />
+            </div>
+
+            {/* android */}
+            <div>
+              <InputLabel
+                htmlFor='android'
+                value={trans["android"]}
+                aria-required
+              />
+              <TextInput
+                defaultValue={user.android}
+                id='android'
+                type='text'
+                {...register("android")}
+                aria-required
+                onChange={(e) => setValue("android", e.target.value)}
+                className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'
+              />
+              <InputError message={get(errors, "android")} className='mt-2' />
+            </div>
+
+            {/* keywords */}
+            <div>
+              <InputLabel
+                htmlFor='keywords'
+                value={trans["keywords"]}
+                aria-required
+              />
+              <TextInput
+                defaultValue={user.keywords}
+                id='keywords'
+                type='text'
+                {...register("keywords")}
+                aria-required
+                onChange={(e) => setValue("keywords", e.target.value)}
+                className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'
+              />
+              <InputError message={get(errors, "keywords")} className='mt-2' />
+            </div>
+
+            {/* snap */}
+            <div>
+              <InputLabel htmlFor='snap' value={trans["snap"]} aria-required />
+              <TextInput
+                defaultValue={user.snap}
+                id='snap'
+                type='text'
+                {...register("snap")}
+                aria-required
+                onChange={(e) => setValue("snap", e.target.value)}
+                className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'
+              />
+              <InputError message={get(errors, "snap")} className='mt-2' />
+            </div>
+
+            {/* tiktok */}
+            <div>
+              <InputLabel
+                htmlFor='tiktok'
+                value={trans["tiktok"]}
+                aria-required
+              />
+              <TextInput
+                defaultValue={user.tiktok}
+                id='tiktok'
+                type='text'
+                {...register("tiktok")}
+                aria-required
+                onChange={(e) => setValue("tiktok", e.target.value)}
+                className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'
+              />
+              <InputError message={get(errors, "tiktok")} className='mt-2' />
             </div>
           </form>
         </Tab.Panel>

@@ -2,7 +2,15 @@ import { MainContextLayout } from "@/layouts/MainContentLayout";
 import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
 import { getSetting } from "@/utils/setting";
-import { Auth, Category, Country, Role, Setting, User } from "@/types/queries";
+import {
+  AppQueryResult,
+  Auth,
+  Category,
+  Country,
+  Role,
+  Setting,
+  User,
+} from "@/types/queries";
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import AccountContent from "@/components/account/AccountContent";
 import { getAuth, updateUser } from "@/utils/user";
@@ -27,7 +35,7 @@ export default async function ({
     Auth,
     User,
     Country[],
-    Category[]
+    AppQueryResult<Category[]>
   ] = await Promise.all([
     getDictionary(lang),
     getSetting(lang),
@@ -37,7 +45,15 @@ export default async function ({
     getCategories("", lang),
   ]);
 
-  if (user.id !== auth.id || !countries || !user || !categories || !setting)
+  if (
+    !user ||
+    !auth ||
+    user.id !== auth.id ||
+    !countries ||
+    !user ||
+    !categories ||
+    !setting
+  )
     notFound();
 
   return (

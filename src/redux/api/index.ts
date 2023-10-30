@@ -33,7 +33,7 @@ export const apiSlice = createApi({
         'Access-Control-Allow-Methods',
         'GET,PUT,POST,DELETE,PATCH,OPTIONS'
       );
-      headers.set('Content-Type', 'application/json');
+      // headers.set('Content-Type', 'application/json');
       headers.set('Accept', 'application/json');
       headers.set('Cache-Control', 'no-store');
       if (api_token) {
@@ -72,21 +72,23 @@ export const apiSlice = createApi({
         validateStatus: (response, result) => response.status === 200,
       }),
     }),
-    uploadImage: builder.query<
+    uploadImages: builder.query<
       Setting,
       any
     >({
-      query: (body) => ({
-        url: `images/upload`,
-        method: 'POST',
-        body,
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
-        formData: true,
-        validateStatus: (response, result) =>
-          response.status == 200,
-      }),
+      query: (body) => {
+        return {
+          url: `images/upload`,
+          method: 'post',
+          body,
+          prepareHeaders: (headers: any) => {
+            headers.set("Content-Type", "multipart/form-data");
+          },
+          formData: true,
+          validateStatus: (response, result) =>
+            response.status == 200,
+        }
+      },
     }),
     newsletter: builder.query<
       object,
@@ -105,5 +107,5 @@ export const apiSlice = createApi({
 
 export const { useGetSettingQuery,
   useLazySendContactusQuery,
-  useLazyUploadImageQuery,
+  useLazyUploadImagesQuery,
   useLazyNewsletterQuery } = apiSlice;

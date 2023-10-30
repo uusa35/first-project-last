@@ -168,6 +168,22 @@
     "profile": "الصفحة الشخصية",
     "control_information": "التحكم بالمعلومات",
     "featured": " مميز",
-    "registeration": "التسجيل"
+    "registeration": "التسجيل",
+    "mobile": "mobile",
+    "whatsapp": "whatsapp",
+    "facebook": "facebook",
+    "instagram": "instagram",
+    "twitter": "twitter",
+    "snap": "snap",
+    "tiktok": "tiktok",
+    "linked": "linked",
+    "iphone": "iphone",
+    "android": "android",
+    "longitude": "longitude",
+    "latitude": "latitude",
+    "keywords": "keywords",
+    "image": "image",
+    "logo": "logo",
+    "banner": "banner"
   }
 }
