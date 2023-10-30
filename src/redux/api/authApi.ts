@@ -28,9 +28,6 @@ export const authApi = apiSlice.injectEndpoints({
         url: `register`,
         params: { name, email, password, password_confirmation, country_id, role },
         method: "post",
-        headers:{
-          "Access-Control-Allow-Origin": "*"
-        },
         validateStatus: (response, result) =>
           response.status == 200,
       }),
@@ -48,21 +45,22 @@ export const authApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['User'],
     }),
-    updateUserImage: builder.mutation<
-      User, { formData: any, id: number }
+    uploadImage: builder.query<
+      User, any
     >({
-      query: ({ formData, id }) => ({
-        url: `user/${id}`,
-        body: formData,
-        method: "post",
-        headers: {
-          'Content-Type': 'multipart/form-data;'
-        },
-        formData: true,
-        validateStatus: (response, result) =>
-          response.status == 200,
-      }),
-      invalidatesTags: ['User'],
+      query: (body) => {
+        return {
+          url: `image/upload`,
+          body,
+          formData: true,
+          method: "post",
+          prepareHeaders: (headers: any) => {
+            headers.set("Content-Type", "multipart/form-data");
+          },
+          validateStatus: (response, result) =>
+            response.status == 200,
+        }
+      }
     }),
     forgotPassword: builder.query<
       User, { email: string }
@@ -82,6 +80,6 @@ export const {
   useLazyLoginQuery,
   useRegisterVisitorMutation,
   useUpdateUserMutation,
-  useUpdateUserImageMutation,
+  useLazyUploadImageQuery,
   useLazyForgotPasswordQuery
 } = authApi;
