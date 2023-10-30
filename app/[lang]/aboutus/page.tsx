@@ -2,7 +2,7 @@ import { MainContextLayout } from "@/layouts/MainContentLayout";
 import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
 import { getSetting } from "@/utils/setting";
-import LoginImage from "@/appImages/login/section.jpg";
+import AboutusImage from "@/appImages/aboutus/banner.jpg";
 import Image from "next/image";
 import DOMPurify from "isomorphic-dompurify";
 import { Setting } from "@/types/queries";
@@ -37,7 +37,7 @@ export default async function ({ params: { lang } }: Props) {
             className='aspect-[9/4] w-full object-cover xl:rounded-lg'
             width={600}
             height={1000}
-            src={LoginImage.src}
+            src={AboutusImage}
             alt={setting.name}
           />
         </div>
