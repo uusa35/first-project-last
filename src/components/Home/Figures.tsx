@@ -1,5 +1,4 @@
 import * as React from "react";
-import { PersonOutlineOutlined } from "@/src/constants";
 import Person from "@/appIcons/home/person.svg";
 import OfficeBag from "@/appIcons/home/bag.svg";
 import Qupe from "@/appIcons/home/qupe.svg";
@@ -19,7 +18,7 @@ export function Figures({ trans }: Props) {
               <Person className="w-16 h-16" />
               <div className="flex flex-col  p-2  border-gray-400 ">
                 <dt className="text-sm font-semibold break-all  leading-6 text-gray-600">
-                  {trans.subscribers}
+                  {trans.a_key_partner_and_sponsor}
                 </dt>
                 <dd className="order-first text-3xl font-semibold tracking-tight text-gray-900">
                   {52}
@@ -31,7 +30,7 @@ export function Figures({ trans }: Props) {
               <OfficeBag className="w-16 h-16" />
               <div className="flex flex-col  p-2 pe-8  border-gray-400 ">
                 <dt className="text-sm font-semibold break-all  leading-6 text-gray-600">
-                  {trans.subscribers}
+                  {trans.investment_opportunities}
                 </dt>
                 <dd className="order-first text-3xl font-semibold tracking-tight text-gray-900">
                   {45}
@@ -43,7 +42,7 @@ export function Figures({ trans }: Props) {
               <Qupe className="w-16 h-16" />
               <div className="flex flex-col  p-2 pe-8  border-gray-400 ">
                 <dt className="text-sm font-semibold break-all  leading-6 text-gray-600">
-                  {trans.subscribers}
+                  {trans.participant_in_events}
                 </dt>
                 <dd className="order-first text-3xl font-semibold tracking-tight text-gray-900">
                   {`2345+`}
@@ -55,7 +54,7 @@ export function Figures({ trans }: Props) {
               <Group className="w-16 h-16" />
               <div className="flex flex-col  p-2 pe-8  border-gray-400 ">
                 <dt className="text-sm font-semibold break-all  leading-6 text-gray-600">
-                  {trans.subscribers}
+                  {trans.seminar_during_the_exhibition}
                 </dt>
                 <dd className="order-first text-3xl font-semibold tracking-tight text-gray-900">
                   {`36+`}

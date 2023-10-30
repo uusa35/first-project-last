@@ -166,6 +166,11 @@
     "featured": "featured",
     "profile": "profile",
     "control_information": "control my information",
-    "registeration": "registeration"
+    "registeration": "registeration",
+    "a_key_partner_and_sponsor":"Ключевой партнер и спонсор",
+    "investment_opportunities":"Инвестиционные возможности",
+   "participant_in_events":"Участник мероприятий",
+    "seminar_during_the_exhibition":"Семинар во время выставки"
+
   }
 }

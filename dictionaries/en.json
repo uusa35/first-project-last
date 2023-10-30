@@ -170,6 +170,10 @@
     "featured": "featured",
     "profile": "profile",
     "control_information": "control my information",
-    "registeration": "registeration"
+    "registeration": "registeration",
+    "a_key_partner_and_sponsor":"a key partner and sponsor",
+"investment_opportunities":"investment opportunities",
+"participant_in_events":"participant in events",
+    "seminar_during_the_exhibition":"seminar during the exhibition"
   }
 }
