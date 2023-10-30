@@ -1,14 +1,11 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-  // experimental: {
-  //   serverActions : true
-  // },
-  reactStrictMode: true,
   experimental: {
     serverActions: true,
   },
-   webpack(config) {
+  reactStrictMode: true,
+  webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
       use: [{ loader: "@svgr/webpack", options: { icon: true } }],
@@ -21,14 +18,18 @@ const nextConfig = {
         source: "/:lang/home",
         destination: "/:lang",
       },
+      {
+        source: "/api/:path*",
+        destination: "http://localhost:3000/:path*",
+      },
     ];
   },
-  async redirects() {
-    return [];
-  },
-  async headers() {
-    return [];
-  },
+  // async redirects() {
+  //   return [];
+  // },
+  // async headers() {
+  //   return [];
+  // },
   env: {
     SECRET_APP_KEY: "",
     NEXT_PUBLIC_URL: "/",
@@ -52,14 +53,6 @@ const nextConfig = {
       "hammerhead-app-fhpzt.ondigitalocean.app",
       "hub-apps.ams3.cdn.digitaloceanspaces.com",
       "images.unsplash.com",
-    ],
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "source.unsplash.com",
-        port: "",
-        pathname: "/random",
-      },
     ],
   },
 };
