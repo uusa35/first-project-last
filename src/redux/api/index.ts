@@ -6,6 +6,7 @@ import { isUndefined } from 'lodash';
 import { Locale } from '@/types/index';
 import { Setting } from '@/types/queries';
 
+
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
@@ -37,22 +38,21 @@ export const apiSlice = createApi({
       headers.set('Cache-Control', 'no-store');
       if (api_token) {
         headers.set('Authorization', `Bearer ${api_token}`);
-        // headers.set('api_token', `${api_token}`);
       }
       console.log('from inside header ====>')
       console.log('headers', headers);
       return headers;
     },
-    // credentials: 'include',
     credentials: "same-origin",
   }),
   keepUnusedDataFor: 0,
   refetchOnReconnect: true,
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === HYDRATE) {
-      return action.payload[reducerPath];
+      return action.payload[reducerPath]
     }
   },
+  tagTypes: ['User'],
   endpoints: (builder) => ({
     getSetting: builder.query<
       Setting, void
@@ -63,16 +63,13 @@ export const apiSlice = createApi({
     }),
     sendContactus: builder.query<
       Setting,
-      { lang?: Locale['lang'] | string | undefined; body: any }
+      object
     >({
-      query: ({ lang, body }) => ({
+      query: (body) => ({
         url: `send/contactus`,
         method: 'POST',
         body,
-        headers: {
-          ...(!isUndefined(lang) && lang && { 'Accept-Language': lang }),
-        },
-        // validateStatus: (response, result) => response.status,
+        validateStatus: (response, result) => response.status === 200,
       }),
     }),
     uploadImage: builder.query<
@@ -91,18 +88,14 @@ export const apiSlice = createApi({
           response.status == 200,
       }),
     }),
-
     newsletter: builder.query<
-      { email: string },
-      any
+      object,
+      { email: string }
     >({
-      query: (params) => ({
+      query: (body) => ({
         url: `newsletter`,
         method: 'POST',
-        params: { ...params },
-        headers: {
-          "content-type": "application/json"
-        },
+        body,
         validateStatus: (response, result) =>
           response.status == 200,
       }),
@@ -110,4 +103,7 @@ export const apiSlice = createApi({
   }),
 });
 
-export const { useGetSettingQuery, useLazySendContactusQuery, useLazyUploadImageQuery, useLazyNewsletterQuery } = apiSlice;
+export const { useGetSettingQuery,
+  useLazySendContactusQuery,
+  useLazyUploadImageQuery,
+  useLazyNewsletterQuery } = apiSlice;

@@ -18,10 +18,6 @@ const nextConfig = {
         source: "/:lang/home",
         destination: "/:lang",
       },
-      {
-        source: "/api/:path*",
-        destination: "http://localhost:3000/:path*",
-      },
     ];
   },
   // async redirects() {
