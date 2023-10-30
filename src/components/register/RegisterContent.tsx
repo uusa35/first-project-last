@@ -2,6 +2,7 @@
 import { MainContext } from "@/layouts/MainContentLayout";
 import { useRegisterVisitorMutation } from "@/redux/api/authApi";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { setAuth } from "@/redux/slices/authSlice";
 import {
   showErrorToastMessage,
   showSuccessToastMessage,
@@ -57,22 +58,22 @@ export function RegisterContent({ role, country }: Props) {
       country_id: country.id,
       role,
     }).then((r: any) => {
-      if (r.error) {
-        dispatch(
-          showErrorToastMessage({
-            content: `${first(r.error.data.message)}`,
-          })
-        );
-      } else {
-        setToken(r.data.api_token);
+      if (r && r.data) {
         dispatch(
           showSuccessToastMessage({
             content: `${trans.registered_successfully}`,
           })
         );
-        // navigate based on role to home if visitor and to complete data if company
+        dispatch(setAuth(r.data));
+        setToken(r.data.api_token);
         if (role === "visitor") router.push(appLinks.home(lang));
         else router.push(appLinks.account(lang, role, r.data.id)); //navigate to update page
+      } else if (r && r.error && r.error.data) {
+        dispatch(
+          showErrorToastMessage({
+            content: `${first(r.error.data.message)}`,
+          })
+        );
       }
     });
   };
