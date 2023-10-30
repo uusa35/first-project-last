@@ -7,17 +7,28 @@ import {
   showSuccessToastMessage,
 } from "@/redux/slices/toastMessageSlice";
 import { appLinks, setToken } from "@/src/constants";
-import { Locale } from "@/types/index";
-import { Role } from "@/types/queries";
+import { registerSchema } from "@/src/validations";
+import { Country, Role } from "@/types/queries";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { first } from "lodash";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useContext } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 type Props = {
   role: Role["name"];
+  country: Country;
+};
+type FormValues = {
+  name: string;
+  password: string;
+  email: string;
+  password_confirmation: string;
 };
 
-export function RegisterContent({ role }: Props) {
+export function RegisterContent({ role, country }: Props) {
+  const router = useRouter();
   const trans: { [key: string]: string } = useContext(MainContext);
   const {
     locale: { lang },
@@ -26,131 +37,159 @@ export function RegisterContent({ role }: Props) {
   const [triggerRegisterVisitorQuery, { data, isSuccess, error }] =
     useRegisterVisitorMutation();
 
-  const createAccountFun = async (formData: FormData) => {
-    const name = formData.get("name")?.toString();
-    const email = formData.get("email")?.toString();
-    const password = formData.get("password")?.toString();
-    const password_confirmation = formData.get("confirm_password")?.toString();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>({
+    resolver: yupResolver(registerSchema),
+    defaultValues: {
+      name: ``,
+      email: ``,
+      password: ``,
+      password_confirmation: ``,
+    },
+  });
 
-    if (email && password && password_confirmation && name) {
-      // console.log(password, email);
-      await triggerRegisterVisitorQuery({
-        name,
-        password,
-        email,
-        password_confirmation,
-        country_id: 1,
-        role,
-      }).then((r: any) => {
-        if (r.error) {
-          dispatch(
-            showErrorToastMessage({
-              content: `${first(r.error.data.message)}`,
-            })
-          );
-        } else {
-          // set token cookie
-          setToken(r.data.api_token);
-          dispatch(
-            showSuccessToastMessage({
-              content: `${trans.registered_successfully}`,
-            })
-          );
-          // navigate based on role to home if visitor and to complete data if company
-        }
-      });
-    }
+  const createAccount: SubmitHandler<FormValues> = async (data) => {
+    // console.log(data);
+    await triggerRegisterVisitorQuery({
+      ...data,
+      country_id: country.id,
+      role,
+    }).then((r: any) => {
+      if (r.error) {
+        dispatch(
+          showErrorToastMessage({
+            content: `${first(r.error.data.message)}`,
+          })
+        );
+      } else {
+        // set token cookie
+        setToken(r.data.api_token);
+        dispatch(
+          showSuccessToastMessage({
+            content: `${trans.registered_successfully}`,
+          })
+        );
+        // navigate based on role to home if visitor and to complete data if company
+        if (role === "company") router.push(appLinks.home(lang));
+        else router.push(appLinks.home(lang)); //navigate to update page
+      }
+    });
   };
   return (
-    <div className='mt-10 space-y-6'>
-      <form action={createAccountFun} className='space-y-6'>
+    <div className="mt-10 space-y-6">
+      <form onSubmit={handleSubmit(createAccount)} className="space-y-6">
         <div>
           <label
-            htmlFor='name'
-            className='block text-sm font-medium leading-6 text-gray-900 capitalize'>
+            htmlFor="name"
+            className="block text-sm font-medium leading-6 text-gray-900 capitalize"
+          >
             {trans.name} *
           </label>
-          <div className='mt-2'>
+          <div className="mt-2">
             <input
-              id='name'
-              name='name'
-              type='name'
-              autoComplete='name'
-              required
-              className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6'
+              {...register("name")}
+              id="name"
+              type="text"
+              autoComplete="name"
+              className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
             />
           </div>
+          {errors?.name?.message && (
+            <span className={`text-red-700 text-xs capitalize`}>
+              {errors?.name?.message}
+            </span>
+          )}
         </div>
 
         <div>
           <label
-            htmlFor='email'
-            className='block text-sm font-medium leading-6 text-gray-900 capitalize'>
+            htmlFor="email"
+            className="block text-sm font-medium leading-6 text-gray-900 capitalize"
+          >
             {trans.email_address} *
           </label>
-          <div className='mt-2'>
+          <div className="mt-2">
             <input
-              id='email'
-              name='email'
-              type='email'
-              autoComplete='email'
-              required
-              className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6'
+              {...register("email")}
+              id="email"
+              type="email"
+              autoComplete="email"
+              className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
             />
           </div>
+          {errors?.email?.message && (
+            <span className={`text-red-700 text-xs capitalize`}>
+              {errors?.email?.message}
+            </span>
+          )}
         </div>
 
         <div>
           <label
-            htmlFor='password'
-            className='block text-sm font-medium leading-6 text-gray-900 capitalize'>
+            htmlFor="password"
+            className="block text-sm font-medium leading-6 text-gray-900 capitalize"
+          >
             {trans.password} *
           </label>
-          <div className='mt-2'>
+          <div className="mt-2">
             <input
-              id='password'
-              name='password'
-              type='password'
-              autoComplete='current-password'
-              required
-              className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6'
+              {...register("password")}
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
             />
           </div>
+          {errors?.password?.message && (
+            <span className={`text-red-700 text-xs capitalize`}>
+              {errors?.password?.message}
+            </span>
+          )}
         </div>
 
         <div>
           <label
-            htmlFor='confirm_password'
-            className='block text-sm font-medium leading-6 text-gray-900 capitalize'>
+            htmlFor="password_confirmation"
+            className="block text-sm font-medium leading-6 text-gray-900 capitalize"
+          >
             {trans.confirm_password} *
           </label>
-          <div className='mt-2'>
+          <div className="mt-2">
             <input
-              id='confirm_password'
-              name='confirm_password'
-              type='password'
-              autoComplete='current-password'
-              required
-              className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6'
+              {...register("password_confirmation")}
+              id="password_confirmation"
+              type="password"
+              autoComplete="current-password"
+              className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
             />
           </div>
+          {errors?.password_confirmation?.message && (
+            <span className={`text-red-700 text-xs capitalize`}>
+              {errors?.password_confirmation?.message}
+            </span>
+          )}
         </div>
 
-        <div className='flex items-center justify-between'>
-          <div className='flex gap-x-3 items-center'>
+        <div className="flex items-center justify-between">
+          <div className="flex gap-x-3 items-center">
             <input
-              id='Terms_conditions'
-              name='Terms_conditions'
-              type='checkbox'
-              className='h-4 w-4 rounded border-gray-300 checked:!bg-expo-dark focus:ring-0'
+              id="Terms_conditions"
+              name="Terms_conditions"
+              type="checkbox"
+              className="h-4 w-4 rounded border-gray-300 checked:!bg-expo-dark focus:ring-0"
             />
             <label
-              htmlFor='Terms_conditions'
-              className='block text-sm leading-6 text-gray-700'>
+              htmlFor="Terms_conditions"
+              className="block text-sm leading-6 text-gray-700"
+            >
               {trans.agree_to}
               <Link
                 href={appLinks.terms(lang)}
-                className='font-semibold text-expo-dark hover:text-green-700 px-1'>
+                className="font-semibold text-expo-dark hover:text-green-700 px-1"
+              >
                 {trans.the_terms_and_conditions}
               </Link>
             </label>
@@ -159,20 +198,22 @@ export function RegisterContent({ role }: Props) {
 
         <div>
           <button
-            type='submit'
-            className='flex w-full justify-center btn-default'>
+            type="submit"
+            className="flex w-full justify-center btn-default"
+          >
             {trans.create_an_account}
           </button>
         </div>
       </form>
 
-      <div className='flex justify-center gap-x-1'>
-        <p className=' text-sm leading-6 text-gray-700'>
+      <div className="flex justify-center gap-x-1">
+        <p className=" text-sm leading-6 text-gray-700">
           {trans.already_have_an_account}
         </p>
         <Link
-          className=' text-sm leading-6 text-expo-dark'
-          href={appLinks.login(lang)}>
+          className=" text-sm leading-6 text-expo-dark"
+          href={appLinks.login(lang)}
+        >
           <p>{trans.sign_in}</p>
         </Link>
       </div>

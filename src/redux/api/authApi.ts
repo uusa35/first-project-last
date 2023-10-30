@@ -30,6 +30,9 @@ export const authApi = apiSlice.injectEndpoints({
         url: `register`,
         params: { name, email, password, password_confirmation, country_id, role },
         method: "post",
+        headers:{
+          "Access-Control-Allow-Origin": "*"
+        },
         validateStatus: (response, result) =>
           response.status == 200,
       }),
