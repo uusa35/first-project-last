@@ -67,7 +67,10 @@ export function RegisterContent({ role, country }: Props) {
         dispatch(setAuth(r.data));
         setToken(r.data.api_token);
         if (role === "visitor") router.push(appLinks.home(lang));
-        else router.push(appLinks.account(lang, role, r.data.id)); //navigate to update page
+        else {
+          router.refresh();
+          router.push(appLinks.account(lang, role, r.data.id));
+        }
       } else if (r && r.error && r.error.data) {
         dispatch(
           showErrorToastMessage({

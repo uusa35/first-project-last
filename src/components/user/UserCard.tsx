@@ -13,6 +13,7 @@ export default async function ({ element, lang, trans }: Props) {
   return (
     <li className='col-span-1 flex flex-col  rounded-lg bg-white text-center shadow transform transition duration-500 hover:scale-110'>
       <Link
+        prefetch
         href={`/${lang}/user/${element.id}?slug=${element.name}`}
         className='flex flex-1 flex-col p-4'>
         <Image

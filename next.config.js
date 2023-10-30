@@ -20,12 +20,12 @@ const nextConfig = {
       },
     ];
   },
-  // async redirects() {
-  //   return [];
-  // },
-  // async headers() {
-  //   return [];
-  // },
+  async redirects() {
+    return [];
+  },
+  async headers() {
+    return [];
+  },
   env: {
     SECRET_APP_KEY: "",
     NEXT_PUBLIC_URL: "/",
