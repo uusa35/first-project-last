@@ -36,7 +36,7 @@ export default async function ({ params: { lang } }: Props) {
           <div className='absolute left-10 top-10'></div>
           <div className='absolute w-full lg:max-w-6xl flex flex-col lg:flex-row  justify-center lg:justify-start items-center top-0 lg:top-32 bg-stone/60 lg:rtl:right-10 lg:ltr:left-10 p-8 text-white  gap-4  rounded-md'>
             <div className='flex flex-col justify-center lg:justify-start items-center lg:items-start gap-4 text-center rtl:text-right ltr:text-left'>
-              <div className='text-2xl lg:text-6xl capitalize drop-shadow-4xl'>
+              <div className='text-2xl lg:text-4xl capitalize drop-shadow-4xl'>
                 {setting.name}
               </div>
               <div className='text-lg lg:text-xl capitalize drop-shadow-4xl'>

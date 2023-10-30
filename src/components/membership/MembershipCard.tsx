@@ -103,7 +103,7 @@ export default function ({
       <button
         type='button'
         onClick={() => handleSubscribe(element)}
-        className={"w-full btn-transparent"}>
+        className={"w-full btn-transparent capitalize"}>
         {isAuth ? trans.register_now_to_subscribe : trans.subscribe_now}
       </button>
       {element.caption && (
