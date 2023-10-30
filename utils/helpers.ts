@@ -50,3 +50,13 @@ export const convertToJson = (qs: string) => {
 
     return JSON.parse(JSON.stringify(result));
 };
+
+
+
+export const removeTags = (str : string) => {
+    if ((str === null) || (str === ''))
+        return false;
+    else
+        str = str.toString();
+    return str.replace(/(<([^>]+)>)/ig, '');
+} 

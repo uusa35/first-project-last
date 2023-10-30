@@ -1,7 +1,7 @@
 import "@/styles/globals.css";
 import type { Metadata } from "next";
 import { Locale } from "@/types/index";
-import { tajawal } from "@/utils/helpers";
+import { removeTags, tajawal } from "@/utils/helpers";
 import Providers from "@/src/redux/provider";
 import MainLayout from "@/src/components/layouts/MainLayout";
 import { getSetting } from "@/utils/setting";
@@ -14,11 +14,11 @@ export async function generateMetadata({ params }: Props) {
   const setting = await getSetting(params.lang);
   return {
     title: setting.name,
-    description: setting.description,
+    description: removeTags(setting.description),
     lang: params.lang,
     openGraph: {
       title: setting.name,
-      description: setting.description,
+      description: removeTags(setting.description),
       url: setting.instagram,
       siteName: setting.name,
       images: [
@@ -74,7 +74,7 @@ export async function generateMetadata({ params }: Props) {
     twitter: {
       card: setting.name,
       title: setting.name,
-      description: setting.description,
+      description: removeTags(setting.description),
       // siteId: "1467726470533754880",
       creator: setting.name,
       // creatorId: "1467726470533754880",

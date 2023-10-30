@@ -11,6 +11,7 @@ import SocialIcons from "@/components/footer/SocialIcons";
 import { EmailOutlined, InsertLink } from "@mui/icons-material";
 import { ImageType, Setting, User } from "@/types/queries";
 import { MainGallery } from "@/components/Home/MainGallery";
+import { removeTags } from "@/utils/helpers";
 
 type Props = {
   params: { lang: Locale["lang"]; id: string };
@@ -24,10 +25,10 @@ export async function generateMetadata({ params }: Props) {
   ]);
   return {
     title: user.name,
-    description: user.description,
+    description: removeTags(user.description ?? setting.description),
     openGraph: {
       title: user.name,
-      description: user.description,
+      description: removeTags(user.description ?? setting.description),
       url: user.instagram ?? user.website ?? setting.website,
       siteName: user.name,
       images: [
@@ -49,7 +50,7 @@ export async function generateMetadata({ params }: Props) {
     twitter: {
       card: user.name,
       title: user.name,
-      description: user.description,
+      description: removeTags(user.description ?? setting.description),
       // siteId: "1467726470533754880",
       creator: setting.name,
       // creatorId: "1467726470533754880",
