@@ -33,38 +33,30 @@ export default async function ({ params: { lang } }: Props) {
       <main className='relative isolate mx-auto max-w-7xl min-h-screen'>
         {/* Image section */}
         <div className='mt-8 sm:mt-8 xl:mx-auto xl:max-w-7xl'>
+          <div className='absolute left-10 top-10'></div>
+          <div className='absolute w-full lg:max-w-6xl flex flex-col lg:flex-row  justify-center lg:justify-start items-center top-0 lg:top-32 bg-stone/60 lg:rtl:right-10 lg:ltr:left-10 p-8 text-white  gap-4  rounded-md'>
+            <div className='flex flex-col justify-center lg:justify-start items-center lg:items-start gap-4 text-center rtl:text-right ltr:text-left'>
+              <div className='text-2xl lg:text-6xl capitalize drop-shadow-4xl'>
+                {setting.name}
+              </div>
+              <div className='text-lg lg:text-xl capitalize drop-shadow-4xl'>
+                {setting.caption}
+              </div>
+            </div>
+          </div>
+
           <Image
-            className='aspect-[9/4] w-full object-cover xl:rounded-lg'
-            width={600}
-            height={1000}
+            fill={false}
             src={AboutusImage}
             alt={setting.name}
+            className='aspect-[9/3] w-full object-cover xl:rounded-lg'
           />
-        </div>
-        {/* Header section */}
-        <div className='px-6 pt-12 lg:px-8'>
-          <div className='mx-auto max-w-7xl text-center py-10'>
-            <h2 className='text-4xl font-bold tracking-tight text-black sm:text-4xl'>
-              {setting.name}
-            </h2>
-            <p className='mt-6 text-lg leading-8 text-gray-800'>
-              {setting.caption}
-            </p>
-          </div>
         </div>
 
         {/* Content section */}
         <div className='mx-auto mt-8 max-w-7xl px-6 lg:px-8 pb-16'>
           <div className='mx-auto  lg:mx-0 lg:max-w-none'>
             <div className='grid grid-cols-1 gap-8 text-base leading-7 text-gray-800 max-w-xs md:max-w-md lg:max-w-7xl capitalize'>
-              <h3 className='text-xl lg:text-2xl text-center'>
-                {trans.description}
-              </h3>
-              <div
-                className='max-w-xs sm:max-w-xl md:max-w-full  whitespace-pre-line text-ellipsis overflow-hidden'
-                dangerouslySetInnerHTML={{
-                  __html: DOMPurify.sanitize(setting.description),
-                }}></div>
               <h3 className='text-xl lg:text-2xl text-center'>
                 {trans.aboutus}
               </h3>
@@ -81,6 +73,15 @@ export default async function ({ params: { lang } }: Props) {
                 dangerouslySetInnerHTML={{
                   __html: DOMPurify.sanitize(setting.services),
                 }}></div>
+              <h3 className='text-xl lg:text-2xl text-center'>
+                {trans.description}
+              </h3>
+              <div
+                className='max-w-xs sm:max-w-xl md:max-w-full  whitespace-pre-line text-ellipsis overflow-hidden'
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(setting.description),
+                }}></div>
+
               <h3 className='text-xl lg:text-2xl text-center'>
                 {trans.address}
               </h3>
