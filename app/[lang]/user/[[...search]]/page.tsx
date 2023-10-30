@@ -33,7 +33,7 @@ export default async function UserIndex({
     getDictionary(lang),
     getSetting(lang),
     getUsers(convertSearchParamsToString(searchParams) ?? ``, lang),
-    getCategories(`on_home=0`, lang),
+    getCategories(``, lang),
   ]);
 
   if ("status" in users && (users.status === 404 || users.status === 500))
