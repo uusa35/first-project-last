@@ -166,12 +166,6 @@
     "featured": "featured",
     "profile": "profile",
     "control_information": "control my information",
-    "registeration": "registeration",
-    "home": {
-      "main": "home"
-    },
-    "about": {
-      "aboutus": "aboutus"
-    }
+    "registeration": "registeration"
   }
 }

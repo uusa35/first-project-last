@@ -16,8 +16,8 @@ import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { forgotPasswordSchema, loginSchema } from "@/src/validations";
-import { disableLoading, enableLoading } from "@/redux/slices/settingSlice";
+import { forgotPasswordSchema } from "@/src/validations";
+import {  enableLoading } from "@/redux/slices/settingSlice";
 import { MainContext } from "@/layouts/MainContentLayout";
 import LoadingSpinner from "@/components/LoadingSpinner";
 
@@ -36,6 +36,7 @@ export default function ({ lang }: Props) {
   const {
     appSetting: { isLoading },
   } = useAppSelector((state) => state);
+  
   const [triggerForgotPassword] = useLazyForgotPasswordQuery();
   const {
     handleSubmit,
