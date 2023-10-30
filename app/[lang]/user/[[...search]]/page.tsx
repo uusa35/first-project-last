@@ -11,6 +11,8 @@ import UserCard from "@/components/user/UserCard";
 import NoResults from "@/components/NoResults";
 import { notFound } from "next/navigation";
 import UserIndexBanner from "@/appImages/user/main_banner.jpg";
+import SponsorshipBanner from "@/appImages/user/sponsorship.jpg";
+import SubscriptionBanner from "@/appImages/user/subscription.jpg";
 import { getCategories } from "@/utils/category";
 import Link from "next/link";
 import { CustomSearch } from "@/components/user/CustomSearch";
@@ -81,13 +83,23 @@ export default async function UserIndex({
               </div>
             </div>
           </div>
-          <Image
-            width={1000}
-            height={500}
-            src={UserIndexBanner}
-            alt={setting.name}
-            className='aspect-[9/3] w-full object-cover xl:rounded-lg'
-          />
+          {searchParams.membership === "sponsorship" ? (
+            <Image
+              width={1000}
+              height={500}
+              src={SponsorshipBanner}
+              alt={setting.name}
+              className='aspect-[9/3] w-full object-cover xl:rounded-lg'
+            />
+          ) : (
+            <Image
+              width={1000}
+              height={500}
+              src={SubscriptionBanner}
+              alt={setting.name}
+              className='aspect-[9/3] w-full object-cover xl:rounded-lg'
+            />
+          )}
         </div>
 
         <div className='px-5 lg:px-0'>
