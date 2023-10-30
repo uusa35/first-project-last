@@ -27,8 +27,9 @@ export function NewsLetters({ trans }: Props) {
   });
   const [triggerNewsLetterSubscribtion] = useLazyNewsletterQuery();
 
-  const onSubmit = async (data: unknown) => {
-    await triggerNewsLetterSubscribtion(data).then((r: any) => {
+  const onSubmit = async (body: { email: string }) => {
+    console.log("body", body);
+    await triggerNewsLetterSubscribtion(body).then((r: any) => {
       if (r.isSuccess && r.data && r.data.message) {
         dispatch(showSuccessToastMessage({ content: r.data.message }));
         reset();

@@ -7,6 +7,7 @@ import Image from "next/image";
 import DOMPurify from "isomorphic-dompurify";
 import { notFound } from "next/navigation";
 import { Post, Setting } from "@/types/queries";
+import { removeTags } from "@/utils/helpers";
 
 type Props = {
   params: { lang: Locale["lang"]; id: string };
@@ -20,12 +21,12 @@ export async function generateMetadata({ params }: Props) {
   ]);
   return {
     title: post.name,
-    description: post.caption,
+    description: removeTags(post.description ?? setting.description),
     openGraph: {
       title: post.name,
-      description: setting.caption,
+      description: removeTags(post.caption ?? setting.caption),
       url: setting.website,
-      siteName: post.name,
+      siteName: setting.name,
       images: [
         {
           url: post.image ?? setting.image,
@@ -45,7 +46,7 @@ export async function generateMetadata({ params }: Props) {
     twitter: {
       card: post.name,
       title: post.name,
-      description: post.caption,
+      description: removeTags(post.caption ?? setting.description),
       // siteId: "1467726470533754880",
       creator: setting.name,
       // creatorId: "1467726470533754880",

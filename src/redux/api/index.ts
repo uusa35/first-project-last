@@ -6,13 +6,14 @@ import { isUndefined } from 'lodash';
 import { Locale } from '@/types/index';
 import { Setting } from '@/types/queries';
 
+
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
     baseUrl: `${apiUrl}`,
     prepareHeaders: async (
       headers,
-      { getState, type, endpoint, extra }: RootState
+      { getState }: RootState
     ) => {
       console.log('apiUrl', apiUrl);
       const {
@@ -21,7 +22,7 @@ export const apiSlice = createApi({
       } = getState() as RootState;
       headers.set(
         'Access-Control-Allow-Origin',
-        '*',
+        '*'
       );
       headers.set(
         'Access-Control-Allow-Headers',
@@ -30,56 +31,45 @@ export const apiSlice = createApi({
       headers.set('Accept-Language', locale.lang);
       headers.set(
         'Access-Control-Allow-Methods',
-        'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+        'GET,PUT,POST,DELETE,PATCH,OPTIONS'
       );
-
       headers.set('Content-Type', 'application/json');
       headers.set('Accept', 'application/json');
       headers.set('Cache-Control', 'no-store');
       if (api_token) {
         headers.set('Authorization', `Bearer ${api_token}`);
-        headers.set('api_token', `${api_token}`);
       }
       console.log('from inside header ====>')
       console.log('headers', headers);
       return headers;
     },
-    // credentials: 'include',
     credentials: "same-origin",
   }),
-  tagTypes: ['User'],
   keepUnusedDataFor: 0,
   refetchOnReconnect: true,
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === HYDRATE) {
-      return action.payload[reducerPath];
+      return action.payload[reducerPath]
     }
   },
+  tagTypes: ['User'],
   endpoints: (builder) => ({
     getSetting: builder.query<
-      Setting,
-      { lang?: Locale['lang'] | string | undefined; }
+      Setting, void
     >({
-      query: ({ lang }) => ({
+      query: () => ({
         url: `setting`,
-        headers: {
-          ...(!isUndefined(lang) && lang && { 'Accept-Language': lang })
-        }
       }),
     }),
     sendContactus: builder.query<
       Setting,
-      { lang?: Locale['lang'] | string | undefined; body: any }
+      object
     >({
-      query: ({ lang, body }) => ({
+      query: (body) => ({
         url: `send/contactus`,
         method: 'POST',
         body,
-        headers: {
-          ...(!isUndefined(lang) && lang && { 'Accept-Language': lang }),
-        },
-        validateStatus: (response, result) =>
-          response.status == 200,
+        validateStatus: (response, result) => response.status === 200,
       }),
     }),
     uploadImage: builder.query<
@@ -98,18 +88,14 @@ export const apiSlice = createApi({
           response.status == 200,
       }),
     }),
-
     newsletter: builder.query<
-      {email:string},
-      any
+      object,
+      { email: string }
     >({
-      query: (params) => ({
+      query: (body) => ({
         url: `newsletter`,
         method: 'POST',
-        params:{...params},
-        headers:{
-          "content-type":"application/json"
-        },
+        body,
         validateStatus: (response, result) =>
           response.status == 200,
       }),
@@ -117,4 +103,7 @@ export const apiSlice = createApi({
   }),
 });
 
-export const { useGetSettingQuery, useLazySendContactusQuery, useLazyUploadImageQuery,useLazyNewsletterQuery } = apiSlice;
+export const { useGetSettingQuery,
+  useLazySendContactusQuery,
+  useLazyUploadImageQuery,
+  useLazyNewsletterQuery } = apiSlice;

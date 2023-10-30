@@ -11,6 +11,7 @@ import SocialIcons from "@/components/footer/SocialIcons";
 import { EmailOutlined, InsertLink } from "@mui/icons-material";
 import { ImageType, Setting, User } from "@/types/queries";
 import { MainGallery } from "@/components/Home/MainGallery";
+import { removeTags } from "@/utils/helpers";
 
 type Props = {
   params: { lang: Locale["lang"]; id: string };
@@ -24,10 +25,10 @@ export async function generateMetadata({ params }: Props) {
   ]);
   return {
     title: user.name,
-    description: user.description,
+    description: removeTags(user.description ?? setting.description),
     openGraph: {
       title: user.name,
-      description: user.description,
+      description: removeTags(user.description ?? setting.description),
       url: user.instagram ?? user.website ?? setting.website,
       siteName: user.name,
       images: [
@@ -49,7 +50,7 @@ export async function generateMetadata({ params }: Props) {
     twitter: {
       card: user.name,
       title: user.name,
-      description: user.description,
+      description: removeTags(user.description ?? setting.description),
       // siteId: "1467726470533754880",
       creator: setting.name,
       // creatorId: "1467726470533754880",
@@ -74,8 +75,6 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
       return { thumbnail: img.image, original: img.image };
     });
   }
-
-  console.log("thumbnail", imagesGroup);
 
   return (
     <MainContextLayout
@@ -107,13 +106,23 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
               <div className='text-lg lg:text-xl'>{user.caption}</div>
             </div>
           </div>
-          <Image
-            width={1000}
-            height={500}
-            src={UserIndexBanner}
-            alt={user.name}
-            className='aspect-[9/5] sm:aspect-[9/3] w-full  object-cover xl:rounded-xl'
-          />
+          {user.banner ? (
+            <Image
+              width={1000}
+              height={500}
+              src={user.banner}
+              alt={user.name}
+              className='aspect-[9/5] sm:aspect-[9/3] w-full  object-cover xl:rounded-xl'
+            />
+          ) : (
+            <Image
+              width={1000}
+              height={500}
+              src={UserIndexBanner}
+              alt={user.name}
+              className='aspect-[9/5] sm:aspect-[9/3] w-full  object-cover xl:rounded-xl'
+            />
+          )}
         </div>
 
         <div className='flex flex-col w-full min-h-screen justify-start items-center gap-y-12 '>

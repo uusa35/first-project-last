@@ -57,7 +57,7 @@ export default async function ({ params: { lang, role } }: Props) {
                 {trans.Welcome_Register_now_and_join_us}
               </p>
             </div>
-            <RegisterContent role={role} country={country} />
+            <RegisterContent role={role} country={country[0]} />
           </div>
         </div>
         <div className="relative hidden w-0 flex-1 lg:block">

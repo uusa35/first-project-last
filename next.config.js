@@ -1,14 +1,11 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-  // experimental: {
-  //   serverActions : true
-  // },
-  reactStrictMode: true,
   experimental: {
     serverActions: true,
   },
-   webpack(config) {
+  reactStrictMode: true,
+  webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
       use: [{ loader: "@svgr/webpack", options: { icon: true } }],
@@ -52,14 +49,6 @@ const nextConfig = {
       "hammerhead-app-fhpzt.ondigitalocean.app",
       "hub-apps.ams3.cdn.digitaloceanspaces.com",
       "images.unsplash.com",
-    ],
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "source.unsplash.com",
-        port: "",
-        pathname: "/random",
-      },
     ],
   },
 };

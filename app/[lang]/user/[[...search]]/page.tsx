@@ -11,6 +11,8 @@ import UserCard from "@/components/user/UserCard";
 import NoResults from "@/components/NoResults";
 import { notFound } from "next/navigation";
 import UserIndexBanner from "@/appImages/user/main_banner.jpg";
+import SponsorshipBanner from "@/appImages/user/sponsorship.jpg";
+import SubscriptionBanner from "@/appImages/user/subscription.jpg";
 import { getCategories } from "@/utils/category";
 import Link from "next/link";
 import { CustomSearch } from "@/components/user/CustomSearch";
@@ -33,7 +35,7 @@ export default async function UserIndex({
     getDictionary(lang),
     getSetting(lang),
     getUsers(convertSearchParamsToString(searchParams) ?? ``, lang),
-    getCategories(`on_home=0`, lang),
+    getCategories(``, lang),
   ]);
 
   if ("status" in users && (users.status === 404 || users.status === 500))
@@ -65,14 +67,14 @@ export default async function UserIndex({
           <div className='absolute left-10 top-10'></div>
           <div className='absolute w-full lg:max-w-4xl flex flex-col lg:flex-row  justify-center lg:justify-start items-center top-0 lg:top-32 bg-stone/60 lg:rtl:right-10 lg:ltr:left-10 p-8 text-white  gap-4  rounded-md'>
             <div className='flex flex-col justify-center lg:justify-start items-center lg:items-start gap-4 text-center rtl:text-right ltr:text-left'>
-              <div className='text-2xl lg:text-6xl capitalize '>
+              <div className='text-2xl lg:text-6xl capitalize drop-shadow-4xl'>
                 {searchParams &&
                 searchParams.membership &&
                 searchParams.membership === "sponsorship"
                   ? trans.sponsorships
                   : trans.subscriptions}
               </div>
-              <div className='text-lg lg:text-xl capitalize'>
+              <div className='text-lg lg:text-xl capitalize drop-shadow-4xl'>
                 {searchParams &&
                 searchParams.membership &&
                 searchParams.membership === "sponsorship"
@@ -81,13 +83,21 @@ export default async function UserIndex({
               </div>
             </div>
           </div>
-          <Image
-            width={1000}
-            height={500}
-            src={UserIndexBanner}
-            alt={setting.name}
-            className='aspect-[9/3] w-full object-cover xl:rounded-lg'
-          />
+          {searchParams.membership === "sponsorship" ? (
+            <Image
+              fill={false}
+              src={SponsorshipBanner}
+              alt={setting.name}
+              className='aspect-[9/3] w-full object-cover xl:rounded-lg'
+            />
+          ) : (
+            <Image
+              fill={false}
+              src={SubscriptionBanner}
+              alt={setting.name}
+              className='aspect-[9/3] w-full object-cover xl:rounded-lg'
+            />
+          )}
         </div>
 
         <div className='px-5 lg:px-4'>

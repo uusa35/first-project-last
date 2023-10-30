@@ -24,6 +24,7 @@ export default function ({ lang }: Props) {
   const handleLogout = () => {
     dispatch(resetAuth());
     deleteToken();
+    router.refresh();
     return router.replace(appLinks.home(lang));
   };
   return (

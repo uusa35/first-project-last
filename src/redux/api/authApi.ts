@@ -1,7 +1,5 @@
 import { apiSlice } from './index';
-import {
-  User,
-} from '@/types/queries';
+import { User } from '@/types/queries';
 
 export const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -11,7 +9,7 @@ export const authApi = apiSlice.injectEndpoints({
       query: (body) => ({
         url: `login`,
         body,
-        method: "post",
+        method: "POST",
         validateStatus: (response, result) =>
           response.status == 200,
       }),
