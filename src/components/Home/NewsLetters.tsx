@@ -33,7 +33,7 @@ export function NewsLetters({ trans }: Props) {
         dispatch(showSuccessToastMessage({ content: r.data.message }));
         reset();
       } else {
-        dispatch(showErrorToastMessage({ content: r.data.error.message }));
+        // dispatch(showErrorToastMessage({ content: r.data.error.message }));
       }
     });
   };

@@ -32,7 +32,7 @@ import MembershipCard from "@/components/membership/MembershipCard";
 
 import DotPattern from "@/appImages/home/dot_pattern.png";
 
-import { Subscriptions } from "@/components/Home/Subscriptions";
+import { Figures } from "@/components/Home/Figures";
 import { NewsLetters } from "@/components/Home/NewsLetters";
 import { LatestNews } from "@/components/Home/LatestNews";
 import { SubscriptionsPrices } from "@/components/Home/SubscriptionsPrices";
@@ -89,7 +89,8 @@ export default async function Home({ params: { lang } }: Props) {
       trans={trans as { [key: string]: string }}
       lang={lang}
       searchParams={``}
-      setting={setting}>
+      setting={setting}
+    >
       {/* slider */}
       <MainSlider slides={slides} lang={lang} />
       {/* search */}
@@ -106,7 +107,7 @@ export default async function Home({ params: { lang } }: Props) {
       <RegisterAs lang={lang} trans={trans as { [key: string]: string }} />
 
       {/*  figures  */}
-      <Subscriptions trans={trans as { [key: string]: string }} />
+      <Figures trans={trans as { [key: string]: string }} />
 
       {/* newsletter */}
       <NewsLetters trans={trans as { [key: string]: string }} />

@@ -90,7 +90,7 @@ export default async function UserIndex({
           />
         </div>
 
-        <div className='px-5 lg:px-0'>
+        <div className='px-5 lg:px-4'>
           {/* filters */}
           <div className='flex flex-col md:flex-row items-center justify-between gap-x-10 text-sm'>
             {/* search categories */}

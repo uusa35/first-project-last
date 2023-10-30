@@ -4,7 +4,7 @@ import Image from "next/image";
 import { AppQueryResult, ImageType, Setting } from "@/types/queries";
 import Carousel from "better-react-carousel";
 import Link from "next/link";
-import DownloadPdf from "@/appIcons/download_pdf.svg";
+import DownloadPdf from "@/appIcons/home/download_pdf.svg";
 
 type Props = {
   images: ImageType[];
