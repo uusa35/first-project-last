@@ -6,9 +6,7 @@ import { getCategories } from "@/utils/category";
 import { getSetting } from "@/utils/setting";
 import { getMemberships } from "@/utils/membership";
 import { getPosts } from "@/utils/post";
-import Link from "next/link";
 import MainSlider from "@/components/MainSlider";
-import Image from "next/image";
 import { getImages } from "@/utils/image";
 import { getUsers } from "@/utils/user";
 import {
@@ -22,16 +20,7 @@ import {
   Slide,
   User,
 } from "@/types/queries";
-import Loading from "./loading";
-import { PersonOutlineOutlined } from "@/src/constants";
 import { getCountries } from "@/utils/country";
-import DOMPurify from "isomorphic-dompurify";
-import PostCard from "@/components/post/PostCard";
-import CategoryCard from "@/components/category/CategoryCard";
-import MembershipCard from "@/components/membership/MembershipCard";
-
-import DotPattern from "@/appImages/home/dot_pattern.png";
-
 import { Figures } from "@/components/Home/Figures";
 import { NewsLetters } from "@/components/Home/NewsLetters";
 import { LatestNews } from "@/components/Home/LatestNews";
@@ -43,10 +32,60 @@ import { Sponsors } from "@/components/Home/Sponsors";
 import { SponsorsPrices } from "@/components/Home/SponsorsPrices";
 import { MainGallery } from "@/components/Home/MainGallery";
 // import Background from "@/appIcons/bg.svg";
+// function classNames(...classes: any) {
+//   return classes.filter(Boolean).join(" ");
+// }
 
 type Props = {
   params: { lang: Locale["lang"] };
 };
+
+// or Dynamic metadata
+export async function generateMetadata({ params }: Props) {
+  const setting = await getSetting(params.lang);
+  return {
+    title: setting.name,
+    description: setting.description,
+    lang: params.lang,
+    openGraph: {
+      title: setting.name,
+      description: setting.description,
+      url: setting.instagram,
+      siteName: setting.name,
+      images: [
+        {
+          url: setting.image,
+          width: 800,
+          height: 600,
+        },
+        {
+          url: setting.image,
+          width: 1800,
+          height: 1600,
+          alt: "My custom alt",
+        },
+      ],
+      locale: params.lang,
+      type: "website",
+    },
+    generator: setting.name,
+    applicationName: setting.name,
+    referrer: "origin-when-cross-origin",
+    keywords: setting.keywords,
+    authors: [
+      { name: setting.name },
+      { name: setting.name, url: setting.facebook },
+    ],
+    colorScheme: "light",
+    creator: setting.name,
+    publisher: setting.name,
+    formatDetection: {
+      email: false,
+      address: false,
+      telephone: false,
+    },
+  };
+}
 
 export default async function Home({ params: { lang } }: Props) {
   const [
