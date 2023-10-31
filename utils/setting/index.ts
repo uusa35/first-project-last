@@ -1,4 +1,5 @@
 import { Locale } from '@/types/index';
+import { notFound } from 'next/navigation';
 import { NextResponse } from 'next/server'
 
 export async function getSetting(lang: Locale['lang']) {
@@ -9,7 +10,7 @@ export async function getSetting(lang: Locale['lang']) {
             'Accept-Language': lang
         }
     });
-    if (!res.ok) return undefined;
+    if (!res.ok) return notFound();
     return res.json();
 }
 
@@ -23,6 +24,6 @@ export async function getLightSetting(lang: Locale['lang']) {
             'Accept-Language': lang
         }
     });
-    if (!res.ok) return undefined;
+    if (!res.ok) return notFound();
     return res.json();
 }

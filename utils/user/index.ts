@@ -11,7 +11,7 @@ export async function getUsers(search: string, lang: Locale['lang']) {
             'Accept-Language': lang
         }
     });
-    if (!res.ok) return undefined;
+    if (!res.ok) return notFound();
     return res.json()
 }
 
@@ -39,7 +39,7 @@ export async function getAuth(token: string) {
             'Authorization': `Bearer ${token}`
         }
     });
-    if (!res.ok) return undefined;
+    if (!res.ok) return notFound();
     return res.json();
 
 }
@@ -53,7 +53,7 @@ export async function updateUser(id: string, lang: Locale['lang'], token: string
             'Authorization': `Bearer ${token}`
         }
     });
-    if (!res.ok) return undefined;
+    if (!res.ok) return notFound();
     return res.json();
 }
 
