@@ -10,6 +10,6 @@ export async function getSlides(search: string, lang: Locale['lang']) {
         },
 
     });
-    if (!res.ok) return notFound();
+    if (!res.ok) throw notFound();
     return res.json()
 }

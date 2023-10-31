@@ -10,7 +10,7 @@ export async function getSetting(lang: Locale['lang']) {
             'Accept-Language': lang
         }
     });
-    if (!res.ok) return notFound();
+    if (!res.ok) throw notFound();
     return res.json();
 }
 
@@ -24,6 +24,6 @@ export async function getLightSetting(lang: Locale['lang']) {
             'Accept-Language': lang
         }
     });
-    if (!res.ok) return notFound();
+    if (!res.ok) throw notFound();
     return res.json();
 }

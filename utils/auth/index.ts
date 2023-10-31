@@ -28,7 +28,7 @@ export async function getUser(id: string, lang: Locale['lang']) {
     });
     if (!res.ok) {
         // throw new Error("Failed to fetch data");
-        return notFound();
+        throw notFound();
     }
     return res.json()
 }

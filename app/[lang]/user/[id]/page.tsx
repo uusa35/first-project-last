@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: Props) {
     getSetting(params.lang),
   ]);
   if (!user || !user.id) {
-    return notFound();
+    throw notFound();
   }
   return {
     title: user.name,

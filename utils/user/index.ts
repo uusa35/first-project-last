@@ -11,7 +11,7 @@ export async function getUsers(search: string, lang: Locale['lang']) {
             'Accept-Language': lang
         }
     });
-    if (!res.ok) return notFound();
+    if (!res.ok) throw notFound();
     return res.json()
 }
 
@@ -23,11 +23,12 @@ export async function getUser(id: string, lang: Locale['lang']) {
         }
     });
 
-    if (JSON.stringify(res.json()).length < 10) {
+    const text = await res.text();
+    try {
+        const json = JSON.parse(text)
+        return json;
+    } catch (err) {
         throw notFound();
-    } else {
-        return res.json()
-
     }
 }
 
@@ -39,7 +40,7 @@ export async function getAuth(token: string) {
             'Authorization': `Bearer ${token}`
         }
     });
-    if (!res.ok) return notFound();
+    if (!res.ok) throw notFound();
     return res.json();
 
 }
@@ -53,7 +54,7 @@ export async function updateUser(id: string, lang: Locale['lang'], token: string
             'Authorization': `Bearer ${token}`
         }
     });
-    if (!res.ok) return notFound();
+    if (!res.ok) throw notFound();
     return res.json();
 }
 
