@@ -23,6 +23,9 @@ export async function generateMetadata({ params }: Props) {
     getUser(params.id, params.lang),
     getSetting(params.lang),
   ]);
+  if (!user || !user.id) {
+    return undefined;
+  }
   return {
     title: user.name,
     description: removeTags(user.description ?? setting.description),
@@ -67,7 +70,7 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
       getUser(id, lang),
     ]);
 
-  if ("status" in user && (user.status === 404 || user.status === 500))
+  if ("status" in user && (user.status === 404 || user.status === 500 || !user))
     notFound();
 
   if (user.images.length > 0) {

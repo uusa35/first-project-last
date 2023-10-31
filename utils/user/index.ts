@@ -1,5 +1,6 @@
 
 import { Locale } from '@/types/index';
+import { notFound } from 'next/navigation';
 import { NextResponse, NextRequest } from 'next/server'
 
 export async function getUsers(search: string, lang: Locale['lang']) {
@@ -21,7 +22,13 @@ export async function getUser(id: string, lang: Locale['lang']) {
             'Accept-Language': lang
         }
     });
-    return res.json()
+
+    if (JSON.stringify(res.json()).length < 10) {
+        throw notFound();
+    } else {
+        return res.json()
+
+    }
 }
 
 export async function getAuth(token: string) {

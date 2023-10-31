@@ -180,7 +180,6 @@ export default function ({ element, countries, categories }: Props) {
       })
       .then(() => {
         if (body.image[0]) {
-          console.log("inside");
           const formData = new FormData();
           formData.append("image", body.image[0]);
           formData.append("name", "image");
