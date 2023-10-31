@@ -6,7 +6,7 @@ import { getSetting } from "@/utils/setting";
 import Image from "next/image";
 import DOMPurify from "isomorphic-dompurify";
 import { notFound } from "next/navigation";
-import UserIndexBanner from "@/appImages/user/banner.jpg";
+import UserIndexBanner from "@/appImages/user/user_show_banner.jpg";
 import SocialIcons from "@/components/footer/SocialIcons";
 import { EmailOutlined, InsertLink } from "@mui/icons-material";
 import { ImageType, Setting, User } from "@/types/queries";
