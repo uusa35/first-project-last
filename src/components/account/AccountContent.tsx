@@ -4,7 +4,7 @@ import {
   useLazyUploadImageQuery,
   useUpdateUserMutation,
 } from "@/redux/api/authApi";
-import { Tab, Switch } from "@headlessui/react";
+import { Tab } from "@headlessui/react";
 import { ArrowsPointingOutIcon } from "@heroicons/react/24/outline";
 import { ArrowBack, FourGMobiledataSharp } from "@mui/icons-material";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -18,6 +18,7 @@ import {
   Auth,
   Category,
   Country,
+  ImageType,
   Role,
   User,
 } from "@/types/queries";
@@ -161,7 +162,6 @@ export default function ({ element, countries, categories }: Props) {
     },
   });
 
-  // console.log("getValues", getValues());
   const onSubmit: SubmitHandler<Inputs> = async (body: any) => {
     console.log("body", body);
     dispatch(enableLoading());
@@ -193,8 +193,7 @@ export default function ({ element, countries, categories }: Props) {
   };
 
   const handleImages = async (imagesGroup: any) => {
-    console.log("group", imagesGroup[0]);
-    if (imagesGroup.length > 1 && imagesGroup.length <= 10 && user) {
+    if (imagesGroup.length > 1 && imagesGroup.length <= 10) {
       console.log("inside");
       let formData = new FormData();
       for (let i = 0; i < imagesGroup.length; i++) {
@@ -202,7 +201,7 @@ export default function ({ element, countries, categories }: Props) {
         formData.append(`images[${i}]`, imagesGroup[i]);
       }
       formData.append("model", "user");
-      formData.append("id", toString(user.id));
+      formData.append("id", toString(element.id));
       await triggerUploadImages(formData).then((r: any) => {
         if (r.data && r.data.message) {
           dispatch(showSuccessToastMessage({ content: r.data.message }));
@@ -224,8 +223,7 @@ export default function ({ element, countries, categories }: Props) {
     }));
   };
 
-  console.log("getValues", getValues());
-  console.log("element=====", element);
+  console.log("element", element);
 
   return (
     <Tab.Group
@@ -283,26 +281,29 @@ export default function ({ element, countries, categories }: Props) {
                 {trans.submit}
               </button>
             </div>
-            {/* activate company role */}
-            {getValues("role") === "visitor" && (
-              <Switch
-                checked={getValues("role") === "company"}
-                onChange={() => setValue("role", "company")}
-                className={`${
-                  getValues("role") === "company"
-                    ? "bg-blue-600"
-                    : "bg-gray-200"
-                } relative inline-flex h-6 w-11 items-center rounded-full`}>
-                <span className='sr-only'>Enable notifications</span>
-                <span
-                  className={`${
-                    getValues("role") === "company"
-                      ? "translate-x-6"
-                      : "translate-x-1"
-                  } inline-block h-4 w-4 transform rounded-full bg-white transition`}
-                />
-              </Switch>
-            )}
+            {/* role */}
+            <div>
+              <InputLabel htmlFor='role' value={trans.role} aria-required />
+              <select
+                onChange={(e) => setValue("role", e.target.value)}
+                id='role'
+                name='role'
+                defaultValue={getValues("role")}
+                className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'>
+                <option value='company'>{trans.company}</option>
+                <option value='visitor'>{trans.visitor}</option>
+              </select>
+              <InputError message={errors.role} className='mt-2' />
+              <div className='p-3 bg-red-300 text-black my-3 rounded-md'>
+                <h3>Declaration</h3>
+                <p className=''>
+                  panel to inform user by switching to visitor role even if u
+                  have subscription deal paid your company profile wont be
+                  public anymore
+                </p>
+              </div>
+            </div>
+
             {/*  username  */}
             <div>
               <label
@@ -357,7 +358,7 @@ export default function ({ element, countries, categories }: Props) {
               </label>
               <div className='mt-2'>
                 <select
-                  onChange={(e) => handleChange(e)}
+                  onChange={(e) => setValue("country_id", e.target.value)}
                   id='country_id'
                   name='country_id'
                   defaultValue={getValues("country_id")}
@@ -463,11 +464,32 @@ export default function ({ element, countries, categories }: Props) {
                   multiple
                   name='images'
                   id='more_images'
-                  // accept='image/jpg, image/jpeg , image/png'
+                  accept='image/jpg, image/jpeg , image/png'
                   autoComplete='more_images'
                   className={`pt-3.5 focus:ring-gray-500 focus:border-gray-500 block w-full border-gray-300 rounded-md`}
                 />
               </div>
+            </div>
+            <div className='col-span-full flex flex-row justify-start items-center gap-x-3 my-4'>
+              {isSuccess && user
+                ? map(user.images, (img: ImageType, i: number) => (
+                    <Image
+                      className='w-20 h-auto border border-gray-200 rounded-sm'
+                      src={img.thumb}
+                      width={100}
+                      height={100}
+                      alt={element.username}
+                    />
+                  ))
+                : map(element.images, (img) => (
+                    <Image
+                      className='w-20 h-auto border border-gray-200 rounded-sm'
+                      src={img.thumb}
+                      width={100}
+                      height={100}
+                      alt={element.username}
+                    />
+                  ))}
             </div>
 
             {categories && categories.data ? (

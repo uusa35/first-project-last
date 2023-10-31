@@ -184,6 +184,10 @@
     "keywords": "keywords",
     "image": "image",
     "logo": "logo",
-    "banner": "banner"
+    "banner": "banner",
+    "username": "username",
+    "company" : "company",
+    "role" : "role",
+    "country" : "country"
   }
 }

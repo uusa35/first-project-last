@@ -56,7 +56,7 @@ let store: any = configureStore({
             PURGE,
             REGISTER,
           ],
-          ignoredPaths: ['api.queries.uploadImage({}).originalArgs'],
+          ignoredPaths: ['api.queries.uploadImage({}).originalArgs', 'api.queries.uploadImages({}).originalArgs'],
         },
       }).concat([
         apiSlice.middleware,
@@ -77,7 +77,7 @@ let store: any = configureStore({
             REGISTER,
 
           ],
-          ignoredPaths: ['api.queries.uploadImage({}).originalArgs'],
+          ignoredPaths: ['api.queries.uploadImage({}).originalArgs', 'api.queries.uploadImages({}).originalArgs'],
         },
       }).concat([
         apiSlice.middleware,

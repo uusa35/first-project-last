@@ -170,6 +170,26 @@
     "featured": "featured",
     "profile": "profile",
     "control_information": "control my information",
-    "registeration": "registeration"
+    "registeration": "registeration",
+    "mobile": "mobile",
+    "whatsapp": "whatsapp",
+    "facebook": "facebook",
+    "instagram": "instagram",
+    "twitter": "twitter",
+    "snap": "snap",
+    "tiktok": "tiktok",
+    "linked": "linked",
+    "iphone": "iphone",
+    "android": "android",
+    "longitude": "longitude",
+    "latitude": "latitude",
+    "keywords": "keywords",
+    "image": "image",
+    "logo": "logo",
+    "banner": "banner",
+    "username": "username",
+    "company": "company",
+    "role": "role",
+    "country": "country"
   }
 }
