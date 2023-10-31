@@ -62,10 +62,10 @@ export default function ({ membership, country, dollarCountry, user }: Props) {
         />
       </div>
       <div>
-        <div className='mx-auto max-w-2xl px-4 py-8 sm:px-6  lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8  xl:gap-x-24'>
+        <div className='mx-auto max-w-2xl px-4 py-8 sm:px-6  lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8  xl:gap-x-24 capitalize'>
           <div className='lg:col-start-2 space-y-3'>
             <p
-              className={`mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl`}>
+              className={`mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl capitalize`}>
               {trans.payment_confirmation}
             </p>
             <p
@@ -76,10 +76,10 @@ export default function ({ membership, country, dollarCountry, user }: Props) {
             </p>
 
             {/* company name */}
-            <dl className='mt-16 grid grid-cols-1  gap-x-4 text-sm text-gray-600'>
+            <dl className='mt-16 grid grid-cols-1  gap-x-4 text-sm text-gray-600 capitalize'>
               {user && (
                 <div className=''>
-                  <dt className='font-medium text-gray-900'>
+                  <dt className='font-medium text-gray-900 capitalize'>
                     {trans.beneficiary_name}
                   </dt>
                   <dd className='mt-2'>
@@ -94,11 +94,22 @@ export default function ({ membership, country, dollarCountry, user }: Props) {
                         />
                       </div>
                       <div className='space-y-1'>
-                        <span className='block'>{user.name}</span>
-                        <span className='block'>{user.email}</span>
                         <span className='block'>
-                          {user.area} {user.country?.name}
+                          {trans.name} : {user.username}
                         </span>
+                        <span className='block'>
+                          {trans.email} : {user.email}
+                        </span>
+                        {user.phone && (
+                          <span className='block'>
+                            {trans.phone} : {user.phone}
+                          </span>
+                        )}
+                        {user.country && (
+                          <span className='block'>
+                            {trans.country} : {user.area} {user.country?.name}
+                          </span>
+                        )}
                       </div>
                     </address>
                   </dd>

@@ -65,7 +65,7 @@ export default async function ({
       <main className='relative isolate mx-auto max-w-7xl min-h-screen p-3 xl:p-0 space-y-4'>
         <AccountSteps />
         <AccountContent
-          user={user}
+          element={user}
           countries={countries}
           categories={categories}
         />

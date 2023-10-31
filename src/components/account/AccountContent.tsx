@@ -1,29 +1,29 @@
 "use client";
+import { ChangeEvent, useContext, useState } from "react";
 import {
   useLazyUploadImageQuery,
   useUpdateUserMutation,
 } from "@/redux/api/authApi";
-import { Tab } from "@headlessui/react";
+import { Tab, Switch } from "@headlessui/react";
 import { ArrowsPointingOutIcon } from "@heroicons/react/24/outline";
 import { ArrowBack, FourGMobiledataSharp } from "@mui/icons-material";
-import {
-  ChangeEvent,
-  FormEventHandler,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema, updateUserSchema } from "@/src/validations";
 import { disableLoading, enableLoading } from "@/redux/slices/settingSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { MainContext } from "@/layouts/MainContentLayout";
-import { AppQueryResult, Auth, Category, Country, User } from "@/types/queries";
+import {
+  AppQueryResult,
+  Auth,
+  Category,
+  Country,
+  Role,
+  User,
+} from "@/types/queries";
 import {
   showErrorToastMessage,
   showSuccessToastMessage,
-  showToastMessage,
 } from "@/redux/slices/toastMessageSlice";
 import { get, map, omit, toString } from "lodash";
 import InputError from "@/components/InputError";
@@ -40,7 +40,7 @@ type Inputs = {
   email: string;
   image: string;
   country_id: string;
-  role: string;
+  role: Role["name"];
   name: any;
   description: any;
   caption: any;
@@ -64,21 +64,21 @@ type Inputs = {
   images: [];
 };
 type Props = {
-  user: User;
+  element: User;
   countries: Country[];
   categories: AppQueryResult<Category[]>;
 };
-export default function ({ user, countries, categories }: Props) {
+export default function ({ element, countries, categories }: Props) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const trans: { [key: string]: string } = useContext(MainContext);
   const {
     appSetting: { isLoading },
   } = useAppSelector((state) => state);
-  const [triggerUpdateUser, { data, error, isSuccess }] =
+  const dispatch = useAppDispatch();
+  const [triggerUpdateUser, { data: user, error, isSuccess }] =
     useUpdateUserMutation();
   const [triggerUploadImage] = useLazyUploadImageQuery();
   const [triggerUploadImages] = useLazyUploadImagesQuery();
-  const dispatch = useAppDispatch();
   const {
     handleSubmit,
     register,
@@ -89,8 +89,8 @@ export default function ({ user, countries, categories }: Props) {
   }: any = useForm<User>({
     // resolver: yupResolver(updateUserSchema),
     defaultValues: {
-      ...(isSuccess
-        ? omit(data, [
+      ...(isSuccess && user
+        ? omit(user, [
             "image",
             "images",
             "country",
@@ -105,7 +105,7 @@ export default function ({ user, countries, categories }: Props) {
             "services",
             "address",
           ])
-        : omit(user, [
+        : omit(element, [
             "image",
             "images",
             "country",
@@ -120,38 +120,41 @@ export default function ({ user, countries, categories }: Props) {
             "services",
             "address",
           ])),
-      categories: map(user.categories, "id"),
-      tags: map(user.tags, "id"),
-      role: user.roles[0].name,
+      categories:
+        isSuccess && user
+          ? map(user.categories, "id")
+          : map(element.categories, "id"),
+      tags: isSuccess && user ? map(user.tags, "id") : map(element.tags, "id"),
+      role: isSuccess && user ? user.roles[0].name : element.roles[0].name,
       name: {
-        ar: user.name?.ar ?? "",
-        en: user.name?.en ?? "",
-        ru: user.name?.ru ?? "",
+        ar: user?.name?.ar ?? element?.name?.ar ?? "",
+        en: user?.name?.en ?? element?.name?.en ?? "",
+        ru: user?.name?.ru ?? element?.name?.ru ?? "",
       },
       description: {
-        ar: user.description?.ar ?? "",
-        en: user.description?.en ?? "",
-        ru: user.description?.ru ?? "",
+        ar: user?.description?.ar ?? element?.description?.ar ?? "",
+        en: user?.description?.en ?? element?.description?.en ?? "",
+        ru: user?.description?.ru ?? element?.description?.ru ?? "",
       },
       caption: {
-        ar: user.caption?.ar ?? "",
-        en: user.caption?.en ?? "",
-        ru: user.caption?.ru ?? "",
+        ar: user?.caption?.ar ?? element?.caption?.ar ?? "",
+        en: user?.caption?.en ?? element?.caption?.en ?? "",
+        ru: user?.caption?.ru ?? element?.caption?.ru ?? "",
       },
       services: {
-        ar: user.services?.ar ?? "",
-        en: user.services?.en ?? "",
-        ru: user.services?.ru ?? "",
+        ar: user?.services?.ar ?? element?.services?.ar ?? "",
+        en: user?.services?.en ?? element?.services?.en ?? "",
+        ru: user?.services?.ru ?? element?.services?.ru ?? "",
       },
       aboutus: {
-        ar: user.aboutus?.ar ?? "",
-        en: user.aboutus?.en ?? "",
-        ru: user.aboutus?.ru ?? "",
+        ar: user?.aboutus?.ar ?? element?.aboutus?.ar ?? "",
+        en: user?.aboutus?.en ?? element?.aboutus?.en ?? "",
+        ru: user?.aboutus?.ru ?? element?.aboutus?.ru ?? "",
       },
       address: {
-        ar: user.address?.ar ?? "",
-        en: user.address?.en ?? "",
-        ru: user.address?.ru ?? "",
+        ar: user?.address?.ar ?? element?.address?.ar ?? "",
+        en: user?.address?.en ?? element?.address?.en ?? "",
+        ru: user?.address?.ru ?? element?.address?.ru ?? "",
       },
       image: ``,
       images: [],
@@ -162,7 +165,7 @@ export default function ({ user, countries, categories }: Props) {
   const onSubmit: SubmitHandler<Inputs> = async (body: any) => {
     console.log("body", body);
     dispatch(enableLoading());
-    await triggerUpdateUser({ body, id: user.id })
+    await triggerUpdateUser({ body, id: element.id })
       .then((r: any) => {
         if (r && r.data) {
           dispatch(showSuccessToastMessage({ content: trans.process_success }));
@@ -183,7 +186,7 @@ export default function ({ user, countries, categories }: Props) {
           formData.append("image", body.image[0]);
           formData.append("name", "image");
           formData.append("model", "user");
-          formData.append("id", toString(user.id));
+          formData.append("id", toString(element.id));
           triggerUploadImage(formData);
         }
       });
@@ -220,6 +223,9 @@ export default function ({ user, countries, categories }: Props) {
       [e.target.id]: e.target.value,
     }));
   };
+
+  console.log("getValues", getValues());
+  console.log("element=====", element);
 
   return (
     <Tab.Group
@@ -277,6 +283,26 @@ export default function ({ user, countries, categories }: Props) {
                 {trans.submit}
               </button>
             </div>
+            {/* activate company role */}
+            {getValues("role") === "visitor" && (
+              <Switch
+                checked={getValues("role") === "company"}
+                onChange={() => setValue("role", "company")}
+                className={`${
+                  getValues("role") === "company"
+                    ? "bg-blue-600"
+                    : "bg-gray-200"
+                } relative inline-flex h-6 w-11 items-center rounded-full`}>
+                <span className='sr-only'>Enable notifications</span>
+                <span
+                  className={`${
+                    getValues("role") === "company"
+                      ? "translate-x-6"
+                      : "translate-x-1"
+                  } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+                />
+              </Switch>
+            )}
             {/*  username  */}
             <div>
               <label
@@ -334,7 +360,7 @@ export default function ({ user, countries, categories }: Props) {
                   onChange={(e) => handleChange(e)}
                   id='country_id'
                   name='country_id'
-                  defaultValue={user.country_id}
+                  defaultValue={getValues("country_id")}
                   required
                   className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'>
                   {map(countries, (c: any, i) => (
@@ -356,12 +382,22 @@ export default function ({ user, countries, categories }: Props) {
               <div className='col-span-1 flex-row'>
                 <InputLabel htmlFor='image' value={trans.logo} aria-required />
                 <div className='flex flex-row gap-x-4 my-4'>
-                  {user.thumb && (
+                  {isSuccess && user ? (
                     <div>
                       <Image
                         src={user.thumb}
                         className='w-20 h-auto rounded-md'
                         alt={user.username}
+                        width={100}
+                        height={100}
+                      />
+                    </div>
+                  ) : (
+                    <div>
+                      <Image
+                        src={element.thumb}
+                        className='w-20 h-auto rounded-md'
+                        alt={element.username}
                         width={100}
                         height={100}
                       />
@@ -442,12 +478,15 @@ export default function ({ user, countries, categories }: Props) {
                   aria-required
                 />
                 <Select
-                  defaultValue={map(user.categories, (c) => {
-                    return {
-                      label: c.name.en,
-                      value: c.id,
-                    };
-                  })}
+                  defaultValue={map(
+                    (user && user.categories) ?? element.categories,
+                    (c) => {
+                      return {
+                        label: c.name.en,
+                        value: c.id,
+                      };
+                    }
+                  )}
                   isMulti
                   required
                   name='categories'
@@ -479,7 +518,7 @@ export default function ({ user, countries, categories }: Props) {
                     aria-required
                   />
                   <TextInput
-                    defaultValue={user.name?.en}
+                    defaultValue={getValues("name.en")}
                     id='name[en]'
                     name='name[en]'
                     required
@@ -504,7 +543,7 @@ export default function ({ user, countries, categories }: Props) {
                     aria-required
                   />
                   <TextInput
-                    defaultValue={user.name?.ar}
+                    defaultValue={getValues("name.ar")}
                     id='name[ar]'
                     name='name[ar]'
                     required
@@ -530,7 +569,7 @@ export default function ({ user, countries, categories }: Props) {
                     aria-required
                   />
                   <TextInput
-                    defaultValue={user.name?.ru}
+                    defaultValue={getValues("name.ru")}
                     id='name[ru]'
                     name='name[ru]'
                     required
@@ -558,14 +597,14 @@ export default function ({ user, countries, categories }: Props) {
                     aria-required
                   />
                   <TextInput
-                    defaultValue={user.caption?.en}
+                    defaultValue={getValues("caption.en")}
                     id='caption[en]'
                     name='caption[en]'
                     required
                     aria-required
                     onChange={(e) =>
                       setValue("caption", {
-                        ...getValues("name"),
+                        ...getValues("caption"),
                         en: e.target.value,
                       })
                     }
@@ -584,14 +623,14 @@ export default function ({ user, countries, categories }: Props) {
                     aria-required
                   />
                   <TextInput
-                    defaultValue={user.caption?.ar}
+                    defaultValue={getValues("caption.ar")}
                     id='caption[ar]'
                     name='caption[ar]'
                     required
                     aria-required
                     onChange={(e) =>
                       setValue("caption", {
-                        ...getValues("name"),
+                        ...getValues("caption"),
                         ar: e.target.value,
                       })
                     }
@@ -610,14 +649,14 @@ export default function ({ user, countries, categories }: Props) {
                     aria-required
                   />
                   <TextInput
-                    defaultValue={user.caption?.ru}
+                    defaultValue={getValues("caption.ru")}
                     id='caption[ru]'
                     name='caption[ru]'
                     required
                     aria-required
                     onChange={(e) =>
                       setValue("caption", {
-                        ...getValues("name"),
+                        ...getValues("caption"),
                         ru: e.target.value,
                       })
                     }
@@ -639,8 +678,7 @@ export default function ({ user, countries, categories }: Props) {
                   language='ar'
                   name='description'
                   setValue={setValue}
-                  values={getValues()}
-                  defaultValue={user.description?.ar}
+                  defaultValue={getValues("description.ar")}
                 />
                 <InputError
                   message={get(errors, "description.ar")}
@@ -654,11 +692,10 @@ export default function ({ user, countries, categories }: Props) {
                   value={trans["description.en"]}
                 />
                 <TextEditor
-                  defaultValue={user.description?.en}
+                  defaultValue={getValues("description.en")}
                   language='en'
                   name='description'
                   setValue={setValue}
-                  values={getValues()}
                 />
                 <InputError
                   message={get(errors, "description.en")}
@@ -672,11 +709,10 @@ export default function ({ user, countries, categories }: Props) {
                   value={trans["description.ru"]}
                 />
                 <TextEditor
-                  defaultValue={user.description?.ru}
+                  defaultValue={getValues("description.ru")}
                   language='ru'
                   name='description'
                   setValue={setValue}
-                  values={getValues()}
                 />
                 <InputError
                   message={get(errors, "description.ru")}
@@ -693,7 +729,7 @@ export default function ({ user, countries, categories }: Props) {
                 aria-required
               />
               <TextInput
-                defaultValue={user.mobile}
+                defaultValue={getValues("mobile")}
                 id='mobile'
                 type='text'
                 {...register("mobile")}
@@ -711,7 +747,7 @@ export default function ({ user, countries, categories }: Props) {
                 aria-required
               />
               <TextInput
-                defaultValue={user.phone}
+                defaultValue={getValues("phone")}
                 id='phone'
                 type='text'
                 {...register("phone")}
@@ -730,7 +766,7 @@ export default function ({ user, countries, categories }: Props) {
                 aria-required
               />
               <TextInput
-                defaultValue={user.whatsapp}
+                defaultValue={getValues("whatsapp")}
                 id='whatsapp'
                 type='text'
                 {...register("whatsapp")}
@@ -749,7 +785,7 @@ export default function ({ user, countries, categories }: Props) {
                 aria-required
               />
               <TextInput
-                defaultValue={user.twitter}
+                defaultValue={getValues("twitter")}
                 id='twitter'
                 type='text'
                 {...register("twitter")}
@@ -768,7 +804,7 @@ export default function ({ user, countries, categories }: Props) {
                 aria-required
               />
               <TextInput
-                defaultValue={user.facebook}
+                defaultValue={getValues("facebook")}
                 id='facebook'
                 type='text'
                 {...register("facebook")}
@@ -787,7 +823,7 @@ export default function ({ user, countries, categories }: Props) {
                 aria-required
               />
               <TextInput
-                defaultValue={user.instagram}
+                defaultValue={getValues("instagram")}
                 id='instagram'
                 type='text'
                 {...register("instagram")}
@@ -806,7 +842,7 @@ export default function ({ user, countries, categories }: Props) {
                 aria-required
               />
               <TextInput
-                defaultValue={user.linked}
+                defaultValue={getValues("linked")}
                 id='linked'
                 type='text'
                 {...register("linked")}
@@ -825,7 +861,7 @@ export default function ({ user, countries, categories }: Props) {
                 aria-required
               />
               <TextInput
-                defaultValue={user.iphone}
+                defaultValue={getValues("iphone")}
                 id='iphone'
                 type='text'
                 {...register("iphone")}
@@ -844,7 +880,7 @@ export default function ({ user, countries, categories }: Props) {
                 aria-required
               />
               <TextInput
-                defaultValue={user.android}
+                defaultValue={getValues("android")}
                 id='android'
                 type='text'
                 {...register("android")}
@@ -863,7 +899,7 @@ export default function ({ user, countries, categories }: Props) {
                 aria-required
               />
               <TextInput
-                defaultValue={user.keywords}
+                defaultValue={getValues("keywords")}
                 id='keywords'
                 type='text'
                 {...register("keywords")}
@@ -878,7 +914,7 @@ export default function ({ user, countries, categories }: Props) {
             <div>
               <InputLabel htmlFor='snap' value={trans["snap"]} aria-required />
               <TextInput
-                defaultValue={user.snap}
+                defaultValue={getValues("snap")}
                 id='snap'
                 type='text'
                 {...register("snap")}
@@ -897,7 +933,7 @@ export default function ({ user, countries, categories }: Props) {
                 aria-required
               />
               <TextInput
-                defaultValue={user.tiktok}
+                defaultValue={getValues("tiktok")}
                 id='tiktok'
                 type='text'
                 {...register("tiktok")}

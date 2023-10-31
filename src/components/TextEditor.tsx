@@ -7,30 +7,19 @@ import "@/styles/suneditor.min.css"; // Import Sun Editor's CSS File
 type Props = {
   language: string;
   name: string;
-  setValue: (values: any, element: any) => void;
-  values: any;
+  setValue: (x: any, y: any) => void;
+
   defaultValue?: string;
 };
 export function TextEditor({
   setValue,
   language,
   name,
-  values,
+
   defaultValue,
 }: Props) {
   const handleChange = (e: string) => {
-    console.log("e", e);
-    // setValue((values: any) => ({
-    //   ...values,
-    //   [`${name}`]: {
-    //     ...values[`${name}`],
-    //     [`${language}`]: e,
-    //   },
-    // }));
-    setValue(`${name}`, {
-      ...values[`${name}`],
-      [`${language}`]: e,
-    });
+    setValue(`${name}[${language}]`, e);
   };
 
   return (

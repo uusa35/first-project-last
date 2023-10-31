@@ -1,7 +1,7 @@
 import { MainContextLayout } from "@/layouts/MainContentLayout";
 import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
-import { getAuth, getUser } from "@/utils/user";
+import { getAuth } from "@/utils/user";
 import { getSetting } from "@/utils/setting";
 import { getMembership } from "@/utils/membership";
 import { Auth, Country, Membership, Setting } from "@/types/queries";

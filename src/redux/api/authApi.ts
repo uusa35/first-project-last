@@ -9,9 +9,22 @@ export const authApi = apiSlice.injectEndpoints({
       query: (body) => ({
         url: `login`,
         body,
-        method: "POST",
+        method: "post",
         validateStatus: (response, result) =>
           response.status == 200,
+      }),
+    }),
+    getAuthenticatedUser: builder.query<
+      User, { id: number; }
+    >({
+      query: ({ id }) => ({
+        url: `user/${id}`,
+        method: "get",
+        validateStatus: (response, result) => {
+          console.log('response', response);
+          console.log('result', result);
+          return response.status == 200;
+        }
       }),
     }),
     registerVisitor: builder.mutation<
@@ -81,5 +94,6 @@ export const {
   useRegisterVisitorMutation,
   useUpdateUserMutation,
   useLazyUploadImageQuery,
-  useLazyForgotPasswordQuery
+  useLazyForgotPasswordQuery,
+  useGetAuthenticatedUserQuery
 } = authApi;
