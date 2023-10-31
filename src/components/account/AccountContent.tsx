@@ -163,7 +163,6 @@ export default function ({ element, countries, categories }: Props) {
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (body: any) => {
-    console.log("body", body);
     dispatch(enableLoading());
     await triggerUpdateUser({ body, id: element.id })
       .then((r: any) => {
@@ -211,19 +210,6 @@ export default function ({ element, countries, categories }: Props) {
       });
     }
   };
-
-  const handleChange = (
-    e:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLSelectElement>
-  ): void => {
-    setValue((values: any) => ({
-      ...values,
-      [e.target.id]: e.target.value,
-    }));
-  };
-
-  console.log("element", element);
 
   return (
     <Tab.Group
