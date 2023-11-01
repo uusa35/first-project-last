@@ -79,7 +79,7 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
   if ("status" in user && (user.status === 404 || user.status === 500 || !user))
     notFound();
 
-  if (user.images.length > 0) {
+  if (user.images && user.images.length > 0) {
     var imagesGroup = user.images.map((img: ImageType) => {
       return { thumbnail: img.image, original: img.image };
     });
@@ -252,12 +252,14 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
             </div>
           )}
 
-          <MainGallery
-            trans={trans as { [key: string]: string }}
-            images={user.images}
-            setting={setting}
-            message={trans.home}
-          />
+          {user.images && user.images.length > 0 && (
+            <MainGallery
+              trans={trans as { [key: string]: string }}
+              images={user.images}
+              setting={setting}
+              message={trans.home}
+            />
+          )}
         </div>
       </main>
     </MainContextLayout>

@@ -85,6 +85,7 @@ export type User = {
     address: string[];
     country_id: string;
     country: Country;
+    images?: ImageType[];
     [key: string]: any;
 }
 
