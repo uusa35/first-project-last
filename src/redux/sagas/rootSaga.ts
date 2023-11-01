@@ -1,4 +1,3 @@
-'use client';
 import { fork, take, all, throttle } from 'redux-saga/effects';
 import { REHYDRATE, PURGE } from 'redux-persist/lib/constants';
 import {

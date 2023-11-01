@@ -1,4 +1,3 @@
-'use client';
 import { combineReducers } from '@reduxjs/toolkit';
 import { localeSlice } from './localeSlice';
 import { apiSlice } from '../api';

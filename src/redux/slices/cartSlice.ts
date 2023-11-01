@@ -1,4 +1,3 @@
-'use client';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Locale } from '@/types/index';
 import { Country, Membership, Order, PaymentFields } from '@/types/queries';

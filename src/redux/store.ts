@@ -1,4 +1,3 @@
-'use client';
 import { useMemo } from "react";
 import { configureStore } from "@reduxjs/toolkit";
 import { createLogger } from "redux-logger";

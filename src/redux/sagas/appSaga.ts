@@ -1,4 +1,3 @@
-'use client';
 import { call, put, delay, select, all } from 'redux-saga/effects';
 import { PayloadAction } from '@reduxjs/toolkit';
 import i18n from 'i18next';
