@@ -9,7 +9,7 @@ import { notFound } from "next/navigation";
 import UserIndexBanner from "@/appImages/user/user_show_banner.jpg";
 import SocialIcons from "@/components/footer/SocialIcons";
 import { EmailOutlined, InsertLink } from "@mui/icons-material";
-import { ImageType, Setting, User } from "@/types/queries";
+import { Setting, User } from "@/types/queries";
 import { MainGallery } from "@/components/Home/MainGallery";
 import { removeTags } from "@/utils/helpers";
 
@@ -78,12 +78,6 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
 
   if ("status" in user && (user.status === 404 || user.status === 500 || !user))
     notFound();
-
-  if (user.images && user.images.length > 0) {
-    var imagesGroup = user.images.map((img: ImageType) => {
-      return { thumbnail: img.image, original: img.image };
-    });
-  }
 
   return (
     <MainContextLayout
@@ -161,7 +155,7 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
                   {trans.contactus_information}
                 </h1>
                 <p className='text-clamp-2 text-clip'>
-                  {user.address} - {user.country.name}
+                  {user.address ?? ''} - {user.country.name}
                 </p>
               </div>
               {user.email && (
