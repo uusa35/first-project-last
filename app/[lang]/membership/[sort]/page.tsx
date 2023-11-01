@@ -5,15 +5,8 @@ import { getSetting } from "@/utils/setting";
 import AboutusImage from "@/appImages/aboutus/banner.jpg";
 import Image from "next/image";
 import DOMPurify from "isomorphic-dompurify";
-import {
-  AppQueryResult,
-  Category,
-  Country,
-  Membership,
-  Setting,
-} from "@/types/queries";
-import { getCategories } from "@/utils/category";
-import { Categories } from "@/components/Home/Categories";
+import { Country, Membership, Setting } from "@/types/queries";
+
 import { getMemberships } from "@/utils/membership";
 import MembershipCard from "@/components/membership/MembershipCard";
 import { getCountries } from "@/utils/country";

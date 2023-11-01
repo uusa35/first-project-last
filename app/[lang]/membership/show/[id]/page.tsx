@@ -5,16 +5,8 @@ import { getSetting } from "@/utils/setting";
 import AboutusImage from "@/appImages/aboutus/banner.jpg";
 import Image from "next/image";
 import DOMPurify from "isomorphic-dompurify";
-import {
-  AppQueryResult,
-  Category,
-  Country,
-  Membership,
-  Setting,
-} from "@/types/queries";
-import { getCategories } from "@/utils/category";
-import { Categories } from "@/components/Home/Categories";
-import { getMembership, getMemberships } from "@/utils/membership";
+import { Country, Membership, Setting } from "@/types/queries";
+import { getMembership,  } from "@/utils/membership";
 import MembershipCard from "@/components/membership/MembershipCard";
 import { getCountries } from "@/utils/country";
 import Link from "next/link";
@@ -149,7 +141,6 @@ export default async function ({ params: { lang, id } }: Props) {
               </>
             )}
           </div>
-
           <div className='mx-auto  lg:mx-0 lg:max-w-none'>
             <MembershipCard
               element={membership}
@@ -157,7 +148,7 @@ export default async function ({ params: { lang, id } }: Props) {
               lang={lang}
             />
           </div>
-
+          {/* gallery */}
           {membership.images && membership.images.length > 0 && (
             <MainGallery
               trans={trans as { [key: string]: string }}
