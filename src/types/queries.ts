@@ -82,7 +82,7 @@ export type User = {
     description: any;
     aboutus: any;
     services: any;
-    address: string[];
+    address: string;
     country_id: string;
     country: Country;
     images?: ImageType[];
