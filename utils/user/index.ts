@@ -39,7 +39,8 @@ export async function getAuth(token: string) {
             'Authorization': `Bearer ${token}`
         }
     });
-    if (!res.ok) throw notFound();
+    // if (!res.ok) throw notFound();
+    if (!res.ok) throw new Error('auth');
     return res.json();
 
 }
@@ -53,7 +54,8 @@ export async function updateUser(id: string, lang: Locale['lang'], token: string
             'Authorization': `Bearer ${token}`
         }
     });
-    if (!res.ok) throw notFound();
+    // if (!res.ok) throw notFound();
+    if (!res.ok) throw new Error('update');
     return res.json();
 }
 
