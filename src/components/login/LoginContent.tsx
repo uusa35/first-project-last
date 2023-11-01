@@ -11,6 +11,7 @@ import { appLinks } from "@/src/links";
 import { Locale } from "@/types/index";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+
 import { useContext } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -52,11 +53,9 @@ export default function ({ lang }: Props) {
     dispatch(enableLoading());
     await triggerLogin(body).then((r: any) => {
       if (r && r.data) {
-        dispatch(showSuccessToastMessage({ content: trans.process_success }));
         dispatch(setAuth(r.data));
         setToken(r.data.api_token);
-        router.refresh();
-        return router.push(`/${lang}`);
+        // router.push(`/${lang}`, undefined, { shallow: false });
       } else if (r && r.error && r.error.data) {
         dispatch(
           showErrorToastMessage({

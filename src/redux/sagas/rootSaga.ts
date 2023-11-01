@@ -1,3 +1,4 @@
+'use client';
 import { fork, take, all, throttle } from 'redux-saga/effects';
 import { REHYDRATE, PURGE } from 'redux-persist/lib/constants';
 import {
@@ -5,12 +6,14 @@ import {
   triggerEnableLoading,
   triggerShowToastMessage,
   triggerResetEntireApp,
+  triggerSetAuthScenario,
 } from './triggers';
 
 export default function* rootSaga() {
   yield all([
     fork(triggerEnableLoading),
     fork(triggerShowToastMessage),
+    fork(triggerSetAuthScenario),
     // fork(triggerChangeLang),
     // fork(triggerResetEntireApp),
 

@@ -64,8 +64,8 @@ export default function ({
   const handleLogout = () => {
     dispatch(resetAuth());
     deleteToken();
-    router.refresh();
-    return router.replace(appLinks.home(lang));
+    // router.refresh();
+    // return router.replace(appLinks.home(lang));
   };
 
   const stickNavbar = () => {
