@@ -82,14 +82,14 @@ export type User = {
     description: any;
     aboutus: any;
     services: any;
-    address: any;
+    address: string[];
     country_id: string;
     country: Country;
     [key: string]: any;
 }
 
 export type Auth = {
-    id: number | string;
+    id: number;
     name: string;
     caption: string;
     email: string;
@@ -120,7 +120,7 @@ export type Membership = {
     price: number;
     sale_price: number;
     on_sale: boolean;
-    is_featured : boolean;
+    is_featured: boolean;
     sort: 'subscription' | 'sponsorship';
     zone: 'A' | 'B' | 'C' | 'D' | 'E';
     [key: string]: any;

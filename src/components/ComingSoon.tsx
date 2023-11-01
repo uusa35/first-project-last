@@ -5,7 +5,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { MainContext } from "@/layouts/MainContentLayout";
 import { useParams } from "next/navigation";
-import { appLinks } from "@/src/constants";
+import { appLinks } from "@/src/links";
 import Logo from "@/appImages/logo.png";
 import Image from "next/image";
 

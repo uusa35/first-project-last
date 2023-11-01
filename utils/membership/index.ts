@@ -1,4 +1,5 @@
 import { Locale } from '@/types/index';
+import { notFound } from 'next/navigation';
 import { NextResponse } from 'next/server'
 
 export async function getMemberships(search: string, lang: Locale['lang']) {
@@ -9,7 +10,7 @@ export async function getMemberships(search: string, lang: Locale['lang']) {
             'Accept-Language': lang
         }
     });
-    if (!res.ok) return undefined
+    if (!res.ok) throw notFound();
     return res.json()
 }
 
@@ -21,6 +22,6 @@ export async function getMembership(id: string, lang: Locale['lang']) {
             'Accept-Language': lang
         }
     });
-    if (!res.ok) return undefined
+    if (!res.ok) throw notFound();
     return res.json()
 }

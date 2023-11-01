@@ -170,7 +170,28 @@
     "a_key_partner_and_sponsor":"Ключевой партнер и спонсор",
     "investment_opportunities":"Инвестиционные возможности",
    "participant_in_events":"Участник мероприятий",
-    "seminar_during_the_exhibition":"Семинар во время выставки"
+    "seminar_during_the_exhibition":"Семинар во время выставки",
 
+    "mobile": "mobile",
+    "whatsapp": "whatsapp",
+    "facebook": "facebook",
+    "instagram": "instagram",
+    "twitter": "twitter",
+    "snap": "snap",
+    "tiktok": "tiktok",
+    "linked": "linked",
+    "iphone": "iphone",
+    "android": "android",
+    "longitude": "longitude",
+    "latitude": "latitude",
+    "keywords": "keywords",
+    "image": "image",
+    "logo": "logo",
+    "banner": "banner",
+    "username": "username",
+    "company": "company",
+    "role": "role",
+    "country": "country",
+    "more_details": "more details"
   }
 }

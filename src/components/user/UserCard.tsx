@@ -34,8 +34,8 @@ export default async function ({ element, lang, trans }: Props) {
             {element.categories.slice(0, 2).map((u: Category, i: number) => (
               <span
                 key={i}
-                className='truncate col-span-1 text-xs text-center rounded-full bg-expo-light hover:bg-expo-dark hover:text-white px-2 py-1 font-medium text-green-700 ring-1 ring-inset ring-green-600/20'>
-                {element.name}
+                className='truncate col-span-1 text-xs text-center rounded-full bg-expo-light hover:bg-expo-dark hover:text-white px-2 py-1 font-medium text-green-700 ring-1 ring-inset ring-green-600/20 capitalize'>
+                {u.name}
               </span>
             ))}
           </dd>

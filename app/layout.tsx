@@ -14,11 +14,11 @@ export async function generateMetadata({ params }: Props) {
   const setting = await getSetting(params.lang);
   return {
     title: setting.name,
-    description: removeTags(setting.description),
+    description: removeTags(setting.caption ?? setting.description),
     lang: params.lang,
     openGraph: {
       title: setting.name,
-      description: removeTags(setting.description),
+      description: removeTags(setting.caption ?? setting.description),
       url: setting.instagram,
       siteName: setting.name,
       images: [
@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: Props) {
     generator: setting.name,
     applicationName: setting.name,
     // referrer: "origin-when-cross-origin",
-    keywords: setting.keywords,
+    keywords: removeTags(setting.keywords ?? setting.description),
     authors: [
       { name: setting.name },
       { name: setting.name, url: setting.facebook },
@@ -74,7 +74,7 @@ export async function generateMetadata({ params }: Props) {
     twitter: {
       card: setting.name,
       title: setting.name,
-      description: removeTags(setting.description),
+      description: removeTags(setting.caption ?? setting.description),
       // siteId: "1467726470533754880",
       creator: setting.name,
       // creatorId: "1467726470533754880",

@@ -1,5 +1,6 @@
 
 import { Locale } from '@/types/index';
+import { notFound } from 'next/navigation';
 import { NextResponse, NextRequest } from 'next/server'
 
 export async function getUsers(search: string, lang: Locale['lang']) {
@@ -10,7 +11,7 @@ export async function getUsers(search: string, lang: Locale['lang']) {
             'Accept-Language': lang
         }
     });
-    if (!res.ok) return undefined;
+    if (!res.ok) throw notFound();
     return res.json()
 }
 
@@ -21,7 +22,14 @@ export async function getUser(id: string, lang: Locale['lang']) {
             'Accept-Language': lang
         }
     });
-    return res.json()
+
+    const text = await res.text();
+    try {
+        const json = JSON.parse(text)
+        return json;
+    } catch (err) {
+        throw notFound();
+    }
 }
 
 export async function getAuth(token: string) {
@@ -32,7 +40,7 @@ export async function getAuth(token: string) {
             'Authorization': `Bearer ${token}`
         }
     });
-    if (!res.ok) return undefined;
+    if (!res.ok) throw notFound();
     return res.json();
 
 }
@@ -46,7 +54,7 @@ export async function updateUser(id: string, lang: Locale['lang'], token: string
             'Authorization': `Bearer ${token}`
         }
     });
-    if (!res.ok) return undefined;
+    if (!res.ok) throw notFound();
     return res.json();
 }
 

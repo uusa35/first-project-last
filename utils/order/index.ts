@@ -1,5 +1,6 @@
 import { Locale } from '@/types/index';
 import { sha256 } from "js-sha256";
+import { notFound } from 'next/navigation';
 
 const token = process.env.NODE_ENV === "production" ? '01989686817' : '7118259ee8e3bc2dbdc0aec954cd6adbd703bc4ff5e8c07f014f8561ce3fa56f';
 
@@ -10,7 +11,7 @@ export async function getOrders(search: string, lang: Locale['lang']) {
             'Accept-Language': lang
         }
     });
-    if (!res.ok) return undefined
+    if (!res.ok) throw notFound();
     return res.json()
 }
 
@@ -23,7 +24,7 @@ export async function getOrderByReferenceId(reference_id: string, lang: Locale['
             'Authorization': `Bearer ${token}`,
         }
     });
-    if (!res.ok) return undefined
+    if (!res.ok) throw notFound();
     return res.json()
 }
 
@@ -35,7 +36,7 @@ export async function getOrder(id: string, lang: Locale['lang']) {
             'Authorization': `Bearer ${token}`,
         }
     });
-    if (!res.ok) return undefined
+    if (!res.ok) throw notFound();
     return res.json()
 }
 
@@ -51,7 +52,7 @@ export async function checkOrderPayment(reference_id: string, lang: Locale['lang
             'Authorization': `Bearer ${token}`,
         }
     });
-    if (!res.ok) return undefined
+    if (!res.ok) throw notFound();
     return res.text();
 }
 
@@ -65,6 +66,6 @@ export async function updateOrder(id: string, reference_id: string, status: 'pen
         }
     });
 
-    if (!res.ok) return undefined
+    if (!res.ok) throw notFound();
     return res.json()
 }

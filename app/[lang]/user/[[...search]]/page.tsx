@@ -122,7 +122,7 @@ export default async function UserIndex({
                   href={`/${lang}/user?membership=${
                     (searchParams as { [key: string]: string }).membership
                   }&category_id=${c.id}`}
-                  className={`border rounded-full px-3 py-2 whitespace-nowrap ${
+                  className={`border rounded-full px-3 py-2 whitespace-nowrap capitalize ${
                     (searchParams as { [key: string]: string })?.category_id ===
                     c.id.toString()
                       ? "text-white  bg-expo-dark "

@@ -56,7 +56,7 @@ export default async function ({ params: { lang } }: Props) {
             className='absolute inset-0 h-full w-full object-cover'
             width={600}
             height={1000}
-            src={LoginImage.src}
+            src={LoginImage}
             alt={setting.name}
           />
         </div>

@@ -55,6 +55,7 @@ const config: Config = {
     require("tailwind-scrollbar-hide"),
     require("@tailwindcss/forms"),
     require("tailwindcss-dir")(),
+
   ],
 }
 export default config;

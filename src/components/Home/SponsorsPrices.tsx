@@ -1,9 +1,10 @@
 import Link from "next/link";
-import { CheckIcon } from "@heroicons/react/20/solid";
 import * as React from "react";
-import { AppQueryResult, Country, Membership } from "@/types/queries";
+import { Country, Membership } from "@/types/queries";
 import { Locale } from "@/types/index";
-import MembershipCard from "../membership/MembershipCard";
+import MembershipCard from "@/components/membership/MembershipCard";
+import { appLinks } from "@/src/links";
+import ShowMore from "@/appIcons/green_left_arrow.svg";
 
 type Props = {
   trans: { [key: string]: string };
@@ -34,6 +35,7 @@ export function SponsorsPrices({ trans, sponsorships, lang, country }: Props) {
         <div className='isolate mx-auto mt-10 grid max-w-md grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3'>
           {sponsorships.map((s: Membership, i: number) => (
             <MembershipCard
+              trans={trans}
               element={s}
               key={i}
               scaleMiddle={i === 1 && s.is_featured}
@@ -42,6 +44,14 @@ export function SponsorsPrices({ trans, sponsorships, lang, country }: Props) {
             />
           ))}
         </div>
+      </div>
+      <div className='pt-8 pb-2 w-full text-center text-expo-dark'>
+        <Link
+          className='flex gap-x-2 items-center justify-center'
+          href={appLinks.membershipIndex(lang, "sponsorship")}>
+          {trans.navigate_to_more}
+          <ShowMore className={`w-6 h-6 ${lang !== "ar" && "rotate-180"}`} />
+        </Link>
       </div>
     </div>
   );

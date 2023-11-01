@@ -5,7 +5,7 @@ import { Auth } from '@/types/queries';
 
 
 const initialState: Auth = {
-  id: ``,
+  id: 0,
   name: ``,
   caption: ``,
   email: ``,

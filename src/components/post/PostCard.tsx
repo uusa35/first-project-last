@@ -7,6 +7,7 @@ import Link from "next/link";
 type Props = {
   element: Post;
   lang: Locale["lang"];
+  
 };
 export default async function ({ element, lang }: Props) {
   return (
@@ -20,7 +21,7 @@ export default async function ({ element, lang }: Props) {
           height={400}
           src={element.image}
           alt={element.name}
-          className='aspect-[16/9] w-full rounded-lg bg-gray-100  object-cover sm:aspect-[2/1] lg:aspect-[3/2]'
+          className='aspect-[16/9] w-full rounded-lg bg-gray-100  object-cover sm:aspect-[2/1] lg:aspect-[3/1]'
         />
         <div className='absolute inset-0 rounded-lg ring-1 ring-inset ring-gray-900/10' />
       </div>
@@ -50,8 +51,8 @@ export default async function ({ element, lang }: Props) {
             {element.categories.slice(0, 2).map((u: Category, i: number) => (
               <span
                 key={i}
-                className='truncate col-span-1 text-sm text-center rounded-full bg-expo-light hover:bg-expo-dark hover:text-white px-2 py-1 font-medium text-green-700 ring-1 ring-inset ring-green-600/20'>
-                {element.name}
+                className='truncate col-span-1 text-sm text-center rounded-full bg-expo-light hover:bg-expo-dark hover:text-white px-2 py-1 font-medium text-green-700 ring-1 ring-inset ring-green-600/20 capitalize'>
+                {u.name}
               </span>
             ))}
           </dd>

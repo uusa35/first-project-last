@@ -172,7 +172,28 @@
     "a_key_partner_and_sponsor":"شريك  وراعي أساسي",
     "investment_opportunities":"فرص استثمارية",
     "participant_in_events":"مشارك في الفعاليات",
-    "seminar_during_the_exhibition":"ندوة في فترة المعرض"
+    "seminar_during_the_exhibition":"ندوة في فترة المعرض",
 
+    "mobile": "متحرك",
+    "whatsapp": "واتساب",
+    "facebook": "فيسبوك",
+    "instagram": "إنستغرام",
+    "twitter": "تويتر",
+    "snap": "فرقعة",
+    "tiktok": "تيك توك",
+    "linked": "لينكد ان",
+    "iphone": "ايفون",
+    "android": "اندرويد",
+    "longitude": "خط الطول",
+    "latitude": "خط العرض",
+    "keywords": "الكلمات الدالة",
+    "image": "صورة",
+    "logo": "شعار",
+    "banner": "لافتة",
+    "username": "اسم المستخدم",
+    "company": "شركة",
+    "role": "دور",
+    "country": "دولة",
+    "more_details": "المزيد من التفاصيل"
   }
 }

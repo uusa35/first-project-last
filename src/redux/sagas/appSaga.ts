@@ -14,7 +14,7 @@ export function* startResetEnireAppSceanrio() {
 
 export function* startEnableLoadingScenario(action: PayloadAction) {
   try {
-    yield delay(5000);
+    yield delay(3000);
     yield put({ type: `${settingSlice.actions.disableLoading}` });
   } catch (e) {
   } finally {

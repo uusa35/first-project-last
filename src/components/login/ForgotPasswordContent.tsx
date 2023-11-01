@@ -1,15 +1,11 @@
 "use client";
-import {
-  useLazyForgotPasswordQuery,
-  useLazyLoginQuery,
-} from "@/redux/api/authApi";
+import { useLazyForgotPasswordQuery } from "@/redux/api/authApi";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { setAuth } from "@/redux/slices/authSlice";
 import {
   showErrorToastMessage,
   showSuccessToastMessage,
 } from "@/redux/slices/toastMessageSlice";
-import { appLinks, setToken } from "@/src/constants";
+import { appLinks } from "@/src/links";
 import { Locale } from "@/types/index";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -17,7 +13,7 @@ import { useContext } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { forgotPasswordSchema } from "@/src/validations";
-import {  enableLoading } from "@/redux/slices/settingSlice";
+import { enableLoading } from "@/redux/slices/settingSlice";
 import { MainContext } from "@/layouts/MainContentLayout";
 import LoadingSpinner from "@/components/LoadingSpinner";
 

@@ -10,7 +10,9 @@ export default function InputLabel({
   return (
     <label
       {...props}
-      className={`block font-medium text-sm text-gray-700 ` + className}>
+      className={
+        `block font-medium text-sm text-gray-700 capitalize` + className
+      }>
       {value ? value : children}
       {props["aria-required"] && (
         <span className='text-red-800 text-xl'>* </span>

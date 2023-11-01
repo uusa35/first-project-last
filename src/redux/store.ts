@@ -20,6 +20,7 @@ import { HYDRATE, createWrapper } from "next-redux-wrapper";
 import { apiSlice } from "./api";
 import { categoryApi } from "@/redux/api/categoryApi";
 import { isLocal } from "@/src/constants";
+import { authApi } from "./api/authApi";
 
 
 const persistConfig = {
@@ -55,6 +56,7 @@ let store: any = configureStore({
             PURGE,
             REGISTER,
           ],
+          ignoredPaths: ['api.queries.uploadImage({}).originalArgs', 'api.queries.uploadImages({}).originalArgs'],
         },
       }).concat([
         apiSlice.middleware,
@@ -73,7 +75,9 @@ let store: any = configureStore({
             PERSIST,
             PURGE,
             REGISTER,
+
           ],
+          ignoredPaths: ['api.queries.uploadImage({}).originalArgs', 'api.queries.uploadImages({}).originalArgs'],
         },
       }).concat([
         apiSlice.middleware,

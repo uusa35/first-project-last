@@ -6,7 +6,7 @@ import { getSetting } from "@/utils/setting";
 import Image from "next/image";
 import DOMPurify from "isomorphic-dompurify";
 import { notFound } from "next/navigation";
-import UserIndexBanner from "@/appImages/user/banner.jpg";
+import UserIndexBanner from "@/appImages/user/user_show_banner.jpg";
 import SocialIcons from "@/components/footer/SocialIcons";
 import { EmailOutlined, InsertLink } from "@mui/icons-material";
 import { ImageType, Setting, User } from "@/types/queries";
@@ -23,12 +23,19 @@ export async function generateMetadata({ params }: Props) {
     getUser(params.id, params.lang),
     getSetting(params.lang),
   ]);
+  if (!user || !user.id) {
+    throw notFound();
+  }
   return {
     title: user.name,
-    description: removeTags(user.description ?? setting.description),
+    description: removeTags(
+      user.description ?? setting.caption ?? setting.description
+    ),
     openGraph: {
       title: user.name,
-      description: removeTags(user.description ?? setting.description),
+      description: removeTags(
+        user.description ?? setting.caption ?? setting.description
+      ),
       url: user.instagram ?? user.website ?? setting.website,
       siteName: user.name,
       images: [
@@ -50,7 +57,9 @@ export async function generateMetadata({ params }: Props) {
     twitter: {
       card: user.name,
       title: user.name,
-      description: removeTags(user.description ?? setting.description),
+      description: removeTags(
+        user.description ?? setting.caption ?? setting.description
+      ),
       // siteId: "1467726470533754880",
       creator: setting.name,
       // creatorId: "1467726470533754880",
@@ -67,7 +76,7 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
       getUser(id, lang),
     ]);
 
-  if ("status" in user && (user.status === 404 || user.status === 500))
+  if ("status" in user && (user.status === 404 || user.status === 500 || !user))
     notFound();
 
   if (user.images.length > 0) {
