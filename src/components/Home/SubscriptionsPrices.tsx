@@ -20,7 +20,9 @@ export function SubscriptionsPrices({
   lang,
   country,
 }: Props) {
+  
   return (
+    
     <div className='bg-expo-green py-16 capitalize'>
       <div className='mx-auto max-w-7xl px-6 lg:px-8'>
         <div className='mx-auto max-w-4xl text-center'>

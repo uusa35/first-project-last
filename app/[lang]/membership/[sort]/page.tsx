@@ -25,9 +25,6 @@ export async function generateMetadata({ params }: Props) {
 }
 
 export default async function ({ params: { lang, sort } }: Props) {
-  const cookieStore = cookies();
-  const token: any = cookieStore.get("token");
-
   const [{ trans }, setting, country, memberships]: [
     { trans: any },
     Setting,
@@ -106,7 +103,6 @@ export default async function ({ params: { lang, sort } }: Props) {
                   country={country[0]}
                   lang={lang}
                   showMore={true}
-                  isAuth={token && token.value}
                 />
               ))}
             </div>
