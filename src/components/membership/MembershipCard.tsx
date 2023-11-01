@@ -1,3 +1,4 @@
+"use client";
 import { Locale } from "@/types/index";
 import { Country, Membership } from "@/types/queries";
 import DOMPurify from "isomorphic-dompurify";
