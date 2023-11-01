@@ -11,6 +11,8 @@ export const appLinks = {
         `/${lang}/terms`,
     categoryIndex: (lang: Locale['lang']) =>
         `/${lang}/category`,
+    cartIndex: (lang: Locale['lang'], id: number) =>
+        `/${lang}/cart/${id}`,
     membershipIndex: (lang: Locale['lang'], sort: Membership['sort']) =>
         `/${lang}/membership/${sort}`,
     membershipShow: (lang: Locale['lang'], id: number, slug: string) =>

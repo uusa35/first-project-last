@@ -39,6 +39,7 @@ export function SubscriptionsPrices({
         <div className='isolate mx-auto grid max-w-md grid-cols-1 gap-y-8 lg:mx-0 lg:max-w-none lg:grid-cols-3 my-20'>
           {subscriptions.map((s: Membership, i: number) => (
             <MembershipCard
+              trans={trans}
               scaleOnHover={false}
               scaleMiddle={i === 1 && s.is_featured}
               element={s}

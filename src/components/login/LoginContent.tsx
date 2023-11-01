@@ -55,6 +55,7 @@ export default function ({ lang }: Props) {
         dispatch(showSuccessToastMessage({ content: trans.process_success }));
         dispatch(setAuth(r.data));
         setToken(r.data.api_token);
+        router.refresh();
         return router.push(`/${lang}`);
       } else if (r && r.error && r.error.data) {
         dispatch(

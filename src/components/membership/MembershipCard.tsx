@@ -1,9 +1,6 @@
 import { Locale } from "@/types/index";
 import { Country, Membership } from "@/types/queries";
 import DOMPurify from "isomorphic-dompurify";
-import { MainContext } from "@/layouts/MainContentLayout";
-import { useContext } from "react";
-import { useRouter } from "next/navigation";
 import { getPrice } from "@/src/constants";
 import Link from "next/link";
 import { appLinks } from "@/src/links";
@@ -16,6 +13,7 @@ type Props = {
   scaleMiddle?: boolean;
   showMore?: boolean;
   isAuth?: boolean;
+  trans: { [key: string]: string };
 };
 export default function ({
   element,
@@ -25,19 +23,8 @@ export default function ({
   scaleOnHover = true,
   showMore = false,
   isAuth = false,
+  trans,
 }: Props) {
-  const trans: { [key: string]: string } = useContext(MainContext);
-  const router = useRouter();
-
-  const handleSubscribe = (e: Membership) => {
-    if (isAuth) {
-      router.push(`/${lang}/cart/${e.id}`);
-    } else {
-      router.push(`/${lang}/login`);
-    }
-  };
-
-  // console.log({ element });
   return (
     <div
       className={`ring-gray-200 rounded-md p-8 ring-1 xl:p-10 bg-white flex flex-col justify-between gap-y-5  ${
@@ -96,12 +83,19 @@ export default function ({
         </p>
       </div>
 
-      <button
-        type='button'
-        onClick={() => handleSubscribe(element)}
-        className={"w-full btn-transparent capitalize"}>
-        {isAuth ? trans.register_now_to_subscribe : trans.subscribe_now}
-      </button>
+      {isAuth ? (
+        <Link
+          className={"w-full btn-transparent capitalize"}
+          href={appLinks.cartIndex(lang, element.id)}>
+          {trans.register_now_to_subscribe}
+        </Link>
+      ) : (
+        <Link
+          className={"w-full btn-transparent capitalize"}
+          href={appLinks.login(lang)}>
+          {trans.subscribe_now}
+        </Link>
+      )}
 
       {showMore && (
         <Link

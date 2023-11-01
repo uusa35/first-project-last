@@ -6,7 +6,7 @@ import AboutusImage from "@/appImages/aboutus/banner.jpg";
 import Image from "next/image";
 import DOMPurify from "isomorphic-dompurify";
 import { Country, Membership, Setting } from "@/types/queries";
-import { getMembership,  } from "@/utils/membership";
+import { getMembership } from "@/utils/membership";
 import MembershipCard from "@/components/membership/MembershipCard";
 import { getCountries } from "@/utils/country";
 import Link from "next/link";
@@ -143,6 +143,7 @@ export default async function ({ params: { lang, id } }: Props) {
           </div>
           <div className='mx-auto  lg:mx-0 lg:max-w-none'>
             <MembershipCard
+              trans={trans}
               element={membership}
               country={country[0]}
               lang={lang}
