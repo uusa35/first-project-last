@@ -21,6 +21,7 @@ import Link from "next/link";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { removeTags } from "@/utils/helpers";
+import { MainGallery } from "@/components/Home/MainGallery";
 
 type Props = {
   params: { lang: Locale["lang"]; id: string };
@@ -156,6 +157,14 @@ export default async function ({ params: { lang, id } }: Props) {
               lang={lang}
             />
           </div>
+
+          {membership.images && membership.images.length > 0 && (
+            <MainGallery
+              trans={trans as { [key: string]: string }}
+              images={membership.images}
+              setting={setting}
+            />
+          )}
         </div>
       </main>
     </MainContextLayout>
