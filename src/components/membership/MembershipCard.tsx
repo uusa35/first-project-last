@@ -1,4 +1,4 @@
- "use client";
+"use client";
 import { Locale } from "@/types/index";
 import { Country, Membership } from "@/types/queries";
 import DOMPurify from "isomorphic-dompurify";
@@ -8,6 +8,8 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useRouter } from "next/navigation";
 import { getPrice } from "@/src/constants";
 import { isAuthenticated } from "@/redux/slices/authSlice";
+import Link from "next/link";
+import { appLinks } from "@/src/links";
 
 type Props = {
   element: Membership;
@@ -15,6 +17,7 @@ type Props = {
   lang: Locale["lang"];
   scaleOnHover?: boolean;
   scaleMiddle?: boolean;
+  showMore?: boolean;
 };
 export default function ({
   element,
@@ -22,6 +25,7 @@ export default function ({
   lang,
   scaleMiddle = false,
   scaleOnHover = true,
+  showMore = false,
 }: Props) {
   const trans: { [key: string]: string } = useContext(MainContext);
   const dispatch = useAppDispatch();
@@ -106,6 +110,15 @@ export default function ({
         className={"w-full btn-transparent capitalize"}>
         {isAuth ? trans.register_now_to_subscribe : trans.subscribe_now}
       </button>
+
+      {showMore && (
+        <Link
+          href={appLinks.membershipShow(lang, element.id, element.name)}
+          className={"w-full btn-transparent capitalize"}>
+          {trans.more_details}
+        </Link>
+      )}
+
       {element.caption && (
         <ul role='list' className={"text-gray-600 text-sm leading-6 mt-4"}>
           <p>{element.caption}</p>

@@ -13,8 +13,8 @@ export const appLinks = {
         `/${lang}/category`,
     membershipIndex: (lang: Locale['lang'], sort: Membership['sort']) =>
         `/${lang}/membership/${sort}`,
-    membershipShow: (lang: Locale['lang'], slug: string) =>
-        `/${lang}/membership?slug=${slug}`,
+    membershipShow: (lang: Locale['lang'], id: number, slug: string) =>
+        `/${lang}/membership/show/${id}?slug=${slug}`,
     userIndex: (lang: Locale['lang'], search?: string) =>
         `/${lang}/user?${search ?? ''}`,
     userShow: (lang: Locale['lang'], id: string, slug?: string) =>

@@ -14,37 +14,82 @@ import {
 } from "@/types/queries";
 import { getCategories } from "@/utils/category";
 import { Categories } from "@/components/Home/Categories";
-import { getMemberships } from "@/utils/membership";
+import { getMembership, getMemberships } from "@/utils/membership";
 import MembershipCard from "@/components/membership/MembershipCard";
 import { getCountries } from "@/utils/country";
 import Link from "next/link";
 import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
+import { removeTags } from "@/utils/helpers";
 
 type Props = {
-  params: { lang: Locale["lang"]; sort: Membership["sort"] };
+  params: { lang: Locale["lang"]; id: string };
 };
 
 export async function generateMetadata({ params }: Props) {
-  const { trans } = await getDictionary(params.lang);
+  const [membership, setting]: [Membership, Setting] = await Promise.all([
+    getMembership(params.id, params.lang),
+    getSetting(params.lang),
+  ]);
+  if (!membership || !membership.id) {
+    throw notFound();
+  }
   return {
-    title: trans[params.sort],
+    title: membership.name,
+    description: removeTags(
+      membership.description ?? setting.caption ?? setting.description
+    ),
+    openGraph: {
+      title: membership.name,
+      description: removeTags(
+        membership.description ?? setting.caption ?? setting.description
+      ),
+      url: membership.instagram ?? membership.website ?? setting.website,
+      siteName: membership.name,
+      images: [
+        {
+          url: membership.image ?? setting.image,
+          width: 800,
+          height: 600,
+        },
+        {
+          url: membership.image ?? setting.image,
+          width: 1800,
+          height: 1600,
+          alt: membership.name,
+        },
+      ],
+      locale: params.lang,
+      type: "website",
+    },
+    twitter: {
+      card: membership.name,
+      title: membership.name,
+      description: removeTags(
+        membership.description ?? setting.caption ?? setting.description
+      ),
+      // siteId: "1467726470533754880",
+      creator: setting.name,
+      // creatorId: "1467726470533754880",
+      images: [membership.image ?? setting.image],
+    },
   };
 }
 
-export default async function ({ params: { lang, sort } }: Props) {
+export default async function ({ params: { lang, id } }: Props) {
   const cookieStore = cookies();
   const token: any = cookieStore.get("token");
 
-  const [{ trans }, setting, country, memberships]: [
+  const [{ trans }, setting, country, membership]: [
     { trans: any },
     Setting,
     Country[],
-    Membership[]
+    Membership
   ] = await Promise.all([
     getDictionary(lang),
     getSetting(lang),
     getCountries(`lang=${lang}&limit=1`, lang),
-    getMemberships(`sort=${sort}`, lang),
+    getMembership(id, lang),
   ]);
 
   return (
@@ -80,9 +125,9 @@ export default async function ({ params: { lang, sort } }: Props) {
           <div className='my-8'>
             <div className='mx-auto max-w-4xl text-center'>
               <p className='mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl capitalize'>
-                {sort === "subscription"
-                  ? trans.subscriptions
-                  : trans.sponsorships}
+                {membership.sort === "subscription"
+                  ? trans.subscription
+                  : trans.sponsorship}
               </p>
             </div>
 
@@ -105,16 +150,11 @@ export default async function ({ params: { lang, sort } }: Props) {
           </div>
 
           <div className='mx-auto  lg:mx-0 lg:max-w-none'>
-            <div className='isolate mx-auto grid max-w-md grid-cols-1 gap-6 lg:mx-0 lg:max-w-none lg:grid-cols-3  '>
-              {memberships.map((s: Membership, i: number) => (
-                <MembershipCard
-                  element={s}
-                  country={country[0]}
-                  lang={lang}
-                  showMore={true}
-                />
-              ))}
-            </div>
+            <MembershipCard
+              element={membership}
+              country={country[0]}
+              lang={lang}
+            />
           </div>
         </div>
       </main>

@@ -186,6 +186,7 @@
     "username": "username",
     "company": "company",
     "role": "role",
-    "country": "country"
+    "country": "country",
+    "more_details": "more details"
   }
 }
