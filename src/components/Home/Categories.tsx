@@ -4,14 +4,22 @@ import CategoryCard from "../category/CategoryCard";
 import { AppQueryResult, Category } from "@/types/queries";
 import { Locale } from "@/types/index";
 import ShowMore from "@/appIcons/green_left_arrow.svg";
+import { appLinks } from "@/src/links";
+import Pagination from "@/components/Pagination";
 
 type Props = {
   trans: { [key: string]: string };
   categories: AppQueryResult<Category[]>;
   lang: Locale["lang"];
+  showMore?: boolean;
 };
 
-export function Categories({ trans, categories, lang }: Props) {
+export function Categories({
+  trans,
+  categories,
+  lang,
+  showMore = true,
+}: Props) {
   return (
     <div className='bg-white py-12 sm:py-12 capitalize'>
       <div className='mx-auto max-w-7xl px-6 lg:px-8'>
@@ -34,14 +42,20 @@ export function Categories({ trans, categories, lang }: Props) {
           ))}
         </ul>
 
-        <div className='pt-12 pb-2 w-full text-center text-expo-dark'>
-          <Link
-            className='flex gap-x-2 items-center justify-center'
-            href={`${lang}/user?membership=subscription`}>
-            {trans.navigate_to_more}
-            <ShowMore className={`w-6 h-6 ${lang !== "ar" && "rotate-180"}`} />
-          </Link>
-        </div>
+        {showMore ? (
+          <div className='pt-12 pb-2 w-full text-center text-expo-dark'>
+            <Link
+              className='flex gap-x-2 items-center justify-center'
+              href={appLinks.categoryIndex(lang)}>
+              {trans.navigate_to_more}
+              <ShowMore
+                className={`w-6 h-6 ${lang !== "ar" && "rotate-180"}`}
+              />
+            </Link>
+          </div>
+        ) : (
+          <Pagination links={categories.meta.links} />
+        )}
       </div>
     </div>
   );

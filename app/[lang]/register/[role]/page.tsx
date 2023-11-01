@@ -6,7 +6,7 @@ import Image from "next/image";
 import RegisterImage from "@/appImages/register/sponsors-company-signup.jpg";
 import LoginImage from "@/appImages/register/visitors-signup.jpg";
 import Link from "next/link";
-import { appLinks } from "@/src/constants";
+import { appLinks } from "@/src/links";
 import { RegisterContent } from "@/components/register/RegisterContent";
 import { Country, Role, Setting } from "@/types/queries";
 import { getCountries } from "@/utils/country";

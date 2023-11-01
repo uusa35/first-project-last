@@ -21,7 +21,8 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { Setting } from "@/types/queries";
 import LanguagesList from "@/components/header/LanguagesList";
 import { isAuthenticated, resetAuth } from "@/redux/slices/authSlice";
-import { appLinks, deleteToken } from "@/src/constants";
+import { deleteToken } from "@/src/constants";
+import { appLinks } from "@/src/links";
 import MyProfileList from "./MyProfileList";
 
 type Props = {

@@ -1,3 +1,4 @@
+
 import { MainContextLayout } from "@/layouts/MainContentLayout";
 import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";

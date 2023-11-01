@@ -1,4 +1,4 @@
-import { filter, map, toString ,truncate,kebabCase, round} from 'lodash';
+import { filter, map, toString, truncate, kebabCase, round } from 'lodash';
 import { Locale } from '@/types/index';
 import { localeType } from '@/types/index';
 export const baseUrl = process.env.NODE_ENV === 'production' ? `https://cp.ar-expo.ru` : `http://ar-expo-backend.test`;
@@ -10,32 +10,9 @@ export const suppressText = true;
 import { PersonOutlineOutlined } from "@mui/icons-material";
 import { Country, Role } from './types/queries';
 export { PersonOutlineOutlined, truncate };
+export { kebabCase}
 
 
-export const appLinks = {
-    home: (lang: Locale['lang']) =>
-        `/${lang}`,
-    about: (lang: Locale['lang']) =>
-        `/${lang}/about`,
-    terms: (lang: Locale['lang']) =>
-        `/${lang}/terms`,
-    userIndex: (lang: Locale['lang'], search?: string) =>
-        `/${lang}/user?${search ?? ''}`,
-    userShow: (lang: Locale['lang'], id: string, slug?: string) =>
-        `/${lang}/user/${id}?slug=${kebabCase(slug) ?? ``}`,
-    postIndex: (lang: Locale['lang'], search?: string) =>
-        `/${lang}/post?${search ?? ''}`,
-    postShow: (lang: Locale['lang'], id: string, slug?: string) => `/${lang}/post/${id}?slug=${kebabCase(slug) ?? ``}`,
-    login: (lang: Locale['lang']) =>
-        `/${lang}/login`,
-    register: (lang: Locale['lang'], role: Role['name']) =>
-        `/${lang}/register/${role}`,
-    account: (lang: Locale['lang'], role: Role['name'], id: string, active_tab?: string) =>
-        `/${lang}/account/${role}/${id}?active_tab=${active_tab ?? 1}`,
-    forgetPassword: (lang: Locale['lang']) =>
-        `/${lang}/forgot/password`,
-
-}
 
 // export const convertSearchParamsToString = (search: { [key: string]: string }): string => Object.keys(search)
 //     .map((key) => {

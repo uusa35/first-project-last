@@ -28,10 +28,14 @@ export async function generateMetadata({ params }: Props) {
   }
   return {
     title: user.name,
-    description: removeTags(user.description ?? setting.description),
+    description: removeTags(
+      user.description ?? setting.caption ?? setting.description
+    ),
     openGraph: {
       title: user.name,
-      description: removeTags(user.description ?? setting.description),
+      description: removeTags(
+        user.description ?? setting.caption ?? setting.description
+      ),
       url: user.instagram ?? user.website ?? setting.website,
       siteName: user.name,
       images: [
@@ -53,7 +57,9 @@ export async function generateMetadata({ params }: Props) {
     twitter: {
       card: user.name,
       title: user.name,
-      description: removeTags(user.description ?? setting.description),
+      description: removeTags(
+        user.description ?? setting.caption ?? setting.description
+      ),
       // siteId: "1467726470533754880",
       creator: setting.name,
       // creatorId: "1467726470533754880",
