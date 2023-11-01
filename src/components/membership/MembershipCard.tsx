@@ -1,13 +1,10 @@
-"use client";
 import { Locale } from "@/types/index";
 import { Country, Membership } from "@/types/queries";
 import DOMPurify from "isomorphic-dompurify";
 import { MainContext } from "@/layouts/MainContentLayout";
 import { useContext } from "react";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useRouter } from "next/navigation";
 import { getPrice } from "@/src/constants";
-import { isAuthenticated } from "@/redux/slices/authSlice";
 import Link from "next/link";
 import { appLinks } from "@/src/links";
 
@@ -18,6 +15,7 @@ type Props = {
   scaleOnHover?: boolean;
   scaleMiddle?: boolean;
   showMore?: boolean;
+  isAuth?: boolean;
 };
 export default function ({
   element,
@@ -26,15 +24,9 @@ export default function ({
   scaleMiddle = false,
   scaleOnHover = true,
   showMore = false,
+  isAuth = false,
 }: Props) {
   const trans: { [key: string]: string } = useContext(MainContext);
-  const dispatch = useAppDispatch();
-  const isAuth = useAppSelector(isAuthenticated);
-  const {
-    cart: {
-      payment: { queryString, paymentUrl },
-    },
-  } = useAppSelector((state) => state);
   const router = useRouter();
 
   const handleSubscribe = (e: Membership) => {

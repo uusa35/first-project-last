@@ -105,6 +105,7 @@ export default async function ({ params: { lang, sort } }: Props) {
                   country={country[0]}
                   lang={lang}
                   showMore={true}
+                  isAuth={token && token.value}
                 />
               ))}
             </div>

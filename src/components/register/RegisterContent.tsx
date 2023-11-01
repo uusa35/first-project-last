@@ -7,7 +7,8 @@ import {
   showErrorToastMessage,
   showSuccessToastMessage,
 } from "@/redux/slices/toastMessageSlice";
-import { appLinks, setToken } from "@/src/constants";
+import { setToken } from "@/src/constants";
+import { appLinks } from "@/src/links";
 import { registerSchema } from "@/src/validations";
 import { Country, Role } from "@/types/queries";
 import { yupResolver } from "@hookform/resolvers/yup";

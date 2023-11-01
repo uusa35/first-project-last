@@ -152,11 +152,7 @@ export default function ({ element, countries, categories }: Props) {
         en: user?.aboutus?.en ?? element?.aboutus?.en ?? "",
         ru: user?.aboutus?.ru ?? element?.aboutus?.ru ?? "",
       },
-      address: {
-        ar: user?.address?.ar ?? element?.address?.ar ?? "",
-        en: user?.address?.en ?? element?.address?.en ?? "",
-        ru: user?.address?.ru ?? element?.address?.ru ?? "",
-      },
+      address: [],
       image: ``,
       images: [],
     },
@@ -358,6 +354,30 @@ export default function ({ element, countries, categories }: Props) {
                 {errors?.email?.message && (
                   <span className={`text-red-700 text-xs capitalize`}>
                     {errors?.email?.message}
+                  </span>
+                )}
+              </div>
+            </div>
+
+            {/*  address  */}
+            <div>
+              <label
+                htmlFor='address'
+                className='block text-sm font-medium leading-6 text-gray-900 capitalize'>
+                {trans.address}
+              </label>
+              <div className='mt-2'>
+                <input
+                  id='address'
+                  {...register("address")}
+                  onChange={(e) => setValue("address[0]", e.target.value)}
+                  type='text'
+                  autoComplete='email'
+                  className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6'
+                />
+                {errors?.address?.message && (
+                  <span className={`text-red-700 text-xs capitalize`}>
+                    {errors?.address?.message}
                   </span>
                 )}
               </div>
