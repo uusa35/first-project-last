@@ -40,7 +40,7 @@ export function NewsLetters({ trans }: Props) {
         reset();
       } else {
         console.log(r)
-        dispatch(showErrorToastMessage({ content: r.error?.data?..message }));
+        dispatch(showErrorToastMessage({ content: r.error?.data?.message }));
       }
     });
   };
