@@ -152,7 +152,7 @@ export default function ({ element, countries, categories }: Props) {
         en: user?.aboutus?.en ?? element?.aboutus?.en ?? "",
         ru: user?.aboutus?.ru ?? element?.aboutus?.ru ?? "",
       },
-      address: [],
+      address: '',
       image: ``,
       images: [],
     },

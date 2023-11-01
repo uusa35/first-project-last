@@ -4,7 +4,8 @@ import DOMPurify from "isomorphic-dompurify";
 import { getPrice } from "@/src/constants";
 import Link from "next/link";
 import { appLinks } from "@/src/links";
-import { cookies } from "next/headers";
+import { useAppSelector } from "@/redux/hooks";
+import { isAuthenticated } from "@/redux/slices/authSlice";
 
 type Props = {
   element: Membership;
@@ -23,10 +24,10 @@ export default function ({
   scaleMiddle = false,
   scaleOnHover = true,
   showMore = false,
+
   trans,
 }: Props) {
-  const cookieStore = cookies();
-  const token: any = cookieStore.get("token");
+  const isAuth = useAppSelector(isAuthenticated);
   return (
     <div
       className={`ring-gray-200 rounded-md p-8 ring-1 xl:p-10 bg-white flex flex-col justify-between gap-y-5  ${
@@ -85,7 +86,7 @@ export default function ({
         </p>
       </div>
 
-      {token && token.value ? (
+      {isAuth ? (
         <Link
           className={"w-full btn-transparent capitalize"}
           href={appLinks.cartIndex(lang, element.id)}>

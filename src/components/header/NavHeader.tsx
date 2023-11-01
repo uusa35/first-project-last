@@ -42,7 +42,6 @@ export default function ({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const {
     appSetting: { currentPath },
-    locale,
     auth,
   } = useAppSelector((state) => state);
   const isAuth = useAppSelector(isAuthenticated);

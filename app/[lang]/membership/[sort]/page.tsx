@@ -36,7 +36,8 @@ export default async function ({ params: { lang, sort } }: Props) {
     getCountries(`lang=${lang}&limit=1`, lang),
     getMemberships(`sort=${sort}`, lang),
   ]);
-
+  const cookieStore = cookies();
+  const token: any = cookieStore.get("token");
   return (
     <MainContextLayout
       trans={trans}
