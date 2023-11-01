@@ -16,14 +16,14 @@ import {
 import { changePathName, convertSearchParamsToString } from "@/utils/helpers";
 import AppLogo from "@/components/header/AppLogo";
 import { last, split, toString } from "lodash";
-import { disableLoading, setCurrentPath } from "@/redux/slices/settingSlice";
+import { setCurrentPath } from "@/redux/slices/settingSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { Setting } from "@/types/queries";
 import LanguagesList from "@/components/header/LanguagesList";
 import { isAuthenticated, resetAuth } from "@/redux/slices/authSlice";
-import { deleteToken } from "@/src/constants";
 import { appLinks } from "@/src/links";
 import MyProfileList from "./MyProfileList";
+import { deleteToken } from "@/app/actions";
 
 type Props = {
   lang: Locale;
@@ -64,8 +64,7 @@ export default function ({
   const handleLogout = () => {
     dispatch(resetAuth());
     deleteToken();
-    // router.refresh();
-    // return router.replace(appLinks.home(lang));
+    router.replace(`/${lang}`);
   };
 
   const stickNavbar = () => {

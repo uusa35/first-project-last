@@ -6,11 +6,11 @@ import { Locale } from "@/types/index";
 import { usePathname } from "next/navigation";
 import { MainContext } from "@/layouts/MainContentLayout";
 import Link from "next/link";
-import { deleteToken } from "@/src/constants";
 import { appLinks } from "@/src/links";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { resetAuth } from "@/redux/slices/authSlice";
 import { useRouter } from "next/navigation";
+import { deleteToken } from "@/app/actions";
 
 type Props = {
   lang: Locale["lang"];
@@ -25,6 +25,7 @@ export default function ({ lang }: Props) {
   const handleLogout = () => {
     dispatch(resetAuth());
     deleteToken();
+    router.replace(`/${lang}`);
     // router.refresh();
     // return router.replace(appLinks.home(lang));
   };

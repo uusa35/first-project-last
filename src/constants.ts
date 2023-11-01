@@ -10,7 +10,7 @@ export const suppressText = true;
 import { PersonOutlineOutlined } from "@mui/icons-material";
 import { Country, Role } from './types/queries';
 export { PersonOutlineOutlined, truncate };
-export { kebabCase}
+export { kebabCase }
 
 
 
@@ -33,39 +33,15 @@ export const convertSearchParamsToString = (search: { [key: string]: string } | 
     return ``;
 }
 
-export const setLang = (lang: localeType) =>
-    fetch(`/api/set/lang`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ lang }),
-    });
+// export const setLang = (lang: localeType) =>
+//     fetch(`/api/set/lang`, {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({ lang }),
+//     });
 
-export const setToken = (token: any) =>
-    fetch(`/api/set/token`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ token }),
-    });
-
-export const deleteToken = () =>
-    fetch(`/api/delete/token`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    });
-
-export const getToken = () =>
-    fetch(`/api/get/token`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    });
 
 export const toEn = (s: any) =>
     s.replace(/[\u0660-\u0669\u06f0-\u06f9]/g, (a: any) => a.charCodeAt(0) & 15);

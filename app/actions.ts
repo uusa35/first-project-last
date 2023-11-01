@@ -5,6 +5,27 @@ export async function setLocaleCookie(value: string) {
     cookies().set({
         name: 'NEXT_LOCALE',
         value,
-        secure: process.env.NODE_ENV !== 'production',
+        secure: process.env.NODE_ENV === 'production',
     });
 }
+
+export async function setToken(value: string) {
+    cookies().set({
+        name: 'token',
+        value,
+        secure: process.env.NODE_ENV === 'production',
+    });
+}
+
+export async function setLang(value: string) {
+    cookies().set({
+        name: 'NEXT_LOCALE',
+        value,
+        secure: process.env.NODE_ENV === 'production',
+    });
+}
+
+export async function deleteToken() {
+    cookies().delete('token');
+}
+

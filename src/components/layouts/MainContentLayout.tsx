@@ -10,9 +10,8 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setLocale } from "@/redux/slices/localeSlice";
 import moment from "moment";
 import * as yup from "yup";
-import { deleteToken, setLang, setToken } from "@/src/constants";
 import { isNull } from "lodash";
-import { setLocaleCookie } from "@/app/actions";
+import { deleteToken, setLang, setLocaleCookie, setToken } from "@/app/actions";
 import { disableLoading } from "@/redux/slices/settingSlice";
 
 type Props = {
