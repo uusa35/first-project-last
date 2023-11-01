@@ -1,4 +1,3 @@
-
 import { MainContextLayout } from "@/layouts/MainContentLayout";
 import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
@@ -28,6 +27,7 @@ export default async function ({
 }) {
   const cookieStore = cookies();
   const token: any = cookieStore.get("token");
+  console.log("the --------> token", token);
   if (!token || !token.value) notFound();
 
   const [{ trans }, setting, auth, user, countries, categories]: [

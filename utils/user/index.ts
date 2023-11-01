@@ -22,7 +22,6 @@ export async function getUser(id: string, lang: Locale['lang']) {
             'Accept-Language': lang
         }
     });
-
     const text = await res.text();
     try {
         const json = JSON.parse(text)
