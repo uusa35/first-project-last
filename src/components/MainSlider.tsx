@@ -34,10 +34,12 @@ export default async function ({ slides, lang }: Props) {
             alt={`${process.env.NEXT_PUBLIC_BASE_URL}`}
             className='h-full w-full object-cover relative'
           />
-          <div className="absolute top-0 w-full h-full bg-[#4c4c4c29] text-white px-10 py-5 flex items-end">
-            <div className="mb-10 px-5 w-full text-end">
-              <h1 className="text-md lg:text-2xl xl:text-4xl">{s.name}</h1>
-              <h4 className="text-sm lg:text-xl xl:text-2xl mt-1 lg:mt-6">
+          <div className='absolute top-0 w-full h-full bg-[#4c4c4c29] text-white px-10 py-5 flex items-end'>
+            <div className='mb-10 px-5 w-full text-end'>
+              <h1 className='text-md lg:text-2xl xl:text-4xl capitalize'>
+                {s.name}
+              </h1>
+              <h4 className='text-sm lg:text-xl xl:text-2xl mt-1 lg:mt-6 capitalize'>
                 {s.description}
               </h4>
             </div>
