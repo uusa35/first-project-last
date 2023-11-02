@@ -76,16 +76,6 @@ export default async function Home({ params: { lang } }: Props) {
     getCountries(`lang=${lang}&limit=1`, lang),
   ]);
 
-  if (
-    !trans ||
-    !country ||
-    !setting ||
-    !categories ||
-    !subscriptions ||
-    !sponsorships
-  )
-    return notFound();
-
   return (
     <MainContextLayout trans={trans} lang={lang} setting={setting}>
       {/* slider */}
