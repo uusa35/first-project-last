@@ -51,11 +51,7 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
     );
 
   return (
-    <MainContextLayout
-      trans={trans}
-      lang={lang}
-      searchParams={``}
-      setting={setting}>
+    <MainContextLayout trans={trans} lang={lang} setting={setting}>
       <CartContent
         membership={membership}
         country={country[0]}

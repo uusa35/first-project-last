@@ -18,8 +18,12 @@ export default function (): React.ReactNode {
     <button
       onClick={() => router.back()}
       className='hidden absolute rtl:right-0 ltr:left-0 md:flex flex-row justify-start items-center gap-x-4 p-4  pt-8 '>
-      <ShowMore className={`w-6 h-6 ${lang === "ar" && "rotate-180"}`} />
-      <div className='text-black text-sm lg:text-md'>{trans.back}</div>
+      <ShowMore
+        className={`w-6 h-6 text-expo-dark ${lang === "ar" && "rotate-180"}`}
+      />
+      <div className='text-black text-sm lg:text-md capitalize border border-expo-light'>
+        {trans.back}
+      </div>
     </button>
   );
 }

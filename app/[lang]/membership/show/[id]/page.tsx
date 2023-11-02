@@ -90,7 +90,7 @@ export default async function ({ params: { lang, id } }: Props) {
     <MainContextLayout
       trans={trans}
       lang={lang}
-      searchParams={``}
+      
       setting={setting}>
       <main className='relative isolate mx-auto max-w-7xl min-h-screen'>
         {/* Image section */}

@@ -27,11 +27,7 @@ export default function ({
       ? `membership=${searchParams.membership}`
       : `membership=subscription`;
   return (
-    <MainContextLayout
-      trans={trans}
-      lang={lang}
-      searchParams={``}
-      setting={setting}>
+    <MainContextLayout trans={trans} lang={lang} setting={setting}>
       <main className='relative isolate mx-auto flex flex-col gap-y-6 justify-start items-center max-w-7xl min-h-screen capitalize'>
         <Link
           href={`/${lang}/${currentModule}`}

@@ -16,7 +16,6 @@ type Props = {
   children: React.ReactNode;
   trans: { [key: string]: string };
   lang: Locale["lang"];
-  searchParams: { [key: string]: string } | string;
   setting: Setting;
 };
 

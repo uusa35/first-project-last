@@ -16,11 +16,7 @@ export default async function NotFound() {
   ]);
 
   return (
-    <MainContextLayout
-      trans={trans}
-      lang={lang}
-      searchParams={``}
-      setting={setting}>
+    <MainContextLayout trans={trans} lang={lang} setting={setting}>
       <main className='relative isolate mx-auto flex flex-col gap-y-6 justify-start items-center max-w-7xl min-h-screen capitalize'>
         {/* <Image
           src={ErrorImage}
@@ -29,7 +25,7 @@ export default async function NotFound() {
           width={300}
           height={300}
         /> */}
-        <ErrorImage className={`w-80 lg:w-1/4 h-auto rounded-md`}/>
+        <ErrorImage className={`w-80 lg:w-1/4 h-auto rounded-md`} />
         <div>
           <h2 className='text-2xl'>{trans.not_found}</h2>
         </div>
