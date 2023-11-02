@@ -21,16 +21,16 @@ import {
   User,
 } from "@/types/queries";
 import { getCountries } from "@/utils/country";
-import { Figures } from "@/components/Home/Figures";
-import { NewsLetters } from "@/components/Home/NewsLetters";
-import { LatestNews } from "@/components/Home/LatestNews";
-import { SubscriptionsPrices } from "@/components/Home/SubscriptionsPrices";
-import { SearchBar } from "@/components/Home/SearchBar";
-import { Categories } from "@/components/Home/Categories";
-import { RegisterAs } from "@/components/Home/RegisterAs";
-import { Sponsors } from "@/components/Home/Sponsors";
-import { SponsorsPrices } from "@/components/Home/SponsorsPrices";
-import { MainGallery } from "@/components/Home/MainGallery";
+import { Figures } from "@/components/home/Figures";
+import { NewsLetters } from "@/components/home/NewsLetters";
+import { LatestNews } from "@/components/home/LatestNews";
+import { SubscriptionsPrices } from "@/components/home/SubscriptionsPrices";
+import { SearchBar } from "@/components/home/SearchBar";
+import { CategoriesList } from "@/components/home/CategoriesList";
+import { RegisterAs } from "@/components/home/RegisterAs";
+import { SponsorsList } from "@/components/home/SponsorsList";
+import { SponsorsPrices } from "@/components/home/SponsorsPrices";
+import { MainGallery } from "@/components/home/MainGallery";
 
 type Props = {
   params: { lang: Locale["lang"] };
@@ -77,14 +77,15 @@ export default async function Home({ params: { lang } }: Props) {
       trans={trans as { [key: string]: string }}
       lang={lang}
       searchParams={``}
-      setting={setting}>
+      setting={setting}
+    >
       {/* slider */}
       <MainSlider slides={slides} lang={lang} />
       {/* search */}
       <SearchBar lang={lang} trans={trans as { [key: string]: string }} />
 
       {/* categories */}
-      <Categories
+      <CategoriesList
         lang={lang}
         categories={categories}
         trans={trans as { [key: string]: string }}
@@ -115,7 +116,7 @@ export default async function Home({ params: { lang } }: Props) {
       />
 
       {/* sponsors logos */}
-      <Sponsors
+      <SponsorsList
         sponsors={sponsors}
         trans={trans as { [key: string]: string }}
       />

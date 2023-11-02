@@ -14,7 +14,7 @@ type Props = {
   showMore?: boolean;
 };
 
-export function Categories({
+export function CategoriesList({
   trans,
   categories,
   lang,

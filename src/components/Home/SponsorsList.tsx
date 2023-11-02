@@ -11,7 +11,7 @@ type Props = {
   sponsors: AppQueryResult<User[]>;
 };
 
-export function Sponsors({ trans, sponsors }: Props) {
+export function SponsorsList({ trans, sponsors }: Props) {
   return (
     <div>
       {sponsors.data && (
