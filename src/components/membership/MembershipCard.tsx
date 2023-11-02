@@ -7,6 +7,7 @@ import Link from "next/link";
 import { appLinks } from "@/src/links";
 import { useAppSelector } from "@/redux/hooks";
 import { isAuthenticated } from "@/redux/slices/authSlice";
+import { isEmpty } from "lodash";
 
 type Props = {
   element: Membership;
@@ -29,6 +30,9 @@ export default function ({
   trans,
 }: Props) {
   const isAuth = useAppSelector(isAuthenticated);
+  const {
+    auth: { id, role, deals },
+  } = useAppSelector((state) => state);
   return (
     <div
       className={`ring-gray-200 rounded-md p-8 ring-1 xl:p-10 bg-white flex flex-col justify-between gap-y-5  ${
@@ -87,13 +91,15 @@ export default function ({
         </p>
       </div>
 
-      {isAuth ? (
+      {isAuth && isEmpty(deals) && (
         <Link
           className={"w-full btn-transparent capitalize"}
-          href={appLinks.cartIndex(lang, element.id)}>
-          {trans.register_now_to_subscribe}
+          href={appLinks.account(lang, role.name, element.id, 8)}>
+          {trans.upgrade_your_account}
         </Link>
-      ) : (
+      )}
+
+      {!isAuth && (
         <Link
           className={"w-full btn-transparent capitalize"}
           href={appLinks.login(lang)}>

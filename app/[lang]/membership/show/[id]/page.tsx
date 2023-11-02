@@ -14,6 +14,7 @@ import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { removeTags } from "@/utils/helpers";
 import { MainGallery } from "@/components/Home/MainGallery";
+import { appLinks } from "@/src/links";
 
 type Props = {
   params: { lang: Locale["lang"]; id: string };
@@ -124,22 +125,23 @@ export default async function ({ params: { lang, id } }: Props) {
               </p>
             </div>
 
-            {token && token.value && (
-              <>
-                <p className='mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-600'>
-                  {
-                    trans.register_now_and_learn_about_the_partner_and_sponsor_packages
-                  }
-                </p>
-                <div className='flex justify-center mt-5'>
-                  <Link
-                    className='btn-dark-hover capitalize'
-                    href={`/${lang}/register/company`}>
-                    {trans.register_as_a_subscriper}
-                  </Link>
-                </div>
-              </>
-            )}
+            {!token ||
+              (!token.value && (
+                <>
+                  <p className='mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-600'>
+                    {
+                      trans.register_now_and_learn_about_the_partner_and_sponsor_packages
+                    }
+                  </p>
+                  <div className='flex justify-center mt-5'>
+                    <Link
+                      className='btn-dark-hover capitalize'
+                      href={`${appLinks.register(lang, "company")}`}>
+                      {trans.register_as_a_subscriper}
+                    </Link>
+                  </div>
+                </>
+              ))}
           </div>
           <div className='mx-auto  lg:mx-0 lg:max-w-none'>
             <MembershipCard

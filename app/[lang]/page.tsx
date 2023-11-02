@@ -31,12 +31,15 @@ import { RegisterAs } from "@/components/Home/RegisterAs";
 import { Sponsors } from "@/components/Home/Sponsors";
 import { SponsorsPrices } from "@/components/Home/SponsorsPrices";
 import { MainGallery } from "@/components/Home/MainGallery";
+import { cookies } from "next/headers";
 
 type Props = {
   params: { lang: Locale["lang"] };
 };
 
 export default async function Home({ params: { lang } }: Props) {
+  const cookieStore = cookies();
+  const token: any = cookieStore.get("token");
   const [
     { trans },
     slides,
@@ -91,7 +94,14 @@ export default async function Home({ params: { lang } }: Props) {
       />
 
       {/* register as */}
-      <RegisterAs lang={lang} trans={trans as { [key: string]: string }} />
+      {!token ||
+        (!token.value && (
+          <RegisterAs
+            lang={lang}
+            trans={trans as { [key: string]: string }}
+            isAuth={token && token.value}
+          />
+        ))}
 
       {/*  figures  */}
       <Figures trans={trans as { [key: string]: string }} />
@@ -112,6 +122,7 @@ export default async function Home({ params: { lang } }: Props) {
         subscriptions={subscriptions}
         trans={trans as { [key: string]: string }}
         lang={lang}
+        isAuth={token && token.value}
       />
 
       {/* sponsors logos */}
@@ -126,6 +137,7 @@ export default async function Home({ params: { lang } }: Props) {
         trans={trans as { [key: string]: string }}
         lang={lang}
         sponsorships={sponsorships}
+        isAuth={token && token.value}
       />
 
       {/* OnHome Images with Url if exist (this will be a slider) */}
