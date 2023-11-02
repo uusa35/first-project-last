@@ -1,6 +1,4 @@
 "use client";
-import { has, isEmpty, isNull, map } from "lodash";
-import Link from "next/link";
 import { MainContext } from "@/layouts/MainContentLayout";
 import { useContext } from "react";
 import ShowMore from "@/appIcons/green_left_arrow.svg";
@@ -17,11 +15,11 @@ export default function (): React.ReactNode {
   return (
     <button
       onClick={() => router.back()}
-      className='hidden absolute rtl:right-0 ltr:left-0 md:flex flex-row justify-start items-center gap-x-4 p-4  pt-8 '>
+      className='hidden absolute rtl:right-0 ltr:left-0 md:flex md:ms-2 flex-row justify-start items-center gap-x-4 mt-8 btn-transparent'>
       <ShowMore
         className={`w-6 h-6 text-expo-dark ${lang === "ar" && "rotate-180"}`}
       />
-      <div className='text-black text-sm lg:text-md capitalize border border-expo-light'>
+      <div className='text-black text-sm lg:text-md capitalize  '>
         {trans.back}
       </div>
     </button>

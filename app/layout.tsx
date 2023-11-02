@@ -45,7 +45,6 @@ export async function generateMetadata({ params }: Props) {
       { name: setting.name },
       { name: setting.name, url: setting.facebook },
     ],
-    colorScheme: "light",
     creator: setting.name,
     publisher: setting.name,
     formatDetection: {

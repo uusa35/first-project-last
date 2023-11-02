@@ -194,7 +194,6 @@ export default function ({ element, countries, categories }: Props) {
     if (imagesGroup.length > 1 && imagesGroup.length <= 10) {
       let formData = new FormData();
       for (let i = 0; i < imagesGroup.length; i++) {
-        console.log("i", i);
         formData.append(`images[${i}]`, imagesGroup[i]);
       }
       formData.append("model", "user");

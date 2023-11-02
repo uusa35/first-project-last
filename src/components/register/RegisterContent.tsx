@@ -53,8 +53,6 @@ export function RegisterContent({ role, country }: Props) {
     },
   });
 
-  console.log(errors);
-
   const createAccount: SubmitHandler<FormValues> = async (data) => {
     await triggerRegisterVisitorQuery({
       ...data,

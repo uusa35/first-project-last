@@ -76,64 +76,46 @@ export default async function Home({ params: { lang } }: Props) {
   ]);
 
   return (
-    <MainContextLayout
-      trans={trans as { [key: string]: string }}
-      lang={lang}
-      setting={setting}>
+    <MainContextLayout trans={trans} lang={lang} setting={setting}>
       {/* slider */}
       <MainSlider slides={slides} lang={lang} />
       {/* search */}
-      <SearchBar lang={lang} trans={trans as { [key: string]: string }} />
+      <SearchBar lang={lang} trans={trans} />
 
       {/* categories */}
-      <Categories
-        lang={lang}
-        categories={categories}
-        trans={trans as { [key: string]: string }}
-      />
+      <Categories lang={lang} categories={categories} trans={trans} />
 
       {/* register as */}
       {!token ||
         (!token.value && (
-          <RegisterAs
-            lang={lang}
-            trans={trans as { [key: string]: string }}
-            isAuth={token && token.value}
-          />
+          <RegisterAs lang={lang} trans={trans} isAuth={token && token.value} />
         ))}
 
       {/*  figures  */}
-      <Figures trans={trans as { [key: string]: string }} />
+      <Figures trans={trans} />
 
       {/* newsletter */}
-      <NewsLetters trans={trans as { [key: string]: string }} />
+      <NewsLetters trans={trans} />
 
       {/* posts */}
-      <LatestNews
-        trans={trans as { [key: string]: string }}
-        lang={lang}
-        posts={posts}
-      />
+      <LatestNews trans={trans} lang={lang} posts={posts} />
 
       {/* subscription prices */}
       <SubscriptionsPrices
         country={country}
         subscriptions={subscriptions}
-        trans={trans as { [key: string]: string }}
+        trans={trans}
         lang={lang}
         isAuth={token && token.value}
       />
 
       {/* sponsors logos */}
-      <Sponsors
-        sponsors={sponsors}
-        trans={trans as { [key: string]: string }}
-      />
+      <Sponsors sponsors={sponsors} trans={trans} />
 
       {/* sponsorship prices */}
       <SponsorsPrices
         country={country}
-        trans={trans as { [key: string]: string }}
+        trans={trans}
         lang={lang}
         sponsorships={sponsorships}
         isAuth={token && token.value}
@@ -141,11 +123,7 @@ export default async function Home({ params: { lang } }: Props) {
 
       {/* OnHome Images with Url if exist (this will be a slider) */}
       {images && images.data.length > 0 && (
-        <MainGallery
-          trans={trans as { [key: string]: string }}
-          images={images.data}
-          setting={setting}
-        />
+        <MainGallery trans={trans} images={images.data} setting={setting} />
       )}
     </MainContextLayout>
   );
