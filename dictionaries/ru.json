@@ -192,6 +192,7 @@
     "role": "role",
     "country": "country",
     "more_details": "more details",
-    "upgrade_your_account": "upgrade your account"
+    "upgrade_your_account": "upgrade your account",
+    "back": "back"
   }
 }

@@ -12,6 +12,8 @@ import { EmailOutlined, InsertLink } from "@mui/icons-material";
 import { Setting, User } from "@/types/queries";
 import { MainGallery } from "@/components/Home/MainGallery";
 import { removeTags } from "@/utils/helpers";
+import BackBtn from "@/components/BackBtn";
+import HtmlContentWithTitle from "@/components/HtmlContentWithTitle";
 
 type Props = {
   params: { lang: Locale["lang"]; id: string };
@@ -127,24 +129,15 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
             />
           )}
         </div>
+        <div className='flex flex-col w-full  min-h-screen justify-start items-center gap-y-12 '>
+          <BackBtn />
 
-        <div className='flex flex-col w-full min-h-screen justify-start items-center gap-y-12 '>
           {/* aboutus section */}
           {user.aboutus && (
-            <div className='px-2 pt-12 lg:px-8'>
-              <div className='mx-auto text-center'>
-                <h2 className='text-2xl font-bold tracking-tight text-black sm:text-4xl capitalize'>
-                  {trans.aboutus}
-                </h2>
-                <div className='mt-6 text-lg leading-8 text-gray-800 '>
-                  <div
-                    className='max-w-xs sm:max-w-xl md:max-w-full  whitespace-pre-line text-ellipsis overflow-hidden'
-                    dangerouslySetInnerHTML={{
-                      __html: DOMPurify.sanitize(user.aboutus),
-                    }}></div>
-                </div>
-              </div>
-            </div>
+            <HtmlContentWithTitle
+              title={trans.aboutus}
+              content={user.aboutus}
+            />
           )}
 
           {/* contactus section */}
@@ -155,7 +148,7 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
                   {trans.contactus_information}
                 </h1>
                 <p className='text-clamp-2 text-clip'>
-                  {user.address ?? ''} - {user.country.name}
+                  {user.address ?? ""} - {user.country.name}
                 </p>
               </div>
               {user.email && (
@@ -213,37 +206,17 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
           </div>
 
           {user.description && (
-            <div className='px-6 pt-12 lg:px-8'>
-              <div className='mx-auto  text-center '>
-                <h2 className=' capitalize text-xl font-bold tracking-tight text-black sm:text-4xl'>
-                  {trans.description}
-                </h2>
-                <div className='mt-6 text-lg leading-8 text-gray-800'>
-                  <div
-                    className='max-w-xs sm:max-w-xl md:max-w-full  whitespace-pre-line text-ellipsis overflow-hidden'
-                    dangerouslySetInnerHTML={{
-                      __html: DOMPurify.sanitize(user.description),
-                    }}></div>
-                </div>
-              </div>
-            </div>
+            <HtmlContentWithTitle
+              title={trans.description}
+              content={user.description}
+            />
           )}
 
           {user.services && (
-            <div className='px-6 pt-12 lg:px-8'>
-              <div className='mx-auto  text-center '>
-                <h2 className=' capitalize text-xl font-bold tracking-tight text-black sm:text-4xl'>
-                  {trans.services}
-                </h2>
-                <div className='mt-6 text-lg leading-8 text-gray-800'>
-                  <div
-                    className='max-w-xs sm:max-w-xl md:max-w-full  whitespace-pre-line text-ellipsis overflow-hidden'
-                    dangerouslySetInnerHTML={{
-                      __html: DOMPurify.sanitize(user.services),
-                    }}></div>
-                </div>
-              </div>
-            </div>
+            <HtmlContentWithTitle
+              title={trans.services}
+              content={user.services}
+            />
           )}
 
           {user.images && user.images.length > 0 && (

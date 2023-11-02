@@ -8,6 +8,7 @@ import DOMPurify from "isomorphic-dompurify";
 import { notFound } from "next/navigation";
 import { Post, Setting } from "@/types/queries";
 import { removeTags } from "@/utils/helpers";
+import BackBtn from "@/components/BackBtn";
 
 type Props = {
   params: { lang: Locale["lang"]; id: string };
@@ -93,6 +94,7 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
             alt={post.name}
             className='aspect-[9/4] w-full object-cover xl:rounded-xl'
           />
+          <BackBtn />
         </div>
         {/* Header section */}
         <div className='px-6 pt-12 lg:px-8'>
