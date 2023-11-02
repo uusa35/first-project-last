@@ -5,6 +5,7 @@ import { removeTags, tajawal } from "@/utils/helpers";
 import Providers from "@/src/redux/provider";
 import MainLayout from "@/src/components/layouts/MainLayout";
 import { getSetting } from "@/utils/setting";
+import { Setting } from "@/types/queries";
 
 type Props = {
   params: { lang: Locale["lang"] };
@@ -15,7 +16,7 @@ export default function RootLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: { lang: Locale["lang"]; setting: any };
+  params: { lang: Locale["lang"]; setting: Setting };
 }) {
   return (
     <html
