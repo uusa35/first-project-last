@@ -32,6 +32,7 @@ import { Sponsors } from "@/components/Home/Sponsors";
 import { SponsorsPrices } from "@/components/Home/SponsorsPrices";
 import { MainGallery } from "@/components/Home/MainGallery";
 import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
 
 type Props = {
   params: { lang: Locale["lang"] };
@@ -74,6 +75,16 @@ export default async function Home({ params: { lang } }: Props) {
     getImages(`on_home=1`, lang),
     getCountries(`lang=${lang}&limit=1`, lang),
   ]);
+
+  if (
+    !trans ||
+    !country ||
+    !setting ||
+    !categories ||
+    !subscriptions ||
+    !sponsorships
+  )
+    return notFound();
 
   return (
     <MainContextLayout trans={trans} lang={lang} setting={setting}>
