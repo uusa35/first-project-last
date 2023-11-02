@@ -173,7 +173,6 @@
     "investment_opportunities":"فرص استثمارية",
     "participant_in_events":"مشارك في الفعاليات",
     "seminar_during_the_exhibition":"ندوة في فترة المعرض",
-
     "mobile": "متحرك",
     "whatsapp": "واتساب",
     "facebook": "فيسبوك",
@@ -194,6 +193,7 @@
     "company": "شركة",
     "role": "دور",
     "country": "دولة",
-    "more_details": "المزيد من التفاصيل"
+    "more_details": "المزيد من التفاصيل",
+    "upgrade_your_account" : "ترقية الحساب"
   }
 }

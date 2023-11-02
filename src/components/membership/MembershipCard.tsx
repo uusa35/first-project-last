@@ -91,7 +91,7 @@ export default function ({
         </p>
       </div>
 
-      {isAuth && isEmpty(deals) && (
+      {isAuth && !isEmpty(deals) && (
         <Link
           className={"w-full btn-transparent capitalize"}
           href={appLinks.account(lang, role.name, element.id, 8)}>
