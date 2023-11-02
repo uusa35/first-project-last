@@ -27,17 +27,11 @@ import { deleteToken } from "@/app/actions";
 
 type Props = {
   lang: Locale;
-  // searchParams: { [key: string]: string } | string;
   mainPages: { href: string; name: string; label: string }[];
   setting: Setting;
 };
 
-export default function ({
-  lang,
-  // searchParams = ``,
-  mainPages,
-  setting,
-}: Props) {
+export default function ({ lang, mainPages, setting }: Props) {
   const trans: { [key: string]: string } = useContext(MainContext);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const {
