@@ -94,7 +94,7 @@ export default function ({
       {isAuth && !isEmpty(deals) && (
         <Link
           className={"w-full btn-transparent capitalize"}
-          href={appLinks.account(lang, role.name, element.id, 8)}>
+          href={appLinks.account(lang, role.name, id, 2)}>
           {trans.upgrade_your_account}
         </Link>
       )}
