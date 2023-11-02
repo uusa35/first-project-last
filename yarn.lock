@@ -2169,9 +2169,9 @@
     "@types/react" "*"
 
 "@types/react@*":
-  version "18.2.33"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.33.tgz#055356243dc4350a9ee6c6a2c07c5cae12e38877"
-  integrity sha512-v+I7S+hu3PIBoVkKGpSYYpiBT1ijqEzWpzQD62/jm4K74hPpSP7FF9BnKG6+fg2+62weJYkkBWDJlZt5JO/9hg==
+  version "18.2.34"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.34.tgz#aed20f19473721ba328feb99d1ec3307ebc1a8dd"
+  integrity sha512-U6eW/alrRk37FU/MS2RYMjx0Va2JGIVXELTODaTIYgvWGCV4Y4TfTUzG8DdmpDNIT0Xpj/R7GfyHOJJrDttcvg==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -3297,9 +3297,9 @@ ecc-jsbn@~0.1.1:
     safer-buffer "^2.1.0"
 
 electron-to-chromium@^1.4.535:
-  version "1.4.572"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.572.tgz#ed9876658998138fe9e3aa47ecfa0bf914192a86"
-  integrity sha512-RlFobl4D3ieetbnR+2EpxdzFl9h0RAJkPK3pfiwMug2nhBin2ZCsGIAJWdpNniLz43sgXam/CgipOmvTA+rUiA==
+  version "1.4.574"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.574.tgz#6de04d7c6e244e5ffcae76d2e2a33b02cab66781"
+  integrity sha512-bg1m8L0n02xRzx4LsTTMbBPiUd9yIR+74iPtS/Ao65CuXvhVZHP0ym1kSdDG3yHFDXqHQQBKujlN1AQ8qZnyFg==
 
 emoji-regex@^8.0.0:
   version "8.0.0"
@@ -4493,13 +4493,13 @@ next-images@^1.8.4:
     url-loader "^4.1.0"
 
 next-intl@^2.19.1:
-  version "2.21.0"
-  resolved "https://registry.yarnpkg.com/next-intl/-/next-intl-2.21.0.tgz#1adac56f2ff8acf3695c75ed5ed6a92929481b8e"
-  integrity sha512-rxyKLsBGGji9gLuNGbbMBe+7jwGYNJZhIXxsDY2esiJ/cpeTfpAq1rLjgeAs663zQE4qHbinUazULdv2QzRngA==
+  version "2.22.1"
+  resolved "https://registry.yarnpkg.com/next-intl/-/next-intl-2.22.1.tgz#ca04cda79fdd68723aadf869512c56e96c12caca"
+  integrity sha512-mg3CXfQRtG0lTS2zyRyTsYIl6ujQi2mAN0Xdmprce9ecUVKNOmHaMMsXOIPgFv1l+O80CavWo7m9rUfj7Zbr8w==
   dependencies:
     "@formatjs/intl-localematcher" "^0.2.32"
     negotiator "^0.6.3"
-    use-intl "^2.21.0"
+    use-intl "^2.22.1"
 
 next-plugin-svgr@^1.1.4:
   version "1.1.9"
@@ -6188,9 +6188,9 @@ universalify@^0.2.0:
   integrity sha512-CJ1QgKmNg3CwvAv/kOFmtnEN05f0D/cn9QntgNOQlQF9dgvVTHj3t+8JPdjqawCHk7V/KA+fbUqzZ9XWhcqPUg==
 
 universalify@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/universalify/-/universalify-2.0.0.tgz#75a4984efedc4b08975c5aeb73f530d02df25717"
-  integrity sha512-hAZsKq7Yy11Zu1DE0OzWjw7nnLZmJZYTDZZyEFHZdUhV8FkH5MCfoU1XMaxXovpyW5nq5scPqq0ZDP9Zyl04oQ==
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/universalify/-/universalify-2.0.1.tgz#168efc2180964e6386d061e094df61afe239b18d"
+  integrity sha512-gptHNQghINnc/vTGIk0SOFGFNXw7JVrlRUtConJRlvaw6DuX0wO5Jeko9sWrMBhh+PsYAZ7oXAiOnf/UKogyiw==
 
 untildify@^4.0.0:
   version "4.0.0"
@@ -6229,10 +6229,10 @@ url-parse@^1.5.3:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
 
-use-intl@^2.21.0:
-  version "2.21.0"
-  resolved "https://registry.yarnpkg.com/use-intl/-/use-intl-2.21.0.tgz#817a284d488f20becfe74003a16da54296aa3e46"
-  integrity sha512-m0gAKo/2OHw1tJtGQV226NIIpUy4Ualf+FKa/whk7hM1W7MXQ2v8c/N54UPrSy+PvJLCrIe7aOQ5xYEmUjnztQ==
+use-intl@^2.22.1:
+  version "2.22.1"
+  resolved "https://registry.yarnpkg.com/use-intl/-/use-intl-2.22.1.tgz#435504a46d1d3521aaa0ab5473576fe4b448e385"
+  integrity sha512-vTMJZrqVjErn421Ry4mxS2GuVUTWkY5zyIwu+3XvrAXH3PsPDAfWBMvVhip3kx914/IRs/4QnZ2ZaOehiZSXng==
   dependencies:
     "@formatjs/ecma402-abstract" "^1.11.4"
     intl-messageformat "^9.3.18"
