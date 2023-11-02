@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-import NewsletterBg from "@/appImages/home/newsletter_bg.jpg";
+import NewsletterBg from "@/appImages/home/newsletter_bg.jpeg";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "@/src/validations";
