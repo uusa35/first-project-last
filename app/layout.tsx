@@ -1,7 +1,6 @@
 import "@/styles/globals.css";
-import type { Metadata } from "next";
 import { Locale } from "@/types/index";
-import { removeTags, tajawal } from "@/utils/helpers";
+import { removeTags } from "@/utils/helpers";
 import Providers from "@/src/redux/provider";
 import MainLayout from "@/src/components/layouts/MainLayout";
 import { getSetting } from "@/utils/setting";

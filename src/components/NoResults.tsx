@@ -3,8 +3,6 @@ import { Locale } from "@/types/index";
 import { MainContextLayout } from "./layouts/MainContentLayout";
 import Link from "next/link";
 import NoResultImage from "@/appImages/errors/no_result.svg";
-import ErrorImage from "@/appImages/errors/404.svg";
-import Image from "next/image";
 
 type Props = {
   lang: Locale["lang"];
@@ -13,6 +11,7 @@ type Props = {
   currentModule: string;
   showSearchBar?: boolean;
   message?: string | null;
+  searchParams?: { [key: string]: string };
 };
 export default function ({
   lang,
@@ -21,7 +20,12 @@ export default function ({
   currentModule,
   showSearchBar = false,
   message = null,
+  searchParams,
 }: Props) {
+  const membership =
+    searchParams && searchParams.membership
+      ? `membership=${searchParams.membership}`
+      : `membership=subscription`;
   return (
     <MainContextLayout
       trans={trans}
@@ -52,7 +56,9 @@ export default function ({
         )}
         <div>
           {currentModule && (
-            <Link href={`/${lang}/${currentModule}`} className='btn-default'>
+            <Link
+              href={`/${lang}/${currentModule}${membership}`}
+              className='btn-default'>
               {trans.reset}
             </Link>
           )}

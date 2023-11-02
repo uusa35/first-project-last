@@ -48,10 +48,8 @@ export default async function UserIndex({
         lang={lang}
         trans={trans}
         showSearchBar={false}
-        currentModule={`user?membership=${
-          (searchParams as { [key: string]: string }).membership ||
-          "subscribtion"
-        }`}
+        currentModule={`user?`}
+        searchParams={searchParams}
       />
     );
 

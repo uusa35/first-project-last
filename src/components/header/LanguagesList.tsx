@@ -4,19 +4,20 @@ import { Popover, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { Locale } from "@/types/index";
 import { changePathName, convertSearchParamsToString } from "@/utils/helpers";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { MainContext } from "@/layouts/MainContentLayout";
 import Link from "next/link";
 
 type Props = {
   lang: Locale["lang"];
-  searchParams: { [key: string]: string } | string;
+  // searchParams: { [key: string]: string } | string;
 };
-export default function ({ lang, searchParams }: Props) {
+export default function ({ lang }: Props) {
   const pathName = usePathname()!;
   const { ar, arabic, en, english, ru, russian, choose_language }: any =
     useContext(MainContext);
   const locales = ["ar", "en", "ru"];
+  const searchParams = useSearchParams();
   return (
     <Popover className='relative'>
       <Popover.Button className='inline-flex btn-default items-center gap-x-1 text-sm font-semibold leading-2 capitalize'>
@@ -41,7 +42,7 @@ export default function ({ lang, searchParams }: Props) {
                   lang,
                   item,
                   pathName
-                )}?${convertSearchParamsToString(searchParams)}`}>
+                )}?${searchParams && searchParams.toString()}`}>
                 {item === "ar" ? arabic : item === "en" ? english : russian}
               </Link>
             ))}
