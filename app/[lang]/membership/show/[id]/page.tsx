@@ -14,6 +14,9 @@ import { notFound } from "next/navigation";
 import { removeTags } from "@/utils/helpers";
 import { MainGallery } from "@/components/Home/MainGallery";
 import { appLinks } from "@/src/links";
+import DOMPurify from "isomorphic-dompurify";
+import { getPrice } from "@/src/constants";
+import BackBtn from "@/components/BackBtn";
 
 type Props = {
   params: { lang: Locale["lang"]; id: string };
@@ -72,7 +75,6 @@ export async function generateMetadata({ params }: Props) {
 export default async function ({ params: { lang, id } }: Props) {
   const cookieStore = cookies();
   const token: any = cookieStore.get("token");
-
   const [{ trans }, setting, country, membership]: [
     { trans: any },
     Setting,
@@ -88,68 +90,105 @@ export default async function ({ params: { lang, id } }: Props) {
   return (
     <MainContextLayout trans={trans} lang={lang} setting={setting}>
       <main className='relative isolate mx-auto max-w-7xl min-h-screen'>
-        {/* Image section */}
-        <div className='mt-8 sm:mt-8 xl:mx-auto xl:max-w-7xl'>
-          <div className='absolute left-10 top-10'></div>
-          <div className='absolute w-full lg:max-w-6xl flex flex-col lg:flex-row  justify-center lg:justify-start items-center top-0 lg:top-32 bg-stone/60 lg:rtl:right-10 lg:ltr:left-10 p-8 text-white  gap-4  rounded-md'>
-            <div className='flex flex-col justify-center lg:justify-start items-center lg:items-start gap-4 text-center rtl:text-right ltr:text-left'>
-              <div className='text-2xl lg:text-4xl capitalize drop-shadow-4xl'>
-                {setting.name}
-              </div>
-              <div className='text-lg lg:text-xl capitalize drop-shadow-4xl'>
-                {setting.caption}
-              </div>
-            </div>
-          </div>
-          <Image
-            fill={false}
-            src={AboutusImage}
-            alt={setting.name}
-            className='aspect-[9/3] w-full object-cover xl:rounded-lg'
-          />
-        </div>
-
-        {/* Content section */}
-        <div className='mx-auto mt-8 max-w-7xl px-6 lg:px-8 pb-16'>
-          <div className='my-8'>
-            <div className='mx-auto max-w-4xl text-center'>
-              <p className='mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl capitalize'>
-                {membership.sort === "subscription"
-                  ? trans.subscription
-                  : trans.sponsorship}
+        <BackBtn />
+        <div className='bg-white py-12 sm:py-22'>
+          <div className='mx-auto max-w-7xl px-6 lg:px-8'>
+            <div className='mx-auto max-w-2xl sm:text-center'>
+              <h2 className='text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl'>
+                {membership.name}
+              </h2>
+              <p className='mt-6 text-lg leading-8 text-gray-600'>
+                {membership.caption}
               </p>
             </div>
+            <div className='mx-auto mt-16 max-w-2xl rounded-3xl ring-1 ring-gray-200 sm:mt-20 lg:mx-0 lg:flex flex-col lg:max-w-none'>
+              <div>
+                <div className='rounded-lg'>
+                  <Image
+                    src={membership.image}
+                    alt={membership.name}
+                    width={1000}
+                    height={500}
+                    className='aspect-[9/5] sm:aspect-[9/3] w-full  object-cover rounded-t-3xl'
+                  />
+                </div>
+              </div>
+              <div className='flex flex-row mt-6'>
+                <div className='p-8 sm:p-10 lg:flex-auto'>
+                  <h3 className='text-2xl font-bold tracking-tight text-gray-900'>
+                    {membership.name}
+                  </h3>
 
-            {!token ||
-              (!token.value && (
-                <>
-                  <p className='mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-600'>
-                    {
-                      trans.register_now_and_learn_about_the_partner_and_sponsor_packages
-                    }
-                  </p>
-                  <div className='flex justify-center mt-5'>
-                    <Link
-                      className='btn-dark-hover capitalize'
-                      href={`${appLinks.register(lang, "company")}`}>
-                      {trans.register_as_a_subscriper}
-                    </Link>
+                  <div className='mt-10 flex items-center gap-x-4'>
+                    <h4 className='flex-none text-sm font-semibold leading-6 text-indigo-600'>
+                      What’s included
+                    </h4>
+                    <div className='h-px flex-auto bg-gray-100' />
                   </div>
-                </>
-              ))}
+                  <div
+                    className='my-4  whitespace-pre-line text-ellipsis overflow-hidden'
+                    dangerouslySetInnerHTML={{
+                      __html: DOMPurify.sanitize(membership.description),
+                    }}
+                  />
+                  {/* content */}
+                </div>
+                <div className='-mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink-0'>
+                  <div className='rounded-2xl bg-gray-50 py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16'>
+                    <div className='mx-auto max-w-xs px-8'>
+                      <p className='text-base font-semibold text-gray-600'>
+                        Pay once, own it forever
+                      </p>
+                      {membership.on_sale && (
+                        <p className='mt-6  flex items-baseline gap-x-1'>
+                          <span
+                            className={
+                              "text-red-800 text-4xl font-bold tracking-tight"
+                            }>
+                            {getPrice(
+                              membership.sale_price,
+                              country[0]
+                            ).toFixed(2)}
+                          </span>
+                          <span
+                            className={
+                              "text-red-900 text-lg font-semibold leading-6"
+                            }>
+                            {country[0].currency_symbol}
+                          </span>
+                        </p>
+                      )}
+                      <p className='mt-6  flex items-baseline gap-x-1'>
+                        <span
+                          className={`text-gray-900 ${
+                            membership.on_sale
+                              ? `text-xl line-through`
+                              : `text-4xl`
+                          }  font-bold tracking-tight`}>
+                          {getPrice(membership.price, country[0]).toFixed(2)}
+                        </span>
+                        <span
+                          className={
+                            "text-gray-600 text-lg font-semibold leading-6"
+                          }>
+                          {country[0].currency_symbol}
+                        </span>
+                      </p>
+                      <Link
+                        href='#'
+                        className='mt-10 block w-full rounded-md btn-default'>
+                        Get access
+                      </Link>
+                      <p className='mt-6 text-xs leading-5 text-gray-600'>
+                        Invoices and receipts available for easy company
+                        reimbursement
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className='mx-auto  lg:mx-0 lg:max-w-none'>
-            <MembershipCard
-              trans={trans}
-              element={membership}
-              country={country[0]}
-              lang={lang}
-            />
-          </div>
-          {/* gallery */}
-          {membership.images && membership.images.length > 0 && (
-            <MainGallery images={membership.images} setting={setting} />
-          )}
         </div>
       </main>
     </MainContextLayout>

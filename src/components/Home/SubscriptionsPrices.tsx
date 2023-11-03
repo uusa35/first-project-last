@@ -50,7 +50,7 @@ export function SubscriptionsPrices({
               element={s}
               country={country[0]}
               lang={lang}
-              showMore={false}
+              showMore={true}
             />
           ))}
         </div>
