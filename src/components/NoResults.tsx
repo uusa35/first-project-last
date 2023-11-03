@@ -8,7 +8,7 @@ type Props = {
   lang: Locale["lang"];
   setting: Setting;
   trans: { [key: string]: string } | any;
-  currentModule: string;
+  currentModule?: string;
   showSearchBar?: boolean;
   message?: string | null;
   searchParams?: { [key: string]: string };
@@ -17,15 +17,15 @@ export default function ({
   lang,
   setting,
   trans,
-  currentModule,
+  currentModule = "home",
   showSearchBar = false,
   message = null,
   searchParams,
 }: Props) {
   const membership =
-    searchParams && searchParams.membership
+    searchParams && searchParams.membership && currentModule === "user"
       ? `membership=${searchParams.membership}`
-      : `membership=subscription`;
+      : ``;
   return (
     <MainContextLayout trans={trans} lang={lang} setting={setting}>
       <main className='relative isolate mx-auto flex flex-col gap-y-6 justify-start items-center max-w-7xl min-h-screen capitalize'>

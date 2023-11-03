@@ -43,7 +43,6 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
         lang={lang}
         trans={trans}
         showSearchBar={false}
-        currentModule={`user`}
         message={
           trans.u_must_be_registered_as_company_register_now_or_update_ur_account
         }
