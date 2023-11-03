@@ -120,13 +120,13 @@ export default async function ({ params: { lang, id } }: Props) {
                   </h3>
 
                   <div className='mt-10 flex items-center gap-x-4'>
-                    <h4 className='flex-none text-sm font-semibold leading-6 text-indigo-600'>
-                      What’s included
+                    <h4 className='flex-none text-sm font-semibold leading-6 text-expo-dark capitalize'>
+                      {trans.membership_features}
                     </h4>
                     <div className='h-px flex-auto bg-gray-100' />
                   </div>
                   <div
-                    className='my-4  whitespace-pre-line text-ellipsis overflow-hidden'
+                    className='my-4  leading-loose whitespace-pre-line text-ellipsis overflow-hidden'
                     dangerouslySetInnerHTML={{
                       __html: DOMPurify.sanitize(membership.description),
                     }}
@@ -137,7 +137,7 @@ export default async function ({ params: { lang, id } }: Props) {
                   <div className='rounded-2xl bg-gray-50 py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16'>
                     <div className='mx-auto max-w-xs px-8'>
                       <p className='text-base font-semibold text-gray-600'>
-                        Pay once, own it forever
+                        {trans.subscribe_now_to_book_ur_place}
                       </p>
                       {membership.on_sale && (
                         <p className='mt-6  flex items-baseline gap-x-1'>
@@ -174,15 +174,25 @@ export default async function ({ params: { lang, id } }: Props) {
                           {country[0].currency_symbol}
                         </span>
                       </p>
-                      <Link
-                        href='#'
-                        className='mt-10 block w-full rounded-md btn-default'>
-                        Get access
-                      </Link>
-                      <p className='mt-6 text-xs leading-5 text-gray-600'>
-                        Invoices and receipts available for easy company
-                        reimbursement
-                      </p>
+                      {token && token.value ? (
+                        <Link
+                          href={appLinks.cartIndex(lang, membership.id)}
+                          className={`mt-10 block w-full rounded-md btn-default bg-[${membership.color}]`}>
+                          {trans.subscribe_now}
+                        </Link>
+                      ) : (
+                        <Link
+                          href={appLinks.login(lang)}
+                          className={`mt-10 block w-full rounded-md btn-default bg-[${membership.color}]`}>
+                          {trans.subscribe_now}
+                        </Link>
+                      )}
+
+                      {membership.on_sale && (
+                        <p className='mt-6 text-xs leading-5 text-gray-600'>
+                          {trans.get_access_now_there_is_offer}
+                        </p>
+                      )}
                     </div>
                   </div>
                 </div>
