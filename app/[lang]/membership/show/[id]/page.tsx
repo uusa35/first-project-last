@@ -4,7 +4,6 @@ import { getDictionary } from "@/lib/dictionary";
 import { getSetting } from "@/utils/setting";
 import AboutusImage from "@/appImages/aboutus/banner.jpg";
 import Image from "next/image";
-import DOMPurify from "isomorphic-dompurify";
 import { Country, Membership, Setting } from "@/types/queries";
 import { getMembership } from "@/utils/membership";
 import MembershipCard from "@/components/membership/MembershipCard";
@@ -87,11 +86,7 @@ export default async function ({ params: { lang, id } }: Props) {
   ]);
 
   return (
-    <MainContextLayout
-      trans={trans}
-      lang={lang}
-      
-      setting={setting}>
+    <MainContextLayout trans={trans} lang={lang} setting={setting}>
       <main className='relative isolate mx-auto max-w-7xl min-h-screen'>
         {/* Image section */}
         <div className='mt-8 sm:mt-8 xl:mx-auto xl:max-w-7xl'>
@@ -153,11 +148,7 @@ export default async function ({ params: { lang, id } }: Props) {
           </div>
           {/* gallery */}
           {membership.images && membership.images.length > 0 && (
-            <MainGallery
-              trans={trans as { [key: string]: string }}
-              images={membership.images}
-              setting={setting}
-            />
+            <MainGallery images={membership.images} setting={setting} />
           )}
         </div>
       </main>
