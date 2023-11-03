@@ -4,7 +4,6 @@ import { getDictionary } from "@/lib/dictionary";
 import { getUser } from "@/utils/user";
 import { getSetting } from "@/utils/setting";
 import Image from "next/image";
-import DOMPurify from "isomorphic-dompurify";
 import { notFound } from "next/navigation";
 import UserIndexBanner from "@/appImages/user/user_show_banner.jpg";
 import SocialIcons from "@/components/footer/SocialIcons";

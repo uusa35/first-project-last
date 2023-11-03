@@ -32,7 +32,6 @@ import { Sponsors } from "@/components/Home/Sponsors";
 import { SponsorsPrices } from "@/components/Home/SponsorsPrices";
 import { MainGallery } from "@/components/Home/MainGallery";
 import { cookies } from "next/headers";
-import { notFound } from "next/navigation";
 
 type Props = {
   params: { lang: Locale["lang"] };
@@ -82,25 +81,20 @@ export default async function Home({ params: { lang } }: Props) {
       <MainSlider slides={slides} lang={lang} />
       {/* search */}
       <SearchBar lang={lang} />
-
       {/* categories */}
       <Categories lang={lang} categories={categories} trans={trans} />
-
       {/* register as */}
       {!token ||
         (!token.value && (
           <RegisterAs lang={lang} trans={trans} isAuth={token && token.value} />
         ))}
-
       {/*  figures  */}
       <Figures trans={trans} />
 
       {/* newsletter */}
       <NewsLetters trans={trans} />
-
       {/* posts */}
       <LatestNews trans={trans} lang={lang} posts={posts} />
-
       {/* subscription prices */}
       <SubscriptionsPrices
         country={country}
@@ -109,10 +103,8 @@ export default async function Home({ params: { lang } }: Props) {
         lang={lang}
         isAuth={token && token.value}
       />
-
       {/* sponsors logos */}
       <Sponsors sponsors={sponsors} trans={trans} />
-
       {/* sponsorship prices */}
       <SponsorsPrices
         country={country}
@@ -121,7 +113,6 @@ export default async function Home({ params: { lang } }: Props) {
         sponsorships={sponsorships}
         isAuth={token && token.value}
       />
-
       {/* OnHome Images with Url if exist (this will be a slider) */}
       {images && images.data.length > 0 && (
         <MainGallery trans={trans} images={images.data} setting={setting} />

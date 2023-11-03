@@ -1,7 +1,6 @@
 "use client";
-import * as React from "react";
 import Image from "next/image";
-import { AppQueryResult, ImageType, Setting } from "@/types/queries";
+import { ImageType, Setting } from "@/types/queries";
 import Carousel from "better-react-carousel";
 import Link from "next/link";
 import DownloadPdf from "@/appIcons/home/download_pdf.svg";
@@ -41,11 +40,10 @@ export function MainGallery({ trans, images, setting, message }: Props) {
           ))}
         </Carousel>
 
-        <div className="pt-10 flex justify-center">
+        <div className='pt-10 flex justify-center'>
           <Link
             href={"#"}
-            className="btn-default w-fit flex items-center gap-x-2"
-          >
+            className='btn-default w-fit flex items-center gap-x-2'>
             {trans.download_the_exhibition_brochure}
             <DownloadPdf />
           </Link>
