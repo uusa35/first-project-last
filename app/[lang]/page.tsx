@@ -81,7 +81,7 @@ export default async function Home({ params: { lang } }: Props) {
       {/* slider */}
       <MainSlider slides={slides} lang={lang} />
       {/* search */}
-      <SearchBar lang={lang} trans={trans} />
+      <SearchBar lang={lang} />
 
       {/* categories */}
       <Categories lang={lang} categories={categories} trans={trans} />
