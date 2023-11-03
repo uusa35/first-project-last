@@ -101,7 +101,7 @@ export default function ({
 
       {!isAuth && (
         <Link
-          className={"w-full btn-transparent capitalize"}
+          className={"w-full btn-dark-hover capitalize"}
           href={appLinks.login(lang)}>
           {trans.subscribe_now}
         </Link>
@@ -116,7 +116,11 @@ export default function ({
       )}
 
       {element.caption && (
-        <ul role='list' className={"text-gray-600 text-sm leading-6 mt-4"}>
+        <ul
+          role='list'
+          className={
+            "h-20 overflow-hidden text-gray-600 text-sm leading-6 mt-4"
+          }>
           <p>{element.caption}</p>
         </ul>
       )}
