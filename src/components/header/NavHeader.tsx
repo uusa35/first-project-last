@@ -254,6 +254,7 @@ export default function ({ lang, mainPages, setting }: Props) {
                 )}
                 <div className='flex flex-row justify-between items-center py-4 lg:py-0 px-8 ps-12'>
                   <Link
+                    replace
                     href={`${changePathName(lang, "ar", pathName)}?${
                       searchParams && searchParams.toString()
                     }`}
@@ -264,6 +265,7 @@ export default function ({ lang, mainPages, setting }: Props) {
                   </Link>
 
                   <Link
+                    replace
                     href={`${changePathName(lang, "en", pathName)}?${
                       searchParams && searchParams.toString()
                     }`}
@@ -273,6 +275,7 @@ export default function ({ lang, mainPages, setting }: Props) {
                     {trans.en}
                   </Link>
                   <Link
+                    replace
                     href={`${changePathName(lang, "ru", pathName)}?${
                       searchParams && searchParams.toString()
                     }`}

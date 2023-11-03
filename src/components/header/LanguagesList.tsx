@@ -36,13 +36,12 @@ export default function ({ lang }: Props) {
           <div className='w-52 shrink rounded-xl divide-x divide-gray-100 bg-white  text-sm font-semibold leading-6 text-gray-900 shadow-lg ring-1 ring-gray-900/5'>
             {locales.map((item, i: number) => (
               <Link
+                replace
                 className='block w-full py-2 px-4  ltr:text-left rtl:text-right hover:bg-gray-200 capitalize'
                 key={i}
-                href={`${changePathName(
-                  lang,
-                  item,
-                  pathName
-                )}?${searchParams && searchParams.toString()}`}>
+                href={`${changePathName(lang, item, pathName)}?${
+                  searchParams && searchParams.toString()
+                }`}>
                 {item === "ar" ? arabic : item === "en" ? english : russian}
               </Link>
             ))}
