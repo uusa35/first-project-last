@@ -1,5 +1,4 @@
 "use client";
-import * as React from "react";
 import NewsletterBg from "@/appImages/home/newsletter_bg.jpeg";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -10,15 +9,14 @@ import {
   showErrorToastMessage,
   showSuccessToastMessage,
 } from "@/redux/slices/toastMessageSlice";
-
-type Props = {
-  trans: { [key: string]: string };
-};
+import { MainContext } from "@/layouts/MainContentLayout";
+import { useContext } from "react";
 
 type InputFields = {
   email: string;
 };
-export function NewsLetters({ trans }: Props) {
+export function NewsLetters() {
+  const trans: { [key: string]: string } = useContext(MainContext);
   const dispatch = useAppDispatch();
   const {
     register,

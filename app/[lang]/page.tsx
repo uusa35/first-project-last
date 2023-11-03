@@ -92,7 +92,7 @@ export default async function Home({ params: { lang } }: Props) {
       <Figures trans={trans} />
 
       {/* newsletter */}
-      <NewsLetters trans={trans} />
+      <NewsLetters />
       {/* posts */}
       <LatestNews trans={trans} lang={lang} posts={posts} />
       {/* subscription prices */}
