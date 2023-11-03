@@ -188,6 +188,13 @@ export default async function ({ params: { lang, id } }: Props) {
                 </div>
               </div>
             </div>
+            {membership.images && membership.images.length > 0 && (
+              <MainGallery
+                images={membership.images}
+                setting={setting}
+                message={membership.name}
+              />
+            )}
           </div>
         </div>
       </main>
