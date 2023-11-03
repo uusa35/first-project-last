@@ -216,7 +216,6 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
 
           {user.images && user.images.length > 0 && (
             <MainGallery
-              trans={trans as { [key: string]: string }}
               images={user.images}
               setting={setting}
               message={trans.home}

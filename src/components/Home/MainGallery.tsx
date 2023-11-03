@@ -4,15 +4,17 @@ import { ImageType, Setting } from "@/types/queries";
 import Carousel from "better-react-carousel";
 import Link from "next/link";
 import DownloadPdf from "@/appIcons/home/download_pdf.svg";
+import { useContext } from "react";
+import { MainContext } from "@/layouts/MainContentLayout";
 
 type Props = {
   images: ImageType[];
-  trans: { [key: string]: string };
   setting: Setting;
   message?: string;
 };
 
-export function MainGallery({ trans, images, setting, message }: Props) {
+export function MainGallery({ images, setting, message }: Props) {
+  const trans: { [key: string]: string } = useContext(MainContext);
   return (
     <div className='py-12 sm:py-10 capitalize'>
       <div className='mx-auto max-w-7xl px-6 lg:px-8'>
