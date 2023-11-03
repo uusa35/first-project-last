@@ -105,7 +105,7 @@ export default async function ({ params: { lang, id } }: Props) {
               <div>
                 <div className='rounded-lg'>
                   <Image
-                    src={membership.image}
+                    src={membership.large}
                     alt={membership.name}
                     width={1000}
                     height={500}
