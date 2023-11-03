@@ -12,6 +12,7 @@ import MembershipCard from "@/components/membership/MembershipCard";
 import { getCountries } from "@/utils/country";
 import Link from "next/link";
 import { cookies } from "next/headers";
+import { appLinks } from "@/src/links";
 
 type Props = {
   params: { lang: Locale["lang"]; sort: Membership["sort"] };
@@ -25,6 +26,8 @@ export async function generateMetadata({ params }: Props) {
 }
 
 export default async function ({ params: { lang, sort } }: Props) {
+  const cookieStore = cookies();
+  const token: any = cookieStore.get("token");
   const [{ trans }, setting, country, memberships]: [
     { trans: any },
     Setting,
@@ -36,14 +39,9 @@ export default async function ({ params: { lang, sort } }: Props) {
     getCountries(`lang=${lang}&limit=1`, lang),
     getMemberships(`sort=${sort}`, lang),
   ]);
-  const cookieStore = cookies();
-  const token: any = cookieStore.get("token");
+
   return (
-    <MainContextLayout
-      trans={trans}
-      lang={lang}
-      
-      setting={setting}>
+    <MainContextLayout trans={trans} lang={lang} setting={setting}>
       <main className='relative isolate mx-auto max-w-7xl min-h-screen'>
         {/* Image section */}
         <div className='mt-8 sm:mt-8 xl:mx-auto xl:max-w-7xl'>
@@ -77,22 +75,23 @@ export default async function ({ params: { lang, sort } }: Props) {
               </p>
             </div>
 
-            {token && token.value && (
-              <>
-                <p className='mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-600'>
-                  {
-                    trans.register_now_and_learn_about_the_partner_and_sponsor_packages
-                  }
-                </p>
-                <div className='flex justify-center mt-5'>
-                  <Link
-                    className='btn-dark-hover capitalize'
-                    href={`/${lang}/register/company`}>
-                    {trans.register_as_a_subscriper}
-                  </Link>
-                </div>
-              </>
-            )}
+            {!token ||
+              (!token.value && (
+                <>
+                  <p className='mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-600'>
+                    {
+                      trans.register_now_and_learn_about_the_partner_and_sponsor_packages
+                    }
+                  </p>
+                  <div className='flex justify-center mt-5'>
+                    <Link
+                      className='btn-dark-hover capitalize'
+                      href={`${appLinks.register(lang, "company")}`}>
+                      {trans.register_as_a_subscriper}
+                    </Link>
+                  </div>
+                </>
+              ))}
           </div>
 
           <div className='mx-auto  lg:mx-0 lg:max-w-none'>
