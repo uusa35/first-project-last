@@ -117,7 +117,7 @@ export default async function ({ params: { lang, id } }: Props) {
                 <div className='p-8 sm:p-10 lg:flex-auto'>
                   <h3
                     className='text-2xl font-bold tracking-tight text-gray-900'
-                    style={{ color: membership.color }}>
+                    style={{ color: `${membership.color} important;` }}>
                     {membership.name}
                   </h3>
 
@@ -180,14 +180,18 @@ export default async function ({ params: { lang, id } }: Props) {
                         <Link
                           href={appLinks.cartIndex(lang, membership.id)}
                           className={`mt-10 block w-full rounded-md btn-default`}
-                          style={{ backgroundColor: membership.color }}>
+                          style={{
+                            backgroundColor: `${membership.color} important;`,
+                          }}>
                           {trans.subscribe_now}
                         </Link>
                       ) : (
                         <Link
                           href={appLinks.login(lang)}
                           className={`mt-10 block w-full rounded-md btn-default `}
-                          style={{ backgroundColor: membership.color }}>
+                          style={{
+                            backgroundColor: `${membership.color} important;`,
+                          }}>
                           {trans.subscribe_now}
                         </Link>
                       )}
