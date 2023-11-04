@@ -27,8 +27,7 @@ export default async function ({ params: { lang } }: Props) {
   return (
     <MainContextLayout
       trans={trans}
-      lang={lang}
-      
+      lang={lang}   
       setting={setting}>
       <main className='relative isolate mx-auto max-w-7xl min-h-screen'>
         {/* Image section */}

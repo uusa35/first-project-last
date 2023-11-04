@@ -113,7 +113,7 @@ export default async function ({ params: { lang, id } }: Props) {
                   />
                 </div>
               </div>
-              <div className='flex flex-row mt-6'>
+              <div className='flex flex-col md:flex-row mt-6'>
                 <div className='p-8 sm:p-10 lg:flex-auto'>
                   <h3
                     className='text-2xl font-bold tracking-tight text-gray-900'
