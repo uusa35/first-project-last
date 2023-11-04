@@ -31,12 +31,15 @@ import { RegisterAs } from "@/components/home/RegisterAs";
 import { SponsorsList } from "@/components/home/SponsorsList";
 import { SponsorsPrices } from "@/components/home/SponsorsPrices";
 import { MainGallery } from "@/components/home/MainGallery";
+import { cookies } from "next/headers";
 
 type Props = {
   params: { lang: Locale["lang"] };
 };
 
 export default async function Home({ params: { lang } }: Props) {
+  const cookieStore = cookies();
+  const token: any = cookieStore.get("token");
   const [
     { trans },
     slides,
@@ -73,17 +76,11 @@ export default async function Home({ params: { lang } }: Props) {
   ]);
 
   return (
-    <MainContextLayout
-      trans={trans as { [key: string]: string }}
-      lang={lang}
-      searchParams={``}
-      setting={setting}
-    >
+    <MainContextLayout trans={trans} lang={lang} setting={setting}>
       {/* slider */}
       <MainSlider slides={slides} lang={lang} />
       {/* search */}
-      <SearchBar lang={lang} trans={trans as { [key: string]: string }} />
-
+      <SearchBar lang={lang} />
       {/* categories */}
       <CategoriesList
         lang={lang}
@@ -92,29 +89,25 @@ export default async function Home({ params: { lang } }: Props) {
       />
 
       {/* register as */}
-      <RegisterAs lang={lang} trans={trans as { [key: string]: string }} />
-
+      {!token ||
+        (!token.value && (
+          <RegisterAs lang={lang} trans={trans} isAuth={token && token.value} />
+        ))}
       {/*  figures  */}
-      <Figures trans={trans as { [key: string]: string }} />
+      <Figures trans={trans} />
 
       {/* newsletter */}
-      <NewsLetters trans={trans as { [key: string]: string }} />
-
+      <NewsLetters />
       {/* posts */}
-      <LatestNews
-        trans={trans as { [key: string]: string }}
-        lang={lang}
-        posts={posts}
-      />
-
+      <LatestNews trans={trans} lang={lang} posts={posts} />
       {/* subscription prices */}
       <SubscriptionsPrices
         country={country}
         subscriptions={subscriptions}
-        trans={trans as { [key: string]: string }}
+        trans={trans}
         lang={lang}
+        isAuth={token && token.value}
       />
-
       {/* sponsors logos */}
       <SponsorsList
         sponsors={sponsors}
@@ -124,18 +117,14 @@ export default async function Home({ params: { lang } }: Props) {
       {/* sponsorship prices */}
       <SponsorsPrices
         country={country}
-        trans={trans as { [key: string]: string }}
+        trans={trans}
         lang={lang}
         sponsorships={sponsorships}
+        isAuth={token && token.value}
       />
-
       {/* OnHome Images with Url if exist (this will be a slider) */}
       {images && images.data.length > 0 && (
-        <MainGallery
-          trans={trans as { [key: string]: string }}
-          images={images.data}
-          setting={setting}
-        />
+        <MainGallery images={images.data} setting={setting} />
       )}
     </MainContextLayout>
   );

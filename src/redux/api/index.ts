@@ -15,7 +15,7 @@ export const apiSlice = createApi({
       headers,
       { getState }: RootState
     ) => {
-      console.log('apiUrl', apiUrl);
+
       const {
         locale,
         auth: { api_token }
@@ -39,8 +39,8 @@ export const apiSlice = createApi({
       if (api_token) {
         headers.set('Authorization', `Bearer ${api_token}`);
       }
-      console.log('from inside header ====>')
-      console.log('headers', headers);
+
+
       return headers;
     },
     credentials: "same-origin",

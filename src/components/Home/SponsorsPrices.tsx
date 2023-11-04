@@ -1,5 +1,4 @@
 import Link from "next/link";
-import * as React from "react";
 import { Country, Membership } from "@/types/queries";
 import { Locale } from "@/types/index";
 import MembershipCard from "@/components/membership/MembershipCard";
@@ -11,9 +10,16 @@ type Props = {
   sponsorships: Membership[];
   lang: Locale["lang"];
   country: Country;
+  isAuth: boolean;
 };
 
-export function SponsorsPrices({ trans, sponsorships, lang, country }: Props) {
+export function SponsorsPrices({
+  trans,
+  sponsorships,
+  lang,
+  country,
+  isAuth,
+}: Props) {
   return (
     <div className='bg-expo-green py-12 sm:py-12 capitalize'>
       <div className='mx-auto max-w-7xl px-6 lg:px-8'>
@@ -26,11 +32,15 @@ export function SponsorsPrices({ trans, sponsorships, lang, country }: Props) {
           {trans.register_now_and_learn_about_sponsorship_packages}
         </p>
 
-        <div className='flex justify-center mt-5'>
-          <Link className='btn-dark-hover' href={`/${lang}/register/company`}>
-            {trans.register_as_a_sponsor}
-          </Link>
-        </div>
+        {!isAuth && (
+          <div className='flex justify-center mt-5'>
+            <Link
+              className='btn-dark-hover'
+              href={`${appLinks.register(lang, "company")}`}>
+              {trans.register_as_a_sponsor}
+            </Link>
+          </div>
+        )}
 
         <div className='isolate mx-auto mt-10 grid max-w-md grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3'>
           {sponsorships.map((s: Membership, i: number) => (

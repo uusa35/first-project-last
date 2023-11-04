@@ -4,7 +4,6 @@ import { getDictionary } from "@/lib/dictionary";
 import { getUser } from "@/utils/user";
 import { getSetting } from "@/utils/setting";
 import Image from "next/image";
-import DOMPurify from "isomorphic-dompurify";
 import { notFound } from "next/navigation";
 import UserIndexBanner from "@/appImages/user/user_show_banner.jpg";
 import SocialIcons from "@/components/footer/SocialIcons";
@@ -12,6 +11,8 @@ import { EmailOutlined, InsertLink } from "@mui/icons-material";
 import { ImageType, Setting, User } from "@/types/queries";
 import { MainGallery } from "@/components/home/MainGallery";
 import { removeTags } from "@/utils/helpers";
+import BackBtn from "@/components/BackBtn";
+import HtmlContentWithTitle from "@/components/HtmlContentWithTitle";
 
 type Props = {
   params: { lang: Locale["lang"]; id: string };
@@ -79,20 +80,9 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
   if ("status" in user && (user.status === 404 || user.status === 500 || !user))
     notFound();
 
-  if (user.images.length > 0) {
-    var imagesGroup = user.images.map((img: ImageType) => {
-      return { thumbnail: img.image, original: img.image };
-    });
-  }
-
   return (
-    <MainContextLayout
-      trans={trans}
-      lang={lang}
-      searchParams={``}
-      setting={setting}
-    >
-      <main className="relative isolate mx-auto max-w-7xl min-h-screen ">
+    <MainContextLayout trans={trans} lang={lang} setting={setting}>
+      <main className='relative isolate mx-auto max-w-7xl min-h-screen '>
         {/* Image section */}
         <div className="mt-8 sm:mt-8 xl:mx-auto xl:max-w-7xl ">
           <div className="absolute left-5 sm:left-10 top-10  z-10 ">
@@ -135,25 +125,15 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
             />
           )}
         </div>
+        <div className='flex flex-col w-full  min-h-screen justify-start items-center gap-y-12 '>
+          <BackBtn />
 
-        <div className="flex flex-col w-full min-h-screen justify-start items-center gap-y-12 ">
           {/* aboutus section */}
           {user.aboutus && (
-            <div className="px-2 pt-12 lg:px-8">
-              <div className="mx-auto text-center">
-                <h2 className="text-2xl font-bold tracking-tight text-black sm:text-4xl capitalize">
-                  {trans.aboutus}
-                </h2>
-                <div className="mt-6 text-lg leading-8 text-gray-800 ">
-                  <div
-                    className="max-w-xs sm:max-w-xl md:max-w-full  whitespace-pre-line text-ellipsis overflow-hidden"
-                    dangerouslySetInnerHTML={{
-                      __html: DOMPurify.sanitize(user.aboutus),
-                    }}
-                  ></div>
-                </div>
-              </div>
-            </div>
+            <HtmlContentWithTitle
+              title={trans.aboutus}
+              content={user.aboutus}
+            />
           )}
 
           {/* contactus section */}
@@ -163,8 +143,8 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
                 <h1 className={`text-2xl capitalize`}>
                   {trans.contactus_information}
                 </h1>
-                <p className="text-clamp-2 text-clip">
-                  {user.address} - {user.country.name}
+                <p className='text-clamp-2 text-clip'>
+                  {user.address ?? ""} - {user.country.name}
                 </p>
               </div>
               {user.email && (
@@ -222,47 +202,26 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
           </div>
 
           {user.description && (
-            <div className="px-6 pt-12 lg:px-8">
-              <div className="mx-auto  text-center ">
-                <h2 className=" capitalize text-xl font-bold tracking-tight text-black sm:text-4xl">
-                  {trans.description}
-                </h2>
-                <div className="mt-6 text-lg leading-8 text-gray-800">
-                  <div
-                    className="max-w-xs sm:max-w-xl md:max-w-full  whitespace-pre-line text-ellipsis overflow-hidden"
-                    dangerouslySetInnerHTML={{
-                      __html: DOMPurify.sanitize(user.description),
-                    }}
-                  ></div>
-                </div>
-              </div>
-            </div>
+            <HtmlContentWithTitle
+              title={trans.description}
+              content={user.description}
+            />
           )}
 
           {user.services && (
-            <div className="px-6 pt-12 lg:px-8">
-              <div className="mx-auto  text-center ">
-                <h2 className=" capitalize text-xl font-bold tracking-tight text-black sm:text-4xl">
-                  {trans.services}
-                </h2>
-                <div className="mt-6 text-lg leading-8 text-gray-800">
-                  <div
-                    className="max-w-xs sm:max-w-xl md:max-w-full  whitespace-pre-line text-ellipsis overflow-hidden"
-                    dangerouslySetInnerHTML={{
-                      __html: DOMPurify.sanitize(user.services),
-                    }}
-                  ></div>
-                </div>
-              </div>
-            </div>
+            <HtmlContentWithTitle
+              title={trans.services}
+              content={user.services}
+            />
           )}
 
-          <MainGallery
-            trans={trans as { [key: string]: string }}
-            images={user.images}
-            setting={setting}
-            message={trans.home}
-          />
+          {user.images && user.images.length > 0 && (
+            <MainGallery
+              images={user.images}
+              setting={setting}
+              message={trans.home}
+            />
+          )}
         </div>
       </main>
     </MainContextLayout>

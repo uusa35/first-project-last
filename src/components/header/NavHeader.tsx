@@ -15,34 +15,27 @@ import {
 } from "next/navigation";
 import { changePathName, convertSearchParamsToString } from "@/utils/helpers";
 import AppLogo from "@/components/header/AppLogo";
-import { last, split, toString } from "lodash";
-import { disableLoading, setCurrentPath } from "@/redux/slices/settingSlice";
+import { isNull, last, split, toString } from "lodash";
+import { setCurrentPath } from "@/redux/slices/settingSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { Setting } from "@/types/queries";
 import LanguagesList from "@/components/header/LanguagesList";
 import { isAuthenticated, resetAuth } from "@/redux/slices/authSlice";
-import { deleteToken } from "@/src/constants";
 import { appLinks } from "@/src/links";
 import MyProfileList from "./MyProfileList";
+import { deleteToken } from "@/app/actions";
 
 type Props = {
   lang: Locale;
-  searchParams: { [key: string]: string } | string;
   mainPages: { href: string; name: string; label: string }[];
   setting: Setting;
 };
 
-export default function ({
-  lang,
-  searchParams = ``,
-  mainPages,
-  setting,
-}: Props) {
+export default function ({ lang, mainPages, setting }: Props) {
   const trans: { [key: string]: string } = useContext(MainContext);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const {
     appSetting: { currentPath },
-    locale,
     auth,
   } = useAppSelector((state) => state);
   const isAuth = useAppSelector(isAuthenticated);
@@ -53,6 +46,7 @@ export default function ({
   const segment = useSelectedLayoutSegment();
   const segments = useSelectedLayoutSegments();
   const [stickyClass, setStickyClass] = useState("relative");
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     window.addEventListener("scroll", stickNavbar);
@@ -64,8 +58,7 @@ export default function ({
   const handleLogout = () => {
     dispatch(resetAuth());
     deleteToken();
-    router.refresh();
-    return router.replace(appLinks.home(lang));
+    router.replace(`/${lang}`);
   };
 
   const stickNavbar = () => {
@@ -88,8 +81,10 @@ export default function ({
   // console.log("searchParams ----->", convertSearchParamsToString(searchParams));
   // console.log("url", changePathName(lang, "ar", pathName));
   useEffect(() => {
-    if (typeof searchParams === "object") {
-      dispatch(setCurrentPath(searchParams.membership));
+    if (!isNull(searchParams) && searchParams.has("membership")) {
+      const membership: string =
+        searchParams.get("membership")?.toString() ?? ``;
+      dispatch(setCurrentPath(membership));
     } else {
       const url: string = toString(last(split(pathName, "/")));
       if (url === "en" || url === "ar") {
@@ -109,7 +104,7 @@ export default function ({
         </div>
         {/* top bar */}
         <div className='hidden lg:flex lg:flex-1  gap-x-4 capitalize'>
-          <LanguagesList lang={lang} searchParams={searchParams} />
+          <LanguagesList lang={lang} />
         </div>
         <div className='flex lg:hidden capitalize'>
           <button
@@ -124,12 +119,6 @@ export default function ({
         <div className='hidden lg:flex lg:gap-x-8'>
           <AppLogo lang={lang} logo={setting.image} name={setting.name} />
         </div>
-        {/* <ActiveLink
-          activeClassName='active'
-          className='border-4 bg-green-800 active:bg-blue-700'
-          href='/'>
-          Home
-        </ActiveLink> */}
         <div className='hidden lg:flex lg:flex-1 lg:justify-end items-center capitalize'>
           {isAuth ? (
             <MyProfileList lang={lang} />
@@ -265,11 +254,10 @@ export default function ({
                 )}
                 <div className='flex flex-row justify-between items-center py-4 lg:py-0 px-8 ps-12'>
                   <Link
-                    href={`${changePathName(
-                      lang,
-                      "ar",
-                      pathName
-                    )}?${convertSearchParamsToString(searchParams)}`}
+                    replace
+                    href={`${changePathName(lang, "ar", pathName)}?${
+                      searchParams && searchParams.toString()
+                    }`}
                     className={`${
                       lang === "ar" && `bg-gray-200 rounded-md`
                     } -mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50`}>
@@ -277,22 +265,20 @@ export default function ({
                   </Link>
 
                   <Link
-                    href={`${changePathName(
-                      lang,
-                      "en",
-                      pathName
-                    )}?${convertSearchParamsToString(searchParams)}`}
+                    replace
+                    href={`${changePathName(lang, "en", pathName)}?${
+                      searchParams && searchParams.toString()
+                    }`}
                     className={`${
                       lang === "en" && `bg-gray-200 rounded-md`
                     } -mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50`}>
                     {trans.en}
                   </Link>
                   <Link
-                    href={`${changePathName(
-                      lang,
-                      "ru",
-                      pathName
-                    )}?${convertSearchParamsToString(searchParams)}`}
+                    replace
+                    href={`${changePathName(lang, "ru", pathName)}?${
+                      searchParams && searchParams.toString()
+                    }`}
                     className={`${
                       lang === "ru" && `bg-gray-200 rounded-md`
                     } -mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50`}>

@@ -171,10 +171,10 @@
     "profile": "profile",
     "control_information": "control my information",
     "registeration": "registeration",
-    "a_key_partner_and_sponsor":"a key partner and sponsor",
-"investment_opportunities":"investment opportunities",
-"participant_in_events":"participant in events",
-    "seminar_during_the_exhibition":"seminar during the exhibition",
+    "a_key_partner_and_sponsor": "a key partner and sponsor",
+    "investment_opportunities": "investment opportunities",
+    "participant_in_events": "participant in events",
+    "seminar_during_the_exhibition": "seminar during the exhibition",
     "mobile": "mobile",
     "whatsapp": "whatsapp",
     "facebook": "facebook",
@@ -195,6 +195,11 @@
     "company": "company",
     "role": "role",
     "country": "country",
-        "more_details": "more details"
+    "more_details": "more details",
+    "upgrade_your_account": "upgrade your account",
+    "back": "back",
+    "membership_features": "membership features",
+    "get_access_now_there_is_offer": "get access now there is offer",
+    "subscribe_now_to_book_ur_place": "subscribe now to book ur place"
   }
 }

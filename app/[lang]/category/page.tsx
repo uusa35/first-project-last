@@ -7,7 +7,7 @@ import Image from "next/image";
 import DOMPurify from "isomorphic-dompurify";
 import { AppQueryResult, Category, Setting } from "@/types/queries";
 import { getCategories } from "@/utils/category";
-import { Categories } from "@/components/home/CategoriesList";
+import { CategoriesList } from "@/components/home/CategoriesList";
 
 type Props = {
   params: { lang: Locale["lang"] };
@@ -32,12 +32,7 @@ export default async function ({ params: { lang } }: Props) {
   ]);
 
   return (
-    <MainContextLayout
-      trans={trans}
-      lang={lang}
-      searchParams={``}
-      setting={setting}
-    >
+    <MainContextLayout trans={trans} lang={lang} setting={setting}>
       <main className="relative isolate mx-auto max-w-7xl min-h-screen">
         {/* Image section */}
         <div className="mt-8 sm:mt-8 xl:mx-auto xl:max-w-7xl">
@@ -64,7 +59,7 @@ export default async function ({ params: { lang } }: Props) {
         {/* Content section */}
         <div className="mx-auto mt-8 max-w-7xl px-6 lg:px-8 pb-16">
           <div className="mx-auto  lg:mx-0 lg:max-w-none">
-            <Categories
+            <CategoriesList
               showMore={false}
               lang={lang}
               categories={categories}

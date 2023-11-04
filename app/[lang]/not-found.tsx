@@ -18,7 +18,7 @@ export default async function NotFound() {
     <MainContextLayout
       trans={trans}
       lang={lang}
-      searchParams={``}
+      
       setting={setting}
     >
       <main className="relative isolate mx-auto flex flex-col gap-y-6 justify-start items-center max-w-7xl min-h-screen capitalize">

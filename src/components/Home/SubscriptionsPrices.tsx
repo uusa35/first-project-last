@@ -1,6 +1,4 @@
-"use client";
 import Link from "next/link";
-import * as React from "react";
 import { Country, Membership } from "@/types/queries";
 import { Locale } from "@/types/index";
 import MembershipCard from "@/components/membership/MembershipCard";
@@ -12,6 +10,7 @@ type Props = {
   subscriptions: Membership[];
   lang: Locale["lang"];
   country: Country;
+  isAuth: boolean;
 };
 
 export function SubscriptionsPrices({
@@ -19,6 +18,7 @@ export function SubscriptionsPrices({
   subscriptions,
   lang,
   country,
+  isAuth,
 }: Props) {
   return (
     <div className='bg-expo-green py-16 capitalize'>
@@ -31,11 +31,16 @@ export function SubscriptionsPrices({
         <p className='mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-600'>
           {trans.register_now_and_learn_about_the_partner_and_sponsor_packages}
         </p>
-        <div className='flex justify-center mt-5'>
-          <Link className='btn-dark-hover' href={`/${lang}/register/company`}>
-            {trans.register_as_a_subscriper}
-          </Link>
-        </div>
+        {!isAuth && (
+          <div className='flex justify-center mt-5'>
+            <Link
+              className='btn-dark-hover'
+              href={`${appLinks.register(lang, "company")}`}>
+              {trans.register_as_a_subscriper}
+            </Link>
+          </div>
+        )}
+
         <div className='isolate mx-auto grid max-w-md grid-cols-1 gap-y-8 lg:mx-0 lg:max-w-none lg:grid-cols-3 my-20'>
           {subscriptions.map((s: Membership, i: number) => (
             <MembershipCard
@@ -45,7 +50,7 @@ export function SubscriptionsPrices({
               element={s}
               country={country[0]}
               lang={lang}
-              showMore={false}
+              showMore={true}
             />
           ))}
         </div>

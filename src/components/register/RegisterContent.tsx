@@ -7,7 +7,7 @@ import {
   showErrorToastMessage,
   showSuccessToastMessage,
 } from "@/redux/slices/toastMessageSlice";
-import { setToken } from "@/src/constants";
+import { setToken } from "@/app/actions";
 import { appLinks } from "@/src/links";
 import { registerSchema } from "@/src/validations";
 import { Country, Role } from "@/types/queries";
@@ -53,8 +53,6 @@ export function RegisterContent({ role, country }: Props) {
     },
   });
 
-  console.log(errors)
-
   const createAccount: SubmitHandler<FormValues> = async (data) => {
     await triggerRegisterVisitorQuery({
       ...data,
@@ -69,7 +67,6 @@ export function RegisterContent({ role, country }: Props) {
         );
         dispatch(setAuth(r.data));
         setToken(r.data.api_token);
-        router.refresh();
         if (role === "visitor") router.push(appLinks.home(lang));
         else {
           router.push(appLinks.account(lang, role, r.data.id));

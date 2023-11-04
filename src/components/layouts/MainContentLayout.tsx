@@ -2,7 +2,6 @@
 import { FC, createContext, useEffect } from "react";
 import NavHeader from "@/components/header/NavHeader";
 import { Locale } from "@/types/index";
-
 import AppFooter from "@/components/footer/AppFooter";
 import { usePathname } from "next/navigation";
 import { Setting } from "@/types/queries";
@@ -10,27 +9,18 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setLocale } from "@/redux/slices/localeSlice";
 import moment from "moment";
 import * as yup from "yup";
-import { deleteToken, setLang, setToken } from "@/src/constants";
 import { isNull } from "lodash";
-import { setLocaleCookie } from "@/app/actions";
-import { disableLoading } from "@/redux/slices/settingSlice";
+import { deleteToken, setLang, setLocaleCookie, setToken } from "@/app/actions";
 
 type Props = {
   children: React.ReactNode;
   trans: { [key: string]: string };
   lang: Locale["lang"];
-  searchParams: { [key: string]: string } | string;
   setting: Setting;
 };
 
 const MainContext = createContext({});
-const MainContextLayout: FC<Props> = ({
-  children,
-  trans,
-  lang,
-  searchParams = ``,
-  setting,
-}) => {
+const MainContextLayout: FC<Props> = ({ children, trans, lang, setting }) => {
   const {
     locale,
     auth: { api_token },
@@ -89,12 +79,7 @@ const MainContextLayout: FC<Props> = ({
   return (
     <MainContext.Provider value={trans}>
       {/* nav & slider */}
-      <NavHeader
-        lang={lang}
-        searchParams={searchParams}
-        mainPages={navigation}
-        setting={setting}
-      />
+      <NavHeader lang={lang} mainPages={navigation} setting={setting} />
       <div>{children}</div>
       <AppFooter
         mainPages={navigation}

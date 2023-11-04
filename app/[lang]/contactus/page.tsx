@@ -31,7 +31,7 @@ export default async function ({ params: { lang } }: Props) {
     <MainContextLayout
       trans={trans}
       lang={lang}
-      searchParams={``}
+      
       setting={setting}>
       <div className='relative bg-white mx-auto max-w-7xl min-h-screen capitalize'>
         <div

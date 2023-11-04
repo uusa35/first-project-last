@@ -5,6 +5,7 @@ import {
   triggerEnableLoading,
   triggerShowToastMessage,
   triggerResetEntireApp,
+  triggerSetAuthScenario,
 } from './triggers';
 
 export default function* rootSaga() {

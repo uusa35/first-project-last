@@ -169,11 +169,10 @@
     "control_information": "التحكم بالمعلومات",
     "featured": " مميز",
     "registeration": "التسجيل",
-    "a_key_partner_and_sponsor":"شريك  وراعي أساسي",
-    "investment_opportunities":"فرص استثمارية",
-    "participant_in_events":"مشارك في الفعاليات",
-    "seminar_during_the_exhibition":"ندوة في فترة المعرض",
-
+    "a_key_partner_and_sponsor": "شريك  وراعي أساسي",
+    "investment_opportunities": "فرص استثمارية",
+    "participant_in_events": "مشارك في الفعاليات",
+    "seminar_during_the_exhibition": "ندوة في فترة المعرض",
     "mobile": "متحرك",
     "whatsapp": "واتساب",
     "facebook": "فيسبوك",
@@ -194,6 +193,11 @@
     "company": "شركة",
     "role": "دور",
     "country": "دولة",
-    "more_details": "المزيد من التفاصيل"
+    "more_details": "المزيد من التفاصيل",
+    "upgrade_your_account": "ترقية الحساب",
+    "back": "للخلف",
+    "membership_features": "مميزات الباقة",
+    "get_access_now_there_is_offer": "بادر بحجز اشتراكك الآن .. يوجد خصوم الآن ..",
+    "subscribe_now_to_book_ur_place": "اشتراك الآن لحجز مكانك بالمعرض"
   }
 }

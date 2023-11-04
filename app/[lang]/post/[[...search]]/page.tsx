@@ -56,7 +56,7 @@ export default async function ({ params: { lang }, searchParams }: Props) {
     <MainContextLayout
       trans={trans}
       lang={lang}
-      searchParams={``}
+      
       setting={setting}>
       <div className='container mx-auto max-w-7xl min-h-screen px-3 xl:px-0'>
         <Link

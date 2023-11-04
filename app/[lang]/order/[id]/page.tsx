@@ -35,11 +35,7 @@ export default async function ({
   ]);
 
   return (
-    <MainContextLayout
-      trans={trans}
-      lang={lang}
-      searchParams={``}
-      setting={setting}>
+    <MainContextLayout trans={trans} lang={lang} setting={setting}>
       <main className='relative bg-white mx-auto max-w-7xl min-h-screen'>
         <div className='h-80 overflow-hidden lg:absolute lg:h-full lg:w-1/2 lg:px-4 xl:px-8'>
           <Image

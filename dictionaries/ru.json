@@ -167,11 +167,10 @@
     "profile": "profile",
     "control_information": "control my information",
     "registeration": "registeration",
-    "a_key_partner_and_sponsor":"Ключевой партнер и спонсор",
-    "investment_opportunities":"Инвестиционные возможности",
-   "participant_in_events":"Участник мероприятий",
-    "seminar_during_the_exhibition":"Семинар во время выставки",
-
+    "a_key_partner_and_sponsor": "Ключевой партнер и спонсор",
+    "investment_opportunities": "Инвестиционные возможности",
+    "participant_in_events": "Участник мероприятий",
+    "seminar_during_the_exhibition": "Семинар во время выставки",
     "mobile": "mobile",
     "whatsapp": "whatsapp",
     "facebook": "facebook",
@@ -192,6 +191,11 @@
     "company": "company",
     "role": "role",
     "country": "country",
-    "more_details": "more details"
+    "more_details": "more details",
+    "upgrade_your_account": "upgrade your account",
+    "back": "back",
+    "membership_features": "membership features",
+    "get_access_now_there_is_offer": "get access now there is offer",
+    "subscribe_now_to_book_ur_place": "subscribe now to book ur place"
   }
 }

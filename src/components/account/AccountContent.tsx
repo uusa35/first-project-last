@@ -26,7 +26,7 @@ import {
   showErrorToastMessage,
   showSuccessToastMessage,
 } from "@/redux/slices/toastMessageSlice";
-import { get, map, omit, toString } from "lodash";
+import { get, map, omit, toNumber, toString } from "lodash";
 import InputError from "@/components/InputError";
 import { TextEditor } from "@/components/TextEditor";
 import InputLabel from "@/components/InputLabel";
@@ -35,6 +35,8 @@ import LoadingSpinner from "../LoadingSpinner";
 import Image from "next/image";
 import { useLazyUploadImagesQuery } from "@/redux/api";
 import Select from "react-select";
+import Link from "next/link";
+import { useParams, useSearchParams } from "next/navigation";
 
 type Inputs = {
   username: string;
@@ -70,7 +72,9 @@ type Props = {
   categories: AppQueryResult<Category[]>;
 };
 export default function ({ element, countries, categories }: Props) {
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const searchParams = useSearchParams();
+  const activeTab = searchParams?.get("active_tab") ?? "0";
+  // const [selectedIndex, setSelectedIndex] = useState(0);
   const trans: { [key: string]: string } = useContext(MainContext);
   const {
     appSetting: { isLoading },
@@ -152,7 +156,7 @@ export default function ({ element, countries, categories }: Props) {
         en: user?.aboutus?.en ?? element?.aboutus?.en ?? "",
         ru: user?.aboutus?.ru ?? element?.aboutus?.ru ?? "",
       },
-      address: [],
+      address: "",
       image: ``,
       images: [],
     },
@@ -188,10 +192,8 @@ export default function ({ element, countries, categories }: Props) {
 
   const handleImages = async (imagesGroup: any) => {
     if (imagesGroup.length > 1 && imagesGroup.length <= 10) {
-      console.log("inside");
       let formData = new FormData();
       for (let i = 0; i < imagesGroup.length; i++) {
-        console.log("i", i);
         formData.append(`images[${i}]`, imagesGroup[i]);
       }
       formData.append("model", "user");
@@ -211,38 +213,41 @@ export default function ({ element, countries, categories }: Props) {
       vertical={true}
       as={`div`}
       className={`flex flex-col md:flex-row p-3 md:p-0`}
-      selectedIndex={selectedIndex}
-      onChange={setSelectedIndex}>
+      selectedIndex={toNumber(activeTab)}>
       <Tab.List
         className={`flex flex-col justify-start items-center w-full md:w-1/3 p-6 bg-expo-light gap-y-6 `}
         as={"div"}>
         <Tab className={`flex w-full  justify-start items-center`}>
-          <div className='flex flex-row justify-start items-center gap-x-4'>
+          <Link
+            href={`?active_tab=0`}
+            className='flex flex-row justify-start items-center gap-x-4'>
             <div className='p-4 bg-white rounded-md shadow-md ring ring-gray-200'>
               <ArrowsPointingOutIcon className='w-8 h-8 text-gray-800' />
             </div>
             <div
               className={`flex flex-col justify-start items-start ${
-                selectedIndex === 0 ? "text-expo-dark" : "text-gray-400"
+                activeTab === "0" ? "text-expo-dark" : "text-gray-400"
               } `}>
               <div>Tab Title 1</div>
               <div>Tab Description 1</div>
             </div>
-          </div>
+          </Link>
         </Tab>
-        <Tab className={`flex w-full  justify-start items-center`}>
-          <div className='flex flex-row justify-start items-center gap-x-4'>
+        <Tab className={`flex w-full justify-start items-center`}>
+          <Link
+            href={`?active_tab=1`}
+            className='flex flex-row justify-start items-center gap-x-4'>
             <div className='p-4 bg-white rounded-md shadow-lg'>
               <ArrowsPointingOutIcon className='w-8 h-8 ' />
             </div>
             <div
               className={`flex flex-col justify-start items-start ${
-                selectedIndex === 1 ? "text-expo-dark" : "text-gray-400"
+                activeTab === "1" ? "text-expo-dark" : "text-gray-400"
               } `}>
               <div>Tab Title 1</div>
               <div>Tab Description 1</div>
             </div>
-          </div>
+          </Link>
         </Tab>
       </Tab.List>
       <Tab.Panels as={"div"} className={`flex w-full md:w-2/3 p-4 flex-col`}>

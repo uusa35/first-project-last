@@ -28,7 +28,7 @@ export const appLinks = {
         `/${lang}/login`,
     register: (lang: Locale['lang'], role: Role['name']) =>
         `/${lang}/register/${role}`,
-    account: (lang: Locale['lang'], role: Role['name'], id: string, active_tab?: string) =>
+    account: (lang: Locale['lang'], role: Role['name'], id: number, active_tab?: number) =>
         `/${lang}/account/${role}/${id}?active_tab=${active_tab ?? 1}`,
     forgetPassword: (lang: Locale['lang']) =>
         `/${lang}/forgot/password`,

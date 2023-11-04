@@ -3,13 +3,15 @@ import * as React from "react";
 import { Locale } from "@/types/index";
 import Image from "next/image";
 import JoinusBg from "@/appImages/home/joinus.jpg";
+import { appLinks } from "@/src/links";
 
 type Props = {
   trans: { [key: string]: string };
   lang: Locale["lang"];
+  isAuth: boolean;
 };
 
-export function RegisterAs({ trans, lang }: Props) {
+export function RegisterAs({ trans, lang, isAuth }: Props) {
   return (
     <div className='relative bg-expo-green capitalize'>
       <div className='relative h-80 overflow-hidden bg-expo-green md:absolute md:left-0 md:h-full md:w-1/3 lg:w-1/2'>
@@ -54,25 +56,23 @@ export function RegisterAs({ trans, lang }: Props) {
           <p className='mt-6 text-base leading-8 line-clamp-2 text-gray-800'>
             {trans.get_to_know_all_kind_of_subscriptions_and_sponsorships}
           </p>
-          <div className="mt-8 w-full">
+          {/* links */}
+          <div className='mt-8 w-full'>
             <Link
-              href={`/${lang}/register/company`}
-              className="inline-flex justify-center btn-default w-full"
-            >
+              href={`${appLinks.register(lang, "company")}`}
+              className='inline-flex justify-center btn-default w-full'>
               {trans.register_as_subscription}
             </Link>
           </div>
-          <div className="grid grid-cols-2 gap-4 mt-2">
+          <div className='grid grid-cols-2 gap-4 mt-2'>
             <Link
-              className="text-center btn-dark-hover"
-              href={`/${lang}/register/company`}
-            >
+              className='text-center btn-dark-hover'
+              href={`${appLinks.register(lang, "company")}`}>
               {trans.register_as_sponsorship}
             </Link>
             <Link
-              className="text-center btn-dark-hover"
-              href={`/${lang}/register/visitor`}
-            >
+              className='text-center btn-dark-hover'
+              href={`${appLinks.register(lang, "visitor")}`}>
               {trans.register_as_visitor}
             </Link>
           </div>

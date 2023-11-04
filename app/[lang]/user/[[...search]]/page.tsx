@@ -48,19 +48,13 @@ export default async function UserIndex({
         lang={lang}
         trans={trans}
         showSearchBar={false}
-        currentModule={`user?membership=${
-          (searchParams as { [key: string]: string }).membership ||
-          "subscribtion"
-        }`}
+        currentModule={`user?`}
+        searchParams={searchParams}
       />
     );
 
   return (
-    <MainContextLayout
-      trans={trans}
-      lang={lang}
-      searchParams={searchParams}
-      setting={setting}>
+    <MainContextLayout trans={trans} lang={lang} setting={setting}>
       <main className='relative isolate mx-auto max-w-7xl min-h-screen'>
         {/* Image section */}
         <div className='mt-8 sm:mt-8 xl:mx-auto xl:max-w-7xl'>

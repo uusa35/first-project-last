@@ -6,7 +6,6 @@ import {
   showErrorToastMessage,
   showSuccessToastMessage,
 } from "@/redux/slices/toastMessageSlice";
-import { setToken } from "@/src/constants";
 import { appLinks } from "@/src/links";
 import { Locale } from "@/types/index";
 import Link from "next/link";
@@ -18,6 +17,7 @@ import { loginSchema } from "@/src/validations";
 import { enableLoading } from "@/redux/slices/settingSlice";
 import { MainContext } from "@/layouts/MainContentLayout";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import { setToken } from "@/app/actions";
 
 type Props = {
   lang: Locale["lang"];
@@ -50,13 +50,11 @@ export default function ({ lang }: Props) {
 
   const onSubmit: SubmitHandler<Inputs> = async (body) => {
     dispatch(enableLoading());
-    await triggerLogin(body).then((r: any) => {
+    await triggerLogin(body, false).then((r: any) => {
       if (r && r.data) {
-        dispatch(showSuccessToastMessage({ content: trans.process_success }));
         dispatch(setAuth(r.data));
         setToken(r.data.api_token);
-        router.refresh();
-        return router.push(`/${lang}`);
+        router.replace(`/${lang}`);
       } else if (r && r.error && r.error.data) {
         dispatch(
           showErrorToastMessage({

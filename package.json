@@ -31,13 +31,11 @@
     "@tailwindcss/typography": "^0.5.10",
     "@types/cookie": "^0.5.2",
     "@types/cookies": "^0.7.9",
-    "@types/isomorphic-fetch": "^0.0.38",
     "@types/js-cookie": "^3.0.2",
     "@types/jsonwebtoken": "^9.0.0",
     "@types/lodash": "^4.14.191",
     "@types/negotiator": "^0.6.1",
     "@types/node": "20.5.0",
-    "@types/node-fetch": "^2.6.7",
     "@types/pluralize": "^0.0.29",
     "@types/query-string": "6.3.0",
     "@types/react": "18.2.20",
@@ -67,19 +65,17 @@
     "i18next-browser-languagedetector": "^7.0.1",
     "i18next-http-backend": "^2.1.1",
     "isomorphic-dompurify": "^1.9.0",
-    "isomorphic-fetch": "^3.0.0",
     "js-cookie": "^3.0.1",
     "js-sha256": "^0.10.1",
     "moment": "^2.29.4",
     "negotiator": "^0.6.3",
-    "next": "^13.5.4",
+    "next": "^14.0.1",
     "next-i18next": "^14.0.3",
     "next-images": "^1.8.4",
     "next-intl": "^2.19.1",
     "next-plugin-svgr": "^1.1.4",
     "next-redux-wrapper": "^8.1.0",
     "nextjs-progressbar": "^0.0.16",
-    "node-fetch": "^3.3.2",
     "pluralize": "^8.0.0",
     "postcss": "8.4.27",
     "query-string": "^8.1.0",
@@ -131,5 +127,8 @@
     "prettier-plugin-tailwindcss": "^0.5.2",
     "utf-8-validate": "^6.0.3",
     "ws": "^8.14.2"
+  },
+  "engines": {
+    "node": "21.x"
   }
 }
