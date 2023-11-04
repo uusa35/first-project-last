@@ -15,7 +15,7 @@ import { useContext } from "react";
 type InputFields = {
   email: string;
 };
-export function NewsLetters() {
+export default function () {
   const trans: { [key: string]: string } = useContext(MainContext);
   const dispatch = useAppDispatch();
   const {

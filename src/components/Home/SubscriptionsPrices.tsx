@@ -13,7 +13,7 @@ type Props = {
   isAuth: boolean;
 };
 
-export function SubscriptionsPrices({
+export default function ({
   trans,
   subscriptions,
   lang,

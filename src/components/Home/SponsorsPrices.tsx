@@ -13,7 +13,7 @@ type Props = {
   isAuth: boolean;
 };
 
-export function SponsorsPrices({
+export default function ({
   trans,
   sponsorships,
   lang,
