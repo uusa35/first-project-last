@@ -1,7 +1,7 @@
 import { Locale } from "@/types/index";
 import { AppQueryResult, Post } from "@/types/queries";
 import * as React from "react";
-import PostCard from "../post/PostCard";
+import PostCard from "@/components/post/PostCard";
 
 type Props = {
   trans: { [key: string]: string };

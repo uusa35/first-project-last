@@ -1,8 +1,6 @@
 import Link from "next/link";
-import { CheckIcon } from "@heroicons/react/20/solid";
 import * as React from "react";
-import { AppQueryResult, Membership, User } from "@/types/queries";
-import { Locale } from "@/types/index";
+import { AppQueryResult, User } from "@/types/queries";
 import Image from "next/image";
 
 type Props = {
