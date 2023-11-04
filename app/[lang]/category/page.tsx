@@ -16,6 +16,7 @@ export async function generateMetadata({ params }: Props) {
   const { trans } = await getDictionary(params.lang);
   return {
     title: trans.aboutus,
+    description: trans.aboutus,
   };
 }
 

@@ -93,7 +93,7 @@ export default async function ({ params: { lang, id } }: Props) {
         <BackBtn />
         <div className='bg-white py-12 sm:py-22'>
           <div className='mx-auto max-w-7xl px-6 lg:px-8'>
-            <div className='mx-auto max-w-2xl sm:text-center'>
+            <div className='mx-auto max-w-2xl text-center'>
               <h2 className='text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl'>
                 {membership.name}
               </h2>
@@ -117,7 +117,7 @@ export default async function ({ params: { lang, id } }: Props) {
                 <div className='p-8 sm:p-10 lg:flex-auto'>
                   <h3
                     className='text-2xl font-bold tracking-tight text-gray-900'
-                    style={{ color: `${membership.color} important;` }}>
+                    style={{ color: `${membership.color}` }}>
                     {membership.name}
                   </h3>
 
@@ -181,7 +181,7 @@ export default async function ({ params: { lang, id } }: Props) {
                           href={appLinks.cartIndex(lang, membership.id)}
                           className={`mt-10 block w-full rounded-md btn-default`}
                           style={{
-                            backgroundColor: `${membership.color} important;`,
+                            backgroundColor: `${membership.color}`,
                           }}>
                           {trans.subscribe_now}
                         </Link>
@@ -190,7 +190,7 @@ export default async function ({ params: { lang, id } }: Props) {
                           href={appLinks.login(lang)}
                           className={`mt-10 block w-full rounded-md btn-default `}
                           style={{
-                            backgroundColor: `${membership.color} important;`,
+                            backgroundColor: `${membership.color}`,
                           }}>
                           {trans.subscribe_now}
                         </Link>
