@@ -18,6 +18,13 @@ export async function generateMetadata({ params }: Props) {
   const { trans } = await getDictionary(params.lang);
   return {
     title: trans.contactus,
+    description: trans.contactus,
+    openGraph: {
+      title: trans.contactus,
+      description: trans.contactus,
+      locale: params.lang,
+      type: "website",
+    },
   };
 }
 
@@ -28,11 +35,7 @@ export default async function ({ params: { lang } }: Props) {
   ]);
 
   return (
-    <MainContextLayout
-      trans={trans}
-      lang={lang}
-      
-      setting={setting}>
+    <MainContextLayout trans={trans} lang={lang} setting={setting}>
       <div className='relative bg-white mx-auto max-w-7xl min-h-screen capitalize'>
         <div
           className='h-full bg-local relative lg:absolute lg:inset-0 lg:ltr:left-1/2 lg:rtl:right-1/2'

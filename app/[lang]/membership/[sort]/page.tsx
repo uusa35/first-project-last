@@ -22,6 +22,13 @@ export async function generateMetadata({ params }: Props) {
   const { trans } = await getDictionary(params.lang);
   return {
     title: trans[params.sort],
+    description: trans.get_to_know_all_kind_of_subscriptions_and_sponsorships,
+    openGraph: {
+      title: trans[params.sort],
+      description: trans.get_to_know_all_kind_of_subscriptions_and_sponsorships,
+      locale: params.lang,
+      type: "website",
+    },
   };
 }
 

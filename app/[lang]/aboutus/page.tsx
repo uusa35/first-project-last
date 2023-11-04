@@ -16,6 +16,12 @@ export async function generateMetadata({ params }: Props) {
   return {
     title: trans.aboutus,
     description: trans.aboutus,
+    openGraph: {
+      title: trans.aboutus,
+      description: trans.aboutus,
+      locale: params.lang,
+      type: "website",
+    },
   };
 }
 
