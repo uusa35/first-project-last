@@ -60,7 +60,6 @@ export default async function ({
     <MainContextLayout
       trans={trans}
       lang={lang}
-      
       setting={setting}>
       <main className='relative isolate mx-auto max-w-7xl min-h-screen p-3 xl:p-0 space-y-4'>
         <AccountSteps />
@@ -69,7 +68,7 @@ export default async function ({
           countries={countries}
           categories={categories}
         />
-        <form className={``}>
+        {/* <form className={``}>
           <div className='space-y-12'>
             <div className='grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3'>
               <div>
@@ -476,7 +475,7 @@ export default async function ({
               Save
             </button>
           </div>
-        </form>
+        </form> */}
       </main>
     </MainContextLayout>
   );

@@ -70,19 +70,21 @@ export default function ({ lang }: Props) {
       <LoadingSpinner isLoading={isLoading} />
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className={`space-y-4 ${isLoading && "hidden"}`}>
+        className={`space-y-4 ${isLoading && "hidden"}`}
+      >
         <div>
           <label
-            htmlFor='email'
-            className='block text-sm font-medium leading-6 text-gray-900 capitalize'>
+            htmlFor="email"
+            className="block text-sm font-medium leading-6 text-gray-900 capitalize"
+          >
             {trans.email_address}
           </label>
-          <div className='mt-2'>
+          <div className="mt-2">
             <input
-              id='email'
+              id="email"
               {...register("email")}
-              type='email'
-              className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6'
+              type="email"
+              className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
             />
             {errors?.email?.message && (
               <span className={`text-red-700 text-xs capitalize`}>
@@ -94,17 +96,18 @@ export default function ({ lang }: Props) {
 
         <div>
           <label
-            htmlFor='password'
-            className='block text-sm font-medium leading-6 text-gray-900 capitalize'>
+            htmlFor="password"
+            className="block text-sm font-medium leading-6 text-gray-900 capitalize"
+          >
             {trans.password}
           </label>
-          <div className='mt-2'>
+          <div className="mt-2">
             <input
-              id='password'
+              id="password"
               {...register("password")}
-              type='password'
-              autoComplete='current-password'
-              className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6'
+              type="password"
+              autoComplete="current-password"
+              className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
             />
             {errors?.password?.message && (
               <span className={`text-red-700 text-xs capitalize`}>
@@ -114,11 +117,12 @@ export default function ({ lang }: Props) {
           </div>
         </div>
 
-        <div className='flex items-center justify-between'>
-          <div className='text-sm leading-6'>
+        <div className="flex items-center justify-between">
+          <div className="text-sm leading-6">
             <Link
               href={appLinks.forgetPassword(lang)}
-              className='font-semibold text-expo-dark hover:text-green-700 capitalize'>
+              className="font-semibold text-expo-dark hover:text-green-700 capitalize"
+            >
               {trans.forgot_password}
             </Link>
           </div>
@@ -126,24 +130,32 @@ export default function ({ lang }: Props) {
 
         <div>
           <button
-            type='submit'
-            className='flex w-full justify-center btn-default capitalize'>
+            type="submit"
+            className="flex w-full justify-center btn-default capitalize"
+          >
             {trans.sign_in}
           </button>
         </div>
       </form>
 
-      <div className='flex justify-center gap-x-1 mt-4'>
+      <div className="flex flex-col justify-center gap-x-1 mt-4">
         <div>
-          <p className=' text-sm leading-6 text-gray-700'>
+          <p className=" text-sm leading-6 text-gray-700">
             {trans.Dont_have_an_account}
           </p>
         </div>
 
         <Link
-          className=' text-sm leading-6 text-expo-dark'
-          href={appLinks.register(lang, "visitor")}>
-          <p>{trans.create_an_account}</p>
+          className=" text-sm leading-6 text-expo-dark"
+          href={appLinks.register(lang, "visitor")}
+        >
+          <p>{trans.create_an_account_as_visitor}</p>
+        </Link>
+        <Link
+          className=" text-sm leading-6 text-expo-dark"
+          href={appLinks.register(lang, "company")}
+        >
+          <p>{trans.create_an_account_as_subscription}</p>
         </Link>
       </div>
     </div>
