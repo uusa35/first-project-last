@@ -91,11 +91,11 @@ export default async function ({ params: { lang, id } }: Props) {
         <BackBtn />
         <div className='bg-white py-12 sm:py-22'>
           <div className='mx-auto max-w-7xl px-6 lg:px-8'>
-            <div className='mx-auto max-w-2xl text-center'>
-              <h2 className='text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl'>
+            <div className='mx-auto max-w-2xl sm:text-center'>
+              <h2 className='text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl capitalize'>
                 {membership.name}
               </h2>
-              <p className='mt-6 text-lg leading-8 text-gray-600'>
+              <p className='mt-6 text-lg leading-8 text-gray-600 capitalize'>
                 {membership.caption}
               </p>
             </div>
@@ -136,7 +136,7 @@ export default async function ({ params: { lang, id } }: Props) {
                 <div className='-mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink-0'>
                   <div className='rounded-2xl bg-gray-50 py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16'>
                     <div className='mx-auto max-w-xs px-8'>
-                      <p className='text-base font-semibold text-gray-600'>
+                      <p className='text-base font-semibold text-gray-600 capitalize'>
                         {trans.subscribe_now_to_book_ur_place}
                       </p>
                       {membership.on_sale && (
@@ -169,7 +169,7 @@ export default async function ({ params: { lang, id } }: Props) {
                         </span>
                         <span
                           className={
-                            "text-gray-600 text-lg font-semibold leading-6"
+                            "text-gray-600 text-lg font-semibold leading-6 uppercase"
                           }>
                           {country[0].currency_symbol}
                         </span>
@@ -177,7 +177,7 @@ export default async function ({ params: { lang, id } }: Props) {
                       {token && token.value ? (
                         <Link
                           href={appLinks.cartIndex(lang, membership.id)}
-                          className={`mt-10 block w-full rounded-md btn-default`}
+                          className={`mt-10 block w-full rounded-md btn-default capitalize`}
                           style={{
                             backgroundColor: `${membership.color}`,
                           }}>
@@ -186,7 +186,7 @@ export default async function ({ params: { lang, id } }: Props) {
                       ) : (
                         <Link
                           href={appLinks.login(lang)}
-                          className={`mt-10 block w-full rounded-md btn-default `}
+                          className={`mt-10 block w-full rounded-md btn-default capitalize`}
                           style={{
                             backgroundColor: `${membership.color}`,
                           }}>
@@ -195,7 +195,7 @@ export default async function ({ params: { lang, id } }: Props) {
                       )}
 
                       {membership.on_sale && (
-                        <p className='mt-6 text-xs leading-5 text-gray-600'>
+                        <p className='mt-6 text-xs leading-5 text-gray-600 capitalize'>
                           {trans.get_access_now_there_is_offer}
                         </p>
                       )}

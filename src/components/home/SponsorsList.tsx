@@ -22,7 +22,7 @@ export default function ({ trans, sponsors }: Props) {
                 <Link key={s.id} href={`/user/${s.id}?slug=${s.name}`}>
                   <Image
                     key={i}
-                    className='col-span-2 max-h-[100px] w-full object-contain lg:col-span-1'
+                    className='col-span-2 max-h-[100px] w-full object-contain lg:col-span-1 rounded-sm'
                     src={s.image}
                     alt={s.name}
                     width={200}
