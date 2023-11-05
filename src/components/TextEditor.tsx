@@ -28,7 +28,7 @@ export function TextEditor({
       defaultValue={defaultValue}
       onChange={(e) => handleChange(e)}
       setOptions={{
-        height: `100`,
+        height: `200`,
         buttonList: buttonList.complex,
       }}
     />
