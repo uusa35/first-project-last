@@ -15,8 +15,16 @@ type Props = {
 export async function generateMetadata({ params }: Props) {
   const { trans } = await getDictionary(params.lang);
   return {
-    title: trans.aboutus,
-    description: trans.aboutus,
+    title: trans.categories,
+    description:
+      trans.through_this_section_find_out_all_companies_related_to_your_interested_field,
+    openGraph: {
+      title: trans.categories,
+      description:
+        trans.through_this_section_find_out_all_companies_related_to_your_interested_field,
+      locale: params.lang,
+      type: "website",
+    },
   };
 }
 

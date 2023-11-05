@@ -177,7 +177,7 @@ export default async function ({ params: { lang, id } }: Props) {
                       {token && token.value ? (
                         <Link
                           href={appLinks.cartIndex(lang, membership.id)}
-                          className={`mt-10 block w-full rounded-md btn-default capitalize`}
+                          className={`mt-10 block w-full rounded-md btn-default capitalize hover:opacity-80`}
                           style={{
                             backgroundColor: `${membership.color}`,
                           }}>
@@ -186,7 +186,7 @@ export default async function ({ params: { lang, id } }: Props) {
                       ) : (
                         <Link
                           href={appLinks.login(lang)}
-                          className={`mt-10 block w-full rounded-md btn-default capitalize`}
+                          className={`mt-10 block w-full rounded-md btn-default capitalize hover:opacity-80`}
                           style={{
                             backgroundColor: `${membership.color}`,
                           }}>
