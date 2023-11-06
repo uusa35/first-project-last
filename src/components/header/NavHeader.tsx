@@ -106,8 +106,8 @@ export default function ({ lang, mainPages, setting }: Props) {
       <nav
         className={` ${
           stickyEnabled
-            ? `flex md:hidden transition-all transform`
-            : `flex transition-all transform`
+            ? `flex opacity-100 md:opacity-0 md:hidden transition-all transform `
+            : `flex transition-all transform `
         }  items-center  justify-between `}
         aria-label='Global'>
         <div className=' lg:hidden xl:flex-1'>
@@ -151,7 +151,7 @@ export default function ({ lang, mainPages, setting }: Props) {
       </nav>
 
       <nav
-        className='hidden lg:flex  items-center justify-between  capitalize py-4'
+        className='hidden lg:flex  items-center justify-between  capitalize py-4 pt-8'
         aria-label='Global'>
         <div className='flex lg:flex-1 '></div>
         <div className='flex lg:hidden '>
