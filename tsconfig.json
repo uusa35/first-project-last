@@ -30,9 +30,6 @@
       "@/components/*": [
         "./src/components/*"
       ],
-      "@/widgets/*": [
-        "./src/components/widgets/*"
-      ],
       "@/redux/*": [
         "./src/redux/*"
       ],
@@ -45,9 +42,6 @@
       "@/appImages/*": [
         "./public/images/*"
       ],
-      "@/hooks/*": [
-        "./src/hooks/*"
-      ],
       "@/styles/*": [
         "./src/styles/*"
       ],
@@ -56,9 +50,6 @@
       ],
       "@/src": [
         "./src/*"
-      ],
-      "@/pages/*": [
-        "./pages/*"
       ],
       "@/utils/*": [
         "./utils/*"

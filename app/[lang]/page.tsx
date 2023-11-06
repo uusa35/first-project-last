@@ -21,15 +21,15 @@ import {
   User,
 } from "@/types/queries";
 import { getCountries } from "@/utils/country";
-import { Figures } from "@/components/home/Figures";
-import { NewsLetters } from "@/components/home/NewsLetters";
-import { LatestNews } from "@/components/home/LatestNews";
-import { SubscriptionsPrices } from "@/components/home/SubscriptionsPrices";
-import { SearchBar } from "@/components/home/SearchBar";
-import { CategoriesList } from "@/components/home/CategoriesList";
-import { RegisterAs } from "@/components/home/RegisterAs";
-import { SponsorsList } from "@/components/home/SponsorsList";
-import { SponsorsPrices } from "@/components/home/SponsorsPrices";
+import Figures from "@/components/home/Figures";
+import NewsLetters from "@/components/home/NewsLetters";
+import LatestNews from "@/components/home/LatestNews";
+import SubscriptionsPrices from "@/components/home/SubscriptionsPrices";
+import SearchBar from "@/components/home/SearchBar";
+import CategoriesList from "@/components/home/CategoriesList";
+import RegisterAs from "@/components/home/RegisterAs";
+import SponsorsList from "@/components/home/SponsorsList";
+import SponsorsPrices from "@/components/home/SponsorsPrices";
 import { MainGallery } from "@/components/home/MainGallery";
 import { cookies } from "next/headers";
 

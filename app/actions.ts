@@ -17,6 +17,14 @@ export async function setToken(value: string) {
     });
 }
 
+export async function setRole(value: string) {
+    cookies().set({
+        name: 'role',
+        value,
+        secure: process.env.NODE_ENV === 'production',
+    });
+}
+
 export async function setLang(value: string) {
     cookies().set({
         name: 'NEXT_LOCALE',
@@ -27,5 +35,6 @@ export async function setLang(value: string) {
 
 export async function deleteToken() {
     cookies().delete('token');
+    cookies().delete('role');
 }
 

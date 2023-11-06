@@ -4,10 +4,9 @@ import { getDictionary } from "@/lib/dictionary";
 import { getSetting } from "@/utils/setting";
 import AboutusImage from "@/appImages/aboutus/banner.jpg";
 import Image from "next/image";
-import DOMPurify from "isomorphic-dompurify";
 import { AppQueryResult, Category, Setting } from "@/types/queries";
 import { getCategories } from "@/utils/category";
-import { CategoriesList } from "@/components/home/CategoriesList";
+import CategoriesList from "@/components/home/CategoriesList";
 
 type Props = {
   params: { lang: Locale["lang"] };
@@ -16,7 +15,16 @@ type Props = {
 export async function generateMetadata({ params }: Props) {
   const { trans } = await getDictionary(params.lang);
   return {
-    title: trans.aboutus,
+    title: trans.categories,
+    description:
+      trans.through_this_section_find_out_all_companies_related_to_your_interested_field,
+    openGraph: {
+      title: trans.categories,
+      description:
+        trans.through_this_section_find_out_all_companies_related_to_your_interested_field,
+      locale: params.lang,
+      type: "website",
+    },
   };
 }
 
@@ -33,16 +41,16 @@ export default async function ({ params: { lang } }: Props) {
 
   return (
     <MainContextLayout trans={trans} lang={lang} setting={setting}>
-      <main className="relative isolate mx-auto max-w-7xl min-h-screen">
+      <main className='relative isolate mx-auto max-w-7xl min-h-screen'>
         {/* Image section */}
-        <div className="mt-8 sm:mt-8 xl:mx-auto xl:max-w-7xl">
-          <div className="absolute left-10 top-10"></div>
-          <div className="absolute w-full lg:max-w-6xl flex flex-col lg:flex-row  justify-center lg:justify-start items-center top-0 lg:top-32 bg-stone/60 lg:rtl:right-10 lg:ltr:left-10 p-8 text-white  gap-4  rounded-md">
-            <div className="flex flex-col justify-center lg:justify-start items-center lg:items-start gap-4 text-center rtl:text-right ltr:text-left">
-              <div className="text-2xl lg:text-4xl capitalize drop-shadow-4xl">
+        <div className='mt-8 sm:mt-8 xl:mx-auto xl:max-w-7xl'>
+          <div className='absolute left-10 top-10'></div>
+          <div className='absolute w-full lg:max-w-6xl flex flex-col lg:flex-row  justify-center lg:justify-start items-center top-0 lg:top-32 bg-stone/60 lg:rtl:right-10 lg:ltr:left-10 p-8 text-white  gap-4  rounded-md'>
+            <div className='flex flex-col justify-center lg:justify-start items-center lg:items-start gap-4 text-center rtl:text-right ltr:text-left'>
+              <div className='text-2xl lg:text-4xl capitalize drop-shadow-4xl'>
                 {setting.name}
               </div>
-              <div className="text-lg lg:text-xl capitalize drop-shadow-4xl">
+              <div className='text-lg lg:text-xl capitalize drop-shadow-4xl'>
                 {setting.caption}
               </div>
             </div>
@@ -52,13 +60,13 @@ export default async function ({ params: { lang } }: Props) {
             fill={false}
             src={AboutusImage}
             alt={setting.name}
-            className="aspect-[9/3] w-full object-cover xl:rounded-lg"
+            className='aspect-[9/3] w-full object-cover xl:rounded-lg'
           />
         </div>
 
         {/* Content section */}
-        <div className="mx-auto mt-8 max-w-7xl px-6 lg:px-8 pb-16">
-          <div className="mx-auto  lg:mx-0 lg:max-w-none">
+        <div className='mx-auto mt-8 max-w-7xl px-6 lg:px-8 pb-16'>
+          <div className='mx-auto  lg:mx-0 lg:max-w-none'>
             <CategoriesList
               showMore={false}
               lang={lang}

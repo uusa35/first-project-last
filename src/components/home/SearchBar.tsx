@@ -13,7 +13,7 @@ type InputFields = {
   search: string;
 };
 
-export function SearchBar({ lang }: Props) {
+export default function ({ lang }: Props) {
   const [searchKey, setSearchKey] = useState<string>("");
   const router = useRouter();
   const trans: { [key: string]: string } = useContext(MainContext);

@@ -15,6 +15,13 @@ export async function generateMetadata({ params }: Props) {
   const { trans } = await getDictionary(params.lang);
   return {
     title: trans.aboutus,
+    description: trans.aboutus,
+    openGraph: {
+      title: trans.aboutus,
+      description: trans.aboutus,
+      locale: params.lang,
+      type: "website",
+    },
   };
 }
 
@@ -25,11 +32,7 @@ export default async function ({ params: { lang } }: Props) {
   ]);
 
   return (
-    <MainContextLayout
-      trans={trans}
-      lang={lang}
-      
-      setting={setting}>
+    <MainContextLayout trans={trans} lang={lang} setting={setting}>
       <main className='relative isolate mx-auto max-w-7xl min-h-screen'>
         {/* Image section */}
         <div className='mt-8 sm:mt-8 xl:mx-auto xl:max-w-7xl'>

@@ -23,7 +23,14 @@ type Props = {
 export async function generateMetadata({ params }: Props) {
   const { trans } = await getDictionary(params.lang);
   return {
-    title: trans.post_index,
+    title: trans.latest_news,
+    description: trans.through_this_section_you_can_browse_the_latest_news,
+    openGraph: {
+      title: trans.latest_news,
+      description: trans.through_this_section_you_can_browse_the_latest_news,
+      locale: params.lang,
+      type: "website",
+    },
   };
 }
 
@@ -53,11 +60,7 @@ export default async function ({ params: { lang }, searchParams }: Props) {
     );
 
   return (
-    <MainContextLayout
-      trans={trans}
-      lang={lang}
-      
-      setting={setting}>
+    <MainContextLayout trans={trans} lang={lang} setting={setting}>
       <div className='container mx-auto max-w-7xl min-h-screen px-3 xl:px-0'>
         <Link
           href={`/${lang}/post/${posts.data[0].id}?slug=${posts.data[0].name}`}

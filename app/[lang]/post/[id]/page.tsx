@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: Props) {
   return {
     title: post.name,
     description: removeTags(
-      post.description ?? setting.caption ?? setting.description
+      post.caption ?? setting.caption ?? setting.description
     ),
     openGraph: {
       title: post.name,
@@ -74,11 +74,7 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
     notFound();
 
   return (
-    <MainContextLayout
-      trans={trans}
-      lang={lang}
-      
-      setting={setting}>
+    <MainContextLayout trans={trans} lang={lang} setting={setting}>
       <main className='relative isolate mx-auto max-w-7xl min-h-screen'>
         {/* Image section */}
         <div className='mt-8 sm:mt-8 xl:mx-auto xl:max-w-7xl xl:px-8'>

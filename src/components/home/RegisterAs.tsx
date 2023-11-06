@@ -11,7 +11,7 @@ type Props = {
   isAuth: boolean;
 };
 
-export function RegisterAs({ trans, lang, isAuth }: Props) {
+export default function ({ trans, lang, isAuth }: Props) {
   return (
     <div className='relative bg-expo-green capitalize'>
       <div className='relative h-80 overflow-hidden bg-expo-green md:absolute md:left-0 md:h-full md:w-1/3 lg:w-1/2'>

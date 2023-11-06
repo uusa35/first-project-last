@@ -1,8 +1,6 @@
 import Link from "next/link";
-import { CheckIcon } from "@heroicons/react/20/solid";
 import * as React from "react";
-import { AppQueryResult, Membership, User } from "@/types/queries";
-import { Locale } from "@/types/index";
+import { AppQueryResult, User } from "@/types/queries";
 import Image from "next/image";
 
 type Props = {
@@ -10,7 +8,7 @@ type Props = {
   sponsors: AppQueryResult<User[]>;
 };
 
-export function SponsorsList({ trans, sponsors }: Props) {
+export default function ({ trans, sponsors }: Props) {
   return (
     <div>
       {sponsors.data && (
@@ -24,7 +22,7 @@ export function SponsorsList({ trans, sponsors }: Props) {
                 <Link key={s.id} href={`/user/${s.id}?slug=${s.name}`}>
                   <Image
                     key={i}
-                    className='col-span-2 max-h-[100px] w-full object-contain lg:col-span-1'
+                    className='col-span-2 max-h-[100px] w-full object-contain lg:col-span-1 rounded-sm'
                     src={s.image}
                     alt={s.name}
                     width={200}

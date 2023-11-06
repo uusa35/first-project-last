@@ -17,7 +17,7 @@ import { loginSchema } from "@/src/validations";
 import { enableLoading } from "@/redux/slices/settingSlice";
 import { MainContext } from "@/layouts/MainContentLayout";
 import LoadingSpinner from "@/components/LoadingSpinner";
-import { setToken } from "@/app/actions";
+import { setRole, setToken } from "@/app/actions";
 
 type Props = {
   lang: Locale["lang"];
@@ -54,6 +54,7 @@ export default function ({ lang }: Props) {
       if (r && r.data) {
         dispatch(setAuth(r.data));
         setToken(r.data.api_token);
+        setRole(r.data.role.name);
         router.replace(`/${lang}`);
       } else if (r && r.error && r.error.data) {
         dispatch(

@@ -91,10 +91,14 @@ export default function ({
         </p>
       </div>
 
-      {isAuth && !isEmpty(deals) && (
+      {isAuth && (isEmpty(deals) || role === "visitor") && (
         <Link
           className={"w-full btn-transparent capitalize"}
-          href={appLinks.account(lang, role.name, id, 2)}>
+          href={
+            role === "visitor"
+              ? appLinks.account(lang, role.name, id, 2)
+              : appLinks.cartIndex(lang, element.id)
+          }>
           {trans.upgrade_your_account}
         </Link>
       )}
