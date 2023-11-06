@@ -207,7 +207,7 @@
     "change_account_information":"change account information",
     "modify_password":"modify password",
     "modify_your_password":"modify your password",
-    "basic_information":"basic_information",
+    "basic_information":"basic information",
     "change_your_company_information":"change your company information",
     "company_description":"company description",
     "add_information_about_your_company":"add information about your company",
@@ -225,6 +225,10 @@
     "go_to_the_payment_page":"go to the payment page",
     "View_profile":"View profile",
     "You_can_see_your_profile_from_here":"You can see your profile from here",
-    "update_information":"update information"
+    "update_information":"update information",
+    "saving_information":"saving information",
+    "current_password":"current password",
+    "new_password":"new password",
+    "new_password_comfirmation":"new password comfirmation"
   }
 }

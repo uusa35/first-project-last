@@ -1,6 +1,7 @@
 import InputError from "@/components/InputError";
 import InputLabel from "@/components/InputLabel";
 import TextInput from "@/components/TextInput";
+import { MainContext } from "@/layouts/MainContentLayout";
 import { useAppSelector } from "@/redux/hooks";
 import { updateUserSchema } from "@/src/validations";
 import { Role } from "@/types/queries";
@@ -18,12 +19,13 @@ type InputsData = {
 };
 
 type Props = {
-  trans: { [key: string]: string };
   default_data: InputsData;
   onSubmit: SubmitHandler<InputsData>;
 };
 
-export function AccountInfo({ trans, default_data, onSubmit }: Props) {
+export function AccountInfo({ default_data, onSubmit }: Props) {
+  const trans: { [key: string]: string } = React.useContext(MainContext);
+
   const {
     appSetting: { isLoading },
   } = useAppSelector((state) => state);
@@ -41,18 +43,17 @@ export function AccountInfo({ trans, default_data, onSubmit }: Props) {
     defaultValues: default_data,
   });
 
-  console.log({ errors }, getValues());
+//   console.log({ errors }, getValues());
   return (
     <Tab.Panel>
-      {/* <LoadingSpinner isLoading={isLoading} /> */}
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className={`space-y-4 ${isLoading && "hidden"}`}
+        className={`space-y-8 ${isLoading && "hidden"}`}
       >
         <h1 className="text-2xl mb-10 mt-5">{trans.update_information}</h1>
 
         {/*  username  */}
-        <div className="mb-5">
+        <div>
           <label
             htmlFor="username"
             className="block text-sm font-medium leading-6 text-gray-900 capitalize"
@@ -75,7 +76,7 @@ export function AccountInfo({ trans, default_data, onSubmit }: Props) {
         </div>
 
         {/* phone */}
-        <div className="mb-5">
+        <div>
           <InputLabel htmlFor="phone" value={trans["phone"]} aria-required />
           {/* <TextInput
             // defaultValue={getValues("phone")}
@@ -96,7 +97,7 @@ export function AccountInfo({ trans, default_data, onSubmit }: Props) {
         </div>
 
         {/* email */}
-        <div className="mb-5">
+        <div>
           <label
             htmlFor="email"
             className="block text-sm font-medium leading-6 text-gray-900 capitalize"
@@ -120,7 +121,7 @@ export function AccountInfo({ trans, default_data, onSubmit }: Props) {
         </div>
 
         {/* role */}
-        <div className="mb-5">
+        <div>
           <InputLabel htmlFor="role" value={trans.role} aria-required />
           <select
             onChange={(e) =>

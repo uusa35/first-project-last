@@ -5,8 +5,6 @@ import {
   useUpdateUserMutation,
 } from "@/redux/api/authApi";
 import { Tab } from "@headlessui/react";
-import { ArrowsPointingOutIcon } from "@heroicons/react/24/outline";
-import { ArrowBack, FourGMobiledataSharp } from "@mui/icons-material";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema, updateUserSchema } from "@/src/validations";
@@ -35,21 +33,11 @@ import LoadingSpinner from "../LoadingSpinner";
 import Image from "next/image";
 import { useLazyUploadImagesQuery } from "@/redux/api";
 import Select from "react-select";
-import Link from "next/link";
-import { useParams, usePathname, useRouter, useSearchParams } from "next/navigation";
-import { AccountTab } from "./AccountTab";
-import AccountInfoIcon from "@/appIcons/account/info.svg";
-import Password from "@/appIcons/account/password.svg";
-import Aboutus from "@/appIcons/account/about_us.svg";
-import BasicInfo from "@/appIcons/account/basic_info.svg";
-import Description from "@/appIcons/account/description.svg";
-import Links from "@/appIcons/account/links.svg";
-import Payment from "@/appIcons/account/payment.svg";
-import ShowPersonnalInfo from "@/appIcons/account/show_personal_info.svg";
-import Type from "@/appIcons/account/type.svg";
-import UploadImage from "@/appIcons/account/upload.svg";
-import Services from "@/appIcons/account/services.svg";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { AccountInfo } from "./tabs content/AccountInfo";
+import { TabList } from "./TabList";
+import { ModifyPassword } from "./tabs content/ModifyPassword";
+import BasicInfo from "./tabs content/BasicInfo";
 
 type Inputs = {
   username?: string;
@@ -78,6 +66,7 @@ type Inputs = {
   keywords?: string;
   website?: string;
   images?: [];
+  address?: string;
 };
 type Props = {
   element: User;
@@ -229,7 +218,7 @@ export default function ({ element, countries, categories }: Props) {
     }
   };
 
-  // console.log({ element, user });
+  console.log({ element, user });
   return (
     <Tab.Group
       vertical={true}
@@ -237,88 +226,7 @@ export default function ({ element, countries, categories }: Props) {
       className={`flex flex-col md:flex-row p-3 md:p-0`}
       selectedIndex={toNumber(activeTab)}
     >
-      <Tab.List
-        className={`flex flex-col justify-start items-center w-full md:w-1/3 p-6 bg-expo-light gap-y-6 `}
-        as={"div"}
-      >
-        <AccountTab
-          title={<p>{trans.account_details}</p>}
-          desc={<p>{trans.change_account_information}</p>}
-          icon={<AccountInfoIcon />}
-          active={activeTab === "0"}
-          tab_index="0"
-        />
-        <AccountTab
-          title={<p>{trans.modify_password}</p>}
-          desc={<p>{trans.modify_your_password}</p>}
-          icon={<Password />}
-          active={activeTab === "1"}
-          tab_index="1"
-        />
-        <AccountTab
-          title={<p>{trans.basic_information}</p>}
-          desc={<p>{trans.change_your_company_information}</p>}
-          icon={<BasicInfo />}
-          active={activeTab === "2"}
-          tab_index="2"
-        />
-        <AccountTab
-          title={<p>{trans.company_description}</p>}
-          desc={<p>{trans.add_information_about_your_company}</p>}
-          icon={<Description />}
-          active={activeTab === "3"}
-          tab_index="3"
-        />
-        <AccountTab
-          title={<p>{trans.company_services}</p>}
-          desc={<p>{trans.add_your_company_services}</p>}
-          icon={<Services />}
-          active={activeTab === "4"}
-          tab_index="4"
-        />
-        <AccountTab
-          title={<p>{trans.about_us}</p>}
-          desc={<p>{trans.add_an_overview_of_your_company}</p>}
-          icon={<Aboutus />}
-          active={activeTab === "5"}
-          tab_index="5"
-        />
-        <AccountTab
-          title={<p>{trans.upload_the_pictures}</p>}
-          desc={<p>{trans.upload_photos_of_your_company}</p>}
-          icon={<UploadImage />}
-          active={activeTab === "6"}
-          tab_index="6"
-        />
-        <AccountTab
-          title={<p>{trans.company_links}</p>}
-          desc={<p>{trans.enter_the_company_links}</p>}
-          icon={<Links />}
-          active={activeTab === "7"}
-          tab_index="7"
-        />
-        <AccountTab
-          title={<p>{trans.subtype}</p>}
-          desc={<p>{trans.choose_the_type_of_subscription_or_sponsorship}</p>}
-          icon={<Type />}
-          active={activeTab === "8"}
-          tab_index="8"
-        />
-        <AccountTab
-          title={<p>{trans.payment_process}</p>}
-          desc={<p>{trans.go_to_the_payment_page}</p>}
-          icon={<Payment />}
-          active={activeTab === "9"}
-          tab_index="9"
-        />
-        <AccountTab
-          title={<p>{trans.View_profile}</p>}
-          desc={<p>{trans.You_can_see_your_profile_from_here}</p>}
-          icon={<ShowPersonnalInfo />}
-          active={activeTab === "10"}
-          tab_index="10"
-        />
-      </Tab.List>
+      <TabList activeTab={activeTab} />
       <Tab.Panels as={"div"} className={`flex w-full md:w-2/3 p-4 flex-col`}>
         <LoadingSpinner isLoading={isLoading} />
         <AccountInfo
@@ -332,8 +240,36 @@ export default function ({ element, countries, categories }: Props) {
             ]),
             role: isSuccess && user ? user.role?.name : element.roles[0]?.name,
           }}
-          trans={trans}
         />
+        <ModifyPassword
+          onSubmit={onSubmit}
+          default_data={{
+            ...pick(isSuccess && user ? user : element, [
+              "id",
+              "username",
+              "phone",
+              "email",
+            ]),
+            role: isSuccess && user ? user.role?.name : element.roles[0]?.name,
+          }}
+        />
+
+        <BasicInfo
+          categories={categories.data}
+          onSubmit={onSubmit}
+          countries={countries}
+          default_data={{
+            ...pick(isSuccess && user ? user : element, [
+              "name",
+              "caption",
+              "categories",
+              "country_id",
+              "address",
+              "keywords",
+            ]),
+          }}
+        />
+
         <Tab.Panel>
           <LoadingSpinner isLoading={isLoading} />
           {/* // @eren i made most of items for you plz continue design and re-organize the file  */}

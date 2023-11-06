@@ -31,6 +31,21 @@ export const updateUserSchema = yup.object({
   username: yup.string().required(),
   phone: yup.string().min(10).max(12).required(),
   role: yup.string().required().oneOf(["company", "visitor"]),
+  name: yup
+    .object({
+      ar: yup.string().required(),
+      en: yup.string().required(),
+      ru: yup.string().required(),
+    })
+    .required(),
+  caption: yup.object({
+    ar: yup.string().required(),
+    en: yup.string().required(),
+    ru: yup.string().required(),
+  }),
+  categories: yup.array(),
+  address: yup.string().required(),
+  keywords: yup.string().nullable(),
 });
 
 export const contactusSchema = yup.object().shape({
