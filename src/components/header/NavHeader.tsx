@@ -46,6 +46,7 @@ export default function ({ lang, mainPages, setting }: Props) {
   const segment = useSelectedLayoutSegment();
   const segments = useSelectedLayoutSegments();
   const [stickyClass, setStickyClass] = useState("relative");
+  const [stickyEnabled, setStickyEnabled] = useState<boolean>(false);
   const searchParams = useSearchParams();
 
   useEffect(() => {
@@ -64,11 +65,11 @@ export default function ({ lang, mainPages, setting }: Props) {
   const stickNavbar = () => {
     if (window !== undefined) {
       let windowHeight = window.scrollY;
-      windowHeight >= 250
-        ? setStickyClass(
-            "sticky top-0 bg-white lg:bg-white/80 w-full border-b border-gray-400 max-w-full"
-          )
-        : setStickyClass("relative");
+      if (windowHeight >= 250) {
+        setStickyEnabled(true);
+      } else {
+        setStickyEnabled(false);
+      }
     }
   };
 
@@ -97,8 +98,18 @@ export default function ({ lang, mainPages, setting }: Props) {
 
   return (
     <header
-      className={` top-0 z-50 mx-auto max-w-7xl lg:py-4 px-2  ${stickyClass}`}>
-      <nav className={`flex items-center justify-between`} aria-label='Global'>
+      className={` top-0 z-50 mx-auto  max-w-7xl  px-2 transition-all ${
+        stickyEnabled
+          ? `sticky top-0 bg-white lg:bg-white/80 w-full border-b border-gray-400 max-w-full`
+          : `relative lg:pt-4`
+      }`}>
+      <nav
+        className={` ${
+          stickyEnabled
+            ? `flex md:hidden transition-all transform`
+            : `flex transition-all transform`
+        }  items-center  justify-between `}
+        aria-label='Global'>
         <div className=' lg:hidden xl:flex-1'>
           <AppLogo lang={lang} logo={setting.image} name={setting.name} />
         </div>
@@ -138,11 +149,12 @@ export default function ({ lang, mainPages, setting }: Props) {
           )}
         </div>
       </nav>
+
       <nav
-        className='hidden lg:flex items-center justify-between  capitalize my-8'
+        className='hidden lg:flex  items-center justify-between  capitalize py-4'
         aria-label='Global'>
-        <div className='flex lg:flex-1'></div>
-        <div className='flex lg:hidden'>
+        <div className='flex lg:flex-1 '></div>
+        <div className='flex lg:hidden '>
           <button
             type='button'
             className='-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700'
@@ -151,7 +163,7 @@ export default function ({ lang, mainPages, setting }: Props) {
             <Bars3Icon className='h-6 w-6' aria-hidden='true' />
           </button>
         </div>
-        <div className='hidden lg:flex lg:gap-x-8 '>
+        <div className='hidden lg:flex lg:gap-x-8  '>
           {mainPages.map((item, i) => (
             <Link
               onClick={() => dispatch(setCurrentPath(item.label))}
@@ -167,7 +179,7 @@ export default function ({ lang, mainPages, setting }: Props) {
             </Link>
           ))}
         </div>
-        <div className='hidden lg:flex lg:flex-1 lg:justify-end gap-x-4'>
+        <div className='hidden lg:flex lg:flex-1 lg:justify-end gap-x-4 '>
           {!isAuth && (
             <Link
               replace
@@ -184,7 +196,7 @@ export default function ({ lang, mainPages, setting }: Props) {
         className='lg:hidden'
         open={mobileMenuOpen}
         onClose={setMobileMenuOpen}>
-        <div className='fixed inset-0 z-50' />
+        <div className='fixed inset-0 z-50 ' />
         <Dialog.Panel className='fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10'>
           <div className='flex items-center justify-between'>
             <Link href='/' className='-m-1.5 p-1.5'>

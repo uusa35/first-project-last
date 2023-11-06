@@ -34,7 +34,7 @@ body {
     @apply text-center bg-expo-dark hover:bg-green-700 rounded-md font-semibold text-white shadow-sm px-3.5 py-2.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white;
   }
   .btn-transparent {
-        @apply text-center text-expo-dark border border-expo-dark hover:bg-expo-light rounded-md font-semibold shadow-sm px-3.5 py-2.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white;
+    @apply text-center text-expo-dark border border-expo-dark hover:bg-expo-light rounded-md font-semibold shadow-sm px-3.5 py-2.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white;
   }
   .btn-dark-hover {
     @apply text-center text-expo-dark border border-expo-dark hover:bg-expo-dark hover:text-white rounded-md font-semibold shadow-sm px-3.5 py-2.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white;
@@ -47,4 +47,8 @@ body {
 
 .material-icon-lg {
   transform: scale(2.5);
+}
+
+.stuck {
+  transition: all 0.6 ease-in-out;
 }
