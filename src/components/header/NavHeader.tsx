@@ -46,7 +46,7 @@ export default function ({ lang, mainPages, setting }: Props) {
   const segment = useSelectedLayoutSegment();
   const segments = useSelectedLayoutSegments();
   const [stickyClass, setStickyClass] = useState("relative");
-  const [stickyEnabled, setStickyEnabled] = useState<boolean>(false);
+  const [isHidden, setIsHidden] = useState<string>("");
   const searchParams = useSearchParams();
 
   useEffect(() => {
@@ -66,9 +66,15 @@ export default function ({ lang, mainPages, setting }: Props) {
     if (window !== undefined) {
       let windowHeight = window.scrollY;
       if (windowHeight >= 250) {
-        setStickyEnabled(true);
+        // setStickyEnabled(true);
+        setStickyClass(
+          "sticky top-0 lg:bg-white/80 w-full border-b border-gray-400 max-w-full"
+        );
+        setIsHidden("lg:opacity-0 ");
       } else {
-        setStickyEnabled(false);
+        // setStickyEnabled(false);
+        setStickyClass("opacity-100 ");
+        setIsHidden("");
       }
     }
   };
@@ -98,19 +104,11 @@ export default function ({ lang, mainPages, setting }: Props) {
 
   return (
     <header
-      className={` top-0 z-50 mx-auto  max-w-7xl  px-2 transition-all ${
-        stickyEnabled
-          ? `sticky top-0 bg-white lg:bg-white/80 w-full border-b border-gray-400 max-w-full`
-          : `relative lg:pt-4`
-      }`}>
+      className={`${stickyClass} top-0  bg-white z-50 mx-auto  max-w-7xl  px-2 transition-all transform-all  lg:pt-4 `}>
       <nav
-        className={` ${
-          stickyEnabled
-            ? `flex opacity-100 md:opacity-0 md:hidden transition-all transform `
-            : `flex transition-all transform `
-        }  items-center  justify-between `}
+        className={`${isHidden} flex transition-all transform  items-center  justify-between`}
         aria-label='Global'>
-        <div className=' lg:hidden xl:flex-1'>
+        <div className=' lg:hidden xl:flex-1 '>
           <AppLogo lang={lang} logo={setting.image} name={setting.name} />
         </div>
         {/* top bar */}
@@ -151,7 +149,7 @@ export default function ({ lang, mainPages, setting }: Props) {
       </nav>
 
       <nav
-        className='hidden lg:flex  items-center justify-between  capitalize py-4 pt-8'
+        className='hidden md:flex sticky border-8 transition-all transform items-center justify-between  capitalize py-4 pt-8'
         aria-label='Global'>
         <div className='flex lg:flex-1 '></div>
         <div className='flex lg:hidden '>

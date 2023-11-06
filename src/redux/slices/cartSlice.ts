@@ -39,7 +39,7 @@ const initialState: { membership: Membership, payment: PaymentFields, order: Omi
   }
 
 };
-const transactionId = toString(random(9999, 99999));
+const transactionId = toString(random(9999, 99999999));
 export const cartSlice = createSlice({
   name: 'cart',
   initialState,
