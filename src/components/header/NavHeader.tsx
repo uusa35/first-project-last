@@ -70,10 +70,10 @@ export default function ({ lang, mainPages, setting }: Props) {
         setStickyClass(
           "sticky top-0 lg:bg-white/80 w-full border-b border-gray-400 max-w-full"
         );
-        setIsHidden("lg:opacity-0 ");
+        setIsHidden("lg:opacity-0 lg:absolute lg:bottom-100");
       } else {
         // setStickyEnabled(false);
-        setStickyClass("opacity-100 ");
+        setStickyClass("opacity-100");
         setIsHidden("");
       }
     }
@@ -106,7 +106,7 @@ export default function ({ lang, mainPages, setting }: Props) {
     <header
       className={`${stickyClass} top-0  bg-white z-50 mx-auto  max-w-7xl  px-2 transition-all transform-all  lg:pt-4 `}>
       <nav
-        className={`${isHidden} flex transition-all transform  items-center  justify-between`}
+        className={`${isHidden} flex w-full bg-white transition-all transform-all  items-center  justify-between`}
         aria-label='Global'>
         <div className=' lg:hidden xl:flex-1 '>
           <AppLogo lang={lang} logo={setting.image} name={setting.name} />
@@ -149,7 +149,7 @@ export default function ({ lang, mainPages, setting }: Props) {
       </nav>
 
       <nav
-        className='hidden md:flex sticky border-8 transition-all transform items-center justify-between  capitalize py-4 pt-8'
+        className='hidden lg:flex w-full sticky top-0 transition-all transform items-center justify-between  capitalize py-4 pt-8'
         aria-label='Global'>
         <div className='flex lg:flex-1 '></div>
         <div className='flex lg:hidden '>
@@ -161,7 +161,7 @@ export default function ({ lang, mainPages, setting }: Props) {
             <Bars3Icon className='h-6 w-6' aria-hidden='true' />
           </button>
         </div>
-        <div className='hidden lg:flex lg:gap-x-8  '>
+        <div className='hidden lg:flex lg:gap-x-8'>
           {mainPages.map((item, i) => (
             <Link
               onClick={() => dispatch(setCurrentPath(item.label))}
