@@ -46,7 +46,7 @@ export default function ({ lang }: Props) {
                 // minLength={3}
                 type='text'
                 {...register("search")}
-                className='min-w-0 ps-10 flex-auto rounded-md border-0 px-3.5 py-2 h-14 text-black bg-gray-100 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-white sm:text-sm sm:leading-6 capitalize'
+                className='min-w-0 ps-10 flex-auto text-sm md:text-base rounded-md border-0 px-3.5 py-2 h-14 text-black bg-gray-100 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-white sm:text-sm sm:leading-6 capitalize'
                 placeholder={
                   trans.enter_company_name_or_the_word_u_willing_to_search
                 }
