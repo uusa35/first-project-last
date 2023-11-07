@@ -47,7 +47,7 @@ export default function ({ lang }: Props) {
           <div className='w-60 shrink rounded-xl divide-y divide-gray-100 bg-white  text-sm font-semibold leading-6 text-gray-900 shadow-lg ring-1 ring-gray-900/5'>
             {auth.role && auth.id && (
               <Link
-                className='block w-full py-2 px-4  ltr:text-left rtl:text-right hover:bg-gray-200 capitalize'
+                className='block w-full py-2 px-4 rounded-t-xl ltr:text-left rtl:text-right hover:bg-gray-200 capitalize'
                 href={appLinks.account(lang, auth.role.name, auth.id)}>
                 {trans.control_account_information}
               </Link>
@@ -59,7 +59,7 @@ export default function ({ lang }: Props) {
               {trans.back_to_home}
             </Link>
             <button
-              className='block w-full py-2 px-4  ltr:text-left rtl:text-right hover:bg-gray-200 capitalize'
+              className='block w-full py-2 px-4  rounded-b-xl ltr:text-left rtl:text-right hover:bg-gray-200 capitalize'
               onClick={() => handleLogout()}>
               {trans.logout}
             </button>

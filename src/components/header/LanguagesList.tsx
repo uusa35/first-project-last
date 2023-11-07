@@ -37,7 +37,7 @@ export default function ({ lang }: Props) {
             {locales.map((item, i: number) => (
               <Link
                 replace
-                className='block w-full py-2 px-4  ltr:text-left rtl:text-right hover:bg-gray-200 capitalize'
+                className='block w-full py-2 px-4  first:rounded-t-xl last:rounded-b-xl ltr:text-left rtl:text-right hover:bg-gray-200 capitalize'
                 key={i}
                 href={`${changePathName(lang, item, pathName)}?${
                   searchParams && searchParams.toString()
