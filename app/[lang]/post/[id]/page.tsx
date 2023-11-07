@@ -77,7 +77,7 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
     <MainContextLayout trans={trans} lang={lang} setting={setting}>
       <main className='relative isolate mx-auto max-w-7xl min-h-screen'>
         {/* Image section */}
-        <div className='mt-8 sm:mt-8 xl:mx-auto xl:max-w-7xl xl:px-8'>
+        <div className='mt-8 sm:mt-8 xl:mx-auto xl:max-w-7xl'>
           <div className='absolute left-10 top-10'>
             <span className={` text-gray-800 bg-white/50 p-4 rounded-md`}>
               {post.created_at}
