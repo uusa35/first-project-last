@@ -56,4 +56,3 @@ export async function updateUser(id: string, lang: Locale['lang'], token: string
     if (!res.ok) throw notFound();
     return res.json();
 }
-

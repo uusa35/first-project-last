@@ -67,7 +67,7 @@ export default function ({
     ),
     defaultValues: default_data,
   });
-  console.log({ default_data, errors }, getValues());
+  // console.log({ default_data, errors }, getValues());
   return (
     <Tab.Panel>
       <form

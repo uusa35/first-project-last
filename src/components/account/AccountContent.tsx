@@ -168,16 +168,22 @@ export default function ({ element, countries, categories }: Props) {
 
   const onSubmit: SubmitHandler<Inputs> = async (body: any) => {
     dispatch(enableLoading());
-    await triggerUpdateUser({ body, id: element.id })
+    await triggerUpdateUser({
+      body: {
+        ...body,
+        ...(body.address ? { address: [body.address] } : {}),
+      },
+      id: element.id,
+    })
       .then((r: any) => {
         if (r && r.data) {
           dispatch(showSuccessToastMessage({ content: trans.process_success }));
           // navigate
-          router.push(
-            `${
-              pathname + "?active_tab=" + (parseInt(activeTab) + 1).toString()
-            }`
-          );
+          // router.push(
+          //   `${
+          //     pathname + "?active_tab=" + (parseInt(activeTab) + 1).toString()
+          //   }`
+          // );
           dispatch(disableLoading());
         } else if (r && r.error && r.error.data) {
           dispatch(
@@ -218,7 +224,7 @@ export default function ({ element, countries, categories }: Props) {
     }
   };
 
-  console.log({ element, user });
+  // console.log({ element, user });
   return (
     <Tab.Group
       vertical={true}
@@ -241,18 +247,7 @@ export default function ({ element, countries, categories }: Props) {
             role: isSuccess && user ? user.role?.name : element.roles[0]?.name,
           }}
         />
-        <ModifyPassword
-          onSubmit={onSubmit}
-          default_data={{
-            ...pick(isSuccess && user ? user : element, [
-              "id",
-              "username",
-              "phone",
-              "email",
-            ]),
-            role: isSuccess && user ? user.role?.name : element.roles[0]?.name,
-          }}
-        />
+        <ModifyPassword />
 
         <BasicInfo
           categories={categories.data}

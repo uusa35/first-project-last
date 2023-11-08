@@ -227,8 +227,6 @@
     "You_can_see_your_profile_from_here":"You can see your profile from here",
     "update_information":"update information",
     "saving_information":"saving information",
-    "current_password":"current password",
-    "new_password":"new password",
-    "new_password_comfirmation":"new password comfirmation"
+    "password_confirmation":"password comfirmation"
   }
 }
