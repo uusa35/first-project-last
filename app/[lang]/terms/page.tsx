@@ -2,7 +2,7 @@ import { MainContextLayout } from "@/layouts/MainContentLayout";
 import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
 import { getSetting } from "@/utils/setting";
-import LoginImage from "@/appImages/login/section.jpg";
+import LoginImage from "@/appImages/order/banner.jpeg";
 import Image from "next/image";
 import DOMPurify from "isomorphic-dompurify";
 import { Setting } from "@/types/queries";
