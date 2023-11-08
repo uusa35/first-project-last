@@ -30,10 +30,10 @@ export default async function ({ params: { lang } }: Props) {
         {/* Image section */}
         <div className='mt-8 sm:mt-8 xl:mx-auto xl:max-w-7xl'>
           <Image
-            className='aspect-[9/4] w-full object-cover xl:rounded-lg'
+            className='aspect-[9/3] w-full object-cover xl:rounded-lg'
             width={600}
             height={1000}
-            src={LoginImage.src}
+            src={LoginImage}
             alt={setting.name}
           />
         </div>

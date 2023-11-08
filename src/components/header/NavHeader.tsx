@@ -104,7 +104,7 @@ export default function ({ lang, mainPages, setting }: Props) {
 
   return (
     <header
-      className={`${stickyClass} top-0  bg-white z-50 mx-auto  max-w-7xl  px-2 transition-all transform-all  lg:pt-4 `}>
+      className={`${stickyClass} top-0  bg-white z-50 mx-auto  max-w-7xl  px-2 lg:px-0 transition-all transform-all  lg:pt-4 `}>
       <nav
         className={`${isHidden} flex w-full bg-white transition-all transform-all  items-center  justify-between`}
         aria-label='Global'>
