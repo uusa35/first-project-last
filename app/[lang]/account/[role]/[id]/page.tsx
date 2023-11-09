@@ -58,7 +58,7 @@ export default async function ({
 
   return (
     <MainContextLayout trans={trans} lang={lang} setting={setting}>
-      <main className="relative isolate mx-auto max-w-7xl min-h-screen p-3 xl:p-0 space-y-4">
+      <main className='relative isolate mx-auto max-w-7xl min-h-screen p-3 xl:p-0 space-y-4'>
         {/* <AccountSteps /> */}
         <AccountContent
           element={user}
