@@ -46,6 +46,7 @@ export default function ({
   const trans: { [key: string]: string } = React.useContext(MainContext);
   const {
     appSetting: { isLoading },
+    locale: { lang },
   } = useAppSelector((state) => state);
   const {
     handleSubmit,
@@ -242,7 +243,7 @@ export default function ({
               <Select
                 defaultValue={map(default_data.categories, (c: any) => {
                   return {
-                    label: c?.name.en,
+                    label: c?.name[lang],
                     value: c?.id,
                   };
                 })}
