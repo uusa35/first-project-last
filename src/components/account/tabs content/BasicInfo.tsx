@@ -11,6 +11,8 @@ import Select from "react-select";
 import { get, map } from "lodash";
 import * as React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useParams } from "next/navigation";
+import { Locale } from "@/types/index";
 
 type InputsData = {
   name: {
@@ -46,8 +48,8 @@ export default function ({
   const trans: { [key: string]: string } = React.useContext(MainContext);
   const {
     appSetting: { isLoading },
-    locale: { lang },
   } = useAppSelector((state) => state);
+  const { lang }: any = useParams();
   const {
     handleSubmit,
     register,
