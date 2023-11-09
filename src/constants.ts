@@ -2,7 +2,7 @@ import { truncate, kebabCase, round } from 'lodash';
 export const baseUrl =
     process.env.NODE_ENV === "production"
         ? `https://cp.ar-expo.ru`
-        : `https://cp.ar-expo.ru`;
+        : `https://ar-expo-backend.test`;
 export const appVersion = `0.0.1`;
 export const apiUrl = `${baseUrl}/api/`;
 export const imageUrl = `https://loremflickr.com/`;

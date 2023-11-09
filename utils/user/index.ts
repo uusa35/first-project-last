@@ -2,13 +2,15 @@
 import { Locale } from '@/types/index';
 import { notFound } from 'next/navigation';
 import { NextResponse, NextRequest } from 'next/server'
+import { mainHeaders } from '@/utils/helpers';
 
 export async function getUsers(search: string, lang: Locale['lang']) {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}user?${search}`, {
         cache: "no-store",
         // next: { revalidate: 3600 },
         headers: {
-            'Accept-Language': lang
+            'Accept-Language': lang,
+            ...mainHeaders
         }
     });
     if (!res.ok) throw notFound();
@@ -19,7 +21,8 @@ export async function getUser(id: string, lang: Locale['lang']) {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}user/${id}`, {
         cache: "no-store",
         headers: {
-            'Accept-Language': lang
+            'Accept-Language': lang,
+            ...mainHeaders
         }
     });
     const text = await res.text();
@@ -36,7 +39,8 @@ export async function getAuth(token: string) {
         cache: "no-store",
         method: 'post',
         headers: {
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${token}`,
+            ...mainHeaders
         }
     });
     if (!res.ok) throw notFound();
@@ -50,7 +54,8 @@ export async function updateUser(id: string, lang: Locale['lang'], token: string
         method: 'put',
         headers: {
             'Accept-Language': lang,
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${token}`,
+            ...mainHeaders
         }
     });
     if (!res.ok) throw notFound();

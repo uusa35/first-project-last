@@ -53,10 +53,15 @@ export const convertToJson = (qs: string) => {
 
 
 
-export const removeTags = (str : string) => {
+export const removeTags = (str: string) => {
     if ((str === null) || (str === ''))
         return false;
     else
         str = str.toString();
     return str.replace(/(<([^>]+)>)/ig, '');
-} 
+}
+
+export const mainHeaders = {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+};

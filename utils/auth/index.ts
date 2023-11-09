@@ -1,5 +1,6 @@
 import { Locale } from '@/types/index';
 import { notFound } from 'next/navigation';
+import { mainHeaders } from '@/utils/helpers';
 
 export async function login(email: string, password: string, lang: Locale['lang']) {
     const query = `?email=${email}&password=${password}`;
@@ -9,12 +10,10 @@ export async function login(email: string, password: string, lang: Locale['lang'
         method: "POST",
         headers: {
             'Accept-Language': lang,
+            ...mainHeaders
         }
     });
-    if (!res.ok) {
-        // throw new Error("Failed to fetch data");
-        throw notFound();
-    }
+    if (!res.ok) throw notFound();
     return res.json()
 }
 
@@ -24,11 +23,9 @@ export async function getUser(id: string, lang: Locale['lang']) {
         method: "POST",
         headers: {
             'Accept-Language': lang,
+            ...mainHeaders
         }
     });
-    if (!res.ok) {
-        // throw new Error("Failed to fetch data");
-        throw notFound();
-    }
+    if (!res.ok) throw notFound();
     return res.json()
 }
