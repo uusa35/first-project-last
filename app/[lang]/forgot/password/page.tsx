@@ -3,8 +3,7 @@ import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
 import { getSetting } from "@/utils/setting";
 import Image from "next/image";
-import LoginImage from "@/appImages/login/section.jpg";
-import LoginContent from "@/components/login/LoginContent";
+import LoginImage from "@/appImages/order/banner.jpeg";
 import { Setting } from "@/types/queries";
 import ForgotPasswordContent from "@/components/login/ForgotPasswordContent";
 
@@ -19,11 +18,7 @@ export default async function ({
   ]);
 
   return (
-    <MainContextLayout
-      trans={trans}
-      lang={lang}
-      
-      setting={setting}>
+    <MainContextLayout trans={trans} lang={lang} setting={setting}>
       <div className='flex flex-1 mx-auto max-w-7xl min-h-screen'>
         <div className='flex flex-1 flex-col justify-start px-4 py-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24'>
           <div className='mx-auto w-full  max-w-sm  lg:w-96 space-y-6 '>
