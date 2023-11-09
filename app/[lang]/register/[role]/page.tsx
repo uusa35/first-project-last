@@ -1,12 +1,10 @@
 import { MainContextLayout } from "@/layouts/MainContentLayout";
-import { Locale, TranslationType } from "@/types/index";
+import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
 import { getSetting } from "@/utils/setting";
 import Image from "next/image";
 import RegisterImage from "@/appImages/register/sponsors-company-signup.jpg";
 import LoginImage from "@/appImages/register/visitors-signup.jpg";
-import Link from "next/link";
-import { appLinks } from "@/src/links";
 import { RegisterContent } from "@/components/register/RegisterContent";
 import { Country, Role, Setting } from "@/types/queries";
 import { getCountries } from "@/utils/country";
@@ -33,11 +31,7 @@ export default async function ({ params: { lang, role } }: Props) {
     ]);
 
   return (
-    <MainContextLayout
-      trans={trans}
-      lang={lang}
-      
-      setting={setting}>
+    <MainContextLayout trans={trans} lang={lang} setting={setting}>
       <div className='flex flex-1 mx-auto max-w-7xl min-h-screen'>
         <div className='flex flex-1 flex-col justify-start px-4 py-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24'>
           <div className='mx-auto w-full  max-w-sm  lg:w-96  '>

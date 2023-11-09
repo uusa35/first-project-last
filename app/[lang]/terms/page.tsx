@@ -48,7 +48,6 @@ export default async function ({ params: { lang } }: Props) {
             </p>
           </div>
         </div>
-
         {/* Content section */}
         <div className='mx-auto mt-8 max-w-7xl px-6 lg:px-8 pb-16'>
           <div className='mx-auto  lg:mx-0 lg:max-w-none'>
