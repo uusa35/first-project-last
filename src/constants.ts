@@ -1,27 +1,17 @@
-import { filter, map, toString, truncate, kebabCase, round } from 'lodash';
-import { Locale } from '@/types/index';
-import { localeType } from '@/types/index';
+import { truncate, kebabCase, round } from 'lodash';
 export const baseUrl =
-  process.env.NODE_ENV === "production"
-    ? `https://cp.ar-expo.ru`
-    : `https://cp.ar-expo.ru`;
+    process.env.NODE_ENV === "production"
+        ? `https://cp.ar-expo.ru`
+        : `https://cp.ar-expo.ru`;
 export const appVersion = `0.0.1`;
 export const apiUrl = `${baseUrl}/api/`;
 export const imageUrl = `https://loremflickr.com/`;
 export const isLocal = process.env.NODE_ENV !== 'production';
 export const suppressText = true;
 import { PersonOutlineOutlined } from "@mui/icons-material";
-import { Country, Role } from './types/queries';
+import { Country } from './types/queries';
 export { PersonOutlineOutlined, truncate };
 export { kebabCase }
-
-
-
-// export const convertSearchParamsToString = (search: { [key: string]: string }): string => Object.keys(search)
-//     .map((key) => {
-//         return `${key}=${encodeURIComponent(search[key])}`;
-//     })
-//     .join("&");
 
 export const convertSearchParamsToString = (search: { [key: string]: string } | string): string => {
     if (typeof search === 'object' &&
@@ -35,16 +25,6 @@ export const convertSearchParamsToString = (search: { [key: string]: string } | 
     }
     return ``;
 }
-
-// export const setLang = (lang: localeType) =>
-//     fetch(`/api/set/lang`, {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify({ lang }),
-//     });
-
 
 export const toEn = (s: any) =>
     s.replace(/[\u0660-\u0669\u06f0-\u06f9]/g, (a: any) => a.charCodeAt(0) & 15);
