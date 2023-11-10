@@ -8,7 +8,6 @@ type Props = {
   language: string;
   name: string;
   setValue: (x: any, y: any) => void;
-
   defaultValue?: string;
 };
 export function TextEditor({

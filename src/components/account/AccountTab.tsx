@@ -12,7 +12,7 @@ type Props = {
 
 export function AccountTab({ icon, active, title, desc, tab_index }: Props) {
   return (
-    <Tab className={`flex w-full  justify-start items-center`}>
+    <Tab className={`flex w-full  justify-start items-center capitalize`}>
       <Link
         href={`?active_tab=${tab_index}`}
         className="flex flex-row justify-start items-center gap-x-4"

@@ -38,6 +38,12 @@ import { AccountInfo } from "./tabs content/AccountInfo";
 import { TabList } from "./TabList";
 import { ModifyPassword } from "./tabs content/ModifyPassword";
 import BasicInfo from "./tabs content/BasicInfo";
+import CompanyDescription from "./tabs content/CompanyDescription";
+import CompanyServices from "./tabs content/CompanyServices";
+import AboutUs from "./tabs content/AboutUs";
+import UploadPhotos from "./tabs content/UploadPhotos";
+import CompanyLinks from "./tabs content/CompanyLinks";
+import SubscriptionType from "./tabs content/SubscriptionType";
 
 type Inputs = {
   username?: string;
@@ -47,6 +53,8 @@ type Inputs = {
   role?: Role["name"];
   name?: any;
   description?: any;
+  services?: any;
+  aboutus?: any;
   caption?: any;
   categories?: [] | undefined;
   tags?: [] | undefined;
@@ -195,7 +203,7 @@ export default function ({ element, countries, categories }: Props) {
         }
       })
       .then(() => {
-        if (body.image[0]) {
+        if (body.image && body.image[0]) {
           const formData = new FormData();
           formData.append("image", body.image[0]);
           formData.append("name", "image");
@@ -264,6 +272,45 @@ export default function ({ element, countries, categories }: Props) {
             ]),
           }}
         />
+
+        <CompanyDescription
+          onSubmit={onSubmit}
+          default_data={{
+            description: {
+              ar: user?.description?.ar ?? element?.description?.ar ?? "",
+              en: user?.description?.en ?? element?.description?.en ?? "",
+              ru: user?.description?.ru ?? element?.description?.ru ?? "",
+            },
+          }}
+        />
+
+        <CompanyServices
+          onSubmit={onSubmit}
+          default_data={{
+            services: {
+              ar: user?.services?.ar ?? element?.services?.ar ?? "",
+              en: user?.services?.en ?? element?.services?.en ?? "",
+              ru: user?.services?.ru ?? element?.services?.ru ?? "",
+            },
+          }}
+        />
+
+        <AboutUs
+          onSubmit={onSubmit}
+          default_data={{
+            aboutus: {
+              ar: user?.aboutus?.ar ?? element?.aboutus?.ar ?? "",
+              en: user?.aboutus?.en ?? element?.aboutus?.en ?? "",
+              ru: user?.aboutus?.ru ?? element?.aboutus?.ru ?? "",
+            },
+          }}
+        />
+
+        <UploadPhotos />
+
+        <CompanyLinks />
+
+        <SubscriptionType />
 
         <Tab.Panel>
           <LoadingSpinner isLoading={isLoading} />
@@ -999,7 +1046,6 @@ export default function ({ element, countries, categories }: Props) {
             </div>
           </form>
         </Tab.Panel>
-        <Tab.Panel>Content 2</Tab.Panel>
       </Tab.Panels>
     </Tab.Group>
   );

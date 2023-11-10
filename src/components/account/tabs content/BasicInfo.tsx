@@ -336,7 +336,7 @@ export default function ({
 
         <div className="mt-10 flex items-center justify-center gap-x-6">
           <button type="submit" className="btn-default">
-            {trans.saving_information}
+            {trans.continue}
           </button>
         </div>
       </form>
