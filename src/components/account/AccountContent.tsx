@@ -44,6 +44,8 @@ import AboutUs from "./tabs content/AboutUs";
 import UploadPhotos from "./tabs content/UploadPhotos";
 import CompanyLinks from "./tabs content/CompanyLinks";
 import SubscriptionType from "./tabs content/SubscriptionType";
+import AccountSteps from "./AccountSteps";
+import { MobileStepper } from "@mui/material";
 
 type Inputs = {
   username?: string;
@@ -241,7 +243,11 @@ export default function ({ element, countries, categories }: Props) {
       selectedIndex={toNumber(activeTab)}
     >
       <TabList activeTab={activeTab} />
+
       <Tab.Panels as={"div"} className={`flex w-full md:w-2/3 p-4 flex-col`}>
+        {activeTab !== "0" && activeTab !== "1" && (
+          <AccountSteps active_tab={activeTab} />
+        )}
         <LoadingSpinner isLoading={isLoading} />
         <AccountInfo
           onSubmit={onSubmit}
@@ -256,7 +262,6 @@ export default function ({ element, countries, categories }: Props) {
           }}
         />
         <ModifyPassword />
-
         <BasicInfo
           categories={categories.data}
           onSubmit={onSubmit}
@@ -272,7 +277,6 @@ export default function ({ element, countries, categories }: Props) {
             ]),
           }}
         />
-
         <CompanyDescription
           onSubmit={onSubmit}
           default_data={{
@@ -283,7 +287,6 @@ export default function ({ element, countries, categories }: Props) {
             },
           }}
         />
-
         <CompanyServices
           onSubmit={onSubmit}
           default_data={{
@@ -294,7 +297,6 @@ export default function ({ element, countries, categories }: Props) {
             },
           }}
         />
-
         <AboutUs
           onSubmit={onSubmit}
           default_data={{
@@ -305,13 +307,44 @@ export default function ({ element, countries, categories }: Props) {
             },
           }}
         />
-
         <UploadPhotos />
-
-        <CompanyLinks />
-
+        <CompanyLinks
+          onSubmit={onSubmit}
+          default_data={{
+            ...pick(isSuccess && user ? user : element, [
+              "website",
+              "twitter",
+              "facebook",
+              "instagram",
+              "snap",
+              "tiktok",
+              "linked",
+              "iphone",
+              "android",
+            ]),
+          }}
+        />
         <SubscriptionType />
-
+        {/* <MobileStepper
+          variant="dots"
+          steps={11}
+          position="static"
+          activeStep={parseInt(activeTab)}
+          sx={[
+            {
+              maxWidth: 400,
+              flexGrow: 1,
+              marginInline: "auto",
+            },
+            {
+              "& .MuiMobileStepper-dotActive": {
+                backgroundColor: "#006838",
+              },
+            },
+          ]}
+          nextButton={<></>}
+          backButton={<></>}
+        /> */}
         <Tab.Panel>
           <LoadingSpinner isLoading={isLoading} />
           {/* // @eren i made most of items for you plz continue design and re-organize the file  */}

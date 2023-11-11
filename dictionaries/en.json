@@ -228,6 +228,8 @@
     "update_information":"update information",
     "saving_information":"saving information",
     "password_confirmation":"password comfirmation",
-    "register_to_participate_in_the_exhibition":"register to participate in the exhibition"
+    "register_to_participate_in_the_exhibition":"register to participate in the exhibition",    
+    "company_information":"company information",
+    "company_website_link":"company website link"
   }
 }

@@ -46,6 +46,15 @@ export const updateUserSchema = yup.object({
   categories: yup.array(),
   address: yup.string().required(),
   keywords: yup.string().nullable(),
+  website: yup.string().url().nullable(),
+  twitter: yup.string().url().nullable(),
+  facebook: yup.string().url().nullable(),
+  instagram: yup.string().url().nullable(),
+  snap: yup.string().url().nullable(),
+  tiktok: yup.string().url().nullable(),
+  linked: yup.string().url().nullable(),
+  iphone: yup.string().url().nullable(),
+  android: yup.string().url().nullable(),
 });
 
 export const contactusSchema = yup.object().shape({

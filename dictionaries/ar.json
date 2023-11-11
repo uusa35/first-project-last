@@ -226,7 +226,9 @@
     "update_information":"تحديث المعلومات",
     "saving_information":"حفظ المعلومات",
     "password_confirmation":"تأكيد كلمة المرور الجديدة",
-    "register_to_participate_in_the_exhibition":"سجل للمشاركة في المعرض"
+    "register_to_participate_in_the_exhibition":"سجل للمشاركة في المعرض",
+    "company_information":"معلومات الشركة",
+    "company_website_link":"رابط موقع الشركة"
 
   }
 }
