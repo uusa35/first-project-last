@@ -6,6 +6,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/navigation";
 import { searchSchema } from "@/src/validations";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 type Props = {
   lang: Locale["lang"];
 };
@@ -36,23 +37,26 @@ export default function ({ lang }: Props) {
         <form
           onSubmit={handleSubmit(onSubmit)}
           className='relative isolate overflow-hidden  '>
-          <h2 className='text-3xl text-center font-bold tracking-tight text-gray-900 sm:text-4xl capitalize'>
-            {trans.search}
+          <h2 className='text-3xl text-center leading-loose line-clamp-2 break-words font-bold tracking-tight text-gray-900 sm:text-4xl capitalize'>
+            {trans.search_all_companies}
           </h2>
           <div className='mx-auto mt-10 flex flex-row h-14 max-w-2xl gap-x-4'>
-            <div className='flex flex-col w-full'>
+            <div className='relative flex flex-col w-full'>
               <input
                 // minLength={3}
                 type='text'
                 {...register("search")}
-                className='min-w-0 flex-auto rounded-md border-0 px-3.5 py-2 h-14 text-black bg-gray-100 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-white sm:text-sm sm:leading-6 capitalize'
-                placeholder={trans.search}
+                className='min-w-0 ps-10 flex-auto text-sm md:text-base rounded-md border-0 px-3.5 py-2 h-14 text-black bg-gray-100 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-white sm:text-sm sm:leading-6 capitalize'
+                placeholder={
+                  trans.enter_company_name_or_the_word_u_willing_to_search
+                }
                 onChange={(e) => setValue("search", e.target.value)}
               />
+              <MagnifyingGlassIcon className='w-6 h-6 absolute top-4 rtl:right-2 ltr:left-2 text-gray-600' />
             </div>
 
             <button
-              className='btn-default flex items-center capitalize'
+              className='btn-default flex items-center justify-center w-1/5 capitalize'
               type='submit'>
               {trans.search}
             </button>

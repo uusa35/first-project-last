@@ -1,14 +1,16 @@
 import { Locale } from '@/types/index';
 import { sha256 } from "js-sha256";
 import { notFound } from 'next/navigation';
-
+import { mainHeaders } from '@/utils/helpers';
 const token = process.env.NODE_ENV === "production" ? '01989686817' : '7118259ee8e3bc2dbdc0aec954cd6adbd703bc4ff5e8c07f014f8561ce3fa56f';
+
 
 export async function getOrders(search: string, lang: Locale['lang']) {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}order?${search}`, {
         cache: "no-store",
         headers: {
-            'Accept-Language': lang
+            'Accept-Language': lang,
+            ...mainHeaders
         }
     });
     if (!res.ok) throw notFound();
@@ -22,6 +24,7 @@ export async function getOrderByReferenceId(reference_id: string, lang: Locale['
         headers: {
             'Accept-Language': lang,
             'Authorization': `Bearer ${token}`,
+            ...mainHeaders
         }
     });
     if (!res.ok) throw notFound();
@@ -34,6 +37,7 @@ export async function getOrder(id: string, lang: Locale['lang']) {
         headers: {
             'Accept-Language': lang,
             'Authorization': `Bearer ${token}`,
+            ...mainHeaders
         }
     });
     if (!res.ok) throw notFound();
@@ -50,6 +54,7 @@ export async function checkOrderPayment(reference_id: string, lang: Locale['lang
         headers: {
             'Accept-Language': lang,
             'Authorization': `Bearer ${token}`,
+            ...mainHeaders
         }
     });
     if (!res.ok) throw notFound();
@@ -63,6 +68,7 @@ export async function updateOrder(id: string, reference_id: string, status: 'pen
         headers: {
             'Accept-Language': lang,
             'Authorization': `Bearer ${token}`,
+            ...mainHeaders
         }
     });
 

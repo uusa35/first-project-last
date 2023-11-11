@@ -193,7 +193,6 @@ export default async function ({ params: { lang, id } }: Props) {
                           {trans.subscribe_now}
                         </Link>
                       )}
-
                       {membership.on_sale && (
                         <p className='mt-6 text-xs leading-5 text-gray-600 capitalize'>
                           {trans.get_access_now_there_is_offer}

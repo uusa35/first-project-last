@@ -96,7 +96,7 @@ export default function ({
           className={"w-full btn-transparent capitalize"}
           href={
             role === "visitor"
-              ? appLinks.account(lang, role.name, id, 2)
+              ? appLinks.account(lang, role.name, id, 0)
               : appLinks.cartIndex(lang, element.id)
           }>
           {trans.upgrade_your_account}

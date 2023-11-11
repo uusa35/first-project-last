@@ -12,7 +12,7 @@ import Image from "next/image";
 import { getCountries } from "@/utils/country";
 import OrderDetails from "@/components/order/OrderDetails";
 import Link from "next/link";
-import { convertToJson } from "@/utils/helpers";
+import OrderBanner from "@/appImages/order/banner.jpeg";
 import { Country, Order, Setting } from "@/types/queries";
 //  this page will appear after redirection from Payment (will update the order with failed / paid)
 export default async function ({
@@ -41,7 +41,7 @@ export default async function ({
           <Image
             width={200}
             height={200}
-            src='https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&crop=focalpoint&fp-x=.4&w=2560&h=3413&&q=80'
+            src={OrderBanner}
             alt={order.membership.name}
             className='h-full w-full object-cover object-center'
           />

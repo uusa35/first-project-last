@@ -44,13 +44,34 @@ export default function ({ lang }: Props) {
         leaveFrom='opacity-100 translate-y-0'
         leaveTo='opacity-0 translate-y-1'>
         <Popover.Panel className='absolute rtl:left-1/2 ltr:right-1/2 z-10 mt-2 flex w-screen max-w-min rtl:-translate-x-1/4 ltr:translate-x-1/4 px-4'>
-          <div className='w-60 shrink rounded-md divide-x divide-gray-100 bg-white  text-sm font-semibold leading-6 text-gray-900 shadow-lg ring-1 ring-gray-900/5'>
+          <div className='w-60 shrink rounded-xl divide-y divide-gray-100 bg-white  text-sm font-semibold leading-6 text-gray-900 shadow-lg ring-1 ring-gray-900/5'>
             {auth.role && auth.id && (
-              <Link
-                className='block w-full py-2 px-4  ltr:text-left rtl:text-right hover:bg-gray-200 capitalize'
-                href={appLinks.account(lang, auth.role.name, auth.id)}>
-                {trans.control_account_information}
-              </Link>
+              <>
+                <Link
+                  className='block w-full py-2 px-4 rounded-t-xl ltr:text-left rtl:text-right hover:bg-gray-200 capitalize'
+                  href={appLinks.account(lang, auth.role.name, auth.id, 0)}>
+                  {trans.control_account_information}
+                </Link>
+                <Link
+                  className='block w-full py-2 px-4  ltr:text-left rtl:text-right hover:bg-gray-200 capitalize'
+                  href={appLinks.account(lang, auth.role.name, auth.id, 1)}>
+                  {trans.modify_password}
+                </Link>
+                {auth.role.name === "company" && (
+                  <>
+                    <Link
+                      className='block w-full py-2 px-4  ltr:text-left rtl:text-right hover:bg-gray-200 capitalize'
+                      href={appLinks.account(lang, auth.role.name, auth.id, 2)}>
+                      {trans.basic_information}
+                    </Link>
+                    <Link
+                      className='block w-full py-2 px-4  ltr:text-left rtl:text-right hover:bg-gray-200 capitalize'
+                      href={appLinks.account(lang, auth.role.name, auth.id, 3)}>
+                      {trans.company_services}
+                    </Link>
+                  </>
+                )}
+              </>
             )}
 
             <Link
@@ -59,7 +80,7 @@ export default function ({ lang }: Props) {
               {trans.back_to_home}
             </Link>
             <button
-              className='block w-full py-2 px-4  ltr:text-left rtl:text-right hover:bg-gray-200 capitalize'
+              className='block w-full py-2 px-4  rounded-b-xl ltr:text-left rtl:text-right hover:bg-gray-200 capitalize'
               onClick={() => handleLogout()}>
               {trans.logout}
             </button>

@@ -44,6 +44,7 @@ export function* startSetAuthScenario(action: PayloadAction<any>) {
   // const { locale: { lang } } = yield select();
   // yield delay(1000);
   // window.location.href = `/${lang}`;
+
 }
 export function* startShowToastMessageScenario(action: PayloadAction<any>) {
   try {

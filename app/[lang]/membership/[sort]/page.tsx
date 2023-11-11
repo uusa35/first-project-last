@@ -6,7 +6,6 @@ import AboutusImage from "@/appImages/aboutus/banner.jpg";
 import Image from "next/image";
 import DOMPurify from "isomorphic-dompurify";
 import { Country, Membership, Setting } from "@/types/queries";
-
 import { getMemberships } from "@/utils/membership";
 import MembershipCard from "@/components/membership/MembershipCard";
 import { getCountries } from "@/utils/country";
@@ -70,7 +69,6 @@ export default async function ({ params: { lang, sort } }: Props) {
             className='aspect-[9/3] w-full object-cover xl:rounded-lg'
           />
         </div>
-
         {/* Content section */}
         <div className='mx-auto mt-8 max-w-7xl px-6 lg:px-8 pb-16'>
           <div className='my-8'>
@@ -81,7 +79,6 @@ export default async function ({ params: { lang, sort } }: Props) {
                   : trans.sponsorships}
               </p>
             </div>
-
             {!token ||
               (!token.value && (
                 <>
@@ -100,7 +97,6 @@ export default async function ({ params: { lang, sort } }: Props) {
                 </>
               ))}
           </div>
-
           <div className='mx-auto  lg:mx-0 lg:max-w-none py-12'>
             <div className='isolate mx-auto grid max-w-md grid-cols-1 gap-6 lg:mx-0 lg:max-w-none lg:grid-cols-3  '>
               {memberships.map((s: Membership, i: number) => (

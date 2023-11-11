@@ -55,9 +55,9 @@ export async function generateMetadata({ params }: Props) {
     alternates: {
       canonical: "/",
       languages: {
-        "en-US": "/en",
         "ar-SA": "/ar",
         "ru-RU": "/ru",
+        "en-US": "/en",
       },
     },
     icons: {

@@ -2,7 +2,7 @@
 
 const nextConfig = {
   reactStrictMode: false,
-  experimental:{serverActions:true},
+  // experimental: { serverActions: true },
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
@@ -39,14 +39,37 @@ const nextConfig = {
     },
   },
   images: {
-    domains: [
-      "loremflickr.com",
-      "*.ar-expo.ru",
-      "ar-expo-backend.test",
-      "cp.ar-expo.ru",
-      "hammerhead-app-fhpzt.ondigitalocean.app",
-      "hub-apps.ams3.cdn.digitaloceanspaces.com",
-      "images.unsplash.com",
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "*.ar-expo.ru",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "http",
+        hostname: "ar-expo-backend.test",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "cp.ar-expo.ru",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "hammerhead-app-fhpzt.ondigitalocean.app",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "hub-apps.ams3.cdn.digitaloceanspaces.com",
+        port: "",
+        pathname: "/**",
+      },
     ],
   },
 };

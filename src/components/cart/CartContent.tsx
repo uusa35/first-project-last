@@ -10,6 +10,7 @@ import { useContext, useEffect, useRef } from "react";
 import OrderDetails from "@/components/order/OrderDetails";
 import { MainContext } from "@/layouts/MainContentLayout";
 import { isAuthenticated } from "@/redux/slices/authSlice";
+import OrderBanner from "@/appImages/order/banner.jpeg";
 
 type Props = {
   membership: Membership;
@@ -54,9 +55,9 @@ export default function ({ membership, country, dollarCountry, user }: Props) {
     <main className='relative bg-white mx-auto max-w-7xl min-h-screen'>
       <div className='h-80 overflow-hidden lg:absolute lg:h-full lg:w-1/2 lg:px-4 xl:px-8'>
         <Image
-          width={200}
-          height={200}
-          src='https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&crop=focalpoint&fp-x=.4&w=2560&h=3413&&q=80'
+          width={500}
+          height={500}
+          src={OrderBanner}
           alt={membership.name}
           className='h-full w-full object-cover object-center'
         />

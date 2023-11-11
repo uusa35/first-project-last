@@ -3,7 +3,7 @@ import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
 import { getSetting } from "@/utils/setting";
 import Image from "next/image";
-import LoginImage from "@/appImages/login/section.jpg";
+import LoginImage from "@/appImages/order/banner.jpeg";
 import LoginContent from "@/components/login/LoginContent";
 import { Setting } from "@/types/queries";
 

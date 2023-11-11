@@ -1,13 +1,15 @@
 import { Locale } from '@/types/index';
 import { notFound } from 'next/navigation';
 import { NextResponse } from 'next/server'
+import { mainHeaders } from '@/utils/helpers';
 
 export async function getMemberships(search: string, lang: Locale['lang']) {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}membership?${search}`, {
         // next: { revalidate: 3600 },
         cache: "no-store",
         headers: {
-            'Accept-Language': lang
+            'Accept-Language': lang,
+            ...mainHeaders
         }
     });
     if (!res.ok) throw notFound();
@@ -19,7 +21,8 @@ export async function getMembership(id: string, lang: Locale['lang']) {
         // next: { revalidate: 3600 },
         cache: "no-store",
         headers: {
-            'Accept-Language': lang
+            'Accept-Language': lang,
+            ...mainHeaders
         }
     });
     if (!res.ok) throw notFound();
