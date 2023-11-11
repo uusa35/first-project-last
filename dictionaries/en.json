@@ -230,6 +230,10 @@
     "password_confirmation":"password comfirmation",
     "register_to_participate_in_the_exhibition":"register to participate in the exhibition",    
     "company_information":"company information",
-    "company_website_link":"company website link"
+    "company_website_link":"company website link",    
+    "download_logo":"upload logo",
+    "exhibition_photos":"exhibition photos"
+
+
   }
 }

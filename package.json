@@ -89,6 +89,7 @@
     "react-google-map-picker": "^1.2.3",
     "react-hook-form": "^7.47.0",
     "react-i18next": "^12.2.2",
+    "react-image-lightbox": "^5.1.4",
     "react-infinite-scroll-component": "^6.1.0",
     "react-loading": "^2.0.3",
     "react-material-ui-carousel": "^3.4.2",

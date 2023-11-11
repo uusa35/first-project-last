@@ -6,30 +6,54 @@ import Link from "next/link";
 import DownloadPdf from "@/appIcons/home/download_pdf.svg";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { MainContext } from "@/layouts/MainContentLayout";
+import Lightbox from "react-image-lightbox";
+import "react-image-lightbox/style.css";
 
 type Props = {
   images: ImageType[];
   setting: Setting;
   message?: string;
+  show_download_btn?: boolean;
 };
 
-export function MainGallery({ images, setting, message }: Props) {
+export function MainGallery({
+  images,
+  setting,
+  message,
+  show_download_btn = false,
+}: Props) {
   const trans: { [key: string]: string } = useContext(MainContext);
+
+  const [index, setIndex] = useState(-1);
+
+  const currentImage = images[index];
+  const nextIndex = (index + 1) % images.length;
+  const nextImage = images[nextIndex] || currentImage;
+  const prevIndex = (index + images.length - 1) % images.length;
+  const prevImage = images[prevIndex] || currentImage;
+
+  const handleClick = (index: number) => setIndex(index);
+  const handleClose = () => setIndex(-1);
+  const handleMovePrev = () => setIndex(prevIndex);
+  const handleMoveNext = () => setIndex(nextIndex);
+
+  console.log({ currentImage, prevImage, nextImage, prevIndex });
+
   return (
-    <div className='py-12 sm:py-10 capitalize'>
-      <div className='mx-auto max-w-7xl px-6 lg:px-8'>
-        <div className='mx-auto  lg:mx-0 mb-10'>
-          <h2 className='text-center text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl'>
+    <div className="py-12 sm:py-10 capitalize">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="mx-auto  lg:mx-0 mb-10">
+          <h2 className="text-center text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
             {trans.gallery}
           </h2>
-          <p className='mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-600'>
+          <p className="mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-600">
             {message ??
               trans.through_this_section_you_can_browse_the_latest_news}
           </p>
         </div>
-        <Carousel cols={5} rows={1} gap={10}>
+        {/* <Carousel cols={5} rows={1} gap={10}>
           {images.map((img: any, i: number) => (
             <Carousel.Item key={i}>
               <Zoom>
@@ -41,19 +65,51 @@ export function MainGallery({ images, setting, message }: Props) {
                   height={200}
                 />
               </Zoom>
-              {/* <p>{img.name}</p> */}
+            </Carousel.Item>
+          ))}
+        </Carousel> */}
+
+        <Carousel cols={5} rows={1} gap={10}>
+          {images.map((img: any, i: number) => (
+            <Carousel.Item key={i}>
+              <Image
+                onClick={() => handleClick(i)}
+                className="aspect-[3/2] w-full rounded-2xl object-cover cursor-pointer"
+                src={img.image}
+                alt={setting.name}
+                width={200}
+                height={200}
+              />
             </Carousel.Item>
           ))}
         </Carousel>
 
-        <div className='pt-10 flex justify-center'>
-          <Link
-            href={"#"}
-            className='btn-default w-fit flex items-center gap-x-2'>
-            {trans.download_the_exhibition_brochure}
-            <DownloadPdf />
-          </Link>
-        </div>
+        {currentImage && (
+          <Lightbox
+            mainSrc={currentImage.image}
+            imageTitle={currentImage.name}
+            mainSrcThumbnail={currentImage.image}
+            nextSrc={nextImage.image}
+            nextSrcThumbnail={nextImage.image}
+            prevSrc={prevImage.image}
+            prevSrcThumbnail={prevImage.image}
+            onCloseRequest={handleClose}
+            onMovePrevRequest={handleMovePrev}
+            onMoveNextRequest={handleMoveNext}
+          />
+        )}
+
+        {show_download_btn ? (
+          <div className="pt-10 flex justify-center">
+            <Link
+              href={"#"}
+              className="btn-default w-fit flex items-center gap-x-2"
+            >
+              {trans.download_the_exhibition_brochure}
+              <DownloadPdf />
+            </Link>
+          </div>
+        ) : null}
       </div>
     </div>
   );

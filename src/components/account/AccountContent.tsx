@@ -50,7 +50,7 @@ import { MobileStepper } from "@mui/material";
 type Inputs = {
   username?: string;
   email?: string;
-  image?: string;
+  image?: File | string;
   country_id?: string;
   role?: Role["name"];
   name?: any;
@@ -77,6 +77,7 @@ type Inputs = {
   website?: string;
   images?: [];
   address?: string;
+  thumb?: File | string;
 };
 type Props = {
   element: User;
@@ -234,7 +235,7 @@ export default function ({ element, countries, categories }: Props) {
     }
   };
 
-  // console.log({ element, user });
+  console.log({ element, user });
   return (
     <Tab.Group
       vertical={true}
@@ -307,7 +308,14 @@ export default function ({ element, countries, categories }: Props) {
             },
           }}
         />
-        <UploadPhotos />
+        <UploadPhotos
+          onSubmit={onSubmit}
+          submitImages={handleImages}
+          default_data={{
+            image: user?.thumb || element?.thumb || "",
+            images: user?.images || element?.images || [],
+          }}
+        />
         <CompanyLinks
           onSubmit={onSubmit}
           default_data={{
@@ -325,7 +333,7 @@ export default function ({ element, countries, categories }: Props) {
           }}
         />
         <SubscriptionType />
-        {/* <MobileStepper
+        <MobileStepper
           variant="dots"
           steps={11}
           position="static"
@@ -344,7 +352,8 @@ export default function ({ element, countries, categories }: Props) {
           ]}
           nextButton={<></>}
           backButton={<></>}
-        /> */}
+        />
+
         <Tab.Panel>
           <LoadingSpinner isLoading={isLoading} />
           {/* // @eren i made most of items for you plz continue design and re-organize the file  */}

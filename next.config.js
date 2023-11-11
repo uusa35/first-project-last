@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   experimental:{serverActions:true},
   webpack(config) {
     config.module.rules.push({

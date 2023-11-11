@@ -226,7 +226,10 @@
     "password_confirmation": "подтверждение нового пароля",
     "register_to_participate_in_the_exhibition":"Зарегистрируйтесь для участия в выставке",
     "company_information":"Информация о компании",
-    "company_website_link":"Ссылка на сайт компании"
+    "company_website_link":"Ссылка на сайт компании",    
+    "download_logo":"Скачать логотип",
+    "exhibition_photos":"Фотографии выставки"
+
 
   }
 }
