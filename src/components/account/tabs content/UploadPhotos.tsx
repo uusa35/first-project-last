@@ -6,7 +6,7 @@ import { Tab } from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { map } from "lodash";
 import Image from "next/image";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 type Props = {
@@ -23,7 +23,7 @@ export default function UploadPhotos({
   submitImages,
   onSubmit,
 }: Props) {
-  const trans: { [key: string]: string } = React.useContext(MainContext);
+  const trans: { [key: string]: string } = useContext(MainContext);
   const [images, setImages] = useState(default_data.images);
   const {
     appSetting: { isLoading },
@@ -36,35 +36,34 @@ export default function UploadPhotos({
         // onSubmit={() => {
         //   submitImages(images);
         // }}
-        className={`space-y-8 ${isLoading && "hidden"}`}
-      >
-        <h1 className="text-2xl mb-10 mt-5">
+        className={`space-y-8 ${isLoading && "hidden"}`}>
+        <h1 className='text-2xl mb-10 mt-5'>
           {trans.register_to_participate_in_the_exhibition}
         </h1>
 
         <div>
           {/* image */}
-          <div className="flex flex-col items-center gap-x-4 my-4 mx-auto">
+          <div className='flex flex-col items-center gap-x-4 my-4 mx-auto'>
             <Image
               src={default_data.image as string}
-              className="w-16 h-auto rounded-full"
+              className='w-16 h-auto rounded-full'
               alt={""}
               width={100}
               height={100}
             />
-            <h1 className="mt-1">{trans.logo}</h1>
+            <h1 className='mt-1'>{trans.logo}</h1>
             <InputLabel
-              htmlFor="image"
+              htmlFor='image'
               value={trans.download_logo}
-              className=" rounded-md mt-3 border border-gray-300 py-1 px-2"
+              className=' rounded-md mt-3 border border-gray-300 py-1 px-2'
             />
             <input
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 onSubmit({ thumb: e.target.files ? e.target.files[0] : "" })
               }
-              type="file"
-              id="image"
-              accept="image/jpg, image/jpeg , image/png"
+              type='file'
+              id='image'
+              accept='image/jpg, image/jpeg , image/png'
               className={`hidden`}
             />
           </div>
@@ -72,23 +71,23 @@ export default function UploadPhotos({
           <div>
             <h1>{trans.exhibition_photos}</h1>
             <InputLabel
-              htmlFor="image"
+              htmlFor='image'
               value={trans.download_logo}
-              className=" rounded-md mt-3 border border-gray-300 py-1 px-2"
+              className=' rounded-md mt-3 border border-gray-300 py-1 px-2'
             />
             <input
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 onSubmit({ thumb: e.target.files ? e.target.files[0] : "" })
               }
-              type="file"
-              id="image"
-              accept="image/jpg, image/jpeg , image/png"
+              type='file'
+              id='image'
+              accept='image/jpg, image/jpeg , image/png'
               className={`hidden`}
             />
             <div>
               <Image
                 src={default_data.image as string}
-                className="w-16 h-auto rounded-full"
+                className='w-16 h-auto rounded-full'
                 alt={""}
                 width={100}
                 height={100}
@@ -97,8 +96,8 @@ export default function UploadPhotos({
           </div>
         </div>
 
-        <div className="mt-10 flex items-center justify-center gap-x-6">
-          <button type="submit" className="btn-default">
+        <div className='mt-10 flex items-center justify-center gap-x-6'>
+          <button type='submit' className='btn-default'>
             {trans.continue}
           </button>
         </div>
