@@ -13,7 +13,8 @@ export async function getUsers(search: string, lang: Locale['lang']) {
             ...mainHeaders
         }
     });
-    if (!res.ok) throw notFound();
+    if (!res.ok) throw process.env.NODE_ENV === 'production' ? notFound() : Error('getusers error');
+    // if (!res.ok) throw notFound();
     return res.json()
 }
 
@@ -30,7 +31,8 @@ export async function getUser(id: string, lang: Locale['lang']) {
         const json = JSON.parse(text)
         return json;
     } catch (err) {
-        throw notFound();
+        throw process.env.NODE_ENV === 'production' ? notFound() : Error('get user error');
+        // throw notFound();
     }
 }
 
@@ -43,7 +45,8 @@ export async function getAuth(token: string) {
             ...mainHeaders
         }
     });
-    if (!res.ok) throw notFound();
+    if (!res.ok) throw process.env.NODE_ENV === 'production' ? notFound() : Error('auth error');
+    // if (!res.ok) throw notFound();
     return res.json();
 
 }

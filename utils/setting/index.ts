@@ -1,6 +1,5 @@
 import { Locale } from '@/types/index';
 import { notFound } from 'next/navigation';
-import { NextResponse } from 'next/server'
 import { mainHeaders } from '@/utils/helpers';
 
 export async function getSetting(lang: Locale['lang']) {
@@ -12,7 +11,7 @@ export async function getSetting(lang: Locale['lang']) {
             ...mainHeaders,
         }
     });
-    if (!res.ok) throw notFound();
+    if (!res.ok) throw process.env.NODE_ENV === 'production' ? notFound() : Error('setting error');
     return res.json();
 }
 

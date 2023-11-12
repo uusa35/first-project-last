@@ -1,13 +1,11 @@
 "use client";
 import { whatsappUrl } from "@/src/constants";
-import {
-  Facebook,
-  Twitter,
-  Instagram,
-  LinkedIn,
-  WhatsApp,
-  YouTube,
-} from "@mui/icons-material";
+import Facebook from "@mui/icons-material/Facebook";
+import Twitter from "@mui/icons-material/Twitter";
+import Instagram from "@mui/icons-material/Instagram";
+import LinkedIn from "@mui/icons-material/LinkedIn";
+import WhatsApp from "@mui/icons-material/WhatsApp";
+import YouTube from "@mui/icons-material/YouTube";
 import Link from "next/link";
 import { Suspense } from "react";
 

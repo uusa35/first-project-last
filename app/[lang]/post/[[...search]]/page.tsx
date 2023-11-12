@@ -12,7 +12,7 @@ import { getSetting } from "@/utils/setting";
 import LoginImage from "@/appImages/login/section.jpg";
 import Pagination from "@/components/Pagination";
 import PostCard from "@/components/post/PostCard";
-import { ArrowUpRightIcon } from "@heroicons/react/24/outline";
+import ArrowUpRightIcon from "@heroicons/react/24/outline/ArrowUpRightIcon";
 import { notFound } from "next/navigation";
 import NoResults from "@/components/NoResults";
 
@@ -46,7 +46,7 @@ export default async function ({ params: { lang }, searchParams }: Props) {
   ]);
 
   if ("status" in posts && (posts.status === 404 || posts.status === 500))
-    notFound();
+    return notFound();
 
   if (posts.data && posts.data.length === 0)
     return (

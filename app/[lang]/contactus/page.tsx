@@ -5,8 +5,12 @@ import { getSetting } from "@/utils/setting";
 import Image from "next/image";
 import ContactusContent from "@/components/contactus/ContactusContent";
 import ContactusImage from "@/appImages/contactus/contactus_bg.jpg";
-import { DevicePhoneMobileIcon, PhoneIcon } from "@heroicons/react/24/outline";
-import { WhatsApp, Email, Android, Apple } from "@mui/icons-material";
+import PhoneIcon from "@heroicons/react/24/outline/PhoneIcon";
+import DevicePhoneMobileIcon from "@heroicons/react/24/outline/DevicePhoneMobileIcon";
+import WhatsApp from "@mui/icons-material/WhatsApp";
+import Email from "@mui/icons-material/Email";
+import Android from "@mui/icons-material/Android";
+import Apple from "@mui/icons-material/Apple";
 import SocialIcons from "@/components/footer/SocialIcons";
 import { Setting } from "@/types/queries";
 

@@ -39,7 +39,7 @@ export default async function UserIndex({
   ]);
 
   if ("status" in users && (users.status === 404 || users.status === 500))
-    notFound();
+    return notFound();
 
   if (users.data && users.data.length === 0)
     return (

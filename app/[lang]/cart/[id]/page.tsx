@@ -18,7 +18,7 @@ type Props = {
 export default async function ({ params: { lang, id }, searchParams }: Props) {
   const cookieStore = cookies();
   const token: any = cookieStore.get("token");
-  if (!token || !token.value) notFound();
+  if (!token || !token.value) return notFound();
   const [{ trans }, membership, country, dollarCountry, setting, auth]: [
     { trans: any },
     Membership,
@@ -35,7 +35,7 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
     getAuth(token.value),
   ]);
 
-  if (!membership || !country || !dollarCountry) notFound();
+  if (!membership || !country || !dollarCountry) return notFound();
   if (!auth || auth.role.name !== "company")
     return (
       <NoResults

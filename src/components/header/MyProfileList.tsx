@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { resetAuth } from "@/redux/slices/authSlice";
 import { useRouter } from "next/navigation";
 import { deleteToken } from "@/app/actions";
+import { logout } from "@/utils/auth";
 
 type Props = {
   lang: Locale["lang"];
@@ -22,12 +23,12 @@ export default function ({ lang }: Props) {
   const dispatch = useAppDispatch();
   const router = useRouter();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     dispatch(resetAuth());
-    deleteToken();
+    
+    await logout();
+    await deleteToken();
     router.replace(`/${lang}`);
-    // router.refresh();
-    // return router.replace(appLinks.home(lang));
   };
   return (
     <Popover className='relative'>

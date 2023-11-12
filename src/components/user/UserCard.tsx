@@ -1,6 +1,7 @@
 import { Locale } from "@/types/index";
 import { Category, User } from "@/types/queries";
-import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
+import ArrowLeftIcon from "@heroicons/react/24/outline/ArrowLeftIcon";
+import ArrowRightIcon from "@heroicons/react/24/outline/ArrowRightIcon";
 import Image from "next/image";
 import Link from "next/link";
 

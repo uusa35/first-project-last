@@ -12,7 +12,8 @@ export async function getPosts(search: string, lang: Locale['lang']) {
             ...mainHeaders
         }
     });
-    if (!res.ok) throw notFound();
+    if (!res.ok) throw process.env.NODE_ENV === 'production' ? notFound() : Error('get posts error');
+    // if (!res.ok) throw notFound();
     return res.json()
 }
 
@@ -24,6 +25,7 @@ export async function getPost(id: string, lang: Locale['lang']) {
             ...mainHeaders
         }
     });
-    if (!res.ok) throw notFound();
+    if (!res.ok) throw process.env.NODE_ENV === 'production' ? notFound() : Error('get post error');
+    // if (!res.ok) throw notFound();
     return res.json()
 }

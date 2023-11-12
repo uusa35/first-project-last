@@ -8,7 +8,7 @@ export const apiUrl = `${baseUrl}/api/`;
 export const imageUrl = `https://loremflickr.com/`;
 export const isLocal = process.env.NODE_ENV !== 'production';
 export const suppressText = true;
-import { PersonOutlineOutlined } from "@mui/icons-material";
+import PersonOutlineOutlined from "@mui/icons-material/PersonOutlineOutlined";
 import { Country } from './types/queries';
 export { PersonOutlineOutlined, truncate };
 export { kebabCase }
