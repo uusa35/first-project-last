@@ -7,7 +7,7 @@ export async function setLocaleCookie(value: string) {
         value,
         secure: process.env.NODE_ENV === 'production',
     });
-}
+}``
 
 export async function setToken(value: string) {
     cookies().set({

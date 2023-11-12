@@ -12,6 +12,7 @@ import { resetAuth } from "@/redux/slices/authSlice";
 import { useRouter } from "next/navigation";
 import { deleteToken } from "@/app/actions";
 import { logout } from "@/utils/auth";
+import { useLazyLogoutQuery } from "@/redux/api/authApi";
 
 type Props = {
   lang: Locale["lang"];
@@ -22,12 +23,15 @@ export default function ({ lang }: Props) {
   const { auth } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const [triggerLogout] = useLazyLogoutQuery();
 
   const handleLogout = async () => {
-    dispatch(resetAuth());
-    logout();
-    deleteToken();
-    router.replace(`/${lang}`);
+    triggerLogout()
+      .then(() => {
+        dispatch(resetAuth());
+        deleteToken();
+      })
+      .then(() => router.replace(`/${lang}`));
   };
   return (
     <Popover className='relative'>

@@ -27,6 +27,7 @@ import { appLinks } from "@/src/links";
 import MyProfileList from "./MyProfileList";
 import { deleteToken } from "@/app/actions";
 import { logout } from "@/utils/auth";
+import { useLazyLogoutQuery } from "@/redux/api/authApi";
 
 type Props = {
   lang: Locale;
@@ -42,6 +43,7 @@ export default function ({ lang, mainPages, setting }: Props) {
     auth,
   } = useAppSelector((state) => state);
   const isAuth = useAppSelector(isAuthenticated);
+  const [triggerLogout] = useLazyLogoutQuery();
   const dispatch = useAppDispatch();
   const params = useParams();
   const pathName = usePathname()!;
@@ -60,10 +62,12 @@ export default function ({ lang, mainPages, setting }: Props) {
   }, []);
 
   const handleLogout = async () => {
-    dispatch(resetAuth());
-    logout();
-    deleteToken();
-    router.replace(`/${lang}`);
+    triggerLogout()
+      .then(() => {
+        dispatch(resetAuth());
+        deleteToken();
+      })
+      .then(() => router.replace(`/${lang}`));
   };
 
   const stickNavbar = () => {

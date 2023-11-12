@@ -49,6 +49,7 @@ export default function ({ lang }: Props) {
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (body) => {
+    console.log("body", body);
     dispatch(enableLoading());
     await triggerLogin(body, false).then((r: any) => {
       if (r && r.data) {
