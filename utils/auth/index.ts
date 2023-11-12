@@ -3,6 +3,7 @@ import { Locale } from '@/types/index';
 import { notFound } from 'next/navigation';
 import { mainHeaders } from '@/utils/helpers';
 import { cookies } from 'next/headers';
+import { getToken } from '@/app/actions';
 
 export async function login(email: string, password: string, lang: Locale['lang']) {
     const query = `?email=${email}&password=${password}`;
@@ -19,13 +20,12 @@ export async function login(email: string, password: string, lang: Locale['lang'
 }
 
 export async function logout() {
-    const cookieStore = cookies();
-    const token: any = cookieStore.get("token");
+    const token = await getToken();
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}logout`, {
         cache: "no-store",
         method: "POST",
         headers: {
-            ...(token && token.value && { 'Authorization': `Bearer ${token.value}` }),
+            ...(token && token && { 'Authorization': `Bearer ${token}` }),
             ...mainHeaders
         }
     });

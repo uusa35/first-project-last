@@ -17,6 +17,10 @@ export async function setToken(value: string) {
     });
 }
 
+export async function getToken() {
+    return cookies().get('token')?.value ?? null;
+}
+
 export async function setRole(value: string) {
     cookies().set({
         name: 'role',

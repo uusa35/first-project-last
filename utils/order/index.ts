@@ -1,9 +1,8 @@
-'use server';
 import { Locale } from '@/types/index';
 import { sha256 } from "js-sha256";
 import { notFound } from 'next/navigation';
 import { mainHeaders } from '@/utils/helpers';
-import { cookies } from 'next/headers';
+import { getToken } from '@/app/actions';
 
 
 export async function getOrders(search: string, lang: Locale['lang']) {
@@ -19,14 +18,13 @@ export async function getOrders(search: string, lang: Locale['lang']) {
 }
 
 export async function getOrderByReferenceId(reference_id: string, lang: Locale['lang']) {
-    const cookieStore = cookies();
-    const token: any = cookieStore.get("token");
+    const token: string | null = await getToken();
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}order/reference?reference_id=${reference_id}`, {
         cache: "no-store",
         method: 'POST',
         headers: {
             'Accept-Language': lang,
-            ...(token && token.value && { 'Authorization': `Bearer ${token.value}` }),
+            ...(token && { 'Authorization': `Bearer ${token}` }),
             ...mainHeaders
         }
     });
@@ -35,13 +33,12 @@ export async function getOrderByReferenceId(reference_id: string, lang: Locale['
 }
 
 export async function getOrder(id: string, lang: Locale['lang']) {
-    const cookieStore = cookies();
-    const token: any = cookieStore.get("token");
+    const token: string | null = await getToken();
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}order/${id}`, {
         cache: "no-store",
         headers: {
             'Accept-Language': lang,
-            ...(token && token.value && { 'Authorization': `Bearer ${token.value}` }),
+            ...(token && { 'Authorization': `Bearer ${token}` }),
             ...mainHeaders
         }
     });
