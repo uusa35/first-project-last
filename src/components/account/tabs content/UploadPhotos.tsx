@@ -29,7 +29,6 @@ export default function UploadPhotos({
     appSetting: { isLoading },
   } = useAppSelector((state) => state);
 
-  console.log({ default_data });
   return (
     <Tab.Panel>
       <form
