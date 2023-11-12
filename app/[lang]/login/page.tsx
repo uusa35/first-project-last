@@ -28,7 +28,6 @@ export default async function ({ params: { lang } }: Props) {
     <MainContextLayout
       trans={trans}
       lang={lang}
-      
       setting={setting}>
       <div className='flex flex-1 mx-auto max-w-7xl min-h-screen'>
         <div className='flex flex-1 flex-col justify-start px-4 py-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24'>
