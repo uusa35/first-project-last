@@ -32,7 +32,7 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
     getCountries(`lang=${lang}&limit=1`, lang),
     getCountries(`lang=en&limit=1`, lang),
     getSetting(lang),
-    getAuth(token.value),
+    getAuth(),
   ]);
 
   if (!membership || !country || !dollarCountry) return notFound();

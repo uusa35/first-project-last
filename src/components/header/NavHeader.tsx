@@ -61,9 +61,8 @@ export default function ({ lang, mainPages, setting }: Props) {
 
   const handleLogout = async () => {
     dispatch(resetAuth());
-
-    await logout();
-    await deleteToken();
+    logout();
+    deleteToken();
     router.replace(`/${lang}`);
   };
 

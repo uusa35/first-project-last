@@ -50,13 +50,13 @@ export default function ({ lang }: Props) {
 
   const onSubmit: SubmitHandler<Inputs> = async (body) => {
     dispatch(enableLoading());
-    return await triggerLogin(body, false).then((r: any) => {
+    await triggerLogin(body, false).then((r: any) => {
       if (r && r.data) {
         dispatch(setAuth(r.data));
         setToken(r.data.api_token);
         setRole(r.data.role.name);
         dispatch(showSuccessToastMessage({ content: trans.process_success }));
-        return router.replace(`/${lang}`);
+        router.replace(`/${lang}`);
       } else if (r && r.error && r.error.data) {
         dispatch(
           showErrorToastMessage({

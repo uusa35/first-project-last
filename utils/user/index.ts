@@ -3,6 +3,7 @@ import { Locale } from '@/types/index';
 import { notFound } from 'next/navigation';
 import { NextResponse, NextRequest } from 'next/server'
 import { mainHeaders } from '@/utils/helpers';
+import { getToken } from '@/app/actions';
 
 export async function getUsers(search: string, lang: Locale['lang']) {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}user?${search}`, {
@@ -36,12 +37,13 @@ export async function getUser(id: string, lang: Locale['lang']) {
     }
 }
 
-export async function getAuth(token: string) {
+export async function getAuth() {
+    const token: string | null = await getToken();
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}authenticate`, {
         cache: "no-store",
         method: 'post',
         headers: {
-            'Authorization': `Bearer ${token}`,
+            ...(token && { 'Authorization': `Bearer ${token}` }),
             ...mainHeaders
         }
     });
@@ -51,13 +53,14 @@ export async function getAuth(token: string) {
 
 }
 
-export async function updateUser(id: string, lang: Locale['lang'], token: string) {
+export async function updateUser(id: string, lang: Locale['lang']) {
+    const token: string | null = await getToken();
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}user/${id}`, {
         cache: "no-store",
         method: 'put',
         headers: {
             'Accept-Language': lang,
-            'Authorization': `Bearer ${token}`,
+            ...(token && { 'Authorization': `Bearer ${token}` }),
             ...mainHeaders
         }
     });
