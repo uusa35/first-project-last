@@ -332,9 +332,9 @@ export default function ({ element, countries, categories }: Props) {
         />
         <SubscriptionType />
         <MobileStepper
-          variant="dots"
+          variant='dots'
           steps={11}
-          position="static"
+          position='static'
           activeStep={parseInt(activeTab)}
           sx={[
             {

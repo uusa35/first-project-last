@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
 import SunEditor, { buttonList } from "suneditor-react";
-import "@/styles/suneditor.min.css"; // Import Sun Editor's CSS File
-// import "suneditor/src/assets/css/suneditor.css";
+// import "@/styles/suneditor.min.css"; // Import Sun Editor's CSS File
+import "suneditor/src/assets/css/suneditor.css";
 
 type Props = {
   language: string;
