@@ -9,7 +9,7 @@ import UserIndexBanner from "@/appImages/user/user_show_banner.jpg";
 import SocialIcons from "@/components/footer/SocialIcons";
 import InsertLink from "@mui/icons-material/InsertLink";
 import EmailOutlined from "@mui/icons-material/EmailOutlined";
-import { ImageType, Setting, User } from "@/types/queries";
+import { Setting, User } from "@/types/queries";
 import { MainGallery } from "@/components/home/MainGallery";
 import { removeTags } from "@/utils/helpers";
 import BackBtn from "@/components/BackBtn";
@@ -127,7 +127,6 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
         </div>
         <div className='flex flex-col w-full  min-h-screen justify-start items-center gap-y-12 '>
           <BackBtn />
-
           {/* aboutus section */}
           {user.aboutus && (
             <HtmlContentWithTitle
@@ -135,7 +134,6 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
               content={user.aboutus}
             />
           )}
-
           {/* contactus section */}
           <div className='px-6 py-12 lg:px-8 bg-gray-100 w-full h-auto'>
             <div className='grid grid-cols-1 gap-y-10 text-center ltr:lg:text-left rtl:lg:text-right lg:gap-y-0 lg:grid-cols-3'>
@@ -200,21 +198,18 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
               </div>
             </div>
           </div>
-
           {user.description && (
             <HtmlContentWithTitle
               title={trans.description}
               content={user.description}
             />
           )}
-
           {user.services && (
             <HtmlContentWithTitle
               title={trans.services}
               content={user.services}
             />
           )}
-
           {user.images && user.images.length > 0 && (
             <MainGallery
               images={user.images}
