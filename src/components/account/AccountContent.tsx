@@ -220,6 +220,8 @@ export default function ({ element, countries, categories }: Props) {
   const handleImages = async (imagesGroup: any) => {
     if (imagesGroup.length > 1 && imagesGroup.length <= 10) {
       let formData = new FormData();
+      // for (const key in imagesGroup) {
+      // }
       for (let i = 0; i < imagesGroup.length; i++) {
         formData.append(`images[${i}]`, imagesGroup[i]);
       }
@@ -229,6 +231,7 @@ export default function ({ element, countries, categories }: Props) {
         console.log({ r });
         if (r.data && r.data.message) {
           dispatch(showSuccessToastMessage({ content: r.data.message }));
+          router.refresh();
         } else if (r.error && r.error.data?.message) {
           dispatch(showErrorToastMessage({ content: r.error.data.message }));
         }
@@ -245,8 +248,8 @@ export default function ({ element, countries, categories }: Props) {
       formData.append("id", toString(element.id));
       await triggerUploadImage(formData).then((r: any) => {
         console.log({ r });
-
         if (r.data && r.data.message) {
+          router.refresh();
           dispatch(showSuccessToastMessage({ content: r.data.message }));
         } else if (r.error && r.error.data?.message) {
           dispatch(showErrorToastMessage({ content: r.error.data.message }));
@@ -254,6 +257,7 @@ export default function ({ element, countries, categories }: Props) {
       });
     }
   };
+  console.log({ element });
 
   return (
     <Tab.Group

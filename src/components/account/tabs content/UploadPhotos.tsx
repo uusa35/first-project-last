@@ -4,10 +4,11 @@ import { useAppSelector } from "@/redux/hooks";
 import { ImageType } from "@/types/queries";
 import { Tab } from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { isEmpty, map } from "lodash";
+import { isEmpty, map, size } from "lodash";
 import Image from "next/image";
 import React, { ChangeEvent, useState } from "react";
 import Upload from "@/appIcons/account/upload_img.svg";
+import DeleteIcon from "@/appIcons/account/delete.svg";
 import { FileUploader } from "react-drag-drop-files";
 
 type Props = {
@@ -16,7 +17,7 @@ type Props = {
     image: File | string;
     images: ImageType[];
   };
-  submitImages: (e: string[]) => void;
+  submitImages: (e: any) => void;
 };
 
 export default function UploadPhotos({
@@ -25,16 +26,26 @@ export default function UploadPhotos({
   hadleImage,
 }: Props) {
   const trans: { [key: string]: string } = React.useContext(MainContext);
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState<
+    { [key: string]: File | number } | undefined
+  >(undefined);
   const {
     appSetting: { isLoading },
   } = useAppSelector((state) => state);
 
+  const displayImages = () => {
+    if (images)
+      return Object.keys(images).map((obj, i) => {
+        if (obj !== "length") {
+          return <p>{(images[obj] as File).name}</p>;
+        }
+      });
+  };
   // console.log({ default_data });
 
   return (
     <Tab.Panel>
-      <form className={`space-y-8 ${isLoading && "hidden"}`}>
+      <div className={`space-y-8 ${isLoading && "hidden"}`}>
         <h1 className="text-2xl mb-10 mt-5">
           {trans.register_to_participate_in_the_exhibition}
         </h1>
@@ -44,7 +55,7 @@ export default function UploadPhotos({
           <div className="flex flex-col items-center gap-x-4 my-4 mx-auto">
             <Image
               src={default_data.image as string}
-              className="w-16 h-auto rounded-full"
+              className="w-16 h-16 rounded-full object-cover"
               alt={""}
               width={100}
               height={100}
@@ -67,7 +78,7 @@ export default function UploadPhotos({
           </div>
           {/* images */}
           <div>
-            <h1>{trans.exhibition_photos}</h1>
+            <h1 className="mb-5">{trans.exhibition_photos}</h1>
             <FileUploader
               handleChange={(e: any) => {
                 setImages(e);
@@ -84,21 +95,26 @@ export default function UploadPhotos({
                     {trans.or_drag_and_drop}
                   </p>
                   <p className="text-sm">PNG, JPG, GIF up to 10MB</p>
-                  {!isEmpty(images) && (
-                    <div>
-                      {}
-                    </div>
-                  )}
+
+                  <div className="text-black mt-5">{displayImages()}</div>
                 </div>
               }
             />
 
             {/* images */}
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-2 py-5">
               {default_data.images.map((itm) => {
                 return (
-                  <div>
-                    <Image src={itm.image} alt={itm.name} key={itm.id} />
+                  <div className="w-1/6 h-auto aspect-2">
+                    <Image
+                      width={100}
+                      height={100}
+                      src={itm.thumb}
+                      alt={itm.name}
+                      key={itm.id}
+                      className="w-full h-auto aspect-2 rounded-md mb-1"
+                    />
+                    <DeleteIcon classNmae="" />
                   </div>
                 );
               })}
@@ -107,11 +123,11 @@ export default function UploadPhotos({
         </div>
 
         <div className="mt-10 flex items-center justify-center gap-x-6">
-          <button type="submit" className="btn-default">
+          <button onClick={() => submitImages(images)} className="btn-default">
             {trans.continue}
           </button>
         </div>
-      </form>
+      </div>
     </Tab.Panel>
   );
 }
