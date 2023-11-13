@@ -2,10 +2,14 @@
 
 const nextConfig = {
   reactStrictMode: false,
-  // experimental: { serverActions: true },
   experimental: {
     serverActions: {
-      allowedOrigins: ["dev.ar-expo.ru", "ar-expo.ru", "cp.ar-expo.ru", "ar-expo-backend.test"],
+      allowedOrigins: [
+        "dev.ar-expo.ru",
+        "ar-expo.ru",
+        "cp.ar-expo.ru",
+        "ar-expo-backend.test",
+      ],
     },
   },
   webpack(config) {
