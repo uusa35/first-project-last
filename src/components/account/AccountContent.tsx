@@ -226,6 +226,26 @@ export default function ({ element, countries, categories }: Props) {
       formData.append("model", "user");
       formData.append("id", toString(element.id));
       await triggerUploadImages(formData).then((r: any) => {
+        console.log({ r });
+        if (r.data && r.data.message) {
+          dispatch(showSuccessToastMessage({ content: r.data.message }));
+        } else if (r.error && r.error.data?.message) {
+          dispatch(showErrorToastMessage({ content: r.error.data.message }));
+        }
+      });
+    }
+  };
+
+  const hadleImage = async (image: File | undefined) => {
+    if (image) {
+      const formData = new FormData();
+      formData.append("image", image);
+      formData.append("name", "image");
+      formData.append("model", "user");
+      formData.append("id", toString(element.id));
+      await triggerUploadImage(formData).then((r: any) => {
+        console.log({ r });
+
         if (r.data && r.data.message) {
           dispatch(showSuccessToastMessage({ content: r.data.message }));
         } else if (r.error && r.error.data?.message) {
@@ -240,7 +260,8 @@ export default function ({ element, countries, categories }: Props) {
       vertical={true}
       as={`div`}
       className={`flex flex-col md:flex-row p-3 md:p-0`}
-      selectedIndex={toNumber(activeTab)}>
+      selectedIndex={toNumber(activeTab)}
+    >
       <TabList activeTab={activeTab} />
 
       <Tab.Panels as={"div"} className={`flex w-full md:w-2/3 p-4 flex-col`}>
@@ -307,7 +328,7 @@ export default function ({ element, countries, categories }: Props) {
           }}
         />
         <UploadPhotos
-          onSubmit={onSubmit}
+          hadleImage={hadleImage}
           submitImages={handleImages}
           default_data={{
             image: user?.thumb || element?.thumb || "",
@@ -357,33 +378,36 @@ export default function ({ element, countries, categories }: Props) {
           {/* // @eren i made most of items for you plz continue design and re-organize the file  */}
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className={`space-y-4 ${isLoading && "hidden"}`}>
-            <div className='mt-6 flex items-center justify-end gap-x-6'>
+            className={`space-y-4 ${isLoading && "hidden"}`}
+          >
+            <div className="mt-6 flex items-center justify-end gap-x-6">
               <button
-                type='button'
-                className='text-sm font-semibold leading-6 text-gray-900'>
+                type="button"
+                className="text-sm font-semibold leading-6 text-gray-900"
+              >
                 Cancel
               </button>
-              <button type='submit' className='btn-default '>
+              <button type="submit" className="btn-default ">
                 {trans.submit}
               </button>
             </div>
             {/* role */}
             <div>
-              <InputLabel htmlFor='role' value={trans.role} aria-required />
+              <InputLabel htmlFor="role" value={trans.role} aria-required />
               <select
                 onChange={(e) => setValue("role", e.target.value)}
-                id='role'
-                name='role'
+                id="role"
+                name="role"
                 defaultValue={getValues("role")}
-                className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'>
-                <option value='company'>{trans.company}</option>
-                <option value='visitor'>{trans.visitor}</option>
+                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+              >
+                <option value="company">{trans.company}</option>
+                <option value="visitor">{trans.visitor}</option>
               </select>
-              <InputError message={errors.role} className='mt-2' />
-              <div className='p-3 bg-red-300 text-black my-3 rounded-md'>
+              <InputError message={errors.role} className="mt-2" />
+              <div className="p-3 bg-red-300 text-black my-3 rounded-md">
                 <h3>Declaration</h3>
-                <p className=''>
+                <p className="">
                   panel to inform user by switching to visitor role even if u
                   have subscription deal paid your company profile wont be
                   public anymore
@@ -394,17 +418,18 @@ export default function ({ element, countries, categories }: Props) {
             {/*  username  */}
             <div>
               <label
-                htmlFor='username'
-                className='block text-sm font-medium leading-6 text-gray-900 capitalize'>
+                htmlFor="username"
+                className="block text-sm font-medium leading-6 text-gray-900 capitalize"
+              >
                 {trans.username}
               </label>
-              <div className='mt-2'>
+              <div className="mt-2">
                 <input
-                  id='username'
+                  id="username"
                   {...register("username")}
-                  type='text'
-                  autoComplete='email'
-                  className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6'
+                  type="text"
+                  autoComplete="email"
+                  className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
                 />
                 {errors?.username?.message && (
                   <span className={`text-red-700 text-xs capitalize`}>
@@ -416,17 +441,18 @@ export default function ({ element, countries, categories }: Props) {
             {/* email */}
             <div>
               <label
-                htmlFor='email'
-                className='block text-sm font-medium leading-6 text-gray-900 capitalize'>
+                htmlFor="email"
+                className="block text-sm font-medium leading-6 text-gray-900 capitalize"
+              >
                 {trans.email}
               </label>
-              <div className='mt-2'>
+              <div className="mt-2">
                 <input
-                  id='email'
+                  id="email"
                   {...register("email")}
-                  type='email'
-                  autoComplete='email'
-                  className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6'
+                  type="email"
+                  autoComplete="email"
+                  className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
                 />
                 {errors?.email?.message && (
                   <span className={`text-red-700 text-xs capitalize`}>
@@ -439,18 +465,20 @@ export default function ({ element, countries, categories }: Props) {
             {/* country_id */}
             <div>
               <label
-                htmlFor='email'
-                className='block text-sm font-medium leading-6 text-gray-900 capitalize'>
+                htmlFor="email"
+                className="block text-sm font-medium leading-6 text-gray-900 capitalize"
+              >
                 {trans.country}
               </label>
-              <div className='mt-2'>
+              <div className="mt-2">
                 <select
                   onChange={(e) => setValue("country_id", e.target.value)}
-                  id='country_id'
-                  name='country_id'
+                  id="country_id"
+                  name="country_id"
                   defaultValue={getValues("country_id")}
                   required
-                  className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'>
+                  className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                >
                   {map(countries, (c: any, i) => (
                     <option value={c.id} key={i}>
                       {c.name}
@@ -468,18 +496,19 @@ export default function ({ element, countries, categories }: Props) {
             {/*  address  */}
             <div>
               <label
-                htmlFor='address'
-                className='block text-sm font-medium leading-6 text-gray-900 capitalize'>
+                htmlFor="address"
+                className="block text-sm font-medium leading-6 text-gray-900 capitalize"
+              >
                 {trans.address}
               </label>
-              <div className='mt-2'>
+              <div className="mt-2">
                 <input
-                  id='address'
+                  id="address"
                   {...register("address")}
                   onChange={(e) => setValue("address[0]", e.target.value)}
-                  type='text'
-                  autoComplete='email'
-                  className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6'
+                  type="text"
+                  autoComplete="email"
+                  className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
                 />
                 {errors?.address?.message && (
                   <span className={`text-red-700 text-xs capitalize`}>
@@ -489,16 +518,16 @@ export default function ({ element, countries, categories }: Props) {
               </div>
             </div>
 
-            <div className='col-span-full grid grid-cols-1 lg:grid-cols-2'>
+            <div className="col-span-full grid grid-cols-1 lg:grid-cols-2">
               {/* image */}
-              <div className='col-span-1 flex-row'>
-                <InputLabel htmlFor='image' value={trans.logo} aria-required />
-                <div className='flex flex-row gap-x-4 my-4'>
+              <div className="col-span-1 flex-row">
+                <InputLabel htmlFor="image" value={trans.logo} aria-required />
+                <div className="flex flex-row gap-x-4 my-4">
                   {isSuccess && user ? (
                     <div>
                       <Image
                         src={user.thumb}
-                        className='w-20 h-auto rounded-md'
+                        className="w-20 h-auto rounded-md"
                         alt={user.username}
                         width={100}
                         height={100}
@@ -508,7 +537,7 @@ export default function ({ element, countries, categories }: Props) {
                     <div>
                       <Image
                         src={element.thumb}
-                        className='w-20 h-auto rounded-md'
+                        className="w-20 h-auto rounded-md"
                         alt={element.username}
                         width={100}
                         height={100}
@@ -520,23 +549,23 @@ export default function ({ element, countries, categories }: Props) {
                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
                       setValue("image", e.target.files)
                     }
-                    type='file'
+                    type="file"
                     {...register("image")}
-                    id='image'
-                    accept='image/jpg, image/jpeg , image/png'
+                    id="image"
+                    accept="image/jpg, image/jpeg , image/png"
                     className={`focus:ring-gray-500 focus:border-gray-500 block w-full border-gray-300 rounded-md`}
                   />
                 </div>
               </div>
 
               {/* banner */}
-              <div className='col-span-1 flex-row'>
+              <div className="col-span-1 flex-row">
                 <InputLabel
-                  htmlFor='banner'
+                  htmlFor="banner"
                   value={trans.banner}
                   aria-required
                 />
-                <div className='flex flex-row gap-x-4 my-4'>
+                <div className="flex flex-row gap-x-4 my-4">
                   {/* {user.banner && (
                     <div>
                       <Image
@@ -553,39 +582,39 @@ export default function ({ element, countries, categories }: Props) {
                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
                       setValue("banner", e.target.files)
                     }
-                    type='file'
+                    type="file"
                     {...register("banner")}
-                    id='banner'
-                    accept='image/jpg, image/jpeg , image/png'
+                    id="banner"
+                    accept="image/jpg, image/jpeg , image/png"
                     className={`focus:ring-gray-500 focus:border-gray-500 block w-full border-gray-300 rounded-md`}
                   />
                 </div>
               </div>
 
               {/* more images */}
-              <div className='col-span-1'>
+              <div className="col-span-1">
                 <InputLabel
-                  htmlFor='more_images'
+                  htmlFor="more_images"
                   value={trans.gallery}
                   aria-required
                 />
                 <input
                   onChange={(e: any) => handleImages(e.target.files)}
-                  type='file'
+                  type="file"
                   multiple
-                  name='images'
-                  id='more_images'
-                  accept='image/jpg, image/jpeg , image/png'
-                  autoComplete='more_images'
+                  name="images"
+                  id="more_images"
+                  accept="image/jpg, image/jpeg , image/png"
+                  autoComplete="more_images"
                   className={`pt-3.5 focus:ring-gray-500 focus:border-gray-500 block w-full border-gray-300 rounded-md`}
                 />
               </div>
             </div>
-            <div className='col-span-full flex flex-row justify-start items-center gap-x-3 my-4'>
+            <div className="col-span-full flex flex-row justify-start items-center gap-x-3 my-4">
               {isSuccess && user
                 ? map(user.images, (img: ImageType, i: number) => (
                     <Image
-                      className='w-20 h-auto border border-gray-200 rounded-sm'
+                      className="w-20 h-auto border border-gray-200 rounded-sm"
                       src={img.thumb}
                       width={100}
                       height={100}
@@ -594,7 +623,7 @@ export default function ({ element, countries, categories }: Props) {
                   ))
                 : map(element.images, (img) => (
                     <Image
-                      className='w-20 h-auto border border-gray-200 rounded-sm'
+                      className="w-20 h-auto border border-gray-200 rounded-sm"
                       src={img.thumb}
                       width={100}
                       height={100}
@@ -604,9 +633,9 @@ export default function ({ element, countries, categories }: Props) {
             </div>
 
             {categories && categories.data ? (
-              <div className='col-span-2 pt-4'>
+              <div className="col-span-2 pt-4">
                 <InputLabel
-                  htmlFor='categories'
+                  htmlFor="categories"
                   value={trans.categories}
                   aria-required
                 />
@@ -622,7 +651,7 @@ export default function ({ element, countries, categories }: Props) {
                   )}
                   isMulti
                   required
-                  name='categories'
+                  name="categories"
                   options={map(categories.data, (c: any, i) => {
                     return {
                       label: c.name,
@@ -630,30 +659,30 @@ export default function ({ element, countries, categories }: Props) {
                     };
                   })}
                   onChange={(e: any) => setValue("categories", map(e, "value"))}
-                  className='basic-multi-select'
-                  classNamePrefix='select'
+                  className="basic-multi-select"
+                  classNamePrefix="select"
                 />
                 <InputError
                   message={get(errors, "categories")}
-                  className='mt-2'
+                  className="mt-2"
                 />
               </div>
             ) : null}
 
             {/* fields  */}
-            <div className='grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
+            <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {/*  name  */}
-              <div className='col-span-full grid grid-cols-1 lg:grid-cols-3 gap-4'>
+              <div className="col-span-full grid grid-cols-1 lg:grid-cols-3 gap-4">
                 <div>
                   <InputLabel
-                    htmlFor='name[en]'
+                    htmlFor="name[en]"
                     value={trans["name.en"]}
                     aria-required
                   />
                   <TextInput
                     defaultValue={getValues("name.en")}
-                    id='name[en]'
-                    name='name[en]'
+                    id="name[en]"
+                    name="name[en]"
                     required
                     aria-required
                     onChange={(e) =>
@@ -662,23 +691,23 @@ export default function ({ element, countries, categories }: Props) {
                         en: e.target.value,
                       })
                     }
-                    className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'
+                    className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                   />
                   <InputError
                     message={get(errors, "name.en")}
-                    className='mt-2'
+                    className="mt-2"
                   />
                 </div>
                 <div>
                   <InputLabel
-                    htmlFor='name[ar]'
+                    htmlFor="name[ar]"
                     value={trans["name.ar"]}
                     aria-required
                   />
                   <TextInput
                     defaultValue={getValues("name.ar")}
-                    id='name[ar]'
-                    name='name[ar]'
+                    id="name[ar]"
+                    name="name[ar]"
                     required
                     aria-required
                     onChange={(e) =>
@@ -687,24 +716,24 @@ export default function ({ element, countries, categories }: Props) {
                         ar: e.target.value,
                       })
                     }
-                    className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'
+                    className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                   />
                   <InputError
                     message={get(errors, "name.ar")}
-                    className='mt-2'
+                    className="mt-2"
                   />
                 </div>
 
                 <div>
                   <InputLabel
-                    htmlFor='name[ru]'
+                    htmlFor="name[ru]"
                     value={trans["name.ru"]}
                     aria-required
                   />
                   <TextInput
                     defaultValue={getValues("name.ru")}
-                    id='name[ru]'
-                    name='name[ru]'
+                    id="name[ru]"
+                    name="name[ru]"
                     required
                     aria-required
                     onChange={(e) =>
@@ -713,26 +742,26 @@ export default function ({ element, countries, categories }: Props) {
                         ru: e.target.value,
                       })
                     }
-                    className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'
+                    className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                   />
                   <InputError
                     message={get(errors, "name.ru")}
-                    className='mt-2'
+                    className="mt-2"
                   />
                 </div>
               </div>
               {/* caption */}
-              <div className='col-span-full grid grid-cols-1 lg:grid-cols-3 gap-4'>
+              <div className="col-span-full grid grid-cols-1 lg:grid-cols-3 gap-4">
                 <div>
                   <InputLabel
-                    htmlFor='caption[en]'
+                    htmlFor="caption[en]"
                     value={trans["caption.en"]}
                     aria-required
                   />
                   <TextInput
                     defaultValue={getValues("caption.en")}
-                    id='caption[en]'
-                    name='caption[en]'
+                    id="caption[en]"
+                    name="caption[en]"
                     required
                     aria-required
                     onChange={(e) =>
@@ -741,24 +770,24 @@ export default function ({ element, countries, categories }: Props) {
                         en: e.target.value,
                       })
                     }
-                    className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'
+                    className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                   />
                   <InputError
                     message={get(errors, "caption.en")}
-                    className='mt-2'
+                    className="mt-2"
                   />
                 </div>
 
                 <div>
                   <InputLabel
-                    htmlFor='name'
+                    htmlFor="name"
                     value={trans["name.ar"]}
                     aria-required
                   />
                   <TextInput
                     defaultValue={getValues("caption.ar")}
-                    id='caption[ar]'
-                    name='caption[ar]'
+                    id="caption[ar]"
+                    name="caption[ar]"
                     required
                     aria-required
                     onChange={(e) =>
@@ -767,24 +796,24 @@ export default function ({ element, countries, categories }: Props) {
                         ar: e.target.value,
                       })
                     }
-                    className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'
+                    className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                   />
                   <InputError
                     message={get(errors, "caption.ar")}
-                    className='mt-2'
+                    className="mt-2"
                   />
                 </div>
 
                 <div>
                   <InputLabel
-                    htmlFor='name'
+                    htmlFor="name"
                     value={trans["name.ar"]}
                     aria-required
                   />
                   <TextInput
                     defaultValue={getValues("caption.ru")}
-                    id='caption[ru]'
-                    name='caption[ru]'
+                    id="caption[ru]"
+                    name="caption[ru]"
                     required
                     aria-required
                     onChange={(e) =>
@@ -793,63 +822,63 @@ export default function ({ element, countries, categories }: Props) {
                         ru: e.target.value,
                       })
                     }
-                    className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'
+                    className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                   />
                   <InputError
                     message={get(errors, "caption.ru")}
-                    className='mt-2'
+                    className="mt-2"
                   />
                 </div>
               </div>
               {/* description[ar] */}
-              <div className='col-span-full'>
+              <div className="col-span-full">
                 <InputLabel
-                  htmlFor='description[ar]'
+                  htmlFor="description[ar]"
                   value={trans["description.ar"]}
                 />
                 <TextEditor
-                  language='ar'
-                  name='description'
+                  language="ar"
+                  name="description"
                   setValue={setValue}
                   defaultValue={getValues("description.ar")}
                 />
                 <InputError
                   message={get(errors, "description.ar")}
-                  className='mt-2'
+                  className="mt-2"
                 />
               </div>
               {/* descirption[en] */}
-              <div className='col-span-full'>
+              <div className="col-span-full">
                 <InputLabel
-                  htmlFor='description[en]'
+                  htmlFor="description[en]"
                   value={trans["description.en"]}
                 />
                 <TextEditor
                   defaultValue={getValues("description.en")}
-                  language='en'
-                  name='description'
+                  language="en"
+                  name="description"
                   setValue={setValue}
                 />
                 <InputError
                   message={get(errors, "description.en")}
-                  className='mt-2'
+                  className="mt-2"
                 />
               </div>
               {/* descrption[ru] */}
-              <div className='col-span-full'>
+              <div className="col-span-full">
                 <InputLabel
-                  htmlFor='description[ru]'
+                  htmlFor="description[ru]"
                   value={trans["description.ru"]}
                 />
                 <TextEditor
                   defaultValue={getValues("description.ru")}
-                  language='ru'
-                  name='description'
+                  language="ru"
+                  name="description"
                   setValue={setValue}
                 />
                 <InputError
                   message={get(errors, "description.ru")}
-                  className='mt-2'
+                  className="mt-2"
                 />
               </div>
             </div>
@@ -857,224 +886,224 @@ export default function ({ element, countries, categories }: Props) {
             {/* mobile */}
             <div>
               <InputLabel
-                htmlFor='mobile'
+                htmlFor="mobile"
                 value={trans["mobile"]}
                 aria-required
               />
               <TextInput
                 defaultValue={getValues("mobile")}
-                id='mobile'
-                type='text'
+                id="mobile"
+                type="text"
                 {...register("mobile")}
                 aria-required
                 onChange={(e) => setValue("mobile", e.target.value)}
-                className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'
+                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
               />
-              <InputError message={get(errors, "mobile")} className='mt-2' />
+              <InputError message={get(errors, "mobile")} className="mt-2" />
             </div>
             {/* phone */}
             <div>
               <InputLabel
-                htmlFor='phone'
+                htmlFor="phone"
                 value={trans["phone"]}
                 aria-required
               />
               <TextInput
                 defaultValue={getValues("phone")}
-                id='phone'
-                type='text'
+                id="phone"
+                type="text"
                 {...register("phone")}
                 aria-required
                 onChange={(e) => setValue("phone", e.target.value)}
-                className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'
+                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
               />
-              <InputError message={get(errors, "phone")} className='mt-2' />
+              <InputError message={get(errors, "phone")} className="mt-2" />
             </div>
 
             {/* whatsapp */}
             <div>
               <InputLabel
-                htmlFor='whatsapp'
+                htmlFor="whatsapp"
                 value={trans["whatsapp"]}
                 aria-required
               />
               <TextInput
                 defaultValue={getValues("whatsapp")}
-                id='whatsapp'
-                type='text'
+                id="whatsapp"
+                type="text"
                 {...register("whatsapp")}
                 aria-required
                 onChange={(e) => setValue("whatsapp", e.target.value)}
-                className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'
+                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
               />
-              <InputError message={get(errors, "whatsapp")} className='mt-2' />
+              <InputError message={get(errors, "whatsapp")} className="mt-2" />
             </div>
 
             {/* twitter */}
             <div>
               <InputLabel
-                htmlFor='twitter'
+                htmlFor="twitter"
                 value={trans["twitter"]}
                 aria-required
               />
               <TextInput
                 defaultValue={getValues("twitter")}
-                id='twitter'
-                type='text'
+                id="twitter"
+                type="text"
                 {...register("twitter")}
                 aria-required
                 onChange={(e) => setValue("twitter", e.target.value)}
-                className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'
+                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
               />
-              <InputError message={get(errors, "twitter")} className='mt-2' />
+              <InputError message={get(errors, "twitter")} className="mt-2" />
             </div>
 
             {/* facebook */}
             <div>
               <InputLabel
-                htmlFor='facebook'
+                htmlFor="facebook"
                 value={trans["facebook"]}
                 aria-required
               />
               <TextInput
                 defaultValue={getValues("facebook")}
-                id='facebook'
-                type='text'
+                id="facebook"
+                type="text"
                 {...register("facebook")}
                 aria-required
                 onChange={(e) => setValue("facebook", e.target.value)}
-                className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'
+                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
               />
-              <InputError message={get(errors, "facebook")} className='mt-2' />
+              <InputError message={get(errors, "facebook")} className="mt-2" />
             </div>
 
             {/* instagram */}
             <div>
               <InputLabel
-                htmlFor='instagram'
+                htmlFor="instagram"
                 value={trans["instagram"]}
                 aria-required
               />
               <TextInput
                 defaultValue={getValues("instagram")}
-                id='instagram'
-                type='text'
+                id="instagram"
+                type="text"
                 {...register("instagram")}
                 aria-required
                 onChange={(e) => setValue("instagram", e.target.value)}
-                className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'
+                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
               />
-              <InputError message={get(errors, "instagram")} className='mt-2' />
+              <InputError message={get(errors, "instagram")} className="mt-2" />
             </div>
 
             {/* linked */}
             <div>
               <InputLabel
-                htmlFor='linked'
+                htmlFor="linked"
                 value={trans["linked"]}
                 aria-required
               />
               <TextInput
                 defaultValue={getValues("linked")}
-                id='linked'
-                type='text'
+                id="linked"
+                type="text"
                 {...register("linked")}
                 aria-required
                 onChange={(e) => setValue("linked", e.target.value)}
-                className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'
+                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
               />
-              <InputError message={get(errors, "linked")} className='mt-2' />
+              <InputError message={get(errors, "linked")} className="mt-2" />
             </div>
 
             {/* iphone */}
             <div>
               <InputLabel
-                htmlFor='iphone'
+                htmlFor="iphone"
                 value={trans["iphone"]}
                 aria-required
               />
               <TextInput
                 defaultValue={getValues("iphone")}
-                id='iphone'
-                type='text'
+                id="iphone"
+                type="text"
                 {...register("iphone")}
                 aria-required
                 onChange={(e) => setValue("iphone", e.target.value)}
-                className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'
+                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
               />
-              <InputError message={get(errors, "iphone")} className='mt-2' />
+              <InputError message={get(errors, "iphone")} className="mt-2" />
             </div>
 
             {/* android */}
             <div>
               <InputLabel
-                htmlFor='android'
+                htmlFor="android"
                 value={trans["android"]}
                 aria-required
               />
               <TextInput
                 defaultValue={getValues("android")}
-                id='android'
-                type='text'
+                id="android"
+                type="text"
                 {...register("android")}
                 aria-required
                 onChange={(e) => setValue("android", e.target.value)}
-                className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'
+                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
               />
-              <InputError message={get(errors, "android")} className='mt-2' />
+              <InputError message={get(errors, "android")} className="mt-2" />
             </div>
 
             {/* keywords */}
             <div>
               <InputLabel
-                htmlFor='keywords'
+                htmlFor="keywords"
                 value={trans["keywords"]}
                 aria-required
               />
               <TextInput
                 defaultValue={getValues("keywords")}
-                id='keywords'
-                type='text'
+                id="keywords"
+                type="text"
                 {...register("keywords")}
                 aria-required
                 onChange={(e) => setValue("keywords", e.target.value)}
-                className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'
+                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
               />
-              <InputError message={get(errors, "keywords")} className='mt-2' />
+              <InputError message={get(errors, "keywords")} className="mt-2" />
             </div>
 
             {/* snap */}
             <div>
-              <InputLabel htmlFor='snap' value={trans["snap"]} aria-required />
+              <InputLabel htmlFor="snap" value={trans["snap"]} aria-required />
               <TextInput
                 defaultValue={getValues("snap")}
-                id='snap'
-                type='text'
+                id="snap"
+                type="text"
                 {...register("snap")}
                 aria-required
                 onChange={(e) => setValue("snap", e.target.value)}
-                className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'
+                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
               />
-              <InputError message={get(errors, "snap")} className='mt-2' />
+              <InputError message={get(errors, "snap")} className="mt-2" />
             </div>
 
             {/* tiktok */}
             <div>
               <InputLabel
-                htmlFor='tiktok'
+                htmlFor="tiktok"
                 value={trans["tiktok"]}
                 aria-required
               />
               <TextInput
                 defaultValue={getValues("tiktok")}
-                id='tiktok'
-                type='text'
+                id="tiktok"
+                type="text"
                 {...register("tiktok")}
                 aria-required
                 onChange={(e) => setValue("tiktok", e.target.value)}
-                className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring'
+                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
               />
-              <InputError message={get(errors, "tiktok")} className='mt-2' />
+              <InputError message={get(errors, "tiktok")} className="mt-2" />
             </div>
           </form>
         </Tab.Panel>

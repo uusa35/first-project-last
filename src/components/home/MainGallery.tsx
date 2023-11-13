@@ -39,8 +39,6 @@ export function MainGallery({
   const handleMovePrev = () => setIndex(prevIndex);
   const handleMoveNext = () => setIndex(nextIndex);
 
-  console.log({ currentImage, prevImage, nextImage, prevIndex });
-
   return (
     <div className="py-12 sm:py-10 capitalize">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">

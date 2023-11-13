@@ -36,7 +36,7 @@ export default function AboutUs({ default_data, onSubmit }: Props) {
     defaultValues: default_data,
   });
 
-  console.log(getValues());
+  // console.log(getValues());
   return (
     <Tab.Panel>
       <form

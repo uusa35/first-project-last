@@ -227,6 +227,14 @@
     "View_profile": "عرض الملف الشخصي",
     "You_can_see_your_profile_from_here": "يمكنك رؤية ملفك الشخصي من هنا",
     "update_information": "تحديث المعلومات",
-    "saving_information": "حفظ المعلومات"
+    "saving_information": "حفظ المعلومات",
+    "password_confirmation":"تأكيد كلمة المرور الجديدة",
+    "register_to_participate_in_the_exhibition":"سجل للمشاركة في المعرض",
+    "company_information":"معلومات الشركة",
+    "company_website_link":"رابط موقع الشركة",
+    "download_logo":"تحميل الشعار",
+    "exhibition_photos":"صور المعرض",
+    "upload_file":"ارفع ملف",
+    "or_drag_and_drop":"او اسحب والقي"
   }
 }

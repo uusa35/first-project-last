@@ -232,6 +232,14 @@
     "new_password": "new password",
     "new_password_comfirmation": "new password comfirmation",
     "search_all_companies": "search all companies",
-    "enter_company_name_or_the_word_u_willing_to_search": "enter company name or the word u willing to search"
+    "enter_company_name_or_the_word_u_willing_to_search": "enter company name or the word u willing to search",
+    "register_to_participate_in_the_exhibition":"register to participate in the exhibition",    
+    "company_information":"company information",
+    "company_website_link":"company website link",    
+    "download_logo":"upload logo",
+    "exhibition_photos":"exhibition photos",
+    "upload_file":"upload file",
+    "or_drag_and_drop":"or drag and drop"
+
   }
 }

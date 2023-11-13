@@ -50,10 +50,10 @@ export function ModifyPassword({}: Props) {
   });
 
   const onSubmit: SubmitHandler<InputsData> = (data) => {
-    console.log({ data });
+    // console.log({ data });
     dispatch(enableLoading());
     triggerChangePassword({ params: { ...data } }).then((r: any) => {
-      console.log({ r });
+      // console.log({ r });
       if (r && r.data) {
         dispatch(showSuccessToastMessage({ content: trans.process_success }));
       } else if (r && r.error && r.error.data) {
@@ -66,7 +66,7 @@ export function ModifyPassword({}: Props) {
       dispatch(disableLoading());
     });
   };
-  console.log(getValues());
+  // console.log(getValues());
 
   return (
     <Tab.Panel>

@@ -38,7 +38,7 @@ export default function CompanyDescription({ default_data, onSubmit }: Props) {
     defaultValues: default_data,
   });
 
-  console.log(getValues());
+  // console.log(getValues());
 
   return (
     <Tab.Panel>
