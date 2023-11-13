@@ -57,7 +57,7 @@ export default function ({ lang }: Props) {
         setToken(r.data.api_token);
         setRole(r.data.role.name);
         dispatch(showSuccessToastMessage({ content: trans.process_success }));
-        router.replace(`/${lang}`);
+        return router.replace(`/${lang}`);
       } else if (r && r.error && r.error.data) {
         dispatch(
           showErrorToastMessage({
@@ -157,5 +157,3 @@ export default function ({ lang }: Props) {
     </div>
   );
 }
-
-

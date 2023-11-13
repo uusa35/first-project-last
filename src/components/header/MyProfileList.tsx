@@ -16,23 +16,12 @@ import { useLazyLogoutQuery } from "@/redux/api/authApi";
 
 type Props = {
   lang: Locale["lang"];
+  handleLogout: () => void;
 };
-export default function ({ lang }: Props) {
-  const pathName = usePathname()!;
+export default function ({ lang, handleLogout }: Props) {
   const trans: { [key: string]: string } = useContext(MainContext);
   const { auth } = useAppSelector((state) => state);
-  const dispatch = useAppDispatch();
-  const router = useRouter();
-  const [triggerLogout] = useLazyLogoutQuery();
 
-  const handleLogout = async () => {
-    triggerLogout()
-      .then(() => {
-        dispatch(resetAuth());
-        deleteToken();
-      })
-      .then(() => router.replace(`/${lang}`));
-  };
   return (
     <Popover className='relative'>
       <Popover.Button className='inline-flex btn-default items-center gap-x-1 text-sm font-semibold leading-2 capitalize'>

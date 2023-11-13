@@ -11,7 +11,7 @@ export async function getSetting(lang: Locale['lang']) {
             ...mainHeaders,
         }
     });
-    if (!res.ok) throw process.env.NODE_ENV === 'production' ? notFound() : Error('setting error');
+    if (!res.ok) throw process.env.NODE_ENV === 'production' ? notFound() : new Error('setting error');
     return res.json();
 }
 

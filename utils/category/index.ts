@@ -11,7 +11,7 @@ export async function getCategories(search: string, lang: Locale['lang']) {
 
         }
     });
-    if (!res.ok) throw process.env.NODE_ENV === 'production' ? notFound() : Error('get categories error');
+    if (!res.ok) throw process.env.NODE_ENV === 'production' ? notFound() : new Error('get categories error');
     // if (!res.ok) throw notFound();
     return res.json();
 }

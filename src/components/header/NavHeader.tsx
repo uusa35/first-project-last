@@ -138,7 +138,7 @@ export default function ({ lang, mainPages, setting }: Props) {
         </div>
         <div className='hidden lg:flex lg:flex-1 lg:justify-end items-center capitalize'>
           {isAuth ? (
-            <MyProfileList lang={lang} />
+            <MyProfileList lang={lang} handleLogout={handleLogout} />
           ) : (
             <div className='flex flex-row  gap-x-4'>
               <Link
