@@ -1,45 +1,36 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { HYDRATE } from 'next-redux-wrapper';
-import { apiUrl } from '@/src/constants';
-import { RootState } from '@/redux/store';
-import { isUndefined } from 'lodash';
-import { Locale } from '@/types/index';
-import { Setting } from '@/types/queries';
-
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { HYDRATE } from "next-redux-wrapper";
+import { apiUrl } from "@/src/constants";
+import { RootState } from "@/redux/store";
+import { isUndefined } from "lodash";
+import { Locale } from "@/types/index";
+import { Setting } from "@/types/queries";
 
 export const apiSlice = createApi({
-  reducerPath: 'api',
+  reducerPath: "api",
   baseQuery: fetchBaseQuery({
     baseUrl: `${apiUrl}`,
-    prepareHeaders: async (
-      headers,
-      { getState }: RootState
-    ) => {
-
+    prepareHeaders: async (headers, { getState }: RootState) => {
       const {
         locale,
-        auth: { api_token }
+        auth: { api_token },
       } = getState() as RootState;
+      headers.set("Access-Control-Allow-Origin", "*");
       headers.set(
-        'Access-Control-Allow-Origin',
-        '*'
+        "Access-Control-Allow-Headers",
+        "X-Requested-With,Accept,Authentication,Content-Type"
       );
+      headers.set("Accept-Language", locale.lang);
       headers.set(
-        'Access-Control-Allow-Headers',
-        'X-Requested-With,Accept,Authentication,Content-Type',
-      );
-      headers.set('Accept-Language', locale.lang);
-      headers.set(
-        'Access-Control-Allow-Methods',
-        'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+        "Access-Control-Allow-Methods",
+        "GET,PUT,POST,DELETE,PATCH,OPTIONS"
       );
       // headers.set('Content-Type', 'application/json');
-      headers.set('Accept', 'application/json');
-      headers.set('Cache-Control', 'no-store');
+      headers.set("Accept", "application/json");
+      headers.set("Cache-Control", "no-store");
       if (api_token) {
-        headers.set('Authorization', `Bearer ${api_token}`);
+        headers.set("Authorization", `Bearer ${api_token}`);
       }
-
 
       return headers;
     },
@@ -49,63 +40,62 @@ export const apiSlice = createApi({
   refetchOnReconnect: true,
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === HYDRATE) {
-      return action.payload[reducerPath]
+      return action.payload[reducerPath];
     }
   },
-  tagTypes: ['User'],
+  tagTypes: ["User"],
   endpoints: (builder) => ({
-    getSetting: builder.query<
-      Setting, void
-    >({
+    getSetting: builder.query<Setting, void>({
       query: () => ({
         url: `setting`,
       }),
     }),
-    sendContactus: builder.query<
-      Setting,
-      object
-    >({
+    sendContactus: builder.query<Setting, object>({
       query: (body) => ({
         url: `send/contactus`,
-        method: 'POST',
+        method: "POST",
         body,
         validateStatus: (response, result) => response.status === 200,
       }),
     }),
-    uploadImages: builder.query<
-      Setting,
-      any
-    >({
+    uploadImages: builder.query<Setting, any>({
       query: (body) => {
         return {
           url: `images/upload`,
-          method: 'post',
+          method: "post",
           body,
           prepareHeaders: (headers: any) => {
             headers.set("Content-Type", "multipart/form-data");
           },
           formData: true,
-          validateStatus: (response, result) =>
-            response.status == 200,
-        }
+          validateStatus: (response, result) => response.status == 200,
+        };
       },
     }),
-    newsletter: builder.query<
-      object,
-      { email: string }
-    >({
+    deleteImage: builder.query<Setting, number>({
+      query: (num) => {
+        return {
+          url: `image/${num}`,
+          method: "DELETE",
+          validateStatus: (response, result) => response.status == 200,
+        };
+      },
+    }),
+    newsletter: builder.query<object, { email: string }>({
       query: (body) => ({
         url: `newsletter`,
-        method: 'POST',
+        method: "POST",
         body,
-        validateStatus: (response, result) =>
-          response.status == 200,
+        validateStatus: (response, result) => response.status == 200,
       }),
     }),
   }),
 });
 
-export const { useGetSettingQuery,
+export const {
+  useGetSettingQuery,
   useLazySendContactusQuery,
   useLazyUploadImagesQuery,
-  useLazyNewsletterQuery } = apiSlice;
+  useLazyNewsletterQuery,
+  useLazyDeleteImageQuery
+} = apiSlice;

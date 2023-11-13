@@ -228,7 +228,7 @@ export default function ({ element, countries, categories }: Props) {
       formData.append("model", "user");
       formData.append("id", toString(element.id));
       await triggerUploadImages(formData).then((r: any) => {
-        console.log({ r });
+        // console.log({ r });
         if (r.data && r.data.message) {
           dispatch(showSuccessToastMessage({ content: r.data.message }));
           router.refresh();
@@ -247,7 +247,7 @@ export default function ({ element, countries, categories }: Props) {
       formData.append("model", "user");
       formData.append("id", toString(element.id));
       await triggerUploadImage(formData).then((r: any) => {
-        console.log({ r });
+        // console.log({ r });
         if (r.data && r.data.message) {
           router.refresh();
           dispatch(showSuccessToastMessage({ content: r.data.message }));

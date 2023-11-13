@@ -1,15 +1,16 @@
 import InputLabel from "@/components/InputLabel";
 import { MainContext } from "@/layouts/MainContentLayout";
-import { useAppSelector } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { ImageType } from "@/types/queries";
 import { Tab } from "@headlessui/react";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { isEmpty, map, size } from "lodash";
 import Image from "next/image";
 import React, { ChangeEvent, useState } from "react";
 import Upload from "@/appIcons/account/upload_img.svg";
 import DeleteIcon from "@/appIcons/account/delete.svg";
 import { FileUploader } from "react-drag-drop-files";
+import { useLazyDeleteImageQuery } from "@/redux/api";
+import { useRouter } from "next/navigation";
+import { showErrorToastMessage, showSuccessToastMessage } from "@/redux/slices/toastMessageSlice";
 
 type Props = {
   hadleImage: (e: File | undefined) => void;
@@ -25,6 +26,8 @@ export default function UploadPhotos({
   submitImages,
   hadleImage,
 }: Props) {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
   const trans: { [key: string]: string } = React.useContext(MainContext);
   const [images, setImages] = useState<
     { [key: string]: File | number } | undefined
@@ -32,6 +35,7 @@ export default function UploadPhotos({
   const {
     appSetting: { isLoading },
   } = useAppSelector((state) => state);
+  const [triggerDelteImage] = useLazyDeleteImageQuery();
 
   const displayImages = () => {
     if (images)
@@ -40,6 +44,16 @@ export default function UploadPhotos({
           return <p>{(images[obj] as File).name}</p>;
         }
       });
+  };
+  const deleteImage = async (id: number) => {
+    await triggerDelteImage(id).then((r) => {
+      if (r.data && r.data.message) {
+        router.refresh();
+        dispatch(showSuccessToastMessage({ content: r.data.message }));
+      } else if (r.error && r.error.data?.message) {
+        dispatch(showErrorToastMessage({ content: r.error.data.message }));
+      }
+    });
   };
   // console.log({ default_data });
 
@@ -67,9 +81,9 @@ export default function UploadPhotos({
               className=" rounded-md mt-3 border border-gray-300 py-1 px-2"
             />
             <input
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                hadleImage(e.target.files ? e.target.files[0] : undefined)
-              }
+              onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                hadleImage(e.target.files ? e.target.files[0] : undefined);
+              }}
               type="file"
               id="image"
               accept="image/jpg, image/jpeg , image/png"
@@ -82,7 +96,6 @@ export default function UploadPhotos({
             <FileUploader
               handleChange={(e: any) => {
                 setImages(e);
-                console.log(e);
               }}
               name="file"
               multiple
@@ -114,7 +127,12 @@ export default function UploadPhotos({
                       key={itm.id}
                       className="w-full h-auto aspect-2 rounded-md mb-1"
                     />
-                    <DeleteIcon classNmae="" />
+                    <DeleteIcon
+                      classNmae="cursor-pointer"
+                      onClick={() => {
+                        deleteImage(itm.id);
+                      }}
+                    />
                   </div>
                 );
               })}
@@ -123,7 +141,12 @@ export default function UploadPhotos({
         </div>
 
         <div className="mt-10 flex items-center justify-center gap-x-6">
-          <button onClick={() => submitImages(images)} className="btn-default">
+          <button
+            onClick={() => {
+              submitImages(images);
+            }}
+            className="btn-default"
+          >
             {trans.continue}
           </button>
         </div>
