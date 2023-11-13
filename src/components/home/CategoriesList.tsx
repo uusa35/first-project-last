@@ -1,5 +1,4 @@
 import Link from "next/link";
-import * as React from "react";
 import CategoryCard from "../category/CategoryCard";
 import { AppQueryResult, Category } from "@/types/queries";
 import { Locale } from "@/types/index";

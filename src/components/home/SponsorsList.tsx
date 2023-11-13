@@ -1,5 +1,4 @@
 import Link from "next/link";
-import * as React from "react";
 import { AppQueryResult, User } from "@/types/queries";
 import Image from "next/image";
 

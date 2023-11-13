@@ -2,7 +2,7 @@
 import Link from "next/link";
 import type { Locale } from "@/i18n.config";
 import { useContext, useEffect, useState } from "react";
-import { Dialog, Transition } from "@headlessui/react";
+import { Dialog } from "@headlessui/react";
 import Bars3Icon from "@heroicons/react/24/outline/Bars3Icon";
 import UserIcon from "@heroicons/react/24/outline/UserIcon";
 import XMarkIcon from "@heroicons/react/24/outline/XMarkIcon";
@@ -15,7 +15,7 @@ import {
   useSelectedLayoutSegment,
   useSelectedLayoutSegments,
 } from "next/navigation";
-import { changePathName, convertSearchParamsToString } from "@/utils/helpers";
+import { changePathName } from "@/utils/helpers";
 import AppLogo from "@/components/header/AppLogo";
 import { isNull, last, split, toString } from "lodash";
 import { setCurrentPath } from "@/redux/slices/settingSlice";
@@ -26,7 +26,6 @@ import { isAuthenticated, resetAuth } from "@/redux/slices/authSlice";
 import { appLinks } from "@/src/links";
 import MyProfileList from "./MyProfileList";
 import { deleteToken } from "@/app/actions";
-import { logout } from "@/utils/auth";
 import { useLazyLogoutQuery } from "@/redux/api/authApi";
 
 type Props = {
@@ -80,7 +79,6 @@ export default function ({ lang, mainPages, setting }: Props) {
         );
         setIsHidden("lg:opacity-0 lg:absolute lg:bottom-100");
       } else {
-        // setStickyEnabled(false);
         setStickyClass("opacity-100");
         setIsHidden("");
       }

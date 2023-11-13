@@ -3,16 +3,10 @@ import { Fragment, useContext } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { Locale } from "@/types/index";
-import { usePathname } from "next/navigation";
 import { MainContext } from "@/layouts/MainContentLayout";
 import Link from "next/link";
 import { appLinks } from "@/src/links";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { resetAuth } from "@/redux/slices/authSlice";
-import { useRouter } from "next/navigation";
-import { deleteToken } from "@/app/actions";
-import { logout } from "@/utils/auth";
-import { useLazyLogoutQuery } from "@/redux/api/authApi";
+import { useAppSelector } from "@/redux/hooks";
 
 type Props = {
   lang: Locale["lang"];
