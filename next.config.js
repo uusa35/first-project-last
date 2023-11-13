@@ -9,6 +9,7 @@ const nextConfig = {
         "ar-expo.ru",
         "cp.ar-expo.ru",
         "ar-expo-backend.test",
+        "localhost",
       ],
     },
   },
