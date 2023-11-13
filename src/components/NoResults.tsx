@@ -23,8 +23,10 @@ export default function ({
   searchParams,
 }: Props) {
   const membership =
-    searchParams && searchParams.membership && currentModule === "user"
-      ? `membership=${searchParams.membership}`
+    searchParams && searchParams.membership
+      ? currentModule === "user"
+        ? `membership=${searchParams.membership}`
+        : `membership=subscription`
       : ``;
   return (
     <MainContextLayout trans={trans} lang={lang} setting={setting}>
