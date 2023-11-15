@@ -239,7 +239,11 @@
     "download_logo":"upload logo",
     "exhibition_photos":"exhibition photos",
     "upload_file":"upload file",
-    "or_drag_and_drop":"or drag and drop"
-
+    "or_drag_and_drop":"or drag and drop",
+    "select_the_region_in_the_gallery":"select the region in the gallery",
+    "zone_a_desc":"Zone A represents the golden zone and has 3 different zones with areas of 10 m, 15 m and 20 m and prices start from $1000",
+    "zone_b_desc":"Zone B represents the silver zone and has 3 different zones of 10 sqm, 15 sqm and 20 sqm, and prices start at $500",
+    "zone_c_desc":"Area C represents the platinum area and has 3 different areas of 10 sqm, 15 sqm and 20 sqm, and prices start at $300",
+    "zone_d_desc":"Zone D represents the bronze zone and has 3 different zones of 10 m, 15 m and 20 m and prices start at $150"
   }
 }
