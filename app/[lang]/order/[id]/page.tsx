@@ -2,24 +2,24 @@ import { MainContextLayout } from "@/layouts/MainContentLayout";
 import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
 import { getSetting } from "@/utils/setting";
-import {
-  checkOrderPayment,
-  getOrder,
-  getOrderByReferenceId,
-  updateOrder,
-} from "@/utils/order";
+import { getOrder, getOrderByReferenceId } from "@/utils/order";
 import Image from "next/image";
 import { getCountries } from "@/utils/country";
 import OrderDetails from "@/components/order/OrderDetails";
 import Link from "next/link";
 import OrderBanner from "@/appImages/order/banner.jpeg";
 import { Country, Order, Setting } from "@/types/queries";
+import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
 //  this page will appear after redirection from Payment (will update the order with failed / paid)
 export default async function ({
   params: { lang, id },
 }: {
   params: { lang: Locale["lang"]; id: string };
 }) {
+  const cookieStore = cookies();
+  const token: any = cookieStore.get("token");
+  if (!token || !token.value) return notFound();
   const [{ trans }, setting, country, dollarCountry, order]: [
     { trans: any },
     Setting,

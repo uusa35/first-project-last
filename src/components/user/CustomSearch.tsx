@@ -4,11 +4,8 @@ import SearchIcon from "@/appIcons/search.svg";
 import { Locale } from "@/types/index";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
-import {
-  ArrowLeftOnRectangleIcon,
-  MagnifyingGlassIcon,
-} from "@heroicons/react/24/outline";
-import { BackspaceOutlined } from "@mui/icons-material";
+import MagnifyingGlassIcon from "@heroicons/react/24/outline/MagnifyingGlassIcon";
+import BackspaceOutlined from "@mui/icons-material/BackspaceOutlined";
 
 type Props = {
   trans: { [key: string]: string };

@@ -10,7 +10,10 @@ import DeleteIcon from "@/appIcons/account/delete.svg";
 import { FileUploader } from "react-drag-drop-files";
 import { useLazyDeleteImageQuery } from "@/redux/api";
 import { useRouter } from "next/navigation";
-import { showErrorToastMessage, showSuccessToastMessage } from "@/redux/slices/toastMessageSlice";
+import {
+  showErrorToastMessage,
+  showSuccessToastMessage,
+} from "@/redux/slices/toastMessageSlice";
 
 type Props = {
   hadleImage: (e: File | undefined) => void;

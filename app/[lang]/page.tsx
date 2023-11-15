@@ -87,7 +87,6 @@ export default async function Home({ params: { lang } }: Props) {
         categories={categories}
         trans={trans as { [key: string]: string }}
       />
-
       {/* register as */}
       {!token ||
         (!token.value && (
@@ -95,7 +94,6 @@ export default async function Home({ params: { lang } }: Props) {
         ))}
       {/*  figures  */}
       <Figures trans={trans} />
-
       {/* newsletter */}
       <NewsLetters />
       {/* posts */}
@@ -113,7 +111,6 @@ export default async function Home({ params: { lang } }: Props) {
         sponsors={sponsors}
         trans={trans as { [key: string]: string }}
       />
-
       {/* sponsorship prices */}
       <SponsorsPrices
         country={country}

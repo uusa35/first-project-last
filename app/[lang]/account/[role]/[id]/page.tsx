@@ -25,8 +25,7 @@ export default async function ({
 }) {
   const cookieStore = cookies();
   const token: any = cookieStore.get("token");
-  if (!token || !token.value) notFound();
-
+  if (!token || !token.value) return notFound();
   const [{ trans }, setting, auth, user, countries, categories]: [
     { trans: any },
     Setting,
@@ -37,8 +36,8 @@ export default async function ({
   ] = await Promise.all([
     getDictionary(lang),
     getSetting(lang),
-    getAuth(token.value),
-    updateUser(id, lang, token.value),
+    getAuth(),
+    updateUser(id, lang),
     getCountries("", lang),
     getCategories("", lang),
   ]);
@@ -52,7 +51,7 @@ export default async function ({
     !categories ||
     !setting
   )
-    notFound();
+    return notFound();
 
   return (
     <MainContextLayout trans={trans} lang={lang} setting={setting}>

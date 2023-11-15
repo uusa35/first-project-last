@@ -6,7 +6,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/navigation";
 import { searchSchema } from "@/src/validations";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import MagnifyingGlassIcon from "@heroicons/react/24/outline/MagnifyingGlassIcon";
 type Props = {
   lang: Locale["lang"];
 };

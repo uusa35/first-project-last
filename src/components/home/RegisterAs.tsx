@@ -1,5 +1,4 @@
 import Link from "next/link";
-import * as React from "react";
 import { Locale } from "@/types/index";
 import Image from "next/image";
 import JoinusBg from "@/appImages/home/joinus.jpg";

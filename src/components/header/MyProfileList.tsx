@@ -3,32 +3,19 @@ import { Fragment, useContext } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { Locale } from "@/types/index";
-import { usePathname } from "next/navigation";
 import { MainContext } from "@/layouts/MainContentLayout";
 import Link from "next/link";
 import { appLinks } from "@/src/links";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { resetAuth } from "@/redux/slices/authSlice";
-import { useRouter } from "next/navigation";
-import { deleteToken } from "@/app/actions";
+import { useAppSelector } from "@/redux/hooks";
 
 type Props = {
   lang: Locale["lang"];
+  handleLogout: () => void;
 };
-export default function ({ lang }: Props) {
-  const pathName = usePathname()!;
+export default function ({ lang, handleLogout }: Props) {
   const trans: { [key: string]: string } = useContext(MainContext);
   const { auth } = useAppSelector((state) => state);
-  const dispatch = useAppDispatch();
-  const router = useRouter();
 
-  const handleLogout = () => {
-    dispatch(resetAuth());
-    deleteToken();
-    router.replace(`/${lang}`);
-    // router.refresh();
-    // return router.replace(appLinks.home(lang));
-  };
   return (
     <Popover className='relative'>
       <Popover.Button className='inline-flex btn-default items-center gap-x-1 text-sm font-semibold leading-2 capitalize'>

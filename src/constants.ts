@@ -1,15 +1,19 @@
-import { truncate, kebabCase, round } from "lodash";
-export const baseUrl =
-  process.env.NODE_ENV === "production"
-    ? `https://cp.ar-expo.ru`
-    : `https://cp.ar-expo.ru`;
+import { truncate, kebabCase, round } from 'lodash';
+// export const baseUrl =
+// export const baseUrl =
+//     process.env.NODE_ENV === "production"
+//         ? `https://cp.ar-expo.ru`
+//         : `http://ar-expo-backend.test`;
 export const appVersion = `0.0.1`;
-export const apiUrl = `${baseUrl}/api/`;
+// export const apiUrl = `${baseUrl}/api/`;
+export const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 export const imageUrl = `https://loremflickr.com/`;
-export const isLocal = process.env.NODE_ENV !== "production";
+export const isLocal = process.env.NODE_ENV !== 'production';
+console.log('production', process.env.NODE_ENV === "production")
+console.log('apiUrl', process.env.NEXT_PUBLIC_API_URL)
 export const suppressText = true;
-import { PersonOutlineOutlined } from "@mui/icons-material";
-import { Country } from "./types/queries";
+import PersonOutlineOutlined from "@mui/icons-material/PersonOutlineOutlined";
+import { Country } from './types/queries';
 export { PersonOutlineOutlined, truncate };
 export { kebabCase };
 

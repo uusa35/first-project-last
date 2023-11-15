@@ -10,7 +10,6 @@ import Pagination from "@/components/Pagination";
 import UserCard from "@/components/user/UserCard";
 import NoResults from "@/components/NoResults";
 import { notFound } from "next/navigation";
-import UserIndexBanner from "@/appImages/user/main_banner.jpg";
 import SponsorshipBanner from "@/appImages/user/sponsorship.jpg";
 import SubscriptionBanner from "@/appImages/user/subscription.jpg";
 import { getCategories } from "@/utils/category";
@@ -39,7 +38,7 @@ export default async function UserIndex({
   ]);
 
   if ("status" in users && (users.status === 404 || users.status === 500))
-    notFound();
+    return notFound();
 
   if (users.data && users.data.length === 0)
     return (

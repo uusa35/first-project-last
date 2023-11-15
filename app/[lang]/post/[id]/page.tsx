@@ -71,7 +71,7 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
     ]);
 
   if ("status" in post && (post.status === 404 || post.status === 500))
-    notFound();
+    return notFound();
 
   return (
     <MainContextLayout trans={trans} lang={lang} setting={setting}>

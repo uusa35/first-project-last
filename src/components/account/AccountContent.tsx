@@ -267,7 +267,6 @@ export default function ({ element, countries, categories }: Props) {
       selectedIndex={toNumber(activeTab)}
     >
       <TabList activeTab={activeTab} />
-
       <Tab.Panels as={"div"} className={`flex w-full md:w-2/3 p-4 flex-col`}>
         {activeTab !== "0" && activeTab !== "1" && (
           <AccountSteps active_tab={activeTab} />
@@ -357,9 +356,9 @@ export default function ({ element, countries, categories }: Props) {
         />
         <SubscriptionType />
         <MobileStepper
-          variant="dots"
+          variant='dots'
           steps={11}
-          position="static"
+          position='static'
           activeStep={parseInt(activeTab)}
           sx={[
             {

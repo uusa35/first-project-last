@@ -1,7 +1,13 @@
 "use client";
 import React from "react";
-import SunEditor, { buttonList } from "suneditor-react";
-import "@/styles/suneditor.min.css"; // Import Sun Editor's CSS File
+import dynamic from "next/dynamic";
+import "suneditor/dist/css/suneditor.min.css"; // Import Sun Editor's CSS File
+
+const SunEditor = dynamic(() => import("suneditor-react"), {
+  ssr: false,
+});
+// import SunEditor, { buttonList } from "suneditor-react";
+// // import "@/styles/suneditor.min.css"; // Import Sun Editor's CSS File
 // import "suneditor/src/assets/css/suneditor.css";
 
 type Props = {
@@ -28,7 +34,7 @@ export function TextEditor({
       onChange={(e) => handleChange(e)}
       setOptions={{
         height: `200`,
-        buttonList: buttonList.complex,
+        // buttonList: buttonList.complex,
       }}
     />
   );

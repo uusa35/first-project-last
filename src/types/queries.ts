@@ -160,6 +160,7 @@ export type ImageType = {
     name: string,
     caption: string,
     image: string,
+    large: string,
     url: string,
     [key: string]: any;
 }
