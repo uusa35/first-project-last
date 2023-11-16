@@ -16,7 +16,7 @@ import {
 } from "@/redux/slices/toastMessageSlice";
 
 type Props = {
-  hadleImage: (e: File | undefined) => void;
+  handleImage: (e: File | undefined) => void;
   default_data: {
     image: File | string;
     images: ImageType[];
@@ -27,7 +27,7 @@ type Props = {
 export default function UploadPhotos({
   default_data,
   submitImages,
-  hadleImage,
+  handleImage,
 }: Props) {
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -85,7 +85,7 @@ export default function UploadPhotos({
             />
             <input
               onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                hadleImage(e.target.files ? e.target.files[0] : undefined);
+                handleImage(e.target.files ? e.target.files[0] : undefined);
               }}
               type='file'
               id='image'
