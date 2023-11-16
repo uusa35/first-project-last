@@ -23,7 +23,7 @@ type Props = {
 export async function generateMetadata({ params }: Props) {
   const [user, setting]: [User, Setting] = await Promise.all([
     getUser(params.id, params.lang),
-    getSetting(params.lang),
+    getSetting(),
   ]);
   if (!user || !user.id) {
     throw notFound();
