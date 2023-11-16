@@ -17,10 +17,10 @@ export default function SubscriptionType({}: Props) {
         {trans.select_the_region_in_the_gallery}
       </h1>
       <div className="bg-gray-50 border border-gray-200 rounded-md">
-        <p>{trnas.zone_a_desc}</p>
-        <p>{trnas.zone_b_desc}</p>
-        <p>{trnas.zone_c_desc}</p>
-        <p>{trnas.zone_d_desc}</p>
+        <p>{trans.zone_a_desc}</p>
+        <p>{trans.zone_b_desc}</p>
+        <p>{trans.zone_c_desc}</p>
+        <p>{trans.zone_d_desc}</p>
       </div>
     </Tab.Panel>
   );
