@@ -41,7 +41,7 @@ export default async function ({ params: { lang, sort } }: Props) {
     Membership[]
   ] = await Promise.all([
     getDictionary(lang),
-    getSetting(lang),
+    getSetting(),
     getCountries(`lang=${lang}&limit=1`, lang),
     getMemberships(`sort=${sort}`, lang),
   ]);

@@ -31,7 +31,7 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
     getMembership(id, lang),
     getCountries(`lang=${lang}&limit=1`, lang),
     getCountries(`lang=en&limit=1`, lang),
-    getSetting(lang),
+    getSetting(),
     getAuth(),
   ]);
 

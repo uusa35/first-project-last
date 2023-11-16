@@ -35,7 +35,7 @@ export default async function ({ params: { lang } }: Props) {
     AppQueryResult<Category[]>
   ] = await Promise.all([
     getDictionary(lang),
-    getSetting(lang),
+    getSetting(),
     getCategories("", lang),
   ]);
 

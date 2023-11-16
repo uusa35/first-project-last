@@ -80,7 +80,7 @@ export default async function ({ params: { lang, id } }: Props) {
     Membership
   ] = await Promise.all([
     getDictionary(lang),
-    getSetting(lang),
+    getSetting(),
     getCountries(`lang=${lang}&limit=1`, lang),
     getMembership(id, lang),
   ]);

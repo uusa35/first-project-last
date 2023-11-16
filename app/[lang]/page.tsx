@@ -66,7 +66,7 @@ export default async function Home({ params: { lang } }: Props) {
     getDictionary(lang),
     getSlides(`on_home=1`, lang),
     getCategories(`on_home=1`, lang),
-    getSetting(lang),
+    getSetting(),
     getMemberships(`sort=subscription&on_home=1&limit=3`, lang),
     getMemberships(`sort=sponsorship&limit=3`, lang),
     getPosts(`on_home=1`),

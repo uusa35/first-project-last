@@ -64,7 +64,7 @@ export async function generateMetadata({ params }: Props) {
 
 export default async function ({ params: { lang, id }, searchParams }: Props) {
   const [{ trans }, setting, post]: [{ trans: any }, Setting, Post] =
-    await Promise.all([getDictionary(lang), getSetting(lang), getPost(id)]);
+    await Promise.all([getDictionary(lang), getSetting(), getPost(id)]);
 
   if ("status" in post && (post.status === 404 || post.status === 500))
     return notFound();

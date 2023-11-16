@@ -26,7 +26,7 @@ export default async function ({ params: { lang, role } }: Props) {
   const [{ trans }, setting, country]: [any, Setting, Country] =
     await Promise.all([
       getDictionary(lang),
-      getSetting(lang),
+      getSetting(),
       getCountries(`lang=${lang}&limit=1`, lang),
     ]);
 

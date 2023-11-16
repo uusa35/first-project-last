@@ -1,8 +1,10 @@
 import { Locale } from '@/types/index';
 import { notFound } from 'next/navigation';
 import { mainHeaders } from '@/utils/helpers';
+import { getLang } from '@/app/actions';
 
-export async function getSetting(lang: Locale['lang']) {
+export async function getSetting() {
+    const lang = await getLang();
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}setting`, {
         // cache: "no-store",
         next: { revalidate: process.env.NODE_ENV === 'production' ? 60 : 180 },
