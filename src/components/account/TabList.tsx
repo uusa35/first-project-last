@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { AccountTab } from "./AccountTab";
 import { Tab } from "@headlessui/react";
+import { AccountTab } from "@/components/account/AccountTab";
 import AccountInfoIcon from "@/appIcons/account/info.svg";
 import Password from "@/appIcons/account/password.svg";
 import Aboutus from "@/appIcons/account/about_us.svg";

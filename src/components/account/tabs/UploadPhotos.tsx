@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { ImageType } from "@/types/queries";
 import { Tab } from "@headlessui/react";
 import Image from "next/image";
-import React, { ChangeEvent, useState } from "react";
+import { useContext, ChangeEvent, useState } from "react";
 import Upload from "@/appIcons/account/upload_img.svg";
 import DeleteIcon from "@/appIcons/account/delete.svg";
 import { FileUploader } from "react-drag-drop-files";
@@ -31,7 +31,7 @@ export default function UploadPhotos({
 }: Props) {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const trans: { [key: string]: string } = React.useContext(MainContext);
+  const trans: { [key: string]: string } = useContext(MainContext);
   const [images, setImages] = useState<
     { [key: string]: File | number } | undefined
   >(undefined);
