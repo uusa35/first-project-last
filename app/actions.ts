@@ -7,7 +7,7 @@ export async function setLocaleCookie(value: string) {
         value,
         secure: process.env.NODE_ENV === 'production',
     });
-}``
+} ``
 
 export async function setToken(value: string) {
     cookies().set({
@@ -19,6 +19,10 @@ export async function setToken(value: string) {
 
 export async function getToken() {
     return cookies().get('token')?.value ?? null;
+}
+
+export async function getLang() {
+    return cookies().get('NEXT_LOCALE')?.value ?? 'en';
 }
 
 export async function setRole(value: string) {

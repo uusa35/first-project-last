@@ -2,7 +2,6 @@
 import { Locale } from '@/types/index';
 import { notFound } from 'next/navigation';
 import { mainHeaders } from '@/utils/helpers';
-import { cookies } from 'next/headers';
 import { getToken } from '@/app/actions';
 
 export async function login(email: string, password: string, lang: Locale['lang']) {

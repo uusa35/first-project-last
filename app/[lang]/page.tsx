@@ -69,7 +69,7 @@ export default async function Home({ params: { lang } }: Props) {
     getSetting(lang),
     getMemberships(`sort=subscription&on_home=1&limit=3`, lang),
     getMemberships(`sort=sponsorship&limit=3`, lang),
-    getPosts(`on_home=1`, lang),
+    getPosts(`on_home=1`),
     getUsers(`membership=sponsorship`, lang),
     getImages(`on_home=1`, lang),
     getCountries(`lang=${lang}&limit=1`, lang),

@@ -41,7 +41,7 @@ export default async function ({ params: { lang }, searchParams }: Props) {
     Setting
   ] = await Promise.all([
     getDictionary(lang),
-    getPosts(convertSearchParamsToString(searchParams) ?? ``, lang),
+    getPosts(convertSearchParamsToString(searchParams) ?? ``),
     getSetting(lang),
   ]);
 
