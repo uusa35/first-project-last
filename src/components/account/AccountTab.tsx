@@ -1,6 +1,5 @@
 import { Tab } from "@headlessui/react";
 import Link from "next/link";
-import * as React from "react";
 
 type Props = {
   icon?: React.ReactNode;

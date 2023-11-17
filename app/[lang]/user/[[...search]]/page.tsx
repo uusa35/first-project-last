@@ -32,7 +32,7 @@ export default async function UserIndex({
     AppQueryResult<Category[]>
   ] = await Promise.all([
     getDictionary(lang),
-    getSetting(lang),
+    getSetting(),
     getUsers(convertSearchParamsToString(searchParams) ?? ``, lang),
     getCategories(``, lang),
   ]);

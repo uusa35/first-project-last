@@ -1,5 +1,5 @@
 "use client";
-import { ChangeEvent, useContext, useState } from "react";
+import { useContext } from "react";
 import {
   useLazyUploadImageQuery,
   useUpdateUserMutation,
@@ -11,40 +11,26 @@ import { loginSchema, updateUserSchema } from "@/src/validations";
 import { disableLoading, enableLoading } from "@/redux/slices/settingSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { MainContext } from "@/layouts/MainContentLayout";
-import {
-  AppQueryResult,
-  Auth,
-  Category,
-  Country,
-  ImageType,
-  Role,
-  User,
-} from "@/types/queries";
+import { AppQueryResult, Category, Country, Role, User } from "@/types/queries";
 import {
   showErrorToastMessage,
   showSuccessToastMessage,
 } from "@/redux/slices/toastMessageSlice";
-import { get, map, omit, pick, toNumber, toString } from "lodash";
-import InputError from "@/components/InputError";
-import { TextEditor } from "@/components/TextEditor";
-import InputLabel from "@/components/InputLabel";
-import TextInput from "@/components/TextInput";
-import LoadingSpinner from "../LoadingSpinner";
-import Image from "next/image";
+import { map, omit, pick, toNumber, toString } from "lodash";
+import LoadingSpinner from "@/components/LoadingSpinner";
 import { useLazyUploadImagesQuery } from "@/redux/api";
-import Select from "react-select";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { AccountInfo } from "./tabs content/AccountInfo";
-import { TabList } from "./TabList";
-import { ModifyPassword } from "./tabs content/ModifyPassword";
-import BasicInfo from "./tabs content/BasicInfo";
-import CompanyDescription from "./tabs content/CompanyDescription";
-import CompanyServices from "./tabs content/CompanyServices";
-import AboutUs from "./tabs content/AboutUs";
-import UploadPhotos from "./tabs content/UploadPhotos";
-import CompanyLinks from "./tabs content/CompanyLinks";
-import SubscriptionType from "./tabs content/SubscriptionType";
-import AccountSteps from "./AccountSteps";
+import { AccountInfo } from "@/components/account/tabs/AccountInfo";
+import { TabList } from "@/components/account/TabList";
+import { ModifyPassword } from "@/components/account/tabs/ModifyPassword";
+import BasicInfo from "@/components/account/tabs/BasicInfo";
+import CompanyDescription from "@/components/account/tabs/CompanyDescription";
+import CompanyServices from "@/components/account/tabs/CompanyServices";
+import AboutUs from "@/components/account/tabs/AboutUs";
+import UploadPhotos from "@/components/account/tabs/UploadPhotos";
+import CompanyLinks from "@/components/account/tabs/CompanyLinks";
+import SubscriptionType from "@/components/account/tabs/SubscriptionType";
+import AccountSteps from "@/components/account/AccountSteps";
 import { MobileStepper } from "@mui/material";
 import { Locale } from "@/types/index";
 
@@ -231,15 +217,12 @@ export default function ({
   const handleImages = async (imagesGroup: any) => {
     if (imagesGroup.length > 1 && imagesGroup.length <= 10) {
       let formData = new FormData();
-      // for (const key in imagesGroup) {
-      // }
       for (let i = 0; i < imagesGroup.length; i++) {
         formData.append(`images[${i}]`, imagesGroup[i]);
       }
       formData.append("model", "user");
       formData.append("id", toString(element.id));
       await triggerUploadImages(formData).then((r: any) => {
-        // console.log({ r });
         if (r.data && r.data.message) {
           dispatch(showSuccessToastMessage({ content: r.data.message }));
           router.refresh();
@@ -250,7 +233,7 @@ export default function ({
     }
   };
 
-  const hadleImage = async (image: File | undefined) => {
+  const handleImage = async (image: File | undefined) => {
     if (image) {
       const formData = new FormData();
       formData.append("image", image);
@@ -342,7 +325,7 @@ export default function ({
           }}
         />
         <UploadPhotos
-          hadleImage={hadleImage}
+          handleImage={handleImage}
           submitImages={handleImages}
           default_data={{
             image: user?.thumb || element?.thumb || "",

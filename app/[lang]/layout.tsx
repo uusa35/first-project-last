@@ -11,7 +11,7 @@ type Props = {
 };
 // or Dynamic metadata
 export async function generateMetadata({ params }: Props) {
-  const setting = await getSetting(params.lang);
+  const setting = await getSetting();
   return {
     title: setting.name,
     description: removeTags(setting.caption ?? setting.description),

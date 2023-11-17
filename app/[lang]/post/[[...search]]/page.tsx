@@ -41,8 +41,8 @@ export default async function ({ params: { lang }, searchParams }: Props) {
     Setting
   ] = await Promise.all([
     getDictionary(lang),
-    getPosts(convertSearchParamsToString(searchParams) ?? ``, lang),
-    getSetting(lang),
+    getPosts(convertSearchParamsToString(searchParams) ?? ``),
+    getSetting(),
   ]);
 
   if ("status" in posts && (posts.status === 404 || posts.status === 500))

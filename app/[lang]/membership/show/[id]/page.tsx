@@ -23,7 +23,7 @@ type Props = {
 export async function generateMetadata({ params }: Props) {
   const [membership, setting]: [Membership, Setting] = await Promise.all([
     getMembership(params.id, params.lang),
-    getSetting(params.lang),
+    getSetting(),
   ]);
   if (!membership || !membership.id) {
     throw notFound();
@@ -80,7 +80,7 @@ export default async function ({ params: { lang, id } }: Props) {
     Membership
   ] = await Promise.all([
     getDictionary(lang),
-    getSetting(lang),
+    getSetting(),
     getCountries(`lang=${lang}&limit=1`, lang),
     getMembership(id, lang),
   ]);

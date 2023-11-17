@@ -12,7 +12,7 @@ export default async function NotFound() {
   const lang: any = cookieStore.get("NEXT_LOCALE")?.value ?? "en";
   const [{ trans }, setting]: [{ trans: any }, Setting] = await Promise.all([
     getDictionary(lang),
-    getSetting(lang),
+    getSetting(),
   ]);
 
   return (

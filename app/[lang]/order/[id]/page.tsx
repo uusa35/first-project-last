@@ -28,7 +28,7 @@ export default async function ({
     Order
   ] = await Promise.all([
     getDictionary(lang),
-    getSetting(lang),
+    getSetting(),
     getCountries(`lang=${lang}&limit=1`, lang),
     getCountries(`lang=en&limit=1`, lang),
     getOrder(id, lang),
