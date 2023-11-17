@@ -32,6 +32,7 @@ import CompanyLinks from "@/components/account/tabs/CompanyLinks";
 import SubscriptionType from "@/components/account/tabs/SubscriptionType";
 import AccountSteps from "@/components/account/AccountSteps";
 import { MobileStepper } from "@mui/material";
+import { Locale } from "@/types/index";
 
 type Inputs = {
   username?: string;
@@ -69,8 +70,18 @@ type Props = {
   element: User;
   countries: Country[];
   categories: AppQueryResult<Category[]>;
+  lang: Locale["lang"];
+  role: Role["name"];
+  id: string;
 };
-export default function ({ element, countries, categories }: Props) {
+export default function ({
+  element,
+  countries,
+  categories,
+  role,
+  lang,
+  id,
+}: Props) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -247,8 +258,10 @@ export default function ({ element, countries, categories }: Props) {
       vertical={true}
       as={`div`}
       className={`flex flex-col md:flex-row p-3 md:p-0`}
-      selectedIndex={toNumber(activeTab)}>
-      <TabList activeTab={activeTab} />
+      selectedIndex={toNumber(activeTab)}
+    >
+      <TabList lang={lang} id={id} activeTab={activeTab} role={role} />
+
       <Tab.Panels as={"div"} className={`flex w-full md:w-2/3 p-4 flex-col`}>
         {activeTab !== "0" && activeTab !== "1" && (
           <AccountSteps active_tab={activeTab} />
@@ -267,80 +280,85 @@ export default function ({ element, countries, categories }: Props) {
           }}
         />
         <ModifyPassword />
-        <BasicInfo
-          categories={categories.data}
-          onSubmit={onSubmit}
-          countries={countries}
-          default_data={{
-            ...pick(isSuccess && user ? user : element, [
-              "name",
-              "caption",
-              "categories",
-              "country_id",
-              "address",
-              "keywords",
-            ]),
-          }}
-        />
-        <CompanyDescription
-          onSubmit={onSubmit}
-          default_data={{
-            description: {
-              ar: user?.description?.ar ?? element?.description?.ar ?? "",
-              en: user?.description?.en ?? element?.description?.en ?? "",
-              ru: user?.description?.ru ?? element?.description?.ru ?? "",
-            },
-          }}
-        />
-        <CompanyServices
-          onSubmit={onSubmit}
-          default_data={{
-            services: {
-              ar: user?.services?.ar ?? element?.services?.ar ?? "",
-              en: user?.services?.en ?? element?.services?.en ?? "",
-              ru: user?.services?.ru ?? element?.services?.ru ?? "",
-            },
-          }}
-        />
-        <AboutUs
-          onSubmit={onSubmit}
-          default_data={{
-            aboutus: {
-              ar: user?.aboutus?.ar ?? element?.aboutus?.ar ?? "",
-              en: user?.aboutus?.en ?? element?.aboutus?.en ?? "",
-              ru: user?.aboutus?.ru ?? element?.aboutus?.ru ?? "",
-            },
-          }}
-        />
-        <UploadPhotos
-          handleImage={handleImage}
-          submitImages={handleImages}
-          default_data={{
-            image: user?.thumb || element?.thumb || "",
-            images: user?.images || element?.images || [],
-          }}
-        />
-        <CompanyLinks
-          onSubmit={onSubmit}
-          default_data={{
-            ...pick(isSuccess && user ? user : element, [
-              "website",
-              "twitter",
-              "facebook",
-              "instagram",
-              "snap",
-              "tiktok",
-              "linked",
-              "iphone",
-              "android",
-            ]),
-          }}
-        />
-        <SubscriptionType />
+        {role === "company" ? (
+          <>
+            <BasicInfo
+              categories={categories.data}
+              onSubmit={onSubmit}
+              countries={countries}
+              default_data={{
+                ...pick(isSuccess && user ? user : element, [
+                  "name",
+                  "caption",
+                  "categories",
+                  "country_id",
+                  "address",
+                  "keywords",
+                ]),
+              }}
+            />
+            <CompanyDescription
+              onSubmit={onSubmit}
+              default_data={{
+                description: {
+                  ar: user?.description?.ar ?? element?.description?.ar ?? "",
+                  en: user?.description?.en ?? element?.description?.en ?? "",
+                  ru: user?.description?.ru ?? element?.description?.ru ?? "",
+                },
+              }}
+            />
+            <CompanyServices
+              onSubmit={onSubmit}
+              default_data={{
+                services: {
+                  ar: user?.services?.ar ?? element?.services?.ar ?? "",
+                  en: user?.services?.en ?? element?.services?.en ?? "",
+                  ru: user?.services?.ru ?? element?.services?.ru ?? "",
+                },
+              }}
+            />
+            <AboutUs
+              onSubmit={onSubmit}
+              default_data={{
+                aboutus: {
+                  ar: user?.aboutus?.ar ?? element?.aboutus?.ar ?? "",
+                  en: user?.aboutus?.en ?? element?.aboutus?.en ?? "",
+                  ru: user?.aboutus?.ru ?? element?.aboutus?.ru ?? "",
+                },
+              }}
+            />
+            <UploadPhotos
+              handleImage={handleImage}
+              submitImages={handleImages}
+              default_data={{
+                image: user?.thumb || element?.thumb || "",
+                images: user?.images || element?.images || [],
+              }}
+            />
+            <CompanyLinks
+              onSubmit={onSubmit}
+              default_data={{
+                ...pick(isSuccess && user ? user : element, [
+                  "website",
+                  "twitter",
+                  "facebook",
+                  "instagram",
+                  "snap",
+                  "tiktok",
+                  "linked",
+                  "iphone",
+                  "android",
+                ]),
+              }}
+            />
+            <SubscriptionType lang={lang} />
+          </>
+        ) : null}
+
         <MobileStepper
-          variant='dots'
+          variant="dots"
           steps={11}
-          position='static'
+          position="static"
           activeStep={parseInt(activeTab)}
           sx={[
             {

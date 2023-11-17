@@ -244,6 +244,13 @@
     "zone_a_desc":"Zone A represents the golden zone and has 3 different zones with areas of 10 m, 15 m and 20 m and prices start from $1000",
     "zone_b_desc":"Zone B represents the silver zone and has 3 different zones of 10 sqm, 15 sqm and 20 sqm, and prices start at $500",
     "zone_c_desc":"Area C represents the platinum area and has 3 different areas of 10 sqm, 15 sqm and 20 sqm, and prices start at $300",
-    "zone_d_desc":"Zone D represents the bronze zone and has 3 different zones of 10 m, 15 m and 20 m and prices start at $150"
+    "zone_d_desc":"Zone D represents the bronze zone and has 3 different zones of 10 m, 15 m and 20 m and prices start at $150",
+    "select_the_region":"select the region",
+    "choose_the_size_of_stand_you_want":"choose the size of stand you want",
+    "price":"price",
+    "companies":"companies",
+    "zone":"zone",
+    "no_data_found":"no data found"
+
   }
 }
