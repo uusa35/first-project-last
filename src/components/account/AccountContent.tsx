@@ -260,7 +260,8 @@ export default function ({
       className={`flex flex-col md:flex-row p-3 md:p-0`}
       selectedIndex={toNumber(activeTab)}
     >
-      <TabList lang={lang} id={id} activeTab={activeTab} />
+      <TabList lang={lang} id={id} activeTab={activeTab} role={role} />
+
       <Tab.Panels as={"div"} className={`flex w-full md:w-2/3 p-4 flex-col`}>
         {activeTab !== "0" && activeTab !== "1" && (
           <AccountSteps active_tab={activeTab} />
@@ -279,76 +280,81 @@ export default function ({
           }}
         />
         <ModifyPassword />
-        <BasicInfo
-          categories={categories.data}
-          onSubmit={onSubmit}
-          countries={countries}
-          default_data={{
-            ...pick(isSuccess && user ? user : element, [
-              "name",
-              "caption",
-              "categories",
-              "country_id",
-              "address",
-              "keywords",
-            ]),
-          }}
-        />
-        <CompanyDescription
-          onSubmit={onSubmit}
-          default_data={{
-            description: {
-              ar: user?.description?.ar ?? element?.description?.ar ?? "",
-              en: user?.description?.en ?? element?.description?.en ?? "",
-              ru: user?.description?.ru ?? element?.description?.ru ?? "",
-            },
-          }}
-        />
-        <CompanyServices
-          onSubmit={onSubmit}
-          default_data={{
-            services: {
-              ar: user?.services?.ar ?? element?.services?.ar ?? "",
-              en: user?.services?.en ?? element?.services?.en ?? "",
-              ru: user?.services?.ru ?? element?.services?.ru ?? "",
-            },
-          }}
-        />
-        <AboutUs
-          onSubmit={onSubmit}
-          default_data={{
-            aboutus: {
-              ar: user?.aboutus?.ar ?? element?.aboutus?.ar ?? "",
-              en: user?.aboutus?.en ?? element?.aboutus?.en ?? "",
-              ru: user?.aboutus?.ru ?? element?.aboutus?.ru ?? "",
-            },
-          }}
-        />
-        <UploadPhotos
-          handleImage={handleImage}
-          submitImages={handleImages}
-          default_data={{
-            image: user?.thumb || element?.thumb || "",
-            images: user?.images || element?.images || [],
-          }}
-        />
-        <CompanyLinks
-          onSubmit={onSubmit}
-          default_data={{
-            ...pick(isSuccess && user ? user : element, [
-              "website",
-              "twitter",
-              "facebook",
-              "instagram",
-              "snap",
-              "tiktok",
-              "linked",
-              "iphone",
-              "android",
-            ]),
-          }}
-        />
-        <SubscriptionType lang={lang} />
+        {role === "company" ? (
+          <>
+            <BasicInfo
+              categories={categories.data}
+              onSubmit={onSubmit}
+              countries={countries}
+              default_data={{
+                ...pick(isSuccess && user ? user : element, [
+                  "name",
+                  "caption",
+                  "categories",
+                  "country_id",
+                  "address",
+                  "keywords",
+                ]),
+              }}
+            />
+            <CompanyDescription
+              onSubmit={onSubmit}
+              default_data={{
+                description: {
+                  ar: user?.description?.ar ?? element?.description?.ar ?? "",
+                  en: user?.description?.en ?? element?.description?.en ?? "",
+                  ru: user?.description?.ru ?? element?.description?.ru ?? "",
+                },
+              }}
+            />
+            <CompanyServices
+              onSubmit={onSubmit}
+              default_data={{
+                services: {
+                  ar: user?.services?.ar ?? element?.services?.ar ?? "",
+                  en: user?.services?.en ?? element?.services?.en ?? "",
+                  ru: user?.services?.ru ?? element?.services?.ru ?? "",
+                },
+              }}
+            />
+            <AboutUs
+              onSubmit={onSubmit}
+              default_data={{
+                aboutus: {
+                  ar: user?.aboutus?.ar ?? element?.aboutus?.ar ?? "",
+                  en: user?.aboutus?.en ?? element?.aboutus?.en ?? "",
+                  ru: user?.aboutus?.ru ?? element?.aboutus?.ru ?? "",
+                },
+              }}
+            />
+            <UploadPhotos
+              handleImage={handleImage}
+              submitImages={handleImages}
+              default_data={{
+                image: user?.thumb || element?.thumb || "",
+                images: user?.images || element?.images || [],
+              }}
+            />
+            <CompanyLinks
+              onSubmit={onSubmit}
+              default_data={{
+                ...pick(isSuccess && user ? user : element, [
+                  "website",
+                  "twitter",
+                  "facebook",
+                  "instagram",
+                  "snap",
+                  "tiktok",
+                  "linked",
+                  "iphone",
+                  "android",
+                ]),
+              }}
+            />
+            <SubscriptionType lang={lang} />
+          </>
+        ) : null}
+
         <MobileStepper
           variant="dots"
           steps={11}

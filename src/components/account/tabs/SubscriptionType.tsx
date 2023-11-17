@@ -16,6 +16,7 @@ import { isEmpty } from "lodash";
 import Image from "next/image";
 import { useGetMembershipsQuery } from "@/redux/api/membershipApi";
 import { appLinks } from "@/src/links";
+import PreviousDeals from "../PreviousDeals";
 
 type Props = {
   lang: Locale["lang"];
@@ -25,7 +26,6 @@ type Props = {
 export default function SubscriptionType({ lang }: Props) {
   const router = useRouter();
   const trans: { [key: string]: string } = React.useContext(MainContext);
-  const { hasValidDeal, deals } = useAppSelector((state) => state.auth);
 
   const [availableZones, setAvailableZones] = useState<string[] | undefined>(
     undefined
@@ -82,10 +82,11 @@ export default function SubscriptionType({ lang }: Props) {
     }
   }, [sortedMemberships]);
 
-  console.log({ hasValidDeal, deals, selectedZone });
+  // console.log({ hasValidDeal, deals, selectedZone });
 
   return (
     <Tab.Panel>
+      <PreviousDeals />
       {/* membership type */}
       <div className="grid grid-cols-2 bg-gray-50 p-1.5 rounded-md mt-5 border border-gray-200 text-gray-500">
         <div
@@ -113,6 +114,8 @@ export default function SubscriptionType({ lang }: Props) {
           {trans.sponsors}
         </div>
       </div>
+
+      {/* description */}
       <h1 className="text-2xl my-5">
         {trans.select_the_region_in_the_gallery}
       </h1>
@@ -122,6 +125,8 @@ export default function SubscriptionType({ lang }: Props) {
         <p>- {trans.zone_c_desc}</p>
         <p>- {trans.zone_d_desc}</p>
       </div>
+
+      {/* zones and memberships */}
       <div className="mt-5">
         {/* zones */}
         {availableZones ? (
