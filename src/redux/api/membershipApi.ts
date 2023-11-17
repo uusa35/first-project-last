@@ -1,3 +1,4 @@
+import { Locale } from "@/types/index";
 import { apiSlice } from "./index";
 import { AppQueryResult, Membership, User } from "@/types/queries";
 
@@ -13,6 +14,7 @@ export const authApi = apiSlice.injectEndpoints({
           on_home?: number;
           limit?: number;
         };
+        lang?: Locale["lang"];
       } | void
     >({
       query: (params) => {
@@ -20,6 +22,7 @@ export const authApi = apiSlice.injectEndpoints({
         return {
           url: `membership`,
           method: "get",
+          headers: { "Accept-Language": params?.lang },
           ...(params?.params ? { params: { ...params?.params } } : {}),
           validateStatus: (response, result) => response.status == 200,
         };

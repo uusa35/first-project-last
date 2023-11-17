@@ -245,7 +245,8 @@
     "choose_the_size_of_stand_you_want":"Выберите размер подставки, который вам нужен",
     "price":"Цена",
     "companies":"Компании",
-    "zone":"зона"
+    "zone":"зона",
+    "no_data_found":"данные не найдены"
 
   }
 }

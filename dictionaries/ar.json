@@ -245,6 +245,7 @@
     "choose_the_size_of_stand_you_want":"اختر حجم الستاند الذي تريده",
     "price":"السعر",
     "companies":"الشركات",
-    "zone":""
+    "zone":"منطقة",
+    "no_data_found":"لا توجد بيانات"
   }
 }

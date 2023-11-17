@@ -249,7 +249,8 @@
     "choose_the_size_of_stand_you_want":"choose the size of stand you want",
     "price":"price",
     "companies":"companies",
-    "zone":"zone"
+    "zone":"zone",
+    "no_data_found":"no data found"
 
   }
 }

@@ -9,12 +9,13 @@ import ZoneD from "@/appIcons/account/zones/zone_d.svg";
 import React, { useCallback, useEffect, useState } from "react";
 import { Membership } from "@/types/queries";
 import { getMemberships } from "@/utils/membership";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Locale } from "@/types/index";
 import Link from "next/link";
 import { isEmpty } from "lodash";
 import Image from "next/image";
 import { useGetMembershipsQuery } from "@/redux/api/membershipApi";
+import { appLinks } from "@/src/links";
 
 type Props = {
   lang: Locale["lang"];
@@ -22,8 +23,9 @@ type Props = {
 };
 
 export default function SubscriptionType({ lang }: Props) {
-  const { hasValidDeal, deals } = useAppSelector((state) => state.auth);
+  const router = useRouter();
   const trans: { [key: string]: string } = React.useContext(MainContext);
+  const { hasValidDeal, deals } = useAppSelector((state) => state.auth);
 
   const [availableZones, setAvailableZones] = useState<string[] | undefined>(
     undefined
@@ -31,16 +33,19 @@ export default function SubscriptionType({ lang }: Props) {
 
   const [selectedZone, setSelectedZone] = useState<string>("");
 
-  const [selectedMembership, setSelectedMembership] = useState<
+  const [selectedMembershipType, setSelectedMembershipType] = useState<
     "subscription" | "sponsorship"
   >("subscription");
+
+  const [selectedMembership, setSelectedMembership] = useState<Membership>();
 
   const { data: allMemberships, isSuccess: allMembershipsSuccess } =
     useGetMembershipsQuery(
       {
         params: {
-          sort: selectedMembership,
+          sort: selectedMembershipType,
         },
+        lang,
       },
       { refetchOnMountOrArgChange: true }
     );
@@ -49,9 +54,10 @@ export default function SubscriptionType({ lang }: Props) {
     useGetMembershipsQuery(
       {
         params: {
-          sort: selectedMembership,
+          sort: selectedMembershipType,
           zone: selectedZone,
         },
+        lang,
       },
       { refetchOnMountOrArgChange: true }
     );
@@ -68,7 +74,13 @@ export default function SubscriptionType({ lang }: Props) {
       setAvailableZones(all_zones.sort());
       setSelectedZone(all_zones.sort()[0]);
     }
-  }, [allMemberships, selectedMembership]);
+  }, [allMemberships, selectedMembershipType]);
+
+  useEffect(() => {
+    if (sortedMembershipsSuccess && sortedMemberships && sortedMemberships[0]) {
+      setSelectedMembership(sortedMemberships[0]);
+    }
+  }, [sortedMemberships]);
 
   console.log({ hasValidDeal, deals, selectedZone });
 
@@ -78,24 +90,24 @@ export default function SubscriptionType({ lang }: Props) {
       <div className="grid grid-cols-2 bg-gray-50 p-1.5 rounded-md mt-5 border border-gray-200 text-gray-500">
         <div
           className={`w-full text-center rounded-md py-2 cursor-pointer capitalize ${
-            selectedMembership === "subscription" &&
+            selectedMembershipType === "subscription" &&
             "bg-white shadow-sm text-expo-dark"
           } `}
           onClick={() => {
             setAvailableZones(undefined);
-            setSelectedMembership("subscription");
+            setSelectedMembershipType("subscription");
           }}
         >
           {trans.companies}
         </div>
         <div
           className={`w-full text-center rounded-md py-2 cursor-pointer capitalize ${
-            selectedMembership === "sponsorship" &&
+            selectedMembershipType === "sponsorship" &&
             "bg-white shadow-sm text-expo-dark"
           }`}
           onClick={() => {
             setAvailableZones(undefined);
-            setSelectedMembership("sponsorship");
+            setSelectedMembershipType("sponsorship");
           }}
         >
           {trans.sponsors}
@@ -111,13 +123,12 @@ export default function SubscriptionType({ lang }: Props) {
         <p>- {trans.zone_d_desc}</p>
       </div>
       <div className="mt-5">
-        <p>{trans.select_the_region}</p>
-
         {/* zones */}
-        <div className="flex overflow-auto scrollbar-hide gap-x-5 mt-3">
-          {/* map zones here */}
-          {availableZones
-            ? availableZones.map((itm) => (
+        {availableZones ? (
+          <>
+            <p>{trans.select_the_region}</p>
+            <div className="flex overflow-auto scrollbar-hide gap-x-5 mt-3">
+              {availableZones.map((itm) => (
                 <div
                   key={itm}
                   onClick={() => setSelectedZone(itm)}
@@ -130,28 +141,40 @@ export default function SubscriptionType({ lang }: Props) {
                   </p>
                   <ZoneA className="w-3 h-3" />
                 </div>
-              ))
-            : null}
-        </div>
-        {/* zone desc */}
-        <div className="bg-gray-50 border border-gray-200 text-gray-700 rounded-md py-5 px-3 space-y-2 text-sm my-3">
-          <p>- {trans.zone_a_desc}</p>
-        </div>
+              ))}
+            </div>
+          </>
+        ) : null}
 
-        <div>
-          <p>{trans.choose_the_size_of_stand_you_want}</p>
-          <div className="text-center my-5">
-            {sortedMembershipsSuccess ? (
-              isEmpty(sortedMemberships) ? (
-                <p>no data found</p>
+        {/* membership */}
+        {sortedMembershipsSuccess ? (
+          <div>
+            {/* zone desc */}
+            <div
+              dangerouslySetInnerHTML={{
+                __html: selectedMembership?.description,
+              }}
+              className="bg-gray-50 border border-gray-200 text-gray-700 rounded-md py-5 px-3 space-y-2 text-sm my-3"
+            />
+            <p>{trans.choose_the_size_of_stand_you_want}</p>
+            <div className="text-center my-5">
+              {isEmpty(sortedMemberships) ? (
+                <p>{trans.no_data_found}</p>
               ) : (
                 <div className="grid grid-cols-3 gap-x-3">
                   {sortedMemberships.map((itm) => {
                     return (
                       <div
+                        onClick={() => setSelectedMembership(itm)}
                         key={itm.id}
-                        className={`rounded-2xl p-2`}
-                        style={{ backgroundColor: itm.color + "66" }}
+                        className={`rounded-2xl p-2 transform transition duration-500 ease-in-out hover:scale-105 cursor-pointer`}
+                        style={{
+                          backgroundColor: itm.color + "66",
+                          border:
+                            selectedMembership?.id === itm.id
+                              ? `4px solid ${itm.color}`
+                              : "none",
+                        }}
                       >
                         <Image
                           width={100}
@@ -168,17 +191,29 @@ export default function SubscriptionType({ lang }: Props) {
                             {itm.name}
                           </p>
                           <p>
-                            {trans.price} {itm.price}$
+                            {trans.price} : {itm.price}$
                           </p>
                         </div>
                       </div>
                     );
                   })}
                 </div>
-              )
-            ) : null}
+              )}
+            </div>
           </div>
-        </div>
+        ) : null}
+      </div>
+
+      <div className="my-10 flex items-center justify-center gap-x-6">
+        <button
+          type="submit"
+          className="btn-default"
+          onClick={() =>
+            router.push(appLinks.cartIndex(lang, selectedMembership?.id || 0))
+          }
+        >
+          {trans.continue}
+        </button>
       </div>
     </Tab.Panel>
   );
