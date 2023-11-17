@@ -61,6 +61,9 @@ export default async function ({
           element={user}
           countries={countries}
           categories={categories}
+          lang={lang}
+          role={role}
+          id={id}
         />
         {/* <form className={``}>
           <div className='space-y-12'>

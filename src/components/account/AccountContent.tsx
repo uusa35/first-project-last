@@ -46,6 +46,7 @@ import CompanyLinks from "./tabs content/CompanyLinks";
 import SubscriptionType from "./tabs content/SubscriptionType";
 import AccountSteps from "./AccountSteps";
 import { MobileStepper } from "@mui/material";
+import { Locale } from "@/types/index";
 
 type Inputs = {
   username?: string;
@@ -83,8 +84,18 @@ type Props = {
   element: User;
   countries: Country[];
   categories: AppQueryResult<Category[]>;
+  lang: Locale["lang"];
+  role: Role["name"];
+  id: string;
 };
-export default function ({ element, countries, categories }: Props) {
+export default function ({
+  element,
+  countries,
+  categories,
+  role,
+  lang,
+  id,
+}: Props) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -266,7 +277,7 @@ export default function ({ element, countries, categories }: Props) {
       className={`flex flex-col md:flex-row p-3 md:p-0`}
       selectedIndex={toNumber(activeTab)}
     >
-      <TabList activeTab={activeTab} />
+      <TabList lang={lang} id={id} activeTab={activeTab} />
       <Tab.Panels as={"div"} className={`flex w-full md:w-2/3 p-4 flex-col`}>
         {activeTab !== "0" && activeTab !== "1" && (
           <AccountSteps active_tab={activeTab} />
@@ -354,11 +365,11 @@ export default function ({ element, countries, categories }: Props) {
             ]),
           }}
         />
-        <SubscriptionType />
+        <SubscriptionType lang={lang} />
         <MobileStepper
-          variant='dots'
+          variant="dots"
           steps={11}
-          position='static'
+          position="static"
           activeStep={parseInt(activeTab)}
           sx={[
             {

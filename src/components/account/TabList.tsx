@@ -13,13 +13,19 @@ import Type from "@/appIcons/account/type.svg";
 import UploadImage from "@/appIcons/account/upload.svg";
 import Services from "@/appIcons/account/services.svg";
 import { MainContext } from "@/layouts/MainContentLayout";
+import { appLinks } from "@/src/links";
+import { useSearchParams } from "next/navigation";
+import { Locale } from "@/types/index";
 
 export interface Props {
   activeTab: String;
+  lang: Locale["lang"];
+  id: string;
 }
 
-export function TabList({ activeTab }: Props) {
+export function TabList({ activeTab, lang, id }: Props) {
   const trans: { [key: string]: string } = React.useContext(MainContext);
+  const searchParams = useSearchParams;
 
   return (
     <Tab.List
@@ -102,6 +108,7 @@ export function TabList({ activeTab }: Props) {
         icon={<ShowPersonnalInfo className="w-6 h-6" />}
         active={activeTab === "10"}
         tab_index="10"
+        link={appLinks.userShow(lang, id)}
       />
     </Tab.List>
   );
