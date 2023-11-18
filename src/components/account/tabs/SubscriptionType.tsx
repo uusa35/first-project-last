@@ -159,7 +159,7 @@ export default function SubscriptionType({ lang }: Props) {
               dangerouslySetInnerHTML={{
                 __html: selectedMembership?.description,
               }}
-              className="bg-gray-50 border border-gray-200 text-gray-700 rounded-md py-5 px-3 space-y-2 text-sm my-3"
+              className="bg-gray-50 border border-gray-200 text-gray-700 rounded-md py-5 px-3 space-y-2 text-sm my-3 h-28 overflow-auto scrollbar-hide"
             />
             <p>{trans.choose_the_size_of_stand_you_want}</p>
             <div className="text-center my-5">
