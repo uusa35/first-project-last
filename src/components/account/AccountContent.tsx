@@ -292,9 +292,12 @@ export default function ({
                   "caption",
                   "categories",
                   "country_id",
-                  "address",
                   "keywords",
                 ]),
+                address:
+                  isSuccess && user && user.address
+                    ? user.address[0]
+                    : element.address && element.address[0],
               }}
             />
             <CompanyDescription

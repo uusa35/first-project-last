@@ -38,40 +38,41 @@ export default function CompanyServices({ default_data, onSubmit }: Props) {
 
   // console.log(getValues());
   return (
-    <Tab.Panel>
+    <Tab.Panel className={`h-full`}>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className={`space-y-8 ${isLoading && "hidden"}`}>
-        <h1 className='text-2xl mb-10 mt-5'>
+        className={`space-y-8 ${isLoading && "hidden"}`}
+      >
+        <h1 className="text-2xl mb-10 mt-5">
           {trans.register_to_participate_in_the_exhibition}
         </h1>
 
-        <InputLabel value='خدمات الشركة' />
+        <InputLabel value="خدمات الشركة" />
         <TextEditor
           defaultValue={getValues("services.ar")}
-          language='ar'
-          name='services'
+          language="ar"
+          name="services"
           setValue={setValue}
         />
 
-        <InputLabel value='Company’s Services' />
+        <InputLabel value="Company’s Services" />
         <TextEditor
           defaultValue={getValues("services.en")}
-          language='en'
-          name='services'
+          language="en"
+          name="services"
           setValue={setValue}
         />
 
-        <InputLabel value='Услуги компании' />
+        <InputLabel value="Услуги компании" />
         <TextEditor
           defaultValue={getValues("services.ru")}
-          language='ru'
-          name='services'
+          language="ru"
+          name="services"
           setValue={setValue}
         />
 
-        <div className='mt-10 flex items-center justify-center gap-x-6'>
-          <button type='submit' className='btn-default'>
+        <div className="mt-10 flex items-center justify-center gap-x-6">
+          <button type="submit" className="btn-default">
             {trans.continue}
           </button>
         </div>

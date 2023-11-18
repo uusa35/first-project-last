@@ -45,7 +45,7 @@ export function AccountInfo({ default_data, onSubmit }: Props) {
 
   //   console.log({ errors }, getValues());
   return (
-    <Tab.Panel>
+    <Tab.Panel className={`h-full`}>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className={`space-y-8 ${isLoading && "hidden"}`}>

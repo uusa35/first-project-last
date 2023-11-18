@@ -85,7 +85,7 @@ export default function SubscriptionType({ lang }: Props) {
   // console.log({ hasValidDeal, deals, selectedZone });
 
   return (
-    <Tab.Panel>
+    <Tab.Panel className={`h-full`}>
       <PreviousDeals />
       {/* membership type */}
       <div className="grid grid-cols-2 bg-gray-50 p-1.5 rounded-md mt-5 border border-gray-200 text-gray-500">
@@ -166,7 +166,7 @@ export default function SubscriptionType({ lang }: Props) {
               {isEmpty(sortedMemberships) ? (
                 <p>{trans.no_data_found}</p>
               ) : (
-                <div className="grid grid-cols-3 gap-x-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  gap-3">
                   {sortedMemberships.map((itm) => {
                     return (
                       <div

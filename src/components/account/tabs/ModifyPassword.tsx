@@ -69,7 +69,7 @@ export function ModifyPassword({}: Props) {
   // console.log(getValues());
 
   return (
-    <Tab.Panel>
+    <Tab.Panel className={`h-full`}>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className={`space-y-8 ${isLoading && "hidden"}`}
