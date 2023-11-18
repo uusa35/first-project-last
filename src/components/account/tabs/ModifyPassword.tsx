@@ -16,6 +16,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { get } from "lodash";
 import * as React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import Input from "@mui/material/Input";
+import { IconButton, InputAdornment } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 type InputsData = {
   password: string;
@@ -27,6 +30,10 @@ type Props = {};
 export function ModifyPassword({}: Props) {
   const dispatch = useAppDispatch();
   const trans: { [key: string]: string } = React.useContext(MainContext);
+  const [show, setShow] = React.useState({
+    password: false,
+    password_confirmation: false,
+  });
   const [triggerChangePassword, { data: user, error, isSuccess }] =
     useChangePasswordMutation();
   const {
@@ -76,28 +83,6 @@ export function ModifyPassword({}: Props) {
       >
         <h1 className="text-2xl mb-10 mt-5">{trans.modify_password}</h1>
 
-        {/*  current_password  */}
-        {/* <div>
-          <InputLabel
-            htmlFor="current_password"
-            value={trans["current_password"]}
-            aria-required
-          />
-          <div className="mt-2">
-            <input
-              id="current_password"
-              {...register("current_password")}
-              type="text"
-              autoComplete="password"
-              className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
-            />
-            <InputError
-              message={get(errors, "current_password.message")}
-              className="mt-2"
-            />
-          </div>
-        </div> */}
-
         {/*  new_password  */}
         <div>
           <InputLabel
@@ -106,12 +91,36 @@ export function ModifyPassword({}: Props) {
             aria-required
           />
           <div className="mt-2">
-            <input
+            {/* <input
               id="new_password"
               {...register("password")}
               type="text"
               autoComplete="password"
               className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
+            /> */}
+
+            <Input
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={() =>
+                      setShow((prev) => ({ ...prev, password: !show.password }))
+                    }
+                    onMouseDown={() =>
+                      setShow((prev) => ({ ...prev, password: !show.password }))
+                    }
+                  >
+                    {show.password ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              id="new_password"
+              {...register("password")}
+              type={show.password ? "text" : "password"}
+              autoComplete="password"
+              className="w-full outline-none"
+              inputProps={{ className: "outline-none focus:ring-0" }}
             />
             <InputError
               message={get(errors, "password.message")}
@@ -128,12 +137,45 @@ export function ModifyPassword({}: Props) {
             aria-required
           />
           <div className="mt-2">
-            <input
+            {/* <input
               id="password_confirmation"
               {...register("password_confirmation")}
               type="text"
               autoComplete="password"
               className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
+            /> */}
+            <Input
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={() =>
+                      setShow((prev) => ({
+                        ...prev,
+                        password_confirmation: !show.password_confirmation,
+                      }))
+                    }
+                    onMouseDown={() =>
+                      setShow((prev) => ({
+                        ...prev,
+                        password_confirmation: !show.password_confirmation,
+                      }))
+                    }
+                  >
+                    {show.password_confirmation ? (
+                      <VisibilityOff />
+                    ) : (
+                      <Visibility />
+                    )}
+                  </IconButton>
+                </InputAdornment>
+              }
+              id="password_confirmation"
+              {...register("password_confirmation")}
+              type={show.password_confirmation ? "text" : "password"}
+              autoComplete="password"
+              className="w-full outline-none"
+              inputProps={{ className: "outline-none focus:ring-0" }}
             />
             <InputError
               message={get(errors, "password_confirmation.message")}
