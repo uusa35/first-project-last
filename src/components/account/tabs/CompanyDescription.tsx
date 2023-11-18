@@ -50,7 +50,7 @@ export default function CompanyDescription({ default_data, onSubmit }: Props) {
           {trans.register_to_participate_in_the_exhibition}
         </h1>
 
-        <InputLabel value="وصف الشركة" />
+        <InputLabel value={trans["description.ar"]} />
         <TextEditor
           defaultValue={getValues("description.ar")}
           language="ar"
@@ -58,7 +58,7 @@ export default function CompanyDescription({ default_data, onSubmit }: Props) {
           setValue={setValue}
         />
 
-        <InputLabel value="company description" />
+        <InputLabel value={trans["description.en"]} />
         <TextEditor
           defaultValue={getValues("description.en")}
           language="en"
@@ -66,7 +66,7 @@ export default function CompanyDescription({ default_data, onSubmit }: Props) {
           setValue={setValue}
         />
 
-        <InputLabel value="Описание Компании" />
+        <InputLabel value={trans["description.ru"]} />
         <TextEditor
           defaultValue={getValues("description.ru")}
           language="ru"
