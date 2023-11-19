@@ -106,6 +106,7 @@ export function TabList({ activeTab, lang, id, role }: Props) {
             icon={<Payment className="w-6 h-6" />}
             active={activeTab === "9"}
             tab_index="9"
+            link={" "}
           />
           <AccountTab
             title={<p>{trans.View_profile}</p>}
