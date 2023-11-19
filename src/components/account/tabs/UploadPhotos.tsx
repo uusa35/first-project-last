@@ -119,9 +119,9 @@ export default function UploadPhotos({
 
             {/* images */}
             <div className="flex flex-wrap gap-2 py-5">
-              {default_data.images.map((itm) => {
+              {default_data.images.map((itm, i: number) => {
                 return (
-                  <div className="w-1/6 h-auto aspect-2">
+                  <div className="w-1/6 h-auto aspect-2" key={i}>
                     <Image
                       width={100}
                       height={100}

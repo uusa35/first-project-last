@@ -101,6 +101,7 @@ export default async function ({ params: { lang, sort } }: Props) {
             <div className='isolate mx-auto grid max-w-md grid-cols-1 gap-6 lg:mx-0 lg:max-w-none lg:grid-cols-3  '>
               {memberships.map((s: Membership, i: number) => (
                 <MembershipCard
+                  key={i}
                   trans={trans}
                   element={s}
                   country={country[0]}
