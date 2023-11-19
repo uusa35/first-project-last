@@ -71,6 +71,7 @@ export function ModifyPassword({}: Props) {
         );
       }
       dispatch(disableLoading());
+      reset();
     });
   };
   // console.log(getValues());
