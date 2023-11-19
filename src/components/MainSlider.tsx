@@ -31,6 +31,8 @@ export default async function ({ slides, lang }: Props) {
             width='1000'
             height='500'
             src={s.image}
+            placeholder='blur'
+            loading='lazy'
             alt={`${process.env.NEXT_PUBLIC_BASE_URL}`}
             className='h-full w-full object-cover relative'
           />

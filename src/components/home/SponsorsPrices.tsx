@@ -45,9 +45,9 @@ export default function ({
         <div className='isolate mx-auto mt-10 grid max-w-md grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3'>
           {sponsorships.map((s: Membership, i: number) => (
             <MembershipCard
+              key={i}
               trans={trans}
               element={s}
-              key={i}
               scaleMiddle={i === 1 && s.is_featured}
               lang={lang}
               country={country[0]}
