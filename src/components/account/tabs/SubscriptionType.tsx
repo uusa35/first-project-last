@@ -172,32 +172,39 @@ export default function SubscriptionType({ lang }: Props) {
                       <div
                         onClick={() => setSelectedMembership(itm)}
                         key={itm.id}
-                        className={`rounded-2xl p-2 transform transition duration-500 ease-in-out hover:scale-105 cursor-pointer`}
+                        className={`rounded-3xl p-1 transform transition duration-500 ease-in-out hover:scale-105 cursor-pointer`}
                         style={{
-                          backgroundColor: itm.color + "66",
+                          // backgroundColor: itm.color + "66",
                           border:
                             selectedMembership?.id === itm.id
                               ? `4px solid ${itm.color}`
                               : "none",
                         }}
                       >
-                        <Image
-                          width={100}
-                          height={100}
-                          className="w-full h-auto aspect-[2/1] rounded-xl"
-                          src={itm.image}
-                          alt={itm.name}
-                        />
-                        <div className="flex justify-between gap-x-3 items-center mt-3">
-                          <p
-                            className="rounded-md p-1 text-sm"
-                            style={{ backgroundColor: itm.color }}
-                          >
-                            {itm.name}
-                          </p>
-                          <p>
-                            {trans.price} : {itm.price}$
-                          </p>
+                        <div
+                          style={{
+                            backgroundColor: itm.color + "66",
+                          }}
+                          className={`rounded-2xl p-2`}
+                        >
+                          <Image
+                            width={100}
+                            height={100}
+                            className="w-full h-auto aspect-[2/1] rounded-xl"
+                            src={itm.image}
+                            alt={itm.name}
+                          />
+                          <div className="flex justify-between gap-x-3 items-center mt-3">
+                            <p
+                              className="rounded-md p-1 text-sm"
+                              style={{ backgroundColor: itm.color }}
+                            >
+                              {itm.name}
+                            </p>
+                            <p>
+                              {trans.price} : {itm.price}$
+                            </p>
+                          </div>
                         </div>
                       </div>
                     );
