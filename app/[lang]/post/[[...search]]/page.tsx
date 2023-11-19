@@ -122,7 +122,7 @@ export default async function ({ params: { lang }, searchParams }: Props) {
 
         <div className='mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-10  lg:max-w-none lg:grid-cols-3'>
           {posts.data.slice(1, 8).map((p: Post, i: number) => (
-            <PostCard element={p} lang={lang} />
+            <PostCard element={p} lang={lang} key={i} />
           ))}
         </div>
         {posts.data.length > 0 && <Pagination links={posts.meta.links} />}
