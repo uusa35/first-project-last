@@ -88,7 +88,7 @@ export default function SubscriptionType({ lang }: Props) {
     <Tab.Panel className={`h-full`}>
       <PreviousDeals />
       {/* membership type */}
-      <div className='grid grid-cols-2 bg-gray-50 p-1.5 rounded-md mt-5 border border-gray-200 text-gray-500'>
+      <div className='grid grid-cols-2 bg-gray-50 p-1.5 rounded-md mt-5 border border-gray-200 text-gray-500 capitalize'>
         <div
           className={`w-full text-center rounded-md py-2 cursor-pointer capitalize ${
             selectedMembershipType === "subscription" &&
@@ -117,7 +117,7 @@ export default function SubscriptionType({ lang }: Props) {
       <h1 className='text-2xl my-5'>
         {trans.select_the_region_in_the_gallery}
       </h1>
-      <div className='bg-gray-50 border border-gray-200 text-gray-700 rounded-md py-5 px-3 space-y-2 text-sm'>
+      <div className='bg-gray-50 border border-gray-200 text-gray-700 rounded-md py-5 px-3 space-y-2 text-sm capitalize'>
         <p>- {trans.zone_a_desc}</p>
         <p>- {trans.zone_b_desc}</p>
         <p>- {trans.zone_c_desc}</p>
@@ -150,7 +150,7 @@ export default function SubscriptionType({ lang }: Props) {
 
         {/* membership */}
         {sortedMembershipsSuccess ? (
-          <div>
+          <div className='capitalize'>
             {/* zone desc */}
             <div
               dangerouslySetInnerHTML={{

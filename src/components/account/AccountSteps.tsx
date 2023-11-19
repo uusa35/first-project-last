@@ -9,7 +9,7 @@ export default function ({ active_tab }: { active_tab: string }) {
   return (
     <nav aria-label='Progress'>
       <div
-        className={`grid grid-cols-3  border-t  border-l border-r md:border border-gray-200 rounded-md`}>
+        className={`grid grid-cols-3  border-t  border-l border-r md:border border-gray-200 rounded-md capitalize`}>
         <div className='col-span-full md:col-span-1  flex justify-start items-center border-b md:rtl:border-l md:ltr:border-r border-gray-200 p-4'>
           <div className='flex flex-row justify-center items-center gap-x-3'>
             <div
