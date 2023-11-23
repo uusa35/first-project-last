@@ -64,7 +64,7 @@ export default async function ({ params: { lang } }: Props) {
                 {trans.aboutus}
               </h3>
               <div
-                className='max-w-xs sm:max-w-xl md:max-w-full  whitespace-pre-line text-ellipsis overflow-hidden'
+                className='max-w-xs sm:max-w-xl md:max-w-full whitespace-pre-line text-ellipsis overflow-hidden'
                 dangerouslySetInnerHTML={{
                   __html: DOMPurify.sanitize(setting.aboutus),
                 }}></div>
@@ -72,7 +72,7 @@ export default async function ({ params: { lang } }: Props) {
                 {trans.services}
               </h3>
               <div
-                className='max-w-xs sm:max-w-xl md:max-w-full  whitespace-pre-line text-ellipsis overflow-hidden'
+                className='max-w-xs sm:max-w-xl md:max-w-full whitespace-pre-line text-ellipsis overflow-hidden'
                 dangerouslySetInnerHTML={{
                   __html: DOMPurify.sanitize(setting.services),
                 }}></div>
@@ -80,7 +80,7 @@ export default async function ({ params: { lang } }: Props) {
                 {trans.description}
               </h3>
               <div
-                className='max-w-xs sm:max-w-xl md:max-w-full  whitespace-pre-line text-ellipsis overflow-hidden'
+                className='max-w-xs sm:max-w-xl md:max-w-full whitespace-pre-line text-ellipsis overflow-hidden'
                 dangerouslySetInnerHTML={{
                   __html: DOMPurify.sanitize(setting.description),
                 }}></div>
@@ -89,7 +89,7 @@ export default async function ({ params: { lang } }: Props) {
                 {trans.address}
               </h3>
               <div
-                className='max-w-xs sm:max-w-xl md:max-w-full  whitespace-pre-line text-ellipsis overflow-hidden'
+                className='max-w-xs sm:max-w-xl md:max-w-full whitespace-pre-line text-ellipsis overflow-hidden'
                 dangerouslySetInnerHTML={{
                   __html: DOMPurify.sanitize(setting.address),
                 }}></div>
