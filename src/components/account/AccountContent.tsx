@@ -251,15 +251,13 @@ export default function ({
       });
     }
   };
-  console.log({ element });
 
   return (
     <Tab.Group
       vertical={true}
       as={`div`}
       className={`flex flex-col md:flex-row p-3 md:p-0`}
-      selectedIndex={toNumber(activeTab)}
-    >
+      selectedIndex={toNumber(activeTab)}>
       <TabList lang={lang} id={id} activeTab={activeTab} role={role} />
 
       <Tab.Panels as={"div"} className={`flex w-full md:w-2/3 p-4 flex-col`}>
@@ -359,9 +357,9 @@ export default function ({
         ) : null}
 
         <MobileStepper
-          variant="dots"
+          variant='dots'
           steps={11}
-          position="static"
+          position='static'
           activeStep={parseInt(activeTab)}
           sx={[
             {
