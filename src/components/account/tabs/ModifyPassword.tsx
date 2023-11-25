@@ -82,7 +82,9 @@ export function ModifyPassword({}: Props) {
         onSubmit={handleSubmit(onSubmit)}
         className={`space-y-8 ${isLoading && "hidden"}`}
       >
-        <h1 className="text-2xl mb-10 mt-5">{trans.modify_password}</h1>
+        <h1 className="text-2xl mb-10 mt-5 capitalize">
+          {trans.modify_password}
+        </h1>
 
         {/*  new_password  */}
         <div>
@@ -186,7 +188,7 @@ export function ModifyPassword({}: Props) {
         </div>
 
         <div className="mt-10 flex items-center justify-center gap-x-6">
-          <button type="submit" className="btn-default">
+          <button type="submit" className="btn-default capitalize">
             {trans.saving_information}
           </button>
         </div>

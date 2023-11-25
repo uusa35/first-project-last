@@ -43,19 +43,19 @@ export default function AboutUs({ default_data, onSubmit }: Props) {
         onSubmit={handleSubmit(onSubmit)}
         className={`space-y-8 ${isLoading && "hidden"}`}
       >
-        <h1 className="text-2xl mb-10 mt-5">
+        <h1 className="text-2xl mb-10 mt-5 capitalize">
           {trans.register_to_participate_in_the_exhibition}
         </h1>
 
-        <InputLabel value="نبذه عنا" />
+        <InputLabel value={trans["aboutus.ar"]} />
         <TextEditor
-          defaultValue={getValues("aboutus.en")}
+          defaultValue={getValues("aboutus.ar")}
           language="ar"
           name="aboutus"
           setValue={setValue}
         />
 
-        <InputLabel value="About Us" />
+        <InputLabel value={trans["aboutus.en"]} />
         <TextEditor
           defaultValue={getValues("aboutus.en")}
           language="en"
@@ -63,7 +63,7 @@ export default function AboutUs({ default_data, onSubmit }: Props) {
           setValue={setValue}
         />
 
-        <InputLabel value="О нас" />
+        <InputLabel value={trans["aboutus.ru"]} />
         <TextEditor
           defaultValue={getValues("aboutus.ru")}
           language="ru"
@@ -72,7 +72,7 @@ export default function AboutUs({ default_data, onSubmit }: Props) {
         />
 
         <div className="mt-10 flex items-center justify-center gap-x-6">
-          <button type="submit" className="btn-default">
+          <button type="submit" className="btn-default capitalize">
             {trans.continue}
           </button>
         </div>

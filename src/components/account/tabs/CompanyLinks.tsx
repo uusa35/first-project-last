@@ -62,7 +62,7 @@ export default function CompanyLinks({ default_data, onSubmit }: Props) {
         onSubmit={handleSubmit(onSubmit)}
         className={`space-y-8 ${isLoading && "hidden"}`}
       >
-        <h1 className="text-2xl mb-10 mt-5">
+        <h1 className="text-2xl mb-10 mt-5 capitalize">
           {trans.register_to_participate_in_the_exhibition}
         </h1>
 
@@ -86,7 +86,7 @@ export default function CompanyLinks({ default_data, onSubmit }: Props) {
             />
           </div>
           <div className="grid grid-cols-2 gap-3">
-            <h1 className="text-lg my-2 col-span-2">
+            <h1 className="text-lg my-2 col-span-2 capitalize">
               {trans.social_media_links}
             </h1>
             {/* twitter */}
@@ -228,7 +228,7 @@ export default function CompanyLinks({ default_data, onSubmit }: Props) {
         </div>
 
         <div className="mt-10 flex items-center justify-center gap-x-6">
-          <button type="submit" className="btn-default">
+          <button type="submit" className="btn-default capitalize">
             {trans.continue}
           </button>
         </div>

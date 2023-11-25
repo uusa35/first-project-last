@@ -63,7 +63,7 @@ export default function UploadPhotos({
   return (
     <Tab.Panel className={`h-full`}>
       <div className={`space-y-8 ${isLoading && "hidden"}`}>
-        <h1 className="text-2xl mb-10 mt-5">
+        <h1 className="text-2xl mb-10 mt-5 capitalize">
           {trans.register_to_participate_in_the_exhibition}
         </h1>
 
@@ -81,7 +81,7 @@ export default function UploadPhotos({
             <InputLabel
               htmlFor="image"
               value={trans.download_logo}
-              className=" rounded-md mt-3 border border-gray-300 py-1 px-2"
+              className=" rounded-md mt-3 border border-gray-300 py-1 px-2 capitalize"
             />
             <input
               onChange={(e: ChangeEvent<HTMLInputElement>) => {
@@ -95,7 +95,7 @@ export default function UploadPhotos({
           </div>
           {/* images */}
           <div>
-            <h1 className="mb-5">{trans.exhibition_photos}</h1>
+            <h1 className="mb-5 capitalize">{trans.exhibition_photos}</h1>
             <FileUploader
               handleChange={(e: any) => {
                 setImages(e);
@@ -107,7 +107,9 @@ export default function UploadPhotos({
                 <div className="w-full rounded-sm border-2 border-gray-300 border-dashed py-5 flex flex-col items-center gap-y-1 text-gray-300 cursor-pointer">
                   <Upload className="w-7 h-7" />
                   <p>
-                    <span className="text-expo-dark">{trans.upload_file}</span>
+                    <span className="text-expo-dark capitalize">
+                      {trans.upload_file}
+                    </span>
                     {trans.or_drag_and_drop}
                   </p>
                   <p className="text-sm">PNG, JPG, GIF up to 10MB</p>
@@ -143,12 +145,12 @@ export default function UploadPhotos({
           </div>
         </div>
 
-        <div className="mt-10 flex items-center justify-center gap-x-6">
+        <div className="mt-10 flex items-center justify-center gap-x-6 capitalize">
           <button
             onClick={() => {
               submitImages(images);
             }}
-            className="btn-default"
+            className="btn-default capitalize"
           >
             {trans.continue}
           </button>
