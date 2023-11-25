@@ -17,6 +17,7 @@ import Image from "next/image";
 import { useGetMembershipsQuery } from "@/redux/api/membershipApi";
 import { appLinks } from "@/src/links";
 import PreviousDeals from "../PreviousDeals";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 type Props = {
   lang: Locale["lang"];
@@ -39,28 +40,34 @@ export default function SubscriptionType({ lang }: Props) {
 
   const [selectedMembership, setSelectedMembership] = useState<Membership>();
 
-  const { data: allMemberships, isSuccess: allMembershipsSuccess } =
-    useGetMembershipsQuery(
-      {
-        params: {
-          sort: selectedMembershipType,
-        },
-        lang,
+  const {
+    data: allMemberships,
+    isSuccess: allMembershipsSuccess,
+    isLoading: allMembershipsLoading,
+  } = useGetMembershipsQuery(
+    {
+      params: {
+        sort: selectedMembershipType,
       },
-      { refetchOnMountOrArgChange: true }
-    );
+      lang,
+    },
+    { refetchOnMountOrArgChange: true }
+  );
 
-  const { data: sortedMemberships, isSuccess: sortedMembershipsSuccess } =
-    useGetMembershipsQuery(
-      {
-        params: {
-          sort: selectedMembershipType,
-          zone: selectedZone,
-        },
-        lang,
+  const {
+    data: sortedMemberships,
+    isSuccess: sortedMembershipsSuccess,
+    isLoading: sortedMembershipsLoading,
+  } = useGetMembershipsQuery(
+    {
+      params: {
+        sort: selectedMembershipType,
+        zone: selectedZone,
       },
-      { refetchOnMountOrArgChange: true }
-    );
+      lang,
+    },
+    { refetchOnMountOrArgChange: true }
+  );
 
   useEffect(() => {
     if (allMembershipsSuccess && allMemberships) {
@@ -82,13 +89,29 @@ export default function SubscriptionType({ lang }: Props) {
     }
   }, [sortedMemberships]);
 
-  // console.log({ hasValidDeal, deals, selectedZone });
+  if (
+    sortedMembershipsLoading ||
+    allMembershipsLoading ||
+    availableZones === undefined
+  ) {
+    return (
+      <LoadingSpinner
+        isLoading={
+          sortedMembershipsLoading ||
+          allMembershipsLoading ||
+          availableZones === undefined
+        }
+      />
+    );
+  }
+
+  // console.log({ sortedMemberships });
 
   return (
     <Tab.Panel className={`h-full`}>
       <PreviousDeals />
       {/* membership type */}
-      <div className='grid grid-cols-2 bg-gray-50 p-1.5 rounded-md mt-5 border border-gray-200 text-gray-500 capitalize'>
+      <div className="grid grid-cols-2 bg-gray-50 p-1.5 rounded-md mt-5 border border-gray-200 text-gray-500 capitalize">
         <div
           className={`w-full text-center rounded-md py-2 cursor-pointer capitalize ${
             selectedMembershipType === "subscription" &&
@@ -97,7 +120,8 @@ export default function SubscriptionType({ lang }: Props) {
           onClick={() => {
             setAvailableZones(undefined);
             setSelectedMembershipType("subscription");
-          }}>
+          }}
+        >
           {trans.companies}
         </div>
         <div
@@ -108,16 +132,17 @@ export default function SubscriptionType({ lang }: Props) {
           onClick={() => {
             setAvailableZones(undefined);
             setSelectedMembershipType("sponsorship");
-          }}>
+          }}
+        >
           {trans.sponsors}
         </div>
       </div>
 
       {/* description */}
-      <h1 className='text-2xl my-5'>
+      <h1 className="text-2xl my-5">
         {trans.select_the_region_in_the_gallery}
       </h1>
-      <div className='bg-gray-50 border border-gray-200 text-gray-700 rounded-md py-5 px-3 space-y-2 text-sm capitalize'>
+      <div className="bg-gray-50 border border-gray-200 text-gray-700 rounded-md py-5 px-3 space-y-2 text-sm capitalize">
         <p>- {trans.zone_a_desc}</p>
         <p>- {trans.zone_b_desc}</p>
         <p>- {trans.zone_c_desc}</p>
@@ -125,23 +150,24 @@ export default function SubscriptionType({ lang }: Props) {
       </div>
 
       {/* zones and memberships */}
-      <div className='mt-5'>
+      <div className="mt-5">
         {/* zones */}
         {availableZones ? (
           <>
             <p>{trans.select_the_region}</p>
-            <div className='flex overflow-auto scrollbar-hide gap-x-5 mt-3'>
+            <div className="flex overflow-auto scrollbar-hide gap-x-5 mt-3">
               {availableZones.map((itm) => (
                 <div
                   key={itm}
                   onClick={() => setSelectedZone(itm)}
                   className={`flex justify-center items-center gap-x-1 bg-[#F7F7F7] py-2 rounded-md px-5 cursor-pointer ${
                     selectedZone === itm && "border border-expo-dark"
-                  }`}>
-                  <p className=' capitalize'>
+                  }`}
+                >
+                  <p className=" capitalize">
                     {trans.zone}({itm})
                   </p>
-                  <ZoneA className='w-3 h-3' />
+                  <ZoneA className="w-3 h-3" />
                 </div>
               ))}
             </div>
@@ -150,20 +176,20 @@ export default function SubscriptionType({ lang }: Props) {
 
         {/* membership */}
         {sortedMembershipsSuccess ? (
-          <div className='capitalize'>
+          <div className="capitalize">
             {/* zone desc */}
             <div
               dangerouslySetInnerHTML={{
                 __html: selectedMembership?.description,
               }}
-              className='bg-gray-50 border border-gray-200 text-gray-700 rounded-md py-5 px-3 space-y-2 text-sm my-3 h-48 overflow-auto scrollbar-hide'
+              className="bg-gray-50 border border-gray-200 text-gray-700 rounded-md py-5 px-3 space-y-2 text-sm my-3 h-48 overflow-auto scrollbar-hide"
             />
             <p>{trans.choose_the_size_of_stand_you_want}</p>
-            <div className='text-center my-5'>
+            <div className="text-center my-5">
               {isEmpty(sortedMemberships) ? (
                 <p>{trans.no_data_found}</p>
               ) : (
-                <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  gap-3'>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  gap-3">
                   {sortedMemberships.map((itm) => {
                     return (
                       <div
@@ -198,9 +224,22 @@ export default function SubscriptionType({ lang }: Props) {
                             >
                               {itm.name}
                             </p>
-                            <p>
-                              {trans.price} : {itm.price}$
-                            </p>
+                            {itm.on_sale ? (
+                              <div className="flex gap-x-1">
+                                <p>{trans.price}</p>
+                                <p className="flex flex-wrap gap-x-1">
+                                  <span className=" line-through">
+                                    {itm.price}$
+                                  </span>
+
+                                  <span>{itm.sale_price}$</span>
+                                </p>
+                              </div>
+                            ) : (
+                              <p>
+                                {trans.price} :{itm.price}$
+                              </p>
+                            )}
                           </div>
                         </div>
                       </div>
@@ -213,13 +252,14 @@ export default function SubscriptionType({ lang }: Props) {
         ) : null}
       </div>
 
-      <div className='my-10 flex items-center justify-center gap-x-6'>
+      <div className="my-10 flex items-center justify-center gap-x-6">
         <button
-          type='submit'
-          className='btn-default'
+          type="submit"
+          className="btn-default"
           onClick={() =>
             router.push(appLinks.cartIndex(lang, selectedMembership?.id || 0))
-          }>
+          }
+        >
           {trans.continue}
         </button>
       </div>
