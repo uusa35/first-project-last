@@ -158,7 +158,7 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
                   </div>
                 </div>
               )}
-              <div className='flex flex-col gap-y-4 leading-8 '>
+              <div className='flex flex-col gap-y-4 leading-8 capitalize'>
                 <div className='flex flex-col justify-between items-start gap-y-4'>
                   {/* website */}
                   {user.website && (
@@ -168,7 +168,7 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
                           <InsertLink />
                         </div>
                         <div>
-                          <h1>{trans.website}</h1>
+                          <h1 className='capitalize'>{trans.website}</h1>
                         </div>
                       </div>
                       <div className='flex flex-wrap justify-center items-center lg:justify-start'>
@@ -183,7 +183,9 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
                         <InsertLink />
                       </div>
                       <div>
-                        <h1>{trans.social_media_links}</h1>
+                        <h1 className='capitalize'>
+                          {trans.social_media_links}
+                        </h1>
                       </div>
                     </div>
                     <div className='flex flex-wrap justify-center items-center lg:justify-start'>
@@ -210,7 +212,7 @@ export default async function ({ params: { lang, id }, searchParams }: Props) {
             <MainGallery
               images={user.images}
               setting={setting}
-              message={trans.home}
+              message={user.name}
             />
           )}
         </div>
