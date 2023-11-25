@@ -232,12 +232,14 @@ export default function SubscriptionType({ lang }: Props) {
                                     {itm.price}$
                                   </span>
 
-                                  <span>{itm.sale_price}$</span>
+                                  <span className="text-red-800">
+                                    {itm.sale_price}$
+                                  </span>
                                 </p>
                               </div>
                             ) : (
                               <p>
-                                {trans.price} :{itm.price}$
+                                {trans.price} : {itm.price}$
                               </p>
                             )}
                           </div>

@@ -248,6 +248,7 @@
     "price":"السعر",
     "companies":"الشركات",
     "zone":"منطقة",
-    "no_data_found":"لا توجد بيانات"
+    "no_data_found":"لا توجد بيانات",
+    "your_deals":"صفقاتك"
   }
 }

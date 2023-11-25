@@ -250,7 +250,8 @@
     "price":"price",
     "companies":"companies",
     "zone":"zone",
-    "no_data_found":"no data found"
+    "no_data_found":"no data found",
+    "your_deals":"your deals"
 
   }
 }
