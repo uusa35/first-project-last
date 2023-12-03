@@ -16,11 +16,10 @@ type Props = {
   children: React.ReactNode;
   trans: { [key: string]: string };
   lang: Locale["lang"];
-  setting: Setting;
 };
 
 const MainContext = createContext({});
-const MainContextLayout: FC<Props> = ({ children, trans, lang, setting }) => {
+const MainContextLayout: FC<Props> = ({ children, trans, lang }) => {
   const {
     locale,
     auth: { api_token },
@@ -79,14 +78,9 @@ const MainContextLayout: FC<Props> = ({ children, trans, lang, setting }) => {
   return (
     <MainContext.Provider value={trans}>
       {/* nav & slider */}
-      <NavHeader lang={lang} mainPages={navigation} setting={setting} />
+      <NavHeader />
       <div>{children}</div>
-      <AppFooter
-        mainPages={navigation}
-        lang={lang}
-        trans={trans}
-        setting={setting}
-      />
+      <AppFooter />
     </MainContext.Provider>
   );
 };

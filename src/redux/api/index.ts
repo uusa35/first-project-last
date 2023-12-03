@@ -50,52 +50,9 @@ export const apiSlice = createApi({
         url: `setting`,
       }),
     }),
-    sendContactus: builder.query<Setting, object>({
-      query: (body) => ({
-        url: `send/contactus`,
-        method: "POST",
-        body,
-        validateStatus: (response, result) => response.status === 200,
-      }),
-    }),
-    uploadImages: builder.query<Setting, any>({
-      query: (body) => {
-        return {
-          url: `images/upload`,
-          method: "post",
-          body,
-          prepareHeaders: (headers: any) => {
-            headers.set("Content-Type", "multipart/form-data");
-          },
-          formData: true,
-          validateStatus: (response, result) => response.status == 200,
-        };
-      },
-    }),
-    deleteImage: builder.query<Setting, number>({
-      query: (num) => {
-        return {
-          url: `image/${num}`,
-          method: "DELETE",
-          validateStatus: (response, result) => response.status == 200,
-        };
-      },
-    }),
-    newsletter: builder.query<object, { email: string }>({
-      query: (body) => ({
-        url: `newsletter`,
-        method: "POST",
-        body,
-        validateStatus: (response, result) => response.status == 200,
-      }),
-    }),
   }),
 });
 
 export const {
   useGetSettingQuery,
-  useLazySendContactusQuery,
-  useLazyUploadImagesQuery,
-  useLazyNewsletterQuery,
-  useLazyDeleteImageQuery
 } = apiSlice;

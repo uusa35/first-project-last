@@ -20,10 +20,10 @@ const config: Config = {
 
       },
       colors: {
-        "expo-dark": "#006838",
-        "expo-light": "#E6F0EB",
-        "expo-medium": "#80B49C",
-        "expo-green": "#E6F0EB"
+        "picks-dark": "#006838",
+        "picks-light": "#E6F0EB",
+        "picks-medium": "#80B49C",
+        "picks-green": "#E6F0EB"
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
@@ -34,7 +34,7 @@ const config: Config = {
         "8xl": "2500px",
       },
       fontFamily: {
-        'Expo-Medium': ['Expo-Medium', 'sans-serif'],
+        'Picks-Medium': ['Picks-Medium', 'sans-serif'],
       },
       lineHeight: {
         'extra-loose': '2.5',

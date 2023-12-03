@@ -1,13 +1,11 @@
 
 export interface Locale {
-    lang: 'ar' | 'en' | 'ru';
+    lang: 'ar' | 'en';
     isRTL: boolean;
     dir: 'ltr' | 'rtl';
     label: string;
-    otherLang: 'ar' | 'en' | 'ru';
+    otherLang: 'ar' | 'en';
 }
-
-
 
 export type toastMessage = {
     content: string;

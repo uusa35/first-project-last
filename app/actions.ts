@@ -25,14 +25,6 @@ export async function getLang() {
     return cookies().get('NEXT_LOCALE')?.value ?? 'en';
 }
 
-export async function setRole(value: string) {
-    cookies().set({
-        name: 'role',
-        value,
-        secure: process.env.NODE_ENV === 'production',
-    });
-}
-
 export async function setLang(value: string) {
     cookies().set({
         name: 'NEXT_LOCALE',

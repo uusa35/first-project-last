@@ -6,7 +6,6 @@ import { Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { isNull } from "lodash";
-import { pusherChannel } from "@/src/constants";
 import { showWarningToastMessage } from "@/redux/slices/toastMessageSlice";
 
 type Props = {
@@ -21,17 +20,6 @@ const MainLayout: FC<Props> = ({ lang, children }): React.ReactNode => {
   } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    var channel = pusherChannel.subscribe("frontend-notification");
-    channel.bind("public", function (data: any) {
-      dispatch(showWarningToastMessage({ content: data.message }));
-    });
-    if (!isNull(api_token)) {
-      channel.bind(`private-${id}`, function (data: any) {
-        dispatch(showWarningToastMessage({ content: data.message }));
-      });
-    }
-  }, []);
   return (
     <div className={`w-full`}>
       {children}

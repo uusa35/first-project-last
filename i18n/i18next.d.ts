@@ -9,8 +9,8 @@ i18n
         defaultNS: "trans",
         fallbackLng: "en",
         debug: true,
-        whitelist: ["en", "ar", "ru"],
-        languages: ["en", "ar", "ru"],
+        whitelist: ["en", "ar"],
+        languages: ["en", "ar"],
         lng: "en",
         backend: {
             loadPath: `${process.env.NEXT_PUBLIC_URL}dictionaries/{{lng}}.json`,

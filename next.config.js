@@ -4,13 +4,7 @@ const nextConfig = {
   reactStrictMode: false,
   experimental: {
     serverActions: {
-      allowedOrigins: [
-        "dev.ar-expo.ru",
-        "ar-expo.ru",
-        "cp.ar-expo.ru",
-        "ar-expo-backend.test",
-        "localhost",
-      ],
+      allowedOrigins: ["picks.testbedbynd.com", "localhost"],
     },
   },
   webpack(config) {
@@ -52,31 +46,19 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "*.ar-expo.ru",
-        port: "",
-        pathname: "/**",
-      },
-      {
-        protocol: "http",
-        hostname: "ar-expo-backend.test",
+        hostname: "*.testbedbynd.com",
         port: "",
         pathname: "/**",
       },
       {
         protocol: "https",
-        hostname: "cp.ar-expo.ru",
+        hostname: "*.ondigitalocean.app",
         port: "",
         pathname: "/**",
       },
       {
         protocol: "https",
-        hostname: "hammerhead-app-fhpzt.ondigitalocean.app",
-        port: "",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "hub-apps.ams3.cdn.digitaloceanspaces.com",
+        hostname: "*.digitaloceanspaces.com",
         port: "",
         pathname: "/**",
       },

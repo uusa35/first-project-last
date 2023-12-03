@@ -18,7 +18,7 @@ export default function Loading() {
         <Image
           className='w-full h-auto object-contain bg-white'
           src={Logo}
-          alt='ar-expo'
+          alt='picks'
           fill={false}
           placeholder='blur'
           loading='lazy'

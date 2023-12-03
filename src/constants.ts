@@ -1,10 +1,4 @@
 import { truncate, kebabCase, round } from 'lodash';
-import Pusher from "pusher-js";
-// export const baseUrl =
-// export const baseUrl =
-//     process.env.NODE_ENV === "production"
-//         ? `https://cp.ar-expo.ru`
-//         : `http://ar-expo-backend.test`;
 export const appVersion = `0.0.1`;
 // export const apiUrl = `${baseUrl}/api/`;
 export const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -44,8 +38,3 @@ export const getPrice: (element: number, country: Country) => number = (
   element,
   country
 ) => round(element * country.exchange_rate);
-
-Pusher.logToConsole = true;
-export const pusherChannel = new Pusher('51c92b3ae57de17a5e1e', {
-  cluster: "mt1",
-});
