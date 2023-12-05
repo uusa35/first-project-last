@@ -1,9 +1,23 @@
+"use client";
 import { useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import SideMenu from "@/components/header/SideMenu";
+import { locale } from "moment";
+import { useAppSelector } from "@/redux/hooks";
+import Link from "next/link";
+import { usePathname, useSearchParams } from "next/navigation";
+import { changePathName } from "@/utils/helpers";
+import { getLang } from "@/app/actions";
+import { Locale } from "@/types/index";
 
-export default function () {
+type Props = {
+  lang: Locale["lang"];
+};
+export default async function ({ lang }: Props) {
+  const locales = ["ar", "en"];
+  const searchParams = useSearchParams();
+  const pathName = usePathname()!;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigation = [
     { name: "Product", href: "#" },
@@ -46,10 +60,16 @@ export default function () {
               </a>
             ))}
           </div>
-          <div className='hidden lg:flex lg:flex-1 lg:justify-end'>
-            <a href='#' className='text-sm font-semibold leading-6 text-white'>
-              Log in <span aria-hidden='true'>&rarr;</span>
-            </a>
+          <div className='flex lg:flex-1 lg:justify-end'>
+            {locales.map((item, i: number) => (
+              <Link
+                href={`${changePathName(lang, item, pathName)}?${
+                  searchParams && searchParams.toString()
+                }`}
+                className='text-sm font-semibold leading-6 text-white'>
+                {item} <span aria-hidden='true'>&rarr;</span>
+              </Link>
+            ))}
           </div>
         </nav>
         <Dialog

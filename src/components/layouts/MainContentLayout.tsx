@@ -108,7 +108,7 @@ const MainContextLayout: FC<Props> = ({
   return (
     <MainContext.Provider value={trans}>
       {/* nav */}
-      <NavHeader />
+      <NavHeader lang={lang} />
       <div>{children}</div>
       <AppFooter />
     </MainContext.Provider>
