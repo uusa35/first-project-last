@@ -60,16 +60,18 @@ export default async function ({ lang }: Props) {
               </a>
             ))}
           </div>
-          <div className='flex lg:flex-1 lg:justify-end'>
+          <div className='flex lg:flex-1 lg:justify-end gap-x-4 text-white'>
             {locales.map((item, i: number) => (
               <Link
                 href={`${changePathName(lang, item, pathName)}?${
                   searchParams && searchParams.toString()
                 }`}
                 className='text-sm font-semibold leading-6 text-white'>
-                {item} <span aria-hidden='true'>&rarr;</span>
+                {item}
               </Link>
             ))}
+            <Link href='#'>Login</Link>
+            <Link href='#'>Sign up</Link>
           </div>
         </nav>
         <Dialog

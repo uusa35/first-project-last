@@ -37,7 +37,7 @@ const navigation = [
   { name: "Reports", href: "#", icon: ChartPieIcon, current: false },
 ];
 
-function classNames(...classes) {
+function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
 
@@ -102,9 +102,7 @@ export default function Example() {
                                   as='a'
                                   href={subItem.href}
                                   className={classNames(
-                                    subItem.current
-                                      ? "bg-gray-50"
-                                      : "hover:bg-gray-50",
+                                    true ? "bg-gray-50" : "hover:bg-gray-50",
                                     "block rounded-md py-2 pr-2 pl-9 text-sm leading-6 text-gray-700"
                                   )}>
                                   {subItem.name}
