@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import SideMenu from "./SideMenu";
+import SideMenu from "@/components/header/SideMenu";
 
 export default function () {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
