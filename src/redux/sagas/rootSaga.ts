@@ -4,15 +4,16 @@ import {
   triggerChangeLang,
   triggerEnableLoading,
   triggerShowToastMessage,
-  triggerResetEntireApp,
-  triggerSetAuthScenario,
+  // triggerResetEntireApp,
+  // triggerSetAuthScenario,
+
 } from './triggers';
 
 export default function* rootSaga() {
   yield all([
     fork(triggerEnableLoading),
     fork(triggerShowToastMessage),
-    // fork(triggerChangeLang),
+    fork(triggerChangeLang),
     // fork(triggerResetEntireApp),
 
   ]);

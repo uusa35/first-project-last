@@ -27,63 +27,6 @@ export const authApi = apiSlice.injectEndpoints({
         },
       }),
     }),
-    registerVisitor: builder.mutation<
-      User,
-      {
-        name: string;
-        email: string;
-        password: string;
-        password_confirmation: string;
-        country_id: number;
-        role: "visitor" | "company";
-      }
-    >({
-      query: ({
-        name,
-        email,
-        password,
-        password_confirmation,
-        country_id,
-        role,
-      }) => ({
-        url: `register`,
-        params: {
-          name,
-          email,
-          password,
-          password_confirmation,
-          country_id,
-          role,
-        },
-        method: "post",
-        validateStatus: (response, result) => response.status == 200,
-      }),
-      invalidatesTags: ["User"],
-    }),
-    updateUser: builder.mutation<User, { body: any; id: number }>({
-      query: ({ body, id }) => ({
-        url: `user/${id}`,
-        body,
-        method: "put",
-        validateStatus: (response, result) => response.status == 200,
-      }),
-      invalidatesTags: ["User"],
-    }),
-
-    uploadImage: builder.query<User, any>({
-      query: (body) => {
-        return {
-          url: `image/upload`,
-          body,
-          formData: true,
-          method: "post",
-          prepareHeaders: (headers: any) => {
-            headers.set("Content-Type", "multipart/form-data");
-          },
-          validateStatus: (response, result) => response.status == 200,
-        };
-      },
-    }),
     forgotPassword: builder.query<User, { email: string }>({
       query: (body) => ({
         url: `forgot/password`,
@@ -92,7 +35,6 @@ export const authApi = apiSlice.injectEndpoints({
         validateStatus: (response, result) => response.status == 200,
       }),
     }),
-
     changePassword: builder.mutation<
       User,
       {
@@ -111,9 +53,6 @@ export const authApi = apiSlice.injectEndpoints({
 
 export const {
   useLazyLoginQuery,
-  useRegisterVisitorMutation,
-  useUpdateUserMutation,
-  useLazyUploadImageQuery,
   useLazyLogoutQuery,
   useLazyForgotPasswordQuery,
   useGetAuthenticatedUserQuery,

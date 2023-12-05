@@ -1,12 +1,12 @@
-import { call, put, delay, select, all } from 'redux-saga/effects';
+import { call, put, delay, select } from 'redux-saga/effects';
 import { PayloadAction } from '@reduxjs/toolkit';
 import i18n from 'i18next';
-import { toast, TypeOptions } from 'react-toastify';
-import { lowerCase, snakeCase, startCase } from 'lodash';
+import { toast } from 'react-toastify';
+import { startCase } from 'lodash';
 import { persistor } from '@/redux/store';
 import { toastMessageSlice } from '@/redux/slices/toastMessageSlice';
 import { settingSlice } from '@/redux/slices/settingSlice';
-import Router from "next/router";
+
 
 export function* startResetEnireAppSceanrio() {
   persistor.purge();

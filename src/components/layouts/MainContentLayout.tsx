@@ -1,31 +1,57 @@
 "use client";
 import { FC, createContext, useEffect } from "react";
 import NavHeader from "@/components/header/NavHeader";
-import { Locale } from "@/types/index";
+import { Locale, countriesList } from "@/types/index";
 import AppFooter from "@/components/footer/AppFooter";
 import { usePathname } from "next/navigation";
-import { Setting } from "@/types/queries";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setLocale } from "@/redux/slices/localeSlice";
 import moment from "moment";
 import * as yup from "yup";
-import { isNull } from "lodash";
-import { deleteToken, setLang, setLocaleCookie, setToken } from "@/app/actions";
+import {
+  capitalize,
+  isNull,
+  kebabCase,
+  replace,
+  startCase,
+  isUndefined,
+} from "lodash";
+import {
+  deleteToken,
+  setCountryCookie,
+  setLang,
+  setLocaleCookie,
+  setToken,
+} from "@/app/actions";
+import { setCountry } from "@/redux/slices/countrySlice";
+import { useLazyGetCountryByNameQuery } from "@/redux/api/countryApi";
+import { useLazyGetAreasQuery } from "@/redux/api/areaApi";
+import { AppQueryResult } from "@/types/queries";
+import { prepareCountryCookie } from "@/src/constants";
 
 type Props = {
   children: React.ReactNode;
   trans: { [key: string]: string };
   lang: Locale["lang"];
+  country?: countriesList;
 };
 
 const MainContext = createContext({});
-const MainContextLayout: FC<Props> = ({ children, trans, lang }) => {
+const MainContextLayout: FC<Props> = ({
+  children,
+  trans,
+  lang,
+  country = undefined,
+}) => {
   const {
     locale,
-    auth: { api_token },
+    country: { name_en },
   } = useAppSelector((state) => state);
   const pathName = usePathname();
   const dispatch = useAppDispatch();
+  const [triggerGetCountryByName, { data, isSuccess }] =
+    useLazyGetCountryByNameQuery();
+  const [triggerGetAreas, { data: areas }] = useLazyGetAreasQuery();
   const navigation = [
     { name: trans.home, href: `/${lang}`, label: `home` },
     {
@@ -68,16 +94,18 @@ const MainContextLayout: FC<Props> = ({ children, trans, lang }) => {
   }, [lang]);
 
   useEffect(() => {
-    if (isNull(api_token)) {
-      deleteToken();
-    } else {
-      setToken(api_token);
+    if (country !== undefined) {
+      const currentCountry: string = prepareCountryCookie(country);
+      setCountryCookie(currentCountry);
+      triggerGetCountryByName(currentCountry).then((r: any) =>
+        dispatch(setCountry(r.data.data))
+      );
     }
-  }, [api_token]);
+  }, [country]);
 
   return (
     <MainContext.Provider value={trans}>
-      {/* nav & slider */}
+      {/* nav */}
       <NavHeader />
       <div>{children}</div>
       <AppFooter />

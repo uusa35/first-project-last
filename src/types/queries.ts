@@ -13,21 +13,28 @@ export type Category = {
   name: string;
   caption: string;
   image: string;
-  imageLarge: string;
   [key: string]: string;
 };
 
 export type AppQueryResult<T> = {
   data: T;
-  links: any;
-  meta: any;
+  status: number;
+  success: boolean;
 };
 
 
 export type Country = {
   id: number;
+  name: string;
+  name_en: string;
+  code: string;
+  [key: string]: any;
+};
+
+export type Area = {
+  id: number;
   name: any;
-  exchange_rate: number;
+  name_en: any;
   [key: string]: any;
 };
 
@@ -54,11 +61,6 @@ export type Auth = {
   api_token: string | null | undefined;
   [key: string]: any;
 };
-export type Role = {
-  id: string;
-  name: "visitor" | "company";
-};
-
 
 export type Order = {
   id?: string;
@@ -83,5 +85,10 @@ export type ImageType = {
   image: string;
   large: string;
   url: string;
+  [key: string]: any;
+};
+
+export type Setting = {
+  id: number;
   [key: string]: any;
 };

@@ -4,7 +4,7 @@ import { apiUrl } from "@/src/constants";
 import { RootState } from "@/redux/store";
 import { isUndefined } from "lodash";
 import { Locale } from "@/types/index";
-import { Setting } from "@/types/queries";
+import { Setting } from '@/types/queries';
 
 export const apiSlice = createApi({
   reducerPath: "api",
@@ -13,7 +13,7 @@ export const apiSlice = createApi({
     prepareHeaders: async (headers, { getState }: RootState) => {
       const {
         locale,
-        auth: { api_token },
+        country: { id }
       } = getState() as RootState;
       headers.set("Access-Control-Allow-Origin", "*");
       headers.set(
@@ -21,16 +21,18 @@ export const apiSlice = createApi({
         "X-Requested-With,Accept,Authentication,Content-Type"
       );
       headers.set("Accept-Language", locale.lang);
+      headers.set("X-Localization", locale.lang);
+      headers.set("X-Country", id);
       headers.set(
         "Access-Control-Allow-Methods",
         "GET,PUT,POST,DELETE,PATCH,OPTIONS"
       );
-      // headers.set('Content-Type', 'application/json');
+      headers.set('Content-Type', 'application/json');
       headers.set("Accept", "application/json");
       headers.set("Cache-Control", "no-store");
-      if (api_token) {
-        headers.set("Authorization", `Bearer ${api_token}`);
-      }
+      // if (api_token) {
+      //   headers.set("Authorization", `Bearer ${api_token}`);
+      // }
 
       return headers;
     },
@@ -43,7 +45,6 @@ export const apiSlice = createApi({
       return action.payload[reducerPath];
     }
   },
-  tagTypes: ["User"],
   endpoints: (builder) => ({
     getSetting: builder.query<Setting, void>({
       query: () => ({

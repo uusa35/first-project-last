@@ -1,14 +1,16 @@
 import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+import { NextRequest } from 'next/server'
 import { i18n } from '@/i18n.config'
 import { match as matchLocale } from '@formatjs/intl-localematcher'
 import Negotiator from 'negotiator'
-import { setLocaleCookie } from './app/actions'
+import { removeCountryCookie, setCountryCookie, setLocaleCookie } from './app/actions'
+import { getCountries, getCountry } from '@/utils/country'
+import { cookies } from 'next/headers'
+import { Country } from '@/types/queries'
 
 function getLocale(request: NextRequest): string | undefined {
   const negotiatorHeaders: Record<string, string> = {}
   request.headers.forEach((value, key) => (negotiatorHeaders[key] = value))
-
   // @ts-ignore locales are readonly
   const locales: string[] = i18n.locales
   let languages = new Negotiator({ headers: negotiatorHeaders }).languages()
@@ -19,29 +21,36 @@ function getLocale(request: NextRequest): string | undefined {
   return locale
 }
 
-export function middleware(request: NextRequest, response: NextResponse) {
+export default async function middleware(request: NextRequest, response: NextResponse) {
   const pathName = request.nextUrl.pathname;
   const currentRequestedLocale = pathName.split('/')[1];
-  setLocaleCookie(currentRequestedLocale);
-  request.headers.set('X-Localization', currentRequestedLocale);
+  const country: string | undefined = pathName.split('/')[2] ?? undefined;
+  const serverCountry: { data : Country} | undefined = country !== undefined ? await getCountry(country) : undefined;
   const pathnameIsMissingLocale = i18n.locales.every(
     locale => !pathName.startsWith(`/${locale}/`) && pathName !== `/${locale}`
   )
   const token = request.cookies.get('token');
-  if (token &&
-    (request.nextUrl.pathname.includes('login') ||
-      request.nextUrl.pathname.includes('register'))
-  ) {
-    return NextResponse.redirect(new URL(`/`, request.url))
-  }
+
   if (pathnameIsMissingLocale) {
+
     const locale = getLocale(request);
-    setLocaleCookie(locale ?? 'en');
     return NextResponse.redirect(
       new URL(
         `/${locale}${pathName.startsWith('/') ? '' : '/'}${pathName}`,
         request.url
       ))
+  } else {
+    if (token &&
+      (request.nextUrl.pathname.includes('login') ||
+        request.nextUrl.pathname.includes('register'))
+    ) {
+      return NextResponse.redirect(new URL(`/${currentRequestedLocale}`, request.url))
+    }
+    if (!request.nextUrl.pathname.includes('terms') && !request.nextUrl.pathname.includes('faqs')) {
+      if ((country !== undefined || serverCountry !== undefined) && serverCountry?.data?.name_en?.toLowerCase() !== country.toLowerCase()) {
+        return NextResponse.redirect(new URL(`/${currentRequestedLocale}`, request.url))
+      }
+    }
   }
 }
 

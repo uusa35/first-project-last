@@ -2,7 +2,6 @@ import "@/styles/globals.css";
 import { Locale } from "@/types/index";
 import Providers from "@/src/redux/provider";
 import MainLayout from "@/src/components/layouts/MainLayout";
-import { Setting } from "@/types/queries";
 import { getSetting } from "@/utils/setting";
 import { removeTags } from "@/utils/helpers";
 
@@ -16,7 +15,7 @@ export default function RootLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: { lang: Locale["lang"]; setting: Setting };
+  params: { lang: Locale["lang"] };
 }) {
   return (
     <html

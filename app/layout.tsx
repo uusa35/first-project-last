@@ -1,6 +1,5 @@
 import "@/styles/globals.css";
 import { Locale } from "@/types/index";
-import { removeTags } from "@/utils/helpers";
 import Providers from "@/src/redux/provider";
 import MainLayout from "@/src/components/layouts/MainLayout";
 

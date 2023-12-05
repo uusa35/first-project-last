@@ -20,7 +20,9 @@ import { HYDRATE, createWrapper } from "next-redux-wrapper";
 import { apiSlice } from "./api";
 import { categoryApi } from "@/redux/api/categoryApi";
 import { isLocal } from "@/src/constants";
-import { authApi } from "./api/authApi";
+import { authApi } from "@/redux/api/authApi";
+import { areaApi } from "@/redux/api/areaApi";
+import { countryApi } from "@/redux/api/countryApi";
 
 
 const persistConfig = {
@@ -61,6 +63,8 @@ let store: any = configureStore({
       }).concat([
         apiSlice.middleware,
         categoryApi.middleware,
+        areaApi.middleware,
+        countryApi.middleware,
         sagaMiddleware,
         appLogger,
       ])

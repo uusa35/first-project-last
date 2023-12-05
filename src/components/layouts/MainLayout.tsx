@@ -4,7 +4,6 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import type { Locale } from "@/i18n.config";
 import { Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import { isNull } from "lodash";
 import { showWarningToastMessage } from "@/redux/slices/toastMessageSlice";
 
@@ -14,10 +13,7 @@ type Props = {
 };
 
 const MainLayout: FC<Props> = ({ lang, children }): React.ReactNode => {
-  const {
-    locale,
-    auth: { api_token, id },
-  } = useAppSelector((state) => state);
+  const { locale } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
 
   return (

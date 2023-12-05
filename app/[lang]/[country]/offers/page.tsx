@@ -8,15 +8,15 @@ type Props = {
 };
 
 export default async function ({ params: { lang, country } }: Props) {
+  const cookieStore = cookies();
+  const token: any = cookieStore.get("token");
   const [{ trans }]: [{ trans: any }] = await Promise.all([
     getDictionary(lang),
   ]);
 
-  
-
   return (
     <MainContextLayout trans={trans} lang={lang} country={country}>
-      <h1 className='text-7xl'>HomePage Page {country}</h1>
+      <h1 className='text-7xl'>Offers {country}</h1>
     </MainContextLayout>
   );
 }

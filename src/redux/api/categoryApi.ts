@@ -5,7 +5,7 @@ import { Locale } from '@/types/index';
 export const categoryApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getCategories: builder.query<
-      AppQueryResult<[Category]>, void | undefined
+      AppQueryResult<Category[]>, void | undefined
     >({
       query: () => ({
         url: `search/category`,

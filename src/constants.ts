@@ -1,4 +1,4 @@
-import { truncate, kebabCase, round } from 'lodash';
+import { truncate, kebabCase, round, isUndefined, isNull } from 'lodash';
 export const appVersion = `0.0.1`;
 // export const apiUrl = `${baseUrl}/api/`;
 export const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -38,3 +38,7 @@ export const getPrice: (element: number, country: Country) => number = (
   element,
   country
 ) => round(element * country.exchange_rate);
+
+export const prepareCountryCookie = (country : string) => isUndefined(country) || isNull(country) || country.length <= 2
+  ? "kuwait"
+  : kebabCase(country);
