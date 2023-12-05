@@ -14,7 +14,7 @@ import { Locale } from "@/types/index";
 type Props = {
   lang: Locale["lang"];
 };
-export default async function ({ lang }: Props) {
+export default function ({ lang }: Props) {
   const locales = ["ar", "en"];
   const searchParams = useSearchParams();
   const pathName = usePathname()!;
@@ -74,13 +74,14 @@ export default async function ({ lang }: Props) {
             <Link href='#'>Sign up</Link>
           </div>
         </nav>
+        {/* mobile nav */}
         <Dialog
           as='div'
           className=''
           open={mobileMenuOpen}
           onClose={setMobileMenuOpen}>
           <div className='fixed inset-0 z-50' />
-          <Dialog.Panel className='fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-white/10'>
+          <Dialog.Panel className='fixed inset-y-0 ltr:right-0 ltr:left-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-white/10'>
             <div className='flex items-center justify-between'>
               <a href='#' className='-m-1.5 p-1.5'>
                 <span className='sr-only'>Your Company</span>

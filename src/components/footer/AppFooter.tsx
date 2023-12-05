@@ -1,3 +1,4 @@
+"use client";
 const footerNavigation = {
   shop: [
     { name: "Bags", href: "#" },
