@@ -1,5 +1,5 @@
 import { getMainHeaders } from '@/app/actions';
-import { revalidate } from '@/src/constants';
+import { revalidate } from '@/utils/helpers';
 
 export async function getCountries() {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}country`, {

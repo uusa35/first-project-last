@@ -60,3 +60,9 @@ export const mainHeaders = {
     'Content-Type': 'application/json',
     'Accept': 'application/json'
 };
+
+export const revalidate = {
+    min: 60,
+    mid: 120,
+    max: 180
+}

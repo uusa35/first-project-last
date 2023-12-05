@@ -1,7 +1,7 @@
 import { Locale, countriesList } from '@/types/index';
 import { notFound } from 'next/navigation';
 import { mainHeaders } from '@/utils/helpers';
-import { revalidate } from '@/src/constants';
+import { revalidate } from '@/utils/helpers';
 import { getCountryCookieId, getLang, getMainHeaders } from '@/app/actions';
 
 export async function getCategories() {

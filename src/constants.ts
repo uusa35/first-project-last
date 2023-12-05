@@ -43,8 +43,4 @@ export const prepareCountryCookie = (country: string) => isUndefined(country) ||
   ? "kuwait"
   : kebabCase(country);
 
-export const revalidate = {
-  min: 60,
-  mid: 120,
-  max: 180
-}
+

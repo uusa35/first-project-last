@@ -1,12 +1,45 @@
 export type ElementPagination<T> = {
-  current_page: string;
-  next_page: string;
-  per_page: string;
-  prev_page: string;
-  products: T[];
-  total: string;
+  data: T;
+  status: number;
+  success: boolean;
+  pagination: {
+    meta: {
+      page: {
+        current: number;
+        first: number;
+        last: number;
+        next: string;
+        previous: string;
+        per: number;
+        from: number;
+        to: number;
+        count: number;
+        total: number;
+        isFirst: boolean;
+        isLast: boolean;
+        isNext: boolean;
+        isPrevious: boolean;
+      }
+    },
+    links: { path: string; first: string; next: string; previous: string; last: string }
+  }
 };
 
+
+export type Product = {
+  id: number;
+  name: string;
+  name_en: string;
+  description: string;
+  favorite: string;
+  price: string;
+  new_price: string;
+  percentage: string;
+  logo: string;
+  image: string;
+  vendor_id: number;
+  stock: number;
+};
 
 export type Category = {
   id: string;
@@ -20,6 +53,7 @@ export type AppQueryResult<T> = {
   data: T;
   status: number;
   success: boolean;
+
 };
 
 
