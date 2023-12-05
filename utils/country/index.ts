@@ -1,28 +1,20 @@
-import { Locale } from '@/types/index';
-import { notFound } from 'next/navigation';
-import { mainHeaders } from '@/utils/helpers';
+import { getMainHeaders } from '@/app/actions';
+import { revalidate } from '@/src/constants';
 
-export async function getCountries(lang: Locale['lang']) {
+export async function getCountries() {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}country`, {
         // cache: "no-store",
-        next: { revalidate: 180 },
-        headers: {
-            'Accept-Language': lang,
-            ...mainHeaders
-        }
+        next: { revalidate: revalidate.max },
+        headers: await getMainHeaders()
     });
     if (!res.ok) new Error(res.statusText);
     return res.json();
 }
 
-export async function getCountry(name: string, lang?: Locale['lang'], id?: number) {
+export async function getCountry(name: string, id?: number) {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}country/${name.toLowerCase() ?? id}`, {
-        // cache: "no-store",
-        next: { revalidate: 180 },
-        headers: {
-            'Accept-Language': lang ?? 'en',
-            ...mainHeaders
-        }
+        next: { revalidate: revalidate.max },
+        headers: await getMainHeaders()
     });
     if (!res.ok) new Error(res.statusText);
     return res.json();

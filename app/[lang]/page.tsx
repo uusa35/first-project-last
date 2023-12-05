@@ -16,7 +16,7 @@ export default async function ({ params: { lang } }: Props) {
   const token = cookieStore.get("token");
   const countryCookie: any = await getCountryCookie();
   const [{ trans }, countries]: [{ trans: any }, AppQueryResult<Country[]>] =
-    await Promise.all([getDictionary(lang), getCountries(lang)]);
+    await Promise.all([getDictionary(lang), getCountries()]);
 
   return (
     <MainContextLayout trans={trans} lang={lang} country={countryCookie}>

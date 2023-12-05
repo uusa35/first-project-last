@@ -1,16 +1,11 @@
-import { Locale } from '@/types/index';
 import { notFound } from 'next/navigation';
-import { NextResponse } from 'next/server'
-import { mainHeaders } from '@/utils/helpers';
+import { getMainHeaders } from '@/app/actions';
+import { revalidate } from '@/src/constants';
 
-export async function getSlides(search: string, lang: Locale['lang']) {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}slide?${search}`, {
-        next: { revalidate: 60 },
-        headers: {
-            'Accept-Language': lang,
-            ...mainHeaders
-        },
-
+export async function getSlides(search: string) {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}slider?${search}`, {
+        next: { revalidate: revalidate.min },
+        headers: await getMainHeaders()
     });
     if (!res.ok) throw notFound();
     return res.json()

@@ -92,3 +92,13 @@ export type Setting = {
   id: number;
   [key: string]: any;
 };
+
+export type Slide = {
+  id: number,
+  type: 'vendor' | 'offer';
+  screen_type: 'home' | 'category';
+  vendor_id: number | null;
+  offer_id: number | null;
+  category_id: number | null,
+  image: string;
+};

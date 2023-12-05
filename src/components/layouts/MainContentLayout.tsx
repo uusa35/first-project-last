@@ -19,6 +19,7 @@ import {
 import {
   deleteToken,
   setCountryCookie,
+  setCountryCookieId,
   setLang,
   setLocaleCookie,
   setToken,
@@ -96,10 +97,11 @@ const MainContextLayout: FC<Props> = ({
   useEffect(() => {
     if (country !== undefined) {
       const currentCountry: string = prepareCountryCookie(country);
-      setCountryCookie(currentCountry);
-      triggerGetCountryByName(currentCountry).then((r: any) =>
-        dispatch(setCountry(r.data.data))
-      );
+      triggerGetCountryByName(currentCountry).then((r: any) => {
+        setCountryCookie(currentCountry);
+        dispatch(setCountry(r.data.data));
+        setCountryCookieId(r.data.data.id);
+      });
     }
   }, [country]);
 

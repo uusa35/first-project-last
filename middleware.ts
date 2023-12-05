@@ -3,8 +3,7 @@ import { NextRequest } from 'next/server'
 import { i18n } from '@/i18n.config'
 import { match as matchLocale } from '@formatjs/intl-localematcher'
 import Negotiator from 'negotiator'
-import { removeCountryCookie, setCountryCookie, setLocaleCookie } from './app/actions'
-import { getCountries, getCountry } from '@/utils/country'
+import { getCountry } from '@/utils/country'
 import { cookies } from 'next/headers'
 import { Country } from '@/types/queries'
 
@@ -25,7 +24,7 @@ export default async function middleware(request: NextRequest, response: NextRes
   const pathName = request.nextUrl.pathname;
   const currentRequestedLocale = pathName.split('/')[1];
   const country: string | undefined = pathName.split('/')[2] ?? undefined;
-  const serverCountry: { data : Country} | undefined = country !== undefined ? await getCountry(country) : undefined;
+  const serverCountry: { data: Country } | undefined = country !== undefined ? await getCountry(country) : undefined;
   const pathnameIsMissingLocale = i18n.locales.every(
     locale => !pathName.startsWith(`/${locale}/`) && pathName !== `/${locale}`
   )

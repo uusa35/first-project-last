@@ -1,3 +1,4 @@
+import { getCountryCookieId } from "@/app/actions";
 
 export const convertSearchParamsToString = (search: { [key: string]: string } | string): string => {
     if (typeof search === 'object' &&
@@ -57,5 +58,5 @@ export const removeTags = (str: string) => {
 
 export const mainHeaders = {
     'Content-Type': 'application/json',
-    'Accept': 'application/json',
+    'Accept': 'application/json'
 };

@@ -39,6 +39,12 @@ export const getPrice: (element: number, country: Country) => number = (
   country
 ) => round(element * country.exchange_rate);
 
-export const prepareCountryCookie = (country : string) => isUndefined(country) || isNull(country) || country.length <= 2
+export const prepareCountryCookie = (country: string) => isUndefined(country) || isNull(country) || country.length <= 2
   ? "kuwait"
   : kebabCase(country);
+
+export const revalidate = {
+  min: 60,
+  mid: 120,
+  max: 180
+}
