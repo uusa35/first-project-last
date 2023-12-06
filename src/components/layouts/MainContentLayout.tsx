@@ -19,7 +19,9 @@ import {
 import {
   deleteToken,
   setCountryCookie,
+  setCountryCookieFull,
   setCountryCookieId,
+  setCountryNameCookie,
   setLang,
   setLocaleCookie,
   setToken,
@@ -98,9 +100,9 @@ const MainContextLayout: FC<Props> = ({
     if (country !== undefined) {
       const currentCountry: string = prepareCountryCookie(country);
       triggerGetCountryByName(currentCountry).then((r: any) => {
-        setCountryCookie(currentCountry);
+        setCountryNameCookie(currentCountry);
+        setCountryCookie(JSON.stringify(r.data.data));
         dispatch(setCountry(r.data.data));
-        setCountryCookieId(r.data.data.id);
       });
     }
   }, [country]);

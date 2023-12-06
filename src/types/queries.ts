@@ -1,3 +1,5 @@
+import { countriesList } from ".";
+
 export type ElementPagination<T> = {
   data: T;
   status: number;
@@ -60,7 +62,7 @@ export type AppQueryResult<T> = {
 export type Country = {
   id: number;
   name: string;
-  name_en: string;
+  name_en: countriesList;
   code: string;
   [key: string]: any;
 };

@@ -1,4 +1,3 @@
-import { getCountryCookieId } from "@/app/actions";
 
 export const convertSearchParamsToString = (search: { [key: string]: string } | string): string => {
     if (typeof search === 'object' &&

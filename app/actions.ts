@@ -1,5 +1,6 @@
 'use server'
 import { countriesList } from '@/types/index';
+import { Country } from '@/types/queries';
 import { cookies } from 'next/headers'
 
 export async function setLocaleCookie(value: string) {
@@ -10,6 +11,19 @@ export async function setLocaleCookie(value: string) {
     });
 }
 
+export async function setCountryNameCookie(value: string) {
+    cookies().set({
+        name: 'NEXT_COUNTRY_NAME',
+        value,
+        secure: process.env.NODE_ENV === 'production',
+    });
+}
+
+export async function getCountryNameCookie() {
+    const countryCookie = cookies().get('NEXT_COUNTRY_NAME');
+    return countryCookie?.value ?? 'kuwait';
+}
+
 export async function setCountryCookie(value: string) {
     cookies().set({
         name: 'NEXT_COUNTRY',
@@ -18,39 +32,33 @@ export async function setCountryCookie(value: string) {
     });
 }
 
-export async function setCountryCookieId(value: string) {
-    cookies().set({
-        name: 'NEXT_COUNTRY_ID',
-        value,
-        secure: process.env.NODE_ENV === 'production',
-    });
-}
-
 export async function getCountryCookie() {
     const countryCookie = cookies().get('NEXT_COUNTRY');
-    return countryCookie?.value ?? 'kuwait';
+    if (countryCookie && countryCookie.value !== undefined) {
+        return JSON.parse(countryCookie?.value);
+    } else {
+        return 'kuwait';
+    }
 }
 
-export async function getCountryCookieId() {
-    const countryCookie = cookies().get('NEXT_COUNTRY_ID');
-    return countryCookie?.value ?? '1';
+export async function removeCountryCookie() {
+    cookies().delete('NEXT_COUNTRY_NAME');
+    cookies().delete('NEXT_COUNTRY');
 }
 
 export async function setAreaCookie(value: string) {
     cookies().set({
         name: 'NEXT_AREA',
-        value: value.toLowerCase(),
+        value,
         secure: process.env.NODE_ENV === 'production',
     });
 }
 
 export async function getAreaCookie() {
-    return cookies().get('NEXT_AREA')?.value ?? undefined;
-}
-
-export async function removeCountryCookie() {
-    cookies().delete('NEXT_COUNTRY');
-    cookies().delete('NEXT_COUNTRY_ID');
+    const areaCookie = cookies().get('NEXT_AREA');
+    if (areaCookie && areaCookie.value !== undefined) {
+        return JSON.parse(areaCookie?.value);
+    }
 }
 
 export async function removeAreaCookie() {
@@ -89,12 +97,12 @@ export async function deleteToken() {
 }
 
 export async function getMainHeaders() {
-    const countryId = await getCountryCookieId();
+    const country = await getCountryCookie();
     const lang = await getLang();
     return {
         'Accept-Language': lang,
         'X-Localization': lang,
-        'X-Country': countryId,
+        'X-Country': country?.id,
         'Content-Type': 'application/json',
         'Accept': 'application/json'
     }

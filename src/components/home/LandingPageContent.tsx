@@ -1,11 +1,14 @@
 "use client";
-import { setCountryCookie } from "@/app/actions";
+import {
+  setAreaCookie,
+  setCountryCookie,
+  setCountryNameCookie,
+} from "@/app/actions";
 import { useLazyGetAreasQuery } from "@/redux/api/areaApi";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setArea } from "@/redux/slices/areaSlice";
 import { getCountry, setCountry } from "@/redux/slices/countrySlice";
 import { Area, Country } from "@/types/queries";
-import { kebabCase } from "lodash";
 import { Suspense, useEffect } from "react";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { prepareCountryCookie } from "@/src/constants";
@@ -23,8 +26,12 @@ export default function ({ countries }: Props) {
   const [triggerGetAreas, { data: areas, isSuccess: areaSuccess, isFetching }] =
     useLazyGetAreasQuery();
 
-  const handleClick = async (c: Country) => {
-    setCountryCookie(prepareCountryCookie(c.name_en));
+  const handleSetCountry = async (c: Country) => {
+    await setCountryCookie(JSON.stringify(c));
+    await setCountryNameCookie(prepareCountryCookie(c.name_en.toLowerCase()));
+  };
+  const handleSetArea = async (a: Area) => {
+    await setAreaCookie(JSON.stringify(a)).then(() => dispatch(setArea(a)));
   };
   useEffect(() => {
     triggerGetAreas(undefined, false);
@@ -55,7 +62,7 @@ export default function ({ countries }: Props) {
               {countries &&
                 countries.map((c: Country) => (
                   <button
-                    onClick={() => handleClick(c)}
+                    onClick={() => handleSetCountry(c)}
                     className={`${
                       country.id === c.id && "border-4 border-blue-800"
                     }`}>
@@ -69,7 +76,7 @@ export default function ({ countries }: Props) {
                     {areas &&
                       areas.data?.length > 0 &&
                       areas.data?.map((a: Area) => (
-                        <button onClick={() => dispatch(setArea(a))}>
+                        <button onClick={() => handleSetArea(a)}>
                           {a.name}
                         </button>
                       ))}
