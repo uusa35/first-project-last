@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import SideMenu from "@/components/header/SideMenu";
@@ -8,22 +8,30 @@ import { useAppSelector } from "@/redux/hooks";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { changePathName } from "@/utils/helpers";
-import { getLang } from "@/app/actions";
 import { Locale } from "@/types/index";
+import { appLinks } from "@/src/links";
+import { MainContext } from "@/layouts/MainContentLayout";
+import { lowerCase } from "lodash";
 
 type Props = {
   lang: Locale["lang"];
 };
 export default function ({ lang }: Props) {
+  const trans: { [key: string]: string } = useContext(MainContext);
   const locales = ["ar", "en"];
+  const {
+    country: { name_en },
+  } = useAppSelector((state) => state);
   const searchParams = useSearchParams();
   const pathName = usePathname()!;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigation = [
-    { name: "Product", href: "#" },
-    { name: "Features", href: "#" },
-    { name: "Marketplace", href: "#" },
-    { name: "Company", href: "#" },
+    { name: trans.landing, href: appLinks.landing(lang) },
+    { name: trans.home, href: appLinks.home(lang, name_en.toLowerCase()) },
+    { name: trans.offers, href: appLinks.offers(lang, name_en.toLowerCase()) },
+    { name: trans.terms, href: appLinks.terms(lang) },
+    { name: trans.aboutus, href: appLinks.aboutus(lang) },
+    { name: trans.contactus, href: appLinks.contactus(lang) },
   ];
   return (
     <div>
@@ -52,12 +60,12 @@ export default function ({ lang }: Props) {
           </div>
           <div className='hidden lg:flex lg:gap-x-12'>
             {navigation.map((item) => (
-              <a
+              <Link
                 key={item.name}
                 href={item.href}
                 className='text-sm font-semibold leading-6 text-white'>
                 {item.name}
-              </a>
+              </Link>
             ))}
           </div>
           <div className='flex lg:flex-1 lg:justify-end gap-x-4 text-white'>
@@ -103,12 +111,12 @@ export default function ({ lang }: Props) {
               <div className='-my-6 divide-y divide-gray-500/25'>
                 <div className='space-y-2 py-6'>
                   {navigation.map((item) => (
-                    <a
+                    <Link
                       key={item.name}
                       href={item.href}
                       className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-black hover:bg-gray-800'>
                       {item.name}
-                    </a>
+                    </Link>
                   ))}
                 </div>
                 <div className='py-6'>

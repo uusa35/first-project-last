@@ -33,7 +33,7 @@ export default async function ({ params: { lang, country } }: Props) {
 
   return (
     <MainContextLayout trans={trans} lang={lang} country={country}>
-      <div className='relative top-20'>
+      <div className='relative isolate overflow-hidden pt-14'>
         <h1 className='text-7xl'>HomePage Page {country}</h1>
         <div className='bg-gray-100'>
           <div className='py-8 mb-8 xl:mx-auto xl:max-w-7xl xl:px-8'>

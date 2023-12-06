@@ -45,7 +45,11 @@ export default async function middleware(request: NextRequest, response: NextRes
     ) {
       return NextResponse.redirect(new URL(`/${currentRequestedLocale}`, request.url))
     }
-    if (!request.nextUrl.pathname.includes('terms') && !request.nextUrl.pathname.includes('faqs')) {
+    if (!request.nextUrl.pathname.includes('terms')
+      && !request.nextUrl.pathname.includes('faqs')
+      && !request.nextUrl.pathname.includes('about')
+      && !request.nextUrl.pathname.includes('contactus')
+    ) {
       if ((country !== undefined || serverCountry !== undefined) && serverCountry?.data?.name_en?.toLowerCase() !== country.toLowerCase()) {
         return NextResponse.redirect(new URL(`/${currentRequestedLocale}`, request.url))
       }

@@ -1,10 +1,16 @@
-import { Locale } from '@/src/types'
+import { Locale, countriesList } from '@/src/types'
 
 export const appLinks = {
-    home: (lang: Locale['lang']) =>
+    landing: (lang: Locale['lang']) =>
         `/${lang}`,
-    about: (lang: Locale['lang']) =>
-        `/${lang}/about`,
+    home: (lang: Locale['lang'], country: countriesList) =>
+        `/${lang}/${country}`,
+    aboutus: (lang: Locale['lang']) =>
+        `/${lang}/aboutus`,
+    contactus: (lang: Locale['lang']) =>
+        `/${lang}/contactus`,
     terms: (lang: Locale['lang']) =>
         `/${lang}/terms`,
+    offers: (lang: Locale['lang'], country: countriesList) =>
+        `/${lang}/${country}/offers`,
 }
