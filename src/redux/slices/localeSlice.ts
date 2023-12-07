@@ -13,7 +13,7 @@ export const localeSlice = createSlice({
   name: 'locale',
   initialState,
   reducers: {
-    setLocale: (state, action: PayloadAction<string | any>) => {
+    setLocale: (state, action: PayloadAction<Locale['lang']>) => {
       return {
         dir: action.payload === 'ar' ? 'rtl' : 'ltr',
         isRTL: action.payload === 'ar' ? true : false,
