@@ -2,7 +2,7 @@ import { Locale, countriesList } from '@/types/index';
 import { notFound } from 'next/navigation';
 import { mainHeaders } from '@/utils/helpers';
 import { revalidate } from '@/utils/helpers';
-import { getCountryCookieId, getLang, getMainHeaders } from '@/app/actions';
+import { getMainHeaders } from '@/app/actions';
 
 export async function getCategories() {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}category`, {

@@ -9,18 +9,8 @@ import { setLocale } from "@/redux/slices/localeSlice";
 import moment from "moment";
 import * as yup from "yup";
 import {
-  capitalize,
-  isNull,
-  kebabCase,
-  replace,
-  startCase,
-  isUndefined,
-} from "lodash";
-import {
   deleteToken,
   setCountryCookie,
-  setCountryCookieFull,
-  setCountryCookieId,
   setCountryNameCookie,
   setLang,
   setLocaleCookie,
@@ -29,7 +19,6 @@ import {
 import { setCountry } from "@/redux/slices/countrySlice";
 import { useLazyGetCountryByNameQuery } from "@/redux/api/countryApi";
 import { useLazyGetAreasQuery } from "@/redux/api/areaApi";
-import { AppQueryResult } from "@/types/queries";
 import { prepareCountryCookie } from "@/src/constants";
 
 type Props = {

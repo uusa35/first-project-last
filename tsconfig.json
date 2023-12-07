@@ -24,6 +24,12 @@
       }
     ],
     "paths": {
+      "@/*": [
+        "./*"
+      ],
+      "@/mainApp/*": [
+        "./app/*"
+      ],
       "@/layouts/*": [
         "./src/components/layouts/*"
       ],
@@ -44,12 +50,6 @@
       ],
       "@/styles/*": [
         "./src/styles/*"
-      ],
-      "@/*": [
-        "./*"
-      ],
-      "@/mainApp": [
-        "./app"
       ],
       "@/src": [
         "./src/*"

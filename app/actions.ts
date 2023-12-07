@@ -1,6 +1,4 @@
 'use server'
-import { countriesList } from '@/types/index';
-import { Country } from '@/types/queries';
 import { cookies } from 'next/headers'
 
 export async function setLocaleCookie(value: string) {

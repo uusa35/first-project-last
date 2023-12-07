@@ -3,11 +3,10 @@ import {
   setAreaCookie,
   setCountryCookie,
   setCountryNameCookie,
-} from "@/app/actions";
+} from "@/mainApp/actions";
 import { useLazyGetAreasQuery } from "@/redux/api/areaApi";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setArea } from "@/redux/slices/areaSlice";
-import { getCountry, setCountry } from "@/redux/slices/countrySlice";
 import { Area, Country } from "@/types/queries";
 import { Suspense, useEffect } from "react";
 import LoadingSpinner from "@/components/LoadingSpinner";

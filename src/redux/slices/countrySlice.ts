@@ -5,7 +5,7 @@ type Props = Country;
 const initialState: Props = {
   id: 0,
   name: '',
-  name_en: '',
+  name_en: 'kuwait',
   code: ''
 };
 

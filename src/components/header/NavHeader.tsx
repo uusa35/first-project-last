@@ -19,7 +19,7 @@ type Props = {
 };
 export default function ({ lang }: Props) {
   const trans: { [key: string]: string } = useContext(MainContext);
-  const locales = ["ar", "en"];
+  const locales: Locale["lang"][] = ["ar", "en"];
   const {
     locale,
     country: { name_en },

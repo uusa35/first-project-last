@@ -4,7 +4,7 @@ import { MainContextLayout } from "@/layouts/MainContentLayout";
 import { getCountries } from "@/utils/country";
 import { cookies } from "next/headers";
 import { AppQueryResult, Country } from "@/types/queries";
-import { getCountryCookie, getCountryCookieFull } from "../actions";
+import { getCountryCookie } from "@/mainApp/actions";
 import LandingPageContent from "@/components/home/LandingPageContent";
 
 type Props = {
