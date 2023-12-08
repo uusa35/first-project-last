@@ -205,8 +205,8 @@ export default function ({ countries }: Props) {
                       ))}
                   </div>
                 )}
-              </Suspense>
-            </div>
+              </div>
+            )}
           </div>
         </div> */}
 
