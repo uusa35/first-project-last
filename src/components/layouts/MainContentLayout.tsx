@@ -87,6 +87,7 @@ const MainContextLayout: FC<Props> = ({
 
   useEffect(() => {
     if (country !== undefined) {
+      console.log("heeeeere", { country });
       const currentCountry: string = prepareCountryCookie(country);
       triggerGetCountryByName(currentCountry, false).then((r: any) => {
         setCountryNameCookie(currentCountry);

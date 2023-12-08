@@ -1,109 +1,110 @@
-'use server'
-import { cookies } from 'next/headers'
+"use server";
+import { cookies } from "next/headers";
 
 export async function setLocaleCookie(value: string) {
-    cookies().set({
-        name: 'NEXT_LOCALE',
-        value,
-        secure: process.env.NODE_ENV === 'production',
-    });
+  cookies().set({
+    name: "NEXT_LOCALE",
+    value,
+    secure: process.env.NODE_ENV === "production",
+  });
 }
 
 export async function setCountryNameCookie(value: string) {
-    cookies().set({
-        name: 'NEXT_COUNTRY_NAME',
-        value,
-        secure: process.env.NODE_ENV === 'production',
-    });
+  cookies().set({
+    name: "NEXT_COUNTRY_NAME",
+    value,
+    secure: process.env.NODE_ENV === "production",
+  });
 }
 
 export async function getCountryNameCookie() {
-    const countryCookie = cookies().get('NEXT_COUNTRY_NAME');
-    return countryCookie?.value ?? 'kuwait';
+  const countryCookie = cookies().get("NEXT_COUNTRY_NAME");
+  return countryCookie?.value ?? "kuwait";
 }
 
 export async function setCountryCookie(value: string) {
-    cookies().set({
-        name: 'NEXT_COUNTRY',
-        value,
-        secure: process.env.NODE_ENV === 'production',
-    });
+  console.log({ value });
+  cookies().set({
+    name: "NEXT_COUNTRY",
+    value,
+    secure: process.env.NODE_ENV === "production",
+  });
 }
 
 export async function getCountryCookie() {
-    const countryCookie = cookies().get('NEXT_COUNTRY');
-    if (countryCookie && countryCookie.value !== undefined) {
-        return JSON.parse(countryCookie?.value);
-    } else {
-        return 'kuwait';
-    }
+  const countryCookie = cookies().get("NEXT_COUNTRY");
+  if (
+    countryCookie &&
+    countryCookie.value !== undefined &&
+    countryCookie.value
+  ) {
+    return JSON.parse(countryCookie?.value);
+  } else {
+    return "kuwait";
+  }
 }
 
 export async function removeCountryCookie() {
-    cookies().delete('NEXT_COUNTRY_NAME');
-    cookies().delete('NEXT_COUNTRY');
+  cookies().delete("NEXT_COUNTRY_NAME");
+  cookies().delete("NEXT_COUNTRY");
 }
 
 export async function setAreaCookie(value: string) {
-    cookies().set({
-        name: 'NEXT_AREA',
-        value,
-        secure: process.env.NODE_ENV === 'production',
-    });
+  cookies().set({
+    name: "NEXT_AREA",
+    value,
+    secure: process.env.NODE_ENV === "production",
+  });
 }
 
 export async function getAreaCookie() {
-    const areaCookie = cookies().get('NEXT_AREA');
-    if (areaCookie && areaCookie.value !== undefined) {
-        return JSON.parse(areaCookie?.value);
-    }
+  const areaCookie = cookies().get("NEXT_AREA");
+  if (areaCookie && areaCookie.value !== undefined) {
+    return JSON.parse(areaCookie?.value);
+  }
 }
 
 export async function removeAreaCookie() {
-    cookies().delete('NEXT_AREA');
+  cookies().delete("NEXT_AREA");
 }
 
-
 export async function setToken(value: string) {
-    cookies().set({
-        name: 'token',
-        value,
-        secure: process.env.NODE_ENV === 'production',
-    });
+  cookies().set({
+    name: "token",
+    value,
+    secure: process.env.NODE_ENV === "production",
+  });
 }
 
 export async function getToken() {
-    return cookies().get('token')?.value ?? null;
+  return cookies().get("token")?.value ?? null;
 }
 
 export async function getLang() {
-    return cookies().get('NEXT_LOCALE')?.value ?? 'en';
+  return cookies().get("NEXT_LOCALE")?.value ?? "en";
 }
 
-
 export async function setLang(value: string) {
-    cookies().set({
-        name: 'NEXT_LOCALE',
-        value,
-        secure: process.env.NODE_ENV === 'production',
-    });
+  cookies().set({
+    name: "NEXT_LOCALE",
+    value,
+    secure: process.env.NODE_ENV === "production",
+  });
 }
 
 export async function deleteToken() {
-    cookies().delete('token');
-    cookies().delete('role');
+  cookies().delete("token");
+  cookies().delete("role");
 }
 
 export async function getMainHeaders() {
-    const country = await getCountryCookie();
-    const lang = await getLang();
-    return {
-        'Accept-Language': lang,
-        'X-Localization': lang,
-        'X-Country': country?.id,
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-    }
+  const country = await getCountryCookie();
+  const lang = await getLang();
+  return {
+    "Accept-Language": lang,
+    "X-Localization": lang,
+    "X-Country": country?.id,
+    "Content-Type": "application/json",
+    Accept: "application/json",
+  };
 }
-
-

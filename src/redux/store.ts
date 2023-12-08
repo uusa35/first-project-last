@@ -66,7 +66,7 @@ let store: any = configureStore({
         areaApi.middleware,
         countryApi.middleware,
         sagaMiddleware,
-        appLogger,
+        // appLogger,
       ])
     : (gDM) =>
       gDM({
