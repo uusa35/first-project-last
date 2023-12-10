@@ -89,12 +89,12 @@ const MainContextLayout: FC<Props> = ({
   // sets cookies if country changed from any page  
   useEffect(() => {
     if (country !== undefined) {
-      // console.log("heeeeere", { country });
-      const currentCountry: string = prepareCountryCookie(country);
-      triggerGetCountryByName(currentCountry, false).then((r: any) => {
-        setCountryNameCookie(currentCountry);
-        setCountryCookie(JSON.stringify(r.data.data));
-        dispatch(setCountry(r.data.data));
+      triggerGetCountryByName(country, false).then((r: any) => {
+        if (r.data && r.data.data) {
+          setCountryNameCookie(country);
+          setCountryCookie(JSON.stringify(r.data.data));
+          dispatch(setCountry(r.data.data));
+        }
       });
     }
   }, [country]);

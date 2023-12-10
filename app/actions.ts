@@ -18,8 +18,8 @@ export async function setCountryNameCookie(value: string) {
 }
 
 export async function getCountryNameCookie() {
-  const countryCookie = cookies().get("NEXT_COUNTRY_NAME");
-  return countryCookie?.value ?? "kuwait";
+    const countryCookie = cookies().get('NEXT_COUNTRY_NAME');
+    return countryCookie?.value ?? 'kw';
 }
 
 export async function setCountryCookie(value: string) {
@@ -32,16 +32,12 @@ export async function setCountryCookie(value: string) {
 }
 
 export async function getCountryCookie() {
-  const countryCookie = cookies().get("NEXT_COUNTRY");
-  if (
-    countryCookie &&
-    countryCookie.value !== undefined &&
-    countryCookie.value
-  ) {
-    return JSON.parse(countryCookie?.value);
-  } else {
-    return "kuwait";
-  }
+    const countryCookie = cookies().get('NEXT_COUNTRY');
+    if (countryCookie && countryCookie.value !== undefined) {
+        return JSON.parse(countryCookie?.value);
+    } else {
+        return 'kw';
+    }
 }
 
 export async function removeCountryCookie() {
