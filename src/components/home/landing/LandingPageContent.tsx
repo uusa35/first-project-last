@@ -5,7 +5,7 @@ import {
   setCountryCookie,
   setCountryNameCookie,
 } from "@/mainApp/actions";
-import { useLazyGetAreasQuery } from "@/redux/api/areaApi";
+import { useGetAreasQuery, useLazyGetAreasQuery } from "@/redux/api/areaApi";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { resetArea, setArea } from "@/redux/slices/areaSlice";
 import { Area, Country } from "@/types/queries";
@@ -13,7 +13,6 @@ import { ReactNode, Suspense, useContext, useEffect, useState } from "react";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { prepareCountryCookie } from "@/src/constants";
 import Search from "@/appIcons/landing/search.svg";
-import { MainContext } from "../layouts/MainContentLayout";
 import { Autocomplete, TextField } from "@mui/material";
 import { isEmpty, toNumber } from "lodash";
 import GetLocation from "@/appIcons/landing/get_location.svg";
@@ -29,8 +28,9 @@ import AppleStore from "@/appIcons/landing/download_apple_store.svg";
 import AppGallery from "@/appIcons/landing/download_app_gallery.svg";
 import about_us from "@/appImages/about_us.png";
 import get_started from "@/appImages/get_started.jpg";
-import DownloadAppSection from "./DownloadAppSection";
 import { setCountry } from "@/src/redux/slices/countrySlice";
+import { MainContext } from "../../layouts/MainContentLayout";
+import DownloadAppSection from "../DownloadAppSection";
 
 type Props = {
   countries: Country[];

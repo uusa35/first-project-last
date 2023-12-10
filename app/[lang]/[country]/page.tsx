@@ -7,29 +7,35 @@ import {
   ElementPagination,
   Product,
   Slide,
+  User,
 } from "@/types/queries";
 import { getCategories } from "@/utils/category";
 import { getSlides } from "@/utils/slide";
 import Image from "next/image";
 import { getProducts } from "@/utils/product";
 import Link from "next/link";
+import { getVendors } from "@/utils/user";
+import { setOrderType } from "@/app/actions";
 import HomeContent from "@/src/components/home/HomeContent";
+import { appLinks } from "@/src/links";
 
 type Props = {
   params: { lang: Locale["lang"]; country: countriesList };
 };
 
 export default async function ({ params: { lang, country } }: Props) {
-  const [{ trans }, categories, sliders, products]: [
+  const [{ trans }, categories, sliders, products, vendors]: [
     { trans: any },
     AppQueryResult<Category[]>,
     AppQueryResult<Slide[]>,
-    ElementPagination<Product[]>
+    ElementPagination<Product[]>,
+    AppQueryResult<User[]>
   ] = await Promise.all([
     getDictionary(lang),
     getCategories(),
     getSlides(`screen_type=home&limit=10`),
     getProducts(`limit=10`),
+    getVendors(`limit=10`),
   ]);
 
   return (

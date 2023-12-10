@@ -3,10 +3,12 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 type Props = {
   currentPath: string;
   isLoading: boolean;
+  orderType: 'pickup' | 'delivery'
 }
 const initialState: Props = {
   currentPath: ``,
-  isLoading: false
+  isLoading: false,
+  orderType: 'pickup'
 };
 
 export const settingSlice = createSlice({
@@ -20,6 +22,15 @@ export const settingSlice = createSlice({
       return {
         ...state,
         currentPath: action.payload
+      };
+    },
+    changeOrderType: (
+      state: typeof initialState,
+      action: PayloadAction<Props['orderType']>
+    ) => {
+      return {
+        ...state,
+        orderType: action.payload
       };
     },
     enableLoading: (
@@ -47,5 +58,6 @@ export const settingSlice = createSlice({
 export const {
   setCurrentPath,
   enableLoading,
-  disableLoading
+  disableLoading,
+  changeOrderType
 } = settingSlice.actions;

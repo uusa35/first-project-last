@@ -86,6 +86,8 @@ let store: any = configureStore({
       }).concat([
         apiSlice.middleware,
         categoryApi.middleware,
+        areaApi.middleware,
+        countryApi.middleware,
         sagaMiddleware,
       ]),
 });

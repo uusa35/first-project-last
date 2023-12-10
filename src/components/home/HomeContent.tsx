@@ -11,6 +11,9 @@ import Slider from "react-slick";
 import CustomSlider from "../CustomSlider";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import ProductWidget from "../widgets/ProductWidget";
+import { setOrderType } from "@/app/actions";
+import { changeOrderType } from "@/src/redux/slices/settingSlice";
+import { useAppDispatch } from "@/src/redux/hooks";
 
 type Props = {
   categories: Category[];
@@ -18,6 +21,7 @@ type Props = {
   products: Product[];
 };
 export default function HomeContent({ categories, slides, products }: Props) {
+  const dispatch = useAppDispatch();
   const refSlider2 = useRef<Slider | null>(null);
   const settings = {
     dots: false,
@@ -43,6 +47,12 @@ export default function HomeContent({ categories, slides, products }: Props) {
     // centerMode: true,
     // infinite: true,
     // centerPadding: "60px",
+  };
+
+  const handleOrderType = async (orderType: "pickup" | "delivery") => {
+    await setOrderType(orderType).then(() =>
+      dispatch(changeOrderType(orderType))
+    );
   };
 
   const RenderArrows = () => {
@@ -119,6 +129,21 @@ export default function HomeContent({ categories, slides, products }: Props) {
               ))}
             </Slider>
           </div>
+        </div>
+
+        <div className="flex justify-evenly items-center">
+          <button
+            className="btn-default"
+            onClick={() => handleOrderType("pickup")}
+          >
+            pickup
+          </button>
+          <button
+            className="btn-default"
+            onClick={() => handleOrderType("delivery")}
+          >
+            delivery
+          </button>
         </div>
       </div>
     </div>

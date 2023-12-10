@@ -5,7 +5,7 @@ import { getCountries } from "@/utils/country";
 import { cookies } from "next/headers";
 import { AppQueryResult, Country } from "@/types/queries";
 import { getCountryCookie } from "@/mainApp/actions";
-import LandingPageContent from "@/components/home/LandingPageContent";
+import LandingPageContent from "@/src/components/home/landing/LandingPageContent";
 
 type Props = {
   params: { lang: Locale["lang"] };

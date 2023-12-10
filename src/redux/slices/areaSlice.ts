@@ -19,7 +19,6 @@ export const areaSlice = createSlice({
       state: typeof initialState,
       action: PayloadAction<Props>
     ) => action.payload,
-
     resetArea: (
       state: typeof initialState,
       action: PayloadAction<void>
