@@ -19,6 +19,8 @@ const config: Config = {
         "picks-light": "#E6F0EB",
         "picks-medium": "#80B49C",
         "picks-green": "#E6F0EB",
+        "picks-gray": "#F3F5F6",
+        "picks-border": "#E2E5E9",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

@@ -1,12 +1,13 @@
 "use client";
 import {
+  removeAreaCookie,
   setAreaCookie,
   setCountryCookie,
   setCountryNameCookie,
 } from "@/mainApp/actions";
 import { useLazyGetAreasQuery } from "@/redux/api/areaApi";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { setArea } from "@/redux/slices/areaSlice";
+import { resetArea, setArea } from "@/redux/slices/areaSlice";
 import { Area, Country } from "@/types/queries";
 import { ReactNode, Suspense, useContext, useEffect, useState } from "react";
 import LoadingSpinner from "@/components/LoadingSpinner";
@@ -39,6 +40,7 @@ export default function ({ countries }: Props) {
   const {
     locale: { lang },
     country,
+    area,
   } = useAppSelector((state) => state);
   const trans: { [key: string]: string } = useContext(MainContext);
 
@@ -70,17 +72,28 @@ export default function ({ countries }: Props) {
     setSelectedCountry(c || undefined);
     if (c && c.id) {
       const selectedCountry = countries.filter((itm) => itm.id === c?.id)[0];
-      console.log(JSON.stringify(selectedCountry));
+      // console.log(JSON.stringify(selectedCountry));
       await setCountryCookie(JSON.stringify(selectedCountry));
-      await setCountryNameCookie(
-        prepareCountryCookie(selectedCountry.name_en.toLowerCase())
-      );
+      // await setCountryNameCookie(
+      //   prepareCountryCookie(selectedCountry.name_en.toLowerCase())
+      // );
       // setCountry(selectedCountry);
+
+      // reset area when country change
+      resetArea();
+      setSelectedArea(undefined);
+      await removeAreaCookie();
     }
   };
 
-  const handleSetArea = async (a: Area) => {
-    await setAreaCookie(JSON.stringify(a)).then(() => dispatch(setArea(a)));
+  const handleSetArea = async (a: { label: string; id: number } | null) => {
+    setSelectedArea(a || undefined);
+    if (a && a.id && areas && areas?.data) {
+      const selectedArea = areas?.data.filter((itm) => itm.id === a?.id)[0];
+      await setAreaCookie(JSON.stringify(selectedArea)).then(() =>
+        dispatch(setArea(selectedArea))
+      );
+    }
   };
 
   useEffect(() => {
@@ -88,6 +101,7 @@ export default function ({ countries }: Props) {
   }, [country.id]);
 
   useEffect(() => {
+    // counteies for select
     let mappedCountries = countries.map((itm) => {
       return { label: itm.name, id: itm.id };
     });
@@ -100,6 +114,27 @@ export default function ({ countries }: Props) {
       );
     }
   }, []);
+
+  useEffect(() => {
+    if (areaSuccess && !isFetching && areas && areas?.data) {
+      // console.log(areas?.data);
+
+      // areas for select
+      let mappedAreas = areas.data.map((itm: Area) => {
+        return { label: itm.name, id: itm.id };
+      });
+
+      setAllAreas(mappedAreas);
+
+      if (area.id) {
+        setSelectedArea(
+          mappedAreas.filter(
+            (itm: { id: number; label: string }) => itm.id === area.id
+          )[0]
+        );
+      }
+    }
+  }, [areaSuccess, areas, isFetching]);
 
   // console.log({ countries });
 
@@ -132,33 +167,59 @@ export default function ({ countries }: Props) {
 
           {/* select country*/}
           {!isEmpty(allCountries) && (
-            <div className="flex items-center gap-x-2  w-full">
-              {/* contry select */}
-
-              <div className="flex gap-x-2 items-center justify-between bg-white rounded-lg py-2 px-3 grow">
-                <div className="flex gap-x-2 items-center">
-                  <Search />
-                  <Autocomplete
-                    size="small"
-                    className="outline-none"
-                    disablePortal
-                    id="combo-box-demo"
-                    options={allCountries}
-                    value={selectedCountry}
-                    onChange={(e, newval) => {
-                      handleSetCountry(newval);
-                    }}
-                    sx={{ width: 300 }}
-                    renderInput={(params) => (
-                      <TextField {...params} label="select country" />
-                    )}
-                  />
+            <div className="flex items-start gap-x-2  w-full">
+              <div className="flex flex-col gap-y-5 grow">
+                {/* contry select */}
+                <div className="flex gap-x-2 items-center justify-between bg-white rounded-lg py-2 px-3 grow">
+                  <div className="flex gap-x-2 items-center">
+                    <Search />
+                    <Autocomplete
+                      size="small"
+                      className="outline-none"
+                      disablePortal
+                      id="combo-box-demo"
+                      options={allCountries}
+                      value={selectedCountry}
+                      onChange={(e, newval) => {
+                        handleSetCountry(newval);
+                      }}
+                      sx={{ width: 300 }}
+                      renderInput={(params) => (
+                        <TextField {...params} label="select country" />
+                      )}
+                    />
+                  </div>
+                  <GetLocation />
                 </div>
-                <GetLocation />
+
+                {/* area select */}
+                {!isEmpty(allAreas) && (
+                  <div className="flex gap-x-2 items-center justify-between bg-white rounded-lg py-2 px-3 grow">
+                    <div className="flex gap-x-2 items-center">
+                      <Search />
+                      <Autocomplete
+                        disabled={isFetching}
+                        size="small"
+                        className="outline-none"
+                        disablePortal
+                        id="combo-box-demo"
+                        options={allAreas}
+                        value={selectedArea}
+                        onChange={(e, newval) => {
+                          handleSetArea(newval);
+                        }}
+                        sx={{ width: 300 }}
+                        renderInput={(params) => (
+                          <TextField {...params} label="select area" />
+                        )}
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* btn */}
-              <button className="flex items-center gap-x-2 rounded-lg bg-picks-dark px-2 h-full">
+              <button className="flex items-center gap-x-2 rounded-lg bg-picks-dark px-2 h-[40%]">
                 <span className="whitespace-nowrap">Let’s go</span>
                 <RightArrow />
               </button>
