@@ -49,13 +49,13 @@ export default async function middleware(request: NextRequest, response: NextRes
       && !request.nextUrl.pathname.includes('contactus')
     ) {
       // if country exists or serverCountry exists but where must be servercountry equal to country go to the URL 
-      if ((country !== undefined || serverCountry !== undefined) && serverCountry?.data?.name_en?.toLowerCase() !== country.toLowerCase()) {
+      if ((country !== undefined || serverCountry !== undefined) && serverCountry?.data?.country_code?.toLowerCase() !== country.toLowerCase()) {
         // go to landing page
         return NextResponse.redirect(new URL(`/${currentRequestedLocale}`, request.url))
       }
     }
   }
-} 
+}
 
 export const config = {
   // Matcher ignoring `/_next/` and `/api/`

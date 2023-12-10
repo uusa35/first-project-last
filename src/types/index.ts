@@ -17,4 +17,4 @@ export type toastMessage = {
 export type TranslationType = { [key: string]: string };
 
 export type localeType = Locale | string | string[];
-export type countriesList = 'kuwait' | 'egypt' | 'united arab emirates';
+export type countriesList = 'kw' | 'eg' | 'ua';

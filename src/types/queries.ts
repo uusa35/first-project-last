@@ -62,8 +62,8 @@ export type AppQueryResult<T> = {
 export type Country = {
   id: number;
   name: string;
-  name_en: countriesList;
-  code: string;
+  country_code: countriesList;
+  code: string;  
   [key: string]: any;
 };
 
