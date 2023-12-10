@@ -1,6 +1,7 @@
 'use server'
 import { cookies } from 'next/headers'
 
+// lang
 export async function setLocaleCookie(value: string) {
     cookies().set({
         name: 'NEXT_LOCALE',
@@ -9,6 +10,7 @@ export async function setLocaleCookie(value: string) {
     });
 }
 
+// country
 export async function setCountryNameCookie(value: string) {
     cookies().set({
         name: 'NEXT_COUNTRY_NAME',
@@ -44,6 +46,7 @@ export async function removeCountryCookie() {
     cookies().delete('NEXT_COUNTRY');
 }
 
+// area
 export async function setAreaCookie(value: string) {
     cookies().set({
         name: 'NEXT_AREA',
@@ -51,10 +54,10 @@ export async function setAreaCookie(value: string) {
         secure: process.env.NODE_ENV === 'production',
     });
 }
-
+// area
 export async function getAreaCookie() {
     const areaCookie = cookies().get('NEXT_AREA');
-    if (areaCookie && areaCookie.value !== undefined) {
+    if (areaCookie && areaCookie.value && areaCookie.value !== undefined) {
         return JSON.parse(areaCookie?.value);
     }
 }
@@ -63,7 +66,21 @@ export async function removeAreaCookie() {
     cookies().delete('NEXT_AREA');
 }
 
+// type
+export async function setOrderType(value: string) {
+    cookies().set({
+        name: 'NEXT_X_TYPE',
+        value,
+        secure: process.env.NODE_ENV === 'production',
+    });
+}
 
+export async function getOrderType() {
+    const countryCookie = cookies().get('NEXT_X_TYPE');
+    return countryCookie?.value ?? 'pickup';
+}
+
+// auth token
 export async function setToken(value: string) {
     cookies().set({
         name: 'token',
@@ -97,12 +114,14 @@ export async function deleteToken() {
 export async function getMainHeaders() {
     const country = await getCountryCookie();
     const lang = await getLang();
+    const area = await getAreaCookie();
     return {
         'Accept-Language': lang,
         'X-Localization': lang,
         'X-Country': country?.id,
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        ...(area && area.id && { 'X-AREA': area.id })
     }
 }
 

@@ -10,6 +10,7 @@ import moment from "moment";
 import * as yup from "yup";
 import {
   deleteToken,
+  removeAreaCookie,
   setCountryCookie,
   setCountryNameCookie,
   setLang,
@@ -18,7 +19,7 @@ import {
 import { setCountry } from "@/redux/slices/countrySlice";
 import { useLazyGetCountryByNameQuery } from "@/redux/api/countryApi";
 import { useLazyGetAreasQuery } from "@/redux/api/areaApi";
-
+import { resetArea } from "@/src/redux/slices/areaSlice";
 
 type Props = {
   children: React.ReactNode;
@@ -36,7 +37,7 @@ const MainContextLayout: FC<Props> = ({
 }) => {
   const {
     locale,
-    country: { name_en },
+    country: { country_code },
   } = useAppSelector((state) => state);
   const pathName = usePathname();
   const dispatch = useAppDispatch();
@@ -87,10 +88,18 @@ const MainContextLayout: FC<Props> = ({
   useEffect(() => {
     if (country !== undefined) {
       triggerGetCountryByName(country, false).then((r: any) => {
-        if (r.data && r.data.data) {
-          setCountryNameCookie(country);
+        if (
+          r.data &&
+          r.data.data &&
+          (country_code !== country || lang !== locale.lang)
+        ) {
           setCountryCookie(JSON.stringify(r.data.data));
+          setCountryNameCookie(country);
           dispatch(setCountry(r.data.data));
+          triggerGetAreas(undefined, false).then(() => {
+            removeAreaCookie();
+            dispatch(resetArea());
+          });
         }
       });
     }

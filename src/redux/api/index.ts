@@ -13,7 +13,8 @@ export const apiSlice = createApi({
     prepareHeaders: async (headers, { getState }: RootState) => {
       const {
         locale,
-        country: { id }
+        country,
+        area,
       } = getState() as RootState;
       headers.set("Access-Control-Allow-Origin", "*");
       headers.set(
@@ -22,7 +23,12 @@ export const apiSlice = createApi({
       );
       headers.set("Accept-Language", locale.lang);
       headers.set("X-Localization", locale.lang);
-      headers.set("X-Country", id);
+      if (country && country.id) {
+        headers.set("X-Country", country.id);
+      }
+      if (area && area.id) {
+        headers.set("X-AREA", area.id);
+      }
       headers.set(
         "Access-Control-Allow-Methods",
         "GET,PUT,POST,DELETE,PATCH,OPTIONS"

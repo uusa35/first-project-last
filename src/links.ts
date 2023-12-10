@@ -13,4 +13,5 @@ export const appLinks = {
         `/${lang}/terms`,
     offers: (lang: Locale['lang'], country: countriesList) =>
         `/${lang}/${country}/offers`,
+    
 }

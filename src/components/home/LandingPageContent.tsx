@@ -4,14 +4,11 @@ import {
   setCountryCookie,
   setCountryNameCookie,
 } from "@/mainApp/actions";
-import { useLazyGetAreasQuery } from "@/redux/api/areaApi";
+import { useGetAreasQuery } from "@/redux/api/areaApi";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setArea } from "@/redux/slices/areaSlice";
 import { Area, Country } from "@/types/queries";
-import { Suspense, useEffect } from "react";
 import LoadingSpinner from "@/components/LoadingSpinner";
-import { prepareCountryCookie } from "@/src/constants";
-import Loading from "@/app/[lang]/loading";
 
 type Props = {
   countries: Country[];
@@ -21,22 +18,21 @@ export default function ({ countries }: Props) {
     locale: { lang },
     country,
   } = useAppSelector((state) => state);
-
   const dispatch = useAppDispatch();
-  const [triggerGetAreas, { data: areas, isSuccess: areaSuccess, isFetching }] =
-    useLazyGetAreasQuery();
+  const {
+    data: areas,
+    isSuccess: areaSuccess,
+    isFetching,
+  } = useGetAreasQuery();
 
   const handleSetCountry = async (c: Country) => {
-    console.log("c", c);
-    await setCountryCookie(JSON.stringify(c));
-    await setCountryNameCookie(c.country_code);
+    await setCountryCookie(JSON.stringify(c)).then(() =>
+      setCountryNameCookie(c.country_code)
+    );
   };
   const handleSetArea = async (a: Area) => {
     await setAreaCookie(JSON.stringify(a)).then(() => dispatch(setArea(a)));
   };
-  useEffect(() => {
-    triggerGetAreas(undefined, false);
-  }, [country.id]);
 
   return (
     <>

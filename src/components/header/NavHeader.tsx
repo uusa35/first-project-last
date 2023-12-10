@@ -2,8 +2,6 @@
 import { useContext, useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import SideMenu from "@/components/header/SideMenu";
-import { locale } from "moment";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
@@ -22,7 +20,7 @@ export default function ({ lang }: Props) {
   const locales: Locale["lang"][] = ["ar", "en"];
   const {
     locale,
-    country: { name_en },
+    country: { country_code },
   } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -31,8 +29,11 @@ export default function ({ lang }: Props) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigation = [
     { name: trans.landing, href: appLinks.landing(lang) },
-    { name: trans.home, href: appLinks.home(lang, name_en.toLowerCase()) },
-    { name: trans.offers, href: appLinks.offers(lang, name_en.toLowerCase()) },
+    { name: trans.home, href: appLinks.home(lang, country_code.toLowerCase()) },
+    {
+      name: trans.offers,
+      href: appLinks.offers(lang, country_code.toLowerCase()),
+    },
     { name: trans.terms, href: appLinks.terms(lang) },
     { name: trans.aboutus, href: appLinks.aboutus(lang) },
     { name: trans.contactus, href: appLinks.contactus(lang) },

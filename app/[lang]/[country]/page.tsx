@@ -7,28 +7,32 @@ import {
   ElementPagination,
   Product,
   Slide,
+  User,
 } from "@/types/queries";
 import { getCategories } from "@/utils/category";
 import { getSlides } from "@/utils/slide";
 import Image from "next/image";
 import { getProducts } from "@/utils/product";
 import Link from "next/link";
+import { getVendors } from "@/utils/user";
 
 type Props = {
   params: { lang: Locale["lang"]; country: countriesList };
 };
 
 export default async function ({ params: { lang, country } }: Props) {
-  const [{ trans }, categories, sliders, products]: [
+  const [{ trans }, categories, sliders, products, vendors]: [
     { trans: any },
     AppQueryResult<Category[]>,
     AppQueryResult<Slide[]>,
-    ElementPagination<Product[]>
+    ElementPagination<Product[]>,
+    AppQueryResult<User[]>
   ] = await Promise.all([
     getDictionary(lang),
     getCategories(),
     getSlides(`screen_type=home&limit=10`),
     getProducts(`limit=10`),
+    getVendors(`limit=10`),
   ]);
 
   return (
@@ -93,11 +97,26 @@ export default async function ({ params: { lang, country } }: Props) {
         </div>
 
         <div className='flex w-full flex-wrap justify-between items-center'>
+          <h1>sliders</h1>
           {sliders.data.map((s: Slide, i) => (
             <Image
               alt={s.type}
               key={i}
               src={s.image}
+              width='100'
+              height='100'
+            />
+          ))}
+        </div>
+
+        {/* vendors */}
+        <div className='flex w-full flex-col flex-wrap justify-between items-center'>
+          <h1>Vendors</h1>
+          {vendors.data.map((s: User, i) => (
+            <Image
+              alt={s.name ?? s.store_name}
+              key={i}
+              src={s.logo}
               width='100'
               height='100'
             />

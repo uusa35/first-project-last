@@ -32,7 +32,7 @@ export async function logout() {
     return res.json()
 }
 
-export async function getUser(id: string, lang: Locale['lang']) {
+export async function getAuth(id: string, lang: Locale['lang']) {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}user/${id}`, {
         cache: "no-store",
         method: "POST",
