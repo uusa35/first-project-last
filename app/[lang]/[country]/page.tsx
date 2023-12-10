@@ -15,6 +15,8 @@ import Image from "next/image";
 import { getProducts } from "@/utils/product";
 import Link from "next/link";
 import { getVendors } from "@/utils/user";
+import { setOrderType } from "@/app/actions";
+import HomeContent from "@/src/components/home/HomeContent";
 
 type Props = {
   params: { lang: Locale["lang"]; country: countriesList };
@@ -35,10 +37,16 @@ export default async function ({ params: { lang, country } }: Props) {
     getVendors(`limit=10`),
   ]);
 
+  const handleClick = () => {
+    console.log("click");
+  };
+
   return (
     <MainContextLayout trans={trans} lang={lang} country={country}>
       <div className='relative isolate overflow-hidden pt-14'>
         <h1 className='text-7xl'>HomePage Page {country}</h1>
+        {/*  pickup & delivery cookie */}
+        <HomeContent />
         <div className='bg-gray-100'>
           <div className='py-8 mb-8 xl:mx-auto xl:max-w-7xl xl:px-8'>
             <div className='px-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 xl:px-0'>

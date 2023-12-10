@@ -15,6 +15,7 @@ export const apiSlice = createApi({
         locale,
         country,
         area,
+        appSetting: { orderType }
       } = getState() as RootState;
       headers.set("Access-Control-Allow-Origin", "*");
       headers.set(
@@ -29,6 +30,7 @@ export const apiSlice = createApi({
       if (area && area.id) {
         headers.set("X-AREA", area.id);
       }
+      headers.set("X-TYPE", orderType);
       headers.set(
         "Access-Control-Allow-Methods",
         "GET,PUT,POST,DELETE,PATCH,OPTIONS"
