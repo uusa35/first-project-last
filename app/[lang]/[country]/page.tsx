@@ -17,6 +17,7 @@ import Link from "next/link";
 import { getVendors } from "@/utils/user";
 import { setOrderType } from "@/app/actions";
 import HomeContent from "@/src/components/home/HomeContent";
+import { appLinks } from "@/src/links";
 
 type Props = {
   params: { lang: Locale["lang"]; country: countriesList };
@@ -36,10 +37,6 @@ export default async function ({ params: { lang, country } }: Props) {
     getProducts(`limit=10`),
     getVendors(`limit=10`),
   ]);
-
-  const handleClick = () => {
-    console.log("click");
-  };
 
   return (
     <MainContextLayout trans={trans} lang={lang} country={country}>
@@ -119,7 +116,10 @@ export default async function ({ params: { lang, country } }: Props) {
 
         {/* vendors */}
         <div className='flex w-full flex-col flex-wrap justify-between items-center'>
-          <h1>Vendors</h1>
+          <Link href={appLinks.vendors(lang, country, `limit=10`)}>
+            {" "}
+            All Vendors
+          </Link>
           {vendors.data.map((s: User, i) => (
             <Image
               alt={s.name ?? s.store_name}
