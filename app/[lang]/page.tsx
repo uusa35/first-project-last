@@ -19,7 +19,7 @@ export default async function ({ params: { lang } }: Props) {
     await Promise.all([getDictionary(lang), getCountries()]);
 
   return (
-    <MainContextLayout trans={trans} lang={lang} country={country.name_en}>
+    <MainContextLayout trans={trans} lang={lang} country={country.country_code}>
       <LandingPageContent countries={countries.data} />
     </MainContextLayout>
   );

@@ -41,7 +41,7 @@ export const getPrice: (element: number, country: Country) => number = (
 ) => round(element * country.exchange_rate);
 
 export const prepareCountryCookie = (country: string) => isUndefined(country) || isNull(country) || country.length <= 2
-  ? "kuwait"
+  ? "kw"
   : country;
 
 

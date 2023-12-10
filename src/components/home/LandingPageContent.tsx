@@ -27,8 +27,9 @@ export default function ({ countries }: Props) {
     useLazyGetAreasQuery();
 
   const handleSetCountry = async (c: Country) => {
+    console.log("c", c);
     await setCountryCookie(JSON.stringify(c));
-    await setCountryNameCookie(prepareCountryCookie(c.name_en));
+    await setCountryNameCookie(c.country_code);
   };
   const handleSetArea = async (a: Area) => {
     await setAreaCookie(JSON.stringify(a)).then(() => dispatch(setArea(a)));

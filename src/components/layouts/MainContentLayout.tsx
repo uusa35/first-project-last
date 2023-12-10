@@ -87,11 +87,12 @@ const MainContextLayout: FC<Props> = ({
 
   useEffect(() => {
     if (country !== undefined) {
-      const currentCountry: string = prepareCountryCookie(country);
-      triggerGetCountryByName(currentCountry, false).then((r: any) => {
-        setCountryNameCookie(currentCountry);
-        setCountryCookie(JSON.stringify(r.data.data));
-        dispatch(setCountry(r.data.data));
+      triggerGetCountryByName(country, false).then((r: any) => {
+        if (r.data && r.data.data) {
+          setCountryNameCookie(country);
+          setCountryCookie(JSON.stringify(r.data.data));
+          dispatch(setCountry(r.data.data));
+        }
       });
     }
   }, [country]);
