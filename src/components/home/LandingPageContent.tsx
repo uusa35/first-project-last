@@ -3,15 +3,15 @@ import {
   setAreaCookie,
   setCountryCookie,
   setCountryNameCookie,
-} from "@/app/actions";
+} from "@/mainApp/actions";
 import { useLazyGetAreasQuery } from "@/redux/api/areaApi";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setArea } from "@/redux/slices/areaSlice";
-import { getCountry, setCountry } from "@/redux/slices/countrySlice";
 import { Area, Country } from "@/types/queries";
 import { Suspense, useEffect } from "react";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { prepareCountryCookie } from "@/src/constants";
+import Loading from "@/app/[lang]/loading";
 
 type Props = {
   countries: Country[];
@@ -27,8 +27,9 @@ export default function ({ countries }: Props) {
     useLazyGetAreasQuery();
 
   const handleSetCountry = async (c: Country) => {
+    console.log("c", c);
     await setCountryCookie(JSON.stringify(c));
-    await setCountryNameCookie(prepareCountryCookie(c.name_en.toLowerCase()));
+    await setCountryNameCookie(c.country_code);
   };
   const handleSetArea = async (a: Area) => {
     await setAreaCookie(JSON.stringify(a)).then(() => dispatch(setArea(a)));
@@ -57,19 +58,22 @@ export default function ({ countries }: Props) {
           />
         </div>
         <div className='mx-auto max-w-2xl py-32 sm:py-48 lg:py-56'>
-          <div className='text-center text-white border border-white rounded-md'>
-            <div className='flex justify-between items-center'>
-              {countries &&
-                countries.map((c: Country) => (
-                  <button
-                    onClick={() => handleSetCountry(c)}
-                    className={`${
-                      country.id === c.id && "border-4 border-blue-800"
-                    }`}>
-                    {c.name}
-                  </button>
-                ))}
-              <Suspense fallback={<LoadingSpinner isLoading={true} />}>
+          <div className='text-center text-white border border-white rounded-md h-full'>
+            {isFetching ? (
+              <LoadingSpinner isLoading={isFetching} />
+            ) : (
+              <div className='flex justify-between items-center'>
+                {countries &&
+                  countries.map((c: Country) => (
+                    <button
+                      onClick={() => handleSetCountry(c)}
+                      className={`${
+                        country.id === c.id && "border-4 border-blue-800"
+                      }`}>
+                      {c.name}
+                    </button>
+                  ))}
+
                 {areaSuccess && (
                   <div className='flex flex-col'>
                     <h1>Areas</h1>
@@ -82,8 +86,8 @@ export default function ({ countries }: Props) {
                       ))}
                   </div>
                 )}
-              </Suspense>
-            </div>
+              </div>
+            )}
           </div>
         </div>
         <div

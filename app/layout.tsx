@@ -4,7 +4,7 @@ import Providers from "@/src/redux/provider";
 import MainLayout from "@/src/components/layouts/MainLayout";
 
 type Props = {
-  params: { lang: Locale["lang"] };
+   lang: Locale["lang"];
 };
 
 export default function RootLayout({
@@ -12,7 +12,7 @@ export default function RootLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: { lang: Locale["lang"] };
+  params: Props;
 }) {
   return (
     <html

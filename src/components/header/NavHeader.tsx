@@ -4,24 +4,28 @@ import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import SideMenu from "@/components/header/SideMenu";
 import { locale } from "moment";
-import { useAppSelector } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { changePathName } from "@/utils/helpers";
 import { Locale } from "@/types/index";
 import { appLinks } from "@/src/links";
 import { MainContext } from "@/layouts/MainContentLayout";
-import { lowerCase } from "lodash";
+import { useRouter } from "next/navigation";
+import { setLocale } from "@/redux/slices/localeSlice";
 
 type Props = {
   lang: Locale["lang"];
 };
 export default function ({ lang }: Props) {
   const trans: { [key: string]: string } = useContext(MainContext);
-  const locales = ["ar", "en"];
+  const locales: Locale["lang"][] = ["ar", "en"];
   const {
+    locale,
     country: { name_en },
   } = useAppSelector((state) => state);
+  const dispatch = useAppDispatch();
+  const router = useRouter();
   const searchParams = useSearchParams();
   const pathName = usePathname()!;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -33,6 +37,14 @@ export default function ({ lang }: Props) {
     { name: trans.aboutus, href: appLinks.aboutus(lang) },
     { name: trans.contactus, href: appLinks.contactus(lang) },
   ];
+  const handleClick = (item: Locale["lang"]) => {
+    dispatch(setLocale(item));
+    return router.push(
+      `${changePathName(locale.lang, item, pathName)}?${
+        searchParams && searchParams.toString()
+      }`
+    );
+  };
   return (
     <div>
       <header className='absolute inset-x-0 top-0 z-50'>
@@ -70,13 +82,14 @@ export default function ({ lang }: Props) {
           </div>
           <div className='flex lg:flex-1 lg:justify-end gap-x-4 text-white'>
             {locales.map((item, i: number) => (
-              <Link
-                href={`${changePathName(lang, item, pathName)}?${
-                  searchParams && searchParams.toString()
-                }`}
+              <button
+                // href={`${changePathName(lang, item, pathName)}?${
+                //   searchParams && searchParams.toString()
+                // }`}
+                onClick={() => handleClick(item)}
                 className='text-sm font-semibold leading-6 text-white'>
                 {item}
-              </Link>
+              </button>
             ))}
             <Link href='#'>Login</Link>
             <Link href='#'>Sign up</Link>

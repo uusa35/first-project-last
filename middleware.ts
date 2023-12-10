@@ -29,9 +29,7 @@ export default async function middleware(request: NextRequest, response: NextRes
     locale => !pathName.startsWith(`/${locale}/`) && pathName !== `/${locale}`
   )
   const token = request.cookies.get('token');
-
   if (pathnameIsMissingLocale) {
-
     const locale = getLocale(request);
     return NextResponse.redirect(
       new URL(
@@ -50,7 +48,9 @@ export default async function middleware(request: NextRequest, response: NextRes
       && !request.nextUrl.pathname.includes('about')
       && !request.nextUrl.pathname.includes('contactus')
     ) {
-      if ((country !== undefined || serverCountry !== undefined) && serverCountry?.data?.name_en?.toLowerCase() !== country.toLowerCase()) {
+      // if country exists or serverCountry exists but where must be servercountry equal to country go to the URL 
+      if ((country !== undefined || serverCountry !== undefined) && serverCountry?.data?.country_code?.toLowerCase() !== country.toLowerCase()) {
+        // go to landing page
         return NextResponse.redirect(new URL(`/${currentRequestedLocale}`, request.url))
       }
     }

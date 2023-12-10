@@ -1,6 +1,4 @@
 'use server'
-import { countriesList } from '@/types/index';
-import { Country } from '@/types/queries';
 import { cookies } from 'next/headers'
 
 export async function setLocaleCookie(value: string) {
@@ -21,7 +19,7 @@ export async function setCountryNameCookie(value: string) {
 
 export async function getCountryNameCookie() {
     const countryCookie = cookies().get('NEXT_COUNTRY_NAME');
-    return countryCookie?.value ?? 'kuwait';
+    return countryCookie?.value ?? 'kw';
 }
 
 export async function setCountryCookie(value: string) {
@@ -37,7 +35,7 @@ export async function getCountryCookie() {
     if (countryCookie && countryCookie.value !== undefined) {
         return JSON.parse(countryCookie?.value);
     } else {
-        return 'kuwait';
+        return 'kw';
     }
 }
 

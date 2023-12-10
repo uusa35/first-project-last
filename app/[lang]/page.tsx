@@ -4,7 +4,7 @@ import { MainContextLayout } from "@/layouts/MainContentLayout";
 import { getCountries } from "@/utils/country";
 import { cookies } from "next/headers";
 import { AppQueryResult, Country } from "@/types/queries";
-import { getCountryCookie, getCountryCookieFull } from "../actions";
+import { getCountryCookie } from "@/mainApp/actions";
 import LandingPageContent from "@/components/home/LandingPageContent";
 
 type Props = {
@@ -19,7 +19,7 @@ export default async function ({ params: { lang } }: Props) {
     await Promise.all([getDictionary(lang), getCountries()]);
 
   return (
-    <MainContextLayout trans={trans} lang={lang} country={country.name_en}>
+    <MainContextLayout trans={trans} lang={lang} country={country.country_code}>
       <LandingPageContent countries={countries.data} />
     </MainContextLayout>
   );

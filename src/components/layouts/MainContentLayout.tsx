@@ -9,6 +9,7 @@ import { setLocale } from "@/redux/slices/localeSlice";
 import moment from "moment";
 import * as yup from "yup";
 import {
+  deleteToken,
   setCountryCookie,
   setCountryNameCookie,
   setLang,
@@ -17,8 +18,7 @@ import {
 import { setCountry } from "@/redux/slices/countrySlice";
 import { useLazyGetCountryByNameQuery } from "@/redux/api/countryApi";
 import { useLazyGetAreasQuery } from "@/redux/api/areaApi";
-import { AppQueryResult } from "@/types/queries";
-import { prepareCountryCookie } from "@/src/constants";
+
 
 type Props = {
   children: React.ReactNode;
@@ -86,11 +86,12 @@ const MainContextLayout: FC<Props> = ({
 
   useEffect(() => {
     if (country !== undefined) {
-      const currentCountry: string = prepareCountryCookie(country);
-      triggerGetCountryByName(currentCountry).then((r: any) => {
-        setCountryNameCookie(currentCountry);
-        setCountryCookie(JSON.stringify(r.data.data));
-        dispatch(setCountry(r.data.data));
+      triggerGetCountryByName(country, false).then((r: any) => {
+        if (r.data && r.data.data) {
+          setCountryNameCookie(country);
+          setCountryCookie(JSON.stringify(r.data.data));
+          dispatch(setCountry(r.data.data));
+        }
       });
     }
   }, [country]);
