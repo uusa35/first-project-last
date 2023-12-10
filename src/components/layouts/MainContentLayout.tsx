@@ -9,22 +9,10 @@ import { setLocale } from "@/redux/slices/localeSlice";
 import moment from "moment";
 import * as yup from "yup";
 import {
-  capitalize,
-  isNull,
-  kebabCase,
-  replace,
-  startCase,
-  isUndefined,
-} from "lodash";
-import {
-  deleteToken,
   setCountryCookie,
-  setCountryCookieFull,
-  setCountryCookieId,
   setCountryNameCookie,
   setLang,
   setLocaleCookie,
-  setToken,
 } from "@/app/actions";
 import { setCountry } from "@/redux/slices/countrySlice";
 import { useLazyGetCountryByNameQuery } from "@/redux/api/countryApi";
