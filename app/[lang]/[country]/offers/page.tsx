@@ -8,6 +8,7 @@ import { convertSearchParamsToString } from "@/utils/helpers";
 import { appLinks } from "@/src/links";
 import Link from "next/link";
 import Image from "next/image";
+import Pagination from "@/src/components/Pagination";
 
 type Props = {
   params: { lang: Locale["lang"]; country: countriesList; search: string };
