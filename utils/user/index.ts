@@ -25,3 +25,14 @@ export async function getVendor(id: string) {
     // if (!res.ok) throw notFound();
     return res.json()
 }
+
+export async function getVendorFeatured(search?: string) {
+    console.log('headers', await getMainHeaders());
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}vendors/featured?${search ?? ``}`, {
+        cache: "no-store",
+        headers: await getMainHeaders()
+    });
+    if (!res.ok) throw process.env.NODE_ENV === 'production' ? notFound() : new Error('getusers error');
+    // if (!res.ok) throw notFound();
+    return res.json()
+}

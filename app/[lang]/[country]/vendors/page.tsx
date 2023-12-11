@@ -3,7 +3,7 @@ import { getDictionary } from "@/lib/dictionary";
 import { MainContextLayout } from "@/layouts/MainContentLayout";
 import { cookies } from "next/headers";
 import { getVendors } from "@/utils/user";
-import { AppQueryResult, ElementPagination, User } from "@/src/types/queries";
+import { ElementPagination, User } from "@/src/types/queries";
 import Image from "next/image";
 import Link from "next/link";
 import { appLinks } from "@/src/links";
