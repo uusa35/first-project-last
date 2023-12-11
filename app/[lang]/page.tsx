@@ -14,11 +14,10 @@ type Props = {
 export default async function ({ params: { lang } }: Props) {
   const cookieStore = cookies();
   const token = cookieStore.get("token");
-  const country  = await getCountryNameCookie();
+  const country = await getCountryNameCookie();
   const [{ trans }, countries]: [{ trans: any }, AppQueryResult<Country[]>] =
     await Promise.all([getDictionary(lang), getCountries()]);
 
-  console.log("country=====> from cookie", country);
   return (
     <MainContextLayout trans={trans} lang={lang} country={country}>
       <LandingPageContent countries={countries.data} />

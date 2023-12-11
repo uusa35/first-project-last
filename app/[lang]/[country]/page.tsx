@@ -121,13 +121,22 @@ export default async function ({ params: { lang, country } }: Props) {
             All Vendors
           </Link>
           {vendors.data.map((s: User, i) => (
-            <Image
-              alt={s.name ?? s.store_name}
-              key={i}
-              src={s.logo}
-              width='100'
-              height='100'
-            />
+            <Link
+              href={appLinks.vendor(
+                lang,
+                country,
+                s.id.toString(),
+                s.store_name ?? s.name
+              )}>
+              <div>{s.store_name ?? s.name}</div>
+              <Image
+                alt={s.description}
+                key={i}
+                src={s.logo}
+                width='100'
+                height='100'
+              />
+            </Link>
           ))}
         </div>
 
@@ -146,35 +155,41 @@ export default async function ({ params: { lang, country } }: Props) {
             </div>
             <div className='mt-6 grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 sm:gap-y-10 lg:grid-cols-4'>
               {products.data.map((p: Product, i) => (
-                <div key={p.id} className='group relative'>
-                  <div className='aspect-h-3 aspect-w-4 overflow-hidden rounded-lg bg-gray-100'>
-                    <Image
-                      alt={p.name}
-                      key={i}
-                      src={p.image}
-                      width='100'
-                      height='100'
-                      className='object-cover object-center'
-                    />
-                    <div
-                      className='flex items-end p-4 opacity-0 group-hover:opacity-100'
-                      aria-hidden='true'>
-                      <div className='w-full rounded-md bg-white bg-opacity-75 px-4 py-2 text-center text-sm font-medium text-gray-900 backdrop-blur backdrop-filter'>
-                        View Product
+                <Link
+                  href={appLinks.offer(lang, country, p.id.toString(), p.name)}>
+                  <div key={p.id} className='group relative'>
+                    <div className='aspect-h-3 aspect-w-4 overflow-hidden rounded-lg bg-gray-100'>
+                      <Image
+                        alt={p.name}
+                        key={i}
+                        src={p.image}
+                        width='100'
+                        height='100'
+                        className='object-cover object-center'
+                      />
+                      <div
+                        className='flex items-end p-4 opacity-0 group-hover:opacity-100'
+                        aria-hidden='true'>
+                        <div className='w-full rounded-md bg-white bg-opacity-75 px-4 py-2 text-center text-sm font-medium text-gray-900 backdrop-blur backdrop-filter'>
+                          View Product
+                        </div>
                       </div>
                     </div>
+                    <div className='mt-4 flex items-center justify-between space-x-8 text-base font-medium text-gray-900'>
+                      <h3>
+                        <a href='#'>
+                          <span
+                            aria-hidden='true'
+                            className='absolute inset-0'
+                          />
+                          {p.name}
+                        </a>
+                      </h3>
+                      <p>{p.price}</p>
+                    </div>
+                    <p className='mt-1 text-sm text-gray-500'>{p.name}</p>
                   </div>
-                  <div className='mt-4 flex items-center justify-between space-x-8 text-base font-medium text-gray-900'>
-                    <h3>
-                      <a href='#'>
-                        <span aria-hidden='true' className='absolute inset-0' />
-                        {p.name}
-                      </a>
-                    </h3>
-                    <p>{p.price}</p>
-                  </div>
-                  <p className='mt-1 text-sm text-gray-500'>{p.name}</p>
-                </div>
+                </Link>
               ))}
             </div>
           </div>
