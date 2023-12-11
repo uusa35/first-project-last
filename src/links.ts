@@ -16,6 +16,6 @@ export const appLinks = {
     vendors: (lang: Locale['lang'], country: countriesList, search?: string) =>
         `/${lang}/${country}/vendors?${search}`,
     vendor: (lang: Locale['lang'], country: countriesList, id: string, slug?: string) =>
-        `/${lang}/${country}/vendor/${id}?${slug ?? ``}`,
+        `/${lang}/${country}/vendor/${id}?slug=${slug ?? ``}`,
 
 }
