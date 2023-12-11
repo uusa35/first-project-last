@@ -3,12 +3,22 @@ import { getDictionary } from "@/lib/dictionary";
 import { MainContextLayout } from "@/layouts/MainContentLayout";
 import { cookies } from "next/headers";
 import { getProducts } from "@/utils/product";
-import { ElementPagination, Product } from "@/src/types/queries";
+import {
+  AppQueryResult,
+  Category,
+  ElementPagination,
+  Product,
+  Slide,
+  User,
+} from "@/src/types/queries";
 import { convertSearchParamsToString } from "@/utils/helpers";
 import { appLinks } from "@/src/links";
 import Link from "next/link";
 import Image from "next/image";
 import Pagination from "@/src/components/Pagination";
+import { getCategories } from "@/utils/category";
+import { getVendors } from "@/utils/user";
+import { getSlides } from "@/utils/slide";
 
 type Props = {
   params: { lang: Locale["lang"]; country: countriesList; search: string };
@@ -22,19 +32,28 @@ export default async function (props: Props) {
     searchParams,
   } = props;
   const token: any = cookieStore.get("token");
-  const [{ trans }, offers]: [{ trans: any }, ElementPagination<Product[]>] =
-    await Promise.all([
-      getDictionary(lang),
-      getProducts(convertSearchParamsToString(searchParams ?? undefined)),
-    ]);
+  const [{ trans }, slides, categories, offers, vendors]: [
+    { trans: any },
+    AppQueryResult<Slide[]>,
+    AppQueryResult<Category[]>,
+    ElementPagination<Product[]>,
+    ElementPagination<User[]>
+  ] = await Promise.all([
+    getDictionary(lang),
+    getSlides(`screen_type=home&limit=10`),
+    getCategories(),
+    getProducts(convertSearchParamsToString(searchParams ?? undefined)),
+    getVendors(convertSearchParamsToString(searchParams ?? undefined)),
+  ]);
 
+  console.log("searchParams", searchParams);
   return (
     <MainContextLayout trans={trans} lang={lang} country={country}>
       <h1 className='text-7xl'>Offers {country}</h1>
       <div className='flex w-full flex-col flex-wrap justify-between items-center'>
         <h1>Vendors</h1>
         {offers.data?.map((p: Product, i) => (
-          <Link href={appLinks.offer(lang, country, s.id.toString(), s.name)}>
+          <Link href={appLinks.offer(lang, country, p.id.toString(), p.name)}>
             <div>{p.name}</div>
             <Image
               alt={p.description}

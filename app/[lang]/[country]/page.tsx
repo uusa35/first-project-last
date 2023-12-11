@@ -67,7 +67,11 @@ export default async function ({ params: { lang, country } }: Props) {
                     {categories.data.map((c: Category, i) => (
                       <Link
                         key={c.name}
-                        href={"#"}
+                        href={appLinks.offers(
+                          lang,
+                          country,
+                          `category_id=${c.id}`
+                        )}
                         className='relative flex h-40 w-56 flex-col overflow-hidden rounded-lg p-6 hover:opacity-75 xl:w-auto'>
                         <span aria-hidden='true' className='absolute inset-0'>
                           <Image

@@ -1,8 +1,7 @@
 import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
 import { MainContextLayout } from "@/layouts/MainContentLayout";
-import { getVendor } from "@/utils/user";
-import { AppQueryResult, Product, User } from "@/src/types/queries";
+import { AppQueryResult, Product } from "@/src/types/queries";
 import { notFound } from "next/navigation";
 import { getProduct } from "@/utils/product";
 
