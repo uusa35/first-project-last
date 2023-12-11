@@ -14,10 +14,12 @@ export default async function ({ params: { lang, id } }: Props) {
     await Promise.all([getDictionary(lang), getVendor(id)]);
 
   if (!vendor) notFound();
+
   return (
     <MainContextLayout trans={trans} lang={lang}>
       <h1>Resturan {id} </h1>
-      <h1>Name {vendor.data.store_name} </h1>
+      <h1>Name {vendor.data.vendor.store_name} </h1>
+      <h1>Description {vendor.data.vendor.description} </h1>
     </MainContextLayout>
   );
 }

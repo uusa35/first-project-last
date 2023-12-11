@@ -11,11 +11,13 @@ export const appLinks = {
         `/${lang}/contactus`,
     terms: (lang: Locale['lang']) =>
         `/${lang}/terms`,
-    offers: (lang: Locale['lang'], country: countriesList) =>
-        `/${lang}/${country}/offers`,
+    offers: (lang: Locale['lang'], country: countriesList, search?: string) =>
+        `/${lang}/${country}/offers?${search}`,
+    offer: (lang: Locale['lang'], country: countriesList, id: string, slug?: string) =>
+        `/${lang}/${country}/offer/${id}?slug=${slug ?? ``}`,
     vendors: (lang: Locale['lang'], country: countriesList, search?: string) =>
         `/${lang}/${country}/vendors?${search}`,
     vendor: (lang: Locale['lang'], country: countriesList, id: string, slug?: string) =>
-        `/${lang}/${country}/vendor/${id}?${slug ?? ``}`,
+        `/${lang}/${country}/vendor/${id}?slug=${slug ?? ``}`,
 
 }

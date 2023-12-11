@@ -22,32 +22,16 @@ export default function ({ links }: Props): React.ReactNode {
     !isEmpty(links) && (
       <div className='bg-white my-6 rounded-md flex justify-center items-center capitalize'>
         <div className='flex flex-wrap  px-2 py-4 '>
-          {links &&
-            map(links, (link: any, i) =>
-              has(link, "url") && isNull(link.url) ? (
-                <div
-                  key={i}
-                  className='flex  justify-center items-center mr-1 mb-1 text-sm leading-4 text-gray-400 border rounded w-24 text-center hover:bg-gray-200'>
-                  {link.label.includes("Previous")
-                    ? trans.previous
-                    : link.label.includes("Next")
-                    ? trans.next
-                    : link.label}
-                </div>
-              ) : (
-                <Link
-                  scroll={false}
-                  key={i}
-                  className={getClassName(link.active)}
-                  href={link.url}>
-                  {link.label.includes("Previous")
-                    ? trans.previous
-                    : link.label.includes("Next")
-                    ? trans.next
-                    : link.label}
-                </Link>
-              )
-            )}
+          {links && (
+            <>
+              <Link scroll={false} href={links.next}>
+                next
+              </Link>
+              <Link scroll={false} href={links.previous}>
+                previous
+              </Link>
+            </>
+          )}
         </div>
       </div>
     )

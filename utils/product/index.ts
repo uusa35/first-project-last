@@ -2,11 +2,24 @@ import { notFound } from 'next/navigation';
 import { getMainHeaders } from '@/app/actions';
 import { revalidate } from '@/utils/helpers';
 
-export async function getProducts(search: string) {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}offers?${search}`, {
-        next: { revalidate: revalidate.min },
+
+export async function getProducts(search?: string) {
+    console.log('headers', await getMainHeaders());
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}offers?${search ?? ``}`, {
+        cache: "no-store",
         headers: await getMainHeaders()
     });
-    if (!res.ok) throw notFound();
+    if (!res.ok) throw process.env.NODE_ENV === 'production' ? notFound() : new Error('getusers error');
+    // if (!res.ok) throw notFound();
+    return res.json()
+}
+
+export async function getProduct(id: string) {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}offer/${id}`, {
+        cache: "no-store",
+        headers: await getMainHeaders()
+    });
+    if (!res.ok) throw process.env.NODE_ENV === 'production' ? notFound() : new Error('getusers error');
+    // if (!res.ok) throw notFound();
     return res.json()
 }

@@ -6,6 +6,7 @@ const initialState: Props = {
   id: 0,
   name: '',
   name_en: 'kuwait',
+  country_code: 'kw',
   code: ''
 };
 

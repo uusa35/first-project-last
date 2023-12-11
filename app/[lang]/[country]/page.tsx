@@ -14,7 +14,7 @@ import { getSlides } from "@/utils/slide";
 import Image from "next/image";
 import { getProducts } from "@/utils/product";
 import Link from "next/link";
-import { getVendors } from "@/utils/user";
+import { getVendorFeatured, getVendors } from "@/utils/user";
 import { setOrderType } from "@/app/actions";
 import HomeContent from "@/src/components/home/HomeContent";
 import { appLinks } from "@/src/links";
@@ -24,11 +24,12 @@ type Props = {
 };
 
 export default async function ({ params: { lang, country } }: Props) {
-  const [{ trans }, categories, sliders, products, vendors]: [
+  const [{ trans }, categories, sliders, products, vendors, featuredVendors]: [
     { trans: any },
     AppQueryResult<Category[]>,
     AppQueryResult<Slide[]>,
     ElementPagination<Product[]>,
+    AppQueryResult<User[]>,
     AppQueryResult<User[]>
   ] = await Promise.all([
     getDictionary(lang),
@@ -36,6 +37,7 @@ export default async function ({ params: { lang, country } }: Props) {
     getSlides(`screen_type=home&limit=10`),
     getProducts(`limit=10`),
     getVendors(`limit=10`),
+    getVendorFeatured(`limit=10`),
   ]);
 
   return (
@@ -153,18 +155,21 @@ export default async function ({ params: { lang, country } }: Props) {
                         View Product
                       </div>
                     </div>
+                    <div className='mt-4 flex items-center justify-between space-x-8 text-base font-medium text-gray-900'>
+                      <h3>
+                        <a href='#'>
+                          <span
+                            aria-hidden='true'
+                            className='absolute inset-0'
+                          />
+                          {p.name}
+                        </a>
+                      </h3>
+                      <p>{p.price}</p>
+                    </div>
+                    <p className='mt-1 text-sm text-gray-500'>{p.name}</p>
                   </div>
-                  <div className="mt-4 flex items-center justify-between space-x-8 text-base font-medium text-gray-900">
-                    <h3>
-                      <a href="#">
-                        <span aria-hidden="true" className="absolute inset-0" />
-                        {p.name}
-                      </a>
-                    </h3>
-                    <p>{p.price}</p>
-                  </div>
-                  <p className="mt-1 text-sm text-gray-500">{p.name}</p>
-                </div>
+                </Link>
               ))}
             </div>
           </div>
