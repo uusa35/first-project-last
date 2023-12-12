@@ -21,7 +21,7 @@ export async function getVendor(id: string) {
         cache: "no-store",
         headers: await getMainHeaders()
     });
-    if (!res.ok) throw process.env.NODE_ENV === 'production' ? notFound() : new Error('getusers error');
+    if (!res.ok) throw process.env.NODE_ENV === 'production' ? notFound() : new Error(res.statusText);
     // if (!res.ok) throw notFound();
     return res.json()
 }
@@ -32,7 +32,7 @@ export async function getVendorFeatured(search?: string) {
         cache: "no-store",
         headers: await getMainHeaders()
     });
-    if (!res.ok) throw process.env.NODE_ENV === 'production' ? notFound() : new Error('getusers error');
+    if (!res.ok) throw process.env.NODE_ENV === 'production' ? notFound() : new Error(res.statusText);
     // if (!res.ok) throw notFound();
     return res.json()
 }

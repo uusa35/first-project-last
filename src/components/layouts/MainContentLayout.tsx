@@ -95,8 +95,8 @@ const MainContextLayout: FC<Props> = ({
       console.log("case 1", country);
       triggerGetCountryByName(country, false).then((r: any) => {
         if (r.data && r.data.data) {
-          setCountryCookie(JSON.stringify(r.data.data));
-          setCountryNameCookie(country);
+          // setCountryCookie(JSON.stringify(r.data.data));
+          // setCountryNameCookie(country);
           dispatch(setCountry(r.data.data));
           triggerGetAreas(undefined, false).then(() => {
             removeAreaCookie();

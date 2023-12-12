@@ -15,6 +15,8 @@ import { setOrderType } from "@/app/actions";
 import { changeOrderType } from "@/src/redux/slices/settingSlice";
 import { useAppDispatch } from "@/src/redux/hooks";
 import { countriesList } from "@/src/types";
+import Link from "next/link";
+import { appLinks } from "@/src/links";
 
 type Props = {
   categories: Category[];
@@ -83,7 +85,9 @@ export default function HomeContent({
 
   const CategoryComponent = ({ category }: { category: Category }) => {
     return (
-      <div className='px-5'>
+      <Link
+        href={appLinks.offers(lang, country, `category_id=${category.id}`)}
+        className='px-5'>
         <div className='flex items-center gap-x-2 bg-white rounded-full py-2 px-3 w-fit'>
           <Image
             alt={category.name}
@@ -94,7 +98,7 @@ export default function HomeContent({
           />
           <p className='text-black'>{category.name}</p>
         </div>
-      </div>
+      </Link>
     );
   };
 
@@ -102,9 +106,10 @@ export default function HomeContent({
     <div>
       <div className='py-5 relative mt-24 page-padding bg-picks-gray border-b border-picks-border'>
         <Slider {...settings}>
-          {categories.map((itm: Category) => (
-            <CategoryComponent category={itm} key={itm.id} />
-          ))}
+          {categories &&
+            categories.map((itm: Category) => (
+              <CategoryComponent category={itm} key={itm.id} />
+            ))}
         </Slider>
       </div>
 
@@ -128,14 +133,15 @@ export default function HomeContent({
           </div>
           <div>
             <Slider {...settings2} ref={(c) => (refSlider2.current = c)}>
-              {products.map((itm) => (
-                <ProductWidget
-                  product={itm}
-                  key={itm.id}
-                  lang={lang}
-                  country={country}
-                />
-              ))}
+              {products &&
+                products.map((itm) => (
+                  <ProductWidget
+                    product={itm}
+                    key={itm.id}
+                    lang={lang}
+                    country={country}
+                  />
+                ))}
             </Slider>
           </div>
         </div>

@@ -1,4 +1,5 @@
 import { Locale, countriesList } from '@/src/types'
+import { addDashs } from '@/utils/helpers'
 
 export const appLinks = {
     landing: (lang: Locale['lang']) =>
@@ -14,10 +15,10 @@ export const appLinks = {
     offers: (lang: Locale['lang'], country: countriesList, search?: string) =>
         `/${lang}/${country}/offers?${search}`,
     offer: (lang: Locale['lang'], country: countriesList, id: string, slug?: string) =>
-        `/${lang}/${country}/offer/${id}?slug=${slug ?? ``}`,
+        `/${lang}/${country}/offer/${id}?slug=${slug ? addDashs(slug) : ``}`,
     vendors: (lang: Locale['lang'], country: countriesList, search?: string) =>
         `/${lang}/${country}/vendors?${search}`,
     vendor: (lang: Locale['lang'], country: countriesList, id: string, slug?: string) =>
-        `/${lang}/${country}/vendor/${id}?slug=${slug ?? ``}`,
+        `/${lang}/${country}/vendor/${id}?slug=${slug ? addDashs(slug) : ``}`,
 
 }

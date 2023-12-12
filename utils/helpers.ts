@@ -23,7 +23,6 @@ export const changePathName = (current: string, newLang: string, pathName: strin
 
 export const convertToJson = (qs: string) => {
     qs = qs || location.search.slice(1);
-
     var pairs = qs.split('&');
     var result: any = {};
     pairs.forEach(function (p) {
@@ -45,7 +44,7 @@ export const convertToJson = (qs: string) => {
     return JSON.parse(JSON.stringify(result));
 };
 
-
+export const addDashs = (str: string) => str.replace(/\s+/g, '-').toLowerCase();
 
 export const removeTags = (str: string) => {
     if ((str === null) || (str === ''))

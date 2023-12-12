@@ -24,11 +24,17 @@ export default async function middleware(request: NextRequest, response: NextRes
   const pathName = request.nextUrl.pathname;
   const currentRequestedLocale = pathName.split('/')[1];
   const country: string | undefined = pathName.split('/')[2] ?? undefined;
-  const serverCountry: { data: Country } | undefined = country !== undefined ? await getCountry(country) : undefined;
-  const pathnameIsMissingLocale = i18n.locales.every(
+  const serverCountry: { data: Country } | undefined = country || country !== undefined ? await getCountry(country) : undefined;
+  const pathnameIsMissingLocale = await i18n.locales.every(
     locale => !pathName.startsWith(`/${locale}/`) && pathName !== `/${locale}`
   )
   const token = request.cookies.get('token');
+  const res = NextResponse.next()
+  if (serverCountry && serverCountry.data && country) {
+    await res.cookies.set('NEXT_COUNTRY', JSON.stringify(serverCountry.data));
+    await res.cookies.set('NEXT_COUNTRY_NAME', country)
+  }
+
   if (pathnameIsMissingLocale) {
     const locale = getLocale(request);
     return NextResponse.redirect(
@@ -51,9 +57,12 @@ export default async function middleware(request: NextRequest, response: NextRes
       // if country exists or serverCountry exists but where must be servercountry equal to country go to the URL 
       if ((country !== undefined || serverCountry !== undefined) && serverCountry?.data?.country_code?.toLowerCase() !== country.toLowerCase()) {
         // go to landing page
-        return NextResponse.redirect(new URL(`/${currentRequestedLocale}`, request.url))
+        return NextResponse.rewrite(new URL(`/${currentRequestedLocale}`, request.url))
+      } else {
+        return res;
       }
     }
+    return res;
   }
 }
 
