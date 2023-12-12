@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { changePathName } from "@/utils/helpers";
-import { Locale } from "@/types/index";
+import { Locale, countriesList } from "@/types/index";
 import { appLinks } from "@/src/links";
 import { MainContext } from "@/layouts/MainContentLayout";
 import { useRouter } from "next/navigation";
@@ -14,12 +14,13 @@ import { setLocale } from "@/redux/slices/localeSlice";
 
 type Props = {
   lang: Locale["lang"];
+  country: countriesList;
   showBg: boolean;
 };
-export default function ({ lang, showBg }: Props) {
+export default function ({ lang, country, showBg }: Props) {
   const trans: { [key: string]: string } = useContext(MainContext);
   const locales: Locale["lang"][] = ["ar", "en"];
-  const { locale, country } = useAppSelector((state) => state);
+  const { locale } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -29,11 +30,11 @@ export default function ({ lang, showBg }: Props) {
     { name: trans.landing, href: appLinks.landing(lang) },
     {
       name: trans.home,
-      href: appLinks.home(lang, country.country_code?.toLowerCase()),
+      href: appLinks.home(lang, country),
     },
     {
       name: trans.offers,
-      href: appLinks.offers(lang, country.country_code?.toLowerCase(), ""),
+      href: appLinks.offers(lang, country, ""),
     },
     { name: trans.terms, href: appLinks.terms(lang) },
     { name: trans.aboutus, href: appLinks.aboutus(lang) },

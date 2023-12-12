@@ -96,7 +96,7 @@ const MainContextLayout: FC<Props> = ({
           // setCountryCookie(JSON.stringify(r.data.data));
           // setCountryNameCookie(country);
           dispatch(setCountry(r.data.data));
-          triggerGetAreas(undefined, false).then(() => {
+          triggerGetAreas(undefined, lang !== locale.lang).then(() => {
             removeAreaCookie();
             dispatch(resetArea());
           });
@@ -108,7 +108,7 @@ const MainContextLayout: FC<Props> = ({
   return (
     <MainContext.Provider value={trans}>
       {/* nav */}
-      <NavHeader lang={lang} showBg={showBg} />
+      <NavHeader lang={lang} showBg={showBg} country={country} />
       <div className='relative isolate overflow-hidden pt-14'>
         {showBg && (
           <Image
