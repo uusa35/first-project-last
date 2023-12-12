@@ -1,5 +1,6 @@
 'use client';
 import { truncate, kebabCase, round, isUndefined, isNull, lowerCase, replace } from 'lodash';
+
 export const appVersion = `0.0.1`;
 // export const apiUrl = `${baseUrl}/api/`;
 export const apiUrl = process.env.NEXT_PUBLIC_API_URL;

@@ -24,8 +24,6 @@ export default async function ({ params: { lang } }: Props) {
       lang={lang}
       country={country ?? "kw"}
       showBg={true}>
-      
-
       <LandingPageContent countries={countries.data} />
     </MainContextLayout>
   );

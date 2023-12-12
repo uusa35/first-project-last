@@ -140,3 +140,8 @@ export type Slide = {
   category_id: number | null,
   image: string;
 };
+
+export type Faq = {
+  question: string;
+  answer: string;
+};
