@@ -14,8 +14,9 @@ import { setLocale } from "@/redux/slices/localeSlice";
 
 type Props = {
   lang: Locale["lang"];
+  showBg: boolean;
 };
-export default function ({ lang }: Props) {
+export default function ({ lang, showBg }: Props) {
   const trans: { [key: string]: string } = useContext(MainContext);
   const locales: Locale["lang"][] = ["ar", "en"];
   const { locale, country } = useAppSelector((state) => state);
@@ -32,7 +33,7 @@ export default function ({ lang }: Props) {
     },
     {
       name: trans.offers,
-      href: appLinks.offers(lang, country.country_code?.toLowerCase()),
+      href: appLinks.offers(lang, country.country_code?.toLowerCase(), ""),
     },
     { name: trans.terms, href: appLinks.terms(lang) },
     { name: trans.aboutus, href: appLinks.aboutus(lang) },
@@ -48,7 +49,10 @@ export default function ({ lang }: Props) {
   };
   return (
     <div>
-      <header className='absolute inset-x-0 top-0 z-50'>
+      <header
+        className={`absolute inset-x-0 top-0 z-50 ${
+          !showBg ? `text-black` : `text-white`
+        }`}>
         <nav
           className='flex items-center justify-between p-6 lg:px-8'
           aria-label='Global'>
@@ -76,19 +80,19 @@ export default function ({ lang }: Props) {
               <Link
                 key={item.name}
                 href={item.href}
-                className='text-sm font-semibold leading-6 text-white'>
+                className='text-sm font-semibold leading-6 '>
                 {item.name}
               </Link>
             ))}
           </div>
-          <div className='flex lg:flex-1 lg:justify-end gap-x-4 text-white'>
+          <div className='flex lg:flex-1 lg:justify-end gap-x-4 '>
             {locales.map((item, i: number) => (
               <button
                 // href={`${changePathName(lang, item, pathName)}?${
                 //   searchParams && searchParams.toString()
                 // }`}
                 onClick={() => handleClick(item)}
-                className='text-sm font-semibold leading-6 text-white'>
+                className='text-sm font-semibold leading-6 '>
                 {item}
               </button>
             ))}

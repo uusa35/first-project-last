@@ -8,19 +8,28 @@ import React, {
   useRef,
 } from "react";
 import Slider from "react-slick";
-import CustomSlider from "../CustomSlider";
+import CustomSlider from "@/components/CustomSlider";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
-import ProductWidget from "../widgets/ProductWidget";
+import ProductWidget from "@/components/widgets/ProductWidget";
 import { setOrderType } from "@/app/actions";
 import { changeOrderType } from "@/src/redux/slices/settingSlice";
 import { useAppDispatch } from "@/src/redux/hooks";
+import { countriesList } from "@/src/types";
 
 type Props = {
   categories: Category[];
   slides: Slide[];
   products: Product[];
+  lang: Locale["lang"];
+  country: countriesList;
 };
-export default function HomeContent({ categories, slides, products }: Props) {
+export default function HomeContent({
+  categories,
+  slides,
+  products,
+  lang,
+  country,
+}: Props) {
   const dispatch = useAppDispatch();
   const refSlider2 = useRef<Slider | null>(null);
   const settings = {
@@ -57,67 +66,62 @@ export default function HomeContent({ categories, slides, products }: Props) {
 
   const RenderArrows = () => {
     return (
-      <div className="slider-arrow flex gap-x-2">
+      <div className='slider-arrow flex gap-x-2'>
         <button
-          className="arrow-btn prev w-8 h-8 rounded-full bg-[#EEE]"
-          onClick={() => refSlider2?.current?.slickPrev()}
-        >
+          className='arrow-btn prev w-8 h-8 rounded-full bg-[#EEE]'
+          onClick={() => refSlider2?.current?.slickPrev()}>
           <KeyboardArrowLeft />
         </button>
         <button
-          className="arrow-btn next w-8 h-8 rounded-full bg-[#EEE]"
-          onClick={() => refSlider2?.current?.slickNext()}
-        >
+          className='arrow-btn next w-8 h-8 rounded-full bg-[#EEE]'
+          onClick={() => refSlider2?.current?.slickNext()}>
           <KeyboardArrowRight />
         </button>
       </div>
     );
   };
 
-  const CategoryComponent = ({
-    category,
-  }: {
-    category: Category;
-  }): React.ReactNode => {
+  const CategoryComponent = ({ category }: { category: Category }) => {
     return (
-      <div className="px-5">
-        <div className="flex items-center gap-x-2 bg-white rounded-full py-2 px-3 w-fit">
+      <div className='px-5'>
+        <div className='flex items-center gap-x-2 bg-white rounded-full py-2 px-3 w-fit'>
           <Image
             alt={category.name}
             src={category.image}
             width={1000}
             height={1000}
-            className="w-5 h-5"
+            className='w-5 h-5'
           />
-          <p className="text-black">{category.name}</p>
+          <p className='text-black'>{category.name}</p>
         </div>
       </div>
     );
   };
+
   return (
     <div>
-      <div className="py-5 relative mt-24 page-padding bg-picks-gray border-b border-picks-border">
+      <div className='py-5 relative mt-24 page-padding bg-picks-gray border-b border-picks-border'>
         <Slider {...settings}>
-          {categories.map((itm) => (
+          {categories.map((itm: Category) => (
             <CategoryComponent category={itm} key={itm.id} />
           ))}
         </Slider>
       </div>
 
       {/* filters and   items*/}
-      <div className="page-padding">
+      <div className='page-padding'>
         {/* filters */}
         <div></div>
         {/* slider  */}
-        <div className="my-10">
+        <div className='my-10'>
           <CustomSlider slides={slides} />
         </div>
 
         {/* new to picks */}
-        <div className="my-5">
-          <div className="flex justify-between mb-3">
+        <div className='my-5'>
+          <div className='flex justify-between mb-3'>
             <p>New Picks</p>
-            <div className="flex gap-x-3">
+            <div className='flex gap-x-3'>
               <p>See all</p>
               <RenderArrows />
             </div>
@@ -125,23 +129,26 @@ export default function HomeContent({ categories, slides, products }: Props) {
           <div>
             <Slider {...settings2} ref={(c) => (refSlider2.current = c)}>
               {products.map((itm) => (
-                <ProductWidget product={itm} key={itm.id} />
+                <ProductWidget
+                  product={itm}
+                  key={itm.id}
+                  lang={lang}
+                  country={country}
+                />
               ))}
             </Slider>
           </div>
         </div>
 
-        <div className="flex justify-evenly items-center">
+        <div className='flex justify-evenly items-center'>
           <button
-            className="btn-default"
-            onClick={() => handleOrderType("pickup")}
-          >
+            className='btn-default'
+            onClick={() => handleOrderType("pickup")}>
             pickup
           </button>
           <button
-            className="btn-default"
-            onClick={() => handleOrderType("delivery")}
-          >
+            className='btn-default'
+            onClick={() => handleOrderType("delivery")}>
             delivery
           </button>
         </div>

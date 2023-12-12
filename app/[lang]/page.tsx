@@ -18,7 +18,11 @@ export default async function ({ params: { lang } }: Props) {
   const [{ trans }, countries]: [{ trans: any }, AppQueryResult<Country[]>] =
     await Promise.all([getDictionary(lang), getCountries()]);
   return (
-    <MainContextLayout trans={trans} lang={lang} country={country}>
+    <MainContextLayout
+      trans={trans}
+      lang={lang}
+      country={country}
+      showBg={true}>
       <LandingPageContent countries={countries.data} />
     </MainContextLayout>
   );
