@@ -145,19 +145,6 @@ export default function HomeContent({
             </Slider>
           </div>
         </div>
-
-        <div className='flex justify-evenly items-center'>
-          <button
-            className='btn-default'
-            onClick={() => handleOrderType("pickup")}>
-            pickup
-          </button>
-          <button
-            className='btn-default'
-            onClick={() => handleOrderType("delivery")}>
-            delivery
-          </button>
-        </div>
       </div>
     </div>
   );
