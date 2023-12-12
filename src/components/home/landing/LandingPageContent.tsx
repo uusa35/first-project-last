@@ -68,17 +68,12 @@ export default function ({ countries }: Props) {
     useLazyGetAreasQuery();
 
   const handleSetCountry = async (c: { label: string; id: number } | null) => {
-    // console.log({ c });
     setSelectedCountry(c || undefined);
     if (c && c.id && countries) {
       const selectedCountry = countries.filter((itm) => itm.id === c?.id)[0];
-      // console.log(JSON.stringify(selectedCountry));
       await setCountryCookie(JSON.stringify(selectedCountry));
-      // await setCountryNameCookie(
-      //   prepareCountryCookie(selectedCountry.name_en.toLowerCase())
-      // );
+      await setCountryNameCookie(selectedCountry.country_code);
       // setCountry(selectedCountry);
-
       // reset area when country change
       dispatch(resetArea());
       setSelectedArea(undefined);

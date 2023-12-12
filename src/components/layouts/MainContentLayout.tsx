@@ -90,9 +90,7 @@ const MainContextLayout: FC<Props> = ({
 
   // sets cookies if country changed from any page
   useEffect(() => {
-    console.log("the country", country);
     if (country !== undefined) {
-      console.log("case 1", country);
       triggerGetCountryByName(country, false).then((r: any) => {
         if (r.data && r.data.data) {
           // setCountryCookie(JSON.stringify(r.data.data));
