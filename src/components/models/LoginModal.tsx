@@ -2,7 +2,10 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
-import { toggleLoginModal } from "@/src/redux/slices/settingSlice";
+import {
+  toggleForgetPasswordModal,
+  toggleLoginModal,
+} from "@/src/redux/slices/settingSlice";
 
 export default function () {
   const {
@@ -73,11 +76,13 @@ export default function () {
                             Password
                           </label>
                           <div className='text-sm'>
-                            <a
-                              href='#'
+                            <button
+                              onClick={() =>
+                                dispatch(toggleForgetPasswordModal())
+                              }
                               className='font-semibold text-picks-dark hover:text-indigo-500'>
                               Forgot password?
-                            </a>
+                            </button>
                           </div>
                         </div>
                         <div className='mt-2'>

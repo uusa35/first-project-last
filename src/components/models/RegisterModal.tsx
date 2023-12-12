@@ -2,11 +2,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
-import {
-  toggleR,
-  toggleRegisterModal,
-  toggleRegisterModalegisterModal,
-} from "@/src/redux/slices/settingSlice";
+import { toggleRegisterModal } from "@/src/redux/slices/settingSlice";
 
 export default function () {
   const {
@@ -74,13 +70,13 @@ export default function () {
                           <label
                             htmlFor='password'
                             className='block text-sm font-medium leading-6 text-gray-900'>
-                            Password
+                            test
                           </label>
                           <div className='text-sm'>
                             <a
                               href='#'
                               className='font-semibold text-picks-dark hover:text-indigo-500'>
-                              Forgot password?
+                              test here
                             </a>
                           </div>
                         </div>

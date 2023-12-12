@@ -28,7 +28,7 @@ import { countryApi } from "@/redux/api/countryApi";
 const persistConfig = {
   key: "root",
   storage,
-  // blacklist: ["api", 'appSetting', 'cart'],
+  blacklist: ['appSetting'],
   // whitelist: [
   // ],
   // stateReconciler: hardSet,

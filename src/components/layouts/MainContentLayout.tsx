@@ -23,6 +23,7 @@ import { resetArea } from "@/src/redux/slices/areaSlice";
 import Image from "next/image";
 import LoginModal from "@/components/models/LoginModal";
 import RegisterModal from "../models/RegisterModal";
+import ForgetPasswordModal from "../models/ForgetPasswordModal";
 
 type Props = {
   children: React.ReactNode;
@@ -116,6 +117,7 @@ const MainContextLayout: FC<Props> = ({
       <NavHeader lang={lang} showMiddleNav={showMiddleNav} country={country} />
       <LoginModal />
       <RegisterModal />
+      <ForgetPasswordModal />
       <div className='relative isolate overflow-hidden pt-14'>
         {/* <div
           className='absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80'
