@@ -12,9 +12,11 @@ import { MainContext } from "@/layouts/MainContentLayout";
 import { useRouter } from "next/navigation";
 import { setLocale } from "@/redux/slices/localeSlice";
 import {
+  changeOrderType,
   toggleLoginModal,
   toggleRegisterModal,
 } from "@/src/redux/slices/settingSlice";
+import { setOrderType } from "@/app/actions";
 
 type Props = {
   lang: Locale["lang"];
@@ -24,7 +26,7 @@ type Props = {
 export default function ({ lang, country, showMiddleNav }: Props) {
   const trans: { [key: string]: string } = useContext(MainContext);
   const locales: Locale["lang"][] = ["ar", "en"];
-  const { locale } = useAppSelector((state) => state);
+  const { locale, area } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -52,6 +54,13 @@ export default function ({ lang, country, showMiddleNav }: Props) {
       }`
     );
   };
+
+  const handleOrderType = async (orderType: "pickup" | "delivery") => {
+    await setOrderType(orderType).then(() =>
+      dispatch(changeOrderType(orderType))
+    );
+  };
+
   return (
     <div>
       <header
@@ -81,6 +90,23 @@ export default function ({ lang, country, showMiddleNav }: Props) {
             </a>
           </div>
           <div className={`hidden ${showMiddleNav && `lg:flex`} lg:gap-x-12 `}>
+            <div className='flex justify-evenly items-center gap-x-4'>
+              <button
+                className='btn-default'
+                onClick={() => handleOrderType("pickup")}>
+                pickup
+              </button>
+              <button
+                className='btn-default'
+                onClick={() => handleOrderType("delivery")}>
+                delivery
+              </button>
+              <button
+                className='btn-default'
+                onClick={() => console.log("handle area here")}>
+                {area.name}
+              </button>
+            </div>
             {navigation.map((item) => (
               <Link
                 key={item.name}

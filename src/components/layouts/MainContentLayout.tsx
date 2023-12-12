@@ -43,6 +43,7 @@ const MainContextLayout: FC<Props> = ({
   const {
     locale,
     country: { country_code },
+    area,
   } = useAppSelector((state) => state);
   const pathName = usePathname();
   const dispatch = useAppDispatch();
@@ -99,8 +100,10 @@ const MainContextLayout: FC<Props> = ({
           // setCountryNameCookie(country);
           dispatch(setCountry(r.data.data));
           triggerGetAreas(undefined, lang !== locale.lang).then(() => {
-            removeAreaCookie();
-            dispatch(resetArea());
+            if (area.country.id !== r.data.data.id) {
+              removeAreaCookie();
+              dispatch(resetArea());
+            }
           });
         }
       });

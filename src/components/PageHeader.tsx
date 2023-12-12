@@ -11,10 +11,10 @@ export default function ({ img, title }: Props) {
         alt='testing'
         width={1000}
         height={1000}
-        className='absolute inset-0 -z-10 h-full w-full object-cover'
+        className='absolute inset-0 -z-10 h-[40vh] w-full object-cover'
       />
-      <div className='mx-auto max-w-2xl w-full lg:w-3/4  text-white flex flex-col  justify-center items-center h-[40vh]'>
-        <h1 className='mb-5 text-3xl font-semibold text-center px-5 capitalize'>
+      <div className=' mx-auto max-w-2xl w-full text-white flex flex-col  justify-center items-center h-[30vh]'>
+        <h1 className='text-3xl font-semibold text-center px-5 capitalize'>
           {title}
         </h1>
       </div>

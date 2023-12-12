@@ -43,7 +43,6 @@ export default function ({ countries }: Props) {
     area,
   } = useAppSelector((state) => state);
   const trans: { [key: string]: string } = useContext(MainContext);
-
   const [allCountries, setAllCountries] = useState<
     { label: string; id: number }[]
   >([]);
@@ -64,8 +63,11 @@ export default function ({ countries }: Props) {
     | undefined
   >();
 
-  const [triggerGetAreas, { data: areas, isSuccess: areaSuccess, isFetching }] =
-    useLazyGetAreasQuery();
+  const {
+    data: areas,
+    isSuccess: areaSuccess,
+    isFetching,
+  } = useGetAreasQuery();
 
   const handleSetCountry = async (c: { label: string; id: number } | null) => {
     setSelectedCountry(c || undefined);
@@ -90,10 +92,6 @@ export default function ({ countries }: Props) {
       );
     }
   };
-
-  useEffect(() => {
-    triggerGetAreas(undefined, false);
-  }, [country.id]);
 
   useEffect(() => {
     // counteies for select

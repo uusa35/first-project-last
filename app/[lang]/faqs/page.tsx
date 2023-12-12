@@ -8,7 +8,10 @@ import { getFaqs } from "@/utils/faq";
 import { Disclosure } from "@headlessui/react";
 import { MinusSmallIcon, PlusSmallIcon } from "@heroicons/react/24/outline";
 import FaqWidget from "@/src/components/faq/FaqWidget";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import {
+  ArrowPathIcon,
+  ChevronRightIcon,
   CloudArrowUpIcon,
   LockClosedIcon,
   ServerIcon,
@@ -39,6 +42,46 @@ const features = [
     icon: ServerIcon,
   },
 ];
+
+const people = [
+  {
+    name: "Michael Foster",
+    role: "Co-Founder / CTO",
+    imageUrl:
+      "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80",
+  },
+  {
+    name: "Michael Foster",
+    role: "Co-Founder / CTO",
+    imageUrl:
+      "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80",
+  },
+];
+
+const secondaryFeatures = [
+  {
+    name: "Push to deploy",
+    description:
+      "Commodo nec sagittis tortor mauris sed. Turpis tortor quis scelerisque diam id accumsan nullam tempus. Pulvinar etiam lacus volutpat eu. Phasellus praesent ligula sit faucibus.",
+    href: "#",
+    icon: CloudArrowUpIcon,
+  },
+  {
+    name: "SSL certificates",
+    description:
+      "Pellentesque enim a commodo malesuada turpis eleifend risus. Facilisis donec placerat sapien consequat tempor fermentum nibh.",
+    href: "#",
+    icon: LockClosedIcon,
+  },
+  {
+    name: "Simple queues",
+    description:
+      "Pellentesque sit elit congue ante nec amet. Dolor aenean curabitur viverra suspendisse iaculis eget. Nec mollis placerat ultricies euismod ut condimentum.",
+    href: "#",
+    icon: ArrowPathIcon,
+  },
+];
+
 export default async function ({ params: { lang } }: Props) {
   const country: any = await getCountryNameCookie();
   const [{ trans }, faqs]: [{ trans: any }, AppQueryResult<Faq[]>] =
@@ -47,6 +90,81 @@ export default async function ({ params: { lang } }: Props) {
   return (
     <MainContextLayout trans={trans} lang={lang} country={country ?? "kw"}>
       <PageHeader img={``} title={`faqs`} />
+
+      <div className='bg-white py-14 sm:py-22'>
+        <div className='mx-auto  max-w-7xl px-6 lg:px-8'>
+          <div className='mx-auto max-w-2xl lg:text-center'>
+            <h2 className='text-base font-semibold leading-7 text-indigo-600'>
+              Deploy faster
+            </h2>
+            <p className='mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl'>
+              Everything you need to deploy your app
+            </p>
+            <p className='mt-6 text-lg leading-8 text-gray-600'>
+              Quis tellus eget adipiscing convallis sit sit eget aliquet quis.
+              Suspendisse eget egestas a elementum pulvinar et feugiat blandit
+              at. In mi viverra elit nunc.
+            </p>
+          </div>
+          <div className='mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none'>
+            <dl className='grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3'>
+              {secondaryFeatures.map((feature) => (
+                <div key={feature.name} className='flex flex-col'>
+                  <dt className='flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900'>
+                    <feature.icon
+                      className='h-5 w-5 flex-none text-indigo-600'
+                      aria-hidden='true'
+                    />
+                    {feature.name}
+                  </dt>
+                  <dd className='mt-4 flex flex-auto flex-col text-base leading-7 text-gray-600'>
+                    <p className='flex-auto'>{feature.description}</p>
+                    <p className='mt-6'>
+                      <a
+                        href={feature.href}
+                        className='text-sm font-semibold leading-6 text-indigo-600'>
+                        Learn more <span aria-hidden='true'>→</span>
+                      </a>
+                    </p>
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <div className='bg-white py-14 sm:py-22'>
+        <div className='mx-auto max-w-7xl px-6 lg:px-8'>
+          <div className='mx-auto max-w-2xl lg:mx-0'>
+            <h2 className='text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl'>
+              Our team
+            </h2>
+            <p className='mt-6 text-lg leading-8 text-gray-600'>
+              We’re a dynamic group of individuals who are passionate about what
+              we do and dedicated to delivering the best results for our
+              clients.
+            </p>
+          </div>
+          <ul
+            role='list'
+            className='mx-auto mt-20 grid max-w-2xl grid-cols-2 gap-x-8 gap-y-16 text-center sm:grid-cols-3 md:grid-cols-4 lg:mx-0 lg:max-w-none lg:grid-cols-5 xl:grid-cols-6'>
+            {people.map((person) => (
+              <li key={person.name}>
+                <img
+                  className='mx-auto h-24 w-24 rounded-full'
+                  src={person.imageUrl}
+                  alt=''
+                />
+                <h3 className='mt-6 text-base font-semibold leading-7 tracking-tight text-gray-900'>
+                  {person.name}
+                </h3>
+                <p className='text-sm leading-6 text-gray-600'>{person.role}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
       <div className='overflow-hidden bg-white py-14 sm:py-22'>
         <div className='mx-auto max-w-7xl md:px-6 lg:px-8'>
           <div className='grid grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:grid-cols-2 lg:items-start'>

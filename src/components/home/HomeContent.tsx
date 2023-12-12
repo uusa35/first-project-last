@@ -14,7 +14,7 @@ import ProductWidget from "@/components/widgets/ProductWidget";
 import { setOrderType } from "@/app/actions";
 import { changeOrderType } from "@/src/redux/slices/settingSlice";
 import { useAppDispatch } from "@/src/redux/hooks";
-import { countriesList } from "@/src/types";
+import { Locale, countriesList } from "@/src/types";
 import Link from "next/link";
 import { appLinks } from "@/src/links";
 
