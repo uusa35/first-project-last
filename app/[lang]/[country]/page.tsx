@@ -15,7 +15,6 @@ import Image from "next/image";
 import { getProducts } from "@/utils/product";
 import Link from "next/link";
 import { getVendorFeatured, getVendors } from "@/utils/user";
-import { setOrderType } from "@/app/actions";
 import HomeContent from "@/src/components/home/HomeContent";
 import { appLinks } from "@/src/links";
 
