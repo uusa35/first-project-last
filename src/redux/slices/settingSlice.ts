@@ -3,12 +3,20 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 type Props = {
   currentPath: string;
   isLoading: boolean;
-  orderType: 'pickup' | 'delivery'
+  orderType: 'pickup' | 'delivery',
+  showLoginModal: boolean;
+  showRegisterModal: boolean;
+  showForgetPasswordModal: boolean;
+  showVerificationModal: boolean;
 }
 const initialState: Props = {
   currentPath: ``,
   isLoading: false,
-  orderType: 'pickup'
+  orderType: 'pickup',
+  showLoginModal: false,
+  showRegisterModal: false,
+  showForgetPasswordModal: false,
+  showVerificationModal: false,
 };
 
 export const settingSlice = createSlice({
@@ -51,7 +59,42 @@ export const settingSlice = createSlice({
         isLoading: false
       };
     },
-
+    toggleLoginModal: (
+      state: typeof initialState,
+      action: PayloadAction<void>
+    ) => {
+      return {
+        ...state,
+        showLoginModal: !state.showLoginModal
+      };
+    },
+    toggleRegisterModal: (
+      state: typeof initialState,
+      action: PayloadAction<void>
+    ) => {
+      return {
+        ...state,
+        showRegisterModal: !state.showRegisterModal
+      };
+    },
+    toggleForgetPasswordModal: (
+      state: typeof initialState,
+      action: PayloadAction<void>
+    ) => {
+      return {
+        ...state,
+        showForgetPasswordModal: !state.showForgetPasswordModal
+      };
+    },
+    toggleVerficationModal: (
+      state: typeof initialState,
+      action: PayloadAction<void>
+    ) => {
+      return {
+        ...state,
+        showVerificationModal: !state.showVerificationModal
+      };
+    },
   }
 });
 
@@ -59,5 +102,9 @@ export const {
   setCurrentPath,
   enableLoading,
   disableLoading,
-  changeOrderType
+  changeOrderType,
+  toggleLoginModal,
+  toggleRegisterModal,
+  toggleForgetPasswordModal,
+  toggleVerficationModal
 } = settingSlice.actions;

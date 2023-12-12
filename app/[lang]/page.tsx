@@ -6,6 +6,7 @@ import { cookies } from "next/headers";
 import { AppQueryResult, Country } from "@/types/queries";
 import { getCountryCookie, getCountryNameCookie } from "@/mainApp/actions";
 import LandingPageContent from "@/src/components/home/landing/LandingPageContent";
+import LoginModal from "@/src/components/models/LoginModal";
 
 type Props = {
   params: { lang: Locale["lang"] };
@@ -14,15 +15,17 @@ type Props = {
 export default async function ({ params: { lang } }: Props) {
   const cookieStore = cookies();
   const token = cookieStore.get("token");
-  const country = await getCountryNameCookie();
+  const country: any = await getCountryNameCookie();
   const [{ trans }, countries]: [{ trans: any }, AppQueryResult<Country[]>] =
     await Promise.all([getDictionary(lang), getCountries()]);
   return (
     <MainContextLayout
       trans={trans}
       lang={lang}
-      country={country}
+      country={country ?? "kw"}
       showBg={true}>
+      
+
       <LandingPageContent countries={countries.data} />
     </MainContextLayout>
   );

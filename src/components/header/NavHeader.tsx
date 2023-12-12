@@ -11,6 +11,10 @@ import { appLinks } from "@/src/links";
 import { MainContext } from "@/layouts/MainContentLayout";
 import { useRouter } from "next/navigation";
 import { setLocale } from "@/redux/slices/localeSlice";
+import {
+  toggleLoginModal,
+  toggleRegisterModal,
+} from "@/src/redux/slices/settingSlice";
 
 type Props = {
   lang: Locale["lang"];
@@ -97,8 +101,10 @@ export default function ({ lang, country, showBg }: Props) {
                 {item}
               </button>
             ))}
-            <Link href='#'>Login</Link>
-            <Link href='#'>Sign up</Link>
+            <button onClick={() => dispatch(toggleLoginModal())}>Login</button>
+            <button onClick={() => dispatch(toggleRegisterModal())}>
+              Sign up
+            </button>
           </div>
         </nav>
         {/* mobile nav */}

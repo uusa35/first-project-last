@@ -21,12 +21,14 @@ import { useLazyGetCountryByNameQuery } from "@/redux/api/countryApi";
 import { useLazyGetAreasQuery } from "@/redux/api/areaApi";
 import { resetArea } from "@/src/redux/slices/areaSlice";
 import Image from "next/image";
+import LoginModal from "@/components/models/LoginModal";
+import RegisterModal from "../models/RegisterModal";
 
 type Props = {
   children: React.ReactNode;
   trans: { [key: string]: string };
   lang: Locale["lang"];
-  country?: countriesList | string;
+  country: countriesList;
   showBg?: boolean;
 };
 
@@ -35,7 +37,7 @@ const MainContextLayout: FC<Props> = ({
   children,
   trans,
   lang,
-  country = undefined,
+  country,
   showBg = false,
 }) => {
   const {
@@ -109,6 +111,8 @@ const MainContextLayout: FC<Props> = ({
     <MainContext.Provider value={trans}>
       {/* nav */}
       <NavHeader lang={lang} showBg={showBg} country={country} />
+      <LoginModal />
+      <RegisterModal />
       <div className='relative isolate overflow-hidden pt-14'>
         {showBg && (
           <Image
