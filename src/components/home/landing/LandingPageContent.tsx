@@ -80,7 +80,7 @@ export default function ({ countries }: Props) {
       // setCountry(selectedCountry);
 
       // reset area when country change
-      resetArea();
+      dispatch(resetArea());
       setSelectedArea(undefined);
       await removeAreaCookie();
     }
