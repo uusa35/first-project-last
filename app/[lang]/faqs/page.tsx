@@ -13,6 +13,7 @@ import {
   LockClosedIcon,
   ServerIcon,
 } from "@heroicons/react/20/solid";
+import PageHeader from "@/src/components/PageHeader";
 
 type Props = {
   params: { lang: Locale["lang"] };
@@ -45,6 +46,7 @@ export default async function ({ params: { lang } }: Props) {
 
   return (
     <MainContextLayout trans={trans} lang={lang} country={country ?? "kw"}>
+      <PageHeader img={``} title={`faqs`} />
       <div className='overflow-hidden bg-white py-14 sm:py-22'>
         <div className='mx-auto max-w-7xl md:px-6 lg:px-8'>
           <div className='grid grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:grid-cols-2 lg:items-start'>

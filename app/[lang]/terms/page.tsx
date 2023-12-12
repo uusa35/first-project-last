@@ -3,6 +3,8 @@ import { getDictionary } from "@/lib/dictionary";
 import { MainContextLayout } from "@/layouts/MainContentLayout";
 import { cookies } from "next/headers";
 import { getCountryNameCookie } from "@/app/actions";
+import Image from "next/image";
+import PageHeader from "@/src/components/PageHeader";
 
 type Props = {
   params: { lang: Locale["lang"] };
@@ -16,7 +18,7 @@ export default async function ({ params: { lang } }: Props) {
 
   return (
     <MainContextLayout trans={trans} lang={lang} country={country ?? "kw"}>
-      <h1>Terms</h1>
+      <PageHeader img={``} title={"terms"} />
     </MainContextLayout>
   );
 }

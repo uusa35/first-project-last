@@ -29,7 +29,9 @@ const footerNavigation = {
 };
 export default function () {
   return (
-    <footer aria-labelledby='footer-heading' className='bg-gray-900'>
+    <footer
+      aria-labelledby='footer-heading'
+      className='relative bottom-0 bg-gray-900 w-full'>
       <h2 id='footer-heading' className='sr-only'>
         Footer
       </h2>
