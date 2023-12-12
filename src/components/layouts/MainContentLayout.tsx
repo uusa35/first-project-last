@@ -29,7 +29,7 @@ type Props = {
   trans: { [key: string]: string };
   lang: Locale["lang"];
   country: countriesList;
-  showBg?: boolean;
+  showMiddleNav?: boolean;
 };
 
 const MainContext = createContext({});
@@ -38,7 +38,7 @@ const MainContextLayout: FC<Props> = ({
   trans,
   lang,
   country,
-  showBg = false,
+  showMiddleNav = false,
 }) => {
   const {
     locale,
@@ -110,20 +110,10 @@ const MainContextLayout: FC<Props> = ({
   return (
     <MainContext.Provider value={trans}>
       {/* nav */}
-      <NavHeader lang={lang} showBg={showBg} country={country} />
+      <NavHeader lang={lang} showMiddleNav={showMiddleNav} country={country} />
       <LoginModal />
       <RegisterModal />
       <div className='relative isolate overflow-hidden pt-14'>
-        {showBg && (
-          <Image
-            src='https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2830&q=80&blend=111827&sat=-100&exp=15&blend-mode=multiply'
-            alt='testing'
-            width={1000}
-            height={1000}
-            className='absolute inset-0 -z-10 h-full w-full object-cover'
-          />
-        )}
-
         {/* <div
           className='absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80'
           aria-hidden='true'>

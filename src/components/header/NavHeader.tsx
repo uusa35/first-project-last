@@ -19,9 +19,9 @@ import {
 type Props = {
   lang: Locale["lang"];
   country: countriesList;
-  showBg: boolean;
+  showMiddleNav: boolean;
 };
-export default function ({ lang, country, showBg }: Props) {
+export default function ({ lang, country, showMiddleNav }: Props) {
   const trans: { [key: string]: string } = useContext(MainContext);
   const locales: Locale["lang"][] = ["ar", "en"];
   const { locale } = useAppSelector((state) => state);
@@ -56,7 +56,7 @@ export default function ({ lang, country, showBg }: Props) {
     <div>
       <header
         className={`absolute inset-x-0 top-0 z-50 ${
-          !showBg ? `text-black` : `text-white`
+          showMiddleNav ? `text-black` : `text-white`
         }`}>
         <nav
           className='flex items-center justify-between p-6 lg:px-8'
@@ -80,7 +80,7 @@ export default function ({ lang, country, showBg }: Props) {
               />
             </a>
           </div>
-          <div className='hidden lg:flex lg:gap-x-12'>
+          <div className={`hidden ${showMiddleNav && `lg:flex`} lg:gap-x-12 `}>
             {navigation.map((item) => (
               <Link
                 key={item.name}
