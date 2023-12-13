@@ -43,10 +43,10 @@ export default async function (props: Props) {
   }: any = props;
   if (!searchParams && !searchParams?.category_id) return notFound();
   const token: any = cookieStore.get("token");
-  const [{ trans }, slides, categories, products, vendors]: [
+  const [{ trans }, categories, slides, products, vendors]: [
     { trans: any },
-    AppQueryResult<Slide[]>,
     AppQueryResult<Category[]>,
+    AppQueryResult<Slide[]>,
     ElementPagination<Product[]>,
     ElementPagination<User[]>
   ] = await Promise.all([
@@ -57,8 +57,13 @@ export default async function (props: Props) {
     getVendors(convertSearchParamsToString(searchParams)),
   ]);
 
+  console.log("slider", slides);
   return (
-    <MainContextLayout trans={trans} lang={lang} country={country}>
+    <MainContextLayout
+      trans={trans}
+      lang={lang}
+      country={country}
+      showMiddleNav={true}>
       {/* categories slider */}
       {categories.data && (
         <div className='py-5 relative mt-24 page-padding bg-picks-gray border-b border-picks-border border-8'>
@@ -74,10 +79,11 @@ export default async function (props: Props) {
           </Slider>
         </div>
       )}
+
       {slides.data && (
         <div className='my-10'>
           <Slider {...adsSliderSettings} rtl={lang === "ar"}>
-            {slides.data.map((s, i) => (
+            {slides.data.map((s, i: number) => (
               <Image
                 key={i}
                 alt={"slider"}
@@ -128,8 +134,8 @@ export default async function (props: Props) {
             {vendors.data.map((u: User, i: number) => (
               <Image
                 key={i}
-                alt={"slider"}
-                src={u.logo}
+                alt={"vendor"}
+                src={u.image}
                 width={1000}
                 height={1000}
                 className='w-full h-auto aspect-[2/1] object-fill object-bottom'

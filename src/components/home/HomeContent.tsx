@@ -19,6 +19,7 @@ import Link from "next/link";
 import { appLinks } from "@/src/links";
 import CategoryCard from "@/components/category/CategoryCard";
 import { categoriesSliderSettings } from "@/utils/helpers";
+import { slidesToShow } from "@/src/constants";
 
 type Props = {
   categories: Category[];
@@ -76,7 +77,10 @@ export default function HomeContent({
   return (
     <div>
       <div className='py-5 relative mt-24 page-padding bg-picks-gray border-b border-picks-border'>
-        <Slider {...categoriesSliderSettings}>
+        <Slider
+          {...categoriesSliderSettings}
+          rlt={lang === "ar"}
+          slidesToShow={slidesToShow(3, 6, 6, 7)}>
           {categories &&
             categories.map((itm: Category) => (
               <CategoryCard

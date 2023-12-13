@@ -1,3 +1,4 @@
+import { slidesToShow } from "@/src/constants";
 
 export const convertSearchParamsToString = (search: { [key: string]: string } | string): string => {
     if (typeof search === 'object' &&
@@ -69,7 +70,6 @@ export const categoriesSliderSettings: any = {
     dots: false,
     speed: 500,
     infinite: false,
-    slidesToShow: 7,
     slidesToScroll: 1,
     arrows: true,
 

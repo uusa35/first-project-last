@@ -46,3 +46,34 @@ export const prepareCountryCookie = (country: string) => isUndefined(country) ||
   : country;
 
 
+export const currentScreenSize = (): string => {
+  if (window.innerWidth <= 640) {
+    return 'sm';
+  } else if (window.innerWidth <= 768) {
+    return 'md';
+  } else if (window.innerWidth <= 1024) {
+    return 'lg';
+  } else if (window.innerWidth <= 1280) {
+    return 'xl';
+  } else if (window.innerWidth > 1280) {
+    return '2xl';
+  }
+  return '2xl'
+}
+
+export const slidesToShow = (sm: number, md: number, lg: number, xl: number): number => {
+  if (window && window !== undefined) {
+    if (window.innerWidth <= 640) {
+      return sm;
+    } else if (window.innerWidth <= 768) {
+      return md;
+    } else if (window.innerWidth <= 1024) {
+      return lg;
+    } else if (window.innerWidth <= 1280) {
+      return xl;
+    } else if (window.innerWidth > 1280) {
+      return xl;
+    }
+  }
+  return xl;
+}

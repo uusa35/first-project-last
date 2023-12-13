@@ -59,6 +59,13 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "*.digitaloceanspaces.com",
+
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "queue-spaces.nyc3.digitaloceanspaces.com",
         port: "",
         pathname: "/**",
       },
