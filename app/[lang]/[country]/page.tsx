@@ -51,6 +51,7 @@ export default async function ({ params: { lang, country } }: Props) {
         categories={categories.data}
         slides={sliders.data}
         products={products.data}
+        vendors={vendors.data}
       />
     </MainContextLayout>
   );

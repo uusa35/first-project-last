@@ -30,6 +30,11 @@ justify-content: center;
 .slick-initialized {
     position: relative;
 }
+
+.slick-track{
+    margin-right:0 !important ;
+    margin-left: 0 !important;
+}
 /* .slick-arrow{
     margin-inline: 3rem;
 } */

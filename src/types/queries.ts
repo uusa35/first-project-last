@@ -33,7 +33,7 @@ export type Product = {
   name: string;
   name_en: string;
   description: string;
-  favorite: string;
+  favorite: boolean;
   price: string;
   new_price: string;
   percentage: string;

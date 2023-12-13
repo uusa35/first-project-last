@@ -20,6 +20,7 @@ const config: Config = {
         "picks-medium": "#80B49C",
         "picks-green": "#E6F0EB",
         "picks-gray": "#F3F5F6",
+        "picks-text-gray": "#6E7887",
         "picks-border": "#E2E5E9",
       },
       backgroundImage: {
@@ -52,7 +53,7 @@ const config: Config = {
     require("tailwind-scrollbar-hide"),
     require("@tailwindcss/forms"),
     require("tailwindcss-dir")(),
-    require('@headlessui/tailwindcss')
+    require("@headlessui/tailwindcss"),
   ],
 };
 export default config;

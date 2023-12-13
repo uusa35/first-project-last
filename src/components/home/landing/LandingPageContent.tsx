@@ -31,12 +31,15 @@ import get_started from "@/appImages/get_started.jpg";
 import { setCountry } from "@/src/redux/slices/countrySlice";
 import { MainContext } from "../../layouts/MainContentLayout";
 import DownloadAppSection from "../DownloadAppSection";
+import { useRouter } from "next/navigation";
+import { appLinks } from "@/src/links";
 
 type Props = {
   countries: Country[];
 };
 export default function ({ countries }: Props) {
   const dispatch = useAppDispatch();
+  const router = useRouter();
   const {
     locale: { lang },
     country,
@@ -135,6 +138,12 @@ export default function ({ countries }: Props) {
     }
   }, [areaSuccess, areas, isFetching]);
 
+  const handleGoHome = () => {
+    if (country.id) {
+      router.push(appLinks.home(lang, country.country_code));
+    }
+  };
+
   return (
     <>
       <Image
@@ -204,7 +213,10 @@ export default function ({ countries }: Props) {
             </div>
 
             {/* btn */}
-            <button className="flex items-center gap-x-2 rounded-lg bg-picks-dark px-2 h-[40%]">
+            <button
+              className="flex items-center gap-x-2 rounded-lg bg-picks-dark px-2 h-[40%]"
+              onClick={handleGoHome}
+            >
               <span className="whitespace-nowrap">Let’s go</span>
               <RightArrow />
             </button>
