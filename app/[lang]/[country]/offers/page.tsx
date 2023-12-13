@@ -11,12 +11,8 @@ import {
   Slide,
   User,
 } from "@/src/types/queries";
-import {
-  adsSliderSettings,
-  categoriesSliderSettings,
-  convertSearchParamsToString,
-  vendorSliderSettings,
-} from "@/utils/helpers";
+import { adsSliderSettings, vendorSliderSettings } from "@/src/constants";
+import { convertSearchParamsToString } from "@/utils/helpers";
 import { appLinks } from "@/src/links";
 import Link from "next/link";
 import Image from "next/image";
@@ -24,11 +20,13 @@ import Pagination from "@/src/components/Pagination";
 import { getCategories } from "@/utils/category";
 import { getVendors } from "@/utils/user";
 import { getSlides } from "@/utils/slide";
-import CategoryCard from "@/components/category/CategoryCard";
 import { Slider } from "@/src/constants";
 import { notFound } from "next/navigation";
 import ProductWidget from "@/src/components/widgets/ProductWidget";
-import RenderArrows from "@/src/components/SliderArrow";
+import CategoriesSlider from "@/src/components/sliders/CategoriesSlider";
+import AdsSlider from "@/src/components/sliders/AdsSlider";
+import ProductsSlider from "@/src/components/sliders/ProductsSlider";
+import VendorsSlider from "@/src/components/sliders/VendorsSlider";
 
 type Props = {
   params: { lang: Locale["lang"]; country: countriesList; search: string };
@@ -43,10 +41,10 @@ export default async function (props: Props) {
   }: any = props;
   if (!searchParams && !searchParams?.category_id) return notFound();
   const token: any = cookieStore.get("token");
-  const [{ trans }, slides, categories, products, vendors]: [
+  const [{ trans }, categories, slides, products, vendors]: [
     { trans: any },
-    AppQueryResult<Slide[]>,
     AppQueryResult<Category[]>,
+    AppQueryResult<Slide[]>,
     ElementPagination<Product[]>,
     ElementPagination<User[]>
   ] = await Promise.all([
@@ -58,86 +56,34 @@ export default async function (props: Props) {
   ]);
 
   return (
-    <MainContextLayout trans={trans} lang={lang} country={country}>
-      {/* categories slider */}
-      {categories.data && (
-        <div className='py-5 relative mt-24 page-padding bg-picks-gray border-b border-picks-border border-8'>
-          <Slider {...categoriesSliderSettings} rtl={lang === "ar"}>
-            {categories.data.map((itm: Category, i: number) => (
-              <CategoryCard
-                category={itm}
-                key={i}
-                lang={lang}
-                country={country}
-              />
-            ))}
-          </Slider>
-        </div>
-      )}
+    <MainContextLayout
+      trans={trans}
+      lang={lang}
+      country={country}
+      showMiddleNav={true}>
+      {/* {categories.data && (
+        <CategoriesSlider
+          lang={lang}
+          country={country}
+          categories={categories.data}
+        />
+      )} */}
+
       {slides.data && (
-        <div className='my-10'>
-          <Slider {...adsSliderSettings} rtl={lang === "ar"}>
-            {slides.data.map((s, i) => (
-              <Image
-                key={i}
-                alt={"slider"}
-                src={s.image}
-                width={1000}
-                height={1000}
-                className='w-full h-auto aspect-[2/1] object-fill object-bottom'
-              />
-            ))}
-          </Slider>
-        </div>
+        <AdsSlider lang={lang} country={country} slides={slides.data} />
       )}
 
-      {/* products */}
-      <div className='my-5'>
-        {/* <div className='flex justify-between mb-3'>
-          <p>New Picks</p>
-          <div className='flex gap-x-3'>
-            <p>See all</p>
-            <RenderArrows />
-          </div>
-        </div> */}
-        <div>
-          <Slider {...vendorSliderSettings}>
-            {products.data.map((itm: Product, i: number) => (
-              <ProductWidget
-                product={itm}
-                key={i}
-                lang={lang}
-                country={country}
-              />
-            ))}
-          </Slider>
-        </div>
-      </div>
+      {products.data && (
+        <ProductsSlider
+          lang={lang}
+          country={country}
+          products={products.data}
+        />
+      )}
 
-      {/* vendors */}
-      <div className='my-5'>
-        {/* <div className='flex justify-between mb-3'>
-          <p>New Picks</p>
-          <div className='flex gap-x-3'>
-            <p>See all</p>
-            <RenderArrows />
-          </div>
-        </div> */}
-        <div>
-          <Slider {...vendorSliderSettings}>
-            {vendors.data.map((u: User, i: number) => (
-              <Image
-                key={i}
-                alt={"slider"}
-                src={u.logo}
-                width={1000}
-                height={1000}
-                className='w-full h-auto aspect-[2/1] object-fill object-bottom'
-              />
-            ))}
-          </Slider>
-        </div>
-      </div>
+      {vendors.data && (
+        <VendorsSlider lang={lang} country={country} vendors={vendors.data} />
+      )} */}
 
       <Pagination links={products.pagination?.links} />
     </MainContextLayout>

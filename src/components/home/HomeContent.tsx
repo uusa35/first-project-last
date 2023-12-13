@@ -1,16 +1,35 @@
 "use client";
+<<<<<<< HEAD
 import { Category, Product, Slide, User } from "@/src/types/queries";
 import React, { useRef } from "react";
+=======
+import { Category, Product, Slide } from "@/src/types/queries";
+import Image from "next/image";
+import React, {
+  LegacyRef,
+  ReactElement,
+  ReactHTMLElement,
+  useEffect,
+  useRef,
+} from "react";
+>>>>>>> usama
 import Slider from "react-slick";
 import { setOrderType } from "@/app/actions";
 import { changeOrderType } from "@/src/redux/slices/settingSlice";
 import { useAppDispatch } from "@/src/redux/hooks";
 import { Locale, countriesList } from "@/src/types";
+<<<<<<< HEAD
 import VendorWidget from "../widgets/VendorWidget";
 import CategoriesSlider from "../CategoriesSlider";
 import AdsSlider from "@/src/components/AdsSlider";
 import CustomSlider from "../CustomSlider";
 import FlashOffers from "./FlashOffers";
+=======
+import Link from "next/link";
+import { appLinks } from "@/src/links";
+import CategoryCard from "@/components/category/CategoryCard";
+import CategoriesSlider  from "@/components/sliders/CategoriesSlider";
+>>>>>>> usama
 
 type Props = {
   categories: Category[];
@@ -38,7 +57,11 @@ export default function HomeContent({
 
   return (
     <div>
+<<<<<<< HEAD
       <CategoriesSlider lang={lang} categories={categories} country={country} />
+=======
+      <CategoriesSlider lang={lang} country={country} categories={categories} />
+>>>>>>> usama
 
       {/* filters and   items*/}
       <div className="page-padding">

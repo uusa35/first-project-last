@@ -51,6 +51,7 @@
     "@types/react-toastify": "^4.1.0",
     "@types/redux-logger": "^3.0.9",
     "@types/redux-saga": "0.10.5",
+    "@uidotdev/usehooks": "^2.4.1",
     "autoprefixer": "10.4.15",
     "better-react-carousel": "^1.1.2",
     "clsx": "^1.2.1",

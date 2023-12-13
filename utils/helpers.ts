@@ -1,4 +1,5 @@
 
+
 export const convertSearchParamsToString = (search: { [key: string]: string } | string): string => {
     if (typeof search === 'object' &&
         !Array.isArray(search) &&
@@ -65,30 +66,3 @@ export const revalidate = {
     max: 180
 }
 
-export const categoriesSliderSettings: any = {
-    dots: false,
-    speed: 500,
-    infinite: false,
-    slidesToShow: 7,
-    slidesToScroll: 1,
-    arrows: true,
-
-};
-
-export const adsSliderSettings: any = {
-    dots: false,
-    speed: 500,
-    infinite: false,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    arrows: true,
-}
-
-export const vendorSliderSettings: any = {
-    dots: false,
-    speed: 500,
-    infinite: false,
-    slidesToShow: 4,
-    slidesToScroll: 1,
-    arrows: false,
-}

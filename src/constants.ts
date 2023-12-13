@@ -46,3 +46,67 @@ export const prepareCountryCookie = (country: string) => isUndefined(country) ||
   : country;
 
 
+export const currentScreenSize = (): string => {
+  if (window.innerWidth <= 640) {
+    return 'sm';
+  } else if (window.innerWidth <= 768) {
+    return 'md';
+  } else if (window.innerWidth <= 1024) {
+    return 'lg';
+  } else if (window.innerWidth <= 1280) {
+    return 'xl';
+  } else if (window.innerWidth > 1280) {
+    return '2xl';
+  }
+  return '2xl'
+}
+
+export const getSlidesToShow = (currentWidth: number | null, sm: number, md: number, lg: number, xl: number, xxl: number): number => {
+  if (currentWidth) {
+    if (currentWidth <= 640) {
+      console.log('sm');
+      return sm;
+    } else if (currentWidth <= 768) {
+      console.log('md');
+      return md;
+    } else if (currentWidth <= 1024) {
+      console.log('lg');
+      return lg;
+    } else if (currentWidth <= 1280) {
+      console.log('xl');
+      return xl;
+    } else {
+      console.log('xxl');
+      return xxl;
+    }
+  } else {
+    return xxl;
+  }
+
+}
+
+
+export const categoriesSliderSettings: any = {
+  dots: false,
+  speed: 500,
+  infinite: true,
+  slidesToScroll: 1,
+  arrows: true,
+
+};
+
+export const adsSliderSettings: any = {
+  dots: false,
+  speed: 500,
+  infinite: true,
+  slidesToScroll: 1,
+  arrows: true,
+}
+
+export const vendorSliderSettings: any = {
+  dots: false,
+  speed: 500,
+  infinite: true,
+  slidesToScroll: 1,
+  arrows: false,
+}
