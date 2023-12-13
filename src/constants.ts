@@ -64,19 +64,14 @@ export const currentScreenSize = (): string => {
 export const getSlidesToShow = (currentWidth: number | null, sm: number, md: number, lg: number, xl: number, xxl: number): number => {
   if (currentWidth) {
     if (currentWidth <= 640) {
-      console.log('sm');
-      return sm;
+      return sm <= xxl ? sm : xxl;
     } else if (currentWidth <= 768) {
-      console.log('md');
-      return md;
+      return md <= xxl ? md : xxl;
     } else if (currentWidth <= 1024) {
-      console.log('lg');
-      return lg;
+      return lg <= xxl ? lg : xxl;
     } else if (currentWidth <= 1280) {
-      console.log('xl');
-      return xl;
+      return xl <= xxl ? lg : xxl;
     } else {
-      console.log('xxl');
       return xxl;
     }
   } else {
