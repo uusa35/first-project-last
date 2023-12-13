@@ -40,8 +40,8 @@ export default async function (props: Props) {
     ElementPagination<User[]>
   ] = await Promise.all([
     getDictionary(lang),
-    getSlides(`screen_type=home&limit=10`),
     getCategories(),
+    getSlides(`${searchParams}&screen_type=category`),
     getProducts(convertSearchParamsToString(searchParams ?? undefined)),
     getVendors(convertSearchParamsToString(searchParams ?? undefined)),
   ]);

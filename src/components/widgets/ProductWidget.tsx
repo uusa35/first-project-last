@@ -17,13 +17,21 @@ type Props = {
 export default function ProductWidget({ product, lang, country }: Props) {
   return (
     <div className='relative rtl:text-right ltr:text-left'>
-      <Image
-        alt={product.name}
-        src={product.image}
-        width={1000}
-        height={1000}
-        className='w-full h-auto aspect-[2/1] object-contain rounded-lg'
-      />
+      <Link
+        href={appLinks.offer(
+          lang,
+          country,
+          product.id.toString(),
+          product.name
+        )}>
+        <Image
+          alt={product.name}
+          src={product.image}
+          width={1000}
+          height={1000}
+          className='w-full h-auto aspect-[2/1] object-contain rounded-lg'
+        />
+      </Link>
       <div className='w-full h-auto aspect-[2/1] absolute bg-black bg-opacity-20 top-0 bottom-0 left-0 right-0 rounded-lg py-3 px-2'>
         <div className='flex justify-between items-center'>
           <Link
