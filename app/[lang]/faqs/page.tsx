@@ -7,7 +7,7 @@ import { AppQueryResult, Faq } from "@/src/types/queries";
 import { getFaqs } from "@/utils/faq";
 import { Disclosure } from "@headlessui/react";
 import { MinusSmallIcon, PlusSmallIcon } from "@heroicons/react/24/outline";
-import FaqWidget from "@/src/components/faq/FaqWidget";
+import FaqCard from "@/src/components/faq/FaqCard";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import {
   ArrowPathIcon,
@@ -229,7 +229,7 @@ export default async function ({ params: { lang } }: Props) {
             </h2>
             <dl className='mt-10 space-y-6 divide-y divide-gray-900/10'>
               {faqs.data.map((faq, i) => (
-                <FaqWidget faq={faq} />
+                <FaqCard faq={faq} />
               ))}
             </dl>
           </div>

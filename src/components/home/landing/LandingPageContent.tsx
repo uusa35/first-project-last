@@ -235,39 +235,6 @@ export default function ({ countries }: Props) {
         </div>
       </div>
 
-      {/* <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
-          <div className="text-center text-white border border-white rounded-md">
-            <div className="flex justify-between items-center">
-              {countries &&
-                countries.map((c: Country) => (
-                  <button
-                    onClick={() => handleSetCountry(c)}
-                    className={`${
-                      country.id === c.id && "border-4 border-blue-800"
-                    }`}
-                  >
-                    {c.name}
-                  </button>
-                ))}
-
-              <Suspense fallback={<LoadingSpinner isLoading={true} />}>
-                {areaSuccess && (
-                  <div className="flex flex-col">
-                    <h1>Areas</h1>
-                    {areas &&
-                      areas.data?.length > 0 &&
-                      areas.data?.map((a: Area) => (
-                        <button onClick={() => handleSetArea(a)}>
-                          {a.name}
-                        </button>
-                      ))}
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-        </div> */}
-
       <DownloadAppSection />
     </>
   );
