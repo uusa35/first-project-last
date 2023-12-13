@@ -5,6 +5,7 @@ import React, {
   LegacyRef,
   ReactElement,
   ReactHTMLElement,
+  useEffect,
   useRef,
 } from "react";
 import Slider from "react-slick";
@@ -20,6 +21,7 @@ import { appLinks } from "@/src/links";
 import CategoryCard from "@/components/category/CategoryCard";
 import { categoriesSliderSettings } from "@/utils/helpers";
 import { slidesToShow } from "@/src/constants";
+import { CategoriesSlider } from "../sliders/CategoriesSlider";
 
 type Props = {
   categories: Category[];
@@ -76,22 +78,7 @@ export default function HomeContent({
 
   return (
     <div>
-      <div className='py-5 relative mt-24 page-padding bg-picks-gray border-b border-picks-border'>
-        <Slider
-          {...categoriesSliderSettings}
-          rlt={lang === "ar"}
-          slidesToShow={slidesToShow(3, 6, 6, 7)}>
-          {categories &&
-            categories.map((itm: Category) => (
-              <CategoryCard
-                category={itm}
-                key={itm.id}
-                lang={lang}
-                country={country}
-              />
-            ))}
-        </Slider>
-      </div>
+      <CategoriesSlider lang={lang} country={country} categories={categories} />
 
       {/* filters and   items*/}
       <div className='page-padding'>

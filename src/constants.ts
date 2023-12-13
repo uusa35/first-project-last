@@ -61,19 +61,17 @@ export const currentScreenSize = (): string => {
   return '2xl'
 }
 
-export const slidesToShow = (sm: number, md: number, lg: number, xl: number): number => {
-  if (window && window !== undefined) {
-    if (window.innerWidth <= 640) {
+export const getSlidesToShow = (currentWidth: number | null, sm: number, md: number, lg: number, xl: number, xxl: number): number => {
+  if (currentWidth) {
+    if (currentWidth <= 640) {
       return sm;
-    } else if (window.innerWidth <= 768) {
+    } else if (currentWidth <= 768) {
       return md;
-    } else if (window.innerWidth <= 1024) {
+    } else if (currentWidth <= 1024) {
       return lg;
-    } else if (window.innerWidth <= 1280) {
-      return xl;
-    } else if (window.innerWidth > 1280) {
+    } else if (currentWidth <= 1280) {
       return xl;
     }
   }
-  return xl;
+  return xxl;
 }
