@@ -19,9 +19,10 @@ export default function ({ lang, country, products }: Props) {
   const refSlider = useRef<Slider | null>(null);
   const { width } = useWindowSize();
   useEffect(() => {
-    setSlidesToShow(getSlidesToShow(width, 2, 3, 4, 5, products.length));
+    setSlidesToShow(getSlidesToShow(width, 2, 3, 4, 6, products.length));
   }, [width]);
 
+  console.log("slidsToShow", slidesToShow);
   const RenderArrows = () => {
     return (
       <div className='slider-arrow flex gap-x-2'>
