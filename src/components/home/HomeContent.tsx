@@ -17,6 +17,8 @@ import { useAppDispatch } from "@/src/redux/hooks";
 import { Locale, countriesList } from "@/src/types";
 import Link from "next/link";
 import { appLinks } from "@/src/links";
+import CategoryCard from "@/components/category/CategoryCard";
+import { categoriesSliderSettings } from "@/utils/helpers";
 
 type Props = {
   categories: Category[];
@@ -34,18 +36,6 @@ export default function HomeContent({
 }: Props) {
   const dispatch = useAppDispatch();
   const refSlider2 = useRef<Slider | null>(null);
-  const settings = {
-    dots: false,
-    speed: 500,
-    infinite: false,
-    slidesToShow: 7,
-    slidesToScroll: 1,
-    arrows: true,
-    // className: "center",
-    // centerMode: true,
-    // infinite: true,
-    // centerPadding: "60px",
-  };
 
   const settings2 = {
     dots: false,
@@ -83,32 +73,18 @@ export default function HomeContent({
     );
   };
 
-  const CategoryComponent = ({ category }: { category: Category }) => {
-    return (
-      <Link
-        href={appLinks.offers(lang, country, `category_id=${category.id}`)}
-        className='px-5'>
-        <div className='flex items-center gap-x-2 bg-white rounded-full py-2 px-3 w-fit'>
-          <Image
-            alt={category.name}
-            src={category.image}
-            width={1000}
-            height={1000}
-            className='w-5 h-5'
-          />
-          <p className='text-black'>{category.name}</p>
-        </div>
-      </Link>
-    );
-  };
-
   return (
     <div>
       <div className='py-5 relative mt-24 page-padding bg-picks-gray border-b border-picks-border'>
-        <Slider {...settings}>
+        <Slider {...categoriesSliderSettings}>
           {categories &&
             categories.map((itm: Category) => (
-              <CategoryComponent category={itm} key={itm.id} />
+              <CategoryCard
+                category={itm}
+                key={itm.id}
+                lang={lang}
+                country={country}
+              />
             ))}
         </Slider>
       </div>

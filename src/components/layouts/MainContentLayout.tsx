@@ -116,7 +116,7 @@ const MainContextLayout: FC<Props> = ({
       <LoginModal />
       <RegisterModal />
       <ForgetPasswordModal />
-      <div className='relative isolate overflow-hidden pt-14'>
+      <div className='relative isolate overflow-hidden pt-14 py-8'>
         {/* <div
           className='absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80'
           aria-hidden='true'>

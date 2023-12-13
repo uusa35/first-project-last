@@ -1,6 +1,6 @@
 'use client';
 import { truncate, kebabCase, round, isUndefined, isNull, lowerCase, replace } from 'lodash';
-
+import Slider from "react-slick";
 export const appVersion = `0.0.1`;
 // export const apiUrl = `${baseUrl}/api/`;
 export const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -12,7 +12,7 @@ export const suppressText = true;
 import PersonOutlineOutlined from "@mui/icons-material/PersonOutlineOutlined";
 import { Country } from './types/queries';
 export { PersonOutlineOutlined, truncate };
-export { kebabCase };
+export { kebabCase, Slider };
 
 export const convertSearchParamsToString = (
   search: { [key: string]: string } | string
