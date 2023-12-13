@@ -80,7 +80,7 @@ export const getSlidesToShow = (currentWidth: number | null, sm: number, md: num
 export const categoriesSliderSettings: any = {
   dots: false,
   speed: 500,
-  infinite: false,
+  infinite: true,
   slidesToScroll: 1,
   arrows: true,
 
@@ -89,7 +89,7 @@ export const categoriesSliderSettings: any = {
 export const adsSliderSettings: any = {
   dots: false,
   speed: 500,
-  infinite: false,
+  infinite: true,
   slidesToScroll: 1,
   arrows: true,
 }
@@ -97,7 +97,7 @@ export const adsSliderSettings: any = {
 export const vendorSliderSettings: any = {
   dots: false,
   speed: 500,
-  infinite: false,
+  infinite: true,
   slidesToScroll: 1,
   arrows: false,
 }

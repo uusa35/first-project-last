@@ -14,10 +14,10 @@ type Props = {
   slides: Slide[];
 };
 export default function ({ lang, country, slides }: Props) {
-  const [slidesToShow, setSlidesToShow] = useState<number>(10);
+  const [slidesToShow, setSlidesToShow] = useState<number>(4);
   const { width } = useWindowSize();
   useEffect(() => {
-    setSlidesToShow(getSlidesToShow(width, 1, 3, 3, 4, 5));
+    setSlidesToShow(getSlidesToShow(width, 1, 2, 3, 3, slides.length));
   }, [width]);
 
   return (
@@ -26,9 +26,9 @@ export default function ({ lang, country, slides }: Props) {
         {...adsSliderSettings}
         rtl={lang === "ar"}
         slidesToShow={slidesToShow}>
-        {slides.map((s: Slide, i: number) => (
+        {slides.map((s: Slide) => (
           <Image
-            key={i}
+            key={s.id}
             alt={"slider"}
             src={s.image}
             width={1000}
