@@ -75,3 +75,29 @@ export const getSlidesToShow = (currentWidth: number | null, sm: number, md: num
   }
   return xxl;
 }
+
+
+export const categoriesSliderSettings: any = {
+  dots: false,
+  speed: 500,
+  infinite: false,
+  slidesToScroll: 1,
+  arrows: true,
+
+};
+
+export const adsSliderSettings: any = {
+  dots: false,
+  speed: 500,
+  infinite: false,
+  slidesToScroll: 1,
+  arrows: true,
+}
+
+export const vendorSliderSettings: any = {
+  dots: false,
+  speed: 500,
+  infinite: false,
+  slidesToScroll: 1,
+  arrows: false,
+}

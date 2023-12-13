@@ -19,9 +19,7 @@ import { Locale, countriesList } from "@/src/types";
 import Link from "next/link";
 import { appLinks } from "@/src/links";
 import CategoryCard from "@/components/category/CategoryCard";
-import { categoriesSliderSettings } from "@/utils/helpers";
-import { slidesToShow } from "@/src/constants";
-import { CategoriesSlider } from "../sliders/CategoriesSlider";
+import CategoriesSlider  from "@/components/sliders/CategoriesSlider";
 
 type Props = {
   categories: Category[];
