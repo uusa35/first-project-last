@@ -85,7 +85,7 @@ export default async function (props: Props) {
         <VendorsSlider lang={lang} country={country} vendors={vendors.data} />
       )} */}
 
-      <Pagination links={products.pagination?.links} />
+      <Pagination links={products.pagination?.links} searchParams={searchParams} />
     </MainContextLayout>
   );
 }
