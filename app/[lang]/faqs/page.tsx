@@ -1,17 +1,12 @@
 import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
 import { MainContextLayout } from "@/layouts/MainContentLayout";
-import { cookies } from "next/headers";
 import { getCountryNameCookie } from "@/app/actions";
 import { AppQueryResult, Faq } from "@/src/types/queries";
 import { getFaqs } from "@/utils/faq";
-import { Disclosure } from "@headlessui/react";
-import { MinusSmallIcon, PlusSmallIcon } from "@heroicons/react/24/outline";
 import FaqCard from "@/src/components/faq/FaqCard";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import {
   ArrowPathIcon,
-  ChevronRightIcon,
   CloudArrowUpIcon,
   LockClosedIcon,
   ServerIcon,
@@ -21,6 +16,20 @@ import PageHeader from "@/src/components/PageHeader";
 type Props = {
   params: { lang: Locale["lang"] };
 };
+
+export async function generateMetadata({ params }: Props) {
+  const { trans } = await getDictionary(params.lang);
+  return {
+    title: trans.faqs,
+    description: trans.faqs,
+    openGraph: {
+      title: trans.faqs,
+      description: trans.faqs,
+      locale: params.lang,
+      type: "website",
+    },
+  };
+}
 
 const features = [
   {
