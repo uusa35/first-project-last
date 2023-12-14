@@ -1,35 +1,51 @@
 "use client";
-import { Category } from "@/src/types/queries";
-import { categoriesSliderSettings } from "@/src/constants";
-import CategoryCard from "@/components/category/CategoryCard";
-import { Locale, countriesList } from "@/src/types";
-import Slider from "react-slick";
-import { getSlidesToShow } from "@/src/constants";
-import { useEffect, useRef, useState } from "react";
-import { useWindowSize } from "@uidotdev/usehooks";
+import React from "react";
+import Slider, { Settings } from "react-slick";
+import CategoryWidget from "../widgets/CategoryWidget";
+import { Category } from "../../types/queries";
+import { Locale, countriesList } from "../../types";
 
 type Props = {
+  categories: Category[];
   lang: Locale["lang"];
   country: countriesList;
-  categories: Category[];
 };
-export default function ({ lang, country, categories }: Props) {
-  const [slidesToShow, setSlidesToShow] = useState<number>(10);
-  const { width } = useWindowSize();
-  
-  useEffect(() => {
-    setSlidesToShow(getSlidesToShow(width, 2, 3, 4, 5, 7));
-  }, [width]);
 
+export default function CategoriesSlider({ country, lang, categories }: Props) {
+  const settings: any = {
+    dots: false,
+    speed: 500,
+    infinite: false,
+
+    slidesToScroll: 1,
+    arrows: true,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 7,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 5,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 3,
+        },
+      },
+    ],
+  };
   return (
-    <div className='py-5 relative mt-24 page-padding bg-picks-gray border-b border-picks-border'>
-      <Slider
-        {...categoriesSliderSettings}
-        rlt={lang === "ar"}
-        slidesToShow={slidesToShow}>
+    <div className='py-3 relative mt-24 page-padding bg-picks-gray border-b border-picks-border'>
+      <Slider {...settings}>
         {categories &&
           categories.map((itm: Category) => (
-            <CategoryCard
+            <CategoryWidget
               category={itm}
               key={itm.id}
               lang={lang}
@@ -39,4 +55,4 @@ export default function ({ lang, country, categories }: Props) {
       </Slider>
     </div>
   );
-};
+}

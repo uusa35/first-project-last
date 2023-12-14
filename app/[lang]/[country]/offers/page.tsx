@@ -22,11 +22,9 @@ import { getVendors } from "@/utils/user";
 import { getSlides } from "@/utils/slide";
 import { Slider } from "@/src/constants";
 import { notFound } from "next/navigation";
-import ProductWidget from "@/src/components/widgets/ProductWidget";
 import CategoriesSlider from "@/src/components/sliders/CategoriesSlider";
 import AdsSlider from "@/src/components/sliders/AdsSlider";
-import ProductsSlider from "@/src/components/sliders/ProductsSlider";
-import VendorsSlider from "@/src/components/sliders/VendorsSlider";
+import CustomSlider from "@/src/components/sliders/CustomSlider";
 
 type Props = {
   params: { lang: Locale["lang"]; country: countriesList; search: string };
@@ -69,20 +67,23 @@ export default async function (props: Props) {
         />
       )}
 
-      {slides.data && (
-        <AdsSlider lang={lang} country={country} slides={slides.data} />
-      )}
+      {slides.data && <AdsSlider slides={slides.data} />}
 
-      {products.data && (
+      {/* {products.data && (
         <ProductsSlider
           lang={lang}
           country={country}
           products={products.data}
         />
-      )}
+      )} */}
 
       {vendors.data && (
-        <VendorsSlider lang={lang} country={country} vendors={vendors.data} />
+        <CustomSlider
+          lang={lang}
+          country={country}
+          vendors={vendors.data}
+          title={"vendors"}
+        />
       )}
 
       <Pagination

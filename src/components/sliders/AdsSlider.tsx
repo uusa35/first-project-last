@@ -1,42 +1,75 @@
-"use client";
-import { Slide } from "@/src/types/queries";
-import { adsSliderSettings } from "@/src/constants";
-import { Locale, countriesList } from "@/src/types";
+import React from "react";
+import { Slide } from "@/types/queries";
+import { isEmpty } from "lodash";
 import Slider from "react-slick";
-import { getSlidesToShow } from "@/src/constants";
-import { useEffect, useState } from "react";
-import { useWindowSize } from "@uidotdev/usehooks";
 import Image from "next/image";
 
 type Props = {
-  lang: Locale["lang"];
-  country: countriesList;
   slides: Slide[];
 };
-export default function ({ lang, country, slides }: Props) {
-  const [slidesToShow, setSlidesToShow] = useState<number>(4);
-  const { width } = useWindowSize();
-  useEffect(() => {
-    setSlidesToShow(getSlidesToShow(width, 1, 2, 3, 3, slides.length));
-  }, [width]);
+
+export default function AdsSlider({ slides }: Props) {
+  const settings: any = {
+    dots: false,
+    speed: 500,
+    infinite: false,
+    slidesToScroll: 1,
+    arrows: true,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 4,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 3,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+    ],
+  };
+  const renderArrows = () => {
+    return (
+      <div className='slider-arrow'>
+        {/* <ButtonBase
+            className="arrow-btn prev"
+            onClick={() => this.slider.slickPrev()}
+          >
+            <ArrowLeft />
+          </ButtonBase>
+          <ButtonBase
+            className="arrow-btn next"
+            onClick={() => this.slider.slickNext()}
+          >
+            <ArrowRight />
+          </ButtonBase> */}
+      </div>
+    );
+  };
 
   return (
-    <div className='my-10'>
-      <Slider
-        {...adsSliderSettings}
-        rtl={lang === "ar"}
-        slidesToShow={slidesToShow}>
-        {slides.map((s: Slide) => (
-          <Image
-            key={s.id}
-            alt={"slider"}
-            src={s.image}
-            width={1000}
-            height={1000}
-            className='w-full h-auto aspect-[2/1] object-fill object-bottom'
-          />
-        ))}
-      </Slider>
-    </div>
+    <>
+      {!isEmpty(slides) && (
+        <Slider {...settings}>
+          {slides.map((s) => (
+            <Image
+              alt={"slider"}
+              src={s.image}
+              width={1000}
+              height={1000}
+              className='w-full h-auto aspect-[2/1] object-fill object-bottom'
+            />
+          ))}
+        </Slider>
+      )}
+    </>
   );
 }

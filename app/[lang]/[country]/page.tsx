@@ -11,12 +11,9 @@ import {
 } from "@/types/queries";
 import { getCategories } from "@/utils/category";
 import { getSlides } from "@/utils/slide";
-import Image from "next/image";
 import { getProducts } from "@/utils/product";
-import Link from "next/link";
 import { getVendorFeatured, getVendors } from "@/utils/user";
 import HomeContent from "@/src/components/home/HomeContent";
-import { appLinks } from "@/src/links";
 
 type Props = {
   params: { lang: Locale["lang"]; country: countriesList };
