@@ -18,14 +18,19 @@ export default function FlashOffers({ products }: Props) {
     dots: false,
     speed: 500,
     infinite: false,
-    slidesToShow: 4,
     slidesToScroll: 1,
     arrows: false,
     responsive: [
       {
+        breakpoint: 5000,
+        settings: {
+          slidesToShow: 5,
+        },
+      },
+      {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 3,
         },
       },
       {

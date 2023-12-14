@@ -16,26 +16,38 @@ export default function CategoriesSlider({ country, lang, categories }: Props) {
     dots: false,
     speed: 500,
     infinite: false,
-
     slidesToScroll: 1,
     arrows: true,
+    rtl: lang === "ar",
     responsive: [
+      {
+        breakpoint: 1400,
+        settings: {
+          slidesToShow: 8,
+        },
+      },
+      {
+        breakpoint: 1250,
+        settings: {
+          slidesToShow: 6,
+        },
+      },
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 7,
+          slidesToShow: 4,
         },
       },
       {
         breakpoint: 600,
         settings: {
-          slidesToShow: 5,
+          slidesToShow: 3,
         },
       },
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 2,
         },
       },
     ],

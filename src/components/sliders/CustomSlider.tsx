@@ -7,7 +7,7 @@ import { User } from "@/types/queries";
 import VendorWidget from "../widgets/VendorWidget";
 
 type Props = {
-  vendors: User[]; 
+  vendors: User[];
   lang: Locale["lang"];
   country: countriesList;
   title: string;
@@ -20,14 +20,20 @@ export default function CustomSlider({ vendors, lang, country, title }: Props) {
     dots: false,
     speed: 500,
     infinite: false,
-    slidesToShow: 4,
     slidesToScroll: 1,
     arrows: false,
+    rtl: lang === "ar",
     responsive: [
+      {
+        breakpoint: 5000,
+        settings: {
+          slidesToShow: 5,
+        },
+      },
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 3,
         },
       },
       {

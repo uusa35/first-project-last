@@ -15,6 +15,7 @@ export default function AdsSlider({ slides }: Props) {
     infinite: false,
     slidesToScroll: 1,
     arrows: true,
+    rtl: lang === "ar",
     responsive: [
       {
         breakpoint: 1024,
