@@ -31,7 +31,9 @@ export default function HomeContent({
         <div></div>
 
         {/* slider  */}
-        <div className='my-10'>{/* <AdsSlider slides={slides} /> */}</div>
+        <div className='my-10'>
+          <AdsSlider lang={lang} country={country} slides={slides} />
+        </div>
 
         {/* new to picks */}
         <CustomSlider

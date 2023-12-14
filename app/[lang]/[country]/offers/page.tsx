@@ -66,7 +66,9 @@ export default async function (props: Props) {
         categories={categories.data}
       />
       <div className='px-2 md:px-8'>
-        {slides.data && <AdsSlider lang={lang} slides={slides.data} />}
+        {slides.data && (
+          <AdsSlider lang={lang} country={country} slides={slides.data} />
+        )}
         {products?.data?.length > 0 && (
           <ProductsSlider
             lang={lang}
