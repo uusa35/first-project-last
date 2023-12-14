@@ -2,7 +2,7 @@
 import { Locale } from '@/types/index';
 import { notFound } from 'next/navigation';
 import { mainHeaders } from '@/utils/helpers';
-import { getToken } from '@/app/actions';
+import { getAuth } from '@/app/actions';
 import { getMainHeaders } from '@/app/actions';
 
 export async function getVendors(search?: string) {

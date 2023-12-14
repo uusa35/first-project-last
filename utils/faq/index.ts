@@ -1,8 +1,6 @@
 
-import { Locale } from '@/types/index';
 import { notFound } from 'next/navigation';
-import { mainHeaders, revalidate } from '@/utils/helpers';
-import { getToken } from '@/app/actions';
+import { revalidate } from '@/utils/helpers';
 import { getMainHeaders } from '@/app/actions';
 
 export async function getFaqs() {
