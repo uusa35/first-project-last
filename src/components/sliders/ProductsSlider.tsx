@@ -22,7 +22,6 @@ export default function ({ lang, country, products }: Props) {
     setSlidesToShow(getSlidesToShow(width, 2, 3, 4, 6, products.length));
   }, [width]);
 
-  console.log("slidsToShow", slidesToShow);
   const RenderArrows = () => {
     return (
       <div className='slider-arrow flex gap-x-2'>

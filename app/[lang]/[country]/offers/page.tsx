@@ -61,13 +61,13 @@ export default async function (props: Props) {
       lang={lang}
       country={country}
       showMiddleNav={true}>
-      {/* {categories.data && (
+      {categories.data && (
         <CategoriesSlider
           lang={lang}
           country={country}
           categories={categories.data}
         />
-      )} */}
+      )}
 
       {slides.data && (
         <AdsSlider lang={lang} country={country} slides={slides.data} />
@@ -83,9 +83,12 @@ export default async function (props: Props) {
 
       {vendors.data && (
         <VendorsSlider lang={lang} country={country} vendors={vendors.data} />
-      )} */}
+      )}
 
-      <Pagination links={products.pagination?.links} />
+      <Pagination
+        links={products.pagination?.links}
+        searchParams={searchParams}
+      />
     </MainContextLayout>
   );
 }

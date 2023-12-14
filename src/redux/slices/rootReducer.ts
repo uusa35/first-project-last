@@ -11,6 +11,7 @@ import { areaSlice } from './areaSlice';
 import { countrySlice } from './countrySlice';
 
 
+
 export const rootReducer = combineReducers({
 
   [localeSlice.name]: localeSlice.reducer,

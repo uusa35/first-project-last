@@ -20,12 +20,11 @@ export async function setCountryNameCookie(value: string) {
 }
 
 export async function getCountryNameCookie() {
-    const countryCookie = cookies().get('NEXT_COUNTRY_NAME');
-    return countryCookie?.value ?? 'kw';
+  const countryCookie = cookies().get('NEXT_COUNTRY_NAME');
+  return countryCookie?.value ?? 'kw';
 }
 
 export async function setCountryCookie(value: string) {
-  console.log({ value });
   cookies().set({
     name: "NEXT_COUNTRY",
     value,
@@ -34,12 +33,12 @@ export async function setCountryCookie(value: string) {
 }
 
 export async function getCountryCookie() {
-    const countryCookie = cookies().get('NEXT_COUNTRY');
-    if (countryCookie && countryCookie.value !== undefined) {
-        return JSON.parse(countryCookie?.value);
-    } else {
-        return 'kw';
-    }
+  const countryCookie = cookies().get('NEXT_COUNTRY');
+  if (countryCookie && countryCookie.value !== undefined) {
+    return JSON.parse(countryCookie?.value);
+  } else {
+    return 'kw';
+  }
 }
 
 export async function removeCountryCookie() {
@@ -57,10 +56,10 @@ export async function setAreaCookie(value: string) {
 }
 // area
 export async function getAreaCookie() {
-    const areaCookie = cookies().get('NEXT_AREA');
-    if (areaCookie && areaCookie.value && areaCookie.value !== undefined) {
-        return JSON.parse(areaCookie?.value);
-    }
+  const areaCookie = cookies().get('NEXT_AREA');
+  if (areaCookie && areaCookie.value && areaCookie.value !== undefined) {
+    return JSON.parse(areaCookie?.value);
+  }
 }
 
 export async function removeAreaCookie() {
@@ -69,29 +68,36 @@ export async function removeAreaCookie() {
 
 // type
 export async function setOrderType(value: string) {
-    cookies().set({
-        name: 'NEXT_X_TYPE',
-        value,
-        secure: process.env.NODE_ENV === 'production',
-    });
+  cookies().set({
+    name: 'NEXT_X_TYPE',
+    value,
+    secure: process.env.NODE_ENV === 'production',
+  });
 }
 
 export async function getOrderType() {
-    const countryCookie = cookies().get('NEXT_X_TYPE');
-    return countryCookie?.value ?? 'pickup';
+  const countryCookie = cookies().get('NEXT_X_TYPE');
+  return countryCookie?.value ?? 'pickup';
 }
 
-// auth token
-export async function setToken(value: string) {
+// auth 
+export async function setAuth(value: string) {
   cookies().set({
-    name: "token",
+    name: "NEXT_AUTH",
     value,
     secure: process.env.NODE_ENV === "production",
   });
 }
 
-export async function getToken() {
-  return cookies().get("token")?.value ?? null;
+export async function getAuth() {
+  const authCookie = cookies().get('NEXT_AUTH');
+  if (authCookie && authCookie.value && authCookie.value !== undefined) {
+    return JSON.parse(authCookie?.value);
+  }
+}
+
+export async function removeAuth() {
+  cookies().delete("NEXT_AUTH");
 }
 
 export async function getLang() {
@@ -112,17 +118,17 @@ export async function deleteToken() {
 }
 
 export async function getMainHeaders() {
-    const country = await getCountryCookie();
-    const lang = await getLang();
-    const area = await getAreaCookie();
-    const orderType = await getOrderType();
-    return {
-        'Accept-Language': lang,
-        'X-Localization': lang,
-        'X-Country': country?.id,
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        ...(area && area.id && { 'X-AREA': area.id }),
-        ...(orderType && { 'X-TYPE': orderType })
-    }
+  const country = await getCountryCookie();
+  const lang = await getLang();
+  const area = await getAreaCookie();
+  const orderType = await getOrderType();
+  return {
+    'Accept-Language': lang,
+    'X-Localization': lang,
+    'X-Country': country?.id,
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+    ...(area && area.id && { 'X-AREA': area.id }),
+    ...(orderType && { 'X-TYPE': orderType })
+  }
 }

@@ -3,12 +3,20 @@ import { User } from "@/types/queries";
 
 export const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    login: builder.query<User, { email: string; password: string }>({
+    login: builder.query<User, { phone: string; phone_country_code: string; password: string; session_id?: string }>({
       query: (body) => ({
         url: `login`,
         body,
         method: "post",
-        validateStatus: (response, result) => response.status == 200,
+        validateStatus: (response, result) => result.data.status == 200,
+      }),
+    }),
+    register: builder.query<User, { phone: string; phone_country_code: string; email: string; password: string; password_confirmation: string; session_id?: string }>({
+      query: (body) => ({
+        url: `register`,
+        body,
+        method: "post",
+        validateStatus: (response, result) => result.data.status == 200,
       }),
     }),
     logout: builder.query<void, void>({
@@ -53,6 +61,7 @@ export const authApi = apiSlice.injectEndpoints({
 
 export const {
   useLazyLoginQuery,
+  useLazyRegisterQuery,
   useLazyLogoutQuery,
   useLazyForgotPasswordQuery,
   useGetAuthenticatedUserQuery,
