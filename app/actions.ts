@@ -94,6 +94,7 @@ export async function getAuth() {
   if (authCookie && authCookie.value && authCookie.value !== undefined) {
     return JSON.parse(authCookie?.value);
   }
+  return null;
 }
 
 export async function removeAuth() {
