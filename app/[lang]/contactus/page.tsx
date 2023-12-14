@@ -10,6 +10,20 @@ type Props = {
   params: { lang: Locale["lang"] };
 };
 
+export async function generateMetadata({ params }: Props) {
+  const { trans } = await getDictionary(params.lang);
+  return {
+    title: trans.contactus,
+    description: trans.contactus,
+    openGraph: {
+      title: trans.contactus,
+      description: trans.contactus,
+      locale: params.lang,
+      type: "website",
+    },
+  };
+}
+
 export default async function ({ params: { lang } }: Props) {
   const country: any = await getCountryNameCookie();
   const [{ trans }]: [{ trans: any }] = await Promise.all([

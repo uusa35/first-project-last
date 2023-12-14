@@ -30,13 +30,11 @@ export default function ({
 }: Props) {
   return (
     <div>
-      <CategoriesSlider lang={lang} country={country} categories={categories} />
-
+      <CategoriesSlider lang={lang} categories={categories} country={country} />
       {/* filters and   items*/}
       <div className="page-padding">
         {/* filters */}
         <div></div>
-
         {/* slider  */}
         <div className='my-10'>
           <AdsSlider lang={lang} country={country} slides={slides} />
@@ -48,7 +46,6 @@ export default function ({
           country={country}
           title="New Picks"
         />
-
         {/* flash offers */}
         <FlashOffers products={products} lang={lang} country={country} />
 
