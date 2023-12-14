@@ -3,8 +3,7 @@ import React, { useRef } from "react";
 import Slider from "react-slick";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import { Locale, countriesList } from "@/src/types";
-import { Product, User } from "@/types/queries";
-import VendorWidget from "@/components/widgets/VendorWidget";
+import { Product } from "@/types/queries";
 import ProductWidget from "../widgets/ProductWidget";
 
 type Props = {

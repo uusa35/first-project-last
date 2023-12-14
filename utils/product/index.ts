@@ -4,7 +4,6 @@ import { revalidate } from '@/utils/helpers';
 
 
 export async function getProducts(search?: string) {
-    console.log('headers', await getMainHeaders());
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}offers?${search ?? ``}`, {
         cache: "no-store",
         headers: await getMainHeaders()

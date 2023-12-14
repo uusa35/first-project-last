@@ -42,7 +42,7 @@ export default function HomeContent({
         />
 
         {/* flash offers */}
-        <FlashOffers products={products} />
+        <FlashOffers products={products} lang={lang} country={country} />
       </div>
     </div>
   );

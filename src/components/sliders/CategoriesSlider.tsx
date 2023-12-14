@@ -7,11 +7,17 @@ import { Locale, countriesList } from "@/src/types";
 
 type Props = {
   categories: Category[];
+  
   lang: Locale["lang"];
   country: countriesList;
 };
 
-export default function CategoriesSlider({ country, lang, categories }: Props) {
+export default function CategoriesSlider({
+  country,
+  lang,
+  categories,
+  
+}: Props) {
   const settings: any = {
     dots: false,
     speed: 500,
@@ -62,6 +68,7 @@ export default function CategoriesSlider({ country, lang, categories }: Props) {
               key={itm.id}
               lang={lang}
               country={country}
+              
             />
           ))}
       </Slider>

@@ -7,12 +7,15 @@ import Flash2 from "@/appIcons/landing/orange_flash.svg";
 import Flash1 from "@/appIcons/landing/yellow_flash.svg";
 import { Product } from "@/src/types/queries";
 import OfferWidget from "@/components/widgets/OfferWidget";
+import { Locale, countriesList } from "@/src/types";
 
 type Props = {
   products: Product[];
+  lang: Locale["lang"];
+  country: countriesList;
 };
 
-export default function FlashOffers({ products }: Props) {
+export default function FlashOffers({ products , lang , country }: Props) {
   const refSlider = useRef<Slider | null>(null);
   const settings: any = {
     dots: false,
@@ -82,7 +85,14 @@ export default function FlashOffers({ products }: Props) {
       <div className='my-5'>
         <Slider {...settings} ref={(c) => (refSlider.current = c)}>
           {products &&
-            products.map((itm) => <OfferWidget product={itm} key={itm.id} />)}
+            products.map((itm) => (
+              <OfferWidget
+                product={itm}
+                lang={lang}
+                country={country}
+                key={itm.id}
+              />
+            ))}
         </Slider>
       </div>
 

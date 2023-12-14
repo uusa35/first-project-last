@@ -25,6 +25,7 @@ import { notFound } from "next/navigation";
 import CategoriesSlider from "@/src/components/sliders/CategoriesSlider";
 import AdsSlider from "@/src/components/sliders/AdsSlider";
 import CustomSlider from "@/src/components/sliders/VendorsSlider";
+import ProductsSlider from "@/src/components/sliders/ProductsSlider";
 
 type Props = {
   params: { lang: Locale["lang"]; country: countriesList; search: string };
@@ -64,30 +65,27 @@ export default async function (props: Props) {
         country={country}
         categories={categories.data}
       />
+      <div className='px-2 md:px-8'>
+        {slides.data && <AdsSlider lang={lang} slides={slides.data} />}
+        {products?.data?.length > 0 && (
+          <ProductsSlider
+            lang={lang}
+            country={country}
+            products={products.data}
+            title={"Top "}
+          />
+        )}
+        {vendors.data && (
+          <CustomSlider
+            lang={lang}
+            country={country}
+            vendors={vendors.data}
+            title={"vendors"}
+          />
+        )}
 
-      {slides.data && <AdsSlider lang={lang} slides={slides.data} />}
-
-      {/* {products.data && (
-        <ProductsSlider
-          lang={lang}
-          country={country}
-          products={products.data}
-        />
-      )} */}
-
-      {vendors.data && (
-        <CustomSlider
-          lang={lang}
-          country={country}
-          vendors={vendors.data}
-          title={"vendors"}
-        />
-      )}
-
-      <Pagination
-        links={products.pagination?.links}
-        searchParams={searchParams}
-      />
+        <Pagination links={products.pagination?.links} />
+      </div>
     </MainContextLayout>
   );
 }

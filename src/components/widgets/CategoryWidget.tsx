@@ -1,8 +1,10 @@
+"use client";
 import { appLinks } from "@/src/links";
 import { Locale, countriesList } from "@/src/types";
 import { Category } from "@/src/types/queries";
 import Image from "next/image";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import React from "react";
 
 type Props = {
@@ -12,11 +14,17 @@ type Props = {
 };
 
 export default function ({ category, lang, country }: Props) {
+  const searchParams = useSearchParams();
+
   return (
     <Link
       href={appLinks.offers(lang, country, `category_id=${category.id}`)}
       className='px-5'>
-      <div className='flex items-center gap-x-2 bg-white rounded-full py-2 px-3 w-fit'>
+      <div
+        className={`flex items-center gap-x-2 bg-white rounded-full py-2 px-3 w-fit ${
+          searchParams?.get("category_id") == category.id &&
+          "ring-1 ring-picks-dark"
+        }`}>
         <Image
           alt={category.name}
           src={category.image}

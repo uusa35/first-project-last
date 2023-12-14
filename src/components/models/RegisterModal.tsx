@@ -28,7 +28,7 @@ import { appLinks } from "@/src/links";
 import Link from "next/link";
 import TextTrans from "../TextTrans";
 import { randomFillSync } from "crypto";
-import { replace, snakeCase, trim } from "lodash";
+import { random, replace, snakeCase, trim } from "lodash";
 
 type Inputs = {
   phone: string;
@@ -72,7 +72,7 @@ export default function () {
       password: ``,
       password_confirmation: ``,
       session_id: session_id,
-      device_token: snakeCase(window.navigator.userAgent),
+      device_token: random(9999,999999),
     },
   });
 

@@ -4,14 +4,15 @@ import Link from "next/link";
 import { MainContext } from "@/layouts/MainContentLayout";
 import { useContext } from "react";
 import { convertSearchParamsToString } from "@/utils/helpers";
+import { useSearchParams } from "next/navigation";
 
 type Props = {
   links: any;
-  searchParams: { [key: string]: string } | string;
 };
 
-export default function ({ links, searchParams }: Props): React.ReactNode {
+export default function ({ links }: Props): React.ReactNode {
   const trans: { [key: string]: string } = useContext(MainContext);
+  const searchParams: any = useSearchParams();
   function getClassName(active: boolean) {
     if (active) {
       return "mr-1 mb-1 px-4 py-3 text-sm leading-4 border rounded hover:bg-gray-200 focus:border-primary focus:text-primary bg-gray-600 text-white hover:text-gray-900 ";

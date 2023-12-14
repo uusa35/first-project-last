@@ -26,7 +26,6 @@ export async function getVendor(id: string) {
 }
 
 export async function getVendorFeatured(search?: string) {
-    console.log('headers', await getMainHeaders());
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}vendors/featured?${search ?? ``}`, {
         cache: "no-store",
         headers: await getMainHeaders()
