@@ -5,6 +5,7 @@ import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import { Locale, countriesList } from "@/src/types";
 import { Product } from "@/types/queries";
 import ProductWidget from "../widgets/ProductWidget";
+import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 
 type Props = {
   products: Product[];
@@ -62,12 +63,12 @@ export default function ({ products, lang, country, title }: Props) {
         <button
           className='arrow-btn prev w-8 h-8 rounded-full bg-[#EEE]'
           onClick={() => refSlider?.current?.slickPrev()}>
-          <KeyboardArrowLeft />
+          <ArrowLeftIcon className='rtl:rotate-180' />
         </button>
         <button
           className='arrow-btn next w-8 h-8 rounded-full bg-[#EEE]'
           onClick={() => refSlider?.current?.slickNext()}>
-          <KeyboardArrowRight />
+          <ArrowLeftIcon className='rtl:rotate-180' />
         </button>
       </div>
     );

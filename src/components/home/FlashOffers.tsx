@@ -8,6 +8,12 @@ import Flash1 from "@/appIcons/landing/yellow_flash.svg";
 import { Product } from "@/src/types/queries";
 import OfferWidget from "@/components/widgets/OfferWidget";
 import { Locale, countriesList } from "@/src/types";
+import {
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+} from "@heroicons/react/24/outline";
 
 type Props = {
   products: Product[];
@@ -15,7 +21,7 @@ type Props = {
   country: countriesList;
 };
 
-export default function FlashOffers({ products , lang , country }: Props) {
+export default function FlashOffers({ products, lang, country }: Props) {
   const refSlider = useRef<Slider | null>(null);
   const settings: any = {
     dots: false,
@@ -60,14 +66,14 @@ export default function FlashOffers({ products , lang , country }: Props) {
     return (
       <div className='slider-arrow flex gap-x-2'>
         <button
-          className='arrow-btn prev w-8 h-8 rounded-full bg-white'
+          className='arrow-btn prev w-8 h-8 justify-center items-center rounded-full bg-white'
           onClick={() => refSlider?.current?.slickPrev()}>
-          <KeyboardArrowLeft />
+          <ChevronLeftIcon className='rtl:rotate-180 w-4 h-4 font-extralight' />
         </button>
         <button
           className='arrow-btn next w-8 h-8 rounded-full bg-white'
           onClick={() => refSlider?.current?.slickNext()}>
-          <KeyboardArrowRight />
+          <ChevronRightIcon className='rtl:rotate-180 w-4 h-4' />
         </button>
       </div>
     );
