@@ -13,7 +13,7 @@ type Props = {
   lang: Locale["lang"];
   country: countriesList;
 };
-export default function HomeContent({
+export default function ({
   categories,
   slides,
   lang,
@@ -34,7 +34,6 @@ export default function HomeContent({
         <div className='my-10'>
           <AdsSlider lang={lang} country={country} slides={slides} />
         </div>
-
         {/* new to picks */}
         <CustomSlider
           vendors={vendors}

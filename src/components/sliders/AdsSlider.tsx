@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { Slide } from "@/types/queries";
-import { isEmpty } from "lodash";
+import { isEmpty, isNull } from "lodash";
 import Slider from "react-slick";
 import Image from "next/image";
 import { Locale, countriesList } from "@/src/types";
@@ -55,24 +55,6 @@ export default function AdsSlider({ slides, lang, country }: Props) {
       },
     ],
   };
-  const renderArrows = () => {
-    return (
-      <div className='slider-arrow'>
-        {/* <ButtonBase
-            className="arrow-btn prev"
-            onClick={() => this.slider.slickPrev()}
-          >
-            <ArrowLeft />
-          </ButtonBase>
-          <ButtonBase
-            className="arrow-btn next"
-            onClick={() => this.slider.slickNext()}
-          >
-            <ArrowRight />
-          </ButtonBase> */}
-      </div>
-    );
-  };
 
   return (
     <div className='py-4'>
@@ -82,9 +64,9 @@ export default function AdsSlider({ slides, lang, country }: Props) {
             <Link
               key={i}
               href={
-                s.screen_type === "home"
-                  ? appLinks.vendor(lang, country, s.vendor_id)
-                  : appLinks.offers(lang, country, s.category_id)
+                s.screen_type === "home" && !isNull(s.vendor_id)
+                  ? appLinks.vendor(lang, country, s.vendor_id.toString())
+                  : appLinks.offers(lang, country, s.category_id?.toString())
               }>
               <Image
                 alt={"slider"}

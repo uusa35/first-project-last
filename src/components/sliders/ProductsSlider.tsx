@@ -1,11 +1,10 @@
 "use client";
 import React, { useRef } from "react";
 import Slider from "react-slick";
-import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import { Locale, countriesList } from "@/src/types";
 import { Product } from "@/types/queries";
-import ProductWidget from "../widgets/ProductWidget";
-import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
+import ProductWidget from "@/components/widgets/ProductWidget";
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 
 type Props = {
   products: Product[];

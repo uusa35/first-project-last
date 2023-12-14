@@ -5,6 +5,7 @@ import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import { Locale, countriesList } from "@/src/types";
 import { User } from "@/types/queries";
 import VendorWidget from "@/components/widgets/VendorWidget";
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 
 type Props = {
   vendors: User[];
@@ -15,7 +16,6 @@ type Props = {
 
 export default function ({ vendors, lang, country, title }: Props) {
   const refSlider = useRef<Slider | null>(null);
-
   const settings: any = {
     dots: false,
     speed: 500,
@@ -62,12 +62,12 @@ export default function ({ vendors, lang, country, title }: Props) {
         <button
           className='arrow-btn prev w-8 h-8 rounded-full bg-[#EEE]'
           onClick={() => refSlider?.current?.slickPrev()}>
-          <KeyboardArrowLeft />
+          <ArrowLeftIcon className='rtl:rotate-180' />
         </button>
         <button
           className='arrow-btn next w-8 h-8 rounded-full bg-[#EEE]'
           onClick={() => refSlider?.current?.slickNext()}>
-          <KeyboardArrowRight />
+          <ArrowLeftIcon className='rtl:rotate-180' />
         </button>
       </div>
     );

@@ -8,12 +8,7 @@ import Flash1 from "@/appIcons/landing/yellow_flash.svg";
 import { Product } from "@/src/types/queries";
 import OfferWidget from "@/components/widgets/OfferWidget";
 import { Locale, countriesList } from "@/src/types";
-import {
-  ArrowLeftIcon,
-  ArrowRightIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-} from "@heroicons/react/24/outline";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 
 type Props = {
   products: Product[];

@@ -11,16 +11,11 @@ import {
   Slide,
   User,
 } from "@/src/types/queries";
-
 import { convertSearchParamsToString } from "@/utils/helpers";
-import { appLinks } from "@/src/links";
-import Link from "next/link";
-import Image from "next/image";
 import Pagination from "@/src/components/Pagination";
 import { getCategories } from "@/utils/category";
 import { getVendors } from "@/utils/user";
 import { getSlides } from "@/utils/slide";
-import { Slider } from "@/src/constants";
 import { notFound } from "next/navigation";
 import CategoriesSlider from "@/src/components/sliders/CategoriesSlider";
 import AdsSlider from "@/src/components/sliders/AdsSlider";
@@ -87,7 +82,6 @@ export default async function (props: Props) {
             title={"vendors"}
           />
         )}
-
         <Pagination links={products.pagination?.links} />
       </div>
     </MainContextLayout>
