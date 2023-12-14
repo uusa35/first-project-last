@@ -10,9 +10,10 @@ import FavouriteWidget from "./FavouriteWidget";
 
 type Props = {
   product: Product;
+  lang: Locale["lang"];
 };
 
-export default function OfferWidget({ product }: Props) {
+export default function OfferWidget({ product ,lang}: Props) {
   return (
     <div>
       <div className="relative rtl:text-right ltr:text-left">
@@ -54,7 +55,7 @@ export default function OfferWidget({ product }: Props) {
             {product.description}
           </p>
           {/* price */}
-          <div className="text-sm text-picks-text-gray flex gap-x-2 items-center flex-wrap">
+          <div className="text-sm text-picks-text-gray flex gap-x-2 items-center flex-wrap" dir={lang=== "ar" ? "rtl" :"ltr"}>
             <p className="bg-picks-dark text-white rounded-full px-2 py-px pt-1">
               {product.new_price}
             </p>

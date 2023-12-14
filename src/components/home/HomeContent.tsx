@@ -57,7 +57,7 @@ export default function HomeContent({
         />
 
         {/* flash offers */}
-        <FlashOffers products={products} />
+        <FlashOffers products={products} lang={lang} />
 
         {/* new to picks */}
         <VendorsSlider

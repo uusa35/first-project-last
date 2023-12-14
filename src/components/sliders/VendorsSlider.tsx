@@ -22,7 +22,12 @@ export default function ({ vendors, lang, country, title }: Props) {
 
   const RenderArrows = () => {
     return (
-      <div className="slider-arrow flex gap-x-2">
+      <div
+        className={`slider-arrow flex gap-x-2 ${
+          lang === "ar" && "flex-row-reverse"
+        }`}
+        dir={lang === "ar" ? "rtl" : "ltr"}
+      >
         <button
           className="arrow-btn prev w-8 h-8 rounded-full bg-[#EEE]"
           onClick={() => refSlider?.current?.slickPrev()}

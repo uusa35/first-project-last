@@ -6,12 +6,14 @@ import Flash2 from "@/appIcons/landing/orange_flash.svg";
 import Flash1 from "@/appIcons/landing/yellow_flash.svg";
 import { Product } from "@/src/types/queries";
 import OfferWidget from "../widgets/OfferWidget";
+import { Locale } from "@/src/types";
 
 type Props = {
   products: Product[];
+  lang: Locale["lang"];
 };
 
-export default function FlashOffers({ products }: Props) {
+export default function FlashOffers({ products, lang }: Props) {
   const refSlider2 = useRef<Slider | null>(null);
 
   const settings2 = {
@@ -44,7 +46,12 @@ export default function FlashOffers({ products }: Props) {
   };
   const RenderArrows = () => {
     return (
-      <div className="slider-arrow flex gap-x-2">
+      <div
+        className={`slider-arrow flex gap-x-2 ${
+          lang === "ar" && "flex-row-reverse"
+        }`}
+        dir={lang === "ar" ? "rtl" : "ltr"}
+      >
         <button
           className="arrow-btn prev w-8 h-8 rounded-full bg-white"
           onClick={() => refSlider2?.current?.slickPrev()}
@@ -74,7 +81,7 @@ export default function FlashOffers({ products }: Props) {
         <Slider {...settings2} ref={(c) => (refSlider2.current = c)}>
           {products &&
             products.map((itm) => (
-              <OfferWidget product={itm} key={itm.id} />
+              <OfferWidget lang={lang} product={itm} key={itm.id} />
             ))}
         </Slider>
       </div>
