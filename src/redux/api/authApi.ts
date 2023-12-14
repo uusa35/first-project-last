@@ -3,7 +3,7 @@ import { User } from "@/types/queries";
 
 export const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    login: builder.query<User, { email: string; password: string }>({
+    login: builder.query<User, { phone: string; phone_country_code: string; password: string; session_id?: string }>({
       query: (body) => ({
         url: `login`,
         body,

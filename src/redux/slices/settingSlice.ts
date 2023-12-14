@@ -65,7 +65,10 @@ export const settingSlice = createSlice({
     ) => {
       return {
         ...state,
-        showLoginModal: !state.showLoginModal
+        showLoginModal: !state.showLoginModal,
+        showRegisterModal: false,
+        showForgetPasswordModal: false,
+        showVerificationModal: false,
       };
     },
     toggleRegisterModal: (
@@ -74,7 +77,10 @@ export const settingSlice = createSlice({
     ) => {
       return {
         ...state,
-        showRegisterModal: !state.showRegisterModal
+        showRegisterModal: !state.showRegisterModal,
+        showLoginModal: false,
+        showForgetPasswordModal: false,
+        showVerificationModal: false,
       };
     },
     toggleForgetPasswordModal: (
@@ -83,7 +89,10 @@ export const settingSlice = createSlice({
     ) => {
       return {
         ...state,
-        showForgetPasswordModal: !state.showForgetPasswordModal
+        showForgetPasswordModal: !state.showForgetPasswordModal,
+        showLoginModal: false,
+        showRegisterModal: false,
+        showVerificationModal: false,
       };
     },
     toggleVerficationModal: (
@@ -92,7 +101,10 @@ export const settingSlice = createSlice({
     ) => {
       return {
         ...state,
-        showVerificationModal: !state.showVerificationModal
+        showVerificationModal: !state.showVerificationModal,
+        showLoginModal: false,
+        showRegisterModal: false,
+        showForgetPasswordModal: false,
       };
     },
   }
