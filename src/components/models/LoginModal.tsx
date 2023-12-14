@@ -38,7 +38,7 @@ export default function () {
   const {
     appSetting: { showLoginModal, isLoading },
     locale: { lang },
-    country: { id: country_id },
+    country: { code },
   } = useAppSelector((state) => state);
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -84,7 +84,6 @@ export default function () {
           })
         );
       }
-      reset();
     });
   };
 
@@ -135,10 +134,10 @@ export default function () {
                         <div className='flex flex-row gap-x-3'>
                           <select
                             id='phone_country_code'
-                            defaultValue={country_id}
+                            defaultValue={code}
                             {...register("phone_country_code")}
                             autoComplete='country-name'
-                            className='block w-1/3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6'>
+                            className='block w-1/3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:max-w-xs sm:text-sm sm:leading-6'>
                             {countriesSuccess &&
                               countries.data?.map((c: Country, i: number) => (
                                 <option value={c.code} key={i}>
@@ -205,7 +204,7 @@ export default function () {
                     Not a member?{" "}
                     <button
                       onClick={() => dispatch(toggleRegisterModal())}
-                      className='font-semibold leading-6 text-picks-dark hover:text-indigo-500'>
+                      className='font-semibold leading-6 text-picks-dark hover:text-gray-500'>
                       Start a 14 day free trial
                     </button>
                   </p>
