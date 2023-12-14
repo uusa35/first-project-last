@@ -19,7 +19,7 @@ type Props = {
   country: countriesList;
   featuredVendors: User[];
 };
-export default function HomeContent({
+export default function ({
   categories,
   slides,
   lang,
@@ -38,8 +38,9 @@ export default function HomeContent({
         <div></div>
 
         {/* slider  */}
-        <AdsSlider slides={slides} lang={lang} />
-
+        <div className='my-10'>
+          <AdsSlider lang={lang} country={country} slides={slides} />
+        </div>
         {/* new to picks */}
         <VendorsSlider
           vendors={vendors}

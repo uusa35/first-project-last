@@ -1,38 +1,25 @@
 "use client";
 import {
-  removeAreaCookie,
   setAreaCookie,
   setCountryCookie,
   setCountryNameCookie,
 } from "@/mainApp/actions";
-import { useGetAreasQuery, useLazyGetAreasQuery } from "@/redux/api/areaApi";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { resetArea, setArea } from "@/redux/slices/areaSlice";
+import { setArea } from "@/redux/slices/areaSlice";
 import { Area, Country } from "@/types/queries";
-import { ReactNode, Suspense, useContext, useEffect, useState } from "react";
-import LoadingSpinner from "@/components/LoadingSpinner";
-import { prepareCountryCookie } from "@/src/constants";
+import { useContext, useEffect, useState } from "react";
 import Search from "@/appIcons/landing/search.svg";
 import { Autocomplete, TextField } from "@mui/material";
-import { isEmpty, toNumber } from "lodash";
+import { isEmpty } from "lodash";
 import GetLocation from "@/appIcons/landing/get_location.svg";
 import RightArrow from "@/appIcons/landing/right_arrow.svg";
 import Avatar from "@/appIcons/landing/avatar.svg";
-import downloadApp from "@/appImages/landing_download_app.png";
-import Image, { StaticImageData } from "next/image";
-import No_order_calls from "@/appIcons/landing/no_order_calls.svg";
-import Flash_offers from "@/appIcons/landing/flash_offers.svg";
-import Tracking_orders from "@/appIcons/landing/tracking_orders.svg";
-import GooglePlay from "@/appIcons/landing/download_google_play.svg";
-import AppleStore from "@/appIcons/landing/download_apple_store.svg";
-import AppGallery from "@/appIcons/landing/download_app_gallery.svg";
-import about_us from "@/appImages/about_us.png";
-import get_started from "@/appImages/get_started.jpg";
-import { setCountry } from "@/src/redux/slices/countrySlice";
-import { MainContext } from "../../layouts/MainContentLayout";
-import DownloadAppSection from "../DownloadAppSection";
+import Image from "next/image";
+import { MainContext } from "@/components/layouts/MainContentLayout";
+import DownloadAppSection from "@/components/home/DownloadAppSection";
 import { useRouter } from "next/navigation";
 import { appLinks } from "@/src/links";
+import { useGetAreasQuery } from "@/src/redux/api/areaApi";
 
 type Props = {
   countries: Country[];
@@ -50,7 +37,6 @@ export default function ({ countries }: Props) {
     { label: string; id: number }[]
   >([]);
   const [allAreas, setAllAreas] = useState<{ label: string; id: number }[]>([]);
-
   const [selectedCountry, setSelectedCountry] = useState<
     | {
         label: string;
@@ -66,7 +52,6 @@ export default function ({ countries }: Props) {
     | undefined
     | ""
   >();
-
   const {
     data: areas,
     isSuccess: areaSuccess,
@@ -80,11 +65,6 @@ export default function ({ countries }: Props) {
       const selectedCountry = countries.filter((itm) => itm.id === c?.id)[0];
       await setCountryCookie(JSON.stringify(selectedCountry));
       await setCountryNameCookie(selectedCountry.country_code);
-      // setCountry(selectedCountry);
-      // reset area when country change
-
-      // dispatch(resetArea());
-      // await removeAreaCookie();
     }
   };
 
