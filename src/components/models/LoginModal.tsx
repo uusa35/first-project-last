@@ -1,6 +1,6 @@
 "use client";
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useContext, useEffect } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
 import {
   enableLoading,
@@ -19,11 +19,10 @@ import { setAuth } from "@/app/actions";
 import { useRouter } from "next/navigation";
 import { useLazyLoginQuery } from "@/src/redux/api/authApi";
 import { MainContext } from "@/components/layouts/MainContentLayout";
-import { appLinks } from "@/src/links";
-import LoadingSpinner from "../LoadingSpinner";
-import { getCountries } from "@/utils/country";
+import LoadingSpinner from "@/components/LoadingSpinner";
 import { AppQueryResult, Country } from "@/src/types/queries";
 import { useLazyGetCountriesQuery } from "@/src/redux/api/countryApi";
+import { EyeIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
 type Inputs = {
   phone: string;
@@ -33,15 +32,17 @@ type Inputs = {
 };
 
 export default function () {
-  // const countries = await getCountries();
   const trans: { [key: string]: string } = useContext(MainContext);
   const {
-    appSetting: { showLoginModal, isLoading },
+    appSetting: { showLoginModal, isLoading, session_id },
     locale: { lang },
     country: { code },
   } = useAppSelector((state) => state);
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const [showPassword, setShowPassword] = useState<"text" | "password">(
+    "password"
+  );
   const [triggerLogin] = useLazyLoginQuery();
   const [
     triggerGetCountries,
@@ -62,6 +63,7 @@ export default function () {
       phone_country_code: ``,
       phone: ``,
       password: ``,
+      session_id: session_id,
     },
   });
 
@@ -86,6 +88,9 @@ export default function () {
       }
     });
   };
+
+  const toggleShowPassword = () =>
+    setShowPassword(showPassword === "text" ? "password" : "text");
 
   return (
     <Transition appear show={showLoginModal} as={Fragment}>
@@ -113,11 +118,17 @@ export default function () {
               leave='ease-in duration-200'
               leaveFrom='opacity-100 scale-100'
               leaveTo='opacity-0 scale-95'>
-              <Dialog.Panel className='w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all'>
+              <Dialog.Panel className='w-full max-w-md transform overflow-hidden rounded-2xl bg-white py-6 text-left align-middle shadow-xl transition-all'>
                 <Dialog.Title
                   as='h3'
                   className='text-lg font-medium leading-6 text-gray-900'>
-                  Login
+                  <div className='flex flex-row justify-center items-center border-b border-gray-200 pb-4'>
+                    {trans.login}
+                    <XMarkIcon
+                      className='absolute ltr:left-4 rtl:right-4 w-6 h-6 text-gray-600'
+                      onClick={() => dispatch(toggleLoginModal())}
+                    />
+                  </div>
                 </Dialog.Title>
                 <div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
                   <LoadingSpinner isLoading={isLoading} />
@@ -166,12 +177,16 @@ export default function () {
                         className='block text-sm font-medium leading-6 text-gray-900 capitalize'>
                         {trans.password}
                       </label>
-                      <div className='mt-2'>
+                      <div className='mt-2 relative flex flex-row'>
                         <input
                           id='password'
                           {...register("password")}
-                          type='password'
+                          type={showPassword}
                           className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6'
+                        />
+                        <EyeIcon
+                          className='absolute top-1.5 ltr:right-4 rtl:left-4 w-6 h-6 text-gray-600 hover:text-gray-900'
+                          onClick={() => toggleShowPassword()}
                         />
                         {errors?.password?.message && (
                           <span className={`text-red-700 text-xs capitalize`}>
@@ -201,11 +216,11 @@ export default function () {
                   </form>
 
                   <p className='mt-10 text-center text-sm text-gray-500'>
-                    Not a member?{" "}
+                    Dont't have an account?{" "}
                     <button
                       onClick={() => dispatch(toggleRegisterModal())}
                       className='font-semibold leading-6 text-picks-dark hover:text-gray-500'>
-                      Start a 14 day free trial
+                      {trans.signup}
                     </button>
                   </p>
                 </div>

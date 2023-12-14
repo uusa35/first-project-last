@@ -8,6 +8,7 @@ type Props = {
   showRegisterModal: boolean;
   showForgetPasswordModal: boolean;
   showVerificationModal: boolean;
+  session_id: string;
 }
 const initialState: Props = {
   currentPath: ``,
@@ -17,6 +18,7 @@ const initialState: Props = {
   showRegisterModal: false,
   showForgetPasswordModal: false,
   showVerificationModal: false,
+  session_id: ``
 };
 
 export const settingSlice = createSlice({
