@@ -22,7 +22,10 @@ import { useLazyRegisterQuery } from "@/src/redux/api/authApi";
 import { MainContext } from "@/components/layouts/MainContentLayout";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { AppQueryResult, Country } from "@/src/types/queries";
-import { useLazyGetCountriesQuery } from "@/src/redux/api/countryApi";
+import {
+  useGetCountriesQuery,
+  useLazyGetCountriesQuery,
+} from "@/src/redux/api/countryApi";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { appLinks } from "@/src/links";
 import Link from "next/link";
@@ -50,13 +53,8 @@ export default function () {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const [triggerRegister] = useLazyRegisterQuery();
-  const [
-    triggerGetCountries,
-    { data: countries, isSuccess: countriesSuccess },
-  ] = useLazyGetCountriesQuery<{
-    data: AppQueryResult<Country[]>;
-    isSuccess: boolean;
-  }>();
+  const { data: countries, isSuccess: countriesSuccess } =
+    useGetCountriesQuery();
   const {
     handleSubmit,
     register,
@@ -72,13 +70,9 @@ export default function () {
       password: ``,
       password_confirmation: ``,
       session_id: session_id,
-      device_token: random(9999,999999),
+      device_token: random(9999, 999999),
     },
   });
-
-  useEffect(() => {
-    triggerGetCountries();
-  }, []);
 
   const onSubmit: SubmitHandler<Inputs> = async (body) => {
     dispatch(enableLoading());

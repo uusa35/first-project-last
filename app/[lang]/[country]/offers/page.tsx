@@ -55,7 +55,7 @@ export default async function (props: Props) {
       lang={lang}
       country={country}
       showMiddleNav={true}>
-      {categories.data.length > 0 && (
+      {categories?.data?.length > 0 && (
         <CategoriesSlider
           lang={lang}
           country={country}
@@ -63,7 +63,7 @@ export default async function (props: Props) {
         />
       )}
       <div className='px-2 md:px-8'>
-        {slides.data.length > 0 && (
+        {slides?.data?.length > 0 && (
           <AdsSlider lang={lang} country={country} slides={slides.data} />
         )}
         {products?.data?.length > 0 && (
@@ -74,7 +74,7 @@ export default async function (props: Props) {
             title={"Top "}
           />
         )}
-        {vendors.data.length > 0 && (
+        {vendors?.data?.length > 0 && (
           <CustomSlider
             lang={lang}
             country={country}

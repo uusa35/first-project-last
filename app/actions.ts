@@ -129,6 +129,7 @@ export async function getMainHeaders() {
     'X-Country': country?.id,
     'Content-Type': 'application/json',
     'Accept': 'application/json',
+    'Internal': 'Internal',
     ...(area && area.id && { 'X-AREA': area.id }),
     ...(orderType && { 'X-TYPE': orderType })
   }

@@ -5,6 +5,7 @@ import { RootState } from "@/redux/store";
 import { isUndefined } from "lodash";
 import { Locale } from "@/types/index";
 import { Setting } from '@/types/queries';
+import { revalidate } from "@/utils/helpers";
 
 export const apiSlice = createApi({
   reducerPath: "api",
@@ -31,13 +32,14 @@ export const apiSlice = createApi({
         headers.set("X-AREA", area.id);
       }
       headers.set("X-TYPE", orderType);
+      headers.set("RTK", "RTK");
       headers.set(
         "Access-Control-Allow-Methods",
         "GET,PUT,POST,DELETE,PATCH,OPTIONS"
       );
       headers.set('Content-Type', 'application/json');
       headers.set("Accept", "application/json");
-      headers.set("Cache-Control", "no-store");
+      // headers.set("Cache-Control", "no-store");
       // if (api_token) {
       //   headers.set("Authorization", `Bearer ${api_token}`);
       // }
@@ -46,7 +48,7 @@ export const apiSlice = createApi({
     },
     credentials: "same-origin",
   }),
-  keepUnusedDataFor: 0,
+  keepUnusedDataFor: revalidate.max,
   refetchOnReconnect: true,
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === HYDRATE) {

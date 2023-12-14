@@ -23,18 +23,14 @@ function getLocale(request: NextRequest): string | undefined {
 export default async function middleware(request: NextRequest, response: NextResponse) {
   const pathName = request.nextUrl.pathname;
   const currentRequestedLocale = pathName.split('/')[1];
-  const country: string | undefined = pathName.split('/')[2] ?? undefined;
-  const serverCountry: { data: Country } | undefined = country || country !== undefined ? await getCountry(country) : undefined;
+  const country: string | undefined = pathName.split('/')[2] ?? 'kw';
+  console.log('the country======>', country);
+
   const pathnameIsMissingLocale = await i18n.locales.every(
     locale => !pathName.startsWith(`/${locale}/`) && pathName !== `/${locale}`
   )
   const token = request.cookies.get('token');
   const res = NextResponse.next()
-  if (serverCountry && serverCountry.data && country) {
-    await res.cookies.set('NEXT_COUNTRY', JSON.stringify(serverCountry.data));
-    await res.cookies.set('NEXT_COUNTRY_NAME', country)
-  }
-
   if (pathnameIsMissingLocale) {
     const locale = getLocale(request);
     return NextResponse.redirect(
@@ -54,12 +50,33 @@ export default async function middleware(request: NextRequest, response: NextRes
       && !request.nextUrl.pathname.includes('about')
       && !request.nextUrl.pathname.includes('contactus')
     ) {
-      // if country exists or serverCountry exists but where must be servercountry equal to country go to the URL 
-      if ((country !== undefined || serverCountry !== undefined) && serverCountry?.data?.country_code?.toLowerCase() !== country.toLowerCase()) {
-        // go to landing page
-        return NextResponse.rewrite(new URL(`/${currentRequestedLocale}`, request.url))
+      const cookieCountry: any = request.cookies.get('NEXT_COUNTRY')?.value;
+      if (cookieCountry) {
+        // console.log('thecookiecountry =====>', JSON.parse(cookieCountry))
+        const cookieCountryVal = JSON.parse(cookieCountry);
+        if (cookieCountryVal.country_code.toLowerCase() === country) {
+          console.log('case 1');
+          return res;
+        } else {
+          console.log('case 2');
+          const serverCountry: { data: Country } = await getCountry(country);
+          res.cookies.set('NEXT_COUNTRY', JSON.stringify(serverCountry.data));
+          res.cookies.set('NEXT_COUNTRY_NAME', country)
+          return res;
+        }
       } else {
-        return res;
+        const serverCountry: { data: Country } = await getCountry(country);
+        // if country exists or serverCountry exists but where must be servercountry equal to country go to the URL 
+        if ((country !== undefined || serverCountry !== undefined) && serverCountry?.data?.country_code?.toLowerCase() !== country.toLowerCase()) {
+          // go to landing page
+          console.log('case Landing Page =======>');
+          return NextResponse.rewrite(new URL(`/${currentRequestedLocale}`, request.url))
+        } else {
+          console.log('case 3');
+          res.cookies.set('NEXT_COUNTRY', JSON.stringify(serverCountry.data));
+          res.cookies.set('NEXT_COUNTRY_NAME', country)
+          return res;
+        }
       }
     }
     return res;
