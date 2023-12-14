@@ -90,14 +90,16 @@ export type User = {
 };
 
 export type Auth = {
-  id: number;
-  name: string;
-  caption: string;
-  email: string;
-  image: string;
-  hasValidDeal: false;
-  api_token: string | null | undefined;
-  [key: string]: any;
+  token: string;
+  user: {
+    id: number;
+    name: string;
+    email: string;
+    phone: string;
+    gender: string;
+    birth_date: string;
+    phone_country_code: string;
+  }
 };
 
 export type Order = {

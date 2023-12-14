@@ -29,15 +29,10 @@ import AppGallery from "@/appIcons/landing/download_app_gallery.svg";
 import about_us from "@/appImages/about_us.png";
 import get_started from "@/appImages/get_started.jpg";
 import { setCountry } from "@/src/redux/slices/countrySlice";
-import { MainContext } from "../../layouts/MainContentLayout";
-import DownloadAppSection from "../DownloadAppSection";
-<<<<<<< HEAD
+import { MainContext } from "@/components/layouts/MainContentLayout";
+import DownloadAppSection from "@/components/home/DownloadAppSection";
 import { useRouter } from "next/navigation";
 import { appLinks } from "@/src/links";
-=======
-import { appLinks } from "@/src/links";
-import { useRouter } from "next/navigation";
->>>>>>> usama
 
 type Props = {
   countries: Country[];
@@ -219,19 +214,10 @@ export default function ({ countries }: Props) {
 
             {/* btn */}
             <button
-<<<<<<< HEAD
-              className="flex items-center gap-x-2 rounded-lg bg-picks-dark px-2 h-[40%]"
-              onClick={handleGoHome}
-            >
-              <span className="whitespace-nowrap">Let’s go</span>
-=======
-              disabled={!country && !area}
-              onClick={() =>
-                router.push(appLinks.home(lang, country.country_code))
-              }
-              className='flex items-center gap-x-2 rounded-lg bg-picks-dark px-2 h-[40%]'>
+              className='flex items-center gap-x-2 rounded-lg bg-picks-dark px-2 h-[40%]'
+              onClick={handleGoHome}>
               <span className='whitespace-nowrap'>Let’s go</span>
->>>>>>> usama
+
               <RightArrow />
             </button>
           </div>

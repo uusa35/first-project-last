@@ -108,15 +108,15 @@ export default function DownloadAppSection({}: Props) {
                   throughout the week on all items and restaurants.'
             />
 
-            <div className='flex gap-x-3 items-center w-full'>
+            <div className='flex gap-x-3 sm:justify-center items-center w-full'>
               <button>
-                <GooglePlay className='w-full h-24' />
+                <GooglePlay className='w-full h-36' />
               </button>
               <button>
-                <AppleStore className='w-full h-24' />
+                <AppleStore className='w-full h-36' />
               </button>
               <button>
-                <AppGallery className='w-full h-24' />
+                <AppGallery className='w-full h-36' />
               </button>
             </div>
           </div>

@@ -60,7 +60,7 @@ export default function () {
   }: any = useForm<any>({
     resolver: yupResolver(loginSchema),
     defaultValues: {
-      phone_country_code: ``,
+      phone_country_code: code,
       phone: ``,
       password: ``,
       session_id: session_id,
@@ -74,17 +74,17 @@ export default function () {
   const onSubmit: SubmitHandler<Inputs> = async (body) => {
     dispatch(enableLoading());
     await triggerLogin(body, false).then((r: any) => {
-      if (r && r.data.success) {
+      if (r && r.error.data) {
+        dispatch(
+          showErrorToastMessage({
+            content: `${r.error.data.message}`,
+          })
+        );
+      } else {
         setAuth(JSON.stringify(r.data.data));
         dispatch(showSuccessToastMessage({ content: trans.process_success }));
         dispatch(toggleLoginModal());
         return router.replace(`/${lang}`);
-      } else {
-        dispatch(
-          showErrorToastMessage({
-            content: `${r.data.message}`,
-          })
-        );
       }
     });
   };
@@ -118,11 +118,11 @@ export default function () {
               leave='ease-in duration-200'
               leaveFrom='opacity-100 scale-100'
               leaveTo='opacity-0 scale-95'>
-              <Dialog.Panel className='w-full max-w-md transform overflow-hidden rounded-2xl bg-white py-6 text-left align-middle shadow-xl transition-all'>
+              <Dialog.Panel className='w-full max-w-lg transform overflow-hidden rounded-2xl bg-white py-6 text-left align-middle shadow-xl transition-all'>
                 <Dialog.Title
                   as='h3'
                   className='text-lg font-medium leading-6 text-gray-900'>
-                  <div className='flex flex-row justify-center items-center border-b border-gray-200 pb-4'>
+                  <div className=' capitalize flex flex-row justify-center items-center border-b border-gray-200 pb-4'>
                     {trans.login}
                     <XMarkIcon
                       className='absolute ltr:left-4 rtl:right-4 w-6 h-6 text-gray-600'
@@ -137,8 +137,8 @@ export default function () {
                     className={`space-y-4 ${isLoading && "hidden"}`}>
                     <div>
                       <label
-                        htmlFor='user_email'
-                        className='block text-sm font-medium leading-6 text-gray-900 capitalize'>
+                        id='phone_country_code'
+                        className='ltr:text-left rtl:text-right block text-sm font-medium leading-6 text-gray-900 capitalize'>
                         {trans.phone_number}
                       </label>
                       <div className='mt-2'>
@@ -147,8 +147,7 @@ export default function () {
                             id='phone_country_code'
                             defaultValue={code}
                             {...register("phone_country_code")}
-                            autoComplete='country-name'
-                            className='block w-1/3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:max-w-xs sm:text-sm sm:leading-6'>
+                            className='block w-1/3 rounded-md border-0 py-2.5 text-gray-900 shadow-sm bg-stone-100 focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:max-w-xs sm:text-sm sm:leading-6'>
                             {countriesSuccess &&
                               countries.data?.map((c: Country, i: number) => (
                                 <option value={c.code} key={i}>
@@ -160,12 +159,17 @@ export default function () {
                             id='phone'
                             {...register("phone")}
                             type='text'
-                            className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6'
+                            className='ltr:text-left rtl:text-right block w-full rounded-md border-0 py-2.5 shadow-sm bg-stone-100 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6'
                           />
                         </div>
                         {errors?.phone?.message && (
                           <span className={`text-red-700 text-xs capitalize`}>
                             {trans[errors?.phone?.message]}
+                          </span>
+                        )}
+                        {errors?.phone_country_code?.message && (
+                          <span className={`text-red-700 text-xs capitalize`}>
+                            {trans[errors?.phone_country_code?.message]}
                           </span>
                         )}
                       </div>
@@ -182,7 +186,7 @@ export default function () {
                           id='password'
                           {...register("password")}
                           type={showPassword}
-                          className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6'
+                          className='ltr:text-left rtl:text-right block w-full rounded-md border-0 py-2.5 shadow-sm bg-stone-100 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6'
                         />
                         <EyeIcon
                           className='absolute top-1.5 ltr:right-4 rtl:left-4 w-6 h-6 text-gray-600 hover:text-gray-900'
@@ -215,14 +219,14 @@ export default function () {
                     </div>
                   </form>
 
-                  <p className='mt-10 text-center text-sm text-gray-500'>
-                    Dont't have an account?{" "}
+                  <div className='capitalize mt-10 text-center text-sm text-gray-500'>
+                    {trans.dont_have_an_account}
                     <button
                       onClick={() => dispatch(toggleRegisterModal())}
-                      className='font-semibold leading-6 text-picks-dark hover:text-gray-500'>
+                      className='capitalize px-2 font-semibold leading-6 text-picks-dark hover:text-gray-500'>
                       {trans.signup}
                     </button>
-                  </p>
+                  </div>
                 </div>
               </Dialog.Panel>
             </Transition.Child>

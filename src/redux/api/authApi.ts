@@ -1,29 +1,37 @@
 import { apiSlice } from "./index";
-import { User } from "@/types/queries";
+import { Auth, User } from "@/types/queries";
 
 export const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    login: builder.query<User, { phone: string; phone_country_code: string; password: string; session_id?: string }>({
+    login: builder.query<Auth, { phone: string; phone_country_code: string; password: string; session_id?: string }>({
       query: (body) => ({
         url: `login`,
         body,
         method: "post",
-        validateStatus: (response, result) => result.data.status == 200,
+        validateStatus: (response, result) => result.status == 200,
       }),
     }),
-    register: builder.query<User, { phone: string; phone_country_code: string; email: string; password: string; password_confirmation: string; session_id?: string }>({
+    register: builder.query<Auth, { phone: string; phone_country_code: string; password: string; password_confirmation: string; device_token: string; session_id?: string, email?: string; }>({
       query: (body) => ({
         url: `register`,
         body,
         method: "post",
-        validateStatus: (response, result) => result.data.status == 200,
+        validateStatus: (response, result) => result.status === 200,
       }),
     }),
     logout: builder.query<void, void>({
       query: () => ({
         url: `logout`,
         method: "post",
-        validateStatus: (response, result) => response.status == 200,
+        validateStatus: (response, result) => result.status == 200,
+      }),
+    }),
+    verify: builder.query<Auth, { phone: string; phone_country_code: string; code: string; type: 'register' | 'reset'; }>({
+      query: (body) => ({
+        url: `verify`,
+        body,
+        method: "post",
+        validateStatus: (response, result) => result.status === 200,
       }),
     }),
     getAuthenticatedUser: builder.query<User, { id: number }>({
@@ -63,6 +71,7 @@ export const {
   useLazyLoginQuery,
   useLazyRegisterQuery,
   useLazyLogoutQuery,
+  useLazyVerifyQuery,
   useLazyForgotPasswordQuery,
   useGetAuthenticatedUserQuery,
   useChangePasswordMutation,

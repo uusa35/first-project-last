@@ -251,7 +251,13 @@
     "no_data_found": "لا توجد بيانات",
     "your_deals": "صفقاتك",
     "offers": "العروض",
-    "landing" : "الواجهة الامامية",
-    "signup" : "سجل"
+    "landing": "الواجهة الامامية",
+    "signup": "سجل",
+    "dont_have_an_account": "ليس لديك حساب",
+    "phone_number": "رقم الهاتف",
+    "by_tapping_sign_up": "بالضغط على تسجيل حساب فقد قمت بالموافقة مسبقا على الشروط والأحكام والسياسات الخاصة بالموقع",
+    "terms_and_conditions": "الشروط والأحكام",
+    "privacy_policy": "السياسات",
+    "plz_enter_the_6_digits_code_that_was_sent_to_number": "يرجى إدخال كود التفعيل الذي تم ارساله للرقم التالي"
   }
 }

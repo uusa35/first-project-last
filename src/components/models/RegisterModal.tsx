@@ -5,11 +5,13 @@ import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
 import {
   enableLoading,
   toggleForgetPasswordModal,
+  toggleLoginModal,
   toggleRegisterModal,
+  toggleVerficationModal,
 } from "@/src/redux/slices/settingSlice";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { loginSchema } from "@/src/validations";
+import { loginSchema, registerSchema } from "@/src/validations";
 import {
   showErrorToastMessage,
   showSuccessToastMessage,
@@ -22,6 +24,11 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 import { AppQueryResult, Country } from "@/src/types/queries";
 import { useLazyGetCountriesQuery } from "@/src/redux/api/countryApi";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import { appLinks } from "@/src/links";
+import Link from "next/link";
+import TextTrans from "../TextTrans";
+import { randomFillSync } from "crypto";
+import { replace, snakeCase, trim } from "lodash";
 
 type Inputs = {
   phone: string;
@@ -29,11 +36,11 @@ type Inputs = {
   email: string;
   password: string;
   password_confirmation: string;
+  device_token: string;
   session_id?: string;
 };
 
 export default function () {
-  // const countries = await getCountries();
   const trans: { [key: string]: string } = useContext(MainContext);
   const {
     appSetting: { showRegisterModal, isLoading, session_id },
@@ -57,14 +64,15 @@ export default function () {
     formState: { errors },
     getValues,
   }: any = useForm<any>({
-    resolver: yupResolver(loginSchema),
+    resolver: yupResolver(registerSchema),
     defaultValues: {
-      phone_country_code: ``,
+      phone_country_code: code,
       phone: ``,
       email: ``,
       password: ``,
       password_confirmation: ``,
       session_id: session_id,
+      device_token: snakeCase(window.navigator.userAgent),
     },
   });
 
@@ -75,17 +83,17 @@ export default function () {
   const onSubmit: SubmitHandler<Inputs> = async (body) => {
     dispatch(enableLoading());
     await triggerRegister(body, false).then((r: any) => {
-      if (r && r.data.success) {
+      if (r && r.error.data) {
+        dispatch(
+          showErrorToastMessage({
+            content: `${r.error.data.message}`,
+          })
+        );
+      } else {
         setAuth(JSON.stringify(r.data.data));
         dispatch(showSuccessToastMessage({ content: trans.process_success }));
         dispatch(toggleRegisterModal());
         return router.replace(`/${lang}`);
-      } else {
-        dispatch(
-          showErrorToastMessage({
-            content: `${r.data.message}`,
-          })
-        );
       }
     });
   };
@@ -116,11 +124,11 @@ export default function () {
               leave='ease-in duration-200'
               leaveFrom='opacity-100 scale-100'
               leaveTo='opacity-0 scale-95'>
-              <Dialog.Panel className='w-full max-w-md transform overflow-hidden rounded-2xl bg-white py-6 text-left align-middle shadow-xl transition-all'>
+              <Dialog.Panel className='w-full max-w-lg transform overflow-hidden rounded-2xl bg-white py-6 text-left align-middle shadow-xl transition-all'>
                 <Dialog.Title
                   as='h3'
                   className='text-lg font-medium leading-6 text-gray-900'>
-                  <div className='flex flex-row justify-center items-center border-b border-gray-200 pb-4'>
+                  <div className='capitalize flex flex-row justify-center items-center border-b border-gray-200 pb-4'>
                     {trans.signup}
                     <XMarkIcon
                       className='absolute ltr:left-4 rtl:right-4 w-6 h-6 text-gray-600'
@@ -135,8 +143,28 @@ export default function () {
                     className={`space-y-4 ${isLoading && "hidden"}`}>
                     <div>
                       <label
-                        htmlFor='user_email'
-                        className='block text-sm font-medium leading-6 text-gray-900 capitalize'>
+                        htmlFor='name'
+                        className='ltr:text-left rtl:text-right block text-sm font-medium leading-6 text-gray-900 capitalize'>
+                        {trans.name}
+                      </label>
+                      <div className='mt-2'>
+                        <input
+                          id='first_name'
+                          {...register("name")}
+                          type='text'
+                          className='block w-full rounded-md border-0 py-2.5 shadow-sm bg-stone-100 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6'
+                        />
+                        {errors?.name?.message && (
+                          <span className={`text-red-700 text-xs capitalize`}>
+                            {trans[errors?.name?.message]}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <div>
+                      <label
+                        htmlFor='phone_country_code'
+                        className='ltr:text-left rtl:text-right block text-sm font-medium leading-6 text-gray-900 capitalize'>
                         {trans.phone_number}
                       </label>
                       <div className='mt-2'>
@@ -157,8 +185,8 @@ export default function () {
                           <input
                             id='phone'
                             {...register("phone")}
-                            type='text'
-                            className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6'
+                            type='number'
+                            className='block w-full rounded-md border-0 py-2.5 shadow-sm bg-stone-100 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6'
                           />
                         </div>
                         {errors?.phone?.message && (
@@ -168,11 +196,32 @@ export default function () {
                         )}
                       </div>
                     </div>
-
+                    {/* email */}
+                    <div>
+                      <label
+                        htmlFor='email'
+                        className='ltr:text-left rtl:text-right block text-sm font-medium leading-6 text-gray-900 capitalize'>
+                        {trans.email} ({trans.optional})
+                      </label>
+                      <div className='mt-2'>
+                        <input
+                          id='email'
+                          {...register("email")}
+                          type='text'
+                          className='block w-full rounded-md border-0 py-2.5 shadow-sm bg-stone-100 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6'
+                        />
+                        {errors?.email?.message && (
+                          <span className={`text-red-700 text-xs capitalize`}>
+                            {trans[errors?.email?.message]}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    {/* password */}
                     <div>
                       <label
                         htmlFor='password'
-                        className='block text-sm font-medium leading-6 text-gray-900 capitalize'>
+                        className='ltr:text-left rtl:text-right block text-sm font-medium leading-6 text-gray-900 capitalize'>
                         {trans.password}
                       </label>
                       <div className='mt-2'>
@@ -180,7 +229,7 @@ export default function () {
                           id='password'
                           {...register("password")}
                           type='password'
-                          className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6'
+                          className='block w-full rounded-md border-0 py-2.5 shadow-sm bg-stone-100 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6'
                         />
                         {errors?.password?.message && (
                           <span className={`text-red-700 text-xs capitalize`}>
@@ -189,15 +238,40 @@ export default function () {
                         )}
                       </div>
                     </div>
+                    {/* password_confirmation */}
+                    <div>
+                      <label
+                        htmlFor='password_confirmation'
+                        className='ltr:text-left rtl:text-right block text-sm font-medium leading-6 text-gray-900 capitalize'>
+                        {trans.password_confirmation}
+                      </label>
+                      <div className='mt-2'>
+                        <input
+                          id='password_confirmation'
+                          {...register("password_confirmation")}
+                          type='password'
+                          className='block w-full rounded-md border-0 py-2.5 shadow-sm bg-stone-100 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6'
+                        />
+                        {errors?.password_confirmation?.message && (
+                          <span className={`text-red-700 text-xs capitalize`}>
+                            {trans[errors?.password_confirmation?.message]}
+                          </span>
+                        )}
+                      </div>
+                    </div>
 
                     <div className='flex items-center justify-between'>
                       <div className='text-sm leading-6'>
-                        <button
-                          type='button'
-                          onClick={() => dispatch(toggleForgetPasswordModal())}
-                          className='font-semibold text-expo-dark hover:text-green-700 capitalize'>
-                          {trans.forgot_password}
-                        </button>
+                        <p className='space-x-2 text-gray-600 text-center'>
+                          <span>{trans.by_tapping_sign_up}</span>
+                          <Link href={appLinks.terms(lang)}>
+                            {trans.terms_and_conditions}
+                          </Link>
+                          <span>{trans.and}</span>
+                          <Link href={appLinks.terms(lang)}>
+                            {trans.policies}.
+                          </Link>
+                        </p>
                       </div>
                     </div>
                     <div>
@@ -209,14 +283,19 @@ export default function () {
                     </div>
                   </form>
 
-                  <p className='mt-10 text-center text-sm text-gray-500'>
-                    Dont't have an account?{" "}
+                  <div className='capitalize mt-10 text-center text-sm text-gray-500'>
+                    {trans.already_have_an_account}
                     <button
-                      onClick={() => dispatch(toggleRegisterModal())}
-                      className='font-semibold leading-6 text-picks-dark hover:text-gray-500'>
-                      {trans.signup}
+                      onClick={() => dispatch(toggleLoginModal())}
+                      className='capitalize px-2 font-semibold leading-6 text-picks-dark hover:text-gray-500'>
+                      {trans.login}
                     </button>
-                  </p>
+                    <button
+                      onClick={() => dispatch(toggleVerficationModal())}
+                      className='capitalize px-2 font-semibold leading-6 text-picks-dark hover:text-gray-500'>
+                      show verification
+                    </button>
+                  </div>
                 </div>
               </Dialog.Panel>
             </Transition.Child>

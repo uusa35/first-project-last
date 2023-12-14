@@ -24,6 +24,7 @@ import Image from "next/image";
 import LoginModal from "@/components/models/LoginModal";
 import RegisterModal from "../models/RegisterModal";
 import ForgetPasswordModal from "../models/ForgetPasswordModal";
+import VerificationModal from "../models/VerificationModal";
 
 type Props = {
   children: React.ReactNode;
@@ -117,6 +118,7 @@ const MainContextLayout: FC<Props> = ({
         <LoginModal />
         <RegisterModal />
         <ForgetPasswordModal />
+        <VerificationModal />
       </Suspense>
       <div className='relative isolate overflow-hidden pt-14 py-8'>
         {children}

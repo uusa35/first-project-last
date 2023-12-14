@@ -1,7 +1,7 @@
 import * as yup from "yup";
 
 export const loginSchema = yup.object({
-  phone: yup.string().required("validation.required"),
+  phone: yup.string().min(6).max(20).required("validation.required"),
   phone_country_code: yup.string().required("validation.required"),
   password: yup
     .string()
@@ -10,19 +10,31 @@ export const loginSchema = yup.object({
     .required("validation.required"),
 });
 
+export const verificySchema = yup.object({
+  phone: yup.string().min(6).max(20).required(),
+  phone_country_code: yup.string().required("validation.required"),
+  code: yup.string().min(6).max(12).required("validation.required"),
+  type: yup.string().required("validation.required"),
+});
+
 export const searchSchema = yup.object({
   search: yup.string().min(3).required(),
 });
 
 export const registerSchema = yup.object({
-  name: yup.string().min(2).max(99).required(),
-  email: yup.string().email().required(),
-  password: yup.string().min(8).max(20).required(),
+  phone: yup.string().min(6, "validation.max").max(20, "validation.max").required("validation.required"),
+  phone_country_code: yup.string().min(2, "validation.max").required("validation.required"),
+  email: yup.string().email(),
+  password: yup
+    .string()
+    .min(4, "validation.min")
+    .max(20, "validation.max")
+    .required("validation.required"),
   password_confirmation: yup
     .string()
-    .min(8)
-    .max(20)
-    .required()
+    .min(4, "validation.min")
+    .max(20, "validation.max")
+    .required("validation.required")
     .oneOf([yup.ref("password")]),
 });
 
