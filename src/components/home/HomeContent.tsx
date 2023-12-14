@@ -1,6 +1,12 @@
 "use client";
 import { Category, Product, Slide, User } from "@/src/types/queries";
-import React, { useRef } from "react";
+import Image from "next/image";
+import React, {
+  LegacyRef,
+  ReactElement,
+  ReactHTMLElement,
+  useRef,
+} from "react";
 import Slider from "react-slick";
 import { setOrderType } from "@/app/actions";
 import { changeOrderType } from "@/src/redux/slices/settingSlice";
@@ -11,6 +17,9 @@ import CategoriesSlider from "../CategoriesSlider";
 import AdsSlider from "@/src/components/AdsSlider";
 import CustomSlider from "../CustomSlider";
 import FlashOffers from "./FlashOffers";
+import Link from "next/link";
+import { appLinks } from "@/src/links";
+import CategoryCard from "@/components/category/CategoryCard";
 
 type Props = {
   categories: Category[];
@@ -38,7 +47,7 @@ export default function HomeContent({
 
   return (
     <div>
-      <CategoriesSlider lang={lang} categories={categories} country={country} />
+      <CategoriesSlider lang={lang} country={country} categories={categories} />
 
       {/* filters and   items*/}
       <div className="page-padding">

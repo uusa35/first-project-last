@@ -3,12 +3,14 @@ import { has, isEmpty, isNull, map } from "lodash";
 import Link from "next/link";
 import { MainContext } from "@/layouts/MainContentLayout";
 import { useContext } from "react";
+import { convertSearchParamsToString } from "@/utils/helpers";
 
 type Props = {
   links: any;
+  searchParams: { [key: string]: string } | string;
 };
 
-export default function ({ links }: Props): React.ReactNode {
+export default function ({ links, searchParams }: Props): React.ReactNode {
   const trans: { [key: string]: string } = useContext(MainContext);
   function getClassName(active: boolean) {
     if (active) {
@@ -24,10 +26,14 @@ export default function ({ links }: Props): React.ReactNode {
         <div className='flex flex-wrap  px-2 py-4 '>
           {links && (
             <>
-              <Link scroll={false} href={links.next}>
+              <Link
+                scroll={false}
+                href={`${convertSearchParamsToString(searchParams)}`}>
                 next
               </Link>
-              <Link scroll={false} href={links.previous}>
+              <Link
+                scroll={false}
+                href={`${convertSearchParamsToString(searchParams)}`}>
                 previous
               </Link>
             </>

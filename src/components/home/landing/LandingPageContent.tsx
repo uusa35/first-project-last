@@ -138,40 +138,34 @@ export default function ({ countries }: Props) {
     }
   }, [areaSuccess, areas, isFetching]);
 
-  const handleGoHome = () => {
-    if (country.id) {
-      router.push(appLinks.home(lang, country.country_code));
-    }
-  };
-
   return (
     <>
       <Image
-        src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2830&q=80&blend=111827&sat=-100&exp=15&blend-mode=multiply"
-        alt="testing"
+        src='https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2830&q=80&blend=111827&sat=-100&exp=15&blend-mode=multiply'
+        alt='testing'
         width={1000}
         height={1000}
-        className="absolute inset-0 -z-10 h-full w-full object-cover"
+        className='absolute inset-0 -z-10 h-full w-full object-cover'
       />
-      <div className="mx-auto max-w-2xl w-full lg:w-3/4  text-white flex flex-col  justify-center items-center h-[90vh]">
-        <p className="mb-5 text-3xl font-semibold text-center px-5">
+      <div className='mx-auto max-w-2xl w-full lg:w-3/4  text-white flex flex-col  justify-center items-center h-[90vh]'>
+        <p className='mb-5 text-3xl font-semibold text-center px-5'>
           Restaurant food, takeaway and groceries.
-          <span className="text-picks-dark">Delivered</span>
+          <span className='text-picks-dark'>Delivered</span>
         </p>
 
         {/* select country*/}
         {!isEmpty(allCountries) && (
-          <div className="flex flex-col md:flex-row items-start gap-x-2  w-full px-8">
-            <div className="flex flex-col gap-y-5 grow w-full">
+          <div className='flex flex-col md:flex-row items-start gap-x-2  w-full px-8'>
+            <div className='flex flex-col gap-y-5 grow w-full'>
               {/* contry select */}
-              <div className="flex gap-x-2 items-center justify-between bg-white rounded-lg py-2 px-3 grow">
-                <div className="flex gap-x-2 items-center">
+              <div className='flex gap-x-2 items-center justify-between bg-white rounded-lg py-2 px-3 grow'>
+                <div className='flex gap-x-2 items-center'>
                   <Search />
                   <Autocomplete
-                    size="small"
-                    className="outline-none"
+                    size='small'
+                    className='outline-none'
                     disablePortal
-                    id="combo-box-demo"
+                    id='combo-box-demo'
                     options={allCountries}
                     value={selectedCountry}
                     onChange={(e, newval) => {
@@ -179,7 +173,7 @@ export default function ({ countries }: Props) {
                     }}
                     sx={{ width: 300 }}
                     renderInput={(params) => (
-                      <TextField {...params} label="select country" />
+                      <TextField {...params} label='select country' />
                     )}
                   />
                 </div>
@@ -188,15 +182,15 @@ export default function ({ countries }: Props) {
 
               {/* area select */}
               {!isEmpty(allAreas) && (
-                <div className="flex gap-x-2 items-center justify-between bg-white rounded-lg py-2 px-3 grow">
-                  <div className="flex gap-x-2 items-center">
+                <div className='flex gap-x-2 items-center justify-between bg-white rounded-lg py-2 px-3 grow'>
+                  <div className='flex gap-x-2 items-center'>
                     <Search />
                     <Autocomplete
                       disabled={isFetching}
-                      size="small"
-                      className="outline-none"
+                      size='small'
+                      className='outline-none'
                       disablePortal
-                      id="combo-box-demo"
+                      id='combo-box-demo'
                       options={allAreas}
                       value={selectedArea}
                       onChange={(e, newval) => {
@@ -204,7 +198,7 @@ export default function ({ countries }: Props) {
                       }}
                       sx={{ width: 300 }}
                       renderInput={(params) => (
-                        <TextField {...params} label="select area" />
+                        <TextField {...params} label='select area' />
                       )}
                     />
                   </div>
@@ -214,21 +208,23 @@ export default function ({ countries }: Props) {
 
             {/* btn */}
             <button
-              className="flex items-center gap-x-2 rounded-lg bg-picks-dark px-2 h-[40%]"
-              onClick={handleGoHome}
-            >
-              <span className="whitespace-nowrap">Let’s go</span>
+              disabled={!country && !area}
+              onClick={() =>
+                router.push(appLinks.home(lang, country.country_code))
+              }
+              className='flex items-center gap-x-2 rounded-lg bg-picks-dark px-2 h-[40%]'>
+              <span className='whitespace-nowrap'>Let’s go</span>
               <RightArrow />
             </button>
           </div>
         )}
 
         {/* login */}
-        <div className="my-8">
-          <div className="flex items-center gap-x-2">
+        <div className='my-8'>
+          <div className='flex items-center gap-x-2'>
             <Avatar />
             <p>
-              or <span className="text-picks-dark">Log in</span> for your saved
+              or <span className='text-picks-dark'>Log in</span> for your saved
               addresses.
             </p>
           </div>
