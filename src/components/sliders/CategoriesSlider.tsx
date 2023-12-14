@@ -16,6 +16,7 @@ type Props = {
 export default function ({ lang, country, categories }: Props) {
   const [slidesToShow, setSlidesToShow] = useState<number>(10);
   const { width } = useWindowSize();
+  
   useEffect(() => {
     setSlidesToShow(getSlidesToShow(width, 2, 3, 4, 5, 7));
   }, [width]);
