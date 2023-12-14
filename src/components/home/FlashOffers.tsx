@@ -95,7 +95,6 @@ export default function FlashOffers({ products, lang, country }: Props) {
               <OfferWidget
                 product={itm}
                 lang={lang}
-                country={country}
                 key={itm.id}
               />
             ))}

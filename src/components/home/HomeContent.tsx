@@ -1,9 +1,14 @@
+"use client";
 import { Category, Product, Slide, User } from "@/src/types/queries";
+import React from "react";
+import { setOrderType } from "@/app/actions";
+import { changeOrderType } from "@/src/redux/slices/settingSlice";
+import { useAppDispatch } from "@/src/redux/hooks";
 import { Locale, countriesList } from "@/src/types";
 import CategoriesSlider from "@/components/sliders/CategoriesSlider";
 import AdsSlider from "@/components/sliders/AdsSlider";
-import CustomSlider from "@/src/components/sliders/VendorsSlider";
-import FlashOffers from "@/components/home/FlashOffers";
+import FlashOffers from "./FlashOffers";
+import VendorsSlider from "../sliders/VendorsSlider";
 
 type Props = {
   categories: Category[];
@@ -12,6 +17,7 @@ type Props = {
   vendors: User[];
   lang: Locale["lang"];
   country: countriesList;
+  featuredVendors: User[];
 };
 export default function HomeContent({
   categories,
@@ -20,31 +26,38 @@ export default function HomeContent({
   country,
   vendors,
   products,
+  featuredVendors,
 }: Props) {
   return (
     <div>
-      <CategoriesSlider lang={lang} categories={categories} country={country} />
+      <CategoriesSlider lang={lang} country={country} categories={categories} />
 
       {/* filters and   items*/}
-      <div className='page-padding'>
+      <div className="page-padding">
         {/* filters */}
         <div></div>
 
         {/* slider  */}
-        <div className='my-10'>
-          <AdsSlider lang={lang} country={country} slides={slides} />
-        </div>
+        <AdsSlider slides={slides} lang={lang} />
 
         {/* new to picks */}
-        <CustomSlider
+        <VendorsSlider
           vendors={vendors}
           lang={lang}
           country={country}
-          title='New Picks'
+          title="New Picks"
         />
 
         {/* flash offers */}
         <FlashOffers products={products} lang={lang} country={country} />
+
+        {/* new to picks */}
+        <VendorsSlider
+          vendors={featuredVendors}
+          lang={lang}
+          country={country}
+          title="Featured Stores"
+        />
       </div>
     </div>
   );

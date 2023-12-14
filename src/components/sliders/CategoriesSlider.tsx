@@ -1,66 +1,21 @@
-"use client";
 import React from "react";
 import Slider from "react-slick";
 import CategoryWidget from "@/components/widgets/CategoryWidget";
-import { Category } from "@/src/types/queries";
-import { Locale, countriesList } from "@/src/types";
+import { Category } from "@/types/queries";
+import { Locale, countriesList } from "@/types/index";
+import { categoriesSliderSettings } from "@/src/constants";
 
 type Props = {
   categories: Category[];
-  
   lang: Locale["lang"];
   country: countriesList;
 };
 
-export default function CategoriesSlider({
-  country,
-  lang,
-  categories,
+export default function CategoriesSlider({ country, lang, categories }: Props) {
   
-}: Props) {
-  const settings: any = {
-    dots: false,
-    speed: 500,
-    infinite: false,
-    slidesToScroll: 1,
-    arrows: true,
-    rtl: lang === "ar",
-    responsive: [
-      {
-        breakpoint: 5000,
-        settings: {
-          slidesToShow: 8,
-        },
-      },
-      {
-        breakpoint: 1250,
-        settings: {
-          slidesToShow: 6,
-        },
-      },
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 4,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 3,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 2,
-        },
-      },
-    ],
-  };
   return (
-    <div className='py-3 relative mt-24 page-padding bg-picks-gray border-b border-picks-border'>
-      <Slider {...settings}>
+    <div className="py-3 relative mt-24 page-padding bg-picks-gray border-b border-picks-border">
+      <Slider {...categoriesSliderSettings} rtl={lang === "ar"}>
         {categories &&
           categories.map((itm: Category) => (
             <CategoryWidget

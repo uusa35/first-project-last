@@ -9,10 +9,9 @@ import { Locale, countriesList } from "@/src/types";
 type Props = {
   product: Product;
   lang: Locale["lang"];
-  country: countriesList;
 };
 
-export default function ({ product, lang, country }: Props) {
+export default function OfferWidget({ product ,lang}: Props) {
   return (
     <div>
       <div className='relative rtl:text-right ltr:text-left'>
@@ -48,13 +47,17 @@ export default function ({ product, lang, country }: Props) {
           </div>
         </div>
 
-        <div className='bg-white -mt-[10%] rounded-lg p-3 relative w-full'>
-          <p className='truncate'>{product.name}</p>
-          <p className='truncate'>{product.description}</p>
+        <div className="bg-white -mt-[10%] rounded-lg p-3 relative w-full space-y-2">
+          <p className="truncate">{product.name}</p>
+          <p className="truncate text-sm text-picks-text-gray">
+            {product.description}
+          </p>
           {/* price */}
-          <div>
-            <p>{product.new_price}</p>
-            <p>{product.price}</p>
+          <div className="text-sm text-picks-text-gray flex gap-x-2 items-center flex-wrap" dir={lang=== "ar" ? "rtl" :"ltr"}>
+            <p className="bg-picks-dark text-white rounded-full px-2 py-px pt-1">
+              {product.new_price}
+            </p>
+            <p className="line-through">{product.price}</p>
           </div>
         </div>
       </div>

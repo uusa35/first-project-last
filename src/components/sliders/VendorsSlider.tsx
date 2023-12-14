@@ -1,10 +1,13 @@
 "use client";
 import React, { useRef } from "react";
 import Slider from "react-slick";
+import { vendorSliderSettings } from "@/src/constants";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
+import Link from "next/link";
+import { appLinks } from "@/src/links";
+import VendorWidget from "../widgets/VendorWidget";
 import { Locale, countriesList } from "@/src/types";
-import { User } from "@/types/queries";
-import VendorWidget from "@/components/widgets/VendorWidget";
+import { User } from "@/src/types/queries";
 
 type Props = {
   vendors: User[];
@@ -58,39 +61,55 @@ export default function ({ vendors, lang, country, title }: Props) {
   };
   const RenderArrows = () => {
     return (
-      <div className='slider-arrow flex gap-x-2'>
+      <div
+        className={`slider-arrow flex gap-x-2 ${
+          lang === "ar" && "flex-row-reverse"
+        }`}
+        dir={lang === "ar" ? "rtl" : "ltr"}
+      >
         <button
-          className='arrow-btn prev w-8 h-8 rounded-full bg-[#EEE]'
-          onClick={() => refSlider?.current?.slickPrev()}>
+          className="arrow-btn prev w-8 h-8 rounded-full bg-[#EEE]"
+          onClick={() => refSlider?.current?.slickPrev()}
+        >
           <KeyboardArrowLeft />
         </button>
         <button
-          className='arrow-btn next w-8 h-8 rounded-full bg-[#EEE]'
-          onClick={() => refSlider?.current?.slickNext()}>
+          className="arrow-btn next w-8 h-8 rounded-full bg-[#EEE]"
+          onClick={() => refSlider?.current?.slickNext()}
+        >
           <KeyboardArrowRight />
         </button>
       </div>
     );
   };
   return (
-    <div className='my-5'>
-      <div className='flex justify-between mb-3'>
+    <div className="my-5">
+      <div className="flex justify-between mb-3">
         <p>{title}</p>
-        <div className='flex items-center gap-x-3'>
+        <div className="flex items-center gap-x-3">
           <p>See all</p>
           <RenderArrows />
         </div>
       </div>
       <div>
-        <Slider {...settings} ref={(c) => (refSlider.current = c)}>
+        <Slider
+          {...vendorSliderSettings}
+          ref={(c) => (refSlider.current = c)}
+          rtl={lang === "ar"}
+        >
           {vendors &&
             vendors.map((itm) => (
-              <VendorWidget
-                vendor={itm}
+              <Link
                 key={itm.id}
-                lang={lang}
-                country={country}
-              />
+                href={appLinks.vendor(
+                  lang,
+                  country,
+                  itm.id.toString(),
+                  itm.store_name_en
+                )}
+              >
+                <VendorWidget vendor={itm} lang={lang} country={country} />
+              </Link>
             ))}
         </Slider>
       </div>

@@ -1,16 +1,24 @@
-'use client';
-import { truncate, kebabCase, round, isUndefined, isNull, lowerCase, replace } from 'lodash';
+"use client";
+import {
+  truncate,
+  kebabCase,
+  round,
+  isUndefined,
+  isNull,
+  lowerCase,
+  replace,
+} from "lodash";
 import Slider from "react-slick";
 export const appVersion = `0.0.1`;
 // export const apiUrl = `${baseUrl}/api/`;
 export const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 export const imageUrl = `https://loremflickr.com/`;
-export const isLocal = process.env.NODE_ENV !== 'production';
-console.log('production', process.env.NODE_ENV === "production")
-console.log('apiUrl', process.env.NEXT_PUBLIC_API_URL)
+export const isLocal = process.env.NODE_ENV !== "production";
+console.log("production", process.env.NODE_ENV === "production");
+console.log("apiUrl", process.env.NEXT_PUBLIC_API_URL);
 export const suppressText = true;
 import PersonOutlineOutlined from "@mui/icons-material/PersonOutlineOutlined";
-import { Country } from './types/queries';
+import { Country } from "./types/queries";
 export { PersonOutlineOutlined, truncate };
 export { kebabCase, Slider };
 
@@ -41,8 +49,142 @@ export const getPrice: (element: number, country: Country) => number = (
   country
 ) => round(element * country.exchange_rate);
 
-export const prepareCountryCookie = (country: string) => isUndefined(country) || isNull(country) || country.length <= 2
-  ? "kw"
-  : country;
+export const prepareCountryCookie = (country: string) =>
+  isUndefined(country) || isNull(country) || country.length <= 2
+    ? "kw"
+    : country;
 
+export const currentScreenSize = (): string => {
+  if (window.innerWidth <= 640) {
+    return "sm";
+  } else if (window.innerWidth <= 768) {
+    return "md";
+  } else if (window.innerWidth <= 1024) {
+    return "lg";
+  } else if (window.innerWidth <= 1280) {
+    return "xl";
+  } else if (window.innerWidth > 1280) {
+    return "2xl";
+  }
+  return "2xl";
+};
 
+export const getSlidesToShow = (
+  currentWidth: number | null,
+  sm: number,
+  md: number,
+  lg: number,
+  xl: number,
+  xxl: number
+): number => {
+  if (currentWidth) {
+    if (currentWidth <= 640) {
+      return sm <= xxl ? sm : xxl;
+    } else if (currentWidth <= 768) {
+      return md <= xxl ? md : xxl;
+    } else if (currentWidth <= 1024) {
+      return lg <= xxl ? lg : xxl;
+    } else if (currentWidth <= 1280) {
+      return xl <= xxl ? lg : xxl;
+    } else {
+      return xxl;
+    }
+  } else {
+    return xxl;
+  }
+};
+
+export const categoriesSliderSettings: any = {
+  dots: false,
+  speed: 500,
+  infinite: false,
+  slidesToShow: 7,
+  slidesToScroll: 1,
+  arrows: true,
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 2,
+      },
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 1,
+      },
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1,
+      },
+    },
+  ],
+  // className: "center",
+  // centerMode: true,
+  // infinite: true,
+  // centerPadding: "60px",
+};
+
+export const adsSliderSettings: any = {
+  dots: false,
+  speed: 500,
+  infinite: false,
+  slidesToShow: 3,
+  slidesToScroll: 1,
+  arrows: true,
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 2,
+      },
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 1,
+      },
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1,
+      },
+    },
+  ],
+  // className: "center",
+  // centerMode: true,
+  // infinite: true,
+  // centerPadding: "60px",
+};
+
+export const vendorSliderSettings: any = {
+  dots: false,
+  speed: 500,
+  infinite: false,
+  slidesToShow: 4,
+  slidesToScroll: 1,
+  arrows: false,
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 2,
+      },
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 1,
+      },
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1,
+      },
+    },
+  ],
+};
