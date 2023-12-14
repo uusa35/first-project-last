@@ -18,7 +18,7 @@ export default function FlashOffers({ products }: Props) {
     dots: false,
     speed: 500,
     infinite: false,
-    slidesToShow: 4,
+    slidesToShow: 3,
     slidesToScroll: 1,
     arrows: false,
     responsive: [

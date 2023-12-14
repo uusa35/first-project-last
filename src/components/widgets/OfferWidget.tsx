@@ -48,13 +48,17 @@ export default function OfferWidget({ product }: Props) {
           </div>
         </div>
 
-        <div className="bg-white -mt-[10%] rounded-lg p-3 relative w-full">
+        <div className="bg-white -mt-[10%] rounded-lg p-3 relative w-full space-y-2">
           <p className="truncate">{product.name}</p>
-          <p className="truncate">{product.description}</p>
+          <p className="truncate text-sm text-picks-text-gray">
+            {product.description}
+          </p>
           {/* price */}
-          <div>
-            <p>{product.new_price}</p>
-            <p>{product.price}</p>
+          <div className="text-sm text-picks-text-gray flex gap-x-2 items-center flex-wrap">
+            <p className="bg-picks-dark text-white rounded-full px-2 py-px pt-1">
+              {product.new_price}
+            </p>
+            <p className="line-through">{product.price}</p>
           </div>
         </div>
       </div>

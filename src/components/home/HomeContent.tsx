@@ -1,25 +1,14 @@
 "use client";
 import { Category, Product, Slide, User } from "@/src/types/queries";
-import Image from "next/image";
-import React, {
-  LegacyRef,
-  ReactElement,
-  ReactHTMLElement,
-  useRef,
-} from "react";
-import Slider from "react-slick";
+import React from "react";
 import { setOrderType } from "@/app/actions";
 import { changeOrderType } from "@/src/redux/slices/settingSlice";
 import { useAppDispatch } from "@/src/redux/hooks";
 import { Locale, countriesList } from "@/src/types";
-import VendorWidget from "../widgets/VendorWidget";
-import CategoriesSlider from "../CategoriesSlider";
-import AdsSlider from "@/src/components/AdsSlider";
-import CustomSlider from "../CustomSlider";
+import CategoriesSlider from "@/components/sliders/CategoriesSlider";
+import AdsSlider from "@/components/sliders/AdsSlider";
 import FlashOffers from "./FlashOffers";
-import Link from "next/link";
-import { appLinks } from "@/src/links";
-import CategoryCard from "@/components/category/CategoryCard";
+import VendorsSlider from "../sliders/VendorsSlider";
 
 type Props = {
   categories: Category[];
@@ -28,6 +17,7 @@ type Props = {
   vendors: User[];
   lang: Locale["lang"];
   country: countriesList;
+  featuredVendors: User[];
 };
 export default function HomeContent({
   categories,
@@ -36,6 +26,7 @@ export default function HomeContent({
   country,
   vendors,
   products,
+  featuredVendors,
 }: Props) {
   const dispatch = useAppDispatch();
 
@@ -55,12 +46,10 @@ export default function HomeContent({
         <div></div>
 
         {/* slider  */}
-        <div className="my-10">
-          <AdsSlider slides={slides} />
-        </div>
+        <AdsSlider slides={slides} lang={lang} />
 
         {/* new to picks */}
-        <CustomSlider
+        <VendorsSlider
           vendors={vendors}
           lang={lang}
           country={country}
@@ -68,7 +57,15 @@ export default function HomeContent({
         />
 
         {/* flash offers */}
-        <FlashOffers products={products}  />
+        <FlashOffers products={products} />
+
+        {/* new to picks */}
+        <VendorsSlider
+          vendors={featuredVendors}
+          lang={lang}
+          country={country}
+          title="Featured Stores"
+        />
       </div>
     </div>
   );

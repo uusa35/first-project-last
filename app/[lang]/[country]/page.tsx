@@ -44,7 +44,8 @@ export default async function ({ params: { lang, country } }: Props) {
       trans={trans}
       lang={lang}
       country={country}
-      showMiddleNav={true}>
+      showMiddleNav={true}
+    >
       <HomeContent
         lang={lang}
         country={country}
@@ -52,6 +53,7 @@ export default async function ({ params: { lang, country } }: Props) {
         slides={sliders.data}
         products={products.data}
         vendors={vendors.data}
+        featuredVendors={featuredVendors.data}
       />
     </MainContextLayout>
   );
