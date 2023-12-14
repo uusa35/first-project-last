@@ -1,14 +1,17 @@
+"use client";
 import React from "react";
 import { Slide } from "@/types/queries";
 import { isEmpty } from "lodash";
 import Slider from "react-slick";
 import Image from "next/image";
+import { Locale } from "@/src/types";
 
 type Props = {
+  lang: Locale["lang"];
   slides: Slide[];
 };
 
-export default function AdsSlider({ slides }: Props) {
+export default function AdsSlider({ slides, lang }: Props) {
   const settings: any = {
     dots: false,
     speed: 500,

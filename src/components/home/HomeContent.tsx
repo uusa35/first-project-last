@@ -2,7 +2,7 @@ import { Category, Product, Slide, User } from "@/src/types/queries";
 import { Locale, countriesList } from "@/src/types";
 import CategoriesSlider from "@/components/sliders/CategoriesSlider";
 import AdsSlider from "@/components/sliders/AdsSlider";
-import CustomSlider from "@/components/sliders/CustomSlider";
+import CustomSlider from "@/src/components/sliders/VendorsSlider";
 import FlashOffers from "@/components/home/FlashOffers";
 
 type Props = {

@@ -1,9 +1,9 @@
 "use client";
 import React from "react";
-import Slider, { Settings } from "react-slick";
-import CategoryWidget from "../widgets/CategoryWidget";
-import { Category } from "../../types/queries";
-import { Locale, countriesList } from "../../types";
+import Slider from "react-slick";
+import CategoryWidget from "@/components/widgets/CategoryWidget";
+import { Category } from "@/src/types/queries";
+import { Locale, countriesList } from "@/src/types";
 
 type Props = {
   categories: Category[];
@@ -21,7 +21,7 @@ export default function CategoriesSlider({ country, lang, categories }: Props) {
     rtl: lang === "ar",
     responsive: [
       {
-        breakpoint: 1400,
+        breakpoint: 5000,
         settings: {
           slidesToShow: 8,
         },

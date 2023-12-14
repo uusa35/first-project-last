@@ -11,7 +11,7 @@ import AppleStore from "@/appIcons/landing/download_apple_store.svg";
 import AppGallery from "@/appIcons/landing/download_app_gallery.svg";
 import about_us from "@/appImages/about_us.png";
 import get_started from "@/appImages/get_started.jpg";
-import { MainContext } from "../layouts/MainContentLayout";
+import { MainContext } from "@/components/layouts/MainContentLayout";
 
 type Props = {};
 
@@ -108,7 +108,7 @@ export default function DownloadAppSection({}: Props) {
                   throughout the week on all items and restaurants.'
             />
 
-            <div className='flex gap-x-3 sm:justify-center items-center w-full'>
+            <div className='flex gap-x-3 sm:justify-center lg:justify-start items-center w-full'>
               <button>
                 <GooglePlay className='w-full h-36' />
               </button>

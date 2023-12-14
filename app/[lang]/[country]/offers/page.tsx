@@ -11,7 +11,7 @@ import {
   Slide,
   User,
 } from "@/src/types/queries";
-import { adsSliderSettings, vendorSliderSettings } from "@/src/constants";
+
 import { convertSearchParamsToString } from "@/utils/helpers";
 import { appLinks } from "@/src/links";
 import Link from "next/link";
@@ -24,7 +24,7 @@ import { Slider } from "@/src/constants";
 import { notFound } from "next/navigation";
 import CategoriesSlider from "@/src/components/sliders/CategoriesSlider";
 import AdsSlider from "@/src/components/sliders/AdsSlider";
-import CustomSlider from "@/src/components/sliders/CustomSlider";
+import CustomSlider from "@/src/components/sliders/VendorsSlider";
 
 type Props = {
   params: { lang: Locale["lang"]; country: countriesList; search: string };
@@ -59,15 +59,13 @@ export default async function (props: Props) {
       lang={lang}
       country={country}
       showMiddleNav={true}>
-      {categories.data && (
-        <CategoriesSlider
-          lang={lang}
-          country={country}
-          categories={categories.data}
-        />
-      )}
+      <CategoriesSlider
+        lang={lang}
+        country={country}
+        categories={categories.data}
+      />
 
-      {slides.data && <AdsSlider slides={slides.data} />}
+      {slides.data && <AdsSlider lang={lang} slides={slides.data} />}
 
       {/* {products.data && (
         <ProductsSlider

@@ -2,24 +2,28 @@
 import React, { useRef } from "react";
 import Slider from "react-slick";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
-import Flash3 from "@/appIcons/landing/picks_flash.svg";
-import Flash2 from "@/appIcons/landing/orange_flash.svg";
-import Flash1 from "@/appIcons/landing/yellow_flash.svg";
-import { Product } from "@/src/types/queries";
-import OfferWidget from "@/components/widgets/OfferWidget";
+import { Locale, countriesList } from "@/src/types";
+import { Product, User } from "@/types/queries";
+import VendorWidget from "@/components/widgets/VendorWidget";
+import ProductWidget from "../widgets/ProductWidget";
 
 type Props = {
   products: Product[];
+  lang: Locale["lang"];
+  country: countriesList;
+  title: string;
 };
 
-export default function FlashOffers({ products }: Props) {
+export default function ({ products, lang, country, title }: Props) {
   const refSlider = useRef<Slider | null>(null);
+
   const settings: any = {
     dots: false,
     speed: 500,
     infinite: false,
     slidesToScroll: 1,
     arrows: false,
+    rtl: lang === "ar",
     responsive: [
       {
         breakpoint: 5000,
@@ -57,12 +61,12 @@ export default function FlashOffers({ products }: Props) {
     return (
       <div className='slider-arrow flex gap-x-2'>
         <button
-          className='arrow-btn prev w-8 h-8 rounded-full bg-white'
+          className='arrow-btn prev w-8 h-8 rounded-full bg-[#EEE]'
           onClick={() => refSlider?.current?.slickPrev()}>
           <KeyboardArrowLeft />
         </button>
         <button
-          className='arrow-btn next w-8 h-8 rounded-full bg-white'
+          className='arrow-btn next w-8 h-8 rounded-full bg-[#EEE]'
           onClick={() => refSlider?.current?.slickNext()}>
           <KeyboardArrowRight />
         </button>
@@ -70,25 +74,26 @@ export default function FlashOffers({ products }: Props) {
     );
   };
   return (
-    <div className='bg-picks-gray p-5 rounded-lg my-10'>
-      <div className='flex gap-x-2 justify-between'>
-        <div className='flex gap-x-1 items-center'>
-          <Flash1 className='w-8 h-8' />
-          <p className='text-lg font-semibold'>️Flash Offers</p>
+    <div className='my-5'>
+      <div className='flex justify-between mb-3'>
+        <p>{title}</p>
+        <div className='flex items-center gap-x-3'>
+          <p>See all</p>
+          <RenderArrows />
         </div>
-        <RenderArrows />
       </div>
-
-      <div className='my-5'>
+      <div>
         <Slider {...settings} ref={(c) => (refSlider.current = c)}>
           {products &&
-            products.map((itm) => <OfferWidget product={itm} key={itm.id} />)}
+            products.map((itm: Product, i: number) => (
+              <ProductWidget
+                product={itm}
+                key={i}
+                lang={lang}
+                country={country}
+              />
+            ))}
         </Slider>
-      </div>
-
-      <div className='flex justify-between'>
-        <Flash3 className='w-10 h-10' />
-        <Flash2 className='w-10 h-10' />
       </div>
     </div>
   );

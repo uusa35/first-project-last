@@ -4,7 +4,7 @@ import Slider from "react-slick";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import { Locale, countriesList } from "@/src/types";
 import { User } from "@/types/queries";
-import VendorWidget from "../widgets/VendorWidget";
+import VendorWidget from "@/components/widgets/VendorWidget";
 
 type Props = {
   vendors: User[];
@@ -13,7 +13,7 @@ type Props = {
   title: string;
 };
 
-export default function CustomSlider({ vendors, lang, country, title }: Props) {
+export default function ({ vendors, lang, country, title }: Props) {
   const refSlider = useRef<Slider | null>(null);
 
   const settings: any = {
@@ -28,6 +28,12 @@ export default function CustomSlider({ vendors, lang, country, title }: Props) {
         breakpoint: 5000,
         settings: {
           slidesToShow: 5,
+        },
+      },
+      {
+        breakpoint: 1250,
+        settings: {
+          slidesToShow: 4,
         },
       },
       {
