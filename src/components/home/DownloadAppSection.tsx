@@ -52,23 +52,23 @@ export default function DownloadAppSection({}: Props) {
     btnText: string;
   }) => {
     return (
-      <div className='text-white w-full h-auto aspect-[1/1] max-w-[50rem] max-h-[25rem] rounded-lg relative'>
+      <div className="text-white w-full h-auto aspect-[1/1] max-w-[50rem] max-h-[25rem] rounded-lg relative">
         <Image
-          alt='about_us'
+          alt="about_us"
           src={imageSrc}
           width={1000}
           height={1000}
-          className='w-full h-full rounded-lg'
+          className="w-full h-full rounded-lg"
           unoptimized
         />
         {/* overlay */}
-        <div className='flex items-end rounded-lg absolute top-0 left-0 right-0 bottom-0 bg-black bg-opacity-50'>
-          <div className='p-5 h-fit'>
-            <p className='text-lg font-semibold'>{title}</p>
-            <p className='text-sm py-2'>{text}</p>
-            <button className='flex items-center gap-x-2 rounded-lg p-2 bg-white text-black'>
-              <span className='whitespace-nowrap'>{btnText}</span>
-              <RightArrow stroke='#02C9C0' />
+        <div className="flex items-end rounded-lg absolute top-0 left-0 right-0 bottom-0 bg-black bg-opacity-50">
+          <div className="p-5 h-fit">
+            <p className="text-lg font-semibold">{title}</p>
+            <p className="text-sm py-2">{text}</p>
+            <button className="flex items-center gap-x-2 rounded-lg p-2 bg-white text-black">
+              <span className="whitespace-nowrap">{btnText}</span>
+              <RightArrow stroke="#02C9C0" className="rtl:rotate-180" />
             </button>
           </div>
         </div>
@@ -129,13 +129,13 @@ export default function DownloadAppSection({}: Props) {
             src={downloadApp}
             width={1000}
             height={1000}
-            className='w-auto md:w-[550px] h-auto object-cover'
+            className='w-auto h-[100vh] object-cover'
           />
         </div>
       </div>
 
       {/* aboutus getstarted */}
-      <div className='grid grid-cols-2 gap-x-5 place-items-center'>
+      <div className='grid grid-cols-1 gap-y-10 md:grid-cols-2 gap-x-5 place-items-center'>
         <CardComponent
           title='Partner with us'
           imageSrc={get_started}

@@ -51,6 +51,7 @@ const MainContextLayout: FC<Props> = ({
     country: { country_code, id },
     area,
   } = useAppSelector((state) => state);
+
   const pathName = usePathname();
   const dispatch = useAppDispatch();
   const [triggerGetCountryByName, { data, isSuccess }] =
@@ -102,7 +103,7 @@ const MainContextLayout: FC<Props> = ({
           matches: trans["validation.matches"],
         },
       });
-      triggerGetCountries(undefined, false);
+      // triggerGetCountries(undefined, false);
     }
   }, [lang]);
 
@@ -135,7 +136,7 @@ const MainContextLayout: FC<Props> = ({
         <ForgetPasswordModal />
         <VerificationModal />
       </Suspense>
-      <div className='relative isolate overflow-hidden pt-14 py-8'>
+      <div className="relative isolate overflow-hidden pt-14 py-8">
         {children}
       </div>
       <AppFooter />
