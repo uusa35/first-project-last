@@ -268,6 +268,21 @@
     "lets_go": "let's go",
     "or":"or",
     "log_in":"log in",
-    "for_your_saved_addresses":"for your saved addresses."
+    "for_your_saved_addresses":"for your saved addresses.",
+    "discover_the_new":"discover the new",
+    "picks":"picks",
+    "app":"app",
+    "flash_daliy_offers":"flash & daliy offers",
+    "no_order_calls":"no order calls",
+    "tracking_orders":"tracking orders",
+    "flash_offer_desc":"no specific day or specific time! Our offers are available throughout the week on all items and restaurants.",
+    "order_calls_desc":"order your favorite food easier, faster, and without phone calls.",
+    "tracking_orders_desc":"Want to know your order status? No problem, Now you can know exactly where your order is throughout the delivery process.",
+    "partner_with_us":"partner with us",
+    "join_us_desc":"Join Picks and reach more customers than ever.We handle delivery, so you can focus on the food",
+    "get_started":"get started",
+    "everything_you_crave_delivered":"everything you crave, delivered.",
+    "about_us_desc":"looking for your breakfast,snaks or any food offers near to you ,we bring all of this closer to you with just a click of a button."
+
   }
 }

@@ -20,6 +20,7 @@ import DownloadAppSection from "@/components/home/DownloadAppSection";
 import { useRouter } from "next/navigation";
 import { appLinks } from "@/src/links";
 import { useGetAreasQuery } from "@/src/redux/api/areaApi";
+import AboutUsGetStarted from "../AboutUsGetStarted";
 
 type Props = {
   countries: Country[];
@@ -88,7 +89,7 @@ export default function ({ countries }: Props) {
 
     setAllCountries(mappedCountries);
 
-    if (country.id) {
+    if (country.id ) {
       setSelectedCountry(
         mappedCountries.filter((itm) => itm.id === country.id)[0]
       );
@@ -128,9 +129,9 @@ export default function ({ countries }: Props) {
         className="absolute inset-0 -z-10 h-full w-full object-cover"
       />
       <div className="mx-auto max-w-2xl w-full lg:w-3/4  text-white flex flex-col  justify-center items-center h-[90vh]">
-        <p className="mb-5 text-3xl font-semibold text-center px-5">
+        <p className="mb-5 text-3xl font-semibold text-center px-5 capitalize">
           {trans.landing_title1}
-          <span className="text-picks-dark">{trans.delivered}</span>
+          <span className="text-picks-dark capitalize">{trans.delivered}</span>
         </p>
 
         {/* select country*/}
@@ -195,7 +196,9 @@ export default function ({ countries }: Props) {
               }
               className="flex items-center gap-x-2 rounded-lg bg-picks-dark p-2 h-[40%]"
             >
-              <span className="whitespace-nowrap">{trans.lets_go}</span>
+              <span className="whitespace-nowrap capitalize">
+                {trans.lets_go}
+              </span>
               <RightArrow className="rtl:rotate-180" />
             </button>
           </div>
@@ -206,14 +209,18 @@ export default function ({ countries }: Props) {
           <div className="flex items-center gap-x-2">
             <Avatar />
             <p>
-              {trans.or} <span className="text-picks-dark">{trans.log_in}</span>{" "}
+              {trans.or}{" "}
+              <span className="text-picks-dark capitalize">{trans.log_in}</span>{" "}
               {trans.for_your_saved_addresses}
             </p>
           </div>
         </div>
       </div>
 
-      <DownloadAppSection />
+      <div className="bg-white p-2 md:p-10">
+        <DownloadAppSection />
+        <AboutUsGetStarted />
+      </div>
     </>
   );
 }
