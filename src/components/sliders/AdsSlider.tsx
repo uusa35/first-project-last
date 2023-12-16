@@ -63,9 +63,15 @@ export default function AdsSlider({ slides, lang, country }: Props) {
             <Link
               key={i}
               href={
-                s.screen_type === "home" && !isNull(s.vendor_id)
+                // s.screen_type === "home" && !isNull(s.vendor_id)
+                //   ? appLinks.vendor(lang, country, s.vendor_id.toString())
+                //   : appLinks.offers(lang, country, s.category_id?.toString())
+
+                !isNull(s.vendor_id)
                   ? appLinks.vendor(lang, country, s.vendor_id.toString())
-                  : appLinks.offers(lang, country, s.category_id?.toString())
+                  : !isNull(s.offer_id)
+                  ? appLinks.offers(lang, country, s.offer_id?.toString())
+                  : ""
               }
             >
               <Image
