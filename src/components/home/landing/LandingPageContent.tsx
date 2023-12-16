@@ -96,7 +96,7 @@ export default function ({ countries }: Props) {
   }, []);
 
   useEffect(() => {
-    if (areaSuccess && !isFetching && areas && areas?.data) {
+    if (areas && areas?.data) {
       // console.log(areas?.data);
 
       // areas for select
@@ -116,7 +116,7 @@ export default function ({ countries }: Props) {
         setSelectedArea("");
       }
     }
-  }, [areaSuccess, areas, isFetching]);
+  }, [country]);
 
   return (
     <>
@@ -132,7 +132,7 @@ export default function ({ countries }: Props) {
           Restaurant food, takeaway and groceries.
           <span className='text-picks-dark'>Delivered</span>
         </p>
-
+        
         {/* select country*/}
         {!isEmpty(allCountries) && (
           <div className='flex flex-col md:flex-row items-start gap-x-2  w-full px-8'>

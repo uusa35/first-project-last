@@ -61,12 +61,12 @@ export default function FlashOffers({ products, lang, country }: Props) {
     return (
       <div className='slider-arrow flex gap-x-2'>
         <button
-          className='arrow-btn prev w-8 h-8 justify-center items-center rounded-full bg-white'
+          className='arrow-btn next  p-3 rounded-full bg-white'
           onClick={() => refSlider?.current?.slickPrev()}>
           <ChevronLeftIcon className='rtl:rotate-180 w-4 h-4 font-extralight' />
         </button>
         <button
-          className='arrow-btn next w-8 h-8 rounded-full bg-white'
+          className='arrow-btn next  p-3 rounded-full bg-white'
           onClick={() => refSlider?.current?.slickNext()}>
           <ChevronRightIcon className='rtl:rotate-180 w-4 h-4' />
         </button>
@@ -87,11 +87,7 @@ export default function FlashOffers({ products, lang, country }: Props) {
         <Slider {...settings} ref={(c) => (refSlider.current = c)}>
           {products &&
             products.map((itm) => (
-              <OfferWidget
-                product={itm}
-                lang={lang}
-                key={itm.id}
-              />
+              <OfferWidget product={itm} lang={lang} key={itm.id} />
             ))}
         </Slider>
       </div>
