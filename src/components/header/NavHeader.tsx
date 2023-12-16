@@ -1,5 +1,5 @@
 "use client";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
@@ -38,6 +38,7 @@ export default function ({ lang, country, showMiddleNav }: Props) {
   const searchParams = useSearchParams();
   const pathName = usePathname()!;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [stickyClass, setStickyClass] = useState("relative");
   const navigation = [
     { name: trans.landing, href: appLinks.landing(lang) },
     {
@@ -67,14 +68,31 @@ export default function ({ lang, country, showMiddleNav }: Props) {
     );
   };
 
+  useEffect(() => {
+    window.addEventListener("scroll", stickNavbar);
+    return () => {
+      window.removeEventListener("scroll", stickNavbar);
+    };
+  }, []);
+  const stickNavbar = () => {
+    if (window !== undefined) {
+      let windowHeight = window.scrollY;
+      if (windowHeight >= 250) {
+        setStickyClass("fixed top-0");
+      } else {
+        setStickyClass("absolute");
+      }
+    }
+  };
+
   return (
     <div>
       <header
-        className={`absolute inset-x-0 top-0 z-50 ${
+        className={`${stickyClass} inset-x-0 top-0 z-50 bg-white/80 ${
           showMiddleNav ? `text-black` : `text-white`
         }`}>
         <nav
-          className='flex items-center justify-between p-6 lg:px-8'
+          className=' flex items-center justify-between p-6 lg:px-8 '
           aria-label='Global'>
           <div className='flex lg:flex-1 gap-x-8'>
             <div className='flex '>
