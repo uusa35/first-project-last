@@ -17,6 +17,8 @@ import {
   toggleRegisterModal,
 } from "@/src/redux/slices/settingSlice";
 import { setOrderType } from "@/app/actions";
+import Image from "next/image";
+import Logo from "@/appImages/logo.png";
 
 type Props = {
   lang: Locale["lang"];
@@ -26,7 +28,11 @@ type Props = {
 export default function ({ lang, country, showMiddleNav }: Props) {
   const trans: { [key: string]: string } = useContext(MainContext);
   const locales: Locale["lang"][] = ["ar", "en"];
-  const { locale, area } = useAppSelector((state) => state);
+  const {
+    locale,
+    area,
+    appSetting: { orderType },
+  } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -80,35 +86,46 @@ export default function ({ lang, country, showMiddleNav }: Props) {
                 <Bars3Icon className='h-6 w-6' aria-hidden='true' />
               </button>
             </div>
-            <a href='#' className='-m-1.5 p-1.5'>
+            <Link href={`/${country}`} className='-m-1.5 p-1.5'>
               <span className='sr-only'>Your Company</span>
-              <img
+              <Image
                 className='h-8 w-auto'
-                src='https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500'
+                src={Logo.src}
                 alt=''
+                width={100}
+                height={100}
               />
-            </a>
+            </Link>
           </div>
           <div
             className={`hidden ${
               showMiddleNav && `lg:flex`
             } lg:gap-x-12 overflow-hidden`}>
             <div className='flex justify-evenly items-center gap-x-4'>
-              <button
-                className='btn-default'
-                onClick={() => handleOrderType("pickup")}>
-                pickup
-              </button>
-              <button
-                className='btn-default'
-                onClick={() => handleOrderType("delivery")}>
-                delivery
-              </button>
-              <button
-                className='btn-default'
-                onClick={() => console.log("handle area here")}>
-                {area.name}
-              </button>
+              <div className='flex p-1 rounded-md bg-gray-100 gap-x-2 '>
+                <button
+                  className={`p-4 text-black rounded-md capitalize ${
+                    orderType === "pickup" ? "bg-gray-50" : "bg-gray-100"
+                  }`}
+                  onClick={() => handleOrderType("pickup")}>
+                  {trans.pickup}
+                </button>
+                <button
+                  className={`p-4 text-black rounded-md capitalize ${
+                    orderType === "delivery" ? "bg-gray-50" : "bg-gray-100"
+                  }`}
+                  onClick={() => handleOrderType("delivery")}>
+                  {trans.delivery}
+                </button>
+              </div>
+
+              {area && area.id !== 0 && (
+                <button
+                  className='btn-default'
+                  onClick={() => console.log("handle area here")}>
+                  {area.name}
+                </button>
+              )}
             </div>
             {navigation.map((item) => (
               <Link
@@ -145,14 +162,16 @@ export default function ({ lang, country, showMiddleNav }: Props) {
           <div className='fixed inset-0 z-50' />
           <Dialog.Panel className='fixed inset-y-0 ltr:right-0 ltr:left-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-white/10'>
             <div className='flex items-center justify-between'>
-              <a href='#' className='-m-1.5 p-1.5'>
-                <span className='sr-only'>Your Company</span>
-                <img
+              <Link href={`/${country}`} className='-m-1.5 p-1.5'>
+                <span className='sr-only'>{trans.picks}</span>
+                <Image
                   className='h-8 w-auto'
-                  src='https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500'
+                  src={Logo.src}
                   alt=''
+                  width={100}
+                  height={100}
                 />
-              </a>
+              </Link>
               <button
                 type='button'
                 className='-m-2.5 rounded-md p-2.5 text-gray-400'

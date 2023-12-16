@@ -285,8 +285,10 @@
     "about_us_desc": "looking for your breakfast,snaks or any food offers near to you ,we bring all of this closer to you with just a click of a button.",
     "see_all": "see all",
     "featured_stores": "featured stores",
-    "️flash_offers":"️flash offers",
-    "new_picks":"new picks",
- "️flash_offer":"️flash offer"
+    "️flash_offers": "️flash offers",
+    "new_picks": "new picks",
+    "️flash_offer": "️flash offer",
+    "pickup": "pickup",
+    "delivery": "delivery"
   }
 }

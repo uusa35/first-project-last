@@ -59,7 +59,6 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "*.digitaloceanspaces.com",
-
         port: "",
         pathname: "/**",
       },
@@ -72,6 +71,12 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "images.unsplash.com",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "tailwindui.com",
         port: "",
         pathname: "/**",
       },
