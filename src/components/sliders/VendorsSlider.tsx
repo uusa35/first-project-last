@@ -8,7 +8,7 @@ import { appLinks } from "@/src/links";
 import { Locale, countriesList } from "@/src/types";
 import { User } from "@/types/queries";
 import VendorWidget from "@/components/widgets/VendorWidget";
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+import { ArrowLeftIcon, ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 
 type Props = {
   vendors: User[];
@@ -61,30 +61,25 @@ export default function ({ vendors, lang, country, title }: Props) {
   };
   const RenderArrows = () => {
     return (
-      <div
-        className={`slider-arrow flex gap-x-2 ${
-          lang === "ar" && "flex-row-reverse"
-        }`}
-        dir={lang === "ar" ? "rtl" : "ltr"}
-      >
+      <div className='slider-arrow flex gap-x-2'>
         <button
-          className='arrow-btn prev w-8 h-8 rounded-full bg-[#EEE]'
+          className='arrow-btn next  p-3 rounded-full bg-white'
           onClick={() => refSlider?.current?.slickPrev()}>
-          <ArrowLeftIcon className='rtl:rotate-180' />
+          <ChevronLeftIcon className='rtl:rotate-180 w-4 h-4 font-extralight' />
         </button>
         <button
-          className='arrow-btn next w-8 h-8 rounded-full bg-[#EEE]'
+          className='arrow-btn next  p-3 rounded-full bg-white'
           onClick={() => refSlider?.current?.slickNext()}>
-          <ArrowLeftIcon className='rtl:rotate-180' />
+          <ChevronRightIcon className='rtl:rotate-180 w-4 h-4' />
         </button>
       </div>
     );
   };
   return (
-    <div className="my-5">
-      <div className="flex justify-between mb-3">
+    <div className='my-5'>
+      <div className='flex justify-between mb-3'>
         <p>{title}</p>
-        <div className="flex items-center gap-x-3">
+        <div className='flex items-center gap-x-3'>
           <p>See all</p>
           <RenderArrows />
         </div>
@@ -93,8 +88,7 @@ export default function ({ vendors, lang, country, title }: Props) {
         <Slider
           {...vendorSliderSettings}
           ref={(c) => (refSlider.current = c)}
-          rtl={lang === "ar"}
-        >
+          rtl={lang === "ar"}>
           {vendors &&
             vendors.map((itm) => (
               <Link
@@ -104,8 +98,7 @@ export default function ({ vendors, lang, country, title }: Props) {
                   country,
                   itm.id.toString(),
                   itm.store_name_en
-                )}
-              >
+                )}>
                 <VendorWidget vendor={itm} lang={lang} country={country} />
               </Link>
             ))}
