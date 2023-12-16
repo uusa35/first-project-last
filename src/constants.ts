@@ -169,9 +169,21 @@ export const vendorSliderSettings: any = {
   arrows: false,
   responsive: [
     {
+      breakpoint: 5000,
+      settings: {
+        slidesToShow: 4,
+      },
+    },
+    {
+      breakpoint: 1250,
+      settings: {
+        slidesToShow: 3,
+      },
+    },
+    {
       breakpoint: 1024,
       settings: {
-        slidesToShow: 2,
+        slidesToShow: 3,
       },
     },
     {

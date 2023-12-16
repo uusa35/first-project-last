@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @font-face {
   font-family: "Expo-Medium";
   src: url("../../public/fonts/alfont_com_AlFont_com_ExpoArabic-Medium.ttf")
@@ -27,8 +26,22 @@ body {
     @apply text-center bg-picks-dark hover:bg-green-700 rounded-md font-semibold text-white shadow-sm px-3.5 py-2.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white;
   }
 
-  .page-padding{
-    @apply px-10
+  .page-padding {
+    @apply px-10;
+  }
+
+  .arrow-btn {
+    @apply w-8 h-8 rounded-full rtl:rotate-180;
+  }
+  .slider-title {
+    @apply text-xl font-semibold;
+  }
+
+  .card-title {
+    @apply truncate font-semibold mt-2 text-sm
+  }
+  .card-desc {
+    @apply truncate text-xs text-picks-text-gray;
   }
 }
 

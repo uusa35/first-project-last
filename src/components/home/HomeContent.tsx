@@ -44,7 +44,7 @@ export default function ({
           vendors={vendors}
           lang={lang}
           country={country}
-          title='New Picks'
+          title='new_picks'
         />
         {/* flash offers */}
         <FlashOffers products={products} lang={lang} country={country} />
@@ -54,7 +54,7 @@ export default function ({
           vendors={featuredVendors}
           lang={lang}
           country={country}
-          title='Featured Stores'
+          title='featured_stores'
         />
       </div>
     </div>

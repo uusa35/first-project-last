@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
 import Slider from "react-slick";
 import { vendorSliderSettings } from "@/src/constants";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
@@ -8,7 +8,7 @@ import { appLinks } from "@/src/links";
 import { Locale, countriesList } from "@/src/types";
 import { User } from "@/types/queries";
 import VendorWidget from "@/components/widgets/VendorWidget";
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+import { MainContext } from "../layouts/MainContentLayout";
 
 type Props = {
   vendors: User[];
@@ -18,47 +18,9 @@ type Props = {
 };
 
 export default function ({ vendors, lang, country, title }: Props) {
+  const trans: { [key: string]: string } = useContext(MainContext);
   const refSlider = useRef<Slider | null>(null);
-  const settings: any = {
-    dots: false,
-    speed: 500,
-    infinite: false,
-    slidesToScroll: 1,
-    arrows: false,
-    rtl: lang === "ar",
-    responsive: [
-      {
-        breakpoint: 5000,
-        settings: {
-          slidesToShow: 5,
-        },
-      },
-      {
-        breakpoint: 1250,
-        settings: {
-          slidesToShow: 4,
-        },
-      },
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 1,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-        },
-      },
-    ],
-  };
+
   const RenderArrows = () => {
     return (
       <div
@@ -68,14 +30,16 @@ export default function ({ vendors, lang, country, title }: Props) {
         dir={lang === "ar" ? "rtl" : "ltr"}
       >
         <button
-          className='arrow-btn prev w-8 h-8 rounded-full bg-[#EEE]'
-          onClick={() => refSlider?.current?.slickPrev()}>
-          <ArrowLeftIcon className='rtl:rotate-180' />
+          className="arrow-btn prev bg-[#EEE]"
+          onClick={() => refSlider?.current?.slickPrev()}
+        >
+          <KeyboardArrowLeft className="rtl:rotate-180" />
         </button>
         <button
-          className='arrow-btn next w-8 h-8 rounded-full bg-[#EEE]'
-          onClick={() => refSlider?.current?.slickNext()}>
-          <ArrowLeftIcon className='rtl:rotate-180' />
+          className="arrow-btn next bg-[#EEE]"
+          onClick={() => refSlider?.current?.slickNext()}
+        >
+          <KeyboardArrowRight className="rtl:rotate-180" />
         </button>
       </div>
     );
@@ -83,9 +47,9 @@ export default function ({ vendors, lang, country, title }: Props) {
   return (
     <div className="my-5">
       <div className="flex justify-between mb-3">
-        <p>{title}</p>
-        <div className="flex items-center gap-x-3">
-          <p>See all</p>
+        <p className="slider-title">{trans[title]}</p>
+        <div className="flex items-center gap-x-3 text-sm">
+          <p>{trans.see_all}</p>
           <RenderArrows />
         </div>
       </div>

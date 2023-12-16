@@ -21,7 +21,6 @@ export default function AdsSlider({ slides, lang, country }: Props) {
     infinite: false,
     slidesToScroll: 1,
     arrows: true,
-    rtl: lang === "ar",
     responsive: [
       {
         breakpoint: 5000,
