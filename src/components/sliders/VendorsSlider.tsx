@@ -23,12 +23,7 @@ export default function ({ vendors, lang, country, title }: Props) {
 
   const RenderArrows = () => {
     return (
-      <div
-        className={`slider-arrow flex gap-x-2 ${
-          lang === "ar" && "flex-row-reverse"
-        }`}
-        dir={lang === "ar" ? "rtl" : "ltr"}
-      >
+      <div className='slider-arrow flex gap-x-2'>
         <button
           className="arrow-btn prev bg-[#EEE]"
           onClick={() => refSlider?.current?.slickPrev()}
@@ -57,8 +52,7 @@ export default function ({ vendors, lang, country, title }: Props) {
         <Slider
           {...vendorSliderSettings}
           ref={(c) => (refSlider.current = c)}
-          rtl={lang === "ar"}
-        >
+          rtl={lang === "ar"}>
           {vendors &&
             vendors.map((itm) => (
               <Link
@@ -68,8 +62,7 @@ export default function ({ vendors, lang, country, title }: Props) {
                   country,
                   itm.id.toString(),
                   itm.store_name_en
-                )}
-              >
+                )}>
                 <VendorWidget vendor={itm} lang={lang} country={country} />
               </Link>
             ))}

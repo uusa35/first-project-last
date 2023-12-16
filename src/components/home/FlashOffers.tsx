@@ -60,7 +60,7 @@ export default function FlashOffers({ products, lang, country }: Props) {
     ],
   };
 
-  
+
   const RenderArrows = () => {
     return (
       <div

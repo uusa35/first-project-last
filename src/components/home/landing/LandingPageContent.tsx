@@ -97,7 +97,7 @@ export default function ({ countries }: Props) {
   }, [countries]);
 
   useEffect(() => {
-    if (areaSuccess && !isFetching && areas && areas?.data) {
+    if (areas && areas?.data) {
       // console.log(areas?.data);
 
       // areas for select
@@ -117,7 +117,7 @@ export default function ({ countries }: Props) {
         setSelectedArea("");
       }
     }
-  }, [areaSuccess, areas, isFetching]);
+  }, [country]);
 
   return (
     <>
@@ -133,7 +133,7 @@ export default function ({ countries }: Props) {
           {trans.landing_title1}
           <span className="text-picks-dark capitalize">{trans.delivered}</span>
         </p>
-
+        
         {/* select country*/}
         {!isEmpty(allCountries) && (
           <div className="flex items-start gap-x-2  w-full px-8">

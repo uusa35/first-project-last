@@ -4,7 +4,11 @@ import Slider from "react-slick";
 import { Locale, countriesList } from "@/src/types";
 import { Product } from "@/types/queries";
 import ProductWidget from "@/components/widgets/ProductWidget";
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowLeftIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+} from "@heroicons/react/24/outline";
 
 type Props = {
   products: Product[];
@@ -60,14 +64,14 @@ export default function ({ products, lang, country, title }: Props) {
     return (
       <div className='slider-arrow flex gap-x-2'>
         <button
-          className='arrow-btn prev w-8 h-8 rounded-full bg-[#EEE]'
+          className='arrow-btn next  p-3 rounded-full bg-white'
           onClick={() => refSlider?.current?.slickPrev()}>
-          <ArrowLeftIcon className='rtl:rotate-180' />
+          <ChevronLeftIcon className='rtl:rotate-180 w-4 h-4 font-extralight' />
         </button>
         <button
-          className='arrow-btn next w-8 h-8 rounded-full bg-[#EEE]'
+          className='arrow-btn next  p-3 rounded-full bg-white'
           onClick={() => refSlider?.current?.slickNext()}>
-          <ArrowLeftIcon className='rtl:rotate-180' />
+          <ChevronRightIcon className='rtl:rotate-180 w-4 h-4' />
         </button>
       </div>
     );

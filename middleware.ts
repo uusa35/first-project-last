@@ -24,8 +24,6 @@ export default async function middleware(request: NextRequest, response: NextRes
   const pathName = request.nextUrl.pathname;
   const currentRequestedLocale = pathName.split('/')[1];
   const country: string | undefined = pathName.split('/')[2] ?? 'kw';
-  console.log('the country======>', country);
-
   const pathnameIsMissingLocale = await i18n.locales.every(
     locale => !pathName.startsWith(`/${locale}/`) && pathName !== `/${locale}`
   )
@@ -52,7 +50,6 @@ export default async function middleware(request: NextRequest, response: NextRes
     ) {
       const cookieCountry: any = request.cookies.get('NEXT_COUNTRY')?.value;
       if (cookieCountry) {
-        // console.log('thecookiecountry =====>', JSON.parse(cookieCountry))
         const cookieCountryVal = JSON.parse(cookieCountry);
         if (cookieCountryVal.country_code.toLowerCase() === country) {
           console.log('case 1');
