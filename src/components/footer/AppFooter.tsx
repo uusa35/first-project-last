@@ -120,7 +120,7 @@ export default function () {
               <div className='ml-4 flex-shrink-0'>
                 <button
                   type='submit'
-                  className='flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-900'>
+                  className='flex w-full items-center justify-center rounded-md border border-transparent bg-picks-dark px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-picks-dark focus:outline-none focus:ring-2 focus:ring-picks-dark focus:ring-offset-2 focus:ring-offset-gray-900'>
                   Sign up
                 </button>
               </div>

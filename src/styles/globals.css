@@ -38,13 +38,25 @@ body {
   }
 
   .card-title {
-    @apply truncate font-semibold mt-2 text-sm
+    @apply truncate font-semibold mt-2 text-sm;
   }
   .card-desc {
     @apply truncate text-xs text-picks-text-gray;
   }
 }
 
-.font-expo-medium {
+.font-picks-medium {
+  font-family: "Expo-Medium", "sans-serif" !important;
+}
+
+body,
+html,
+div,
+label,
+span,
+h1,
+h2,
+h3,
+a {
   font-family: "Expo-Medium", "sans-serif" !important;
 }

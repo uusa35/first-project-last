@@ -25,25 +25,23 @@ export default function ({ vendors, lang, country, title }: Props) {
     return (
       <div className='slider-arrow flex gap-x-2'>
         <button
-          className="arrow-btn prev bg-[#EEE]"
-          onClick={() => refSlider?.current?.slickPrev()}
-        >
-          <KeyboardArrowLeft className="rtl:rotate-180" />
+          className='arrow-btn prev bg-[#EEE]'
+          onClick={() => refSlider?.current?.slickPrev()}>
+          <KeyboardArrowLeft className='' />
         </button>
         <button
-          className="arrow-btn next bg-[#EEE]"
-          onClick={() => refSlider?.current?.slickNext()}
-        >
-          <KeyboardArrowRight className="rtl:rotate-180" />
+          className='arrow-btn next bg-[#EEE]'
+          onClick={() => refSlider?.current?.slickNext()}>
+          <KeyboardArrowRight className='' />
         </button>
       </div>
     );
   };
   return (
-    <div className="my-5">
-      <div className="flex justify-between mb-3">
-        <p className="slider-title">{trans[title]}</p>
-        <div className="flex items-center gap-x-3 text-sm">
+    <div className='my-5'>
+      <div className='flex justify-between mb-3'>
+        <p className='slider-title'>{trans[title]}</p>
+        <div className='flex items-center gap-x-3 text-sm'>
           <p>{trans.see_all}</p>
           <RenderArrows />
         </div>

@@ -9,6 +9,7 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
 } from "@heroicons/react/24/outline";
+import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 
 type Props = {
   products: Product[];
@@ -64,14 +65,14 @@ export default function ({ products, lang, country, title }: Props) {
     return (
       <div className='slider-arrow flex gap-x-2'>
         <button
-          className='arrow-btn next  p-3 rounded-full bg-white'
+          className='arrow-btn prev bg-[#EEE]'
           onClick={() => refSlider?.current?.slickPrev()}>
-          <ChevronLeftIcon className='rtl:rotate-180 w-4 h-4 font-extralight' />
+          <KeyboardArrowLeft />
         </button>
         <button
-          className='arrow-btn next  p-3 rounded-full bg-white'
+          className='arrow-btn next bg-[#EEE]'
           onClick={() => refSlider?.current?.slickNext()}>
-          <ChevronRightIcon className='rtl:rotate-180 w-4 h-4' />
+          <KeyboardArrowRight />
         </button>
       </div>
     );

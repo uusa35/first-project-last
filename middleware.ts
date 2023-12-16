@@ -47,6 +47,7 @@ export default async function middleware(request: NextRequest, response: NextRes
       && !request.nextUrl.pathname.includes('faqs')
       && !request.nextUrl.pathname.includes('about')
       && !request.nextUrl.pathname.includes('contactus')
+      && !request.nextUrl.pathname.includes('privacy')
     ) {
       const cookieCountry: any = request.cookies.get('NEXT_COUNTRY')?.value;
       if (cookieCountry) {

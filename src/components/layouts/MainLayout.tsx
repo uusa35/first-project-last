@@ -21,13 +21,13 @@ const MainLayout: FC<Props> = ({ lang, children }): React.ReactNode => {
   return (
     <div className={`w-full`}>
       {children}
-      
+
       <ToastContainer
         position={locale.isRTL ? "top-left" : "top-right"}
         bodyClassName={() =>
-          "flex flex-1 flex-row font-expo-medium items-center"
+          "flex flex-1 flex-row font-picks-medium items-center"
         }
-        toastClassName={`font-expo-medium opacity-90`}
+        toastClassName={`font-picks-medium opacity-90`}
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={true}
