@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Slider from "react-slick";
 import CategoryWidget from "@/components/widgets/CategoryWidget";
@@ -12,9 +13,8 @@ type Props = {
 };
 
 export default function CategoriesSlider({ country, lang, categories }: Props) {
-  
   return (
-    <div className="py-3 relative mt-24 page-padding bg-picks-gray border-b border-picks-border">
+    <div className='py-3 relative mt-24 page-padding bg-picks-gray border-b border-picks-border'>
       <Slider {...categoriesSliderSettings} rtl={lang === "ar"}>
         {categories &&
           categories.map((itm: Category) => (
@@ -23,7 +23,6 @@ export default function CategoriesSlider({ country, lang, categories }: Props) {
               key={itm.id}
               lang={lang}
               country={country}
-              
             />
           ))}
       </Slider>

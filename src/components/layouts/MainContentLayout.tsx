@@ -17,7 +17,10 @@ import {
   setLocaleCookie,
 } from "@/app/actions";
 import { setCountry } from "@/redux/slices/countrySlice";
-import { useLazyGetCountryByNameQuery } from "@/redux/api/countryApi";
+import {
+  useLazyGetCountriesQuery,
+  useLazyGetCountryByNameQuery,
+} from "@/redux/api/countryApi";
 import { useLazyGetAreasQuery } from "@/redux/api/areaApi";
 import { resetArea } from "@/src/redux/slices/areaSlice";
 import Image from "next/image";
@@ -25,6 +28,7 @@ import LoginModal from "@/components/models/LoginModal";
 import RegisterModal from "../models/RegisterModal";
 import ForgetPasswordModal from "../models/ForgetPasswordModal";
 import VerificationModal from "../models/VerificationModal";
+import { AppQueryResult, Country } from "@/src/types/queries";
 
 type Props = {
   children: React.ReactNode;
@@ -44,13 +48,21 @@ const MainContextLayout: FC<Props> = ({
 }) => {
   const {
     locale,
-    country: { country_code },
+    country: { country_code, id },
     area,
   } = useAppSelector((state) => state);
   const pathName = usePathname();
   const dispatch = useAppDispatch();
   const [triggerGetCountryByName, { data, isSuccess }] =
     useLazyGetCountryByNameQuery();
+  const [
+    triggerGetCountries,
+    { data: countries, isSuccess: countriesSuccess },
+  ] = useLazyGetCountriesQuery<{
+    data: AppQueryResult<Country[]>;
+    isSuccess: boolean;
+  }>();
+
   const [triggerGetAreas, { data: areas }] = useLazyGetAreasQuery();
   const navigation = [
     { name: trans.home, href: `/${lang}`, label: `home` },
@@ -90,12 +102,15 @@ const MainContextLayout: FC<Props> = ({
           matches: trans["validation.matches"],
         },
       });
+      triggerGetCountries(undefined, false);
     }
   }, [lang]);
 
   // sets cookies if country changed from any page
   useEffect(() => {
+    // if (country !== undefined && (country !== country_code || id === 0)) {
     if (country !== undefined) {
+      console.log("fired from useEffect");
       triggerGetCountryByName(country, false).then((r: any) => {
         if (r.data && r.data.data) {
           dispatch(setCountry(r.data.data));

@@ -21,7 +21,10 @@ import { useLazyLoginQuery } from "@/src/redux/api/authApi";
 import { MainContext } from "@/components/layouts/MainContentLayout";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { AppQueryResult, Country } from "@/src/types/queries";
-import { useLazyGetCountriesQuery } from "@/src/redux/api/countryApi";
+import {
+  useGetCountriesQuery,
+  useLazyGetCountriesQuery,
+} from "@/src/redux/api/countryApi";
 import { EyeIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
 type Inputs = {
@@ -44,13 +47,8 @@ export default function () {
     "password"
   );
   const [triggerLogin] = useLazyLoginQuery();
-  const [
-    triggerGetCountries,
-    { data: countries, isSuccess: countriesSuccess },
-  ] = useLazyGetCountriesQuery<{
-    data: AppQueryResult<Country[]>;
-    isSuccess: boolean;
-  }>();
+  const { data: countries, isSuccess: countriesSuccess } =
+    useGetCountriesQuery();
   const {
     handleSubmit,
     register,
@@ -66,10 +64,6 @@ export default function () {
       session_id: session_id,
     },
   });
-
-  useEffect(() => {
-    triggerGetCountries();
-  }, []);
 
   const onSubmit: SubmitHandler<Inputs> = async (body) => {
     dispatch(enableLoading());
