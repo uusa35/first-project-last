@@ -7,7 +7,11 @@ const initialState: Props = {
   name: '',
   name_en: 'kuwait',
   country_code: 'kw',
-  code: ''
+  code: '',
+  web_name: {
+    ar: '',
+    en: ''
+  },
 };
 
 export const countrySlice = createSlice({
