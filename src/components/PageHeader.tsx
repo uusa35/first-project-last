@@ -15,10 +15,10 @@ export default function ({
         src={`${img}`}
         alt='testing'
         width={1000}
-        height={1000}
-        className='absolute inset-0 -z-10 h-[60vh] w-full object-cover'
+        height={400}
+        className='absolute inset-0 -z-10 h-[30vh] w-full object-cover border-8 border-blue-800'
       />
-      <div className='py-8 px-12 max-w-2xl  text-white flex flex-col  justify-end items-start h-[50vh]'>
+      <div className='py-8 px-12 max-w-2xl  text-white flex flex-col  justify-end items-start h-[20vh]'>
         <h1 className='text-7xl  text-center  capitalize'>{title}</h1>
         {description && <p className='text-lg'>{description}</p>}
       </div>

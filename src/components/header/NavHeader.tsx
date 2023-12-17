@@ -5,7 +5,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import Link from "next/link";
 import { useParams, usePathname, useSearchParams } from "next/navigation";
-import { changePathName } from "@/utils/helpers";
+import { changePathName, globalMaxWidth } from "@/utils/helpers";
 import { Locale, countriesList } from "@/types/index";
 import { appLinks } from "@/src/links";
 import { MainContext } from "@/layouts/MainContentLayout";
@@ -19,6 +19,10 @@ import {
 import { setOrderType } from "@/app/actions";
 import LogoDark from "@/appImages/logo_dark.svg";
 import LogoLight from "@/appImages/logo_light.svg";
+import ArFlag from "@/appIcons/ar.svg";
+import MarkerImg from "@/appIcons/marker.svg";
+import AreaDropDown from "../home/AreaDropDown";
+
 type Props = {
   lang: Locale["lang"];
   country: countriesList;
@@ -26,7 +30,6 @@ type Props = {
 };
 export default function ({ lang, country, showMiddleNav = false }: Props) {
   const trans: { [key: string]: string } = useContext(MainContext);
-
   const locales: Locale["lang"][] = ["ar", "en"];
   const {
     locale,
@@ -94,11 +97,11 @@ export default function ({ lang, country, showMiddleNav = false }: Props) {
 
   return (
     <div>
-      <header className={`${stickyClass} inset-x-0 top-0 z-50 `}>
+      <header className={`${stickyClass}  top-0 z-50 ${globalMaxWidth} w-full`}>
         <nav
           className=' flex items-center justify-between p-6 lg:px-8 '
           aria-label='Global'>
-          <div className='flex lg:flex-1 gap-x-8'>
+          <div className='flex'>
             <div className='flex'>
               <button
                 type='button'
@@ -121,56 +124,53 @@ export default function ({ lang, country, showMiddleNav = false }: Props) {
             className={`hidden ${
               showMiddleNav && `lg:flex`
             } lg:gap-x-12 overflow-hidden`}>
-            <div className='flex justify-evenly items-center gap-x-4'>
-              <div className='flex p-1 rounded-md bg-gray-100 gap-x-2 '>
+            <div className='flex flex-row justify-evenly items-start gap-x-2'>
+              <div className='flex flex-row p-1 rounded-md bg-gray-100 '>
                 <button
-                  className={`p-4 text-black rounded-md capitalize ${
-                    orderType === "pickup" ? "bg-gray-50" : "bg-gray-100"
+                  className={`p-3 text-black rounded-md capitalize ${
+                    orderType === "pickup" ? "bg-white" : "bg-gray-100"
                   }`}
                   onClick={() => handleOrderType("pickup")}>
                   {trans.pickup}
                 </button>
                 <button
-                  className={`p-4 text-black rounded-md capitalize ${
-                    orderType === "delivery" ? "bg-gray-50" : "bg-gray-100"
+                  className={`p-3 text-black rounded-md capitalize ${
+                    orderType === "delivery" ? "bg-white" : "bg-gray-100"
                   }`}
                   onClick={() => handleOrderType("delivery")}>
                   {trans.delivery}
                 </button>
               </div>
-
-              {area && area.id !== 0 && (
-                <button
-                  className='btn-default'
-                  onClick={() => console.log("handle area here")}>
-                  {area.name}
-                </button>
-              )}
+              <AreaDropDown />
             </div>
-            {navigation.map((item) => (
+
+            {/* {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
                 className='text-sm font-semibold leading-6 capitalize'>
                 {item.name}
               </Link>
-            ))}
+            ))} */}
           </div>
           <div className='flex lg:flex-1 lg:justify-end gap-x-4 '>
-            {locales.map((item, i: number) => (
-              <button
-                key={i}
-                // href={`${changePathName(lang, item, pathName)}?${
-                //   searchParams && searchParams.toString()
-                // }`}
-                onClick={() => handleClick(item)}
-                className='text-sm font-semibold leading-6 '>
-                {item}
-              </button>
-            ))}
-            <button onClick={() => dispatch(toggleLoginModal())}>Login</button>
-            <button onClick={() => dispatch(toggleRegisterModal())}>
-              Sign up
+            <button
+              className={`p-3 w-32 bg-white/80 rounded-lg capitalize text-lg text-black`}
+              onClick={() => dispatch(toggleRegisterModal())}>
+              {trans.signup}
+            </button>
+            <button
+              className={`p-3 w-32 bg-white/30 rounded-lg capitalize text-lg`}
+              onClick={() => dispatch(toggleLoginModal())}>
+              {trans.login}
+            </button>
+            <button
+              onClick={() => handleClick(lang === "ar" ? "en" : "ar")}
+              className='text-sm font-semibold leading-6 '>
+              <div className='flex flex-row justify-center items-center gap-x-3'>
+                <ArFlag className='w-8 h-8 ' />
+                <div>{lang === "ar" ? trans.english : trans.arabic}</div>
+              </div>
             </button>
           </div>
         </nav>

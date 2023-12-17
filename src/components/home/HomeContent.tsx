@@ -29,7 +29,7 @@ export default function ({
   featuredVendors,
 }: Props) {
   return (
-    <div>
+    <div className=''>
       <CategoriesSlider lang={lang} categories={categories} country={country} />
       {/* filters and   items*/}
       <div className='page-padding'>

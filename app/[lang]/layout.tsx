@@ -3,7 +3,7 @@ import { Locale } from "@/types/index";
 import Providers from "@/src/redux/provider";
 import MainLayout from "@/src/components/layouts/MainLayout";
 import { getSetting } from "@/utils/setting";
-import { removeTags } from "@/utils/helpers";
+import { globalMaxWidth, removeTags } from "@/utils/helpers";
 
 type Props = {
   params: { lang: Locale["lang"] };
@@ -19,7 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <html
-      className='min-h-screen max-w-8xl mx-auto '
+      className={`min-h-screen ${globalMaxWidth} mx-auto `}
       lang={params.lang}
       dir={params.lang === "ar" ? "rtl" : "ltr"}>
       <body

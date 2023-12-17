@@ -66,3 +66,4 @@ export const revalidate = {
     max: 180
 }
 
+export const globalMaxWidth = 'max-w-8xl';

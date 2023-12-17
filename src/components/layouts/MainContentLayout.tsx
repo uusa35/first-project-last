@@ -140,9 +140,10 @@ const MainContextLayout: FC<Props> = ({
       removeAreaCookie();
       dispatch(resetArea());
     }
-  }, [country_code, id, country]);
+  }, [country_code, id, country, lang]);
 
   console.log("country_code", country_code, id);
+  console.log("areas", areas);
 
   return (
     <MainContext.Provider value={trans}>

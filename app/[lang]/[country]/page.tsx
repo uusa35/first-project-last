@@ -41,8 +41,7 @@ export default async function ({ params: { lang, country } }: Props) {
       trans={trans}
       lang={lang}
       country={country}
-      showMiddleNav={true}
-    >
+      showMiddleNav={true}>
       <HomeContent
         lang={lang}
         country={country}
