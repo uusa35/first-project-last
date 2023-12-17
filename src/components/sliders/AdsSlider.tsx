@@ -55,31 +55,31 @@ export default function AdsSlider({ slides, lang, country }: Props) {
     ],
   };
 
+  console.log("slides", slides);
   return (
-    <div className="py-4">
+    <div className='py-4'>
       {!isEmpty(slides) && (
         <Slider {...settings}>
           {slides.map((s: Slide, i: number) => (
             <Link
               key={i}
               href={
-                // s.screen_type === "home" && !isNull(s.vendor_id)
-                //   ? appLinks.vendor(lang, country, s.vendor_id.toString())
-                //   : appLinks.offers(lang, country, s.category_id?.toString())
-
-                !isNull(s.vendor_id)
+                s.screen_type === "home" && !isNull(s.vendor_id)
                   ? appLinks.vendor(lang, country, s.vendor_id.toString())
-                  : !isNull(s.offer_id)
-                  ? appLinks.offers(lang, country, s.offer_id?.toString())
-                  : ""
-              }
-            >
+                  : !isNull(s.category_id)
+                  ? appLinks.offers(
+                      lang,
+                      country,
+                      `category_id=${s.category_id?.toString()}`
+                    )
+                  : `/${lang}/${country}`
+              }>
               <Image
                 alt={"slider"}
                 src={s.image}
                 width={1000}
                 height={1000}
-                className="w-full  h-auto aspect-[2/1] object-fill object-bottom"
+                className='w-full  h-auto aspect-[2/1] object-fill object-bottom'
               />
             </Link>
           ))}

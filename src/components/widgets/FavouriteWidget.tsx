@@ -16,12 +16,12 @@ export default function ({ isFav, id }: Props) {
   };
 
   return (
-    <div key={id} onClick={handleFavourite}>
+    <button key={id} onClick={handleFavourite} className='z-40'>
       {isFavourite ? (
         <Favourite className='h-7 w-7' />
       ) : (
         <NotFavourite className='h-7 w-7' />
       )}
-    </div>
+    </button>
   );
 }
