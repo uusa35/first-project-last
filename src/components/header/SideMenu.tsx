@@ -56,10 +56,11 @@ export default function () {
         <ul role='list' className='flex flex-1 flex-col gap-y-7'>
           <li>
             <ul role='list' className='-mx-2 space-y-1'>
-              {navigation.map((item) => (
+              {navigation.map((item, i) => (
                 <li key={item.name}>
                   {!item.children ? (
                     <a
+                      key={i}
                       href={item.href}
                       className={classNames(
                         item.current ? "bg-gray-50" : "hover:bg-gray-50",
@@ -72,7 +73,7 @@ export default function () {
                       {item.name}
                     </a>
                   ) : (
-                    <Disclosure as='div'>
+                    <Disclosure as='div' key={i}>
                       {({ open }) => (
                         <>
                           <Disclosure.Button

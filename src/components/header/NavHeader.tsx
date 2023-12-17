@@ -157,6 +157,7 @@ export default function ({ lang, country, showMiddleNav }: Props) {
           <div className='flex lg:flex-1 lg:justify-end gap-x-4 '>
             {locales.map((item, i: number) => (
               <button
+                key={i}
                 // href={`${changePathName(lang, item, pathName)}?${
                 //   searchParams && searchParams.toString()
                 // }`}

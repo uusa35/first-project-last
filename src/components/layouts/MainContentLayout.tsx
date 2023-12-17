@@ -50,10 +50,7 @@ const MainContextLayout: FC<Props> = ({
 }) => {
   const {
     locale,
-    country: {
-      country_code,
-      id: { country_id },
-    },
+    country: { country_code, id },
     area,
   } = useAppSelector((state) => state);
 
@@ -125,19 +122,27 @@ const MainContextLayout: FC<Props> = ({
   useEffect(() => {
     if (country === country_code) {
       triggerGetAreas(undefined, false).then((r: any) => {
-        if (r && r.data && r.data.success) {
-          const area: Area | undefined = first(r.data.data);
-          if (area !== undefined) {
-            dispatch(setArea(area));
-            setAreaCookie(JSON.stringify(area));
+        if (r && r.data && r.data.success && r.data.data) {
+          const serverArea: Area | undefined = first(r.data.data);
+          console.log("serverArea =====>", serverArea);
+          // if no area // if area.country.id !== currrent country
+          if (
+            area.country.id !== id &&
+            serverArea !== undefined &&
+            serverArea.country
+          ) {
+            dispatch(setArea(serverArea));
+            setAreaCookie(JSON.stringify(serverArea));
           }
-        } else {
-          removeAreaCookie();
-          dispatch(resetArea());
         }
       });
+    } else {
+      removeAreaCookie();
+      dispatch(resetArea());
     }
-  }, [country_code, country_id, country]);
+  }, [country_code, id, country]);
+
+  console.log("country_code", country_code, id);
 
   return (
     <MainContext.Provider value={trans}>

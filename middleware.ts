@@ -6,6 +6,7 @@ import Negotiator from 'negotiator'
 import { getCountry } from '@/utils/country'
 import { cookies } from 'next/headers'
 import { Country } from '@/types/queries'
+import { getCountryNameCookie } from './app/actions'
 
 function getLocale(request: NextRequest): string | undefined {
   const negotiatorHeaders: Record<string, string> = {}
@@ -23,7 +24,7 @@ function getLocale(request: NextRequest): string | undefined {
 export default async function middleware(request: NextRequest, response: NextResponse) {
   const pathName = request.nextUrl.pathname;
   const currentRequestedLocale = pathName.split('/')[1];
-  const country: string | undefined = pathName.split('/')[2] ?? 'kw';
+  const country: string | undefined = pathName.split('/')[2] ?? await getCountryNameCookie();
   const pathnameIsMissingLocale = await i18n.locales.every(
     locale => !pathName.startsWith(`/${locale}/`) && pathName !== `/${locale}`
   )

@@ -36,6 +36,7 @@ export default async function (props: Props) {
         <h1>Vendors</h1>
         {vendors.data?.map((s: User, i) => (
           <Link
+            key={i}
             href={appLinks.vendor(
               lang,
               country,

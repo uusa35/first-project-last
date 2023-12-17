@@ -43,7 +43,7 @@ export const apiSlice = createApi({
       // if (api_token) {
       //   headers.set("Authorization", `Bearer ${api_token}`);
       // }
-
+      console.log('======== headers ===========', headers)
       return headers;
     },
     credentials: "same-origin",

@@ -41,9 +41,9 @@ export default function () {
           <div className='mt-3 flex items-center'>
             <div>
               <div className='flex items-center'>
-                {[0, 1, 2, 3, 4].map((rating) => (
+                {[0, 1, 2, 3, 4].map((rating, i) => (
                   <StarIcon
-                    key={rating}
+                    key={i}
                     className={classNames(
                       reviews.average > rating
                         ? "text-yellow-400"
