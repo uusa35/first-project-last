@@ -85,7 +85,7 @@ export default function ({ lang, country, showMiddleNav = false }: Props) {
   const stickNavbar = () => {
     if (window !== undefined) {
       let windowHeight = window.scrollY;
-      if (windowHeight >= 250) {
+      if (windowHeight >= 20) {
         setStickyClass("fixed  bg-white/80 text-black");
       } else {
         setStickyClass(
