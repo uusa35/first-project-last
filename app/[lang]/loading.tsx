@@ -1,9 +1,7 @@
 "use client";
 import type { Locale } from "@/i18n.config";
 import { useParams } from "next/navigation";
-import Logo from "@/appImages/logo.png";
-import { logoBlured } from "@/src/constants";
-import Image from "next/image";
+import Logo from "@/appImages/logo.svg";
 
 type Props = {
   params: { lang: Locale };
@@ -15,15 +13,7 @@ export default function Loading() {
   return (
     <div className='h-screen w-screen flex justify-center items-center'>
       <div className='w-1/3 md:w-20 xl:w-24 p-2'>
-        <Image
-          className='w-full h-auto object-contain bg-white'
-          src={Logo}
-          alt='picks'
-          fill={false}
-          placeholder='blur'
-          loading='lazy'
-          blurDataURL={logoBlured}
-        />
+        <Logo className='h-8 w-36 text-white' />
       </div>
     </div>
   );

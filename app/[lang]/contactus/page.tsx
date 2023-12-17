@@ -6,7 +6,7 @@ import { getCountryNameCookie } from "@/app/actions";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import Image from "next/image";
 import PageHeader from "@/src/components/PageHeader";
-import ContactusImg from "@/appImages/about_us.png";
+import ContactusImg from "@/appImages/contactus.png";
 type Props = {
   params: { lang: Locale["lang"] };
 };

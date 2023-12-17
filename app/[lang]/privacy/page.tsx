@@ -6,7 +6,7 @@ import { getCountryNameCookie } from "@/app/actions";
 import Image from "next/image";
 import PageHeader from "@/src/components/PageHeader";
 import DownloadAppSection from "@/src/components/home/DownloadAppSection";
-
+import PrivacyImg from "@/appImages/privacy_img.png";
 type Props = {
   params: { lang: Locale["lang"] };
 };
@@ -78,7 +78,7 @@ export default async function ({ params: { lang } }: Props) {
 
   return (
     <MainContextLayout trans={trans} lang={lang} country={country ?? "kw"}>
-      <PageHeader img={``} title={trans.privacy_policy} />
+      <PageHeader img={PrivacyImg.src} title={trans.privacy_policy} />
       <div className='mt-20 text-black px-4 md:px-8 min-h-screen'>
         <h1 className='capitalize text-2xl'>
           what information do we collect ?

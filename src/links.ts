@@ -10,6 +10,10 @@ export const appLinks = {
         `/${lang}/aboutus`,
     contactus: (lang: Locale['lang']) =>
         `/${lang}/contactus`,
+    joinus: (lang: Locale['lang']) =>
+        `/${lang}/joinus`,
+    faqs: (lang: Locale['lang']) =>
+        `/${lang}/faqs`,
     terms: (lang: Locale['lang']) =>
         `/${lang}/terms`,
     offers: (lang: Locale['lang'], country: countriesList, search?: string) =>

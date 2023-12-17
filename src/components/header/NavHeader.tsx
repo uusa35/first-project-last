@@ -17,15 +17,14 @@ import {
   toggleRegisterModal,
 } from "@/src/redux/slices/settingSlice";
 import { setOrderType } from "@/app/actions";
-import Image from "next/image";
-import Logo from "@/appImages/logo.png";
+import Logo from "@/appImages/logo.svg";
 
 type Props = {
   lang: Locale["lang"];
   country: countriesList;
   showMiddleNav: boolean;
 };
-export default function ({ lang, country, showMiddleNav }: Props) {
+export default function ({ lang, country, showMiddleNav = false }: Props) {
   const trans: { [key: string]: string } = useContext(MainContext);
   const locales: Locale["lang"][] = ["ar", "en"];
   const {
@@ -38,7 +37,9 @@ export default function ({ lang, country, showMiddleNav }: Props) {
   const searchParams = useSearchParams();
   const pathName = usePathname()!;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [stickyClass, setStickyClass] = useState("relative");
+  const [stickyClass, setStickyClass] = useState(
+    `absolute ${showMiddleNav ? "text-black" : "text-white"}`
+  );
   const navigation = [
     { name: trans.landing, href: appLinks.landing(lang) },
     {
@@ -49,9 +50,11 @@ export default function ({ lang, country, showMiddleNav }: Props) {
       name: trans.offers,
       href: appLinks.offers(lang, country, ""),
     },
-    { name: trans.terms, href: appLinks.terms(lang) },
+    // { name: trans.terms, href: appLinks.terms(lang) },
     { name: trans.aboutus, href: appLinks.aboutus(lang) },
     { name: trans.contactus, href: appLinks.contactus(lang) },
+    { name: trans.joinus, href: appLinks.joinus(lang) },
+    { name: trans.faqs, href: appLinks.faqs(lang) },
   ];
   const handleClick = (item: Locale["lang"]) => {
     dispatch(setLocale(item));
@@ -78,19 +81,18 @@ export default function ({ lang, country, showMiddleNav }: Props) {
     if (window !== undefined) {
       let windowHeight = window.scrollY;
       if (windowHeight >= 250) {
-        setStickyClass("fixed top-0");
+        setStickyClass("fixed  bg-white/80 text-black");
       } else {
-        setStickyClass("absolute");
+        setStickyClass(
+          `absolute ${showMiddleNav ? "text-black" : "text-white"}`
+        );
       }
     }
   };
 
   return (
     <div>
-      <header
-        className={`${stickyClass} inset-x-0 top-0 z-50 bg-white/80 ${
-          showMiddleNav ? `text-black` : `text-white`
-        }`}>
+      <header className={`${stickyClass} inset-x-0 top-0 z-50 `}>
         <nav
           className=' flex items-center justify-between p-6 lg:px-8 '
           aria-label='Global'>
@@ -106,13 +108,7 @@ export default function ({ lang, country, showMiddleNav }: Props) {
             </div>
             <Link href={`/${country}`} className='-m-1.5 p-1.5'>
               <span className='sr-only'>Your Company</span>
-              <Image
-                className='h-8 w-auto'
-                src={Logo.src}
-                alt=''
-                width={100}
-                height={100}
-              />
+              <Logo className='h-8 w-36 text-white' />
             </Link>
           </div>
           <div
@@ -183,13 +179,7 @@ export default function ({ lang, country, showMiddleNav }: Props) {
             <div className='flex items-center justify-between'>
               <Link href={`/${country}`} className='-m-1.5 p-1.5'>
                 <span className='sr-only'>{trans.picks}</span>
-                <Image
-                  className='h-8 w-auto'
-                  src={Logo.src}
-                  alt=''
-                  width={100}
-                  height={100}
-                />
+                <Logo className='h-8 w-36 text-white' />
               </Link>
               <button
                 type='button'
@@ -206,7 +196,7 @@ export default function ({ lang, country, showMiddleNav }: Props) {
                     <Link
                       key={item.name}
                       href={item.href}
-                      className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-black hover:bg-gray-800'>
+                      className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-black hover:bg-picks-light'>
                       {item.name}
                     </Link>
                   ))}
@@ -214,7 +204,7 @@ export default function ({ lang, country, showMiddleNav }: Props) {
                 <div className='py-6'>
                   <a
                     href='#'
-                    className='-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-black hover:bg-gray-800'>
+                    className='-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-black hover:bg-picks-light'>
                     Log in
                   </a>
                 </div>
