@@ -1,7 +1,7 @@
 "use client";
 import type { Locale } from "@/i18n.config";
 import { useParams } from "next/navigation";
-import Logo from "@/appImages/logo.svg";
+import Logo from "@/appImages/logo_dark.svg";
 
 type Props = {
   params: { lang: Locale };

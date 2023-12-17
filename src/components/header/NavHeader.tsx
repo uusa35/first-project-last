@@ -4,7 +4,7 @@ import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
+import { useParams, usePathname, useSearchParams } from "next/navigation";
 import { changePathName } from "@/utils/helpers";
 import { Locale, countriesList } from "@/types/index";
 import { appLinks } from "@/src/links";
@@ -17,8 +17,8 @@ import {
   toggleRegisterModal,
 } from "@/src/redux/slices/settingSlice";
 import { setOrderType } from "@/app/actions";
-import Logo from "@/appImages/logo.svg";
-
+import LogoDark from "@/appImages/logo_dark.svg";
+import LogoLight from "@/appImages/logo_light.svg";
 type Props = {
   lang: Locale["lang"];
   country: countriesList;
@@ -26,6 +26,7 @@ type Props = {
 };
 export default function ({ lang, country, showMiddleNav = false }: Props) {
   const trans: { [key: string]: string } = useContext(MainContext);
+
   const locales: Locale["lang"][] = ["ar", "en"];
   const {
     locale,
@@ -35,6 +36,7 @@ export default function ({ lang, country, showMiddleNav = false }: Props) {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const searchParams = useSearchParams();
+  const params = useParams();
   const pathName = usePathname()!;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [stickyClass, setStickyClass] = useState(
@@ -108,7 +110,11 @@ export default function ({ lang, country, showMiddleNav = false }: Props) {
             </div>
             <Link href={`/${country}`} className='-m-1.5 p-1.5'>
               <span className='sr-only'>Your Company</span>
-              <Logo className='h-8 w-36 text-white' />
+              {params?.country ? (
+                <LogoDark className='h-8 w-36 ' />
+              ) : (
+                <LogoLight className='h-8 w-36 ' />
+              )}
             </Link>
           </div>
           <div
@@ -145,7 +151,7 @@ export default function ({ lang, country, showMiddleNav = false }: Props) {
               <Link
                 key={item.name}
                 href={item.href}
-                className='text-sm font-semibold leading-6 '>
+                className='text-sm font-semibold leading-6 capitalize'>
                 {item.name}
               </Link>
             ))}
@@ -179,7 +185,11 @@ export default function ({ lang, country, showMiddleNav = false }: Props) {
             <div className='flex items-center justify-between'>
               <Link href={`/${country}`} className='-m-1.5 p-1.5'>
                 <span className='sr-only'>{trans.picks}</span>
-                <Logo className='h-8 w-36 text-white' />
+                {params?.country ? (
+                  <LogoDark className='h-8 w-36 ' />
+                ) : (
+                  <LogoLight className='h-8 w-36 ' />
+                )}
               </Link>
               <button
                 type='button'
@@ -196,7 +206,7 @@ export default function ({ lang, country, showMiddleNav = false }: Props) {
                     <Link
                       key={item.name}
                       href={item.href}
-                      className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-black hover:bg-picks-light'>
+                      className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-black hover:bg-picks-light capitalize'>
                       {item.name}
                     </Link>
                   ))}
