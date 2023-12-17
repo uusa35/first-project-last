@@ -10,7 +10,7 @@ import { Area, Country } from "@/types/queries";
 import { Suspense, useContext, useEffect, useState } from "react";
 import Search from "@/appIcons/landing/search.svg";
 import { Autocomplete, TextField } from "@mui/material";
-import { isEmpty } from "lodash";
+import { first, isEmpty } from "lodash";
 import GetLocation from "@/appIcons/landing/get_location.svg";
 import RightArrow from "@/appIcons/landing/right_arrow.svg";
 import Avatar from "@/appIcons/landing/avatar.svg";
@@ -22,6 +22,7 @@ import { appLinks } from "@/src/links";
 import { useGetAreasQuery } from "@/src/redux/api/areaApi";
 import AboutUsGetStarted from "../AboutUsGetStarted";
 import LoadingSpinner from "../../LoadingSpinner";
+import { setCountry } from "@/src/redux/slices/countrySlice";
 
 type Props = {
   countries: Country[];
@@ -64,7 +65,9 @@ export default function ({ countries }: Props) {
     setSelectedArea(undefined);
     setSelectedCountry(c || undefined);
     if (c && c.id && countries) {
-      const selectedCountry = countries.filter((itm) => itm.id === c?.id)[0];
+      const selectedCountry: Country = countries.filter(
+        (itm) => itm.id === c?.id
+      )[0];
       await setCountryCookie(JSON.stringify(selectedCountry));
       await setCountryNameCookie(selectedCountry.country_code);
     }
@@ -87,9 +90,7 @@ export default function ({ countries }: Props) {
     let mappedCountries = countries.map((itm) => {
       return { label: itm.name, id: itm.id };
     });
-
     setAllCountries(mappedCountries);
-
     if (country.id) {
       setSelectedCountry(
         mappedCountries.filter((itm) => itm.id === country.id)[0]
@@ -98,27 +99,17 @@ export default function ({ countries }: Props) {
   }, [countries]);
 
   useEffect(() => {
-    if (areas && areas?.data) {
-      // console.log(areas?.data);
-
-      // areas for select
+    if (areas && areas?.data && first(areas.data)?.country.id === country.id) {
       let mappedAreas = areas.data.map((itm: Area) => {
         return { label: itm.name, id: itm.id };
       });
-
       setAllAreas(mappedAreas);
-
-      if (area.id) {
-        setSelectedArea(
-          mappedAreas.filter(
-            (itm: { id: number; label: string }) => itm.id === area.id
-          )[0]
-        );
-      } else {
-        setSelectedArea("");
-      }
+      setSelectedArea(first(mappedAreas));
+    } else {
+      setAllAreas([]);
+      setSelectedArea(undefined);
     }
-  }, [country, areaSuccess]);
+  }, [country.id, areas]);
 
   return (
     <>

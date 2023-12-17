@@ -11,6 +11,7 @@ import * as yup from "yup";
 import {
   deleteToken,
   removeAreaCookie,
+  setAreaCookie,
   setCountryCookie,
   setCountryNameCookie,
   setLang,
@@ -22,13 +23,14 @@ import {
   useLazyGetCountryByNameQuery,
 } from "@/redux/api/countryApi";
 import { useLazyGetAreasQuery } from "@/redux/api/areaApi";
-import { resetArea } from "@/src/redux/slices/areaSlice";
+import { resetArea, setArea } from "@/src/redux/slices/areaSlice";
 import Image from "next/image";
 import LoginModal from "@/components/models/LoginModal";
 import RegisterModal from "../models/RegisterModal";
 import ForgetPasswordModal from "../models/ForgetPasswordModal";
 import VerificationModal from "../models/VerificationModal";
-import { AppQueryResult, Country } from "@/src/types/queries";
+import { AppQueryResult, Area, Country } from "@/src/types/queries";
+import { first } from "lodash";
 
 type Props = {
   children: React.ReactNode;
@@ -48,7 +50,10 @@ const MainContextLayout: FC<Props> = ({
 }) => {
   const {
     locale,
-    country: { country_code, id },
+    country: {
+      country_code,
+      id: { country_id },
+    },
     area,
   } = useAppSelector((state) => state);
 
@@ -103,28 +108,36 @@ const MainContextLayout: FC<Props> = ({
           matches: trans["validation.matches"],
         },
       });
-      // triggerGetCountries(undefined, false);
     }
   }, [lang]);
 
   // sets cookies if country changed from any page
   useEffect(() => {
-    // if (country !== undefined && (country !== country_code || id === 0)) {
     if (country !== undefined) {
-      console.log("fired from useEffect");
       triggerGetCountryByName(country, false).then((r: any) => {
         if (r.data && r.data.data) {
           dispatch(setCountry(r.data.data));
-          triggerGetAreas(undefined, lang !== locale.lang).then(() => {
-            if (area.country.id !== r.data.data.id) {
-              removeAreaCookie();
-              dispatch(resetArea());
-            }
-          });
         }
       });
     }
   }, [country]);
+
+  useEffect(() => {
+    if (country === country_code) {
+      triggerGetAreas(undefined, false).then((r: any) => {
+        if (r && r.data && r.data.success) {
+          const area: Area | undefined = first(r.data.data);
+          if (area !== undefined) {
+            dispatch(setArea(area));
+            setAreaCookie(JSON.stringify(area));
+          }
+        } else {
+          removeAreaCookie();
+          dispatch(resetArea());
+        }
+      });
+    }
+  }, [country_code, country_id, country]);
 
   return (
     <MainContext.Provider value={trans}>
@@ -136,7 +149,7 @@ const MainContextLayout: FC<Props> = ({
         <ForgetPasswordModal />
         <VerificationModal />
       </Suspense>
-      <div className="relative isolate overflow-hidden pt-14 py-8">
+      <div className='relative isolate overflow-hidden pt-14 py-8'>
         {children}
       </div>
       <AppFooter />

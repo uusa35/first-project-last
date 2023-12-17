@@ -95,7 +95,7 @@ export default function ({ lang, country, showMiddleNav }: Props) {
           className=' flex items-center justify-between p-6 lg:px-8 '
           aria-label='Global'>
           <div className='flex lg:flex-1 gap-x-8'>
-            <div className='flex '>
+            <div className='flex'>
               <button
                 type='button'
                 className='-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-400'

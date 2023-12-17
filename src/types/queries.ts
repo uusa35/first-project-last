@@ -64,6 +64,10 @@ export type Country = {
   name: string;
   country_code: countriesList;
   code: string;
+  web_name: {
+    ar: string;
+    en: string;
+  };
   [key: string]: any;
 };
 
@@ -71,6 +75,10 @@ export type Area = {
   id: number;
   name: any;
   name_en: any;
+  web_name: {
+    ar: string;
+    en: string;
+  };
   [key: string]: any;
 };
 

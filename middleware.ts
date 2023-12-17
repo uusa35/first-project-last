@@ -58,9 +58,13 @@ export default async function middleware(request: NextRequest, response: NextRes
         } else {
           console.log('case 2');
           const serverCountry: { data: Country } = await getCountry(country);
-          res.cookies.set('NEXT_COUNTRY', JSON.stringify(serverCountry.data));
-          res.cookies.set('NEXT_COUNTRY_NAME', country)
-          return res;
+          if (serverCountry?.data?.country_code?.toLowerCase()) {
+            res.cookies.set('NEXT_COUNTRY', JSON.stringify(serverCountry.data));
+            res.cookies.set('NEXT_COUNTRY_NAME', country)
+            return res;
+          } else {
+            return NextResponse.redirect(new URL(`/${currentRequestedLocale}`, request.url))
+          }
         }
       } else {
         const serverCountry: { data: Country } = await getCountry(country);
@@ -68,7 +72,7 @@ export default async function middleware(request: NextRequest, response: NextRes
         if ((country !== undefined || serverCountry !== undefined) && serverCountry?.data?.country_code?.toLowerCase() !== country.toLowerCase()) {
           // go to landing page
           console.log('case Landing Page =======>');
-          return NextResponse.rewrite(new URL(`/${currentRequestedLocale}`, request.url))
+          return NextResponse.redirect(new URL(`/${currentRequestedLocale}`, request.url))
         } else {
           console.log('case 3');
           res.cookies.set('NEXT_COUNTRY', JSON.stringify(serverCountry.data));
