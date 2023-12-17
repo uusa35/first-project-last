@@ -16,7 +16,7 @@ export default function ({ isFav, id }: Props) {
   };
 
   return (
-    <button key={id} onClick={handleFavourite} className='z-40'>
+    <button key={id} onClick={handleFavourite} className='absolute z-40'>
       {isFavourite ? (
         <Favourite className='h-7 w-7' />
       ) : (

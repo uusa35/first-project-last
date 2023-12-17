@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 /*
   This example requires some changes to your config:
   
@@ -22,86 +24,37 @@ const collections = [
   },
 ];
 
-export default function Example() {
+export default function ({
+  title,
+  logo,
+  bg,
+}: {
+  title: string;
+  logo: string;
+  bg: string;
+}) {
   return (
-    <div className='relative bg-white'>
-      {/* Background image and overlap */}
-      <div
-        aria-hidden='true'
-        className='absolute inset-0 hidden sm:flex sm:flex-col'>
-        <div className='relative w-full flex-1 bg-gray-800'>
-          <div className='absolute inset-0 overflow-hidden'>
-            <img
-              src='https://tailwindui.com/img/ecommerce-images/home-page-04-hero-full-width.jpg'
-              alt=''
-              className='h-full w-full object-cover object-center'
+    <div className='px-4'>
+      <div className='relative bg-white'>
+        <div className=''>
+          <Image
+            src={bg}
+            alt={title}
+            className='h-60 w-full rounded-xl object-cover object-center'
+            width={1000}
+            height={1000}
+          />
+          <div className='absolute -bottom-6 ltr:left-14 rtl:right-14  '>
+            <Image
+              src={logo}
+              alt={title}
+              className='h-16 w-16 rounded-full object-cover object-center ring-1 ring-gray-100 shadow-xl'
+              width={1000}
+              height={1000}
             />
           </div>
-          <div className='absolute inset-0 bg-gray-900 opacity-50' />
-        </div>
-        <div className='h-32 w-full bg-white md:h-40 lg:h-48' />
-      </div>
-
-      <div className='relative mx-auto max-w-3xl px-4 pb-96 text-center sm:px-6 sm:pb-0 lg:px-8'>
-        {/* Background image and overlap */}
-        <div
-          aria-hidden='true'
-          className='absolute inset-0 flex flex-col sm:hidden'>
-          <div className='relative w-full flex-1 bg-gray-800'>
-            <div className='absolute inset-0 overflow-hidden'>
-              <img
-                src='https://tailwindui.com/img/ecommerce-images/home-page-04-hero-full-width.jpg'
-                alt=''
-                className='h-full w-full object-cover object-center'
-              />
-            </div>
-            <div className='absolute inset-0 bg-gray-900 opacity-50' />
-          </div>
-          <div className='h-48 w-full bg-white' />
-        </div>
-        <div className='relative py-32'>
-          <h1 className='text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl'>
-            Mid-Season Sale
-          </h1>
-          <div className='mt-4 sm:mt-6'>
-            <a
-              href='#'
-              className='inline-block rounded-md border border-transparent bg-indigo-600 px-8 py-3 font-medium text-white hover:bg-indigo-700'>
-              Shop Collection
-            </a>
-          </div>
         </div>
       </div>
-
-      <section
-        aria-labelledby='collection-heading'
-        className='relative -mt-96 sm:mt-0'>
-        <h2 id='collection-heading' className='sr-only'>
-          Collections
-        </h2>
-        <div className='mx-auto grid max-w-md grid-cols-1 gap-y-6 px-4 sm:max-w-7xl sm:grid-cols-3 sm:gap-x-6 sm:gap-y-0 sm:px-6 lg:gap-x-8 lg:px-8'>
-          {collections.map((collection) => (
-            <div
-              key={collection.name}
-              className='group relative h-12 rounded-full bg-white shadow-xl sm:aspect-h-2 sm:aspect-w-2 sm:h-auto'>
-              <div>
-                <div
-                  aria-hidden='true'
-                  className='absolute inset-0 overflow-hidden rounded-full'>
-                  <div className='absolute inset-0 overflow-hidden group-hover:opacity-75'>
-                    <img
-                      src={collection.imageSrc}
-                      alt={collection.imageAlt}
-                      className='h-full w-full rounded-full object-cover object-center'
-                    />
-                  </div>
-                  <div className='absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-50' />
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
     </div>
   );
 }

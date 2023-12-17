@@ -5,9 +5,9 @@ const pages = [
   { name: "Project Nero", href: "#", current: true },
 ];
 
-export default function Example() {
+export default function () {
   return (
-    <nav className='flex' aria-label='Breadcrumb'>
+    <nav className='flex m-4 pt-6' aria-label='Breadcrumb'>
       <ol role='list' className='flex items-center gap-x-4'>
         <li>
           <div>

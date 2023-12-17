@@ -55,7 +55,6 @@ export default function AdsSlider({ slides, lang, country }: Props) {
     ],
   };
 
-  console.log("slides", slides);
   return (
     <div className='py-4'>
       {!isEmpty(slides) && (
