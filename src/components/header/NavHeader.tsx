@@ -45,6 +45,7 @@ export default function ({ lang, country, showMiddleNav = false }: Props) {
   const [stickyClass, setStickyClass] = useState(
     `absolute ${showMiddleNav ? "text-black" : "text-white"}`
   );
+  const [isSticky, setIsSticky] = useState<boolean>(false);
   const navigation = [
     { name: trans.landing, href: appLinks.landing(lang) },
     {
@@ -86,11 +87,13 @@ export default function ({ lang, country, showMiddleNav = false }: Props) {
     if (window !== undefined) {
       let windowHeight = window.scrollY;
       if (windowHeight >= 20) {
-        setStickyClass("fixed  bg-white/80 text-black");
+        setStickyClass("fixed bg-white/80 text-black");
+        setIsSticky(true);
       } else {
         setStickyClass(
           `absolute ${showMiddleNav ? "text-black" : "text-white"}`
         );
+        setIsSticky(false);
       }
     }
   };
@@ -111,9 +114,9 @@ export default function ({ lang, country, showMiddleNav = false }: Props) {
                 <Bars3Icon className='h-6 w-6' aria-hidden='true' />
               </button>
             </div>
-            <Link href={`/${country}`} className='-m-1.5 p-1.5'>
+            <Link href={`/${lang}/${country ?? ``}`} className='-m-1.5 p-1.5'>
               <span className='sr-only'>Your Company</span>
-              {params?.country ? (
+              {params?.country || isSticky ? (
                 <LogoDark className='h-8 w-36 ' />
               ) : (
                 <LogoLight className='h-8 w-36 ' />
@@ -153,7 +156,7 @@ export default function ({ lang, country, showMiddleNav = false }: Props) {
               </Link>
             ))} */}
           </div>
-          <div className='flex lg:flex-1 lg:justify-end gap-x-4 '>
+          <div className='hidden sm:flex sm:flex-1 sm:justify-end gap-x-4 '>
             <button
               className={`p-3 w-32 bg-white/80 rounded-lg capitalize text-lg text-black`}
               onClick={() => dispatch(toggleRegisterModal())}>
@@ -183,7 +186,7 @@ export default function ({ lang, country, showMiddleNav = false }: Props) {
           <div className='fixed inset-0 z-50' />
           <Dialog.Panel className='fixed inset-y-0 ltr:right-0 ltr:left-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-white/10'>
             <div className='flex items-center justify-between'>
-              <Link href={`/${country}`} className='-m-1.5 p-1.5'>
+              <Link href={`/${lang}/${country ?? ``}`} className='-m-1.5 p-1.5'>
                 <span className='sr-only'>{trans.picks}</span>
                 {params?.country ? (
                   <LogoDark className='h-8 w-36 ' />

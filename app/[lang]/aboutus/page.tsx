@@ -79,7 +79,7 @@ export default async function ({ params: { lang } }: Props) {
 
   return (
     <MainContextLayout trans={trans} lang={lang} country={country ?? "kw"}>
-      <PageHeader img={AboutusImg.src} title={"about picks"} />
+      <PageHeader img={AboutusImg.src} title={trans.aboutus} />
       <div className='mt-20 text-black px-4 md:px-8 min-h-screen'>
         <h1 className='capitalize text-2xl'>
           what is <span className='text-picks-dark'>pick</span> App ?
