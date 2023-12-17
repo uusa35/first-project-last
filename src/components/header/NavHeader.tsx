@@ -141,7 +141,7 @@ export default function ({ lang, country, showMiddleNav = false }: Props) {
                   {trans.delivery}
                 </button>
               </div>
-              <AreaDropDown />
+              {area.id !== 0 && <AreaDropDown />}
             </div>
 
             {/* {navigation.map((item) => (

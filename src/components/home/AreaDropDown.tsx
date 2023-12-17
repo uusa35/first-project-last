@@ -29,7 +29,9 @@ export default function () {
           <div className=''>
             <Menu.Button className='inline-flex gap-x-4 w-full justify-center items-center rounded-md bg-gray-100 p-4 pb-5  text-sm font-medium text-black hover:bg-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 capitalize'>
               <MarkerImg className={`w-5 h-auto`} />
-              <span className='truncate w-18'> {area.web_name[lang]}</span>
+              <span className='truncate w-18'>
+                {lang === "ar" ? area.web_name.ar : area.web_name.en}
+              </span>
               <ChevronDownIcon className='w-4 h-4 text-black' />
             </Menu.Button>
           </div>
@@ -54,7 +56,7 @@ export default function () {
                               ? "bg-picks-dark text-white"
                               : "text-gray-900"
                           } group flex w-full items-center rounded-md px-2 py-2 text-sm`}>
-                          {a.web_name[lang]}
+                          {lang === "ar" ? a.web_name.ar : a.web_name.en}
                         </button>
                       )}
                     </Menu.Item>

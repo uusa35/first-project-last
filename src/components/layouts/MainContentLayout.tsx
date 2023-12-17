@@ -121,10 +121,9 @@ const MainContextLayout: FC<Props> = ({
 
   useEffect(() => {
     if (country === country_code) {
-      triggerGetAreas(undefined, false).then((r: any) => {
+      triggerGetAreas(id, false).then((r: any) => {
         if (r && r.data && r.data.success && r.data.data) {
           const serverArea: Area | undefined = first(r.data.data);
-          console.log("serverArea =====>", serverArea);
           // if no area // if area.country.id !== currrent country
           if (
             area.country.id !== id &&
@@ -140,7 +139,7 @@ const MainContextLayout: FC<Props> = ({
       removeAreaCookie();
       dispatch(resetArea());
     }
-  }, [country_code, id, country, lang]);
+  }, [id, lang]);
 
   return (
     <MainContext.Provider value={trans}>
