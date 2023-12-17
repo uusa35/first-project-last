@@ -13,9 +13,10 @@ import { setArea } from "@/src/redux/slices/areaSlice";
 export default function () {
   const {
     area,
+    country: { id },
     locale: { lang },
   } = useAppSelector((state) => state);
-  const { data: areas, isSuccess } = useGetAreasQuery();
+  const { data: areas, isSuccess } = useGetAreasQuery(id);
   const dispatch = useAppDispatch();
 
   const handleSetArea = async (a: Area) => {
