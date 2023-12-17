@@ -142,9 +142,6 @@ const MainContextLayout: FC<Props> = ({
     }
   }, [country_code, id, country, lang]);
 
-  console.log("country_code", country_code, id);
-  console.log("areas", areas);
-
   return (
     <MainContext.Provider value={trans}>
       {/* nav */}
