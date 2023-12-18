@@ -228,10 +228,9 @@ export default function () {
             </div>
           </div>
         </div>
-
         <div
           className={`mx-auto ${globalMaxWidth} px-4 py-8 mt-8 md:flex md:items-center md:justify-between lg:px-8 border-t border-opacity-20 border-gray-50`}>
-          <div className='flex justify-center space-x-6 md:order-2 '>
+          <div className='flex justify-center gap-x-6 md:order-2 '>
             {navigation.map((item) => (
               <a
                 key={item.name}

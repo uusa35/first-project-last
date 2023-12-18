@@ -9,7 +9,6 @@ import { setLocale } from "@/redux/slices/localeSlice";
 import moment from "moment";
 import * as yup from "yup";
 import {
-  deleteToken,
   removeAreaCookie,
   setAreaCookie,
   setCountryCookie,
@@ -142,7 +141,7 @@ const MainContextLayout: FC<Props> = ({
   return (
     <MainContext.Provider value={trans}>
       {/* nav */}
-      <NavHeader  showMiddleNav={showMiddleNav}  />
+      <NavHeader showMiddleNav={showMiddleNav} />
       <Suspense>
         <LoginModal />
         <RegisterModal />
