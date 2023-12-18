@@ -43,12 +43,7 @@ export default async function ({ params: { lang, country, id } }: Props) {
           </div>
         </div>
 
-        <ProductsSlider
-          products={vendor.data.items}
-          lang={lang}
-          country={country}
-          title={"big deals"}
-        />
+        <ProductsSlider products={vendor.data.items} title={"big deals"} />
         <VendorContent />
       </div>
     </MainContextLayout>

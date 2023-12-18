@@ -7,19 +7,21 @@ import FavouriteWidget from "@/components/widgets/FavouriteWidget";
 import { Locale, countriesList } from "@/src/types";
 import Link from "next/link";
 import { appLinks } from "@/src/links";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 type Props = {
   product: Product;
-  lang: Locale["lang"];
-  country: countriesList;
 };
 
-export default function ({ product, lang, country }: Props) {
+export default function ({ product }: Props) {
   const router = useRouter();
+  const params: { lang: Locale["lang"]; country?: countriesList } | any =
+    useParams!();
+  const { lang } = params;
+
   const handleClick = () =>
     router.push(
-      appLinks.offer(lang, country, product.id.toString(), product.name)
+      appLinks.offer(lang, params?.country, product.id.toString(), product.name)
     );
   return (
     <div>
@@ -52,7 +54,7 @@ export default function ({ product, lang, country }: Props) {
             <Link
               href={appLinks.offer(
                 lang,
-                country,
+                params?.country,
                 product.id.toString(),
                 product.name
               )}
@@ -65,7 +67,7 @@ export default function ({ product, lang, country }: Props) {
         <Link
           href={appLinks.offer(
             lang,
-            country,
+            params?.country,
             product.id.toString(),
             product.name
           )}
