@@ -113,7 +113,21 @@ export default function () {
         Footer
       </h2>
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
-        <div className='py-20 xl:grid xl:grid-cols-3 xl:gap-8'>
+        <div className='pt-10 pb-8 mb-8 border-b border-opacity-20 border-gray-50 space-y-12 md:grid md:grid-cols-4 md:gap-8 md:space-y-0'>
+          <div>
+            <h3 className='text-sm font-medium text-white'>Shop</h3>
+          </div>
+          <div>
+            <h3 className='text-sm font-medium text-white'>Shop</h3>
+          </div>
+          <div>
+            <h3 className='text-sm font-medium text-white'>Shop</h3>
+          </div>
+          <div>
+            <h3 className='text-sm font-medium text-white'>Shop</h3>
+          </div>
+        </div>
+        <div className=' xl:grid xl:grid-cols-3 xl:gap-8'>
           <div className='grid grid-cols-2 gap-8 xl:col-span-2 '>
             <div className='space-y-12 md:grid md:grid-cols-2 md:gap-8 md:space-y-0'>
               <div>
@@ -176,8 +190,8 @@ export default function () {
           </div>
         </div>
 
-        <div className='mx-auto max-w-7xl px-6 py-12 md:flex md:items-center md:justify-between lg:px-8'>
-          <div className='flex justify-center space-x-6 md:order-2'>
+        <div className='mx-auto max-w-7xl px-4 py-8 mt-8 md:flex md:items-center md:justify-between lg:px-8 border-t border-opacity-20 border-gray-50'>
+          <div className='flex justify-center space-x-6 md:order-2 '>
             {navigation.map((item) => (
               <a
                 key={item.name}
