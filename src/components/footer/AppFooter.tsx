@@ -6,6 +6,11 @@ import { appLinks } from "@/src/links";
 import { Locale, countriesList } from "@/src/types";
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import GooglePlay from "@/appIcons/landing/download_google_play.svg";
+import AppleStore from "@/appIcons/landing/download_apple_store.svg";
+import AppGallery from "@/appIcons/landing/download_app_gallery.svg";
+import LogoLight from "@/appImages/logo_light.svg";
+import { globalMaxWidth } from "@/utils/helpers";
 
 const footerNavigation = {
   shop: [
@@ -112,19 +117,32 @@ export default function () {
       <h2 id='footer-heading' className='sr-only'>
         Footer
       </h2>
-      <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
-        <div className='pt-10 pb-8 mb-8 border-b border-opacity-20 border-gray-50 space-y-12 md:grid md:grid-cols-4 md:gap-8 md:space-y-0'>
+      <div className={`mx-auto ${globalMaxWidth}  px-4 sm:px-6 lg:px-8`}>
+        <div className='pt-10 pb-8 mb-8 border-b border-opacity-20 border-gray-50  grid grid-cols-2 md:grid-cols-6 gap-8 md:space-y-0'>
           <div>
-            <h3 className='text-sm font-medium text-white'>Shop</h3>
+            <h3 className='text-sm font-medium text-white truncate capitalize'>
+              {trans.aboutus}
+            </h3>
           </div>
           <div>
-            <h3 className='text-sm font-medium text-white'>Shop</h3>
+            <h3 className='text-sm font-medium text-white truncate capitalize'>
+              {trans.faqs}
+            </h3>
           </div>
           <div>
-            <h3 className='text-sm font-medium text-white'>Shop</h3>
+            <h3 className='text-sm font-medium text-white truncate capitalize'>
+              {trans.privacy_policy}
+            </h3>
           </div>
           <div>
-            <h3 className='text-sm font-medium text-white'>Shop</h3>
+            <h3 className='text-sm font-medium text-white truncate capitalize'>
+              {trans.terms}
+            </h3>
+          </div>
+          <div>
+            <h3 className='text-sm font-medium text-white truncate capitalize'>
+              {trans.contactus}
+            </h3>
           </div>
         </div>
         <div className=' xl:grid xl:grid-cols-3 xl:gap-8'>
@@ -132,12 +150,33 @@ export default function () {
             <div className='space-y-12 md:grid md:grid-cols-2 md:gap-8 md:space-y-0'>
               <div>
                 <h3 className='text-sm font-medium text-white'>Shop</h3>
-                <ul role='list' className='mt-6 space-y-6'>
+                <ul role='list' className='mt-6 space-y-2'>
                   <li className='text-sm'>
                     <Link
                       href={`${appLinks.aboutus(lang)}`}
                       className='text-gray-300 hover:text-white'>
-                      {trans.aboutus}
+                      <LogoLight className='w-28 h-10' />
+                    </Link>
+                  </li>
+                  <li className='text-sm'>
+                    <Link
+                      href={`${appLinks.aboutus(lang)}`}
+                      className='text-gray-300 hover:text-white'>
+                      <AppGallery className='w-28 h-10' />
+                    </Link>
+                  </li>
+                  <li className='text-sm'>
+                    <Link
+                      href={`${appLinks.aboutus(lang)}`}
+                      className='text-gray-300 hover:text-white'>
+                      <GooglePlay className='w-28 h-10' />
+                    </Link>
+                  </li>
+                  <li className='text-sm'>
+                    <Link
+                      href={`${appLinks.aboutus(lang)}`}
+                      className='text-gray-300 hover:text-white'>
+                      <AppGallery className='w-28 h-10' />
                     </Link>
                   </li>
                 </ul>
@@ -190,7 +229,8 @@ export default function () {
           </div>
         </div>
 
-        <div className='mx-auto max-w-7xl px-4 py-8 mt-8 md:flex md:items-center md:justify-between lg:px-8 border-t border-opacity-20 border-gray-50'>
+        <div
+          className={`mx-auto ${globalMaxWidth} px-4 py-8 mt-8 md:flex md:items-center md:justify-between lg:px-8 border-t border-opacity-20 border-gray-50`}>
           <div className='flex justify-center space-x-6 md:order-2 '>
             {navigation.map((item) => (
               <a
