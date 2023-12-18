@@ -11,8 +11,6 @@ import * as yup from "yup";
 import {
   removeAreaCookie,
   setAreaCookie,
-  setCountryCookie,
-  setCountryNameCookie,
   setLang,
   setLocaleCookie,
 } from "@/app/actions";
@@ -23,7 +21,6 @@ import {
 } from "@/redux/api/countryApi";
 import { useLazyGetAreasQuery } from "@/redux/api/areaApi";
 import { resetArea, setArea } from "@/src/redux/slices/areaSlice";
-import Image from "next/image";
 import LoginModal from "@/components/models/LoginModal";
 import RegisterModal from "../models/RegisterModal";
 import ForgetPasswordModal from "../models/ForgetPasswordModal";
