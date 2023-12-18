@@ -3,7 +3,15 @@ import { Auth, User } from "@/types/queries";
 
 export const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    login: builder.query<Auth, { phone: string; phone_country_code: string; password: string; session_id?: string }>({
+    login: builder.query<
+      Auth,
+      {
+        phone: string;
+        phone_country_code: string;
+        password: string;
+        session_id?: string;
+      }
+    >({
       query: (body) => ({
         url: `login`,
         body,
@@ -11,12 +19,26 @@ export const authApi = apiSlice.injectEndpoints({
         validateStatus: (response, result) => result.status == 200,
       }),
     }),
-    register: builder.query<Auth, { phone: string; phone_country_code: string; password: string; password_confirmation: string; device_token: string; session_id?: string, email?: string; }>({
+    register: builder.query<
+      Auth,
+      {
+        phone: string;
+        phone_country_code: string;
+        password: string;
+        password_confirmation: string;
+        device_token: string;
+        session_id?: string;
+        email?: string;
+      }
+    >({
       query: (body) => ({
-        url: `register`,
+        url: `web-register`,
         body,
         method: "post",
-        validateStatus: (response, result) => result.status === 200,
+        validateStatus: (response, result) => {
+          console.log({ result, response });
+          return result.status === 200 && result.success;
+        },
       }),
     }),
     logout: builder.query<void, void>({
@@ -26,7 +48,15 @@ export const authApi = apiSlice.injectEndpoints({
         validateStatus: (response, result) => result.status == 200,
       }),
     }),
-    verify: builder.query<Auth, { phone: string; phone_country_code: string; code: string; type: 'register' | 'reset'; }>({
+    verify: builder.query<
+      Auth,
+      {
+        phone: string;
+        phone_country_code: string;
+        code: string;
+        type: "register" | "reset";
+      }
+    >({
       query: (body) => ({
         url: `verify`,
         body,
