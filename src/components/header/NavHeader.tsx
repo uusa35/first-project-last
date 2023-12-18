@@ -1,7 +1,12 @@
 "use client";
 import { useContext, useEffect, useState } from "react";
 import { Dialog } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  Bars3Icon,
+  MagnifyingGlassCircleIcon,
+  MagnifyingGlassIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import Link from "next/link";
 import { useParams, usePathname, useSearchParams } from "next/navigation";
@@ -138,14 +143,14 @@ export default function ({ showMiddleNav = false }: Props) {
             <div className='flex flex-row justify-evenly items-start gap-x-2'>
               <div className='flex flex-row p-1 rounded-md bg-gray-100 '>
                 <button
-                  className={`p-3 text-black rounded-md capitalize ${
+                  className={`px-3 py-2 text-black rounded-md capitalize ${
                     orderType === "pickup" ? "bg-white" : "bg-gray-100"
                   }`}
                   onClick={() => handleOrderType("pickup")}>
                   {trans.pickup}
                 </button>
                 <button
-                  className={`p-3 text-black rounded-md capitalize ${
+                  className={`px-3 py-2 text-black rounded-md capitalize ${
                     orderType === "delivery" ? "bg-white" : "bg-gray-100"
                   }`}
                   onClick={() => handleOrderType("delivery")}>
@@ -165,16 +170,36 @@ export default function ({ showMiddleNav = false }: Props) {
             ))} */}
           </div>
           <div className='hidden sm:flex sm:flex-1 sm:justify-end gap-x-4 '>
-            <button
-              className={`p-3 w-32 bg-white/80 rounded-lg capitalize text-lg text-black`}
-              onClick={() => dispatch(toggleRegisterModal())}>
-              {trans.signup}
-            </button>
-            <button
-              className={`p-3 w-32 bg-white/30 rounded-lg capitalize text-lg`}
-              onClick={() => dispatch(toggleLoginModal())}>
-              {trans.login}
-            </button>
+            {params?.country ? (
+              <div className='relative rounded-md shadow-sm'>
+                <div className='pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3'>
+                  <MagnifyingGlassIcon
+                    className='h-5 w-5 text-gray-400'
+                    aria-hidden='true'
+                  />
+                </div>
+                <input
+                  type='text'
+                  name='search'
+                  id='search'
+                  className='block w-full rounded-md border-0 py-3 ltr:pl-10 rtl:pr-10 text-gray-900 bg-gray-100 placeholder:text-gray-400 focus:ring-[0.5px] focus:ring-inset focus:ring-gray-300 sm:text-sm sm:leading-6'
+                  placeholder='you@example.com'
+                />
+              </div>
+            ) : (
+              <>
+                <button
+                  className={`p-3 w-32 bg-white/80 rounded-lg capitalize text-lg text-black`}
+                  onClick={() => dispatch(toggleRegisterModal())}>
+                  {trans.signup}
+                </button>
+                <button
+                  className={`p-3 w-32 bg-white/30 rounded-lg capitalize text-lg`}
+                  onClick={() => dispatch(toggleLoginModal())}>
+                  {trans.login}
+                </button>
+              </>
+            )}
             <button
               onClick={() => handleClick(lang === "ar" ? "en" : "ar")}
               className='text-sm font-semibold leading-6 '>
