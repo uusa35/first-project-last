@@ -155,28 +155,28 @@ export default function () {
                     <Link
                       href={`${appLinks.aboutus(lang)}`}
                       className='text-gray-300 hover:text-white'>
-                      <LogoLight className='w-28 h-10' />
+                      <LogoLight className='w-[12vh] h-[5vh]' />
                     </Link>
                   </li>
                   <li className='text-sm'>
                     <Link
                       href={`${appLinks.aboutus(lang)}`}
                       className='text-gray-300 hover:text-white'>
-                      <AppGallery className='w-28 h-10' />
+                      <AppGallery className='w-[14vh] h-[5vh]' />
                     </Link>
                   </li>
                   <li className='text-sm'>
                     <Link
                       href={`${appLinks.aboutus(lang)}`}
                       className='text-gray-300 hover:text-white'>
-                      <GooglePlay className='w-28 h-10' />
+                      <GooglePlay className='w-[14vh] h-[5vh]' />
                     </Link>
                   </li>
                   <li className='text-sm'>
                     <Link
                       href={`${appLinks.aboutus(lang)}`}
                       className='text-gray-300 hover:text-white'>
-                      <AppGallery className='w-28 h-10' />
+                      <AppGallery className='w-[14vh] h-[5vh]' />
                     </Link>
                   </li>
                 </ul>

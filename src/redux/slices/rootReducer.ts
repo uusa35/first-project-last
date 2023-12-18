@@ -9,6 +9,7 @@ import { countryApi } from '@/redux/api/countryApi';
 import { toastMessageSlice } from './toastMessageSlice';
 import { areaSlice } from './areaSlice';
 import { countrySlice } from './countrySlice';
+import { authSlice } from './authSlice';
 
 
 
@@ -18,6 +19,7 @@ export const rootReducer = combineReducers({
   [settingSlice.name]: settingSlice.reducer,
   [areaSlice.name]: areaSlice.reducer,
   [countrySlice.name]: countrySlice.reducer,
+  [authSlice.name]: authSlice.reducer,
   [toastMessageSlice.name]: toastMessageSlice.reducer,
   [apiSlice.reducerPath]: apiSlice.reducer,
   [categoryApi.reducerPath]: categoryApi.reducer,

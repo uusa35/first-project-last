@@ -23,7 +23,11 @@ body {
 
 @layer components {
   .btn-default {
-    @apply text-center bg-picks-dark hover:bg-green-700 rounded-md font-semibold text-white shadow-sm px-3.5 py-2.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white;
+    @apply text-center bg-picks-dark hover:bg-picks-light rounded-md font-semibold text-white shadow-sm px-3.5 py-2.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white capitalize;
+  }
+
+  .btn-transparent {
+    @apply text-center border border-picks-dark hover:border-none hover:bg-picks-dark hover:text-white text-picks-dark rounded-md font-semibold shadow-sm px-3.5 py-2.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white capitalize;
   }
 
   .btn-gray {

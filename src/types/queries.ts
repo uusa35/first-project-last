@@ -98,7 +98,7 @@ export type User = {
 };
 
 export type Auth = {
-  token: string;
+  token: string | null;
   user: {
     id: number;
     name: string;
@@ -107,7 +107,7 @@ export type Auth = {
     gender: string;
     birth_date: string;
     phone_country_code: string;
-  }
+  } | null
 };
 
 export type Order = {
