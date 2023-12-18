@@ -25,6 +25,7 @@ import {
 } from "@/src/redux/slices/settingSlice";
 import { getCountryNameCookie, setOrderType } from "@/app/actions";
 import LogoDark from "@/appImages/logo_dark.svg";
+import LogoLight from "@/appImages/logo_light.svg";
 import LogoOnly from "@/appImages/logo_only.svg";
 import ArFlag from "@/appIcons/ar.svg";
 import MarkerImg from "@/appIcons/marker.svg";
@@ -55,7 +56,6 @@ export default function ({ showMiddleNav = false }: Props) {
     useParams!();
   const { lang } = params;
   const pathName = usePathname()!;
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [stickyClass, setStickyClass] = useState(
     `absolute ${showMiddleNav ? "text-black" : "text-white"}`
   );
@@ -224,7 +224,6 @@ export default function ({ showMiddleNav = false }: Props) {
           as='div'
           className=''
           open={sideMenuOpen}
-          // open={true}
           onClose={() => dispatch(toggleSideMenu(false))}>
           <div className='fixed inset-0 z-50' />
           <Dialog.Panel className='fixed inset-y-0 ltr:right-0 ltr:left-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-white/10'>
