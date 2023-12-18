@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { Dialog } from "@headlessui/react";
 import {
   Bars3Icon,
+  BellIcon,
   MagnifyingGlassCircleIcon,
   MagnifyingGlassIcon,
   XMarkIcon,
@@ -31,6 +32,8 @@ import AreaDropDown from "@/components/home/AreaDropDown";
 import GooglePlay from "@/appIcons/landing/download_google_play.svg";
 import AppleStore from "@/appIcons/landing/download_apple_store.svg";
 import AppGallery from "@/appIcons/landing/download_app_gallery.svg";
+import { ShoppingBag } from "@mui/icons-material";
+import { ShoppingBagIcon } from "@heroicons/react/20/solid";
 
 type Props = {
   showMiddleNav: boolean;
@@ -171,20 +174,26 @@ export default function ({ showMiddleNav = false }: Props) {
           </div>
           <div className='hidden sm:flex sm:flex-1 sm:justify-end gap-x-4 '>
             {params?.country ? (
-              <div className='relative rounded-md shadow-sm'>
-                <div className='pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3'>
-                  <MagnifyingGlassIcon
-                    className='h-5 w-5 text-gray-400'
-                    aria-hidden='true'
+              <div className='flex flex-row w-full justify-end items-center'>
+                <div className='relative rounded-md shadow-sm me-4 lg:w-3/5 xl:w-[350px]'>
+                  <div className='pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3'>
+                    <MagnifyingGlassIcon
+                      className='h-5 w-5 text-gray-400'
+                      aria-hidden='true'
+                    />
+                  </div>
+                  <input
+                    type='text'
+                    name='search'
+                    id='search'
+                    className='block w-full rounded-md border-0 py-2.5 ltr:pl-10 rtl:pr-10 text-gray-900 bg-gray-100 placeholder:text-gray-400 focus:ring-[0.5px] focus:ring-inset focus:ring-gray-300 sm:text-sm sm:leading-6'
+                    placeholder={trans.search}
                   />
                 </div>
-                <input
-                  type='text'
-                  name='search'
-                  id='search'
-                  className='block w-full rounded-md border-0 py-3 ltr:pl-10 rtl:pr-10 text-gray-900 bg-gray-100 placeholder:text-gray-400 focus:ring-[0.5px] focus:ring-inset focus:ring-gray-300 sm:text-sm sm:leading-6'
-                  placeholder='you@example.com'
-                />
+                <div className='flex flex-row gap-x-4'>
+                  <ShoppingBagIcon className='w-5 h-5' />
+                  <BellIcon className='w-5 h-5' />
+                </div>
               </div>
             ) : (
               <>
