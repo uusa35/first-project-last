@@ -16,22 +16,24 @@ import {
   toggleLoginModal,
   toggleRegisterModal,
 } from "@/src/redux/slices/settingSlice";
-import { setOrderType } from "@/app/actions";
+import { getCountryNameCookie, setOrderType } from "@/app/actions";
 import LogoDark from "@/appImages/logo_dark.svg";
 import LogoLight from "@/appImages/logo_light.svg";
 import ArFlag from "@/appIcons/ar.svg";
 import MarkerImg from "@/appIcons/marker.svg";
-import AreaDropDown from "../home/AreaDropDown";
+import AreaDropDown from "@/components/home/AreaDropDown";
 
 type Props = {
   showMiddleNav: boolean;
 };
 export default function ({ showMiddleNav = false }: Props) {
   const trans: { [key: string]: string } = useContext(MainContext);
+  
   const locales: Locale["lang"][] = ["ar", "en"];
   const {
     locale,
     area,
+    country : { country_code },
     appSetting: { orderType },
   } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
@@ -50,11 +52,11 @@ export default function ({ showMiddleNav = false }: Props) {
     { name: trans.landing, href: appLinks.landing(lang) },
     {
       name: trans.home,
-      href: appLinks.home(lang, params?.country),
+      href: appLinks.home(lang, country_code),
     },
     {
       name: trans.offers,
-      href: appLinks.offers(lang, params?.country, ""),
+      href: appLinks.offers(lang, country_code, ""),
     },
     // { name: trans.terms, href: appLinks.terms(lang) },
     { name: trans.aboutus, href: appLinks.aboutus(lang) },
@@ -114,11 +116,9 @@ export default function ({ showMiddleNav = false }: Props) {
                 <Bars3Icon className='h-6 w-6' aria-hidden='true' />
               </button>
             </div>
-            <Link
-              href={`/${lang}/${params?.country ?? ``}`}
-              className='-m-1.5 p-1.5'>
+            <Link href={`/${lang}/${country_code ?? ``}`} className='-m-1.5 p-1.5'>
               <span className='sr-only'>Your Company</span>
-              {params?.country || isSticky ? (
+              {country_code || isSticky ? (
                 <LogoDark className='h-8 w-36 ' />
               ) : (
                 <LogoLight className='h-8 w-36 ' />
@@ -188,11 +188,9 @@ export default function ({ showMiddleNav = false }: Props) {
           <div className='fixed inset-0 z-50' />
           <Dialog.Panel className='fixed inset-y-0 ltr:right-0 ltr:left-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-white/10'>
             <div className='flex items-center justify-between'>
-              <Link
-                href={`/${lang}/${params?.country ?? ``}`}
-                className='-m-1.5 p-1.5'>
+              <Link href={`/${lang}/${country_code ?? ``}`} className='-m-1.5 p-1.5'>
                 <span className='sr-only'>{trans.picks}</span>
-                {params?.country ? (
+                {country_code ? (
                   <LogoDark className='h-8 w-36 ' />
                 ) : (
                   <LogoLight className='h-8 w-36 ' />
