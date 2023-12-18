@@ -52,32 +52,32 @@ export default async function (props: Props) {
   return (
     <MainContextLayout
       trans={trans}
-      lang={lang}
-      country={country}
+      
+      
       showMiddleNav={true}>
       {categories?.data?.length > 0 && (
         <CategoriesSlider
-          lang={lang}
-          country={country}
+          
+          
           categories={categories.data}
         />
       )}
       <div className='px-2 md:px-8'>
         {slides?.data?.length > 0 && (
-          <AdsSlider lang={lang} country={country} slides={slides.data} />
+          <AdsSlider slides={slides.data} />
         )}
         {products?.data?.length > 0 && (
           <ProductsSlider
-            lang={lang}
-            country={country}
+            
+            
             products={products.data}
             title={"Top "}
           />
         )}
         {vendors?.data?.length > 0 && (
           <CustomSlider
-            lang={lang}
-            country={country}
+            
+            
             vendors={vendors.data}
             title={"vendors"}
           />

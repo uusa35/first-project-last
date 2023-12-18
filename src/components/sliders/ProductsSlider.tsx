@@ -10,15 +10,18 @@ import {
   ChevronRightIcon,
 } from "@heroicons/react/24/outline";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
+import { useParams } from "next/navigation";
 
 type Props = {
   products: Product[];
-  lang: Locale["lang"];
-  country: countriesList;
+
   title: string;
 };
 
-export default function ({ products, lang, country, title }: Props) {
+export default function ({ products, title }: Props) {
+  const params: { lang: Locale["lang"]; country?: countriesList } | any =
+    useParams!();
+  const { lang } = params;
   const refSlider = useRef<Slider | null>(null);
 
   const settings: any = {
@@ -90,12 +93,7 @@ export default function ({ products, lang, country, title }: Props) {
         <Slider {...settings} ref={(c) => (refSlider.current = c)}>
           {products &&
             products.map((itm: Product, i: number) => (
-              <ProductWidget
-                product={itm}
-                key={i}
-                lang={lang}
-                country={country}
-              />
+              <ProductWidget product={itm} key={i} />
             ))}
         </Slider>
       </div>

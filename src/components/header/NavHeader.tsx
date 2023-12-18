@@ -24,11 +24,9 @@ import MarkerImg from "@/appIcons/marker.svg";
 import AreaDropDown from "../home/AreaDropDown";
 
 type Props = {
-  lang: Locale["lang"];
-  country: countriesList;
   showMiddleNav: boolean;
 };
-export default function ({ lang, country, showMiddleNav = false }: Props) {
+export default function ({ showMiddleNav = false }: Props) {
   const trans: { [key: string]: string } = useContext(MainContext);
   const locales: Locale["lang"][] = ["ar", "en"];
   const {
@@ -39,7 +37,9 @@ export default function ({ lang, country, showMiddleNav = false }: Props) {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const params = useParams();
+  const params: { lang: Locale["lang"]; country?: countriesList } | any =
+    useParams!();
+  const { lang } = params;
   const pathName = usePathname()!;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [stickyClass, setStickyClass] = useState(
@@ -50,11 +50,11 @@ export default function ({ lang, country, showMiddleNav = false }: Props) {
     { name: trans.landing, href: appLinks.landing(lang) },
     {
       name: trans.home,
-      href: appLinks.home(lang, country),
+      href: appLinks.home(lang, params?.country),
     },
     {
       name: trans.offers,
-      href: appLinks.offers(lang, country, ""),
+      href: appLinks.offers(lang, params?.country, ""),
     },
     // { name: trans.terms, href: appLinks.terms(lang) },
     { name: trans.aboutus, href: appLinks.aboutus(lang) },
@@ -114,7 +114,9 @@ export default function ({ lang, country, showMiddleNav = false }: Props) {
                 <Bars3Icon className='h-6 w-6' aria-hidden='true' />
               </button>
             </div>
-            <Link href={`/${lang}/${country ?? ``}`} className='-m-1.5 p-1.5'>
+            <Link
+              href={`/${lang}/${params?.country ?? ``}`}
+              className='-m-1.5 p-1.5'>
               <span className='sr-only'>Your Company</span>
               {params?.country || isSticky ? (
                 <LogoDark className='h-8 w-36 ' />
@@ -186,7 +188,9 @@ export default function ({ lang, country, showMiddleNav = false }: Props) {
           <div className='fixed inset-0 z-50' />
           <Dialog.Panel className='fixed inset-y-0 ltr:right-0 ltr:left-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-white/10'>
             <div className='flex items-center justify-between'>
-              <Link href={`/${lang}/${country ?? ``}`} className='-m-1.5 p-1.5'>
+              <Link
+                href={`/${lang}/${params?.country ?? ``}`}
+                className='-m-1.5 p-1.5'>
                 <span className='sr-only'>{trans.picks}</span>
                 {params?.country ? (
                   <LogoDark className='h-8 w-36 ' />

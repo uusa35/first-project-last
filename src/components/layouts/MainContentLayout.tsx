@@ -3,7 +3,7 @@ import { FC, Suspense, createContext, useEffect } from "react";
 import NavHeader from "@/components/header/NavHeader";
 import { Locale, countriesList } from "@/types/index";
 import AppFooter from "@/components/footer/AppFooter";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setLocale } from "@/redux/slices/localeSlice";
 import moment from "moment";
@@ -35,8 +35,6 @@ import { first } from "lodash";
 type Props = {
   children: React.ReactNode;
   trans: { [key: string]: string };
-  lang: Locale["lang"];
-  country: countriesList;
   showMiddleNav?: boolean;
 };
 
@@ -44,8 +42,6 @@ const MainContext = createContext({});
 const MainContextLayout: FC<Props> = ({
   children,
   trans,
-  lang,
-  country,
   showMiddleNav = false,
 }) => {
   const {
@@ -53,7 +49,9 @@ const MainContextLayout: FC<Props> = ({
     country: { country_code, id },
     area,
   } = useAppSelector((state) => state);
-
+  const params: { lang: Locale["lang"]; country?: countriesList } | any =
+    useParams!();
+  const { lang } = params;
   const pathName = usePathname();
   const dispatch = useAppDispatch();
   const [triggerGetCountryByName, { data, isSuccess }] =
@@ -110,17 +108,17 @@ const MainContextLayout: FC<Props> = ({
 
   // sets cookies if country changed from any page
   useEffect(() => {
-    if (country !== undefined) {
-      triggerGetCountryByName(country, false).then((r: any) => {
+    if (params?.country !== undefined) {
+      triggerGetCountryByName(params?.country, false).then((r: any) => {
         if (r.data && r.data.data) {
           dispatch(setCountry(r.data.data));
         }
       });
     }
-  }, [country]);
+  }, [params?.country]);
 
   useEffect(() => {
-    if (country === country_code) {
+    if (params?.country === country_code) {
       triggerGetAreas(id, false).then((r: any) => {
         if (r && r.data && r.data.success && r.data.data) {
           const serverArea: Area | undefined = first(r.data.data);
@@ -144,7 +142,7 @@ const MainContextLayout: FC<Props> = ({
   return (
     <MainContext.Provider value={trans}>
       {/* nav */}
-      <NavHeader lang={lang} showMiddleNav={showMiddleNav} country={country} />
+      <NavHeader  showMiddleNav={showMiddleNav}  />
       <Suspense>
         <LoginModal />
         <RegisterModal />

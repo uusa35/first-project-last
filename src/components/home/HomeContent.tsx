@@ -9,6 +9,7 @@ import CategoriesSlider from "@/components/sliders/CategoriesSlider";
 import AdsSlider from "@/components/sliders/AdsSlider";
 import FlashOffers from "./FlashOffers";
 import VendorsSlider from "../sliders/VendorsSlider";
+import { useParams } from "next/navigation";
 
 type Props = {
   categories: Category[];
@@ -22,40 +23,31 @@ type Props = {
 export default function ({
   categories,
   slides,
-  lang,
-  country,
   vendors,
   products,
   featuredVendors,
 }: Props) {
+  const params: { lang: Locale["lang"]; country?: countriesList } | any =
+    useParams!();
+  const { lang } = params;
   return (
     <div className=''>
-      <CategoriesSlider lang={lang} categories={categories} country={country} />
+      <CategoriesSlider categories={categories} />
       {/* filters and   items*/}
       <div className='page-padding'>
         {/* filters */}
         <div></div>
         {/* slider  */}
         <div className='my-10'>
-          <AdsSlider lang={lang} country={country} slides={slides} />
+          <AdsSlider slides={slides} />
         </div>
         {/* new to picks */}
-        <VendorsSlider
-          vendors={vendors}
-          lang={lang}
-          country={country}
-          title='new_picks'
-        />
+        <VendorsSlider vendors={vendors} title='new_picks' />
         {/* flash offers */}
-        <FlashOffers products={products} lang={lang} country={country} />
+        <FlashOffers products={products} />
 
         {/* new to picks */}
-        <VendorsSlider
-          vendors={featuredVendors}
-          lang={lang}
-          country={country}
-          title='featured_stores'
-        />
+        <VendorsSlider vendors={featuredVendors} title='featured_stores' />
       </div>
     </div>
   );

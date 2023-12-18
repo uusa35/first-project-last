@@ -14,7 +14,7 @@ export default async function NotFound() {
   ]);
 
   return (
-    <MainContextLayout trans={trans} lang={lang} country={country}>
+    <MainContextLayout trans={trans}>
       <h1>Not found</h1>
     </MainContextLayout>
   );
