@@ -26,6 +26,10 @@ body {
     @apply text-center bg-picks-dark hover:bg-green-700 rounded-md font-semibold text-white shadow-sm px-3.5 py-2.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white;
   }
 
+  .btn-gray {
+    @apply text-center bg-gray-100 hover:bg-gray-200 rounded-md font-semibold text-black shadow-sm px-4 py-4  capitalize focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white;
+  }
+
   .page-padding {
     @apply px-10;
   }

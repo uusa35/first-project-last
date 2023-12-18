@@ -29,7 +29,7 @@ export default async function ({ params: { lang, country, id } }: Props) {
           <div className='col-span-2'>
             <h1 className='text-3xl pb-4'>{store_name}</h1>
             <div className='flex flex-1'>
-              <p className='text-gray-400 pl-2 border-l border-gray-400'>
+              <p className='text-gray-400 rtl:pl-2 ltr:pr-2 ltr:border-r rtl:border-l border-gray-400'>
                 {category}
               </p>
             </div>
