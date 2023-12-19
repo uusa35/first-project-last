@@ -22,11 +22,12 @@ import {
 import { useLazyGetAreasQuery } from "@/redux/api/areaApi";
 import { resetArea, setArea } from "@/src/redux/slices/areaSlice";
 import LoginModal from "@/components/models/LoginModal";
-import RegisterModal from "../models/RegisterModal";
-import ForgetPasswordModal from "../models/ForgetPasswordModal";
-import VerificationModal from "../models/VerificationModal";
+import RegisterModal from "@/components/models/RegisterModal";
+import ForgetPasswordModal from "@/components/models/ForgetPasswordModal";
+import VerificationModal from "@/components/models/VerificationModal";
 import { AppQueryResult, Area, Country } from "@/src/types/queries";
 import { first } from "lodash";
+import { toggleSideMenu } from "@/src/redux/slices/settingSlice";
 
 type Props = {
   children: React.ReactNode;
@@ -112,6 +113,10 @@ const MainContextLayout: FC<Props> = ({
       });
     }
   }, [params?.country]);
+
+  useEffect(() => {
+    dispatch(toggleSideMenu(false));
+  }, []);
 
   useEffect(() => {
     if (params?.country === country_code) {
