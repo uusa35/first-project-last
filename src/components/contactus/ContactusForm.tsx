@@ -64,7 +64,7 @@ export default function () {
           <div>
             <label
               htmlFor='first_name'
-              className='block text-sm font-semibold leading-6 text-gray-900'>
+              className='block text-sm font-semibold leading-6 text-gray-900 capitalize'>
               {trans.first_name}
             </label>
             <div className='mt-2.5'>
@@ -73,7 +73,7 @@ export default function () {
                 {...register("first_name")}
                 id='first_name'
                 autoComplete='first_name'
-                className='block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-picks-dark sm:text-sm sm:leading-6'
+                className='input-default'
               />
             </div>
             <InputError
@@ -84,7 +84,7 @@ export default function () {
           <div>
             <label
               htmlFor='last_name'
-              className='block text-sm font-semibold leading-6 text-gray-900'>
+              className='block text-sm font-semibold leading-6 text-gray-900 capitalize'>
               {trans.last_name}
             </label>
             <div className='mt-2.5'>
@@ -93,7 +93,7 @@ export default function () {
                 {...register("last_name")}
                 id='last-name'
                 autoComplete='last-name'
-                className='block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-picks-dark sm:text-sm sm:leading-6'
+                className={`input-default`}
               />
             </div>
             <InputError
@@ -104,7 +104,7 @@ export default function () {
           <div className='sm:col-span-2'>
             <label
               htmlFor='email'
-              className='block text-sm font-semibold leading-6 text-gray-900'>
+              className='block text-sm font-semibold leading-6 text-gray-900 capitalize'>
               {trans.email}
             </label>
             <div className='mt-2.5'>
@@ -113,7 +113,7 @@ export default function () {
                 {...register("email")}
                 id='email'
                 autoComplete='email'
-                className='block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-picks-dark sm:text-sm sm:leading-6'
+                className={`input-default`}
               />
             </div>
             <InputError
@@ -124,7 +124,7 @@ export default function () {
           <div className='sm:col-span-2'>
             <label
               htmlFor='phone'
-              className='block text-sm font-semibold leading-6 text-gray-900'>
+              className='block text-sm font-semibold leading-6 text-gray-900 capitalize'>
               {trans.phone}
             </label>
             <div className='relative mt-2.5'>
@@ -150,7 +150,7 @@ export default function () {
                 {...register("phone")}
                 id='phone'
                 autoComplete='tel'
-                className='block w-full rounded-md border-0 px-3.5 py-2 pl-20 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-picks-dark sm:text-sm sm:leading-6'
+                className={`input-default`}
               />
             </div>
             <InputError
@@ -161,7 +161,7 @@ export default function () {
           <div className='sm:col-span-2'>
             <label
               htmlFor='message'
-              className='block text-sm font-semibold leading-6 text-gray-900'>
+              className='block text-sm font-semibold leading-6 text-gray-900 capitalize'>
               {trans.message}
             </label>
             <div className='mt-2.5'>
@@ -169,7 +169,7 @@ export default function () {
                 {...register("message")}
                 id='message'
                 rows={4}
-                className='block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-picks-dark sm:text-sm sm:leading-6'
+                className={`input-default`}
                 defaultValue={""}
               />
             </div>

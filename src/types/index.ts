@@ -19,6 +19,7 @@ export type ContactusForm = {
     last_name: string;
     phone: string;
     message: string;
+    dail_code?: string;
 }
 
 export type TranslationType = { [key: string]: string };

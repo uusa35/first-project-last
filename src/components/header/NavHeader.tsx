@@ -186,7 +186,7 @@ export default function ({ showMiddleNav = false }: Props) {
                     type='text'
                     name='search'
                     id='search'
-                    className='block w-full rounded-md border-0 py-2.5 ltr:pl-10 rtl:pr-10 text-gray-900 bg-gray-100 placeholder:text-gray-400 focus:ring-[0.5px] focus:ring-inset focus:ring-gray-300 sm:text-sm sm:leading-6'
+                    className='input-default ltr:pl-10 rtl:pr-10 '
                     placeholder={trans.search}
                   />
                 </div>
