@@ -14,6 +14,13 @@ export type toastMessage = {
     showToast: boolean;
 }
 
+export type ContactusForm = {
+    first_name: string;
+    last_name: string;
+    phone: string;
+    message: string;
+}
+
 export type TranslationType = { [key: string]: string };
 
 export type localeType = Locale | string | string[];

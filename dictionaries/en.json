@@ -293,6 +293,9 @@
     "delivery": "delivery",
     "join_us": "join us",
     "join_us_description": "join us description",
-    "add_ur_resturant": "add your resturant"
+    "add_ur_resturant": "add your resturant",
+    "let_us_talk": "let us talk",
+    "first_name": "first name",
+    "last_name": "last name"
   }
 }

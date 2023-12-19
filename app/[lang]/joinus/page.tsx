@@ -129,11 +129,11 @@ const secondaryFeatures = [
 export async function generateMetadata({ params }: Props) {
   const { trans } = await getDictionary(params.lang);
   return {
-    title: trans.aboutus,
-    description: trans.aboutus,
+    title: trans.joinus,
+    description: trans.joinus,
     openGraph: {
-      title: trans.aboutus,
-      description: trans.aboutus,
+      title: trans.joinus,
+      description: trans.joinus,
       locale: params.lang,
       type: "website",
     },
