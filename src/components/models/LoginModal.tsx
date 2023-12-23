@@ -75,7 +75,7 @@ export default function () {
             content: `${r.error.data.message}`,
           })
         );
-        reset()
+        reset();
         if (r.error.data.status === "301") {
           console.log(r);
           setAuth(
@@ -84,14 +84,14 @@ export default function () {
               phone: body.phone,
             })
           );
-          dispatch(toggleLoginModal());
-          dispatch(toggleVerficationModal());
+          dispatch(toggleLoginModal(false));
+          dispatch(toggleVerficationModal(true));
         }
       } else {
         setAuth(JSON.stringify(r.data.data));
         dispatch(setAuthentication(r.data.data));
         dispatch(showSuccessToastMessage({ content: trans.process_success }));
-        dispatch(toggleLoginModal());
+        dispatch(toggleLoginModal(false));
         return router.replace(`/${lang}`);
       }
     });
@@ -144,13 +144,12 @@ export default function () {
                     onSubmit={handleSubmit(onSubmit)}
                     className={`space-y-4 text-justify ${
                       isLoading && "hidden"
-                    }`}
-                  >
-                    <div className="">
-                      <p className="font-semibold">
+                    }`}>
+                    <div className=''>
+                      <p className='font-semibold'>
                         {trans.enter_your_phone_number}
                       </p>
-                      <p className="text-picks-text-gray text-sm mt-1">
+                      <p className='text-picks-text-gray text-sm mt-1'>
                         {trans.login_txt}
                       </p>
                     </div>
@@ -208,7 +207,7 @@ export default function () {
                           className='ltr:text-left rtl:text-right block w-full rounded-md border-0 py-2.5 shadow-sm bg-stone-100 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6'
                         />
                         <EyeIcon
-                          className="absolute top-3 ltr:right-4 rtl:left-4 w-6 h-6 text-gray-600 hover:text-gray-900"
+                          className='absolute top-3 ltr:right-4 rtl:left-4 w-6 h-6 text-gray-600 hover:text-gray-900'
                           onClick={() => toggleShowPassword()}
                         />
                       </div>

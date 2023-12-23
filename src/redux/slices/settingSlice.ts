@@ -65,11 +65,11 @@ export const settingSlice = createSlice({
     },
     toggleLoginModal: (
       state: typeof initialState,
-      action: PayloadAction<void>
+      action: PayloadAction<undefined | boolean>
     ) => {
       return {
         ...state,
-        showLoginModal: !state.showLoginModal,
+        showLoginModal: action.payload === undefined ? !state.showLoginModal : action.payload,
         showRegisterModal: false,
         showForgetPasswordModal: false,
         showVerificationModal: false,
@@ -78,11 +78,11 @@ export const settingSlice = createSlice({
     },
     toggleRegisterModal: (
       state: typeof initialState,
-      action: PayloadAction<void>
+      action: PayloadAction<undefined | boolean>
     ) => {
       return {
         ...state,
-        showRegisterModal: !state.showRegisterModal,
+        showRegisterModal: action.payload === undefined ? !state.showRegisterModal : action.payload,
         showLoginModal: false,
         showForgetPasswordModal: false,
         showVerificationModal: false,
@@ -91,11 +91,11 @@ export const settingSlice = createSlice({
     },
     toggleForgetPasswordModal: (
       state: typeof initialState,
-      action: PayloadAction<void>
+      action: PayloadAction<undefined | boolean>
     ) => {
       return {
         ...state,
-        showForgetPasswordModal: !state.showForgetPasswordModal,
+        showForgetPasswordModal: action.payload === undefined ? !state.showForgetPasswordModal : action.payload,
         showLoginModal: false,
         showRegisterModal: false,
         showVerificationModal: false,
@@ -104,11 +104,11 @@ export const settingSlice = createSlice({
     },
     toggleVerficationModal: (
       state: typeof initialState,
-      action: PayloadAction<void>
+      action: PayloadAction<undefined | boolean>
     ) => {
       return {
         ...state,
-        showVerificationModal: !state.showVerificationModal,
+        showVerificationModal: action.payload === undefined ? !state.showVerificationModal : action.payload,
         showLoginModal: false,
         showRegisterModal: false,
         showForgetPasswordModal: false,
