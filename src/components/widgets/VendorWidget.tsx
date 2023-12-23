@@ -64,15 +64,15 @@ export default function ({ vendor, lang, country }: Props) {
         href={appLinks.vendor(lang, country, vendor.id.toString(), vendor.name)}
         className="mt-2 space-y-1 "
       >
-        <p className="card-title">
-          {vendor.store_name}{" "}
+        <div className="flex items-center gap-x-2">
+          <p className="card-title">{vendor.store_name} </p>
           {vendor.rating ? (
-            <span>
+            <p className="flex items-center gap-x-1 text-xs mt-1">
               <Star />
-              {vendor.rating}
-            </span>
+              <span className="mt-1">{vendor.rating}</span>
+            </p>
           ) : null}
-        </p>
+        </div>
         <p className="card-desc">{vendor.description}</p>
         {vendor.delivery_time || vendor.delivery_fees ? (
           <div className="flex flex-wrap gap-x-2 text-sm text-picks-text-gray">

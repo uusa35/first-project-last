@@ -75,11 +75,11 @@ export default function () {
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (body) => {
-    console.log({ body });
+    // console.log({ body });
     dispatch(enableLoading());
     await triggerRegister(body, false).then((r: any) => {
-      console.log({ r });
-      if (r && r.error.data) {
+      // console.log("register", r);
+      if (r && r.error?.data) {
         dispatch(
           showErrorToastMessage({
             content: `${r.error.data.message}`,
@@ -89,9 +89,11 @@ export default function () {
         setAuth(JSON.stringify(r.data.data));
         dispatch(showSuccessToastMessage({ content: trans.process_success }));
         dispatch(toggleRegisterModal());
-        return router.replace(`/${lang}`);
+        dispatch(toggleVerficationModal());
+        // toggle otp modal
+        // return router.replace(`/${lang}`);
       }
-       reset();
+      reset();
     });
   };
 

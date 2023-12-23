@@ -38,7 +38,7 @@ body {
   }
 
   .card-title {
-    @apply truncate font-semibold mt-2 text-sm;
+    @apply truncate font-semibold mt-2;
   }
   .card-desc {
     @apply truncate text-xs text-picks-text-gray;

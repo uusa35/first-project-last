@@ -291,6 +291,12 @@
     "pickup": "pickup",
     "delivery": "delivery",
     "join_us": "join us",
-    "join_us_description": "join us description"
+    "join_us_description": "join us description",
+    "verification_code": "verification code",
+    "confirm":"confirm",
+    "didnot_receive_the_code_yet":"didn't receive the code yet ?",
+    "resend":"resend",
+     "enter_your_phone_number":"enter your phone number",
+    "login_txt":"Whether you're crating an account or signing back in , let's start with your number."
   }
 }

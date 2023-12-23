@@ -11,8 +11,8 @@ export const loginSchema = yup.object({
 });
 
 export const verificySchema = yup.object({
-  phone: yup.string().min(6).max(20).required(),
-  phone_country_code: yup.string().required("validation.required"),
+  // phone: yup.string().min(6).max(20).required(),
+  // phone_country_code: yup.string().required("validation.required"),
   code: yup.string().min(6).max(12).required("validation.required"),
   type: yup.string().required("validation.required"),
 });

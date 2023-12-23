@@ -290,6 +290,12 @@
     "pickup": "استلام",
     "delivery": "توصيل",
     "join_us": "اشترك معنا",
-    "join_us_description": "نبذة عن الاشتراك معنا"
+    "join_us_description": "نبذة عن الاشتراك معنا",
+    "verification_code": "رمز التحقق",
+    "confirm": "تأكيد",
+    "didnot_receive_the_code_yet":"لم تستلم الرمز بعد؟",
+    "resend":"إعادة إرسال",
+    "enter_your_phone_number":"أدخل رقم هاتفك",
+    "login_txt":"سواء كنت تقوم بإنشاء حساب أو تسجيل الدخول مرة أخرى، فلنبدأ برقمك."
   }
 }

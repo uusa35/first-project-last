@@ -10,13 +10,14 @@ export const authApi = apiSlice.injectEndpoints({
         phone_country_code: string;
         password: string;
         session_id?: string;
+        device_token?: string;
       }
     >({
       query: (body) => ({
         url: `login`,
-        body,
+        body: { ...body, platform: "web", device_token: "1234" },
         method: "post",
-        validateStatus: (response, result) => result.status == 200,
+        validateStatus: (response, result) => result.status == "200",
       }),
     }),
     register: builder.query<
@@ -36,8 +37,8 @@ export const authApi = apiSlice.injectEndpoints({
         body,
         method: "post",
         validateStatus: (response, result) => {
-          console.log({ result, response });
-          return result.status === 200 && result.success;
+          // console.log({ result, response });
+          return result.status === "200";
         },
       }),
     }),
@@ -58,10 +59,26 @@ export const authApi = apiSlice.injectEndpoints({
       }
     >({
       query: (body) => ({
-        url: `verify`,
+        url: `web-verify`,
         body,
         method: "post",
-        validateStatus: (response, result) => result.status === 200,
+        validateStatus: (response, result) => result.status === "200",
+      }),
+    }),
+
+    resendOtp: builder.query<
+      Auth,
+      {
+        phone: string;
+        phone_country_code: string;
+        type: "register" | "reset";
+      }
+    >({
+      query: (body) => ({
+        url: `resend-otp`,
+        body,
+        method: "post",
+        validateStatus: (response, result) => result.status === "200",
       }),
     }),
     getAuthenticatedUser: builder.query<User, { id: number }>({
@@ -105,4 +122,5 @@ export const {
   useLazyForgotPasswordQuery,
   useGetAuthenticatedUserQuery,
   useChangePasswordMutation,
+  useLazyResendOtpQuery,
 } = authApi;
