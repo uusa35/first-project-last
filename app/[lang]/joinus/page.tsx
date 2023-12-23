@@ -16,6 +16,7 @@ import {
   ServerIcon,
 } from "@heroicons/react/24/outline";
 import FaqCard from "@/src/components/faq/FaqCard";
+import JoinusForm from "@/src/components/joinus/JoinusForm";
 
 type Props = {
   params: { lang: Locale["lang"] };
@@ -152,6 +153,9 @@ export default async function ({ params: { lang } }: Props) {
         title={trans.join_us}
         description={trans.join_us_description}
       />
+      <div className='relative -top-20 border-4 max-w-lg mx-8'>
+        <JoinusForm />
+      </div>
       <div className='mt-20 text-black px-4 md:px-8 min-h-screen'>
         <div className='bg-white py-14 sm:py-22'>
           <div className='mx-auto  max-w-7xl px-6 lg:px-8'>
