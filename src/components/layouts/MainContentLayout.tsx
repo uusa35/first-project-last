@@ -3,17 +3,14 @@ import { FC, Suspense, createContext, useEffect } from "react";
 import NavHeader from "@/components/header/NavHeader";
 import { Locale, countriesList } from "@/types/index";
 import AppFooter from "@/components/footer/AppFooter";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setLocale } from "@/redux/slices/localeSlice";
 import moment from "moment";
 import * as yup from "yup";
 import {
-  deleteToken,
   removeAreaCookie,
   setAreaCookie,
-  setCountryCookie,
-  setCountryNameCookie,
   setLang,
   setLocaleCookie,
 } from "@/app/actions";
@@ -24,19 +21,17 @@ import {
 } from "@/redux/api/countryApi";
 import { useLazyGetAreasQuery } from "@/redux/api/areaApi";
 import { resetArea, setArea } from "@/src/redux/slices/areaSlice";
-import Image from "next/image";
 import LoginModal from "@/components/models/LoginModal";
-import RegisterModal from "../models/RegisterModal";
-import ForgetPasswordModal from "../models/ForgetPasswordModal";
-import VerificationModal from "../models/VerificationModal";
+import RegisterModal from "@/components/models/RegisterModal";
+import ForgetPasswordModal from "@/components/models/ForgetPasswordModal";
+import VerificationModal from "@/components/models/VerificationModal";
 import { AppQueryResult, Area, Country } from "@/src/types/queries";
 import { first } from "lodash";
+import { toggleSideMenu } from "@/src/redux/slices/settingSlice";
 
 type Props = {
   children: React.ReactNode;
   trans: { [key: string]: string };
-  lang: Locale["lang"];
-  country: countriesList;
   showMiddleNav?: boolean;
 };
 
@@ -44,8 +39,6 @@ const MainContext = createContext({});
 const MainContextLayout: FC<Props> = ({
   children,
   trans,
-  lang,
-  country,
   showMiddleNav = false,
 }) => {
   const {
@@ -53,7 +46,9 @@ const MainContextLayout: FC<Props> = ({
     country: { country_code, id },
     area,
   } = useAppSelector((state) => state);
-
+  const params: { lang: Locale["lang"]; country?: countriesList } | any =
+    useParams!();
+  const { lang } = params;
   const pathName = usePathname();
   const dispatch = useAppDispatch();
   const [triggerGetCountryByName, { data, isSuccess }] =
@@ -110,17 +105,21 @@ const MainContextLayout: FC<Props> = ({
 
   // sets cookies if country changed from any page
   useEffect(() => {
-    if (country !== undefined) {
-      triggerGetCountryByName(country, false).then((r: any) => {
+    if (params?.country !== undefined) {
+      triggerGetCountryByName(params?.country, false).then((r: any) => {
         if (r.data && r.data.data) {
           dispatch(setCountry(r.data.data));
         }
       });
     }
-  }, [country]);
+  }, [params?.country]);
 
   useEffect(() => {
-    if (country === country_code) {
+    dispatch(toggleSideMenu(false));
+  }, []);
+
+  useEffect(() => {
+    if (params?.country === country_code) {
       triggerGetAreas(id, false).then((r: any) => {
         if (r && r.data && r.data.success && r.data.data) {
           const serverArea: Area | undefined = first(r.data.data);
@@ -144,7 +143,7 @@ const MainContextLayout: FC<Props> = ({
   return (
     <MainContext.Provider value={trans}>
       {/* nav */}
-      <NavHeader lang={lang} showMiddleNav={showMiddleNav} country={country} />
+      <NavHeader showMiddleNav={showMiddleNav} />
       <Suspense>
         <LoginModal />
         <RegisterModal />

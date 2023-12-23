@@ -28,7 +28,7 @@ export default function () {
       <div className='fixed  w-auto text-right '>
         <Menu as='div' className='relative inline-block text-left'>
           <div className=''>
-            <Menu.Button className='inline-flex gap-x-4 w-full justify-center items-center rounded-md bg-gray-100 p-4 pb-5  text-sm font-medium text-black hover:bg-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 capitalize'>
+            <Menu.Button className='inline-flex gap-x-4 w-full justify-center items-center rounded-md bg-gray-100 p-3  text-md font-medium text-black hover:bg-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 capitalize'>
               <MarkerImg className={`w-5 h-auto`} />
               <span className='truncate w-18'>
                 {lang === "ar" ? area.web_name.ar : area.web_name.en}

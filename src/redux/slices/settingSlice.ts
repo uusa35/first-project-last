@@ -1,19 +1,21 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type Props = {
-  currentPath: string;
+
   isLoading: boolean;
   orderType: 'pickup' | 'delivery',
   showLoginModal: boolean;
   showRegisterModal: boolean;
   showForgetPasswordModal: boolean;
   showVerificationModal: boolean;
+  sideMenuOpen: boolean;
   session_id: string;
 }
 const initialState: Props = {
-  currentPath: ``,
+
   isLoading: false,
   orderType: 'pickup',
+  sideMenuOpen: false,
   showLoginModal: false,
   showRegisterModal: false,
   showForgetPasswordModal: false,
@@ -71,6 +73,7 @@ export const settingSlice = createSlice({
         showRegisterModal: false,
         showForgetPasswordModal: false,
         showVerificationModal: false,
+        sideMenuOpen: false,
       };
     },
     toggleRegisterModal: (
@@ -83,6 +86,7 @@ export const settingSlice = createSlice({
         showLoginModal: false,
         showForgetPasswordModal: false,
         showVerificationModal: false,
+        sideMenuOpen: false,
       };
     },
     toggleForgetPasswordModal: (
@@ -95,6 +99,7 @@ export const settingSlice = createSlice({
         showLoginModal: false,
         showRegisterModal: false,
         showVerificationModal: false,
+        sideMenuOpen: false,
       };
     },
     toggleVerficationModal: (
@@ -107,6 +112,20 @@ export const settingSlice = createSlice({
         showLoginModal: false,
         showRegisterModal: false,
         showForgetPasswordModal: false,
+        sideMenuOpen: false,
+      };
+    },
+    toggleSideMenu: (
+      state: typeof initialState,
+      action: PayloadAction<undefined | boolean>
+    ) => {
+      return {
+        ...state,
+        showVerificationModal: false,
+        showLoginModal: false,
+        showRegisterModal: false,
+        showForgetPasswordModal: false,
+        sideMenuOpen: action.payload === undefined ? !state.sideMenuOpen : action.payload,
       };
     },
   }
@@ -120,5 +139,6 @@ export const {
   toggleLoginModal,
   toggleRegisterModal,
   toggleForgetPasswordModal,
-  toggleVerficationModal
+  toggleVerficationModal,
+  toggleSideMenu,
 } = settingSlice.actions;

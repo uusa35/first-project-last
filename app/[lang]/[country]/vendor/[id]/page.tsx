@@ -21,7 +21,7 @@ export default async function ({ params: { lang, country, id } }: Props) {
   if (!vendor || !vendor.data.vendor) notFound();
   const { logo, store_name, description, image, category } = vendor.data.vendor;
   return (
-    <MainContextLayout trans={trans} lang={lang} country={country}>
+    <MainContextLayout trans={trans}>
       <div className='mt-8'>
         <Breadcrumbs />
         <VendorHeader title={store_name} logo={logo} bg={image} />
@@ -29,7 +29,7 @@ export default async function ({ params: { lang, country, id } }: Props) {
           <div className='col-span-2'>
             <h1 className='text-3xl pb-4'>{store_name}</h1>
             <div className='flex flex-1'>
-              <p className='text-gray-400 pl-2 border-l border-gray-400'>
+              <p className='text-gray-400 rtl:pl-2 ltr:pr-2 ltr:border-r rtl:border-l border-gray-400'>
                 {category}
               </p>
             </div>
@@ -43,12 +43,7 @@ export default async function ({ params: { lang, country, id } }: Props) {
           </div>
         </div>
 
-        <ProductsSlider
-          products={vendor.data.items}
-          lang={lang}
-          country={country}
-          title={"big deals"}
-        />
+        <ProductsSlider products={vendor.data.items} title={"big deals"} />
         <VendorContent />
       </div>
     </MainContextLayout>

@@ -129,11 +129,11 @@ const secondaryFeatures = [
 export async function generateMetadata({ params }: Props) {
   const { trans } = await getDictionary(params.lang);
   return {
-    title: trans.aboutus,
-    description: trans.aboutus,
+    title: trans.joinus,
+    description: trans.joinus,
     openGraph: {
-      title: trans.aboutus,
-      description: trans.aboutus,
+      title: trans.joinus,
+      description: trans.joinus,
       locale: params.lang,
       type: "website",
     },
@@ -146,7 +146,7 @@ export default async function ({ params: { lang } }: Props) {
     await Promise.all([getDictionary(lang), getFaqs()]);
 
   return (
-    <MainContextLayout trans={trans} lang={lang} country={country ?? "kw"}>
+    <MainContextLayout trans={trans}>
       <PageHeader
         img={JoinusImg.src}
         title={trans.join_us}

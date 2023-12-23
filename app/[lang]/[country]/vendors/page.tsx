@@ -29,7 +29,7 @@ export default async function (props: Props) {
     ]);
 
   return (
-    <MainContextLayout trans={trans} lang={lang} country={country}>
+    <MainContextLayout trans={trans}>
       <h1 className='text-7xl'>Vendors {country}</h1>
       {/* vendors */}
       <div className='flex w-full flex-col flex-wrap justify-between items-center'>

@@ -98,7 +98,7 @@ export default async function ({ params: { lang } }: Props) {
     await Promise.all([getDictionary(lang), getFaqs()]);
 
   return (
-    <MainContextLayout trans={trans} lang={lang} country={country ?? "kw"}>
+    <MainContextLayout trans={trans}>
       <PageHeader img={FaqImg.src} title={`faqs`} />
 
       <div className='bg-white'>

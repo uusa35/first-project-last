@@ -9,16 +9,19 @@ import { Locale, countriesList } from "@/src/types";
 import { User } from "@/types/queries";
 import VendorWidget from "@/components/widgets/VendorWidget";
 import { MainContext } from "../layouts/MainContentLayout";
+import { useParams } from "next/navigation";
 
 type Props = {
   vendors: User[];
-  lang: Locale["lang"];
-  country: countriesList;
+
   title: string;
 };
 
-export default function ({ vendors, lang, country, title }: Props) {
+export default function ({ vendors, title }: Props) {
   const trans: { [key: string]: string } = useContext(MainContext);
+  const params: { lang: Locale["lang"]; country?: countriesList } | any =
+    useParams!();
+  const { lang } = params;
   const refSlider = useRef<Slider | null>(null);
 
   const RenderArrows = () => {
@@ -57,11 +60,11 @@ export default function ({ vendors, lang, country, title }: Props) {
                 key={itm.id}
                 href={appLinks.vendor(
                   lang,
-                  country,
+                  params?.country,
                   itm.id.toString(),
                   itm.store_name_en
                 )}>
-                <VendorWidget vendor={itm} lang={lang} country={country} />
+                <VendorWidget vendor={itm} />
               </Link>
             ))}
         </Slider>

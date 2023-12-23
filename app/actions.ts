@@ -113,11 +113,6 @@ export async function setLang(value: string) {
   });
 }
 
-export async function deleteToken() {
-  cookies().delete("token");
-  cookies().delete("role");
-}
-
 export async function getMainHeaders() {
   const country = await getCountryCookie();
   const lang = await getLang();

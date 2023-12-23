@@ -75,8 +75,9 @@ export const updateUserSchema = yup.object({
 });
 
 export const contactusSchema = yup.object().shape({
-  name: yup.string().min(2).max(99).required(),
+  first_name: yup.string().min(2).max(99).required(),
+  last_name: yup.string().min(2).max(99).required(),
   email: yup.string().email().required(),
-  phone: yup.string().min(2).max(460).required(),
-  content: yup.string().required().max(9999),
+  phone: yup.string().min(6).max(460).required(),
+  message: yup.string().required().max(9999),
 });

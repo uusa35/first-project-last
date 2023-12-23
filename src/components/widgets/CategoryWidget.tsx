@@ -4,21 +4,24 @@ import { Locale, countriesList } from "@/src/types";
 import { Category } from "@/src/types/queries";
 import Image from "next/image";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import React from "react";
 
 type Props = {
   category: Category;
-  lang: Locale["lang"];
-  country: countriesList;
+  
 };
 
-export default function ({ category, lang, country }: Props) {
+export default function ({ category,  }: Props) {
   const searchParams = useSearchParams();
+  const params: { lang: Locale["lang"]; country?: countriesList } | any =
+    useParams!();
+  const { lang } = params;
 
   return (
     <Link
-      href={appLinks.offers(lang, country, `category_id=${category.id}`)}
+      href={appLinks.offers(lang, params?.country, `category_id=${category.id}`)}
       className='px-5'>
       <div
         className={`flex items-center gap-x-2 bg-white rounded-full py-2 px-3 w-fit ${

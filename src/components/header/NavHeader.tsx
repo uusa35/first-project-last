@@ -1,7 +1,13 @@
 "use client";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { Dialog } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  Bars3Icon,
+  BellIcon,
+  MagnifyingGlassCircleIcon,
+  MagnifyingGlassIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import Link from "next/link";
 import { useParams, usePathname, useSearchParams } from "next/navigation";
@@ -15,48 +21,55 @@ import {
   changeOrderType,
   toggleLoginModal,
   toggleRegisterModal,
+  toggleSideMenu,
   toggleVerficationModal,
 } from "@/src/redux/slices/settingSlice";
-import { getAuth, setOrderType } from "@/app/actions";
+import { getAuth, getCountryNameCookie, setOrderType } from "@/app/actions";
 import LogoDark from "@/appImages/logo_dark.svg";
 import LogoLight from "@/appImages/logo_light.svg";
+import LogoOnly from "@/appImages/logo_only.svg";
 import ArFlag from "@/appIcons/ar.svg";
 import MarkerImg from "@/appIcons/marker.svg";
-import AreaDropDown from "../home/AreaDropDown";
-import { useMediaQuery } from "@mui/material";
+import AreaDropDown from "@/components/home/AreaDropDown";
+import GooglePlay from "@/appIcons/landing/download_google_play.svg";
+import AppleStore from "@/appIcons/landing/download_apple_store.svg";
+import AppGallery from "@/appIcons/landing/download_app_gallery.svg";
+import { ShoppingBag } from "@mui/icons-material";
+import { ShoppingBagIcon } from "@heroicons/react/20/solid";
 
 type Props = {
-  lang: Locale["lang"];
-  country: countriesList;
   showMiddleNav: boolean;
 };
-export default function ({ lang, country, showMiddleNav = false }: Props) {
+export default function ({ showMiddleNav = false }: Props) {
   const trans: { [key: string]: string } = useContext(MainContext);
   const locales: Locale["lang"][] = ["ar", "en"];
   const {
     locale,
     area,
-    appSetting: { orderType },
+    country: { country_code },
+    appSetting: { orderType, sideMenuOpen },
+    auth: { token },
   } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const params = useParams();
+  const params: { lang: Locale["lang"]; country?: countriesList } | any =
+    useParams!();
+  const { lang } = params;
   const pathName = usePathname()!;
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [stickyClass, setStickyClass] = useState(
     `absolute ${showMiddleNav ? "text-black" : "text-white"}`
   );
   const [isSticky, setIsSticky] = useState<boolean>(false);
-  const navigation = [
+  const navigation: { name: string; href: string }[] = [
     { name: trans.landing, href: appLinks.landing(lang) },
     {
       name: trans.home,
-      href: appLinks.home(lang, country),
+      href: appLinks.home(lang, country_code),
     },
     {
       name: trans.offers,
-      href: appLinks.offers(lang, country, ""),
+      href: appLinks.offers(lang, country_code, ""),
     },
     // { name: trans.terms, href: appLinks.terms(lang) },
     { name: trans.aboutus, href: appLinks.aboutus(lang) },
@@ -110,33 +123,33 @@ export default function ({ lang, country, showMiddleNav = false }: Props) {
     }
   };
 
-  useEffect(() => {
-    getAuth().then((r) => {
-      console.log({ r });
-    });
-  }, [getAuth]);
+  // useEffect(() => {
+  //   getAuth().then((r) => {
+  //     console.log({ r });
+  //   });
+  // }, [getAuth]);
 
-  const renderAuthBtns = useMemo(async () => {
-    let auth = await getAuth();
-    if (auth?.token) return <></>;
-    else
-      return (
-        <>
-          <button
-            className={`p-3 w-32 bg-white/80 rounded-lg capitalize text-lg text-black`}
-            onClick={handleRegisterClick}
-          >
-            {trans.signup}
-          </button>
-          <button
-            className={`p-3 w-32 bg-white/30 rounded-lg capitalize text-lg`}
-            onClick={() => dispatch(toggleLoginModal())}
-          >
-            {trans.login}
-          </button>
-        </>
-      );
-  }, []);
+  // const renderAuthBtns = useMemo(async () => {
+  //   let auth = await getAuth();
+  //   if (auth?.token) return <></>;
+  //   else
+  //     return (
+  //       <>
+  //         <button
+  //           className={`p-3 w-32 bg-white/80 rounded-lg capitalize text-lg text-black`}
+  //           onClick={handleRegisterClick}
+  //         >
+  //           {trans.signup}
+  //         </button>
+  //         <button
+  //           className={`p-3 w-32 bg-white/30 rounded-lg capitalize text-lg`}
+  //           onClick={() => dispatch(toggleLoginModal())}
+  //         >
+  //           {trans.login}
+  //         </button>
+  //       </>
+  //     );
+  // }, []);
 
   return (
     <div>
@@ -150,15 +163,18 @@ export default function ({ lang, country, showMiddleNav = false }: Props) {
               <button
                 type="button"
                 className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-400"
-                onClick={() => setMobileMenuOpen(true)}
+                onClick={() => dispatch(toggleSideMenu())}
               >
                 <span className="sr-only">Open main menu</span>
                 <Bars3Icon className="h-6 w-6" aria-hidden="true" />
               </button>
             </div>
-            <Link href={`/${lang}/${country ?? ``}`} className="-m-1.5 p-1.5">
+            <Link
+              href={`/${lang}/${country_code ?? ``}`}
+              className="-m-1.5 p-1.5"
+            >
               <span className="sr-only">Your Company</span>
-              {params?.country || isSticky ? (
+              {country_code || isSticky ? (
                 <LogoDark className="h-8 w-36 " />
               ) : (
                 <LogoLight className="h-8 w-36 " />
@@ -173,7 +189,7 @@ export default function ({ lang, country, showMiddleNav = false }: Props) {
             <div className="flex flex-row justify-evenly items-start gap-x-2">
               <div className="flex flex-row p-1 rounded-md bg-gray-100 ">
                 <button
-                  className={`p-3 text-black rounded-md capitalize ${
+                  className={`px-3 py-2 text-black rounded-md capitalize ${
                     orderType === "pickup" ? "bg-white" : "bg-gray-100"
                   }`}
                   onClick={() => handleOrderType("pickup")}
@@ -181,7 +197,7 @@ export default function ({ lang, country, showMiddleNav = false }: Props) {
                   {trans.pickup}
                 </button>
                 <button
-                  className={`p-3 text-black rounded-md capitalize ${
+                  className={`px-3 py-2 text-black rounded-md capitalize ${
                     orderType === "delivery" ? "bg-white" : "bg-gray-100"
                   }`}
                   onClick={() => handleOrderType("delivery")}
@@ -202,18 +218,44 @@ export default function ({ lang, country, showMiddleNav = false }: Props) {
             ))} */}
           </div>
           <div className="hidden sm:flex sm:flex-1 sm:justify-end gap-x-4 ">
-            <button
-              className={`p-3 w-32 bg-white/80 rounded-lg capitalize text-lg text-black`}
-              onClick={handleRegisterClick}
-            >
-              {trans.signup}
-            </button>
-            <button
-              className={`p-3 w-32 bg-white/30 rounded-lg capitalize text-lg`}
-              onClick={() => dispatch(toggleLoginModal())}
-            >
-              {trans.login}
-            </button>
+            {params?.country ? (
+              <div className="flex flex-row w-full justify-end items-center">
+                <div className="relative rounded-md shadow-sm me-4 lg:w-3/5 xl:w-[350px]">
+                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                    <MagnifyingGlassIcon
+                      className="h-5 w-5 text-gray-400"
+                      aria-hidden="true"
+                    />
+                  </div>
+                  <input
+                    type="text"
+                    name="search"
+                    id="search"
+                    className="input-default ltr:pl-10 rtl:pr-10 "
+                    placeholder={trans.search}
+                  />
+                </div>
+                <div className="flex flex-row gap-x-4">
+                  <ShoppingBagIcon className="w-5 h-5" />
+                  <BellIcon className="w-5 h-5" />
+                </div>
+              </div>
+            ) : (
+              <>
+                <button
+                  className={`p-3 w-32 bg-white/80 rounded-lg capitalize text-lg text-black`}
+                  onClick={() => dispatch(toggleRegisterModal())}
+                >
+                  {trans.signup}
+                </button>
+                <button
+                  className={`p-3 w-32 bg-white/30 rounded-lg capitalize text-lg`}
+                  onClick={() => dispatch(toggleLoginModal())}
+                >
+                  {trans.login}
+                </button>
+              </>
+            )}
             <button
               onClick={() => handleClick(lang === "ar" ? "en" : "ar")}
               className="text-sm font-semibold leading-6 "
@@ -229,49 +271,120 @@ export default function ({ lang, country, showMiddleNav = false }: Props) {
         <Dialog
           as="div"
           className=""
-          open={mobileMenuOpen}
-          onClose={setMobileMenuOpen}
+          open={sideMenuOpen}
+          onClose={() => dispatch(toggleSideMenu(false))}
         >
           <div className="fixed inset-0 z-50" />
           <Dialog.Panel className="fixed inset-y-0 ltr:right-0 ltr:left-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-white/10">
-            <div className="flex items-center justify-between">
-              <Link href={`/${lang}/${country ?? ``}`} className="-m-1.5 p-1.5">
-                <span className="sr-only">{trans.picks}</span>
-                {params?.country ? (
-                  <LogoDark className="h-8 w-36 " />
-                ) : (
-                  <LogoLight className="h-8 w-36 " />
-                )}
-              </Link>
+            <div className="flex w-full items-end justify-end">
               <button
                 type="button"
                 className="-m-2.5 rounded-md p-2.5 text-gray-400"
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={() => dispatch(toggleSideMenu(false))}
               >
                 <span className="sr-only">Close menu</span>
                 <XMarkIcon className="h-6 w-6" aria-hidden="true" />
               </button>
             </div>
+            <div className="flex items-center justify-between">
+              {token ? (
+                <Link
+                  href="#"
+                  className="flex items-center gap-x-4  py-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-50 w-full"
+                >
+                  <img
+                    className="h-8 w-8 rounded-full bg-gray-50"
+                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                    alt=""
+                  />
+                  <span className="sr-only">Your profile</span>
+                  <span aria-hidden="true">Tom Cook</span>
+                </Link>
+              ) : (
+                <div className="flex flex-col gap-y-4">
+                  <h2>Welcome Back,</h2>
+                  <p className="text-sm text-gray-500 leading-3 mb-2">
+                    lorem ipsum dolor sit amet, consectetur adip
+                  </p>
+                  <button
+                    className="btn-default"
+                    onClick={() => dispatch(toggleLoginModal())}
+                  >
+                    {trans.login}
+                  </button>
+                  <button
+                    className="btn-transparent"
+                    onClick={() => dispatch(toggleRegisterModal())}
+                  >
+                    {trans.signup}
+                  </button>
+                </div>
+              )}
+            </div>
             <div className="mt-6 flow-root ">
-              <div className="-my-6 divide-y divide-gray-500/25">
-                <div className="space-y-2 py-6">
+              <div className="-my-6 ">
+                <div className="py-6 ">
                   {navigation.map((item) => (
                     <Link
                       key={item.name}
                       href={item.href}
-                      className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-black hover:bg-picks-light capitalize"
+                      className="-mx-3 block border-b border-gray-200 p-3 py-4  text-base font-semibold leading-7 text-black hover:bg-gray-100 capitalize"
                     >
                       {item.name}
                     </Link>
                   ))}
                 </div>
-                <div className="py-6">
-                  <a
-                    href="#"
-                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-black hover:bg-picks-light"
+                <div className="py-6 ">
+                  <Link
+                    href={appLinks.aboutus(lang)}
+                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-black  capitalize"
                   >
-                    Log in
-                  </a>
+                    {trans.aboutus}
+                  </Link>
+                  <Link
+                    href={appLinks.joinus(lang)}
+                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-black  capitalize"
+                  >
+                    {trans.add_ur_resturant}
+                  </Link>
+                  <ul
+                    role="list"
+                    className="mt-6 space-y-2 flex flex-col flex-1 justify-start items-start"
+                  >
+                    <li className="text-sm flex flex-row justify-start items-center space-x-3">
+                      <Link
+                        href={`${appLinks.aboutus(lang)}`}
+                        className="text-gray-300 hover:text-white"
+                      >
+                        <LogoOnly className="w-[4vh] h-[5vh]" />
+                      </Link>
+                      <p>lorem ipsum dolor sit amet, consectetur adip</p>
+                    </li>
+                    <li className="text-sm">
+                      <Link
+                        href={`${appLinks.aboutus(lang)}`}
+                        className="text-gray-300 hover:text-white"
+                      >
+                        <AppGallery className="w-[14vh] h-[5vh]" />
+                      </Link>
+                    </li>
+                    <li className="text-sm">
+                      <Link
+                        href={`${appLinks.aboutus(lang)}`}
+                        className="text-gray-300 hover:text-white"
+                      >
+                        <GooglePlay className="w-[14vh] h-[5vh]" />
+                      </Link>
+                    </li>
+                    <li className="text-sm">
+                      <Link
+                        href={`${appLinks.aboutus(lang)}`}
+                        className="text-gray-300 hover:text-white"
+                      >
+                        <AppGallery className="w-[14vh] h-[5vh]" />
+                      </Link>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>

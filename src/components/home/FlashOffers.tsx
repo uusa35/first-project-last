@@ -10,16 +10,18 @@ import OfferWidget from "@/components/widgets/OfferWidget";
 import { Locale, countriesList } from "@/src/types";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import { MainContext } from "../layouts/MainContentLayout";
+import { useParams } from "next/navigation";
 
 type Props = {
   products: Product[];
-  lang: Locale["lang"];
-  country: countriesList;
 };
 
-export default function FlashOffers({ products, lang, country }: Props) {
+export default function FlashOffers({ products }: Props) {
   const trans: { [key: string]: string } = useContext(MainContext);
   const refSlider = useRef<Slider | null>(null);
+  const params: { lang: Locale["lang"]; country?: countriesList } | any =
+    useParams!();
+  const { lang } = params;
   const settings: any = {
     dots: false,
     speed: 500,
@@ -91,7 +93,7 @@ export default function FlashOffers({ products, lang, country }: Props) {
         <Slider {...settings} ref={(c) => (refSlider.current = c)}>
           {products &&
             products.map((itm) => (
-              <OfferWidget product={itm} lang={lang} key={itm.id} />
+              <OfferWidget product={itm}  key={itm.id} />
             ))}
         </Slider>
       </div>

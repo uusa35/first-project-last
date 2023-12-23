@@ -7,14 +7,16 @@ import Image from "next/image";
 import { Locale, countriesList } from "@/src/types";
 import Link from "next/link";
 import { appLinks } from "@/src/links";
+import { useParams } from "next/navigation";
 
 type Props = {
-  lang: Locale["lang"];
-  country: countriesList;
   slides: Slide[];
 };
 
-export default function AdsSlider({ slides, lang, country }: Props) {
+export default function AdsSlider({ slides }: Props) {
+  const params: { lang: Locale["lang"]; country?: countriesList } | any =
+    useParams!();
+  const { lang } = params;
   const settings: any = {
     dots: false,
     speed: 500,
@@ -64,14 +66,18 @@ export default function AdsSlider({ slides, lang, country }: Props) {
               key={i}
               href={
                 s.screen_type === "home" && !isNull(s.vendor_id)
-                  ? appLinks.vendor(lang, country, s.vendor_id.toString())
+                  ? appLinks.vendor(
+                      lang,
+                      params?.country,
+                      s.vendor_id.toString()
+                    )
                   : !isNull(s.category_id)
                   ? appLinks.offers(
                       lang,
-                      country,
+                      params?.country,
                       `category_id=${s.category_id?.toString()}`
                     )
-                  : `/${lang}/${country}`
+                  : `/${lang}/${params?.country}`
               }>
               <Image
                 alt={"slider"}

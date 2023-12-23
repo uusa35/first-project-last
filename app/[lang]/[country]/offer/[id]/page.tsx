@@ -20,11 +20,10 @@ export default async function ({ params: { lang, country, id } }: Props) {
   if (!vendor) notFound();
 
   return (
-    <MainContextLayout trans={trans} lang={lang} country={country}>
+    <MainContextLayout trans={trans}>
       <h1>Resturan {id} </h1>
       <h1>Name {vendor.data.name} </h1>
       <h1>Description {vendor.data.description} </h1>
-      
     </MainContextLayout>
   );
 }
