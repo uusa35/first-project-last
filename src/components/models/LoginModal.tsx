@@ -84,14 +84,14 @@ export default function () {
               phone: body.phone,
             })
           );
-          dispatch(toggleLoginModal(false));
-          dispatch(toggleVerficationModal(true));
+          dispatch(toggleLoginModal(undefined));
+          dispatch(toggleVerficationModal(undefined));
         }
       } else {
         setAuth(JSON.stringify(r.data.data));
         dispatch(setAuthentication(r.data.data));
         dispatch(showSuccessToastMessage({ content: trans.process_success }));
-        dispatch(toggleLoginModal(false));
+        dispatch(toggleLoginModal(undefined));
         return router.replace(`/${lang}`);
       }
     });
