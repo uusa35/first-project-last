@@ -293,13 +293,18 @@
     "join_us_description": "نبذة عن الاشتراك معنا",
     "verification_code": "رمز التحقق",
     "confirm": "تأكيد",
-    "didnot_receive_the_code_yet":"لم تستلم الرمز بعد؟",
-    "resend":"إعادة إرسال",
-    "enter_your_phone_number":"أدخل رقم هاتفك",
-    "login_txt":"سواء كنت تقوم بإنشاء حساب أو تسجيل الدخول مرة أخرى، فلنبدأ برقمك.",
+    "didnot_receive_the_code_yet": "لم تستلم الرمز بعد؟",
+    "resend": "إعادة إرسال",
+    "enter_your_phone_number": "أدخل رقم هاتفك",
+    "login_txt": "سواء كنت تقوم بإنشاء حساب أو تسجيل الدخول مرة أخرى، فلنبدأ برقمك.",
     "add_ur_resturant": "اضف مطعمك",
     "let_us_talk": "تواصل معنا",
     "first_name": "الاسم الاول",
-    "last_name": "الاسم الاخير"
+    "last_name": "الاسم الاخير",
+    "welcome_to_picks": "مرحبًا بك في بيكس",
+    "enter_your_personal_information_to_continue": "أدخل معلوماتك الشخصية للمتابعة.",
+    "enter_account_phone_number": "أدخل رقم هاتف الحساب",
+    "enter_the_mobile_number_of_your_account_to_send_a_password_change_OTP_messsage": "أدخل رقم الهاتف المحمول الخاص بحسابك لإرسال رسالة تغيير كلمة المرور لمرة واحدة (OTP).",
+    "send_otp": "ارسل الكود"
   }
 }

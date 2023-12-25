@@ -1,124 +1,197 @@
 "use client";
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment } from "react";
+import { Fragment, useContext } from "react";
 import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
-import { toggleForgetPasswordModal } from "@/src/redux/slices/settingSlice";
-
+import {
+  enableLoading,
+  toggleForgetPasswordModal,
+} from "@/src/redux/slices/settingSlice";
+import { MainContext } from "../layouts/MainContentLayout";
+import { XMarkIcon } from "@heroicons/react/24/outline";
+import ForgetPass from "@/appIcons/auth/forget_pass.svg";
+import { useGetCountriesQuery } from "@/src/redux/api/countryApi";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { pick } from "lodash";
+import { registerSchema } from "@/src/validations";
+import { Country } from "@/src/types/queries";
+import {
+  showErrorToastMessage,
+  showSuccessToastMessage,
+} from "@/src/redux/slices/toastMessageSlice";
+import { useLazyVerifyQuery } from "@/src/redux/api/authApi";
+type Inputs = {
+  phone: string;
+  phone_country_code: string;
+};
 export default function () {
+  const trans: { [key: string]: string } = useContext(MainContext);
   const {
     appSetting: { showForgetPasswordModal },
+    locale: { lang },
+    country: { code },
   } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
+  const { data: countries, isSuccess: countriesSuccess } =
+    useGetCountriesQuery();
+  const [triggerVerifiy] = useLazyVerifyQuery();
 
+  const {
+    handleSubmit,
+    register,
+    reset,
+    formState: { errors },
+    getValues,
+  } = useForm<Inputs>({
+    resolver: yupResolver(registerSchema.pick(["phone", "phone_country_code"])),
+    defaultValues: {
+      phone_country_code: code,
+      phone: ``,
+    },
+  });
+
+  console.log({ countries });
+
+  const onSubmit: SubmitHandler<Inputs> = async (body) => {
+    // dispatch(enableLoading());
+    // await triggerVerifiy(
+    //   {
+    //     ...body,
+    //     type:"reset"
+    //   },
+    //   false
+    // ).then((r: any) => {
+    //   if (r && r.error?.data) {
+    //     dispatch(
+    //       showErrorToastMessage({
+    //         content: `${r.error?.data?.message}`,
+    //       })
+    //     );
+    //   } else {
+    //     // console.log({ r });
+    //     dispatch(showSuccessToastMessage({ content: r.data?.message }));
+    //     closeModal();
+    //   }
+    // });
+  };
+
+  const closeModal = () => {
+    dispatch(toggleForgetPasswordModal());
+    reset();
+  };
   return (
     <>
-      <Transition appear show={showForgetPasswordModal} as={Fragment}>
+      <Transition appear show={true} as={Fragment}>
         <Dialog
-          as='div'
-          className='relative z-10'
-          onClose={() => dispatch(toggleForgetPasswordModal())}>
+          as="div"
+          className="relative z-50"
+          onClose={() => dispatch(toggleForgetPasswordModal())}
+        >
           <Transition.Child
             as={Fragment}
-            enter='ease-out duration-300'
-            enterFrom='opacity-0'
-            enterTo='opacity-100'
-            leave='ease-in duration-200'
-            leaveFrom='opacity-100'
-            leaveTo='opacity-0'>
-            <div className='fixed inset-0 bg-black/25' />
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black/25" />
           </Transition.Child>
 
-          <div className='fixed inset-0 overflow-y-auto'>
-            <div className='flex min-h-full items-center justify-center p-4 text-center'>
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
               <Transition.Child
                 as={Fragment}
-                enter='ease-out duration-300'
-                enterFrom='opacity-0 scale-95'
-                enterTo='opacity-100 scale-100'
-                leave='ease-in duration-200'
-                leaveFrom='opacity-100 scale-100'
-                leaveTo='opacity-0 scale-95'>
-                <Dialog.Panel className='w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all'>
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                   <Dialog.Title
-                    as='h3'
-                    className='text-lg font-medium leading-6 text-gray-900'>
-                    Forget password
-                  </Dialog.Title>
-                  <div className='flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8'>
-                    <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
-                      <img
-                        className='mx-auto h-10 w-auto'
-                        src='https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600'
-                        alt='Your Company'
+                    as="h3"
+                    className="text-lg font-medium leading-6 text-gray-900"
+                  >
+                    <div className=" capitalize flex flex-row justify-center items-center border-b border-gray-200 pb-4 text-xl">
+                      {trans.verification_code}
+                      <XMarkIcon
+                        className="absolute ltr:left-4 rtl:right-4 w-6 h-6 text-gray-600 cursor-pointer"
+                        onClick={closeModal}
                       />
-                      <h2 className='mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900'>
-                        Forget password
-                      </h2>
                     </div>
-                    <div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
-                      <form className='space-y-6' action='#' method='POST'>
+                  </Dialog.Title>
+                  <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 max-h-[70vh] overflow-y-auto scrollbar-hide">
+                    <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+                      <div className="flex justify-center mt-3">
+                        <ForgetPass width={100} height={100} />
+                      </div>
+                      <div className="text-center mt-2">
+                        <p className="font-semibold text-xl">
+                          {trans.enter_account_phone_number}
+                        </p>
+                        <p className="text-picks-text-gray text-sm mt-1">
+                          {
+                            trans.enter_the_mobile_number_of_your_account_to_send_a_password_change_OTP_messsage
+                          }
+                        </p>
+                      </div>
+                    </div>
+                    <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+                      <form className="space-y-6" action="#" method="POST">
                         <div>
                           <label
-                            htmlFor='email'
-                            className='block text-sm font-medium leading-6 text-gray-900'>
-                            Email address
+                            htmlFor="phone_country_code"
+                            className="ltr:text-left rtl:text-right lable-default"
+                          >
+                            {trans.phone_number}
                           </label>
-                          <div className='mt-2'>
-                            <input
-                              id='email'
-                              name='email'
-                              type='email'
-                              autoComplete='email'
-                              required
-                              className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-picks-dark sm:text-sm sm:leading-6'
-                            />
-                          </div>
-                        </div>
-
-                        <div>
-                          <div className='flex items-center justify-between'>
-                            <label
-                              htmlFor='password'
-                              className='block text-sm font-medium leading-6 text-gray-900'>
-                              Password
-                            </label>
-                            <div className='text-sm'>
-                              <a
-                                href='#'
-                                className='font-semibold text-picks-dark hover:text-indigo-500'>
-                                Forgot password?
-                              </a>
+                          <div className="mt-2">
+                            <div className="flex flex-row gap-x-3">
+                              <select
+                                id="phone_country_code"
+                                defaultValue={code}
+                                {...register("phone_country_code")}
+                                autoComplete="country-name"
+                                className="block w-1/3 rounded-md py-1.5 input-default"
+                              >
+                                {countriesSuccess &&
+                                  countries.data?.map(
+                                    (c: Country, i: number) => (
+                                      <option value={c.code} key={i}>
+                                        {`${c.code} (${c.country_code})`}
+                                      </option>
+                                    )
+                                  )}
+                              </select>
+                              <input
+                                id="phone"
+                                {...register("phone")}
+                                // type="number"
+                                name="phone"
+                                className="input-default"
+                              />
                             </div>
-                          </div>
-                          <div className='mt-2'>
-                            <input
-                              id='password'
-                              name='password'
-                              type='password'
-                              autoComplete='current-password'
-                              required
-                              className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-picks-dark sm:text-sm sm:leading-6'
-                            />
+                            {errors?.phone?.message && (
+                              <span
+                                className={`text-red-700 text-xs capitalize`}
+                              >
+                                {trans[errors?.phone?.message]}
+                              </span>
+                            )}
                           </div>
                         </div>
-
-                        <div>
+                        <div className="mt-5">
                           <button
-                            type='submit'
-                            className='flex w-full justify-center rounded-md bg-picks-dark px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-picks-dark'>
-                            Sign in
+                            type="submit"
+                            className="flex w-full justify-center rounded-md bg-picks-dark px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-picks-dark"
+                          >
+                            {trans.send_otp}
                           </button>
                         </div>
                       </form>
-
-                      <p className='mt-10 text-center text-sm text-gray-500'>
-                        Not a member?{" "}
-                        <a
-                          href='#'
-                          className='font-semibold leading-6 text-picks-dark hover:text-indigo-500'>
-                          Start a 14 day free trial
-                        </a>
-                      </p>
                     </div>
                   </div>
                 </Dialog.Panel>

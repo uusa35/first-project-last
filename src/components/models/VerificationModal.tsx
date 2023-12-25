@@ -33,6 +33,7 @@ import { EyeIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { map, range } from "lodash";
 import OtpInput from "react18-input-otp";
 import { toEn } from "@/src/constants";
+import { setAuthentication } from "@/src/redux/slices/authSlice";
 
 type Inputs = {
   phone: string;
@@ -49,6 +50,7 @@ export default function () {
     country: {
       code: { calling_code },
     },
+    auth,
   } = useAppSelector((state) => state);
   const [otp, setOtp] = useState<string>(``);
   const router = useRouter();
@@ -79,7 +81,7 @@ export default function () {
     reset();
   };
   const onSubmit: SubmitHandler<Inputs> = async (body) => {
-    let auth = await getAuth();
+    // let auth = await getAuth();
     // console.log({ body });
     dispatch(enableLoading());
     await triggerVerifiy(
@@ -99,6 +101,7 @@ export default function () {
       } else {
         // console.log({ r });
         setAuth(JSON.stringify(r.data.data));
+        dispatch(setAuthentication(r.data.data));
         dispatch(showSuccessToastMessage({ content: r.data?.message }));
         // dispatch(toggleVerficationModal());
         closeModal();
@@ -115,25 +118,14 @@ export default function () {
 
   // console.log({ errors }, getValues("code"));
 
-  const getPhone = useMemo(async () => {
-    let auth = await getAuth();
-    return (
-      <span className="text-black font-semibold">
-        {auth?.phone_country_code} {auth?.phone}
-      </span>
-    );
-  }, []);
-
-  
   const ResendOtp = async () => {
-    let auth = await getAuth();
-    triggerResendOtp({
+    // let auth = await getAuth();
+    await triggerResendOtp({
       phone_country_code: auth.phone_country_code,
       phone: auth.phone,
       type: "register",
     }).then((r: any) => {
       // console.log({ r });
-
       if (r && r.error?.data) {
         dispatch(
           showErrorToastMessage({
@@ -183,7 +175,7 @@ export default function () {
                   <div className=" capitalize flex flex-row justify-center items-center border-b border-gray-200 pb-4 text-xl">
                     {trans.verification_code}
                     <XMarkIcon
-                      className="absolute ltr:left-4 rtl:right-4 w-6 h-6 text-gray-600"
+                      className="absolute ltr:left-4 rtl:right-4 w-6 h-6 text-gray-600 cursor-pointer"
                       onClick={closeModal}
                     />
                   </div>
@@ -202,14 +194,9 @@ export default function () {
                         {
                           trans.plz_enter_the_6_digits_code_that_was_sent_to_number
                         }
-                        {getPhone}
-                        {/* {getAuth().then((r) => {
-                          return (
-                            <span className="text-black font-semibold">
-                              {r?.phone_country_code} {r?.phone}
-                            </span>
-                          );
-                        })} */}
+                        <span className="text-black font-semibold px-1">
+                          {auth?.phone_country_code} {auth?.phone}
+                        </span>
                       </p>
                     </div>
                     <div>

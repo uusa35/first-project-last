@@ -32,6 +32,7 @@ import Link from "next/link";
 import TextTrans from "../TextTrans";
 import { randomFillSync } from "crypto";
 import { random, replace, snakeCase, trim } from "lodash";
+import { setAuthentication } from "@/src/redux/slices/authSlice";
 
 type Inputs = {
   phone: string;
@@ -86,9 +87,10 @@ export default function () {
           })
         );
       } else {
-        setAuth(JSON.stringify(r.data.data));
+        // setAuth(JSON.stringify(r.data.data));
+        dispatch(setAuthentication(r.data.data));
         dispatch(showSuccessToastMessage({ content: trans.process_success }));
-        dispatch(toggleRegisterModal());
+        // dispatch(toggleRegisterModal());
         dispatch(toggleVerficationModal());
         // toggle otp modal
         // return router.replace(`/${lang}`);
@@ -134,7 +136,7 @@ export default function () {
                   <div className="capitalize flex flex-row justify-center items-center border-b border-gray-200 pb-4">
                     {trans.signup}
                     <XMarkIcon
-                      className="absolute ltr:left-4 rtl:right-4 w-6 h-6 text-gray-600"
+                      className="absolute ltr:left-4 rtl:right-4 w-6 h-6 text-gray-600 cursor-pointer"
                       onClick={() => dispatch(toggleRegisterModal())}
                     />
                   </div>
@@ -143,8 +145,16 @@ export default function () {
                   <LoadingSpinner isLoading={isLoading} />
                   <form
                     onSubmit={handleSubmit(onSubmit)}
-                    className={`space-y-4 ${isLoading && "hidden"}`}
+                    className={`space-y-4 text-justify ${isLoading && "hidden"}`}
                   >
+                    <div>
+                      <p className="font-semibold mb-2 text-lg">
+                        {trans.welcome_to_picks}
+                      </p>
+                      <p className="text-picks-text-gray text-sm">
+                        {trans.enter_your_personal_information_to_continue}
+                      </p>
+                    </div>
                     <div>
                       <label
                         htmlFor="name"
@@ -303,12 +313,12 @@ export default function () {
                     >
                       {trans.login}
                     </button>
-                    <button
+                    {/* <button
                       onClick={() => dispatch(toggleVerficationModal())}
                       className="capitalize px-2 font-semibold leading-6 text-picks-dark hover:text-gray-500"
                     >
                       show verification
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               </Dialog.Panel>

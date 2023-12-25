@@ -302,6 +302,11 @@
     "add_ur_resturant": "add your resturant",
     "let_us_talk": "let us talk",
     "first_name": "first name",
-    "last_name": "last name"
+    "last_name": "last name",
+    "welcome_to_picks":"welcome to picks",
+    "enter_your_personal_information_to_continue":"enter your personal information to continue.",
+    "enter_account_phone_number":"enter account phone number",
+    "enter_the_mobile_number_of_your_account_to_send_a_password_change_OTP_messsage":"enter the mobile number of your account to send a password change OTP messsage",
+    "send_otp":"send OTP"
   }
 }

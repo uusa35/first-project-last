@@ -103,42 +103,46 @@ export default function () {
   return (
     <Transition appear show={showLoginModal} as={Fragment}>
       <Dialog
-        as='div'
-        className='relative z-50'
-        onClose={() => dispatch(toggleLoginModal())}>
+        as="div"
+        className="relative z-50"
+        onClose={() => dispatch(toggleLoginModal())}
+      >
         <Transition.Child
           as={Fragment}
-          enter='ease-out duration-300'
-          enterFrom='opacity-0'
-          enterTo='opacity-100'
-          leave='ease-in duration-200'
-          leaveFrom='opacity-100'
-          leaveTo='opacity-0'>
-          <div className='fixed inset-0 bg-black/25' />
+          enter="ease-out duration-300"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="ease-in duration-200"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <div className="fixed inset-0 bg-black/25" />
         </Transition.Child>
-        <div className='fixed inset-0 overflow-y-auto'>
-          <div className='flex min-h-full items-center justify-center p-4 text-center'>
+        <div className="fixed inset-0 overflow-y-auto">
+          <div className="flex min-h-full items-center justify-center p-4 text-center">
             <Transition.Child
               as={Fragment}
-              enter='ease-out duration-300'
-              enterFrom='opacity-0 scale-95'
-              enterTo='opacity-100 scale-100'
-              leave='ease-in duration-200'
-              leaveFrom='opacity-100 scale-100'
-              leaveTo='opacity-0 scale-95'>
-              <Dialog.Panel className='w-full max-w-lg transform overflow-hidden rounded-2xl bg-white py-6 text-left align-middle shadow-xl transition-all'>
+              enter="ease-out duration-300"
+              enterFrom="opacity-0 scale-95"
+              enterTo="opacity-100 scale-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100 scale-100"
+              leaveTo="opacity-0 scale-95"
+            >
+              <Dialog.Panel className="w-full max-w-lg transform overflow-hidden rounded-2xl bg-white py-6 text-left align-middle shadow-xl transition-all">
                 <Dialog.Title
-                  as='h3'
-                  className='text-lg font-medium leading-6 text-gray-900'>
-                  <div className=' capitalize flex flex-row justify-center items-center border-b border-gray-200 pb-4'>
+                  as="h3"
+                  className="text-lg font-medium leading-6 text-gray-900"
+                >
+                  <div className=" capitalize flex flex-row justify-center items-center border-b border-gray-200 pb-4">
                     {trans.login}
                     <XMarkIcon
-                      className='absolute ltr:left-4 rtl:right-4 w-6 h-6 text-gray-600'
+                      className="absolute ltr:left-4 rtl:right-4 w-6 h-6 text-gray-600 cursor-pointer"
                       onClick={() => dispatch(toggleLoginModal())}
                     />
                   </div>
                 </Dialog.Title>
-                <div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
+                <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                   <LoadingSpinner isLoading={isLoading} />
                   <form
                     onSubmit={handleSubmit(onSubmit)}
@@ -156,17 +160,19 @@ export default function () {
                     </div>
                     <div>
                       <label
-                        id='phone_country_code'
-                        className='ltr:text-left rtl:text-right block text-sm font-medium leading-6 text-gray-900 capitalize'>
+                        id="phone_country_code"
+                        className="ltr:text-left rtl:text-right block text-sm font-medium leading-6 text-gray-900 capitalize"
+                      >
                         {trans.phone_number}
                       </label>
-                      <div className='mt-2'>
-                        <div className='flex flex-row gap-x-3'>
+                      <div className="mt-2">
+                        <div className="flex flex-row gap-x-3">
                           <select
-                            id='phone_country_code'
+                            id="phone_country_code"
                             defaultValue={code}
                             {...register("phone_country_code")}
-                            className='block w-1/3 rounded-md border-0 py-2.5 text-gray-900 shadow-sm bg-stone-100 focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:max-w-xs sm:text-sm sm:leading-6'>
+                            className="block w-1/3 rounded-md border-0 py-2.5 text-gray-900 shadow-sm bg-stone-100 focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:max-w-xs sm:text-sm sm:leading-6"
+                          >
                             {countriesSuccess &&
                               countries.data?.map((c: Country, i: number) => (
                                 <option value={c.code} key={i}>
@@ -175,10 +181,10 @@ export default function () {
                               ))}
                           </select>
                           <input
-                            id='phone'
+                            id="phone"
                             {...register("phone")}
-                            type='text'
-                            className='ltr:text-left rtl:text-right block w-full rounded-md border-0 py-2.5 shadow-sm bg-stone-100 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6'
+                            type="text"
+                            className="ltr:text-left rtl:text-right input-default"
                           />
                         </div>
                         {errors?.phone?.message && (
@@ -196,16 +202,17 @@ export default function () {
 
                     <div>
                       <label
-                        htmlFor='password'
-                        className='block text-sm font-medium leading-6 text-gray-900 capitalize'>
+                        htmlFor="password"
+                        className="block text-sm font-medium leading-6 text-gray-900 capitalize"
+                      >
                         {trans.password}
                       </label>
-                      <div className='mt-2 relative flex flex-row'>
+                      <div className="mt-2 relative flex flex-row">
                         <input
-                          id='password'
+                          id="password"
                           {...register("password")}
                           type={showPassword}
-                          className='ltr:text-left rtl:text-right block w-full rounded-md border-0 py-2.5 shadow-sm bg-stone-100 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6'
+                          className="ltr:text-left rtl:text-right input-default"
                         />
                         <EyeIcon
                           className="absolute top-3 ltr:right-4 rtl:left-4 w-6 h-6 text-gray-600 hover:text-gray-900"
@@ -219,30 +226,33 @@ export default function () {
                       )}
                     </div>
 
-                    <div className='flex items-center justify-between'>
-                      <div className='text-sm leading-6'>
+                    <div className="flex items-center justify-between">
+                      <div className="text-sm leading-6">
                         <button
-                          type='button'
+                          type="button"
                           onClick={() => dispatch(toggleForgetPasswordModal())}
-                          className='font-semibold text-expo-dark hover:text-green-700 capitalize'>
+                          className="font-semibold text-expo-dark hover:text-green-700 capitalize"
+                        >
                           {trans.forgot_password}
                         </button>
                       </div>
                     </div>
                     <div>
                       <button
-                        type='submit'
-                        className='flex w-full justify-center btn-default capitalize'>
+                        type="submit"
+                        className="flex w-full justify-center btn-default capitalize"
+                      >
                         {trans.sign_in}
                       </button>
                     </div>
                   </form>
 
-                  <div className='capitalize mt-10 text-center text-sm text-gray-500'>
+                  <div className="capitalize mt-10 text-center text-sm text-gray-500">
                     {trans.dont_have_an_account}
                     <button
                       onClick={() => dispatch(toggleRegisterModal())}
-                      className='capitalize px-2 font-semibold leading-6 text-picks-dark hover:text-gray-500'>
+                      className="capitalize px-2 font-semibold leading-6 text-picks-dark hover:text-gray-500"
+                    >
                       {trans.signup}
                     </button>
                   </div>

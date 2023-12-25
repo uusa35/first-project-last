@@ -113,10 +113,8 @@ export default function ({ showMiddleNav = false }: Props) {
     }
   };
 
-  const handleRegisterClick = async () => {
-    const auth = await getAuth();
-    // console.log(auth);
-    if (auth && !auth?.token) {
+  const handleRegisterClick = () => {
+    if (!token) {
       dispatch(toggleVerficationModal());
     } else {
       dispatch(toggleRegisterModal());
@@ -244,7 +242,7 @@ export default function ({ showMiddleNav = false }: Props) {
               <>
                 <button
                   className={`p-3 w-32 bg-white/80 rounded-lg capitalize text-lg text-black`}
-                  onClick={() => dispatch(toggleRegisterModal())}
+                  onClick={handleRegisterClick}
                 >
                   {trans.signup}
                 </button>
