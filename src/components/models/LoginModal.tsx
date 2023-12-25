@@ -75,7 +75,7 @@ export default function () {
             content: `${r.error.data.message}`,
           })
         );
-        reset()
+        reset();
         if (r.error.data.status === "301") {
           console.log(r);
           setAuth(
@@ -84,14 +84,14 @@ export default function () {
               phone: body.phone,
             })
           );
-          dispatch(toggleLoginModal());
-          dispatch(toggleVerficationModal());
+          dispatch(toggleLoginModal(undefined));
+          dispatch(toggleVerficationModal(undefined));
         }
       } else {
         setAuth(JSON.stringify(r.data.data));
         dispatch(setAuthentication(r.data.data));
         dispatch(showSuccessToastMessage({ content: trans.process_success }));
-        dispatch(toggleLoginModal());
+        dispatch(toggleLoginModal(undefined));
         return router.replace(`/${lang}`);
       }
     });
@@ -148,13 +148,12 @@ export default function () {
                     onSubmit={handleSubmit(onSubmit)}
                     className={`space-y-4 text-justify ${
                       isLoading && "hidden"
-                    }`}
-                  >
-                    <div className="">
-                      <p className="font-semibold">
+                    }`}>
+                    <div className=''>
+                      <p className='font-semibold'>
                         {trans.enter_your_phone_number}
                       </p>
-                      <p className="text-picks-text-gray text-sm mt-1">
+                      <p className='text-picks-text-gray text-sm mt-1'>
                         {trans.login_txt}
                       </p>
                     </div>
@@ -215,7 +214,7 @@ export default function () {
                           className="ltr:text-left rtl:text-right input-default"
                         />
                         <EyeIcon
-                          className="absolute top-3 ltr:right-4 rtl:left-4 w-6 h-6 text-gray-600 hover:text-gray-900"
+                          className='absolute top-3 ltr:right-4 rtl:left-4 w-6 h-6 text-gray-600 hover:text-gray-900'
                           onClick={() => toggleShowPassword()}
                         />
                       </div>
