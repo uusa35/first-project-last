@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type Props = {
-
   isLoading: boolean;
   orderType: 'pickup' | 'delivery',
   showLoginModal: boolean;
@@ -12,7 +11,6 @@ type Props = {
   session_id: string;
 }
 const initialState: Props = {
-
   isLoading: false,
   orderType: 'pickup',
   sideMenuOpen: false,
