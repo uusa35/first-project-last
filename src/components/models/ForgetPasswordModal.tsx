@@ -53,6 +53,9 @@ export default function () {
   console.log({ countries });
 
   const onSubmit: SubmitHandler<Inputs> = async (body) => {
+    // reset pass
+    // send otp
+
     // dispatch(enableLoading());
     // await triggerVerifiy(
     //   {
