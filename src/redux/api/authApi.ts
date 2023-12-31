@@ -78,7 +78,7 @@ export const authApi = apiSlice.injectEndpoints({
         url: `resend-otp`,
         body,
         method: "post",
-        validateStatus: (response, result) => result.status === "200",
+        validateStatus: (response, result) => result.status == 200,
       }),
     }),
     getAuthenticatedUser: builder.query<User, { id: number }>({
@@ -90,6 +90,16 @@ export const authApi = apiSlice.injectEndpoints({
         },
       }),
     }),
+
+    resetPassword: builder.query<null, { email: string }>({
+      query: (body) => ({
+        url: `reset-password`,
+        body,
+        method: "post",
+        validateStatus: (response, result) => response.status == 200,
+      }),
+    }),
+
     forgotPassword: builder.query<User, { email: string }>({
       query: (body) => ({
         url: `forgot/password`,
@@ -123,4 +133,5 @@ export const {
   useGetAuthenticatedUserQuery,
   useChangePasswordMutation,
   useLazyResendOtpQuery,
+  useLazyResetPasswordQuery
 } = authApi;

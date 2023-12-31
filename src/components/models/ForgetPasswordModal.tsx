@@ -56,11 +56,12 @@ export default function () {
     // reset pass
     // send otp
 
-    // dispatch(enableLoading());
+    dispatch(enableLoading());
+
     // await triggerVerifiy(
     //   {
     //     ...body,
-    //     type:"reset"
+    //     type: "reset",
     //   },
     //   false
     // ).then((r: any) => {
@@ -119,7 +120,7 @@ export default function () {
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
                     <div className=" capitalize flex flex-row justify-center items-center border-b border-gray-200 pb-4 text-xl">
-                      {trans.verification_code}
+                      {trans.forget_password}
                       <XMarkIcon
                         className="absolute ltr:left-4 rtl:right-4 w-6 h-6 text-gray-600 cursor-pointer"
                         onClick={closeModal}
@@ -158,7 +159,7 @@ export default function () {
                                 defaultValue={code}
                                 {...register("phone_country_code")}
                                 autoComplete="country-name"
-                                className="block w-1/3 rounded-md py-1.5 input-default"
+                                className="block w-1/3 rounded-md py-1.5 input-default text-sm"
                               >
                                 {countriesSuccess &&
                                   countries.data?.map(
