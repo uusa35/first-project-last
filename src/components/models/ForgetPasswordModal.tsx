@@ -85,36 +85,33 @@ export default function () {
   };
   return (
     <>
-      <Transition appear show={true} as={Fragment}>
+      <Transition appear show={false} as={Fragment}>
         <Dialog
-          as="div"
-          className="relative z-50"
-          onClose={() => dispatch(toggleForgetPasswordModal())}
-        >
+          as='div'
+          className='relative z-50'
+          onClose={() => dispatch(toggleForgetPasswordModal())}>
           <Transition.Child
             as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-black/25" />
+            enter='ease-out duration-300'
+            enterFrom='opacity-0'
+            enterTo='opacity-100'
+            leave='ease-in duration-200'
+            leaveFrom='opacity-100'
+            leaveTo='opacity-0'>
+            <div className='fixed inset-0 bg-black/25' />
           </Transition.Child>
 
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
+          <div className='fixed inset-0 overflow-y-auto'>
+            <div className='flex min-h-full items-center justify-center p-4 text-center'>
               <Transition.Child
                 as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                enter='ease-out duration-300'
+                enterFrom='opacity-0 scale-95'
+                enterTo='opacity-100 scale-100'
+                leave='ease-in duration-200'
+                leaveFrom='opacity-100 scale-100'
+                leaveTo='opacity-0 scale-95'>
+                <Dialog.Panel className='w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all'>
                   <Dialog.Title
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
@@ -122,40 +119,39 @@ export default function () {
                     <div className=" capitalize flex flex-row justify-center items-center border-b border-gray-200 pb-4 text-xl">
                       {trans.forget_password}
                       <XMarkIcon
-                        className="absolute ltr:left-4 rtl:right-4 w-6 h-6 text-gray-600 cursor-pointer"
+                        className='absolute ltr:left-4 rtl:right-4 w-6 h-6 text-gray-600 cursor-pointer'
                         onClick={closeModal}
                       />
                     </div>
                   </Dialog.Title>
-                  <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 max-h-[70vh] overflow-y-auto scrollbar-hide">
-                    <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                      <div className="flex justify-center mt-3">
+                  <div className='flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 max-h-[70vh] overflow-y-auto scrollbar-hide'>
+                    <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
+                      <div className='flex justify-center mt-3'>
                         <ForgetPass width={100} height={100} />
                       </div>
-                      <div className="text-center mt-2">
-                        <p className="font-semibold text-xl">
+                      <div className='text-center mt-2'>
+                        <p className='font-semibold text-xl'>
                           {trans.enter_account_phone_number}
                         </p>
-                        <p className="text-picks-text-gray text-sm mt-1">
+                        <p className='text-picks-text-gray text-sm mt-1'>
                           {
                             trans.enter_the_mobile_number_of_your_account_to_send_a_password_change_OTP_messsage
                           }
                         </p>
                       </div>
                     </div>
-                    <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                      <form className="space-y-6" action="#" method="POST">
+                    <div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
+                      <form className='space-y-6' action='#' method='POST'>
                         <div>
                           <label
-                            htmlFor="phone_country_code"
-                            className="ltr:text-left rtl:text-right lable-default"
-                          >
+                            htmlFor='phone_country_code'
+                            className='ltr:text-left rtl:text-right lable-default'>
                             {trans.phone_number}
                           </label>
-                          <div className="mt-2">
-                            <div className="flex flex-row gap-x-3">
+                          <div className='mt-2'>
+                            <div className='flex flex-row gap-x-3'>
                               <select
-                                id="phone_country_code"
+                                id='phone_country_code'
                                 defaultValue={code}
                                 {...register("phone_country_code")}
                                 autoComplete="country-name"
@@ -171,27 +167,25 @@ export default function () {
                                   )}
                               </select>
                               <input
-                                id="phone"
+                                id='phone'
                                 {...register("phone")}
                                 // type="number"
-                                name="phone"
-                                className="input-default"
+                                name='phone'
+                                className='input-default'
                               />
                             </div>
                             {errors?.phone?.message && (
                               <span
-                                className={`text-red-700 text-xs capitalize`}
-                              >
+                                className={`text-red-700 text-xs capitalize`}>
                                 {trans[errors?.phone?.message]}
                               </span>
                             )}
                           </div>
                         </div>
-                        <div className="mt-5">
+                        <div className='mt-5'>
                           <button
-                            type="submit"
-                            className="flex w-full justify-center rounded-md bg-picks-dark px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-picks-dark"
-                          >
+                            type='submit'
+                            className='flex w-full justify-center rounded-md bg-picks-dark px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-picks-dark'>
                             {trans.send_otp}
                           </button>
                         </div>
