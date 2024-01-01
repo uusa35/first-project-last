@@ -107,6 +107,7 @@
     "validation.min": "الحقل يجب أن يكون اكبر من {{min}}",
     "validation.max": "الحقل يجب أن يكون أقل من   {{max}}",
     "validation.matches": "ادخل رقم هاتف صحيح",
+    "validation.password_confirmation":"يجب أن يتطابق مع كلمة المرور",
     "contactus_message": "يمكنكم التواصل معنا عبر ملئ الاستمارة وسوف نقوم بالتواصل معاكم في اقرب فرصة ممكنة .. شكرا لزيارتكم موقع المعرض العربي الروسي للاستثمار ",
     "payment_confirmation": "تأكيد عملية الدفع",
     "plz_confirm_membership_selected_and_ur_company_information": "يرجى التأكد من المعلومات قبل إجراء عملية الدفع للتأكيد .. ",
@@ -306,7 +307,11 @@
     "enter_account_phone_number": "أدخل رقم هاتف الحساب",
     "enter_the_mobile_number_of_your_account_to_send_a_password_change_OTP_messsage": "أدخل رقم الهاتف المحمول الخاص بحسابك لإرسال رسالة تغيير كلمة المرور لمرة واحدة (OTP).",
     "send_otp": "ارسل الكود",
-    "forget_password":"نسيت كلمة السر"
+    "forget_password":"نسيت كلمة السر",
+    "send_otp_success":"تم إرسال الرمز بنجاح",
+        "user_not_found":"لم يتم العثور على المستخدم",
+        "save":"حفظ",
+        "change_password_success":"تم تغيير الرقم السري بنجاح"
 
   }
 }

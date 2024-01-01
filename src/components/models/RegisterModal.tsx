@@ -88,7 +88,12 @@ export default function () {
         );
       } else {
         // setAuth(JSON.stringify(r.data.data));
-        dispatch(setAuthentication(r.data.data));
+        dispatch(
+          setAuthentication({
+            user: { ...r.data.data, type: "register" },
+            token: null,
+          })
+        );
         dispatch(showSuccessToastMessage({ content: trans.process_success }));
         // dispatch(toggleRegisterModal());
         dispatch(toggleVerficationModal());
@@ -145,7 +150,9 @@ export default function () {
                   <LoadingSpinner isLoading={isLoading} />
                   <form
                     onSubmit={handleSubmit(onSubmit)}
-                    className={`space-y-4 text-justify ${isLoading && "hidden"}`}
+                    className={`space-y-4 text-justify ${
+                      isLoading && "hidden"
+                    }`}
                   >
                     <div>
                       <p className="font-semibold mb-2 text-lg">

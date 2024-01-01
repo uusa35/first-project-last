@@ -18,7 +18,7 @@ import {
 } from "@/src/redux/slices/toastMessageSlice";
 import { setAuth } from "@/app/actions";
 import { useRouter } from "next/navigation";
-import { useLazyLoginQuery } from "@/src/redux/api/authApi";
+import { useLazyLoginQuery, useLazyResendOtpQuery } from "@/src/redux/api/authApi";
 import { MainContext } from "@/components/layouts/MainContentLayout";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { Country } from "@/src/types/queries";
@@ -46,6 +46,8 @@ export default function () {
     "password"
   );
   const [triggerLogin] = useLazyLoginQuery();
+  const [triggerResendOtp] = useLazyResendOtpQuery();
+
   const { data: countries, isSuccess: countriesSuccess } =
     useGetCountriesQuery();
   const {
@@ -67,7 +69,7 @@ export default function () {
 
   const onSubmit: SubmitHandler<Inputs> = async (body) => {
     dispatch(enableLoading());
-    await triggerLogin(body, false).then((r: any) => {
+    await triggerLogin(body, false).then(async (r: any) => {
       if (r && r.error.data) {
         // user not verified
         dispatch(
@@ -76,16 +78,40 @@ export default function () {
           })
         );
         reset();
+        // user not verified
         if (r.error.data.status === "301") {
-          console.log(r);
-          setAuth(
-            JSON.stringify({
-              phone_country_code: body.phone_country_code,
-              phone: body.phone,
-            })
-          );
-          dispatch(toggleLoginModal(undefined));
-          dispatch(toggleVerficationModal(undefined));
+          // console.log(r);
+          await triggerResendOtp({
+            phone: body.phone,
+            phone_country_code: body.phone_country_code,
+            type: "register",
+          }).then((r: any) => {
+            // console.log({ r });
+            if (r && r.error?.data) {
+              dispatch(
+                showErrorToastMessage({
+                  content: `${r.error?.data?.message}`,
+                })
+              );
+            } else {
+              dispatch(
+                showSuccessToastMessage({
+                  content: `${r?.data?.message}`,
+                })
+              );
+              dispatch(
+                setAuthentication({
+                  user: {
+                    phone_country_code: body.phone_country_code,
+                    phone: body.phone,
+                    type: "register",
+                  },
+                  token: null,
+                })
+              );
+              dispatch(toggleVerficationModal());
+            }
+          });
         }
       } else {
         setAuth(JSON.stringify(r.data.data));
@@ -129,7 +155,7 @@ export default function () {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-lg transform overflow-hidden rounded-2xl bg-white py-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white py-6 text-left align-middle shadow-xl transition-all">
                 <Dialog.Title
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900"
@@ -142,18 +168,19 @@ export default function () {
                     />
                   </div>
                 </Dialog.Title>
-                <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+                <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm px-6 lg:px-8">
                   <LoadingSpinner isLoading={isLoading} />
                   <form
                     onSubmit={handleSubmit(onSubmit)}
                     className={`space-y-4 text-justify ${
                       isLoading && "hidden"
-                    }`}>
-                    <div className=''>
-                      <p className='font-semibold'>
+                    }`}
+                  >
+                    <div className="">
+                      <p className="font-semibold">
                         {trans.enter_your_phone_number}
                       </p>
-                      <p className='text-picks-text-gray text-sm mt-1'>
+                      <p className="text-picks-text-gray text-sm mt-1">
                         {trans.login_txt}
                       </p>
                     </div>
@@ -214,7 +241,7 @@ export default function () {
                           className="ltr:text-left rtl:text-right input-default"
                         />
                         <EyeIcon
-                          className='absolute top-3 ltr:right-4 rtl:left-4 w-6 h-6 text-gray-600 hover:text-gray-900'
+                          className="absolute top-3 ltr:right-4 rtl:left-4 w-6 h-6 text-gray-600 hover:text-gray-900"
                           onClick={() => toggleShowPassword()}
                         />
                       </div>

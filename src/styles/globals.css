@@ -59,6 +59,9 @@ body {
   .card-desc {
     @apply truncate text-xs text-picks-text-gray;
   }
+  .error{
+    @apply text-red-700 text-xs capitalize
+  }
 }
 
 .font-picks-medium {

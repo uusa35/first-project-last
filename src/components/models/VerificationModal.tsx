@@ -4,6 +4,7 @@ import { Fragment, useContext, useEffect, useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
 import {
   enableLoading,
+  toggleChangePasswordModal,
   toggleForgetPasswordModal,
   toggleRegisterModal,
   toggleVerficationModal,
@@ -72,7 +73,7 @@ export default function () {
       // phone_country_code: calling_code,
       // phone: ``,
       code: ``,
-      type: "register",
+      type: auth.user?.type,
     },
   });
 
@@ -80,18 +81,21 @@ export default function () {
     dispatch(toggleVerficationModal());
     reset();
   };
+
   const onSubmit: SubmitHandler<Inputs> = async (body) => {
     // let auth = await getAuth();
-    // console.log({ body });
+    console.log("jjj", auth.user?.type);
     dispatch(enableLoading());
     await triggerVerifiy(
       {
         ...body,
-        phone_country_code: auth.phone_country_code,
-        phone: auth.phone,
+        type: auth.user?.type,
+        phone_country_code: auth.user.phone_country_code,
+        phone: auth.user.phone,
       },
       false
     ).then((r: any) => {
+      // console.log({ r });
       if (r && r.error?.data) {
         dispatch(
           showErrorToastMessage({
@@ -100,12 +104,22 @@ export default function () {
         );
       } else {
         // console.log({ r });
-        setAuth(JSON.stringify(r.data.data));
-        dispatch(setAuthentication(r.data.data));
-        dispatch(showSuccessToastMessage({ content: r.data?.message }));
-        // dispatch(toggleVerficationModal());
-        closeModal();
-        return router.replace(`/${lang}`);
+        if (auth.user?.type === "register") {
+          setAuth(JSON.stringify(r.data.data));
+          dispatch(setAuthentication(r.data.data));
+          dispatch(showSuccessToastMessage({ content: r.data?.message }));
+          // dispatch(toggleVerficationModal());
+          closeModal();
+          return router.replace(`/${lang}`);
+        }
+        // forget pass case
+        else {
+          dispatch(
+            setAuthentication({ user: r.data?.data?.user, token: null })
+          );
+          reset();
+          dispatch(toggleChangePasswordModal());
+        }
       }
     });
   };
@@ -116,14 +130,14 @@ export default function () {
   //   setValues("code", enteredOtp);
   // };
 
-  // console.log({ errors }, getValues("code"));
+  console.log({ errors }, auth.user?.type);
 
   const ResendOtp = async () => {
     // let auth = await getAuth();
     await triggerResendOtp({
-      phone_country_code: auth.phone_country_code,
-      phone: auth.phone,
-      type: "register",
+      phone_country_code: auth.user.phone_country_code,
+      phone: auth.user.phone,
+      type: auth.user.type,
     }).then((r: any) => {
       // console.log({ r });
       if (r && r.error?.data) {
@@ -167,7 +181,7 @@ export default function () {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-lg transform overflow-hidden rounded-2xl bg-white py-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white py-6 text-left align-middle shadow-xl transition-all">
                 <Dialog.Title
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900"
@@ -180,7 +194,7 @@ export default function () {
                     />
                   </div>
                 </Dialog.Title>
-                <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm px-5 md:px-0">
+                <div className="text-justify mt-10 sm:mx-auto sm:w-full sm:max-w-sm px-5 md:px-0">
                   <LoadingSpinner isLoading={isLoading} />
                   <form
                     onSubmit={handleSubmit(onSubmit)}
@@ -195,7 +209,7 @@ export default function () {
                           trans.plz_enter_the_6_digits_code_that_was_sent_to_number
                         }
                         <span className="text-black font-semibold px-1">
-                          {auth?.phone_country_code} {auth?.phone}
+                          {auth?.user?.phone_country_code} {auth?.user?.phone}
                         </span>
                       </p>
                     </div>

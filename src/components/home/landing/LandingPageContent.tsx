@@ -58,7 +58,7 @@ export default function ({ countries }: Props) {
     data: areas,
     isSuccess: areaSuccess,
     isFetching,
-  } = useGetAreasQuery();
+  } = useGetAreasQuery(undefined, { refetchOnMountOrArgChange: true });
 
   const handleSetCountry = async (c: { label: string; id: number } | null) => {
     setSelectedArea(undefined);
@@ -115,37 +115,39 @@ export default function ({ countries }: Props) {
     }
   }, [country, areaSuccess]);
 
+  // console.log({ areaSuccess });
+
   return (
     <>
       <Image
-        src='https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2830&q=80&blend=111827&sat=-100&exp=15&blend-mode=multiply'
-        alt='testing'
+        src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2830&q=80&blend=111827&sat=-100&exp=15&blend-mode=multiply"
+        alt="testing"
         width={1000}
         height={1000}
-        className='absolute inset-0 -z-10 h-full w-full object-cover'
+        className="absolute inset-0 -z-10 h-full w-full object-cover"
       />
-      <div className='mx-auto max-w-2xl w-full lg:w-3/4  text-white flex flex-col  justify-center items-center h-[90vh]'>
+      <div className="mx-auto max-w-2xl w-full lg:w-3/4  text-white flex flex-col  justify-center items-center h-[90vh]">
         {!isEmpty(allCountries) && areaSuccess ? (
           <>
-            <p className='mb-5 text-3xl font-semibold text-center px-5 capitalize'>
+            <p className="mb-5 text-3xl font-semibold text-center px-5 capitalize">
               {trans.landing_title1}
-              <span className='text-picks-dark capitalize'>
+              <span className="text-picks-dark capitalize">
                 {trans.delivered}
               </span>
             </p>
 
             {/* select country*/}
-            <div className='flex items-start gap-x-2  w-full px-8'>
-              <div className='flex flex-col gap-y-5 grow w-full'>
+            <div className="flex items-start gap-x-2  w-full px-8">
+              <div className="flex flex-col gap-y-5 grow w-full">
                 {/* contry select */}
-                <div className='flex gap-x-2 items-center justify-between bg-white rounded-lg py-2 px-3 grow'>
-                  <div className='flex gap-x-2 items-center pt-2'>
+                <div className="flex gap-x-2 items-center justify-between bg-white rounded-lg py-2 px-3 grow">
+                  <div className="flex gap-x-2 items-center pt-2">
                     <Search />
                     <Autocomplete
-                      size='small'
-                      className='outline-none '
+                      size="small"
+                      className="outline-none "
                       disablePortal
-                      id='combo-box-demo'
+                      id="combo-box-demo"
                       options={allCountries}
                       value={selectedCountry}
                       onChange={(e, newval) => {
@@ -162,16 +164,16 @@ export default function ({ countries }: Props) {
 
                 {/* area select */}
                 {!isEmpty(allAreas) && (
-                  <div className='flex gap-x-2 items-center justify-between bg-white rounded-lg py-2 px-3 grow'>
-                    <div className='flex gap-x-2 items-center pt-2'>
+                  <div className="flex gap-x-2 items-center justify-between bg-white rounded-lg py-2 px-3 grow">
+                    <div className="flex gap-x-2 items-center pt-2">
                       <Search />
                       <Autocomplete
                         dir={lang === "ar" ? "rtl" : "ltr"}
                         disabled={isFetching}
-                        size='small'
-                        className='outline-none font-picks-medium'
+                        size="small"
+                        className="outline-none font-picks-medium"
                         disablePortal
-                        id='combo-box-demo'
+                        id="combo-box-demo"
                         options={allAreas}
                         value={selectedArea}
                         onChange={(e, newval) => {
@@ -182,7 +184,7 @@ export default function ({ countries }: Props) {
                           <TextField
                             {...params}
                             label={trans.select_area}
-                            className='font-picks-medium'
+                            className="font-picks-medium"
                           />
                         )}
                       />
@@ -197,11 +199,12 @@ export default function ({ countries }: Props) {
                 onClick={() =>
                   router.push(appLinks.home(lang, country.country_code))
                 }
-                className='flex items-center gap-x-2 rounded-lg bg-picks-dark p-2 h-[40%]'>
-                <span className='whitespace-nowrap capitalize'>
+                className="flex items-center gap-x-2 rounded-lg bg-picks-dark p-2 h-[40%]"
+              >
+                <span className="whitespace-nowrap capitalize">
                   {trans.lets_go}
                 </span>
-                <RightArrow className='rtl:rotate-180' />
+                <RightArrow className="rtl:rotate-180" />
               </button>
             </div>
           </>
@@ -210,19 +213,19 @@ export default function ({ countries }: Props) {
         )}
 
         {/* login */}
-        <div className='my-8'>
-          <div className='flex items-center gap-x-2'>
+        <div className="my-8">
+          <div className="flex items-center gap-x-2">
             <Avatar />
             <p>
               {trans.or}{" "}
-              <span className='text-picks-dark capitalize'>{trans.log_in}</span>{" "}
+              <span className="text-picks-dark capitalize">{trans.log_in}</span>{" "}
               {trans.for_your_saved_addresses}
             </p>
           </div>
         </div>
       </div>
 
-      <div className='bg-white p-2 md:p-10'>
+      <div className="bg-white p-2 md:p-10">
         <DownloadAppSection />
         <AboutUsGetStarted />
       </div>

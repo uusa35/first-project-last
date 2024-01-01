@@ -25,6 +25,8 @@ import LoginModal from "@/components/models/LoginModal";
 import RegisterModal from "@/components/models/RegisterModal";
 import ForgetPasswordModal from "@/components/models/ForgetPasswordModal";
 import VerificationModal from "@/components/models/VerificationModal";
+import ChangePasswordModal from "@/components/models/ChangePasswordModal";
+
 import { AppQueryResult, Area, Country } from "@/src/types/queries";
 import { first } from "lodash";
 import { toggleSideMenu } from "@/src/redux/slices/settingSlice";
@@ -149,8 +151,9 @@ const MainContextLayout: FC<Props> = ({
         <RegisterModal />
         <ForgetPasswordModal />
         <VerificationModal />
+        <ChangePasswordModal />
       </Suspense>
-      <div className='relative isolate overflow-hidden pt-14 py-8'>
+      <div className="relative isolate overflow-hidden pt-14 py-8">
         {children}
       </div>
       <AppFooter />

@@ -4,8 +4,9 @@ import { Fragment, useContext } from "react";
 import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
 import {
   enableLoading,
+  toggleChangePasswordModal,
   toggleForgetPasswordModal,
-  toggleVerficationModal,
+  toggleLoginModal,
 } from "@/src/redux/slices/settingSlice";
 import { MainContext } from "../layouts/MainContentLayout";
 import { XMarkIcon } from "@heroicons/react/24/outline";
@@ -14,13 +15,14 @@ import { useGetCountriesQuery } from "@/src/redux/api/countryApi";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { pick, snakeCase, toLower } from "lodash";
-import { registerSchema } from "@/src/validations";
+import { ChangePasswordSchema, registerSchema } from "@/src/validations";
 import { Country } from "@/src/types/queries";
 import {
   showErrorToastMessage,
   showSuccessToastMessage,
 } from "@/src/redux/slices/toastMessageSlice";
 import {
+  useLazyForgotPasswordQuery,
   useLazyResetPasswordQuery,
   useLazyVerifyQuery,
 } from "@/src/redux/api/authApi";
@@ -29,20 +31,19 @@ import { setAuthentication } from "@/src/redux/slices/authSlice";
 type Inputs = {
   phone: string;
   phone_country_code: string;
+  new_password: string;
+  new_password_confirmation: string;
 };
 export default function () {
   const trans: { [key: string]: string } = useContext(MainContext);
   const {
-    appSetting: { showForgetPasswordModal, isLoading },
+    appSetting: { showChangePasswordModal, isLoading },
     locale: { lang },
     country: { code },
+    auth,
   } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
-  const { data: countries, isSuccess: countriesSuccess } = useGetCountriesQuery(
-    undefined,
-    { refetchOnFocus: true, refetchOnMountOrArgChange: true }
-  );
-  const [triggerResetPassword] = useLazyResetPasswordQuery();
+  const [triggerForgetPassword] = useLazyForgotPasswordQuery();
 
   const {
     handleSubmit,
@@ -51,51 +52,81 @@ export default function () {
     formState: { errors },
     getValues,
   } = useForm<Inputs>({
-    resolver: yupResolver(registerSchema.pick(["phone", "phone_country_code"])),
+    resolver: yupResolver(ChangePasswordSchema),
     defaultValues: {
-      phone_country_code: code,
-      phone: ``,
+      new_password: "",
+      new_password_confirmation: ``,
+      phone: auth.user?.phone,
+      phone_country_code: auth.user?.phone_country_code,
     },
   });
 
   // console.log(countries, countriesSuccess);
 
   const onSubmit: SubmitHandler<Inputs> = async (body) => {
-    // reset pass
-    // send otp
     dispatch(enableLoading());
-    await triggerResetPassword({ ...body }, false).then((r: any) => {
+    await triggerForgetPassword({ ...body }, false).then((r: any) => {
       if (r.error && r.error?.data) {
         dispatch(
           showErrorToastMessage({
             content: trans[`${snakeCase(r.error?.data?.message)}`],
           })
         );
+        if (r.error.data.status === "301") {
+          //   user not verified
+        //    await triggerResendOtp({
+        //      phone: body.phone,
+        //      phone_country_code: body.phone_country_code,
+        //      type: "register",
+        //    }).then((r: any) => {
+        //      // console.log({ r });
+        //      if (r && r.error?.data) {
+        //        dispatch(
+        //          showErrorToastMessage({
+        //            content: `${r.error?.data?.message}`,
+        //          })
+        //        );
+        //      } else {
+        //        dispatch(
+        //          showSuccessToastMessage({
+        //            content: `${r?.data?.message}`,
+        //          })
+        //        );
+        //        dispatch(
+        //          setAuthentication({
+        //            user: {
+        //              phone_country_code: body.phone_country_code,
+        //              phone: body.phone,
+        //              type: "register",
+        //            },
+        //            token: null,
+        //          })
+        //        );
+        //        dispatch(toggleVerficationModal());
+        //      }
+        //    });
+        }
       } else {
-        // set type and phone and country code to use it in verification
-        dispatch(
-          setAuthentication({ user: { ...body, type: "reset" }, token: null })
-        );
         dispatch(
           showSuccessToastMessage({
             content: trans[`${snakeCase(r.data?.message)}`],
           })
         );
-        // dispatch(toggleForgetPasswordModal());
-        dispatch(toggleVerficationModal(true));
-         reset();
+        dispatch(toggleLoginModal());
+        reset();
       }
-      // console.log({ r });
     });
   };
 
+  //   console.log({ errors });
+
   const closeModal = () => {
-    dispatch(toggleForgetPasswordModal());
+    dispatch(toggleChangePasswordModal());
     reset();
   };
   return (
     <>
-      <Transition appear show={showForgetPasswordModal} as={Fragment}>
+      <Transition appear show={showChangePasswordModal} as={Fragment}>
         <Dialog as="div" className="relative z-50" onClose={closeModal}>
           <Transition.Child
             as={Fragment}
@@ -126,7 +157,7 @@ export default function () {
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
                     <div className=" capitalize flex flex-row justify-center items-center border-b border-gray-200 pb-4 text-xl">
-                      {trans.forget_password}
+                      {trans.new_password}
                       <XMarkIcon
                         className="absolute ltr:left-4 rtl:right-4 w-6 h-6 text-gray-600 cursor-pointer"
                         onClick={closeModal}
@@ -139,13 +170,10 @@ export default function () {
                       isLoading && "hidden"
                     }`}
                   >
-                    <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                      <div className="flex justify-center mt-3">
-                        <ForgetPass width={100} height={100} />
-                      </div>
-                      <div className="text-center mt-2">
+                    <div className="sm:mx-auto sm:w-full sm:max-w-sm text-justify">
+                      <div className="mt-2">
                         <p className="font-semibold text-xl">
-                          {trans.enter_account_phone_number}
+                          {trans.new_password}
                         </p>
                         <p className="text-picks-text-gray text-sm mt-1">
                           {
@@ -161,47 +189,62 @@ export default function () {
                       >
                         <div>
                           <label
-                            htmlFor="phone_country_code"
+                            htmlFor="new_password"
                             className="ltr:text-left rtl:text-right lable-default"
                           >
-                            {trans.phone_number}
+                            {trans.new_password}
                           </label>
                           <div className="mt-2">
                             <div className="flex flex-row gap-x-3 rtl:flex-row-reverse">
-                              <select
-                                id="phone_country_code"
-                                defaultValue={code}
-                                {...register("phone_country_code")}
-                                autoComplete="country-name"
-                                className="block w-1/3 rounded-md py-1.5 input-default text-sm"
-                              >
-                                {countriesSuccess &&
-                                  countries.data?.map(
-                                    (c: Country, i: number) => (
-                                      <option value={c.code} key={i}>
-                                        {`${c.code} (${c.country_code})`}
-                                      </option>
-                                    )
-                                  )}
-                              </select>
                               <input
-                                id="phone"
-                                {...register("phone")}
+                                type="password"
+                                id="new_password"
+                                {...register("new_password")}
                                 // type="number"
-                                name="phone"
                                 className="input-default"
                               />
                             </div>
-                            {errors?.phone?.message && (
+                            {errors?.new_password?.message && (
                               <span className={`error`}>
-                                {trans[errors?.phone?.message]}
+                                {trans[errors?.new_password?.message]}
                               </span>
                             )}
                           </div>
                         </div>
+
+                        <div>
+                          <label
+                            htmlFor="new_password_confirmation"
+                            className="ltr:text-left rtl:text-right lable-default"
+                          >
+                            {trans.new_password_comfirmation}
+                          </label>
+                          <div className="mt-2">
+                            <div className="flex flex-row gap-x-3 rtl:flex-row-reverse">
+                              <input
+                                type="password"
+                                id="new_password_confirmation"
+                                {...register("new_password_confirmation")}
+                                // type="number"
+                                name="new_password_confirmation"
+                                className="input-default"
+                              />
+                            </div>
+                            {errors?.new_password_confirmation?.message && (
+                              <span className={`error`}>
+                                {
+                                  trans[
+                                    errors?.new_password_confirmation?.message
+                                  ]
+                                }
+                              </span>
+                            )}
+                          </div>
+                        </div>
+
                         <div className="mt-5">
                           <button type="submit" className="btn-default w-full">
-                            {trans.send_otp}
+                            {trans.save}
                           </button>
                         </div>
                       </form>

@@ -1,24 +1,20 @@
-import { apiSlice } from './index';
-import { AppQueryResult, Area } from '@/types/queries';
-import { Locale } from '@/types/index';
+import { apiSlice } from "./index";
+import { AppQueryResult, Area } from "@/types/queries";
+import { Locale } from "@/types/index";
 
 export const areaApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getAreas: builder.query<
-      AppQueryResult<Area[]>, string | void | undefined
-    >({
+    getAreas: builder.query<AppQueryResult<Area[]>, string | void | undefined>({
       query: (country_id) => ({
         url: `area`,
         headers: {
-          ...(country_id && { 'X-COUNTRY': country_id })
+          ...(country_id && { "X-COUNTRY": country_id }),
         },
         validateStatus: (response, result) =>
-          response.status == 200,
+          result.status == 200 && result.success,
       }),
     }),
   }),
 });
 
-export const { useGetAreasQuery,
-  useLazyGetAreasQuery,
-} = areaApi;
+export const { useGetAreasQuery, useLazyGetAreasQuery } = areaApi;

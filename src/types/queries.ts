@@ -21,12 +21,17 @@ export type ElementPagination<T> = {
         isLast: boolean;
         isNext: boolean;
         isPrevious: boolean;
-      }
-    },
-    links: { path: string; first: string; next: string; previous: string; last: string }
-  }
+      };
+    };
+    links: {
+      path: string;
+      first: string;
+      next: string;
+      previous: string;
+      last: string;
+    };
+  };
 };
-
 
 export type Product = {
   id: number;
@@ -55,9 +60,7 @@ export type AppQueryResult<T> = {
   data: T;
   status: number;
   success: boolean;
-
 };
-
 
 export type Country = {
   id: number;
@@ -100,14 +103,15 @@ export type User = {
 export type Auth = {
   token: string | null;
   user: {
-    id: number;
-    name: string;
-    email: string;
+    id?: number;
+    name?: string;
+    email?: string;
     phone: string;
-    gender: string;
-    birth_date: string;
+    gender?: string;
+    birth_date?: string;
     phone_country_code: string;
-  } | null
+    type?: "reset" | "register";
+  } | null;
 };
 
 export type Order = {
@@ -142,12 +146,12 @@ export type Setting = {
 };
 
 export type Slide = {
-  id: number,
-  type: 'vendor' | 'offer';
-  screen_type: 'home' | 'category';
+  id: number;
+  type: "vendor" | "offer";
+  screen_type: "home" | "category";
   vendor_id: number | null;
   offer_id: number | null;
-  category_id: number | null,
+  category_id: number | null;
   image: string;
 };
 

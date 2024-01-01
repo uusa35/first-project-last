@@ -91,21 +91,34 @@ export const authApi = apiSlice.injectEndpoints({
       }),
     }),
 
-    resetPassword: builder.query<null, { email: string }>({
+    resetPassword: builder.query<
+      any,
+      { phone: string; phone_country_code: string }
+    >({
       query: (body) => ({
         url: `reset-password`,
         body,
         method: "post",
-        validateStatus: (response, result) => response.status == 200,
+        validateStatus: (response, result) =>
+          result.status == 200 && result.success,
       }),
     }),
 
-    forgotPassword: builder.query<User, { email: string }>({
+    forgotPassword: builder.query<
+      User,
+      {
+        phone: string;
+        phone_country_code: string;
+        new_password: string;
+        new_password_confirmation: string;
+      }
+    >({
       query: (body) => ({
-        url: `forgot/password`,
+        url: `new-password`,
         body,
         method: "post",
-        validateStatus: (response, result) => response.status == 200,
+        validateStatus: (response, result) =>
+          result.status == 200 && result.success,
       }),
     }),
     changePassword: builder.mutation<
@@ -133,5 +146,5 @@ export const {
   useGetAuthenticatedUserQuery,
   useChangePasswordMutation,
   useLazyResendOtpQuery,
-  useLazyResetPasswordQuery
+  useLazyResetPasswordQuery,
 } = authApi;
