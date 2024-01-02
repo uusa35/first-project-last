@@ -1,5 +1,7 @@
+"use client";
 import { StarIcon } from "@heroicons/react/20/solid";
-
+import { useContext } from "react";
+import { MainContext } from "@/components/layouts/MainContentLayout";
 const reviews = {
   average: 4,
   totalCount: 1624,
@@ -30,12 +32,13 @@ function classNames(...classes: any) {
 }
 
 export default function () {
+  const trans: { [key: string]: string } = useContext(MainContext);
   return (
     <div className='bg-white'>
-      <div className='mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:grid lg:max-w-7xl lg:grid-cols-12 lg:gap-x-8 lg:px-8 '>
-        <div className='lg:col-span-12'>
-          <h2 className='text-2xl font-bold tracking-tight text-gray-900'>
-            Customer Reviews
+      <div className=' w-full py-10 sm:pe-6  lg:grid lg:max-w-7xl lg:grid-cols-12 lg:gap-x-8 lg:pe-8 '>
+        <div className='lg:col-span-12 w-2/3'>
+          <h2 className='text-2xl capitalize font-bold tracking-tight text-gray-900'>
+            {trans.rating_and_reviews}
           </h2>
 
           <div className='mt-3 flex items-center'>
@@ -115,7 +118,7 @@ export default function () {
 
             <a
               href='#'
-              className='mt-6 inline-flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-8 py-2 text-sm font-medium text-gray-900 hover:bg-gray-50 sm:w-auto lg:w-full'>
+              className='mt-6 inline-flex w-full items-center justify-center rounded-md border border-gray-300 bg-white e-8 py-2 text-sm font-medium text-gray-900 hover:bg-gray-50 sm:w-auto lg:w-full'>
               Write a review
             </a>
           </div>

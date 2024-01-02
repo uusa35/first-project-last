@@ -312,6 +312,9 @@
     "send_otp_success": "otp is sent successfully",
     "user_not_found": "user not found",
     "save": "save",
-    "change_password_success": "password changed successfully"
+    "change_password_success": "password changed successfully",
+    "rating_and_reviews": "rating and reviews",
+    "search_in_menu": "search in menu",
+    "full_menu": "full menu"
   }
 }

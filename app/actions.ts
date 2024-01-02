@@ -77,7 +77,7 @@ export async function setOrderType(value: string) {
 
 export async function getOrderType() {
   const countryCookie = cookies().get('NEXT_X_TYPE');
-  return countryCookie?.value ?? 'pickup';
+  return countryCookie?.value ?? null;
 }
 
 // auth 
@@ -119,13 +119,13 @@ export async function getMainHeaders() {
   const area = await getAreaCookie();
   const orderType = await getOrderType();
   return {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+    'Internal': 'Internal', // just for dev mode will be removed later
     'Accept-Language': lang,
     'X-Localization': lang,
     'X-Country': country?.id,
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
-    'Internal': 'Internal',
-    ...(area && area.id && { 'X-AREA': area.id }),
-    ...(orderType && { 'X-TYPE': orderType })
+    // ...(area && area.id && { 'X-AREA': area.id }),
+    // ...(orderType && { 'X-TYPE': orderType })
   }
 }

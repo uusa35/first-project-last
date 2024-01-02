@@ -18,8 +18,8 @@ export default function () {
     );
   };
   return (
-    <div className='col-span-1  '>
-      <div className='flex flex-row p-2 rounded-full bg-gray-100 w-full 2xl:w-1/2 '>
+    <div className='col-span-full lg:col-span-1  '>
+      <div className='flex flex-row p-2 rounded-full bg-gray-100 w-full max-w-20 '>
         <button
           className={`w-1/2 px-6 py-4 text-black rounded-full capitalize ${
             orderType === "pickup" ? "bg-white" : "bg-gray-100"

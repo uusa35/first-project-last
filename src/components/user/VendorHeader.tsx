@@ -34,7 +34,7 @@ export default function ({
   bg: string;
 }) {
   return (
-    <div className='px-4'>
+    <div className=''>
       <div className='relative bg-white'>
         <div className=''>
           <Image
