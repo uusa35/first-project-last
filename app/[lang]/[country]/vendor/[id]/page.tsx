@@ -9,6 +9,7 @@ import VendorContent from "@/src/components/user/VendorContent";
 import RatingAndReviewsCard from "@/src/components/user/RatingAndReviewsCard";
 import Breadcrumbs from "@/components/BreadCrumbs";
 import ProductsSlider from "@/src/components/sliders/ProductsSlider";
+import SwitchDeliveryPickup from "@/src/components/user/SwitchDeliveryPickup";
 
 type Props = {
   params: { lang: Locale["lang"]; country: countriesList; id: string };
@@ -25,7 +26,7 @@ export default async function ({ params: { lang, country, id } }: Props) {
       <div className='mt-8'>
         <Breadcrumbs />
         <VendorHeader title={store_name} logo={logo} bg={image} />
-        <div className='px-4 grid grid-cols-1 md:grid-cols-3 mt-12 '>
+        <div className='px-4 grid grid-cols-1 md:grid-cols-3 mt-12'>
           <div className='col-span-2'>
             <h1 className='text-3xl pb-4'>{store_name}</h1>
             <div className='flex flex-1'>
@@ -35,15 +36,12 @@ export default async function ({ params: { lang, country, id } }: Props) {
             </div>
             <RatingAndReviewsCard />
           </div>
-          <div className='col-span-1 '>
-            <div className='flex gap-x-4'>
-              <button className='btn-default'>pickup</button>
-              <button className='btn-default'>delivery</button>
-            </div>
-          </div>
+          <SwitchDeliveryPickup />
         </div>
+        {vendor.data.items && vendor.data.items.length > 0 && (
+          <ProductsSlider products={vendor.data.items} title={"big deals"} />
+        )}
 
-        <ProductsSlider products={vendor.data.items} title={"big deals"} />
         <VendorContent />
       </div>
     </MainContextLayout>

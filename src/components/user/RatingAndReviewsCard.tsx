@@ -32,8 +32,8 @@ function classNames(...classes: any) {
 export default function () {
   return (
     <div className='bg-white'>
-      <div className='mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:grid lg:max-w-7xl lg:grid-cols-12 lg:gap-x-8 lg:px-8 lg:py-32'>
-        <div className='lg:col-span-4'>
+      <div className='mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:grid lg:max-w-7xl lg:grid-cols-12 lg:gap-x-8 lg:px-8 '>
+        <div className='lg:col-span-12'>
           <h2 className='text-2xl font-bold tracking-tight text-gray-900'>
             Customer Reviews
           </h2>
@@ -121,13 +121,13 @@ export default function () {
           </div>
         </div>
 
-        <div className='mt-16 lg:col-span-7 lg:col-start-6 lg:mt-0'>
+        <div className='col-span-full lg:mt-0'>
           <h3 className='sr-only'>Recent reviews</h3>
 
           <div className='flow-root'>
-            <div className='-my-12 divide-y divide-gray-200'>
+            <div className='divide-y divide-gray-200'>
               {reviews.featured.map((review) => (
-                <div key={review.id} className='py-12'>
+                <div key={review.id} className='py-6'>
                   <div className='flex items-center'>
                     <img
                       src={review.avatarSrc}
