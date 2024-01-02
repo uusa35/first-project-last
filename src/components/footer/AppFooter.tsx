@@ -120,29 +120,39 @@ export default function () {
       <div className={`mx-auto ${globalMaxWidth}  px-4 sm:px-6 lg:px-8`}>
         <div className='pt-10 pb-8 mb-8 border-b border-opacity-20 border-gray-50  grid grid-cols-2 md:grid-cols-6 gap-8 md:space-y-0'>
           <div>
-            <h3 className='text-sm font-medium text-white truncate capitalize'>
+            <Link
+              href={appLinks.aboutus(lang)}
+              className='text-sm font-medium text-white truncate capitalize'>
               {trans.aboutus}
-            </h3>
+            </Link>
           </div>
           <div>
-            <h3 className='text-sm font-medium text-white truncate capitalize'>
+            <Link
+              href={appLinks.faqs(lang)}
+              className='text-sm font-medium text-white truncate capitalize'>
               {trans.faqs}
-            </h3>
+            </Link>
           </div>
           <div>
-            <h3 className='text-sm font-medium text-white truncate capitalize'>
+            <Link
+              href={appLinks.terms(lang)}
+              className='text-sm font-medium text-white truncate capitalize'>
               {trans.privacy_policy}
-            </h3>
+            </Link>
           </div>
           <div>
-            <h3 className='text-sm font-medium text-white truncate capitalize'>
+            <Link
+              href={appLinks.terms(lang)}
+              className='text-sm font-medium text-white truncate capitalize'>
               {trans.terms}
-            </h3>
+            </Link>
           </div>
           <div>
-            <h3 className='text-sm font-medium text-white truncate capitalize'>
+            <Link
+              href={appLinks.contactus(lang)}
+              className='text-sm font-medium text-white truncate capitalize'>
               {trans.contactus}
-            </h3>
+            </Link>
           </div>
         </div>
         <div className=' xl:grid xl:grid-cols-3 xl:gap-8'>
@@ -186,11 +196,11 @@ export default function () {
                 <ul role='list' className='mt-6 space-y-6'>
                   {footerNavigation.company.map((item) => (
                     <li key={item.name} className='text-sm'>
-                      <a
+                      <Link
                         href={item.href}
                         className='text-gray-300 hover:text-white'>
                         {item.name}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
