@@ -8,13 +8,8 @@ import { Locale } from "@/src/types";
 
 export default function () {
   const trans: { [key: string]: string } = useContext(MainContext);
-  const locales: Locale["lang"][] = ["ar", "en"];
   const {
-    locale,
-
-    country: { country_code },
-    appSetting: { orderType, sideMenuOpen },
-    auth: { token },
+    appSetting: { orderType },
   } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
   const handleOrderType = async (orderType: "pickup" | "delivery") => {
