@@ -35,7 +35,10 @@ export default async function ({ params: { lang, country, id } }: Props) {
                 {category}
               </p>
             </div>
-            <RatingAndReviewsCard />
+            <RatingAndReviewsCard
+              rate={vendor.data.vendor.rate}
+              ratings={vendor.data.vendor.ratings}
+            />
           </div>
           <SwitchDeliveryPickup />
         </div>

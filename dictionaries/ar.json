@@ -314,6 +314,9 @@
     "change_password_success": "تم تغيير الرقم السري بنجاح",
     "rating_and_reviews": "التقيمات والتعليقات",
     "search_in_menu": "البحث في القائمة",
-    "full_menu": "القائمة"
+    "full_menu": "القائمة",
+    "ratings": "التقييمات",
+    "hide": "اخفاء",
+    "show_more": "إظهار المزيد"
   }
 }
