@@ -43,20 +43,6 @@ export default function () {
 
           <div className='mt-3 flex items-center'>
             <div>
-              <div className='flex items-center'>
-                {[0, 1, 2, 3, 4].map((rating, i) => (
-                  <StarIcon
-                    key={i}
-                    className={classNames(
-                      reviews.average > rating
-                        ? "text-yellow-400"
-                        : "text-gray-300",
-                      "h-5 w-5 flex-shrink-0"
-                    )}
-                    aria-hidden='true'
-                  />
-                ))}
-              </div>
               <p className='sr-only'>{reviews.average} out of 5 stars</p>
             </div>
             <p className='ml-2 text-sm text-gray-900'>
@@ -64,10 +50,30 @@ export default function () {
             </p>
           </div>
 
-          <div className='mt-6'>
+          <div className='grid grid-cols-3 justify-between items-center mt-6'>
             <h3 className='sr-only'>Review data</h3>
+            <div className='col-span-1'>
+              <div className='flex flex-col items-center gap-y-4'>
+                <h1 className='text-2xl sm:text-4xl'>4.6</h1>
+                <div className='flex flex-row'>
+                  {[0, 1, 2, 3, 4].map((rating, i) => (
+                    <StarIcon
+                      key={i}
+                      className={classNames(
+                        reviews.average > rating
+                          ? "text-yellow-400"
+                          : "text-gray-300",
+                        "h-5 w-5 flex-shrink-0"
+                      )}
+                      aria-hidden='true'
+                    />
+                  ))}
+                </div>
+                <p className='text-xs text-gray-400'>more data</p>
+              </div>
+            </div>
 
-            <dl className='space-y-3'>
+            <dl className='col-span-2 space-y-3'>
               {reviews.counts.map((count) => (
                 <div key={count.rating} className='flex items-center text-sm'>
                   <dt className='flex flex-1 items-center'>

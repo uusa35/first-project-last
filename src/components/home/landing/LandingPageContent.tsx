@@ -10,7 +10,7 @@ import { Area, Country } from "@/types/queries";
 import { Suspense, useContext, useEffect, useState } from "react";
 import Search from "@/appIcons/landing/search.svg";
 import { Autocomplete, TextField } from "@mui/material";
-import { isEmpty } from "lodash";
+import { first, isEmpty } from "lodash";
 import GetLocation from "@/appIcons/landing/get_location.svg";
 import RightArrow from "@/appIcons/landing/right_arrow.svg";
 import Avatar from "@/appIcons/landing/avatar.svg";
@@ -19,9 +19,13 @@ import { MainContext } from "@/components/layouts/MainContentLayout";
 import DownloadAppSection from "@/components/home/DownloadAppSection";
 import { useRouter } from "next/navigation";
 import { appLinks } from "@/src/links";
-import { useGetAreasQuery } from "@/src/redux/api/areaApi";
-import AboutUsGetStarted from "../AboutUsGetStarted";
-import LoadingSpinner from "../../LoadingSpinner";
+import {
+  useGetAreasQuery,
+  useLazyGetAreasQuery,
+} from "@/src/redux/api/areaApi";
+import AboutUsGetStarted from "@/components/home/AboutUsGetStarted";
+import LoadingSpinner from "@/components/LoadingSpinner";
+import { setCountry } from "@/src/redux/slices/countrySlice";
 
 type Props = {
   countries: Country[];
@@ -54,19 +58,17 @@ export default function ({ countries }: Props) {
     | undefined
     | ""
   >();
-  const {
-    data: areas,
-    isSuccess: areaSuccess,
-    isFetching,
-  } = useGetAreasQuery(undefined, { refetchOnMountOrArgChange: true });
+  const [triggerGetAreas, { data: areas, isSuccess: areaSuccess, isFetching }] =
+    useLazyGetAreasQuery();
 
   const handleSetCountry = async (c: { label: string; id: number } | null) => {
-    setSelectedArea(undefined);
-    setSelectedCountry(c || undefined);
     if (c && c.id && countries) {
+      setSelectedCountry(c);
       const selectedCountry = countries.filter((itm) => itm.id === c?.id)[0];
+      await triggerGetAreas(selectedCountry.id.toString(), false);
       await setCountryCookie(JSON.stringify(selectedCountry));
       await setCountryNameCookie(selectedCountry.country_code);
+      dispatch(setCountry(selectedCountry));
     }
   };
 
@@ -83,14 +85,12 @@ export default function ({ countries }: Props) {
   };
 
   useEffect(() => {
-    // counteies for select
     let mappedCountries = countries.map((itm) => {
       return { label: itm.name, id: itm.id };
     });
 
     setAllCountries(mappedCountries);
-
-    if (country.id) {
+    if (country.id && allCountries.length === 0) {
       setSelectedCountry(
         mappedCountries.filter((itm) => itm.id === country.id)[0]
       );
@@ -98,99 +98,110 @@ export default function ({ countries }: Props) {
   }, [countries]);
 
   useEffect(() => {
-    if (areas && areas?.data) {
-      let mappedAreas = areas.data.map((itm: Area) => {
-        return { label: itm.name, id: itm.id };
-      });
-      setAllAreas(mappedAreas);
-      if (area.id) {
+    triggerGetAreas(country.id.toString(), false).then((r: any) => {
+      if (r && r.data && r.data.success && r.data.data) {
+        const serverArea: Area | undefined = first(r.data.data);
+        let mappedAreas = r.data.data.map((itm: Area) => {
+          return { label: itm.name, id: itm.id };
+        });
+        setAllAreas(mappedAreas);
         setSelectedArea(
           mappedAreas.filter(
             (itm: { id: number; label: string }) => itm.id === area.id
           )[0]
         );
-      } else {
-        setSelectedArea("");
+        if (
+          area.country.id !== country.id &&
+          serverArea !== undefined &&
+          serverArea.country
+        ) {
+          dispatch(setArea(serverArea));
+          setAreaCookie(JSON.stringify(serverArea));
+        }
       }
-    }
-  }, [country, areaSuccess]);
-
-  // console.log({ areaSuccess });
+    });
+  }, [country]);
 
   return (
     <>
       <Image
-        src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2830&q=80&blend=111827&sat=-100&exp=15&blend-mode=multiply"
-        alt="testing"
+        src='https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2830&q=80&blend=111827&sat=-100&exp=15&blend-mode=multiply'
+        alt='testing'
         width={1000}
         height={1000}
-        className="absolute inset-0 -z-10 h-full w-full object-cover"
+        className='absolute inset-0 -z-10 h-full w-full object-cover'
       />
-      <div className="mx-auto max-w-2xl w-full lg:w-3/4  text-white flex flex-col  justify-center items-center h-[90vh]">
+      <div className='mx-auto max-w-3xl w-full   text-white flex flex-col  justify-center items-center h-[90vh]'>
         {!isEmpty(allCountries) && areaSuccess ? (
           <>
-            <p className="mb-5 text-3xl font-semibold text-center px-5 capitalize">
+            <p className='mb-5 text-3xl font-semibold text-center px-5 capitalize'>
               {trans.landing_title1}
-              <span className="text-picks-dark capitalize">
+              <span className='text-picks-dark capitalize'>
                 {trans.delivered}
               </span>
             </p>
 
             {/* select country*/}
-            <div className="flex items-start gap-x-2  w-full px-8">
-              <div className="flex flex-col gap-y-5 grow w-full">
+            <div className='flex w-full flex-col sm:flex-row justify-center items-center '>
+              <div className='flex flex-col w-1/2 sm:w-auto gap-y-4 sm:gap-y-0 sm:flex-row justify-center items-center mb-4 sm:mb-0 sm:me-4 rounded-lg '>
                 {/* contry select */}
-                <div className="flex gap-x-2 items-center justify-between bg-white rounded-lg py-2 px-3 grow">
-                  <div className="flex gap-x-2 items-center pt-2">
+                <div className='col-span-6 gap-x-2 py-2 px-3 bg-white rounded-lg sm:ltr:rounded-r-none sm:rtl:rounded-l-none w-full'>
+                  <div className='flex gap-x-2 items-center pt-2'>
                     <Search />
                     <Autocomplete
-                      size="small"
-                      className="outline-none "
+                      size='small'
+                      className='outline-none '
                       disablePortal
-                      id="combo-box-demo"
+                      id='combo-box-demo'
                       options={allCountries}
                       value={selectedCountry}
                       onChange={(e, newval) => {
                         handleSetCountry(newval);
                       }}
-                      sx={{ width: 300 }}
+                      sx={{ minWidth: 200 }}
                       renderInput={(params) => (
-                        <TextField {...params} label={trans.select_country} />
+                        <TextField
+                          {...params}
+                          label={trans.select_country}
+                          className='font-picks-medium capitalize text-left'
+                        />
                       )}
                     />
                   </div>
-                  <GetLocation />
                 </div>
 
                 {/* area select */}
                 {!isEmpty(allAreas) && (
-                  <div className="flex gap-x-2 items-center justify-between bg-white rounded-lg py-2 px-3 grow">
-                    <div className="flex gap-x-2 items-center pt-2">
+                  <div className='col-span-5 flex flex-row gap-x-2 py-2 px-3 bg-white rounded-lg sm:ltr:rounded-l-none sm:rtl:rounded-r-none w-full'>
+                    <div className='flex gap-x-2 items-center pt-2'>
                       <Search />
                       <Autocomplete
                         dir={lang === "ar" ? "rtl" : "ltr"}
                         disabled={isFetching}
-                        size="small"
-                        className="outline-none font-picks-medium"
+                        size='small'
+                        className='outline-none font-picks-medium'
                         disablePortal
-                        id="combo-box-demo"
+                        id='combo-box-demo'
                         options={allAreas}
                         value={selectedArea}
                         onChange={(e, newval) => {
                           handleSetArea(newval);
                         }}
-                        sx={{ width: 300 }}
+                        sx={{ minWidth: 200 }}
                         renderInput={(params) => (
                           <TextField
                             {...params}
                             label={trans.select_area}
-                            className="font-picks-medium"
+                            className='font-picks-medium capitalize text-left'
                           />
                         )}
                       />
                     </div>
                   </div>
                 )}
+                <div className='hidden sm:col-span-1 '>
+                  <GetLocation className='pt-2 text-2xl' />
+                </div>
               </div>
 
               {/* btn */}
@@ -199,12 +210,11 @@ export default function ({ countries }: Props) {
                 onClick={() =>
                   router.push(appLinks.home(lang, country.country_code))
                 }
-                className="flex items-center gap-x-2 rounded-lg bg-picks-dark p-2 h-[40%]"
-              >
-                <span className="whitespace-nowrap capitalize">
+                className='col-span-1 flex w-1/2 sm:w-auto items-center gap-x-2 rounded-lg bg-picks-dark hover:bg-picks-medium px-4 py-5'>
+                <span className='whitespace-nowrap capitalize'>
                   {trans.lets_go}
                 </span>
-                <RightArrow className="rtl:rotate-180" />
+                <RightArrow className='rtl:rotate-180' />
               </button>
             </div>
           </>
@@ -213,19 +223,19 @@ export default function ({ countries }: Props) {
         )}
 
         {/* login */}
-        <div className="my-8">
-          <div className="flex items-center gap-x-2">
+        <div className='my-8'>
+          <div className='flex items-center gap-x-2'>
             <Avatar />
             <p>
               {trans.or}{" "}
-              <span className="text-picks-dark capitalize">{trans.log_in}</span>{" "}
+              <span className='text-picks-dark capitalize'>{trans.log_in}</span>{" "}
               {trans.for_your_saved_addresses}
             </p>
           </div>
         </div>
       </div>
 
-      <div className="bg-white p-2 md:p-10">
+      <div className='bg-white p-2 md:p-10'>
         <DownloadAppSection />
         <AboutUsGetStarted />
       </div>
