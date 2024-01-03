@@ -100,18 +100,19 @@ export type User = {
   [key: string]: any;
 };
 
+export type AuthUser = {
+  id?: number;
+  name?: string;
+  email?: string;
+  phone: string;
+  gender?: string;
+  birth_date?: string;
+  phone_country_code: string;
+  type?: "reset" | "register";
+};
 export type Auth = {
   token: string | null;
-  user: {
-    id?: number;
-    name?: string;
-    email?: string;
-    phone: string;
-    gender?: string;
-    birth_date?: string;
-    phone_country_code: string;
-    type?: "reset" | "register";
-  } | null;
+  user: AuthUser | null;
 };
 
 export type Order = {

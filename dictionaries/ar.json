@@ -314,6 +314,11 @@
     "change_password_success": "تم تغيير الرقم السري بنجاح",
     "rating_and_reviews": "التقيمات والتعليقات",
     "search_in_menu": "البحث في القائمة",
-    "full_menu": "القائمة"
+    "full_menu": "القائمة",
+    "why_us":"فلماذا",
+    "choose":"تختارنا",
+    "us":"؟",
+    "learn_about_the_most_important_features_of_the_Picks_app":"تعرف على أهم مميزات تطبيق بيكس"
+
   }
 }
