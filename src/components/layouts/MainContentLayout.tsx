@@ -31,6 +31,7 @@ import { AppQueryResult, Area, Country } from "@/src/types/queries";
 import { first } from "lodash";
 import { toggleSideMenu } from "@/src/redux/slices/settingSlice";
 import CartMenu from "../header/CartMenu";
+import ProductModal from "../models/ProductModal";
 
 type Props = {
   children: React.ReactNode;
@@ -148,13 +149,13 @@ const MainContextLayout: FC<Props> = ({
     <MainContext.Provider value={trans}>
       {/* nav */}
       <NavHeader showMiddleNav={showMiddleNav} />
-      
       <Suspense>
         <LoginModal />
         <RegisterModal />
         <ForgetPasswordModal />
         <VerificationModal />
         <ChangePasswordModal />
+        <ProductModal />
       </Suspense>
       <div className='relative isolate overflow-hidden pt-14 py-8'>
         {children}
