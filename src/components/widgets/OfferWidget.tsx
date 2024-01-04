@@ -5,7 +5,7 @@ import Image from "next/image";
 import React, { useContext } from "react";
 import FavouriteWidget from "@/components/widgets/FavouriteWidget";
 import { Locale, countriesList } from "@/src/types";
-import { MainContext } from "../layouts/MainContentLayout";
+import { MainContext } from "@/layouts/MainContentLayout";
 import Link from "next/link";
 import { appLinks } from "@/src/links";
 import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";

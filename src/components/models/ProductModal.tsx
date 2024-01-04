@@ -6,13 +6,11 @@ import {
   enableLoading,
   hideProductModal,
   toggleForgetPasswordModal,
-  toggleProductModal,
   toggleRegisterModal,
   toggleVerficationModal,
 } from "@/src/redux/slices/settingSlice";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { loginSchema } from "@/src/validations";
 import {
   showErrorToastMessage,
   showSuccessToastMessage,
@@ -59,8 +57,6 @@ export default function () {
   const onSubmit: SubmitHandler<Inputs> = async (body) => {
     dispatch(enableLoading());
   };
-
-  console.log("the product from modal", data);
 
   return (
     <Transition appear show={showProductModal.enabled} as={Fragment}>
