@@ -4,6 +4,7 @@ import { Fragment, useContext, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
 import {
   enableLoading,
+  hideProductModal,
   toggleForgetPasswordModal,
   toggleProductModal,
   toggleRegisterModal,
@@ -24,10 +25,14 @@ import {
 } from "@/src/redux/api/authApi";
 import { MainContext } from "@/components/layouts/MainContentLayout";
 import LoadingSpinner from "@/components/LoadingSpinner";
-import { Country } from "@/src/types/queries";
+import { AppQueryResult, Country, Product } from "@/src/types/queries";
 import { useGetCountriesQuery } from "@/src/redux/api/countryApi";
 import { EyeIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { setAuthentication } from "@/src/redux/slices/authSlice";
+import {
+  useGetProductQuery,
+  useLazyGetProductQuery,
+} from "@/src/redux/api/productApi";
 
 type Inputs = {
   phone: string;
@@ -45,17 +50,24 @@ export default function () {
   } = useAppSelector((state) => state);
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const { data, isSuccess, isFetching } = useGetProductQuery<{
+    data: AppQueryResult<Product>;
+    isSuccess: boolean;
+    isFetching: boolean;
+  }>(showProductModal.id);
 
   const onSubmit: SubmitHandler<Inputs> = async (body) => {
     dispatch(enableLoading());
   };
 
+  console.log("the product from modal", data);
+
   return (
-    <Transition appear show={showProductModal} as={Fragment}>
+    <Transition appear show={showProductModal.enabled} as={Fragment}>
       <Dialog
         as='div'
         className='relative z-50'
-        onClose={() => dispatch(toggleProductModal(false))}>
+        onClose={() => dispatch(hideProductModal())}>
         <Transition.Child
           as={Fragment}
           enter='ease-out duration-300'
@@ -84,13 +96,21 @@ export default function () {
                     product name here
                     <XMarkIcon
                       className='absolute ltr:left-4 rtl:right-4 w-6 h-6 text-gray-600 cursor-pointer'
-                      onClick={() => dispatch(toggleProductModal(false))}
+                      onClick={() => dispatch(hideProductModal())}
                     />
                   </div>
                 </Dialog.Title>
                 <div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm px-6 lg:px-8'>
                   <LoadingSpinner isLoading={isLoading} />
-                  Product Here
+                  {isSuccess && (
+                    <div>
+                      <ul>
+                        <li>Product name : {data.data.name}</li>
+                        <li>product description : {data.data.description}</li>
+                        <li>product price : {data.data.price}</li>
+                      </ul>
+                    </div>
+                  )}
                 </div>
               </Dialog.Panel>
             </Transition.Child>

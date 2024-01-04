@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { configureStore } from "@reduxjs/toolkit";
 import { createLogger } from "redux-logger";
-import { rootReducer } from "./slices/rootReducer";
+import { rootReducer } from "@/redux/slices/rootReducer";
 import {
   persistReducer,
   persistStore,
@@ -14,15 +14,16 @@ import {
 } from "redux-persist";
 import createSagaMiddleware from "redux-saga";
 import storage from "redux-persist/lib/storage";
-import rootSaga from "./sagas/rootSaga";
+import rootSaga from "@/redux/sagas/rootSaga";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { HYDRATE, createWrapper } from "next-redux-wrapper";
-import { apiSlice } from "./api";
+import { apiSlice } from "@/redux/api";
 import { categoryApi } from "@/redux/api/categoryApi";
 import { isLocal } from "@/src/constants";
 import { authApi } from "@/redux/api/authApi";
 import { areaApi } from "@/redux/api/areaApi";
 import { countryApi } from "@/redux/api/countryApi";
+import { productApi } from "@/redux/api/productApi";
 
 
 const persistConfig = {
@@ -63,6 +64,8 @@ let store: any = configureStore({
       }).concat([
         apiSlice.middleware,
         categoryApi.middleware,
+        authApi.middleware,
+        productApi.middleware,
         areaApi.middleware,
         countryApi.middleware,
         sagaMiddleware,
@@ -86,6 +89,8 @@ let store: any = configureStore({
       }).concat([
         apiSlice.middleware,
         categoryApi.middleware,
+        authApi.middleware,
+        productApi.middleware,
         areaApi.middleware,
         countryApi.middleware,
         sagaMiddleware,

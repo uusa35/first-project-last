@@ -10,7 +10,11 @@ import Link from "next/link";
 import { appLinks } from "@/src/links";
 import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
 import { useParams } from "next/navigation";
-import { toggleProductModal } from "@/src/redux/slices/settingSlice";
+import {
+  hideProductModal,
+  showProductModal,
+} from "@/src/redux/slices/settingSlice";
+import { useLazyGetProductQuery } from "@/src/redux/api/productApi";
 
 type Props = {
   product: Product;
@@ -22,11 +26,24 @@ export default function OfferWidget({ product }: Props) {
   const params: { lang: Locale["lang"]; country?: countriesList } | any =
     useParams!();
   const { lang } = params;
+  const [triggerGetProduct, { data, isSuccess, isFetching }] =
+    useLazyGetProductQuery();
+
+  const handleClick = async (id: number) => {
+    await triggerGetProduct(id, true).then((r) => {
+      if (r.data && r.data.success) {
+        dispatch(showProductModal(id));
+      } else {
+        dispatch(hideProductModal());
+      }
+    });
+  };
+
   return (
     <div>
       <div className='relative rtl:text-right ltr:text-left'>
         <div
-          onClick={() => dispatch(toggleProductModal())}
+          onClick={() => handleClick(product.id)}
           // href={appLinks.offer(
           //   lang,
           //   params?.country,
@@ -66,7 +83,7 @@ export default function OfferWidget({ product }: Props) {
             </div>
           </div>
         </div>
-        <div onClick={() => dispatch(toggleProductModal())}>
+        <div onClick={() => handleClick(product.id)}>
           <div className='bg-white -mt-[10%] rounded-lg p-3 relative w-full space-y-2'>
             <p className='card-title'>{product.name}</p>
             <p className='card-desc'>{product.description}</p>

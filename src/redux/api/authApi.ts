@@ -37,7 +37,6 @@ export const authApi = apiSlice.injectEndpoints({
         body,
         method: "post",
         validateStatus: (response, result) => {
-          // console.log({ result, response });
           return result.status === "200";
         },
       }),
