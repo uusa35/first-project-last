@@ -21,7 +21,7 @@ export default async function ({ params: { lang, country, id } }: Props) {
 
   if (!vendor || !vendor.data.vendor) notFound();
   const { logo, store_name, description, image, category } = vendor.data.vendor;
-  console.log("vendor====>", vendor.data);
+
   return (
     <MainContextLayout trans={trans}>
       <div className='mt-8 px-4'>

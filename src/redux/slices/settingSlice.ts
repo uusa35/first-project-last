@@ -8,6 +8,8 @@ type Props = {
   showForgetPasswordModal: boolean;
   showVerificationModal: boolean;
   showChangePasswordModal: boolean;
+  showProductModal: boolean;
+  showCartMenu: boolean;
   sideMenuOpen: boolean;
   session_id: string;
 };
@@ -20,6 +22,8 @@ const initialState: Props = {
   showForgetPasswordModal: false,
   showVerificationModal: false,
   showChangePasswordModal: false,
+  showProductModal: false,
+  showCartMenu: false,
   session_id: ``,
 };
 
@@ -75,6 +79,8 @@ export const settingSlice = createSlice({
         showForgetPasswordModal: false,
         showVerificationModal: false,
         sideMenuOpen: false,
+        showProductModal: false,
+        showCartMenu: false,
       };
     },
     toggleRegisterModal: (
@@ -91,6 +97,8 @@ export const settingSlice = createSlice({
         showForgetPasswordModal: false,
         showVerificationModal: false,
         sideMenuOpen: false,
+        showProductModal: false,
+        showCartMenu: false,
       };
     },
     toggleForgetPasswordModal: (
@@ -107,6 +115,8 @@ export const settingSlice = createSlice({
         showRegisterModal: false,
         showVerificationModal: false,
         sideMenuOpen: false,
+        showProductModal: false,
+        showCartMenu: false,
       };
     },
     toggleVerficationModal: (
@@ -123,6 +133,8 @@ export const settingSlice = createSlice({
         showRegisterModal: false,
         showForgetPasswordModal: false,
         sideMenuOpen: false,
+        showProductModal: false,
+        showCartMenu: false,
       };
     },
     toggleChangePasswordModal: (
@@ -140,6 +152,8 @@ export const settingSlice = createSlice({
         showRegisterModal: false,
         showForgetPasswordModal: false,
         sideMenuOpen: false,
+        showProductModal: false,
+        showCartMenu: false,
       };
     },
     toggleSideMenu: (
@@ -148,12 +162,44 @@ export const settingSlice = createSlice({
     ) => {
       return {
         ...state,
+        sideMenuOpen:
+          action.payload === undefined ? !state.sideMenuOpen : action.payload,
         showVerificationModal: false,
         showLoginModal: false,
         showRegisterModal: false,
         showForgetPasswordModal: false,
-        sideMenuOpen:
-          action.payload === undefined ? !state.sideMenuOpen : action.payload,
+        showProductModal: false,
+        showCartMenu: false,
+      };
+    },
+    toggleProductModal: (
+      state: typeof initialState,
+      action: PayloadAction<undefined | boolean>
+    ) => {
+      return {
+        ...state,
+        showProductModal: action.payload === undefined ? !state.sideMenuOpen : action.payload,
+        showVerificationModal: false,
+        showLoginModal: false,
+        showRegisterModal: false,
+        showForgetPasswordModal: false,
+        sideMenuOpen: false,
+        showCartMenu: false,
+      };
+    },
+    toggleCartMenu: (
+      state: typeof initialState,
+      action: PayloadAction<undefined | boolean>
+    ) => {
+      return {
+        ...state,
+        showCartMenu: action.payload === undefined ? !state.sideMenuOpen : action.payload,
+        showVerificationModal: false,
+        showLoginModal: false,
+        showRegisterModal: false,
+        showForgetPasswordModal: false,
+        sideMenuOpen: false,
+        showProductModal: false,
       };
     },
   },
@@ -170,4 +216,6 @@ export const {
   toggleVerficationModal,
   toggleChangePasswordModal,
   toggleSideMenu,
+  toggleProductModal,
+  toggleCartMenu,
 } = settingSlice.actions;

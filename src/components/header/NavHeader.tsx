@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation";
 import { setLocale } from "@/redux/slices/localeSlice";
 import {
   changeOrderType,
+  toggleCartMenu,
   toggleLoginModal,
   toggleRegisterModal,
   toggleSideMenu,
@@ -36,6 +37,7 @@ import AppleStore from "@/appIcons/landing/download_apple_store.svg";
 import AppGallery from "@/appIcons/landing/download_app_gallery.svg";
 import { ShoppingBag } from "@mui/icons-material";
 import { ShoppingBagIcon } from "@heroicons/react/20/solid";
+import CartMenu from "./CartMenu";
 
 type Props = {
   showMiddleNav: boolean;
@@ -192,7 +194,10 @@ export default function ({ showMiddleNav = false }: Props) {
                   />
                 </div>
                 <div className='flex flex-row gap-x-4'>
-                  <ShoppingBagIcon className='w-5 h-5' />
+                  <ShoppingBagIcon
+                    className='w-5 h-5'
+                    onClick={() => dispatch(toggleCartMenu())}
+                  />
                   <BellIcon className='w-5 h-5' />
                 </div>
               </div>
@@ -330,6 +335,7 @@ export default function ({ showMiddleNav = false }: Props) {
             </div>
           </Dialog.Panel>
         </Dialog>
+        <CartMenu />
       </header>
     </div>
   );

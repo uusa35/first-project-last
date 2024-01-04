@@ -30,6 +30,7 @@ import ChangePasswordModal from "@/components/models/ChangePasswordModal";
 import { AppQueryResult, Area, Country } from "@/src/types/queries";
 import { first } from "lodash";
 import { toggleSideMenu } from "@/src/redux/slices/settingSlice";
+import CartMenu from "../header/CartMenu";
 
 type Props = {
   children: React.ReactNode;
@@ -147,6 +148,7 @@ const MainContextLayout: FC<Props> = ({
     <MainContext.Provider value={trans}>
       {/* nav */}
       <NavHeader showMiddleNav={showMiddleNav} />
+      
       <Suspense>
         <LoginModal />
         <RegisterModal />
