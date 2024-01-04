@@ -1,6 +1,6 @@
 "use client";
-import { useContext, useEffect, useMemo, useState } from "react";
-import { Dialog } from "@headlessui/react";
+import { Fragment, useContext, useEffect, useMemo, useState } from "react";
+import { Dialog, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
   BellIcon,
@@ -226,115 +226,124 @@ export default function ({ showMiddleNav = false }: Props) {
           </div>
         </nav>
         {/* mobile nav */}
-        <Dialog
-          as='div'
-          className=''
-          open={sideMenuOpen}
-          onClose={() => dispatch(toggleSideMenu(false))}>
-          <div className='fixed inset-0 z-50' />
-          <Dialog.Panel className='fixed inset-y-0 ltr:right-0 ltr:left-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-white/10'>
-            <div className='flex w-full items-end justify-end'>
-              <button
-                type='button'
-                className='-m-2.5 rounded-md p-2.5 text-gray-400'
-                onClick={() => dispatch(toggleSideMenu(false))}>
-                <span className='sr-only'>Close menu</span>
-                <XMarkIcon className='h-6 w-6' aria-hidden='true' />
-              </button>
-            </div>
-            <div className='flex items-center justify-between'>
-              {token ? (
-                <Link
-                  href='#'
-                  className='flex items-center gap-x-4  py-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-50 w-full'>
-                  <img
-                    className='h-8 w-8 rounded-full bg-gray-50'
-                    src='https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
-                    alt=''
-                  />
-                  <span className='sr-only'>Your profile</span>
-                  <span aria-hidden='true'>Tom Cook</span>
-                </Link>
-              ) : (
-                <div className='flex flex-col gap-y-4'>
-                  <h2>Welcome Back,</h2>
-                  <p className='text-sm text-gray-500 leading-3 mb-2'>
-                    lorem ipsum dolor sit amet, consectetur adip
-                  </p>
+        <Transition.Root show={sideMenuOpen} as={Fragment}>
+          <Dialog
+            as='div'
+            className='relative z-50'
+            onClose={() => dispatch(toggleSideMenu(false))}>
+            <Transition.Child
+              as={Fragment}
+              enter='transition-opacity ease-linear duration-300'
+              enterFrom='opacity-0'
+              enterTo='opacity-100'
+              leave='transition-opacity ease-linear duration-300'
+              leaveFrom='opacity-100'
+              leaveTo='opacity-0'>
+              <Dialog.Panel className='fixed inset-y-0 ltr:right-0 ltr:left-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-white/10'>
+                <div className='flex w-full items-end justify-end'>
                   <button
-                    className='btn-default'
-                    onClick={() => dispatch(toggleLoginModal())}>
-                    {trans.login}
-                  </button>
-                  <button
-                    className='btn-transparent'
-                    onClick={() => dispatch(toggleRegisterModal())}>
-                    {trans.signup}
+                    type='button'
+                    className='-m-2.5 rounded-md p-2.5 text-gray-400'
+                    onClick={() => dispatch(toggleSideMenu(false))}>
+                    <span className='sr-only'>Close menu</span>
+                    <XMarkIcon className='h-6 w-6' aria-hidden='true' />
                   </button>
                 </div>
-              )}
-            </div>
-            <div className='mt-6 flow-root '>
-              <div className='-my-6 '>
-                <div className='py-6 '>
-                  {navigation.map((item) => (
+                <div className='flex items-center justify-between'>
+                  {token ? (
                     <Link
-                      key={item.name}
-                      href={item.href}
-                      className='-mx-3 block border-b border-gray-200 p-3 py-4  text-base font-semibold leading-7 text-black hover:bg-gray-100 capitalize'>
-                      {item.name}
+                      href='#'
+                      className='flex items-center gap-x-4  py-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-50 w-full'>
+                      <img
+                        className='h-8 w-8 rounded-full bg-gray-50'
+                        src='https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
+                        alt=''
+                      />
+                      <span className='sr-only'>Your profile</span>
+                      <span aria-hidden='true'>Tom Cook</span>
                     </Link>
-                  ))}
+                  ) : (
+                    <div className='flex flex-col gap-y-4'>
+                      <h2>Welcome Back,</h2>
+                      <p className='text-sm text-gray-500 leading-3 mb-2'>
+                        lorem ipsum dolor sit amet, consectetur adip
+                      </p>
+                      <button
+                        className='btn-default'
+                        onClick={() => dispatch(toggleLoginModal())}>
+                        {trans.login}
+                      </button>
+                      <button
+                        className='btn-transparent'
+                        onClick={() => dispatch(toggleRegisterModal())}>
+                        {trans.signup}
+                      </button>
+                    </div>
+                  )}
                 </div>
-                <div className='py-6 '>
-                  <Link
-                    href={appLinks.aboutus(lang)}
-                    className='-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-black  capitalize'>
-                    {trans.aboutus}
-                  </Link>
-                  <Link
-                    href={appLinks.joinus(lang)}
-                    className='-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-black  capitalize'>
-                    {trans.add_ur_resturant}
-                  </Link>
-                  <ul
-                    role='list'
-                    className='mt-6 space-y-2 flex flex-col flex-1 justify-start items-start'>
-                    <li className='text-sm flex flex-row justify-start items-center space-x-3'>
+                <div className='mt-6 flow-root '>
+                  <div className='-my-6 '>
+                    <div className='py-6 '>
+                      {navigation.map((item) => (
+                        <Link
+                          key={item.name}
+                          href={item.href}
+                          className='-mx-3 block border-b border-gray-200 p-3 py-4  text-base font-semibold leading-7 text-black hover:bg-gray-100 capitalize'>
+                          {item.name}
+                        </Link>
+                      ))}
+                    </div>
+                    <div className='py-6 '>
                       <Link
-                        href={`${appLinks.aboutus(lang)}`}
-                        className='text-gray-300 hover:text-white'>
-                        <LogoOnly className='w-[4vh] h-[5vh]' />
+                        href={appLinks.aboutus(lang)}
+                        className='-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-black  capitalize'>
+                        {trans.aboutus}
                       </Link>
-                      <p>lorem ipsum dolor sit amet, consectetur adip</p>
-                    </li>
-                    <li className='text-sm'>
                       <Link
-                        href={`${appLinks.aboutus(lang)}`}
-                        className='text-gray-300 hover:text-white'>
-                        <AppGallery className='w-[14vh] h-[5vh]' />
+                        href={appLinks.joinus(lang)}
+                        className='-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-black  capitalize'>
+                        {trans.add_ur_resturant}
                       </Link>
-                    </li>
-                    <li className='text-sm'>
-                      <Link
-                        href={`${appLinks.aboutus(lang)}`}
-                        className='text-gray-300 hover:text-white'>
-                        <GooglePlay className='w-[14vh] h-[5vh]' />
-                      </Link>
-                    </li>
-                    <li className='text-sm'>
-                      <Link
-                        href={`${appLinks.aboutus(lang)}`}
-                        className='text-gray-300 hover:text-white'>
-                        <AppGallery className='w-[14vh] h-[5vh]' />
-                      </Link>
-                    </li>
-                  </ul>
+                      <ul
+                        role='list'
+                        className='mt-6 space-y-2 flex flex-col flex-1 justify-start items-start'>
+                        <li className='text-sm flex flex-row justify-start items-center space-x-3'>
+                          <Link
+                            href={`${appLinks.aboutus(lang)}`}
+                            className='text-gray-300 hover:text-white'>
+                            <LogoOnly className='w-[4vh] h-[5vh]' />
+                          </Link>
+                          <p>lorem ipsum dolor sit amet, consectetur adip</p>
+                        </li>
+                        <li className='text-sm'>
+                          <Link
+                            href={`${appLinks.aboutus(lang)}`}
+                            className='text-gray-300 hover:text-white'>
+                            <AppGallery className='w-[14vh] h-[5vh]' />
+                          </Link>
+                        </li>
+                        <li className='text-sm'>
+                          <Link
+                            href={`${appLinks.aboutus(lang)}`}
+                            className='text-gray-300 hover:text-white'>
+                            <GooglePlay className='w-[14vh] h-[5vh]' />
+                          </Link>
+                        </li>
+                        <li className='text-sm'>
+                          <Link
+                            href={`${appLinks.aboutus(lang)}`}
+                            className='text-gray-300 hover:text-white'>
+                            <AppGallery className='w-[14vh] h-[5vh]' />
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          </Dialog.Panel>
-        </Dialog>
+              </Dialog.Panel>
+            </Transition.Child>
+          </Dialog>
+        </Transition.Root>
         <CartMenu />
       </header>
     </div>
