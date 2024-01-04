@@ -26,12 +26,11 @@ import RegisterModal from "@/components/models/RegisterModal";
 import ForgetPasswordModal from "@/components/models/ForgetPasswordModal";
 import VerificationModal from "@/components/models/VerificationModal";
 import ChangePasswordModal from "@/components/models/ChangePasswordModal";
-
 import { AppQueryResult, Area, Country } from "@/src/types/queries";
 import { first } from "lodash";
 import { toggleSideMenu } from "@/src/redux/slices/settingSlice";
-import CartMenu from "../header/CartMenu";
-import ProductModal from "../models/ProductModal";
+import CartMenu from "@/components/header/CartMenu";
+import ProductModal from "@/components/models/ProductModal";
 
 type Props = {
   children: React.ReactNode;
