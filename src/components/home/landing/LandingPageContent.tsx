@@ -26,6 +26,7 @@ import {
 import AboutUsGetStarted from "@/components/home/AboutUsGetStarted";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { setCountry } from "@/src/redux/slices/countrySlice";
+import LandingPageBgImage from "@/appImages/head.png";
 
 type Props = {
   countries: Country[];
@@ -125,11 +126,11 @@ export default function ({ countries }: Props) {
   return (
     <>
       <Image
-        src='https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2830&q=80&blend=111827&sat=-100&exp=15&blend-mode=multiply'
+        src={LandingPageBgImage}
         alt='testing'
         width={1000}
         height={1000}
-        className='absolute inset-0 -z-10 h-full w-full object-cover'
+        className='absolute inset-0 -z-10 h-[90vh] w-full object-cover'
       />
       <div className='mx-auto max-w-3xl w-full   text-white flex flex-col  justify-center items-center h-[90vh]'>
         {!isEmpty(allCountries) && areaSuccess ? (

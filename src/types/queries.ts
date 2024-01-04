@@ -46,6 +46,7 @@ export type Product = {
   image: string;
   vendor_id: number;
   stock: number;
+  images?: string[]
 };
 
 export type Category = {
