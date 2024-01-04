@@ -141,7 +141,6 @@ export default function ({ countries }: Props) {
                 {trans.delivered}
               </span>
             </p>
-
             {/* select country*/}
             <div className='flex w-full flex-col sm:flex-row justify-center items-center '>
               <div className='flex flex-col w-1/2 sm:w-auto gap-y-4 sm:gap-y-0 sm:flex-row justify-center items-center mb-4 sm:mb-0 sm:me-4 rounded-lg '>

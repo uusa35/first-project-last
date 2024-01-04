@@ -21,16 +21,16 @@ import {
 } from "@/redux/api/countryApi";
 import { useLazyGetAreasQuery } from "@/redux/api/areaApi";
 import { resetArea, setArea } from "@/src/redux/slices/areaSlice";
-import LoginModal from "@/components/models/LoginModal";
-import RegisterModal from "@/components/models/RegisterModal";
-import ForgetPasswordModal from "@/components/models/ForgetPasswordModal";
-import VerificationModal from "@/components/models/VerificationModal";
-import ChangePasswordModal from "@/components/models/ChangePasswordModal";
+import LoginModal from "@/src/components/modals/LoginModal";
+import RegisterModal from "@/src/components/modals/RegisterModal";
+import ForgetPasswordModal from "@/src/components/modals/ForgetPasswordModal";
+import VerificationModal from "@/src/components/modals/VerificationModal";
+import ChangePasswordModal from "@/src/components/modals/ChangePasswordModal";
 import { AppQueryResult, Area, Country } from "@/src/types/queries";
 import { first } from "lodash";
 import { toggleSideMenu } from "@/src/redux/slices/settingSlice";
 import CartMenu from "@/components/header/CartMenu";
-import ProductModal from "@/components/models/ProductModal";
+import ProductModal from "@/src/components/modals/ProductModal";
 
 type Props = {
   children: React.ReactNode;

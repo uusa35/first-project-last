@@ -39,6 +39,8 @@ import {
 } from "@/src/redux/api/productApi";
 import Image from "next/image";
 import { map } from "lodash";
+import CheckBoxInput from "@/components/modals/product/CheckBoxInput";
+import RadioInput from "@/components/modals/product/RadioInput";
 
 type Inputs = {
   phone: string;
@@ -46,12 +48,6 @@ type Inputs = {
   password: string;
   session_id?: string;
 };
-
-const notificationMethods = [
-  { id: "email", title: "Email" },
-  { id: "sms", title: "Phone (SMS)" },
-  { id: "push", title: "Push notification" },
-];
 
 export default function () {
   const trans: { [key: string]: string } = useContext(MainContext);
@@ -66,7 +62,7 @@ export default function () {
     data: AppQueryResult<Product>;
     isSuccess: boolean;
     isFetching: boolean;
-  }>(10);
+  }>(showProductModal.id);
 
   const settings: any = {
     dots: true,
@@ -81,7 +77,7 @@ export default function () {
   };
 
   return (
-    <Transition appear show={false} as={Fragment}>
+    <Transition appear show={showProductModal.enabled} as={Fragment}>
       <Dialog
         as='div'
         className='relative z-50'
@@ -117,7 +113,7 @@ export default function () {
                     />
                   </div>
                   <div
-                    className={`flex  flex-row justify-between items-center w-auto gap-x-4  ltr:right-4 ltr:left-4 border-4 border-green-800`}>
+                    className={`flex  flex-row justify-between items-center w-auto gap-x-4  ltr:right-4 ltr:left-4`}>
                     <div>
                       <HeartIcon className='w-6 h-6 text-black' />
                     </div>
@@ -127,11 +123,11 @@ export default function () {
                   </div>
                 </Dialog.Title>
 
-                <div className=' relative sm:mx-auto overflow-x-auto w-full h-[60vh] '>
+                <div className=' relative sm:mx-auto overflow-x-auto w-full h-full md:h-[60vh] '>
                   <LoadingSpinner isLoading={!isSuccess} />
                   {isSuccess && (
                     <div>
-                      <div className=' overflow-y-auto h-full md:h-[60%] px-4  pb-[10%]'>
+                      <div className=' overflow-y-auto h-full md:h-[60%] px-4  pb-[20%] md:pb-[10%]'>
                         <div className='justify-center items-center '>
                           <Slider {...settings}>
                             {data.data.images &&
@@ -166,58 +162,23 @@ export default function () {
                               </div>
                             </div>
                           </div>
-                          <div className='divide-y divide-gray-400 py-4 gap-y-4'>
-                            <div>
-                              <div className='flex flex-1 justify-between items-center'>
-                                <div>
-                                  <label className='text-base font-semibold text-gray-900'>
-                                    Notifications
-                                  </label>
-                                  <p className='text-sm text-gray-400'>
-                                    How do you prefer to receive notifications?
-                                  </p>
-                                </div>
-                                <div className='bg-gray-200 p-2 text-sm rounded-2xl text-gray-600'>
-                                  {trans.required}
-                                </div>
-                              </div>
-
-                              <fieldset className='mt-4'>
-                                <legend className='sr-only'>
-                                  Notification method
-                                </legend>
-                                <div className='space-y-4'>
-                                  {notificationMethods.map(
-                                    (notificationMethod) => (
-                                      <div
-                                        key={notificationMethod.id}
-                                        className='flex items-center'>
-                                        <input
-                                          id={notificationMethod.id}
-                                          name='notification-method'
-                                          type='radio'
-                                          defaultChecked={
-                                            notificationMethod.id === "email"
-                                          }
-                                          className='h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600'
-                                        />
-                                        <label
-                                          htmlFor={notificationMethod.id}
-                                          className='ml-3 block text-sm font-medium leading-6 text-gray-900'>
-                                          {notificationMethod.title}
-                                        </label>
-                                      </div>
-                                    )
+                          <div className='flex flex-col   divide-y divide-gray-200 py-2 '>
+                            {data.data.groups &&
+                              map(data.data.groups, (g: any, i) => (
+                                <div key={i}>
+                                  {g.input_type === "radio" ? (
+                                    <RadioInput group={g} />
+                                  ) : (
+                                    <CheckBoxInput group={g} />
                                   )}
                                 </div>
-                              </fieldset>
-                            </div>
+                              ))}
                           </div>
                         </div>
                       </div>
                       {/* footer */}
                       <div
-                        className={`fixed bottom-0 bg-orange-400 w-full flex flex-row justify-between items-center   md:rounded-b-2xl p-4 border-t border-gray-200`}>
+                        className={`fixed bottom-0 w-full flex flex-row justify-between items-center   md:rounded-b-2xl p-4 border-t border-gray-200 bg-white`}>
                         <div className={`flex flex-row gap-x-4`}>
                           <div>+</div>
                           <div>1</div>

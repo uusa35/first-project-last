@@ -102,6 +102,8 @@
     "phone": "phone",
     "send": "send",
     "required": "required",
+    "mandatory": "required",
+    "optional": "optional",
     "validation.required": "this field is required",
     "validation.email": "email is not in a correct form.",
     "validation.min": "must enter the min limit",

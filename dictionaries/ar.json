@@ -101,6 +101,8 @@
     "message": "الرسالة",
     "phone": "الهاتف",
     "required": "مطلوب",
+    "mandatory": "مطلوب",
+    "optional": "اختياري",
     "send": "ارسال",
     "validation.required": "الحقل مطلوب",
     "validation.email": "البريد الإلكتروني غير صحيح",

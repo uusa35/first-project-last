@@ -6,8 +6,8 @@ import { Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { isNull } from "lodash";
 import { showWarningToastMessage } from "@/redux/slices/toastMessageSlice";
-import LoginModal from "@/components/models/LoginModal";
-import RegisterModal from "@/components/models/RegisterModal";
+import LoginModal from "@/src/components/modals/LoginModal";
+import RegisterModal from "@/src/components/modals/RegisterModal";
 
 type Props = {
   children: ReactNode | undefined;
