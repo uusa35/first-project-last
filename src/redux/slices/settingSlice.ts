@@ -8,6 +8,8 @@ type Props = {
   showForgetPasswordModal: boolean;
   showVerificationModal: boolean;
   showChangePasswordModal: boolean;
+  showProductModal: { id: number | string | null, enabled: boolean };
+  showCartMenu: boolean;
   sideMenuOpen: boolean;
   session_id: string;
 };
@@ -20,6 +22,8 @@ const initialState: Props = {
   showForgetPasswordModal: false,
   showVerificationModal: false,
   showChangePasswordModal: false,
+  showProductModal: { id: null, enabled: false },
+  showCartMenu: false,
   session_id: ``,
 };
 
@@ -75,6 +79,8 @@ export const settingSlice = createSlice({
         showForgetPasswordModal: false,
         showVerificationModal: false,
         sideMenuOpen: false,
+        showProductModal: { id: null, enabled: false },
+        showCartMenu: false,
       };
     },
     toggleRegisterModal: (
@@ -91,6 +97,8 @@ export const settingSlice = createSlice({
         showForgetPasswordModal: false,
         showVerificationModal: false,
         sideMenuOpen: false,
+        showProductModal: { id: null, enabled: false },
+        showCartMenu: false,
       };
     },
     toggleForgetPasswordModal: (
@@ -107,6 +115,8 @@ export const settingSlice = createSlice({
         showRegisterModal: false,
         showVerificationModal: false,
         sideMenuOpen: false,
+        showProductModal: { id: null, enabled: false },
+        showCartMenu: false,
       };
     },
     toggleVerficationModal: (
@@ -123,6 +133,8 @@ export const settingSlice = createSlice({
         showRegisterModal: false,
         showForgetPasswordModal: false,
         sideMenuOpen: false,
+        showProductModal: { id: null, enabled: false },
+        showCartMenu: false,
       };
     },
     toggleChangePasswordModal: (
@@ -140,6 +152,8 @@ export const settingSlice = createSlice({
         showRegisterModal: false,
         showForgetPasswordModal: false,
         sideMenuOpen: false,
+        showProductModal: { id: null, enabled: false },
+        showCartMenu: false,
       };
     },
     toggleSideMenu: (
@@ -148,12 +162,59 @@ export const settingSlice = createSlice({
     ) => {
       return {
         ...state,
+        sideMenuOpen:
+          action.payload === undefined ? !state.sideMenuOpen : action.payload,
         showVerificationModal: false,
         showLoginModal: false,
         showRegisterModal: false,
         showForgetPasswordModal: false,
-        sideMenuOpen:
-          action.payload === undefined ? !state.sideMenuOpen : action.payload,
+        showProductModal: { id: null, enabled: false },
+        showCartMenu: false,
+      };
+    },
+    showProductModal: (
+      state: typeof initialState,
+      action: PayloadAction<number | string>
+    ) => {
+      return {
+        ...state,
+        showProductModal: { id: action.payload, enabled: true },
+        showVerificationModal: false,
+        showLoginModal: false,
+        showRegisterModal: false,
+        showForgetPasswordModal: false,
+        sideMenuOpen: false,
+        showCartMenu: false,
+      };
+    },
+    hideProductModal: (
+      state: typeof initialState,
+      action: PayloadAction<void | undefined>
+    ) => {
+      return {
+        ...state,
+        showProductModal: { id: null, enabled: false },
+        showVerificationModal: false,
+        showLoginModal: false,
+        showRegisterModal: false,
+        showForgetPasswordModal: false,
+        sideMenuOpen: false,
+        showCartMenu: false,
+      };
+    },
+    toggleCartMenu: (
+      state: typeof initialState,
+      action: PayloadAction<undefined | boolean>
+    ) => {
+      return {
+        ...state,
+        showCartMenu: action.payload === undefined ? !state.showCartMenu : action.payload,
+        showVerificationModal: false,
+        showLoginModal: false,
+        showRegisterModal: false,
+        showForgetPasswordModal: false,
+        sideMenuOpen: false,
+        showProductModal: { id: null, enabled: false },
       };
     },
   },
@@ -170,4 +231,7 @@ export const {
   toggleVerficationModal,
   toggleChangePasswordModal,
   toggleSideMenu,
+  showProductModal,
+  hideProductModal,
+  toggleCartMenu,
 } = settingSlice.actions;

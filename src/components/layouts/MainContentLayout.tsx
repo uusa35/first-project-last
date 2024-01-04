@@ -21,15 +21,16 @@ import {
 } from "@/redux/api/countryApi";
 import { useLazyGetAreasQuery } from "@/redux/api/areaApi";
 import { resetArea, setArea } from "@/src/redux/slices/areaSlice";
-import LoginModal from "@/components/models/LoginModal";
-import RegisterModal from "@/components/models/RegisterModal";
-import ForgetPasswordModal from "@/components/models/ForgetPasswordModal";
-import VerificationModal from "@/components/models/VerificationModal";
-import ChangePasswordModal from "@/components/models/ChangePasswordModal";
-
+import LoginModal from "@/src/components/modals/LoginModal";
+import RegisterModal from "@/src/components/modals/RegisterModal";
+import ForgetPasswordModal from "@/src/components/modals/ForgetPasswordModal";
+import VerificationModal from "@/src/components/modals/VerificationModal";
+import ChangePasswordModal from "@/src/components/modals/ChangePasswordModal";
 import { AppQueryResult, Area, Country } from "@/src/types/queries";
 import { first } from "lodash";
 import { toggleSideMenu } from "@/src/redux/slices/settingSlice";
+import CartMenu from "@/components/header/CartMenu";
+import ProductModal from "@/src/components/modals/ProductModal";
 
 type Props = {
   children: React.ReactNode;
@@ -124,6 +125,7 @@ const MainContextLayout: FC<Props> = ({
     if (params?.country === country_code) {
       triggerGetAreas(id, false).then((r: any) => {
         if (r && r.data && r.data.success && r.data.data) {
+          console.log("areas FromMainContent ========>", r.data.data);
           const serverArea: Area | undefined = first(r.data.data);
           // if no area // if area.country.id !== currrent country
           if (
@@ -152,8 +154,9 @@ const MainContextLayout: FC<Props> = ({
         <ForgetPasswordModal />
         <VerificationModal />
         <ChangePasswordModal />
+        <ProductModal />
       </Suspense>
-      <div className="relative isolate overflow-hidden pt-14 py-8">
+      <div className='relative isolate overflow-hidden pt-14 py-8'>
         {children}
       </div>
       <AppFooter />

@@ -8,6 +8,8 @@ import { Locale, countriesList } from "@/src/types";
 import Link from "next/link";
 import { appLinks } from "@/src/links";
 import { useParams, useRouter } from "next/navigation";
+import { useAppDispatch } from "@/src/redux/hooks";
+import { showProductModal } from "@/src/redux/slices/settingSlice";
 
 type Props = {
   product: Product;
@@ -18,6 +20,7 @@ export default function ({ product }: Props) {
   const params: { lang: Locale["lang"]; country?: countriesList } | any =
     useParams!();
   const { lang } = params;
+  const dispatch = useAppDispatch();
 
   const handleClick = () =>
     router.push(
@@ -51,26 +54,22 @@ export default function ({ product }: Props) {
             </div>
 
             {/* offer type */}
-            <Link
-              href={appLinks.offer(
-                lang,
-                params?.country,
-                product.id.toString(),
-                product.name
-              )}
+            <button
+              // href={appLinks.offer(
+              //   lang,
+              //   params?.country,
+              //   product.id.toString(),
+              //   product.name
+              // )}
+              onClick={() => dispatch(showProductModal(product.id))}
               className='flex items-center gap-x-1 rounded-full bg-[#232323] text-xs text-white px-2 py-px pt-1 w-fit'>
               <Flash />
               <p>Flash Offer</p>
-            </Link>
+            </button>
           </div>
         </div>
-        <Link
-          href={appLinks.offer(
-            lang,
-            params?.country,
-            product.id.toString(),
-            product.name
-          )}
+        <button
+          onClick={() => dispatch(showProductModal(product.id))}
           className='bg-white -mt-[10%] rounded-lg p-3 relative w-full'>
           <p className='card-title'>{product.name}</p>
           <p className='card-desc'>{product.description}</p>
@@ -78,7 +77,7 @@ export default function ({ product }: Props) {
           <div>
             <p>{product.price}</p>
           </div>
-        </Link>
+        </button>
       </div>
     </div>
   );

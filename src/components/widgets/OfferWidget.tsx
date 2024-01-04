@@ -5,11 +5,16 @@ import Image from "next/image";
 import React, { useContext } from "react";
 import FavouriteWidget from "@/components/widgets/FavouriteWidget";
 import { Locale, countriesList } from "@/src/types";
-import { MainContext } from "../layouts/MainContentLayout";
+import { MainContext } from "@/layouts/MainContentLayout";
 import Link from "next/link";
 import { appLinks } from "@/src/links";
-import { useAppSelector } from "@/src/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
 import { useParams } from "next/navigation";
+import {
+  hideProductModal,
+  showProductModal,
+} from "@/src/redux/slices/settingSlice";
+import { useLazyGetProductQuery } from "@/src/redux/api/productApi";
 
 type Props = {
   product: Product;
@@ -17,19 +22,35 @@ type Props = {
 
 export default function OfferWidget({ product }: Props) {
   const trans: { [key: string]: string } = useContext(MainContext);
+  const dispatch = useAppDispatch();
   const params: { lang: Locale["lang"]; country?: countriesList } | any =
     useParams!();
   const { lang } = params;
+  const [triggerGetProduct, { data, isSuccess, isFetching }] =
+    useLazyGetProductQuery();
+
+  const handleClick = async (id: number) => {
+    await triggerGetProduct(id, true).then((r) => {
+      if (r.data && r.data.success) {
+        dispatch(showProductModal(id));
+      } else {
+        dispatch(hideProductModal());
+      }
+    });
+  };
+
   return (
     <div>
       <div className='relative rtl:text-right ltr:text-left'>
-        <Link
-          href={appLinks.offer(
-            lang,
-            params?.country,
-            product.id.toString(),
-            product.name
-          )}>
+        <div
+          onClick={() => handleClick(product.id)}
+          // href={appLinks.offer(
+          //   lang,
+          //   params?.country,
+          //   product.id.toString(),
+          //   product.name
+          // )}
+        >
           <Image
             alt={product.name || ""}
             src={product.image}
@@ -37,7 +58,7 @@ export default function OfferWidget({ product }: Props) {
             height={1000}
             className='w-full h-auto aspect-[2/1] object-cover rounded-lg'
           />
-        </Link>
+        </div>
         <div className='w-full h-auto aspect-[2/1] absolute bg-black bg-opacity-20 top-0 bottom-0 left-0 right-0 rounded-lg py-3 px-2'>
           <div className='flex flex-col justify-between items-end h-[80%]'>
             <div className='flex justify-between items-center w-full'>
@@ -62,13 +83,7 @@ export default function OfferWidget({ product }: Props) {
             </div>
           </div>
         </div>
-        <Link
-          href={appLinks.offer(
-            lang,
-            params?.country,
-            product.id.toString(),
-            product.name
-          )}>
+        <div onClick={() => handleClick(product.id)}>
           <div className='bg-white -mt-[10%] rounded-lg p-3 relative w-full space-y-2'>
             <p className='card-title'>{product.name}</p>
             <p className='card-desc'>{product.description}</p>
@@ -82,7 +97,7 @@ export default function OfferWidget({ product }: Props) {
               <p className='line-through'>{product.price}</p>
             </div>
           </div>
-        </Link>
+        </div>
       </div>
     </div>
   );

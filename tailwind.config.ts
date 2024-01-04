@@ -16,8 +16,8 @@ const config: Config = {
       },
       colors: {
         "picks-dark": "#02C9C0",
-        "picks-light": "#02C9C0",
-        "picks-medium": "#80B49C",
+        "picks-light": "#3be3db",
+        "picks-medium": "#22a8a2",
         "picks-green": "#E6F0EB",
         "picks-gray": "#F3F5F6",
         "picks-text-gray": "#6E7887",

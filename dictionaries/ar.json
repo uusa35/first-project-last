@@ -101,6 +101,8 @@
     "message": "الرسالة",
     "phone": "الهاتف",
     "required": "مطلوب",
+    "mandatory": "مطلوب",
+    "optional": "اختياري",
     "send": "ارسال",
     "validation.required": "الحقل مطلوب",
     "validation.email": "البريد الإلكتروني غير صحيح",
@@ -315,10 +317,9 @@
     "rating_and_reviews": "التقيمات والتعليقات",
     "search_in_menu": "البحث في القائمة",
     "full_menu": "القائمة",
-    "why_us":"فلماذا",
-    "choose":"تختارنا",
-    "us":"؟",
-    "learn_about_the_most_important_features_of_the_Picks_app":"تعرف على أهم مميزات تطبيق بيكس"
-
+    "ratings": "التقييمات",
+    "hide": "اخفاء",
+    "show_more": "إظهار المزيد",
+    "off": "خصم"
   }
 }

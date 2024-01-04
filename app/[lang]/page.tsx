@@ -6,7 +6,7 @@ import { cookies } from "next/headers";
 import { AppQueryResult, Country } from "@/types/queries";
 import { getCountryCookie, getCountryNameCookie } from "@/mainApp/actions";
 import LandingPageContent from "@/src/components/home/landing/LandingPageContent";
-import LoginModal from "@/src/components/models/LoginModal";
+import LoginModal from "@/src/components/modals/LoginModal";
 
 type Props = {
   params: { lang: Locale["lang"] };

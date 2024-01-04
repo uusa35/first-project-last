@@ -21,7 +21,7 @@ export default async function ({ params: { lang, country, id } }: Props) {
 
   if (!vendor || !vendor.data.vendor) notFound();
   const { logo, store_name, description, image, category } = vendor.data.vendor;
-  console.log("vendor====>", vendor.data.items);
+
   return (
     <MainContextLayout trans={trans}>
       <div className='mt-8 px-4'>
@@ -35,7 +35,10 @@ export default async function ({ params: { lang, country, id } }: Props) {
                 {category}
               </p>
             </div>
-            <RatingAndReviewsCard />
+            <RatingAndReviewsCard
+              rate={vendor.data.vendor.rate}
+              ratings={vendor.data.vendor.ratings}
+            />
           </div>
           <SwitchDeliveryPickup />
         </div>
