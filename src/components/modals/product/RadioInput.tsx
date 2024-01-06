@@ -28,19 +28,22 @@ export default function ({ group }: { group: any }) {
         <legend className='sr-only'>Notification method</legend>
         <div className='space-y-4'>
           {group.choices.map((c: any) => (
-            <div key={c.id} className='flex items-center'>
-              <input
-                id={c.id}
-                name='notification-method'
-                type='radio'
-                defaultChecked={c.id === "email"}
-                className='h-4 w-4 border-gray-300 text-picks-dark focus:ring-picks-dark'
-              />
-              <label
-                htmlFor={c.id}
-                className='ml-3 block text-sm font-medium leading-6 text-gray-900'>
-                {c.name}
-              </label>
+            <div key={c.id} className='flex justify-between items-center'>
+              <div>
+                <input
+                  id={c.id}
+                  name='notification-method'
+                  type='radio'
+                  defaultChecked={c.id === "email"}
+                  className='h-4 w-4 border-gray-300 text-picks-dark focus:ring-picks-dark'
+                />
+                <label
+                  htmlFor={c.id}
+                  className='ml-3 block text-sm font-medium leading-6 text-gray-900'>
+                  {c.name}
+                </label>
+              </div>
+              <div>{c.price}</div>
             </div>
           ))}
         </div>
