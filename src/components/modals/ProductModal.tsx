@@ -1,13 +1,10 @@
 "use client";
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useContext, useEffect, useState } from "react";
+import { Fragment, useContext } from "react";
 import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
 import {
   enableLoading,
   hideProductModal,
-  toggleForgetPasswordModal,
-  toggleRegisterModal,
-  toggleVerficationModal,
 } from "@/src/redux/slices/settingSlice";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -15,28 +12,13 @@ import {
   showErrorToastMessage,
   showSuccessToastMessage,
 } from "@/src/redux/slices/toastMessageSlice";
-import { setAuth } from "@/app/actions";
 import { useRouter } from "next/navigation";
-import {
-  useLazyLoginQuery,
-  useLazyResendOtpQuery,
-} from "@/src/redux/api/authApi";
 import { MainContext } from "@/components/layouts/MainContentLayout";
 import LoadingSpinner from "@/components/LoadingSpinner";
-import { AppQueryResult, Country, Product } from "@/src/types/queries";
-import { useGetCountriesQuery } from "@/src/redux/api/countryApi";
+import { AppQueryResult, Product } from "@/src/types/queries";
 import Slider from "react-slick";
-import {
-  EyeIcon,
-  HeartIcon,
-  ShareIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
-import { setAuthentication } from "@/src/redux/slices/authSlice";
-import {
-  useGetProductQuery,
-  useLazyGetProductQuery,
-} from "@/src/redux/api/productApi";
+import { HeartIcon, ShareIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useGetProductQuery } from "@/src/redux/api/productApi";
 import Image from "next/image";
 import { map } from "lodash";
 import CheckBoxInput from "@/components/modals/product/CheckBoxInput";
