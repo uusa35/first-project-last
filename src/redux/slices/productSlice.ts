@@ -1,6 +1,6 @@
 import { Country, Product } from '@/types/queries';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { concat, filter, find, identity, isEmpty, isNil, isNull, isUndefined, map, omitBy, remove } from 'lodash';
+import { concat, filter, find, first, identity, isEmpty, isNil, isNull, isUndefined, map, omitBy, remove } from 'lodash';
 
 interface Choice {
   choice_id: number | string;
@@ -10,6 +10,7 @@ interface Choice {
 interface Selection {
   choice_group_id: number | string;
   choices: Choice[];
+  multi?: boolean;
 }
 
 
@@ -63,8 +64,6 @@ export const productSlice = createSlice({
       state: typeof initialState,
       action: PayloadAction<{ group_id: number | string, choice_id: number | string, qty: number, multi: boolean }>
     ) => {
-      // not undefined 
-      // ...(orderType && { 'X-TYPE': orderType })
       const { group_id, choice_id, qty, multi } = action.payload;
       const currentGroup = find(state.selections, (g) => g.choice_group_id === group_id);
       const currentSelections = isUndefined(state.selections) ? [{
@@ -96,38 +95,22 @@ export const productSlice = createSlice({
     },
     removeProductChoice: (
       state: typeof initialState,
-      action: PayloadAction<{ group_id: number | string, choice_id: number | string }>
+      action: PayloadAction<{ group_id: number | string, choice_id: number | string, multi: boolean }>
     ) => {
-      const cleanSelections: any = () => {
-        if (!isUndefined(state.selections)) {
-          const filteredSelections = omitBy(state.selections, isNil);
-          const groupIdFounded = find(filteredSelections, ['choice_group_id', action.payload.group_id]);
-          if (groupIdFounded) {
-            const choiceIdfounded = find(filteredSelections, ['choices.choice_id', action.payload.choice_id]);
-            if (choiceIdfounded) {
-              // choice exists
-              const filteredChoices = remove(groupIdFounded.choices, (c: any) => c.id === action.payload.choice_id);
-              if (filteredChoices.length > 0) {
-                return concat(filteredSelections, {
-                  choice_group_id: action.payload.group_id,
-                  choices: filteredChoices
-                })
-              } else {
-                return map(filteredSelections, (g) => g.choice_group_id !== action.payload.group_id)
-              }
-            } else {
-              return filteredSelections;
-            }
-          } else {
-            return filteredSelections;
+      const { group_id, choice_id, multi } = action.payload;
+      const currentGroup = first(filter(state.selections, (g) => g.choice_group_id === group_id));
+      const currentSelections = currentGroup && currentGroup.multi ?
+        [
+          ...filter(state.selections, (g) => g.choice_group_id !== group_id),
+          currentGroup && currentGroup.multi && {
+            choice_group_id: group_id,
+            choices: filter(currentGroup.choices, (c) => c.choice_id !== choice_id),
+            multi
           }
-        } else {
-          return undefined;
-        }
-      }
+        ] : filter(state.selections, (g) => g.choice_group_id !== group_id);
       return {
         ...state,
-        selections: cleanSelections()
+        selections: currentSelections
       };
     }
   }

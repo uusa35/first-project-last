@@ -92,8 +92,8 @@ export const contactusSchema = yup.object().shape({
 
 export const addToCartSchema = (groups: any, trans: any) => {
   return yup.lazy((values) => {
-    console.log('values from top', values);
-    console.log('groups', groups);
+    // console.log('values from top', values);
+    // console.log('groups', groups);
     // const requiredGroups = filter(groups, (g) => g.selection_type === 'required' || g.selection_type === 'mandatory');
     const groupShape: any = map(groups, (g) => {
       return yup.object().shape({
@@ -111,8 +111,8 @@ export const addToCartSchema = (groups: any, trans: any) => {
       })
     })
     return yup.object().shape({
-      vendor_id: yup.string().required(trans['required']),
-      offer_id: yup.string().required(trans['required']),
+      vendor_id: yup.number().required(trans['required']),
+      offer_id: yup.number().required(trans['required']),
       quantity: yup.number().required(trans['required']),
       groups: yup.array().of(
         yup.object().shape(groupShape)

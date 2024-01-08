@@ -68,7 +68,7 @@ export default function () {
   });
 
   console.log("errors", errors);
-  console.log("getValues", getValues("groups"));
+  console.log("getValues", getValues());
   console.log("state sections", selections);
 
   const settings: any = {
@@ -89,6 +89,10 @@ export default function () {
       dispatch(setProductGroups(data?.data?.groups));
     }
   }, []);
+
+  useEffect(() => {
+    setValue("groups", selections);
+  }, [selections]);
 
   return (
     <Transition appear show={true} as={Fragment}>
