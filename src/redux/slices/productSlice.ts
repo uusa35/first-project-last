@@ -16,12 +16,14 @@ interface Selection {
 
 type Props = {
   id: number | string | null;
+  quantity: number;
   enabled: boolean;
   groups: [];
   selections: Selection[] | undefined;
 };
 const initialState: Props = {
   id: null,
+  quantity: 1,
   enabled: false,
   groups: [],
   selections: undefined
@@ -112,6 +114,24 @@ export const productSlice = createSlice({
         ...state,
         selections: currentSelections
       };
+    },
+    increaseQty: (
+      state: typeof initialState,
+      action: PayloadAction<number>
+    ) => {
+      return {
+        ...state,
+        quantity: state.quantity + 1
+      }
+    },
+    decraseQty: (
+      state: typeof initialState,
+      action: PayloadAction<void>
+    ) => {
+      return {
+        ...state,
+        quantity: state.quantity - 1 > 0 ? state.quantity - 1 : 0
+      }
     }
   }
 });
@@ -121,5 +141,7 @@ export const {
   hideProductModal,
   setProductGroups,
   addProductChoice,
-  removeProductChoice
+  removeProductChoice,
+  increaseQty,
+  decraseQty
 } = productSlice.actions;
