@@ -2,9 +2,12 @@
 import { useContext } from "react";
 import { MainContext } from "@/components/layouts/MainContentLayout";
 import { map } from "lodash";
+import { useAppDispatch } from "@/src/redux/hooks";
+import { addProductChoice } from "@/src/redux/slices/productSlice";
 
 export default function ({ group }: { group: any }) {
   const trans: { [key: string]: string } = useContext(MainContext);
+  const dispatch = useAppDispatch();
   return (
     <div className='py-3'>
       <div className='flex flex-1 justify-between items-center'>
@@ -31,6 +34,16 @@ export default function ({ group }: { group: any }) {
                     id='comments'
                     aria-describedby='comments-description'
                     name={group.id}
+                    onChange={(e) =>
+                      dispatch(
+                        addProductChoice({
+                          group_id: group.id,
+                          choice_id: c.id,
+                          qty: 1,
+                          multi: group.input_type !== "radio",
+                        })
+                      )
+                    }
                     type='checkbox'
                     className='h-4 w-4 rounded border-gray-300 text-picks-dark focus:ring-picks-dark'
                   />

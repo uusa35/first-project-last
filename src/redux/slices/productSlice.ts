@@ -80,10 +80,10 @@ export const productSlice = createSlice({
           ...filter(state.selections, (g) => g.choice_group_id !== group_id),
           {
             choice_group_id: group_id,
-            choices: currentGroup && multi ? [...currentGroup.choices, {
+            choices: currentGroup && multi ? (!find(currentGroup.choices, (c) => c.choice_id === choice_id) ? [...filter(currentGroup.choices, c => c.choice_id !== choice_id), {
               choice_id,
               quantity: qty
-            }] : [{
+            }] : [...filter(currentGroup.choices, c => c.choice_id !== choice_id)]) : [{
               choice_id,
               quantity: qty
             }],
@@ -92,7 +92,7 @@ export const productSlice = createSlice({
         ];
       return {
         ...state,
-        selections: currentSelections
+        selections: filter(currentSelections, (s) => s.choices.length !== 0)
       };
     },
     removeProductChoice: (
