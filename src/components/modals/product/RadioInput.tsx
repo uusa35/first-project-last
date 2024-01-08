@@ -1,7 +1,8 @@
 "use client";
 import { MainContext } from "@/components/layouts/MainContentLayout";
-import { useAppDispatch } from "@/src/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
 import { addProductChoice } from "@/src/redux/slices/productSlice";
+import { pickBy } from "lodash";
 import { useContext } from "react";
 
 const notificationMethods = [
@@ -15,6 +16,10 @@ type Props = {
 export default function ({ group }: Props) {
   const trans: { [key: string]: string } = useContext(MainContext);
   const dispatch = useAppDispatch();
+  const {
+    product: { selections },
+  } = useAppSelector((state) => state);
+  // console.log("selections====>", pickBy(selections, "choices.id"));
   return (
     <div className='py-3'>
       <div className='flex flex-1 justify-between items-center'>

@@ -325,6 +325,11 @@
     "why_us": "so, why",
     "choose": "choose",
     "us": "us?",
-    "learn_about_the_most_important_features_of_the_Picks_app": "learn about the most important features of the Picks app"
+    "learn_about_the_most_important_features_of_the_Picks_app": "learn about the most important features of the Picks app",
+    "add_to_cart": "add to cart",
+    "select_up_to": "select up to",
+    "max": "max",
+    "min": "min",
+    "and": "and"
   }
 }

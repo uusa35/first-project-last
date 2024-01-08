@@ -4,7 +4,9 @@ import { Fragment, useContext, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
 import { enableLoading } from "@/src/redux/slices/settingSlice";
 import {
+  decraseQty,
   hideProductModal,
+  increaseQty,
   setProductGroups,
 } from "@/src/redux/slices/productSlice";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -37,7 +39,7 @@ export default function () {
   const trans: { [key: string]: string } = useContext(MainContext);
   const {
     appSetting: { showProductModal, isLoading, session_id },
-    product: { selections },
+    product: { selections, quantity },
     locale: { lang },
     country: { code },
   } = useAppSelector((state) => state);
@@ -47,7 +49,7 @@ export default function () {
     data: AppQueryResult<Product>;
     isSuccess: boolean;
     isFetching: boolean;
-  }>(63);
+  }>(50);
   const {
     handleSubmit,
     register,
@@ -140,8 +142,9 @@ export default function () {
                     </div>
                   </div>
                 </Dialog.Title>
-
-                <div className=' relative sm:mx-auto overflow-x-auto w-full h-full bg-white  rounded-2xl'>
+                <form
+                  onSubmit={handleSubmit(onSubmit)}
+                  className='relative sm:mx-auto overflow-x-auto w-full h-full bg-white  rounded-2xl'>
                   <LoadingSpinner isLoading={!isSuccess} />
                   {isSuccess && (
                     <div>
@@ -184,38 +187,52 @@ export default function () {
                             </div>
                           </div>
                           <div className='flex flex-col   divide-y divide-gray-200 py-2 '>
-                            <form onSubmit={handleSubmit(onSubmit)}>
-                              {data.data.groups &&
-                                map(data.data.groups, (g: any, i) => (
-                                  <div key={i}>
-                                    {g.input_type === "radio" ? (
-                                      <RadioInput group={g} />
-                                    ) : (
-                                      <CheckBoxInput group={g} />
-                                    )}
-                                  </div>
-                                ))}
-                              <button type='submit' className='btn-default'>
-                                submitttt
-                              </button>
-                            </form>
+                            {data.data.groups &&
+                              map(data.data.groups, (g: any, i) => (
+                                <div key={i}>
+                                  {g.input_type === "radio" ? (
+                                    <RadioInput group={g} />
+                                  ) : (
+                                    <CheckBoxInput group={g} />
+                                  )}
+                                </div>
+                              ))}
                           </div>
                         </div>
                       </div>
                     </div>
                   )}
                   {/* footer */}
-                  <div
-                    className={`fixed bottom-0 md:-bottom-10 w-full flex flex-row justify-between items-center   rounded-b-2xl p-4 border-t border-gray-200 bg-white`}>
-                    <div className={`flex flex-row gap-x-4`}>
-                      <div>+</div>
-                      <div>1</div>
-                      <div>-</div>
+                  {isSuccess && (
+                    <div
+                      className={`fixed bottom-0 md:-bottom-10 w-full flex flex-row justify-between items-center   rounded-b-2xl p-4 border-t border-gray-200 bg-white`}>
+                      <div className={`flex flex-row gap-x-2`}>
+                        <button
+                          disabled={quantity === 0}
+                          onClick={() => dispatch(decraseQty())}
+                          className={`${
+                            quantity === 0 && `opacity-60`
+                          } bg-picks-dark  flex justify-center items-center text-white w-6 h-6 rounded-full`}>
+                          -
+                        </button>
+                        <div className='flex justify-center items-center text-black w-6 h-6 rounded-full'>
+                          {quantity}
+                        </div>
+                        <button
+                          onClick={() => dispatch(increaseQty())}
+                          disabled={quantity === data.data.stock}
+                          className={`${
+                            quantity === data.data.stock && `opacity-60`
+                          } bg-picks-dark  flex justify-center items-center text-white w-6 h-6 rounded-full`}>
+                          +
+                        </button>
+                      </div>
+                      <button className='btn btn-default' type={"submit"}>
+                        {trans.add_to_cart}
+                      </button>
                     </div>
-                    <button className='btn btn-default'>add to cart</button>
-                  </div>
-                </div>
-                {/* footer  */}
+                  )}
+                </form>
               </Dialog.Panel>
             </Transition.Child>
           </div>

@@ -117,7 +117,7 @@ export const productSlice = createSlice({
     },
     increaseQty: (
       state: typeof initialState,
-      action: PayloadAction<number>
+      action: PayloadAction<void>
     ) => {
       return {
         ...state,
