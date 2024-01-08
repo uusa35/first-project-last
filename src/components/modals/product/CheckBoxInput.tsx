@@ -1,13 +1,17 @@
 "use client";
 import { useContext } from "react";
 import { MainContext } from "@/components/layouts/MainContentLayout";
-import { map } from "lodash";
-import { useAppDispatch } from "@/src/redux/hooks";
+import { filter, flatten, indexOf, map, pick, pickBy } from "lodash";
+import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
 import { addProductChoice } from "@/src/redux/slices/productSlice";
 
 export default function ({ group }: { group: any }) {
   const trans: { [key: string]: string } = useContext(MainContext);
   const dispatch = useAppDispatch();
+  const {
+    product: { selections },
+  } = useAppSelector((state) => state);
+
   return (
     <div className='py-3'>
       <div className='flex flex-1 justify-between items-center'>
@@ -45,6 +49,17 @@ export default function ({ group }: { group: any }) {
                       )
                     }
                     type='checkbox'
+                    checked={
+                      indexOf(
+                        map(
+                          flatten(
+                            map(filter(selections, "choices"), "choices")
+                          ),
+                          "choice_id"
+                        ),
+                        c.id
+                      ) >= 0
+                    }
                     className='h-4 w-4 rounded border-gray-300 text-picks-dark focus:ring-picks-dark'
                   />
                 </div>

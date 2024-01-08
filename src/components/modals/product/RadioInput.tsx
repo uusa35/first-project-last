@@ -2,7 +2,7 @@
 import { MainContext } from "@/components/layouts/MainContentLayout";
 import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
 import { addProductChoice } from "@/src/redux/slices/productSlice";
-import { pickBy } from "lodash";
+import { filter, flatten, indexOf, map, pickBy } from "lodash";
 import { useContext } from "react";
 
 const notificationMethods = [
@@ -56,7 +56,15 @@ export default function ({ group }: Props) {
                   name={group.id}
                   value={c.id}
                   type='radio'
-                  defaultChecked={c.id === "email"}
+                  defaultChecked={
+                    indexOf(
+                      map(
+                        flatten(map(filter(selections, "choices"), "choices")),
+                        "choice_id"
+                      ),
+                      c.id
+                    ) >= 0
+                  }
                   className='h-4 w-4 border-gray-300 text-picks-dark focus:ring-picks-dark'
                 />
                 <label
