@@ -84,7 +84,7 @@ export default function () {
 
   const onSubmit: SubmitHandler<Inputs> = async (body) => {
     // let auth = await getAuth();
-    console.log("jjj", auth.user?.type);
+
     dispatch(enableLoading());
     await triggerVerifiy(
       {
@@ -95,7 +95,6 @@ export default function () {
       },
       false
     ).then((r: any) => {
-      // console.log({ r });
       if (r && r.error?.data) {
         dispatch(
           showErrorToastMessage({
@@ -130,7 +129,7 @@ export default function () {
   //   setValues("code", enteredOtp);
   // };
 
-  console.log({ errors }, auth.user?.type);
+  
 
   const ResendOtp = async () => {
     // let auth = await getAuth();
@@ -158,64 +157,60 @@ export default function () {
 
   return (
     <Transition appear show={showVerificationModal} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={closeModal}>
+      <Dialog as='div' className='relative z-10' onClose={closeModal}>
         <Transition.Child
           as={Fragment}
-          enter="ease-out duration-300"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="ease-in duration-200"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-          <div className="fixed inset-0 bg-black/25" />
+          enter='ease-out duration-300'
+          enterFrom='opacity-0'
+          enterTo='opacity-100'
+          leave='ease-in duration-200'
+          leaveFrom='opacity-100'
+          leaveTo='opacity-0'>
+          <div className='fixed inset-0 bg-black/25' />
         </Transition.Child>
-        <div className="fixed inset-0 overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4 text-center">
+        <div className='fixed inset-0 overflow-y-auto'>
+          <div className='flex min-h-full items-center justify-center p-4 text-center'>
             <Transition.Child
               as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 scale-95"
-              enterTo="opacity-100 scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 scale-100"
-              leaveTo="opacity-0 scale-95"
-            >
-              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white py-6 text-left align-middle shadow-xl transition-all">
+              enter='ease-out duration-300'
+              enterFrom='opacity-0 scale-95'
+              enterTo='opacity-100 scale-100'
+              leave='ease-in duration-200'
+              leaveFrom='opacity-100 scale-100'
+              leaveTo='opacity-0 scale-95'>
+              <Dialog.Panel className='w-full max-w-md transform overflow-hidden rounded-2xl bg-white py-6 text-left align-middle shadow-xl transition-all'>
                 <Dialog.Title
-                  as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900"
-                >
-                  <div className=" capitalize flex flex-row justify-center items-center border-b border-gray-200 pb-4 text-xl">
+                  as='h3'
+                  className='text-lg font-medium leading-6 text-gray-900'>
+                  <div className=' capitalize flex flex-row justify-center items-center border-b border-gray-200 pb-4 text-xl'>
                     {trans.verification_code}
                     <XMarkIcon
-                      className="absolute ltr:left-4 rtl:right-4 w-6 h-6 text-gray-600 cursor-pointer"
+                      className='absolute ltr:left-4 rtl:right-4 w-6 h-6 text-gray-600 cursor-pointer'
                       onClick={closeModal}
                     />
                   </div>
                 </Dialog.Title>
-                <div className="text-justify mt-10 sm:mx-auto sm:w-full sm:max-w-sm px-5 md:px-0">
+                <div className='text-justify mt-10 sm:mx-auto sm:w-full sm:max-w-sm px-5 md:px-0'>
                   <LoadingSpinner isLoading={isLoading} />
                   <form
                     onSubmit={handleSubmit(onSubmit)}
-                    className={`space-y-4 ${isLoading && "hidden"}`}
-                  >
+                    className={`space-y-4 ${isLoading && "hidden"}`}>
                     <div>
-                      <p className="font-semibold mb-3 text-xl">
+                      <p className='font-semibold mb-3 text-xl'>
                         {trans.verification_code}
                       </p>
-                      <p className="text-picks-text-gray text-base">
+                      <p className='text-picks-text-gray text-base'>
                         {
                           trans.plz_enter_the_6_digits_code_that_was_sent_to_number
                         }
-                        <span className="text-black font-semibold px-1">
+                        <span className='text-black font-semibold px-1'>
                           {auth?.user?.phone_country_code} {auth?.user?.phone}
                         </span>
                       </p>
                     </div>
                     <div>
-                      <div className="mt-5 flex flex-row">
-                        <div className="flex flex-row justify-between items-center gap-x-2">
+                      <div className='mt-5 flex flex-row'>
+                        <div className='flex flex-row justify-between items-center gap-x-2'>
                           <Controller
                             render={({
                               field: { onChange, onBlur, value },
@@ -230,7 +225,7 @@ export default function () {
                                     return onChange(e);
                                   }}
                                   numInputs={6}
-                                  successStyle="success"
+                                  successStyle='success'
                                   inputStyle={{
                                     backgroundColor: "#F5F5F5",
                                     width: "100%",
@@ -251,7 +246,7 @@ export default function () {
                                 />
                               );
                             }}
-                            name="code"
+                            name='code'
                             control={control}
                           />
                         </div>
@@ -277,19 +272,17 @@ export default function () {
 
                     <div>
                       <button
-                        type="submit"
-                        className="flex w-full justify-center btn-default capitalize"
-                      >
+                        type='submit'
+                        className='flex w-full justify-center btn-default capitalize'>
                         {trans.confirm}
                       </button>
                     </div>
                   </form>
-                  <div className="capitalize mt-10 text-center text-sm text-gray-500">
+                  <div className='capitalize mt-10 text-center text-sm text-gray-500'>
                     {trans.didnot_receive_the_code_yet}
                     <button
                       onClick={ResendOtp}
-                      className="capitalize px-2 font-semibold leading-6 text-picks-dark hover:text-gray-500"
-                    >
+                      className='capitalize px-2 font-semibold leading-6 text-picks-dark hover:text-gray-500'>
                       {trans.resend}
                     </button>
                   </div>

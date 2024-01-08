@@ -29,7 +29,7 @@ import { productApi } from "@/redux/api/productApi";
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ['appSetting'],
+  blacklist: ['appSetting', 'product'],
   // whitelist: [
   // ],
   // stateReconciler: hardSet,

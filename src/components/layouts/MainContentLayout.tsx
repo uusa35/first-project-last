@@ -125,7 +125,6 @@ const MainContextLayout: FC<Props> = ({
     if (params?.country === country_code) {
       triggerGetAreas(id, false).then((r: any) => {
         if (r && r.data && r.data.success && r.data.data) {
-          console.log("areas FromMainContent ========>", r.data.data);
           const serverArea: Area | undefined = first(r.data.data);
           // if no area // if area.country.id !== currrent country
           if (

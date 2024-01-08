@@ -1,5 +1,7 @@
 "use client";
 import { MainContext } from "@/components/layouts/MainContentLayout";
+import { useAppDispatch } from "@/src/redux/hooks";
+import { addProductChoice } from "@/src/redux/slices/productSlice";
 import { useContext } from "react";
 
 const notificationMethods = [
@@ -7,8 +9,12 @@ const notificationMethods = [
   { id: "sms", title: "Phone (SMS)" },
   { id: "push", title: "Push notification" },
 ];
-export default function ({ group }: { group: any }) {
+type Props = {
+  group: any;
+};
+export default function ({ group }: Props) {
   const trans: { [key: string]: string } = useContext(MainContext);
+  const dispatch = useAppDispatch();
   return (
     <div className='py-3'>
       <div className='flex flex-1 justify-between items-center'>
@@ -29,10 +35,21 @@ export default function ({ group }: { group: any }) {
         <div className='space-y-4'>
           {group.choices.map((c: any) => (
             <div key={c.id} className='flex justify-between items-center'>
-              <div>
+              <div className='flex flex-row justify-start items-center space-x-2'>
                 <input
                   id={c.id}
-                  name='notification-method'
+                  onChange={(e) =>
+                    dispatch(
+                      addProductChoice({
+                        group_id: group.id,
+                        choice_id: c.id,
+                        qty: 1,
+                        multi: group.input_type !== "radio",
+                      })
+                    )
+                  }
+                  name={group.id}
+                  value={c.id}
                   type='radio'
                   defaultChecked={c.id === "email"}
                   className='h-4 w-4 border-gray-300 text-picks-dark focus:ring-picks-dark'

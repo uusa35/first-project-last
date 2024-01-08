@@ -11,6 +11,7 @@ import { toastMessageSlice } from './toastMessageSlice';
 import { areaSlice } from './areaSlice';
 import { countrySlice } from './countrySlice';
 import { authSlice } from './authSlice';
+import { productSlice } from './productSlice';
 
 
 
@@ -20,6 +21,7 @@ export const rootReducer = combineReducers({
   [areaSlice.name]: areaSlice.reducer,
   [countrySlice.name]: countrySlice.reducer,
   [authSlice.name]: authSlice.reducer,
+  [productSlice.name]: productSlice.reducer,
   [toastMessageSlice.name]: toastMessageSlice.reducer,
   [apiSlice.reducerPath]: apiSlice.reducer,
   [categoryApi.reducerPath]: categoryApi.reducer,
