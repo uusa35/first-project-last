@@ -1,4 +1,4 @@
-import { filter, first, map } from "lodash";
+import { filter, find, first, flatten, isEqual, map } from "lodash";
 import * as yup from "yup";
 
 export const loginSchema = yup.object({
@@ -91,32 +91,86 @@ export const contactusSchema = yup.object().shape({
 });
 
 export const addToCartSchema = (groups: any, trans: any) => {
-  return yup.lazy((values) => {
-    // console.log('values from top', values);
-    // console.log('groups', groups);
-    // const requiredGroups = filter(groups, (g) => g.selection_type === 'required' || g.selection_type === 'mandatory');
-    const groupShape: any = map(groups, (g) => {
-      return yup.object().shape({
-        choice_group_id: yup.lazy((values) => {
-          if (g.selection_type === 'mandatory' || g.selection_type === 'required') {
-            return yup.number().oneOf([g.id]).required(trans['required'])
-          } else {
-            return yup.number().oneOf([g.id])
-          }
-        }),
+  const groupShape: any = map(groups, g =>
+    g.selection_type === 'mandatory' || g.selection_type === 'required' ?
+      yup.object().shape({
+        choice_group_id: yup.number().oneOf([g.id]).required(trans['required']),
         choices: yup.array().of(yup.object().shape({
           choice_id: yup.number().oneOf(map(g.choices, 'id')).required(),
           quantity: yup.number().min(g.min_value).max(g.max_value)
         }))
       })
-    })
+      :
+      yup.object().shape({
+        choice_group_id: yup.number().oneOf([g.id]),
+        choices: yup.array().of(yup.object().shape({
+          choice_id: yup.number().oneOf(map(g.choices, 'id')).required(),
+          quantity: yup.number().min(g.min_value).max(g.max_value)
+        }))
+      })
+
+    // yup.object().shape({
+    //   choice_group_id: yup.lazy((values) => {
+    //     if (g.selection_type === 'mandatory' || g.selection_type === 'required') {
+    //       console.log('case 1111111111', g.id)
+    //       return yup.number().oneOf([g.id]).required(trans['required'])
+    //     } else {
+    //       console.log('case 222222222', g.id)
+    //       return yup.number().oneOf([g.id]).optional()
+    //     }
+    //   }),
+    //   choices: yup.array().of(yup.object().shape({
+    //     choice_id: yup.number().oneOf(map(g.choices, 'id')).required(),
+    //     quantity: yup.number().min(g.min_value).max(g.max_value)
+    //   }))
+    // })
+  );
+  const originalAllChoices = map(
+    flatten(
+      map(filter(groups, "choices"), "choices")
+    ),
+    "id"
+  );
+  const originalRequiredChoices = map(
+    flatten(
+      map(filter(filter(groups, g => g.selection_type !== 'optional'), "choices"), "choices")
+    ),
+    "id"
+  )
+  const originalRequiredGroups = map(
+    flatten(
+      filter(groups, g => g.selection_type !== 'optional')
+    ),
+    "id"
+  );
+
+  console.log('originalAllChoices', originalAllChoices);
+  console.log('required gorups', originalRequiredGroups)
+  return yup.lazy((values) => {
+    console.log('values', values);
+    const currentRequiredChoices = map(
+      flatten(
+        map(filter(filter(values.groups, g => g.selection_type !== 'optional'), "choices"), "choices")
+      ),
+      "id"
+    )
     return yup.object().shape({
       vendor_id: yup.number().required(trans['required']),
       offer_id: yup.number().required(trans['required']),
       quantity: yup.number().required(trans['required']),
-      groups: yup.array().of(
-        yup.object().shape(groupShape)
-      )
+      groups: yup.array().of(yup.object().shape({
+        choice_group_id: yup.number(),
+        choices: yup.array().of(yup.object().shape({
+          // choice_id: yup.string().when('choice_group_id', {}),
+          quantity: yup.number(),
+          choice_id: yup.number().when('choice_group_id', {
+            is: isEqual(originalRequiredChoices, currentRequiredChoices),
+            then: (schema: any) => schema.required(trans['required']),
+            otherwise: (schema: any) => schema.optional(),
+          }),
+        })),
+
+      }))
     });
   }
   )

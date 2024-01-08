@@ -17,7 +17,7 @@ export default function ({ group }: { group: any }) {
       <div className='flex flex-1 justify-between items-center'>
         <div>
           <label className='text-base font-semibold text-gray-900'>
-            {group.name}
+            {group.name} - {group.id}
           </label>
           <p className='text-sm text-gray-400'>
             {trans.select_up_to} {trans.max} {group.max_number} {trans.and}{" "}
@@ -67,7 +67,7 @@ export default function ({ group }: { group: any }) {
                   <label
                     htmlFor='comments'
                     className='font-medium text-gray-900'>
-                    {c.name}
+                    {c.name} - {c.id}
                   </label>{" "}
                   <span className='text-gray-500 hidden'>
                     <span className='sr-only'>New comments </span>
