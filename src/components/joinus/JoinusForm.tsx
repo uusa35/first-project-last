@@ -41,17 +41,14 @@ export default function () {
   const [triggerSendJoinus] = useLazySendJoinusQuery();
   const onSubmit: SubmitHandler<ContactusForm> = async (body) => {
     dispatch(enableLoading());
-    await triggerSendJoinus(body)
-      .then((r: any) => {
-        if (r && r.data && r.data.message) {
-          dispatch(showSuccessToastMessage({ content: r.data.message }));
-        } else if (r && r.error && r.error.data) {
-          dispatch(showErrorToastMessage({ content: r.error.data.message }));
-        }
-      })
-      .then(() => {
+    await triggerSendJoinus(body).then((r: any) => {
+      if (r && r.data && r.data.message) {
+        dispatch(showSuccessToastMessage({ content: r.data.message }));
         reset();
-      });
+      } else if (r && r.error && r.error.data) {
+        dispatch(showErrorToastMessage({ content: r.error.data.message }));
+      }
+    });
   };
   return (
     <>
