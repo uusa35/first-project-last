@@ -64,9 +64,9 @@ export const apiSlice = createApi({
         validateStatus: (response, result) => result.status == 200 && result.success,
       }),
     }),
-    sendResturantReq: builder.query<Setting, ContactusForm>({
+    sendJoinus: builder.query<Setting, ContactusForm>({
       query: (body) => ({
-        url: `setting`,
+        url: `restaurant-request`,
         body,
         method: 'post',
         validateStatus: (response, result) => result.status == 200 && result.success,
@@ -77,5 +77,5 @@ export const apiSlice = createApi({
 
 export const {
   useLazySendContactusQuery,
-  useLazySendResturantReqQuery
+  useLazySendJoinusQuery
 } = apiSlice;

@@ -23,7 +23,7 @@ import Slider from "react-slick";
 import { HeartIcon, ShareIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useGetProductQuery } from "@/src/redux/api/productApi";
 import Image from "next/image";
-import { filter, get, map } from "lodash";
+import { filter, get, keys, map, reduce, values } from "lodash";
 import CheckBoxInput from "@/components/modals/product/CheckBoxInput";
 import RadioInput from "@/components/modals/product/RadioInput";
 import { addToCartSchema } from "@/src/validations";
@@ -187,10 +187,12 @@ export default function () {
                             </div>
                           </div>
                           <div className='flex flex-col   divide-y divide-gray-200 py-2 '>
-                            <div>{get(errors, "groups.message")}</div>
-                            <div>{get(errors, "groups.choices.min")}</div>
-                            <div>{get(errors, "groups.choices.max")}</div>
-                            <h1>testing</h1>
+                            <ul className='flex flex-col gap-y-2 text-red-700'>
+                              {map(errors, (v) => (
+                                <li>{v.message}</li>
+                              ))}
+                            </ul>
+
                             {data.data.groups &&
                               map(data.data.groups, (g: any, i) => (
                                 <div key={i}>

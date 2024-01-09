@@ -3,7 +3,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
 import { contactusSchema } from "@/src/validations";
-import { useLazySendContactusQuery } from "@/src/redux/api";
+import { useLazySendJoinusQuery } from "@/src/redux/api";
 import { ContactusForm } from "@/src/types";
 import { enableLoading } from "@/src/redux/slices/settingSlice";
 import {
@@ -38,11 +38,10 @@ export default function () {
     },
   });
   const dispatch = useAppDispatch();
-  const [triggerSendContactus] = useLazySendContactusQuery();
+  const [triggerSendJoinus] = useLazySendJoinusQuery();
   const onSubmit: SubmitHandler<ContactusForm> = async (body) => {
-    console.log("body", body);
     dispatch(enableLoading());
-    await triggerSendContactus(body)
+    await triggerSendJoinus(body)
       .then((r: any) => {
         if (r && r.data && r.data.message) {
           dispatch(showSuccessToastMessage({ content: r.data.message }));
