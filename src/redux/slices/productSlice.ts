@@ -11,6 +11,9 @@ interface Selection {
   choice_group_id: number | string;
   choices: Choice[];
   multi?: boolean;
+  required: boolean;
+  min: number;
+  max: number;
 }
 
 
@@ -64,9 +67,9 @@ export const productSlice = createSlice({
     },
     addProductChoice: (
       state: typeof initialState,
-      action: PayloadAction<{ group_id: number | string, choice_id: number | string, qty: number, multi: boolean }>
+      action: PayloadAction<{ group_id: number | string, choice_id: number | string, qty: number, multi: boolean, required: boolean, min: number, max: number }>
     ) => {
-      const { group_id, choice_id, qty, multi } = action.payload;
+      const { group_id, choice_id, qty, multi, required, min, max } = action.payload;
       const currentGroup = find(state.selections, (g) => g.choice_group_id === group_id);
       const currentSelections = isUndefined(state.selections) ? [{
         choice_group_id: group_id,
@@ -74,20 +77,26 @@ export const productSlice = createSlice({
           choice_id,
           quantity: qty
         }],
-        multi
+        multi,
+        required,
+        min,
+        max
       }] :
         [
           ...filter(state.selections, (g) => g.choice_group_id !== group_id),
           {
             choice_group_id: group_id,
+            multi,
+            required,
+            min,
+            max,
             choices: currentGroup && multi ? (!find(currentGroup.choices, (c) => c.choice_id === choice_id) ? [...filter(currentGroup.choices, c => c.choice_id !== choice_id), {
               choice_id,
               quantity: qty
             }] : [...filter(currentGroup.choices, c => c.choice_id !== choice_id)]) : [{
               choice_id,
               quantity: qty
-            }],
-            multi
+            }]
           }
         ];
       return {
@@ -97,9 +106,9 @@ export const productSlice = createSlice({
     },
     removeProductChoice: (
       state: typeof initialState,
-      action: PayloadAction<{ group_id: number | string, choice_id: number | string, multi: boolean }>
+      action: PayloadAction<{ group_id: number | string, choice_id: number | string, multi: boolean, required: boolean, min: number, max: number }>
     ) => {
-      const { group_id, choice_id, multi } = action.payload;
+      const { group_id, choice_id, multi, required, min, max } = action.payload;
       const currentGroup = first(filter(state.selections, (g) => g.choice_group_id === group_id));
       const currentSelections = currentGroup && currentGroup.multi ?
         [
@@ -107,7 +116,10 @@ export const productSlice = createSlice({
           currentGroup && currentGroup.multi && {
             choice_group_id: group_id,
             choices: filter(currentGroup.choices, (c) => c.choice_id !== choice_id),
-            multi
+            multi,
+            required,
+            min,
+            max,
           }
         ] : filter(state.selections, (g) => g.choice_group_id !== group_id);
       return {

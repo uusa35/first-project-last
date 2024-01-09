@@ -45,6 +45,9 @@ export default function ({ group }: { group: any }) {
                           choice_id: c.id,
                           qty: 1,
                           multi: group.input_type !== "radio",
+                          required: group.selection_type !== 'optional',
+                          min: group.min_number,
+                          max : group.max_number
                         })
                       )
                     }

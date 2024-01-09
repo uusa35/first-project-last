@@ -26,7 +26,7 @@ import Image from "next/image";
 import { filter, map } from "lodash";
 import CheckBoxInput from "@/components/modals/product/CheckBoxInput";
 import RadioInput from "@/components/modals/product/RadioInput";
-import { addToCartSchema, contactusSchema } from "@/src/validations";
+import { addToCartSchema } from "@/src/validations";
 
 type Inputs = {
   phone: string;
@@ -87,7 +87,7 @@ export default function () {
   };
 
   useEffect(() => {
-    if (isSuccess) {
+    if (isSuccess && data?.data?.groups) {
       dispatch(setProductGroups(data?.data?.groups));
     }
   }, []);
@@ -95,6 +95,8 @@ export default function () {
   useEffect(() => {
     setValue("groups", selections);
   }, [selections]);
+
+  console.log("isSuccdss", isSuccess);
 
   return (
     <Transition appear show={true} as={Fragment}>

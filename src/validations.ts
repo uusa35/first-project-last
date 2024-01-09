@@ -1,4 +1,4 @@
-import { filter, find, first, flatten, isEqual, map } from "lodash";
+import { filter, find, first, flatten, isEmpty, isEqual, map } from "lodash";
 import * as yup from "yup";
 
 export const loginSchema = yup.object({
@@ -91,40 +91,6 @@ export const contactusSchema = yup.object().shape({
 });
 
 export const addToCartSchema = (groups: any, trans: any) => {
-  const groupShape: any = map(groups, g =>
-    g.selection_type === 'mandatory' || g.selection_type === 'required' ?
-      yup.object().shape({
-        choice_group_id: yup.number().oneOf([g.id]).required(trans['required']),
-        choices: yup.array().of(yup.object().shape({
-          choice_id: yup.number().oneOf(map(g.choices, 'id')).required(),
-          quantity: yup.number().min(g.min_value).max(g.max_value)
-        }))
-      })
-      :
-      yup.object().shape({
-        choice_group_id: yup.number().oneOf([g.id]),
-        choices: yup.array().of(yup.object().shape({
-          choice_id: yup.number().oneOf(map(g.choices, 'id')).required(),
-          quantity: yup.number().min(g.min_value).max(g.max_value)
-        }))
-      })
-
-    // yup.object().shape({
-    //   choice_group_id: yup.lazy((values) => {
-    //     if (g.selection_type === 'mandatory' || g.selection_type === 'required') {
-    //       console.log('case 1111111111', g.id)
-    //       return yup.number().oneOf([g.id]).required(trans['required'])
-    //     } else {
-    //       console.log('case 222222222', g.id)
-    //       return yup.number().oneOf([g.id]).optional()
-    //     }
-    //   }),
-    //   choices: yup.array().of(yup.object().shape({
-    //     choice_id: yup.number().oneOf(map(g.choices, 'id')).required(),
-    //     quantity: yup.number().min(g.min_value).max(g.max_value)
-    //   }))
-    // })
-  );
   const originalAllChoices = map(
     flatten(
       map(filter(groups, "choices"), "choices")
@@ -143,71 +109,50 @@ export const addToCartSchema = (groups: any, trans: any) => {
     ),
     "id"
   );
-
-  console.log('originalAllChoices', originalAllChoices);
-  console.log('required gorups', originalRequiredGroups)
+  const allOrginalGroups = map(
+    flatten(groups),
+    "id"
+  );
+  // console.log('all original groups', allOrginalGroups);
+  // console.log('originalAllChoices', originalAllChoices);
+  // console.log('required gorups', originalRequiredGroups)
   return yup.lazy((values) => {
-    console.log('values', values);
+    // console.log('values', values);
     const currentRequiredChoices = map(
       flatten(
         map(filter(filter(values.groups, g => g.selection_type !== 'optional'), "choices"), "choices")
       ),
       "id"
     )
+    const currentRequiredGroups = map(
+      flatten(
+        map(filter(values.groups, g => g.selection_type !== 'optional'))
+      ),
+      "id"
+    )
+    // console.log('currentRequiredGroups', currentRequiredGroups);
+    // console.log('currentRequiredChoices', currentRequiredChoices)
+    // console.log('isEqual=====>', isEqual(originalRequiredChoices, currentRequiredChoices))
     return yup.object().shape({
       vendor_id: yup.number().required(trans['required']),
       offer_id: yup.number().required(trans['required']),
       quantity: yup.number().required(trans['required']),
       groups: yup.array().of(yup.object().shape({
-        choice_group_id: yup.number(),
+        choice_group_id: yup.number().oneOf(allOrginalGroups),
         choices: yup.array().of(yup.object().shape({
-          // choice_id: yup.string().when('choice_group_id', {}),
           quantity: yup.number(),
-          choice_id: yup.number().when('choice_group_id', {
-            is: isEqual(originalRequiredChoices, currentRequiredChoices),
-            then: (schema: any) => schema.required(trans['required']),
-            otherwise: (schema: any) => schema.optional(),
-          }),
-        })),
-
+          choice_id: yup.number(),
+        })).when('choice_group_id', (choice_group_id, schema) => {
+          const currentGroup = first(filter(groups, g => g.id === choice_group_id));
+          return !isEmpty(currentGroup) ? schema.min(currentGroup.min_number, trans['min']).max(currentGroup.max_number, trans['max']) : schema;
+        }).when('choice_group_id', (choice_group_id, schema) => {
+          return find(originalRequiredGroups, choice_group_id) ? schema.required(trans['required']) : schema;
+        }),
       }))
     });
   }
   )
 };
-// add to cart
-// "groups": [
-//   {
-//     "choice_group_id": 54,
-//     "choices": [
-//       {
-//         "choice_id": 117,
-//         "quantity": 1
-//       },
-//       {
-//         "choice_id": 116,
-//         "quantity": 1
-//       }
-//     ]
-//   }
-// ]
-
-// "groups": [
-//   {
-//     "id": 33,
-//     "name": "Jensen Reichel DVM",
-//     "min_number": 1,
-//     "max_number": 2,
-//     "selection_type": "mandatory",
-//     "input_type": "meter",
-//     "choices": [
-//       {
-//         "id": 69,
-//         "name": "Rowland Cassin",
-//         "price": 5,
-//         "currency": "EGP",
-//         "status": 1
-//       },
 
 export const ChangePasswordSchema = yup.object({
   phone: yup
