@@ -330,6 +330,8 @@
     "select_up_to": "select up to",
     "max": "max",
     "min": "min",
-    "and": "and"
+    "and": "and",
+    "restaurants": "restaurants",
+    "cuisines" : "cuisines"
   }
 }

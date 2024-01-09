@@ -13,6 +13,7 @@ export const productApi = apiSlice.injectEndpoints({
 
       }),
     }),
+
   }),
 });
 

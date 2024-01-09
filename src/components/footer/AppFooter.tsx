@@ -11,6 +11,8 @@ import AppleStore from "@/appIcons/landing/download_apple_store.svg";
 import AppGallery from "@/appIcons/landing/download_app_gallery.svg";
 import LogoLight from "@/appImages/logo_light.svg";
 import { globalMaxWidth } from "@/utils/helpers";
+import { useGetFooterPagesQuery, useGetFooterUrlsQuery } from "@/src/redux/api";
+import Image from "next/image";
 
 const footerNavigation = {
   shop: [
@@ -110,6 +112,9 @@ export default function () {
   const params: { lang: Locale["lang"]; country?: countriesList } | any =
     useParams!();
   const { lang } = params;
+  const { data: pages, isSuccess } = useGetFooterPagesQuery();
+  const { data: footerUrls, isSuccess: footerUrlsSuccess } =
+    useGetFooterUrlsQuery();
   return (
     <footer
       aria-labelledby='footer-heading'
@@ -192,37 +197,54 @@ export default function () {
                 </ul>
               </div>
               <div>
-                <h3 className='text-sm font-medium text-white'>Company</h3>
+                <h3 className='text-sm font-medium text-white capitalize'>
+                  {trans.restaurants}
+                </h3>
                 <ul role='list' className='mt-6 space-y-6'>
-                  {footerNavigation.company.map((item) => (
-                    <li key={item.name} className='text-sm'>
-                      <Link
-                        href={item.href}
-                        className='text-gray-300 hover:text-white'>
-                        {item.name}
-                      </Link>
-                    </li>
-                  ))}
+                  {isSuccess &&
+                    pages?.data?.restaurants?.map((item: any) => (
+                      <li key={item.name} className='text-sm'>
+                        <Link
+                          href={appLinks.vendor(
+                            lang,
+                            params?.country,
+                            item.id,
+                            item.store_name.en
+                          )}
+                          className='text-gray-300 hover:text-white capitalize'>
+                          {item.store_name[lang]}
+                        </Link>
+                      </li>
+                    ))}
                 </ul>
               </div>
             </div>
             <div className='space-y-12 md:grid md:grid-cols-2 md:gap-8 md:space-y-0'>
               <div>
-                <h3 className='text-sm font-medium text-white'>Account</h3>
+                <h3 className='text-sm font-medium text-white capitalize'>
+                  {trans.cuisines}
+                </h3>
                 <ul role='list' className='mt-6 space-y-6'>
-                  {footerNavigation.account.map((item) => (
-                    <li key={item.name} className='text-sm'>
-                      <a
-                        href={item.href}
-                        className='text-gray-300 hover:text-white'>
-                        {item.name}
-                      </a>
-                    </li>
-                  ))}
+                  {isSuccess &&
+                    pages?.data?.cuisines?.map((item: any) => (
+                      <li key={item.name} className='text-sm'>
+                        <Link
+                          href={appLinks.offers(
+                            lang,
+                            params?.country,
+                            `category_id=${item.id}`
+                          )}
+                          className='text-gray-300 hover:text-white capitalize'>
+                          {item.name[lang]}
+                        </Link>
+                      </li>
+                    ))}
                 </ul>
               </div>
               <div>
-                <h3 className='text-sm font-medium text-white'>Connect</h3>
+                <h3 className='text-sm font-medium text-white capitalize'>
+                  Connect
+                </h3>
                 <ul role='list' className='mt-6 space-y-6'>
                   {footerNavigation.connect.map((item) => (
                     <li key={item.name} className='text-sm'>
@@ -241,15 +263,23 @@ export default function () {
         <div
           className={`mx-auto ${globalMaxWidth} px-4 py-8 mt-8 md:flex md:items-center md:justify-between lg:px-8 border-t border-opacity-20 border-gray-50`}>
           <div className='flex justify-center gap-x-6 md:order-2 '>
-            {navigation.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className='text-gray-400 hover:text-gray-500'>
-                <span className='sr-only'>{item.name}</span>
-                <item.icon className='h-6 w-6' aria-hidden='true' />
-              </a>
-            ))}
+            {footerUrlsSuccess &&
+              footerUrls?.data?.links?.map((item: any) => (
+                <a
+                  key={item.key}
+                  href={item.link}
+                  className='text-gray-400 hover:text-gray-500'>
+                  <span className='sr-only'>{item.name}</span>
+                  <Image
+                    className='h-6 w-6'
+                    src={item.icon}
+                    width={10}
+                    height={10}
+                    aria-hidden='true'
+                    alt={item.name}
+                  />
+                </a>
+              ))}
           </div>
           <div className='mt-8 md:order-1 md:mt-0'>
             <p className='text-center text-xs leading-5 text-gray-500'>

@@ -72,10 +72,26 @@ export const apiSlice = createApi({
         validateStatus: (response, result) => result.status == 200 && result.success,
       }),
     }),
+    getFooterPages: builder.query<any, void>({
+      query: () => ({
+        url: `footer`,
+        method: 'get',
+        validateStatus: (response, result) => result.status == 200 && result.success,
+      }),
+    }),
+    getFooterUrls: builder.query<any, void>({
+      query: () => ({
+        url: `about`,
+        method: 'get',
+        validateStatus: (response, result) => result.status == 200 && result.success,
+      }),
+    }),
   }),
 });
 
 export const {
   useLazySendContactusQuery,
-  useLazySendJoinusQuery
+  useLazySendJoinusQuery,
+  useGetFooterPagesQuery,
+  useGetFooterUrlsQuery
 } = apiSlice;
