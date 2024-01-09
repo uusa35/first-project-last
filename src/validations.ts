@@ -113,9 +113,9 @@ export const addToCartSchema = (originalGroups: any, trans: any) => {
     flatten(originalGroups),
     "id"
   );
-  console.log('all original groups', allOrginalGroups);
+  // console.log('all original groups', allOrginalGroups);
   // console.log('originalAllChoices', originalAllChoices);
-  console.log('required gorups', originalRequiredGroups)
+  // console.log('required gorups', originalRequiredGroups)
   return yup.lazy((values) => {
     // console.log('values', values);
     const currentRequiredChoices = map(
