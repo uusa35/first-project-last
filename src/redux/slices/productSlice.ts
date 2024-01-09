@@ -21,14 +21,14 @@ type Props = {
   id: number | string | null;
   quantity: number;
   enabled: boolean;
-  groups: [];
+  originalGroups: [];
   selections: Selection[] | undefined;
 };
 const initialState: Props = {
   id: null,
   quantity: 1,
   enabled: false,
-  groups: [],
+  originalGroups: [],
   selections: undefined
 };
 
@@ -44,6 +44,8 @@ export const productSlice = createSlice({
         ...state,
         id: action.payload,
         enabled: true,
+        selections: action.payload === state.id ? state.selections : initialState.selections,
+        // originalGroups: action.payload === state.id ? state.originalGroups : initialState.originalGroups
       };
     },
     hideProductModal: (
@@ -56,13 +58,13 @@ export const productSlice = createSlice({
         enabled: false,
       };
     },
-    setProductGroups: (
+    setProductOriginalGroups: (
       state: typeof initialState,
       action: PayloadAction<[]>
     ) => {
       return {
         ...state,
-        groups: action.payload
+        originalGroups: action.payload
       };
     },
     addProductChoice: (
@@ -151,7 +153,7 @@ export const productSlice = createSlice({
 export const {
   showProductModal,
   hideProductModal,
-  setProductGroups,
+  setProductOriginalGroups,
   addProductChoice,
   removeProductChoice,
   increaseQty,

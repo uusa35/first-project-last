@@ -25,7 +25,7 @@ export default function ({ group }: Props) {
       <div className='flex flex-1 justify-between items-center'>
         <div>
           <label className='text-base font-semibold text-gray-900'>
-            {group.name}
+            {group.name} - {group.id}
           </label>
           <p className='text-sm text-gray-400 hidden'>
             Select up to {group.max_number} & min {group.min_number}
@@ -38,8 +38,8 @@ export default function ({ group }: Props) {
       <fieldset className='mt-4'>
         <legend className='sr-only'>Notification method</legend>
         <div className='space-y-4'>
-          {group.choices.map((c: any) => (
-            <div key={c.id} className='flex justify-between items-center'>
+          {map(group.choices, (c: any, i) => (
+            <div key={i} className='flex justify-between items-center'>
               <div className='flex flex-row justify-start items-center space-x-2'>
                 <input
                   id={c.id}
@@ -50,6 +50,9 @@ export default function ({ group }: Props) {
                         choice_id: c.id,
                         qty: 1,
                         multi: group.input_type !== "radio",
+                        required: group.selection_type !== "optional",
+                        min: group.min_number,
+                        max: group.max_number,
                       })
                     )
                   }

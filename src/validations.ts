@@ -90,32 +90,32 @@ export const contactusSchema = yup.object().shape({
   message: yup.string().required().max(9999),
 });
 
-export const addToCartSchema = (groups: any, trans: any) => {
+export const addToCartSchema = (originalGroups: any, trans: any) => {
   const originalAllChoices = map(
     flatten(
-      map(filter(groups, "choices"), "choices")
+      map(filter(originalGroups, "choices"), "choices")
     ),
     "id"
   );
   const originalRequiredChoices = map(
     flatten(
-      map(filter(filter(groups, g => g.selection_type !== 'optional'), "choices"), "choices")
+      map(filter(filter(originalGroups, g => g.selection_type !== 'optional'), "choices"), "choices")
     ),
     "id"
   )
   const originalRequiredGroups = map(
     flatten(
-      filter(groups, g => g.selection_type !== 'optional')
+      filter(originalGroups, g => g.selection_type !== 'optional')
     ),
     "id"
   );
   const allOrginalGroups = map(
-    flatten(groups),
+    flatten(originalGroups),
     "id"
   );
-  // console.log('all original groups', allOrginalGroups);
+  console.log('all original groups', allOrginalGroups);
   // console.log('originalAllChoices', originalAllChoices);
-  // console.log('required gorups', originalRequiredGroups)
+  console.log('required gorups', originalRequiredGroups)
   return yup.lazy((values) => {
     // console.log('values', values);
     const currentRequiredChoices = map(
@@ -143,12 +143,15 @@ export const addToCartSchema = (groups: any, trans: any) => {
           quantity: yup.number(),
           choice_id: yup.number(),
         })).when('choice_group_id', (choice_group_id, schema) => {
-          const currentGroup = first(filter(groups, g => g.id === choice_group_id));
-          return !isEmpty(currentGroup) ? schema.min(currentGroup.min_number, trans['min']).max(currentGroup.max_number, trans['max']) : schema;
+          const currentGroupId = first(filter(allOrginalGroups, g => g === choice_group_id[0]));
+          const currentGroup = first(filter(originalGroups, g => g.id === currentGroupId));
+          return currentGroupId ? schema.min(currentGroup.min_number, trans['min']).max(currentGroup.max_number, trans['max']) : schema;
         }).when('choice_group_id', (choice_group_id, schema) => {
-          return find(originalRequiredGroups, choice_group_id) ? schema.required(trans['required']) : schema;
-        }),
-      }))
+          return find(originalRequiredGroups, choice_group_id[0]) ? schema.required(trans['required']) : schema;
+        })
+      })).when([], (_, schema) => {
+        return originalRequiredGroups.length > 0 ? schema.required(trans['required']) : schema;
+      })
     });
   }
   )

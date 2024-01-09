@@ -7,7 +7,7 @@ import {
   decraseQty,
   hideProductModal,
   increaseQty,
-  setProductGroups,
+  setProductOriginalGroups,
 } from "@/src/redux/slices/productSlice";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -23,7 +23,7 @@ import Slider from "react-slick";
 import { HeartIcon, ShareIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useGetProductQuery } from "@/src/redux/api/productApi";
 import Image from "next/image";
-import { filter, map } from "lodash";
+import { filter, get, map } from "lodash";
 import CheckBoxInput from "@/components/modals/product/CheckBoxInput";
 import RadioInput from "@/components/modals/product/RadioInput";
 import { addToCartSchema } from "@/src/validations";
@@ -39,7 +39,7 @@ export default function () {
   const trans: { [key: string]: string } = useContext(MainContext);
   const {
     appSetting: { showProductModal, isLoading, session_id },
-    product: { selections, quantity },
+    product: { id, selections, quantity, enabled },
     locale: { lang },
     country: { code },
   } = useAppSelector((state) => state);
@@ -49,7 +49,7 @@ export default function () {
     data: AppQueryResult<Product>;
     isSuccess: boolean;
     isFetching: boolean;
-  }>(50);
+  }>(id);
   const {
     handleSubmit,
     register,
@@ -88,7 +88,7 @@ export default function () {
 
   useEffect(() => {
     if (isSuccess && data?.data?.groups) {
-      dispatch(setProductGroups(data?.data?.groups));
+      dispatch(setProductOriginalGroups(data?.data?.groups));
     }
   }, []);
 
@@ -96,10 +96,8 @@ export default function () {
     setValue("groups", selections);
   }, [selections]);
 
-  console.log("isSuccdss", isSuccess);
-
   return (
-    <Transition appear show={true} as={Fragment}>
+    <Transition appear show={enabled} as={Fragment}>
       <Dialog
         as='div'
         className='relative z-50'
@@ -189,6 +187,10 @@ export default function () {
                             </div>
                           </div>
                           <div className='flex flex-col   divide-y divide-gray-200 py-2 '>
+                            <div>{get(errors, "groups.message")}</div>
+                            <div>{get(errors, "groups.choices.min")}</div>
+                            <div>{get(errors, "groups.choices.max")}</div>
+                            <h1>testing</h1>
                             {data.data.groups &&
                               map(data.data.groups, (g: any, i) => (
                                 <div key={i}>
