@@ -31,6 +31,7 @@ import { first } from "lodash";
 import { toggleSideMenu } from "@/src/redux/slices/settingSlice";
 import CartMenu from "@/components/header/CartMenu";
 import ProductModal from "@/src/components/modals/ProductModal";
+import { hideProductModal } from "@/src/redux/slices/productSlice";
 
 type Props = {
   children: React.ReactNode;
@@ -119,6 +120,7 @@ const MainContextLayout: FC<Props> = ({
 
   useEffect(() => {
     dispatch(toggleSideMenu(false));
+    dispatch(hideProductModal());
   }, []);
 
   useEffect(() => {

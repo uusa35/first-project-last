@@ -15,7 +15,7 @@ import {
   showErrorToastMessage,
   showSuccessToastMessage,
 } from "@/src/redux/slices/toastMessageSlice";
-import { useRouter } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { MainContext } from "@/components/layouts/MainContentLayout";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { AppQueryResult, Product } from "@/src/types/queries";
@@ -23,10 +23,13 @@ import Slider from "react-slick";
 import { HeartIcon, ShareIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useGetProductQuery } from "@/src/redux/api/productApi";
 import Image from "next/image";
-import { filter, get, keys, map, reduce, values } from "lodash";
+import { map, capitalize } from "lodash";
 import CheckBoxInput from "@/components/modals/product/CheckBoxInput";
 import RadioInput from "@/components/modals/product/RadioInput";
 import { addToCartSchema } from "@/src/validations";
+import { RWebShare } from "react-web-share";
+import { appLinks } from "@/src/links";
+import { Locale, countriesList } from "@/src/types";
 
 type Inputs = {
   phone: string;
@@ -37,10 +40,13 @@ type Inputs = {
 
 export default function () {
   const trans: { [key: string]: string } = useContext(MainContext);
+  const params: { lang: Locale["lang"]; country?: countriesList } | any =
+    useParams!();
+  const pathName = usePathname()!;
+  const { lang } = params;
   const {
     appSetting: { showProductModal, isLoading, session_id },
     product: { id, selections, quantity, enabled },
-    locale: { lang },
     country: { code },
   } = useAppSelector((state) => state);
   const router = useRouter();
@@ -70,6 +76,8 @@ export default function () {
   });
 
   console.log("errors", errors);
+  console.log("path name", pathName);
+  console.log("router", window.location.hostname);
   // console.log("getValues", getValues());
   // console.log("state sections", selections);
 
@@ -139,7 +147,21 @@ export default function () {
                       <HeartIcon className='w-6 h-6 text-black' />
                     </div>
                     <div>
-                      <ShareIcon className='w-6 h-6 text-black' />
+                      <RWebShare
+                        data={{
+                          text: data?.data?.name,
+                          url: `https://${
+                            window.location.hostname
+                          }${appLinks.vendor(
+                            lang,
+                            params?.country,
+                            data?.data?.vendor?.id?.toString(),
+                            data?.data?.name
+                          )}`,
+                          title: capitalize(trans.picks),
+                        }}>
+                        <ShareIcon className='w-6 h-6 text-black' />
+                      </RWebShare>
                     </div>
                   </div>
                 </Dialog.Title>

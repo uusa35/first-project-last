@@ -5391,6 +5391,11 @@ react-ui-scrollspy@^2.3.0:
   resolved "https://registry.yarnpkg.com/react-ui-scrollspy/-/react-ui-scrollspy-2.3.0.tgz#02c6d578104e5dd20567ea7c8739bd6a80c64290"
   integrity sha512-Z4oEFSdwyHYYWo8deOtKSPvdZXkTUUFSkM/Rnww4jiRlBMyubXf5OBauWC0Y0w/w6VTyMlCuZwRKxrrc5khUFg==
 
+react-web-share@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/react-web-share/-/react-web-share-2.0.2.tgz#ed0f08fd07ec28777b8fc7290bd59f0be78f1410"
+  integrity sha512-bGm1TJc6xtC0MhAnYFsrzT4En7l2oAdLTgCK7nk7b4xGTg3L5gOldiPrmYQ8a/dEXNydgekvOj/tfjduIlIRVA==
+
 react18-input-otp@^1.1.4:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/react18-input-otp/-/react18-input-otp-1.1.4.tgz#5991c4dae6fff9d2dd0384bfc757e183314181be"
