@@ -76,8 +76,6 @@ export default function () {
   });
 
   console.log("errors", errors);
-  console.log("path name", pathName);
-  console.log("router", window.location.hostname);
   // console.log("getValues", getValues());
   // console.log("state sections", selections);
 

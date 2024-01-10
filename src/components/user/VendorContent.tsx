@@ -14,6 +14,7 @@ function classNames(...classes: any) {
 
 export default function ({ products }: { products: any }) {
   const trans: { [key: string]: string } = useContext(MainContext);
+
   return (
     <div className='mx-auto'>
       {/* Product */}

@@ -84,7 +84,9 @@ export default function FlashOffers({ products }: Props) {
       <div className='flex gap-x-2 justify-between'>
         <div className='flex gap-x-1 items-center'>
           <Flash1 className='w-8 h-8' />
-          <p className='text-lg font-semibold'>{trans["️flash_offers"]}</p>
+          <p className='text-lg font-semibold capitalize'>
+            {trans["️flash_offers"]}
+          </p>
         </div>
         <RenderArrows />
       </div>
@@ -92,9 +94,7 @@ export default function FlashOffers({ products }: Props) {
       <div className='my-5'>
         <Slider {...settings} ref={(c) => (refSlider.current = c)}>
           {products &&
-            products.map((itm) => (
-              <OfferWidget product={itm}  key={itm.id} />
-            ))}
+            products.map((itm) => <OfferWidget product={itm} key={itm.id} />)}
         </Slider>
       </div>
 

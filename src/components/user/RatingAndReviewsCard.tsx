@@ -35,6 +35,7 @@ function classNames(...classes: any) {
 export default function ({ rate, ratings }: { rate: any; ratings: any }) {
   const trans: { [key: string]: string } = useContext(MainContext);
   const [showMore, setShowMore] = useState<number>(1);
+  
   return (
     <div className='bg-white'>
       <div className=' w-full py-10 sm:pe-6  lg:grid lg:max-w-7xl lg:grid-cols-12 lg:gap-x-8 lg:pe-8 '>
@@ -72,9 +73,6 @@ export default function ({ rate, ratings }: { rate: any; ratings: any }) {
               </div>
             </div>
 
-            {/* Object.keys(obj).forEach(key => {
-  console.log(key, obj[key]);
-}); */}
             <dl className='col-span-2 space-y-3'>
               {keys(omit(rate, ["avg", "count"])).map((k, i) => (
                 <div key={i} className='flex items-center text-sm'>
@@ -93,7 +91,6 @@ export default function ({ rate, ratings }: { rate: any; ratings: any }) {
                         )}
                         aria-hidden='true'
                       />
-
                       <div className='relative ml-3 flex-1'>
                         <div className='h-3 rounded-full border border-gray-200 bg-gray-100' />
                         {rate[k] > 0 ? (
@@ -107,9 +104,11 @@ export default function ({ rate, ratings }: { rate: any; ratings: any }) {
                       </div>
                     </div>
                   </dt>
-                  <dd className='ml-3 w-10 text-right text-sm tabular-nums text-gray-900'>
-                    {Math.round((rate[k] / rate.count) * 100)}%
-                  </dd>
+                  {rate[k] && rate.count ? (
+                    <dd className='ml-3 w-10 text-right text-sm tabular-nums text-gray-900'>
+                      {Math.round((rate[k] / rate.count) * 100)} %
+                    </dd>
+                  ) : null}
                 </div>
               ))}
             </dl>
@@ -148,13 +147,15 @@ export default function ({ rate, ratings }: { rate: any; ratings: any }) {
           </div>
         </div>
 
-        <div className='col-span-full lg:mt-0'>
-          <button
-            onClick={() => setShowMore(showMore > 1 ? 1 : 2)}
-            className='mt-3 inline-flex btn-gray '>
-            {showMore > 1 ? trans.hide : trans.show_more}
-          </button>
-        </div>
+        {ratings.length > 1 &&  (
+          <div className='col-span-full lg:mt-0'>
+            <button
+              onClick={() => setShowMore(showMore > 1 ? 1 : 2)}
+              className='mt-3 inline-flex btn-gray '>
+              {showMore > 1 ? trans.hide : trans.show_more}
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

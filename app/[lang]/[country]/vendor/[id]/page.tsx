@@ -40,7 +40,7 @@ export default async function ({ params: { lang, country, id } }: Props) {
               ratings={vendor.data.vendor.ratings}
             />
           </div>
-          <SwitchDeliveryPickup />
+          <SwitchDeliveryPickup vendor={vendor.data.vendor} />
         </div>
         {vendor.data.items && vendor.data.items?.length > 0 && (
           <ProductsSlider products={vendor.data.items} title={"big deals"} />
