@@ -56,20 +56,16 @@ export default function () {
       <form
         onSubmit={handleSubmit(onSubmit)}
         className={`max-w-md  ${isLoading && "hidden"}`}>
-        <div className='grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2'>
-          <div>
-            <label
-              htmlFor='first_name'
-              className='block text-sm font-semibold leading-6 text-gray-900 capitalize'>
-              {trans.first_name}
-            </label>
-            <div className='mt-2.5'>
+        <div className='grid grid-cols-1 gap-x-8 gap-y-4 bg-white rounded-xl p-6 border border-gray-100 shadow-sm'>
+          <div className='col-span-full'>
+            <div className=''>
               <input
                 type='text'
                 {...register("first_name")}
                 id='first_name'
                 autoComplete='first_name'
-                className='input-default'
+                className='input-default py-4 capitalize'
+                placeholder={trans.first_name}
               />
             </div>
             <InputError
@@ -77,19 +73,15 @@ export default function () {
               className='mt-2'
             />
           </div>
-          <div>
-            <label
-              htmlFor='last_name'
-              className='block text-sm font-semibold leading-6 text-gray-900 capitalize'>
-              {trans.last_name}
-            </label>
-            <div className='mt-2.5'>
+          <div className='col-span-full'>
+            <div className=''>
               <input
                 type='text'
                 {...register("last_name")}
                 id='last-name'
                 autoComplete='last-name'
-                className={`input-default`}
+                className={`input-default capitalize py-4`}
+                placeholder={trans.last_name}
               />
             </div>
             <InputError
@@ -97,19 +89,15 @@ export default function () {
               className='mt-2'
             />
           </div>
-          <div className='sm:col-span-2'>
-            <label
-              htmlFor='email'
-              className='block text-sm font-semibold leading-6 text-gray-900 capitalize'>
-              {trans.email}
-            </label>
-            <div className='mt-2.5'>
+          <div className='col-span-full'>
+            <div className=''>
               <input
                 type='email'
                 {...register("email")}
                 id='email'
                 autoComplete='email'
-                className={`input-default`}
+                className={`input-default capitalize py-4`}
+                placeholder={trans.email}
               />
             </div>
             <InputError
@@ -117,24 +105,22 @@ export default function () {
               className='mt-2'
             />
           </div>
-          <div className='sm:col-span-2'>
-            <label
-              htmlFor='phone'
-              className='block text-sm font-semibold leading-6 text-gray-900 capitalize'>
-              {trans.phone}
-            </label>
-            <div className='relative mt-2.5'>
-              <div className='absolute inset-y-0 left-0  items-center flex hidden'>
+          {/* phone */}
+          <div className='col-span-full'>
+            <div className='relative'>
+              <div className='absolute inset-y-0 left-0  items-center flex'>
                 <label htmlFor='country' className='sr-only'>
                   Country
                 </label>
                 <select
                   id='country'
                   name='country'
-                  className='hidden h-full rounded-md border-0 bg-transparent bg-none py-0 pl-4 pr-9 text-gray-400 focus:ring-2 focus:ring-inset focus:ring-picks-dark sm:text-sm'>
-                  <option>US</option>
-                  <option>CA</option>
-                  <option>EU</option>
+                  className={
+                    "h-full rounded-md border-0 bg-transparent bg-none py-0 pl-4 pr-9 text-gray-400 focus:ring-2 focus:ring-inset focus:ring-picks-dark sm:text-sm"
+                  }>
+                  <option>Kw (965)</option>
+                  <option>EG (20)</option>
+                  <option>UAE (966)</option>
                 </select>
                 <ChevronDownIcon
                   className='pointer-events-none absolute right-3 top-0 h-full w-5 text-gray-400'
@@ -146,7 +132,8 @@ export default function () {
                 {...register("phone")}
                 id='phone'
                 autoComplete='tel'
-                className={`input-default`}
+                className={`input-default ps-32 capitalize py-4`}
+                placeholder={trans.phone}
               />
             </div>
             <InputError
@@ -154,31 +141,11 @@ export default function () {
               className='mt-2'
             />
           </div>
-          <div className='sm:col-span-2'>
-            <label
-              htmlFor='message'
-              className='block text-sm font-semibold leading-6 text-gray-900 capitalize'>
-              {trans.message}
-            </label>
-            <div className='mt-2.5'>
-              <textarea
-                {...register("message")}
-                id='message'
-                rows={4}
-                className={`input-default`}
-                defaultValue={""}
-              />
-            </div>
-            <InputError
-              message={get(errors, "message.message")}
-              className='mt-2'
-            />
+          <div className='mt-2'>
+            <button type='submit' className='btn-default w-full '>
+              {trans.let_us_talk}
+            </button>
           </div>
-        </div>
-        <div className='mt-10'>
-          <button type='submit' className='btn-default w-1/4 '>
-            {trans.let_us_talk}
-          </button>
         </div>
       </form>
     </>

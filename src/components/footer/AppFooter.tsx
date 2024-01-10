@@ -13,6 +13,9 @@ import LogoLight from "@/appImages/logo_light.svg";
 import { globalMaxWidth } from "@/utils/helpers";
 import { useGetFooterPagesQuery, useGetFooterUrlsQuery } from "@/src/redux/api";
 import Image from "next/image";
+import { useGetAreasQuery } from "@/src/redux/api/areaApi";
+import { map, take } from "lodash";
+import moment from "moment";
 
 const footerNavigation = {
   shop: [
@@ -115,6 +118,7 @@ export default function () {
   const { data: pages, isSuccess } = useGetFooterPagesQuery();
   const { data: footerUrls, isSuccess: footerUrlsSuccess } =
     useGetFooterUrlsQuery();
+  const { data: areas, isSuccess: areasSuccess } = useGetAreasQuery();
   return (
     <footer
       aria-labelledby='footer-heading'
@@ -243,18 +247,27 @@ export default function () {
               </div>
               <div>
                 <h3 className='text-sm font-medium text-white capitalize'>
-                  Connect
+                  {trans.popular_areas}
                 </h3>
                 <ul role='list' className='mt-6 space-y-6'>
-                  {footerNavigation.connect.map((item) => (
-                    <li key={item.name} className='text-sm'>
-                      <a
-                        href={item.href}
-                        className='text-gray-300 hover:text-white'>
-                        {item.name}
-                      </a>
-                    </li>
-                  ))}
+                  {params?.country &&
+                    areasSuccess &&
+                    map(take(areas.data, 4), (item: any, i: number) => (
+                      <li key={i} className='text-sm'>
+                        <Link
+                          href={appLinks.home(lang, params?.country)}
+                          className='text-gray-300 hover:text-white capitalize'>
+                          {item.name}
+                        </Link>
+                      </li>
+                    ))}
+                  <li className='text-sm'>
+                    <Link
+                      href={appLinks.home(lang, params?.country)}
+                      className='text-gray-300 hover:text-white capitalize truncate'>
+                      {trans.more_areas}...
+                    </Link>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -283,7 +296,7 @@ export default function () {
           </div>
           <div className='mt-8 md:order-1 md:mt-0'>
             <p className='text-center text-xs leading-5 text-gray-500'>
-              &copy; 2020 Your Company, Inc. All rights reserved.
+              &copy; {moment().format("Y")} {trans.copy_right}
             </p>
           </div>
         </div>

@@ -332,6 +332,9 @@
     "min": "min",
     "and": "and",
     "restaurants": "restaurants",
-    "cuisines" : "cuisines"
+    "cuisines": "cuisines",
+    "popular_areas": "popular areas",
+    "more_areas": "more areas",
+    "copy_right": "picks, Inc. All rights reserved."
   }
 }
