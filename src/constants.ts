@@ -97,7 +97,7 @@ export const getSlidesToShow = (
 export const categoriesSliderSettings: any = {
   dots: false,
   speed: 500,
-  infinite: false,
+  infinite: true,
   slidesToShow: 7,
   slidesToScroll: 1,
   arrows: true,
@@ -130,7 +130,7 @@ export const categoriesSliderSettings: any = {
 export const adsSliderSettings: any = {
   dots: false,
   speed: 500,
-  infinite: false,
+  infinite: true,
   slidesToShow: 3,
   slidesToScroll: 1,
   arrows: true,
@@ -163,7 +163,7 @@ export const adsSliderSettings: any = {
 export const vendorSliderSettings: any = {
   dots: false,
   speed: 500,
-  infinite: false,
+  infinite: true,
   slidesToShow: 4,
   slidesToScroll: 1,
   arrows: false,
