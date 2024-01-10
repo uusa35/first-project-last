@@ -45,9 +45,9 @@ export default function ({ group }: { group: any }) {
                           choice_id: c.id,
                           qty: 1,
                           multi: group.input_type !== "radio",
-                          required: group.selection_type !== 'optional',
+                          required: group.selection_type !== "optional",
                           min: group.min_number,
-                          max : group.max_number
+                          max: group.max_number,
                         })
                       )
                     }
@@ -66,7 +66,7 @@ export default function ({ group }: { group: any }) {
                     className='h-4 w-4 rounded border-gray-300 text-picks-dark focus:ring-picks-dark'
                   />
                 </div>
-                <div className='ml-3 text-sm leading-6'>
+                <div className='ps-2 text-sm leading-6'>
                   <label
                     htmlFor='comments'
                     className='font-medium text-gray-900'>

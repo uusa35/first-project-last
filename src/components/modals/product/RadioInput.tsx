@@ -68,11 +68,11 @@ export default function ({ group }: Props) {
                       c.id
                     ) >= 0
                   }
-                  className='h-4 w-4 border-gray-300 text-picks-dark focus:ring-picks-dark'
+                  className='h-4 w-4  border-gray-300 text-picks-dark focus:ring-picks-dark'
                 />
                 <label
                   htmlFor={c.id}
-                  className='ml-3 block text-sm font-medium leading-6 text-gray-900'>
+                  className='ps-2 block text-sm font-medium leading-6 text-gray-900'>
                   {c.name}
                 </label>
               </div>

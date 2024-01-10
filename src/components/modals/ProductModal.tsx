@@ -83,6 +83,7 @@ export default function () {
 
   const onSubmit: SubmitHandler<Inputs> = async (body) => {
     console.log("body", body);
+    reset();
     // dispatch(enableLoading());
   };
 
