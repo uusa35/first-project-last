@@ -26,8 +26,8 @@ export default function ({ products }: { products: any }) {
                 <div className='line-clamp-1'>
                   <h1>{trans.full_menu}</h1>
                 </div>
-                <div className='flex flex-row justify-end items-center'>
-                  <div className='relative rounded-md shadow-sm me-4 lg:w-3/5 xl:w-[350px]'>
+                <div className='flex flex-row justify-end items-center w-3/5 sm:w-full max-w-sm '>
+                  <div className='relative rounded-md shadow-sm me-4 w-full '>
                     <div className='pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3'>
                       <MagnifyingGlassIcon
                         className='h-5 w-5 text-gray-400'
