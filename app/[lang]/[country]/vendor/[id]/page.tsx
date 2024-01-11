@@ -23,9 +23,9 @@ export default async function ({ params: { lang, country, id } }: Props) {
   const { logo, store_name, description, image, category } = vendor.data.vendor;
 
   return (
-    <MainContextLayout trans={trans}>
+    <MainContextLayout trans={trans} showMiddleNav={true}>
       <div className='mt-8 px-4'>
-        <Breadcrumbs />
+        <Breadcrumbs title={store_name} />
         <VendorHeader title={store_name} logo={logo} bg={image} />
         <div className='px-4 grid grid-cols-1 md:grid-cols-3 mt-12'>
           <div className='col-span-full lg:col-span-2'>

@@ -27,7 +27,7 @@ export default function ({ products }: { products: any }) {
                   <h1>{trans.full_menu}</h1>
                 </div>
                 <div className='flex flex-row justify-end items-center w-3/5 sm:w-full max-w-sm '>
-                  <div className='relative rounded-md shadow-sm me-4 w-full '>
+                  <div className='relative rounded-full shadow-sm me-4 w-full '>
                     <div className='pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3'>
                       <MagnifyingGlassIcon
                         className='h-5 w-5 text-gray-400'
@@ -38,7 +38,7 @@ export default function ({ products }: { products: any }) {
                       type='text'
                       name='search'
                       id='search'
-                      className='input-default ltr:pl-10 rtl:pr-10 '
+                      className='input-default ltr:pl-10 rtl:pr-10 rounded-full capitalize'
                       placeholder={trans.search_in_menu}
                     />
                   </div>

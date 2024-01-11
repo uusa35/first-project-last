@@ -80,9 +80,9 @@ export default function ({ products, title }: Props) {
   return (
     <div className='my-5'>
       <div className='flex justify-between mb-3'>
-        <p>{title}</p>
+        <p className='capitalize'>{title}</p>
         <div className='flex items-center gap-x-3'>
-          <p>{trans.see_all}</p>
+          <p className='capitalize'>{trans.see_all}</p>
           <RenderArrows />
         </div>
       </div>

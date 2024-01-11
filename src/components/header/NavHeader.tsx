@@ -1,5 +1,12 @@
 "use client";
-import { Fragment, useContext, useEffect, useMemo, useState } from "react";
+import {
+  Fragment,
+  forwardRef,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
@@ -28,6 +35,7 @@ import {
 import { getAuth, getCountryNameCookie, setOrderType } from "@/app/actions";
 import LogoDark from "@/appImages/logo_dark.svg";
 import LogoLight from "@/appImages/logo_light.svg";
+import LogoSmall from "@/appImages/logo_small.png";
 import LogoOnly from "@/appImages/logo_only.svg";
 import ArFlag from "@/appIcons/ar.svg";
 import MarkerImg from "@/appIcons/marker.svg";
@@ -37,7 +45,8 @@ import AppleStore from "@/appIcons/landing/download_apple_store.svg";
 import AppGallery from "@/appIcons/landing/download_app_gallery.svg";
 import { ShoppingBag } from "@mui/icons-material";
 import { ShoppingBagIcon } from "@heroicons/react/20/solid";
-import CartMenu from "./CartMenu";
+import CartMenu from "@/components/header/CartMenu";
+import { Popover } from "@headlessui/react";
 
 type Props = {
   showMiddleNav: boolean;
@@ -54,7 +63,7 @@ export default function ({ showMiddleNav = false }: Props) {
   } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const searchParams: any = useSearchParams!();
   const params: { lang: Locale["lang"]; country?: countriesList } | any =
     useParams!();
   const { lang } = params;
@@ -73,7 +82,6 @@ export default function ({ showMiddleNav = false }: Props) {
       name: trans.offers,
       href: appLinks.offers(lang, country_code, ""),
     },
-    // { name: trans.terms, href: appLinks.terms(lang) },
     { name: trans.aboutus, href: appLinks.aboutus(lang) },
     { name: trans.contactus, href: appLinks.contactus(lang) },
     { name: trans.joinus, href: appLinks.joinus(lang) },
@@ -100,6 +108,7 @@ export default function ({ showMiddleNav = false }: Props) {
       window.removeEventListener("scroll", stickNavbar);
     };
   }, []);
+
   const stickNavbar = () => {
     if (window !== undefined) {
       let windowHeight = window.scrollY;
@@ -123,6 +132,30 @@ export default function ({ showMiddleNav = false }: Props) {
     //   dispatch(toggleRegisterModal());
     // }
   };
+
+  let MyCustomButton = forwardRef<HTMLInputElement, any>(function (props, ref) {
+    return (
+      <div>
+        <div className='pointer-events-auto absolute inset-y-0 left-0 flex items-center pl-3'>
+          <MagnifyingGlassIcon
+            className='h-5 w-5 text-gray-400'
+            aria-hidden='true'
+          />
+        </div>
+        <input
+          type='text'
+          name='search'
+          id='search'
+          // defaultValue={searchParams?.get("search") ?? ""}
+          className='input-default ltr:pl-10 rtl:pr-10 '
+          placeholder={trans.search}
+          ref={ref}
+          {...props}
+          onChange={(e) => console.log("e", e.target.value)}
+        />
+      </div>
+    );
+  });
 
   return (
     <div>
@@ -153,12 +186,18 @@ export default function ({ showMiddleNav = false }: Props) {
             </div>
             <Link
               href={`/${lang}/${country_code ?? ``}`}
-              className='-m-1.5 p-1.5'>
+              className='-m-1.5  p-1.5'>
               <span className='sr-only'>Your Company</span>
               {country_code || isSticky ? (
-                <LogoDark className='h-8 w-36 ' />
+                <>
+                  <LogoDark className='hidden sm:flex h-8 w-auto sm:w-36 ' />
+                  {/* <LogoSmall className='flex sm:hidden h-8 w-auto' /> */}
+                </>
               ) : (
-                <LogoLight className='h-8 w-36 ' />
+                <>
+                  <LogoLight className='hidden:sm flex h-8 w-auto sm:w-36 ' />
+                  {/* <LogoSmall className='flex sm:hidden h-8 w-auto' /> */}
+                </>
               )}
             </Link>
           </div>
@@ -190,19 +229,27 @@ export default function ({ showMiddleNav = false }: Props) {
             {params?.country ? (
               <div className='flex flex-row w-full justify-end items-center'>
                 <div className='relative rounded-md shadow-sm me-4 lg:w-3/5 xl:w-[350px]'>
-                  <div className='pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3'>
-                    <MagnifyingGlassIcon
-                      className='h-5 w-5 text-gray-400'
-                      aria-hidden='true'
-                    />
-                  </div>
-                  <input
-                    type='text'
-                    name='search'
-                    id='search'
-                    className='input-default ltr:pl-10 rtl:pr-10 '
-                    placeholder={trans.search}
-                  />
+                  <Popover as='nav'>
+                    <Popover.Button as={MyCustomButton}></Popover.Button>
+                    <Popover.Panel
+                      focus={false}
+                      className='absolute z-10 w-full py-4 bg-white border-4 border-blue-300'>
+                      <div className='flex w-full flex-col gap-y-2  rounded-lg '>
+                        <Link
+                          className='flex flex-row justify-start items-center gap-x-4 py-2 px-4 hover:bg-gray-50'
+                          href='/analytics'>
+                          <div>
+                            <MagnifyingGlassIcon
+                              className='h-5 w-5 text-gray-400'
+                              aria-hidden='true'
+                            />
+                          </div>
+                          <div>testing</div>
+                        </Link>
+                      </div>
+                      <img src='/solutions.jpg' alt='' />
+                    </Popover.Panel>
+                  </Popover>
                 </div>
                 <div className='flex flex-row gap-x-4'>
                   <svg
