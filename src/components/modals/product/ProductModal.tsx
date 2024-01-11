@@ -188,10 +188,10 @@ export default function () {
 
                         <div className='pt-4'>
                           <div className='flex flex-col gap-y-2'>
-                            <h1 className='text-2xl'>
+                            <h1 className='text-2xl ltr:text-left rtl:text-right'>
                               {data.data.name} - {data.data.id}
                             </h1>
-                            <p className='text-md text-gray-400'>
+                            <p className='text-md text-gray-400 ltr:text-left rtl:text-right'>
                               {data.data.description}
                             </p>
                             <div className='flex flex-row justify-start items-center gap-x-4'>

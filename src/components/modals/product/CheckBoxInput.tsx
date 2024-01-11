@@ -14,12 +14,12 @@ export default function ({ group }: { group: any }) {
 
   return (
     <div className='py-3'>
-      <div className='flex flex-1 justify-between items-center'>
-        <div>
-          <label className='text-base font-semibold text-gray-900'>
+      <div className='flex pb-2 flex-1 justify-between items-center'>
+        <div className='flex flex-col '>
+          <label className='text-base text-gray-900 ltr:text-left rtl:text-right'>
             {group.name} - {group.id}
           </label>
-          <p className='text-sm text-gray-400'>
+          <p className='text-sm text-gray-400 ltr:text-left rtl:text-right'>
             {trans.select_up_to} {trans.max} {group.max_number} {trans.and}{" "}
             {trans.min} {group.min_number}
           </p>
@@ -31,9 +31,9 @@ export default function ({ group }: { group: any }) {
       {group.choices &&
         map(group.choices, (c, i) => (
           <fieldset key={i}>
-            <div className='space-y-5 flex justify-between items-center'>
+            <div className='gap-y-4 py-1 flex justify-between items-center'>
               <div className='relative flex items-start'>
-                <div className='flex h-6 items-center'>
+                <div className='flex items-center'>
                   <input
                     id='comments'
                     aria-describedby='comments-description'
