@@ -8,7 +8,7 @@ import { appLinks } from "@/src/links";
 import { Locale, countriesList } from "@/src/types";
 import { User } from "@/types/queries";
 import VendorWidget from "@/components/widgets/VendorWidget";
-import { MainContext } from "../layouts/MainContentLayout";
+import { MainContext } from "@/components/layouts/MainContentLayout";
 import { useParams } from "next/navigation";
 
 type Props = {

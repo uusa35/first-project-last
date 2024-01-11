@@ -2,7 +2,6 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useContext, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
-import { enableLoading } from "@/src/redux/slices/settingSlice";
 import {
   decraseQty,
   hideProductModal,

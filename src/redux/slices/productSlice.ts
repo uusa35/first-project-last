@@ -1,6 +1,5 @@
-import { Country, Product } from '@/types/queries';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { concat, filter, find, first, identity, isEmpty, isNil, isNull, isUndefined, map, omitBy, remove } from 'lodash';
+import { filter, find, first, isUndefined } from 'lodash';
 
 interface Choice {
   choice_id: number | string;

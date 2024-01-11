@@ -1,16 +1,12 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
 import Slider from "react-slick";
 import { Locale, countriesList } from "@/src/types";
 import { Product } from "@/types/queries";
 import ProductWidget from "@/components/widgets/ProductWidget";
-import {
-  ArrowLeftIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-} from "@heroicons/react/24/outline";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import { useParams } from "next/navigation";
+import { MainContext } from "@/components/layouts/MainContentLayout";
 
 type Props = {
   products: Product[];
@@ -19,6 +15,7 @@ type Props = {
 };
 
 export default function ({ products, title }: Props) {
+  const trans: { [key: string]: string } = useContext(MainContext);
   const params: { lang: Locale["lang"]; country?: countriesList } | any =
     useParams!();
   const { lang } = params;
@@ -27,7 +24,7 @@ export default function ({ products, title }: Props) {
   const settings: any = {
     dots: false,
     speed: 500,
-    infinite: false,
+    infinite: true,
     slidesToScroll: 1,
     arrows: false,
     rtl: lang === "ar",
@@ -85,7 +82,7 @@ export default function ({ products, title }: Props) {
       <div className='flex justify-between mb-3'>
         <p>{title}</p>
         <div className='flex items-center gap-x-3'>
-          <p>See all</p>
+          <p>{trans.see_all}</p>
           <RenderArrows />
         </div>
       </div>

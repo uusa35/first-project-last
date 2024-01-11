@@ -1,7 +1,7 @@
 "use client";
 import { useContext } from "react";
 import { MainContext } from "@/components/layouts/MainContentLayout";
-import { filter, flatten, indexOf, map, pick, pickBy } from "lodash";
+import { filter, flatten, indexOf, map } from "lodash";
 import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
 import { addProductChoice } from "@/src/redux/slices/productSlice";
 
