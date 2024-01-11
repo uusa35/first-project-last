@@ -72,6 +72,13 @@ export const apiSlice = createApi({
         validateStatus: (response, result) => result.status == 200 && result.success,
       }),
     }),
+    getTopSearchKeys: builder.query<any, void>({
+      query: () => ({
+        url: `search-history`,
+        method: 'get',
+        validateStatus: (response, result) => result.status == 200 && result.success,
+      }),
+    }),
     getFooterPages: builder.query<any, void>({
       query: () => ({
         url: `footer`,
@@ -93,5 +100,6 @@ export const {
   useLazySendContactusQuery,
   useLazySendJoinusQuery,
   useGetFooterPagesQuery,
-  useGetFooterUrlsQuery
+  useGetFooterUrlsQuery,
+  useLazyGetTopSearchKeysQuery
 } = apiSlice;

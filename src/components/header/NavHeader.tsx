@@ -47,6 +47,8 @@ import { ShoppingBag } from "@mui/icons-material";
 import { ShoppingBagIcon } from "@heroicons/react/20/solid";
 import CartMenu from "@/components/header/CartMenu";
 import { Popover } from "@headlessui/react";
+import { useLazyGetTopSearchKeysQuery } from "@/src/redux/api";
+import { map } from "lodash";
 
 type Props = {
   showMiddleNav: boolean;
@@ -72,6 +74,10 @@ export default function ({ showMiddleNav = false }: Props) {
     `absolute ${showMiddleNav ? "text-black" : "text-white"}`
   );
   const [isSticky, setIsSticky] = useState<boolean>(false);
+  const [
+    triggerGetTopSearchKeys,
+    { data: searchKeys, isSuccess: searchKeysSuccess },
+  ] = useLazyGetTopSearchKeysQuery();
   const navigation: { name: string; href: string }[] = [
     { name: trans.landing, href: appLinks.landing(lang) },
     {
@@ -151,6 +157,7 @@ export default function ({ showMiddleNav = false }: Props) {
           placeholder={trans.search}
           ref={ref}
           {...props}
+          onFocus={() => triggerGetTopSearchKeys()}
           onChange={(e) => console.log("e", e.target.value)}
         />
       </div>
@@ -235,17 +242,22 @@ export default function ({ showMiddleNav = false }: Props) {
                       focus={false}
                       className='absolute z-10 w-full py-4 bg-white border-4 border-blue-300'>
                       <div className='flex w-full flex-col gap-y-2  rounded-lg '>
-                        <Link
-                          className='flex flex-row justify-start items-center gap-x-4 py-2 px-4 hover:bg-gray-50'
-                          href='/analytics'>
-                          <div>
-                            <MagnifyingGlassIcon
-                              className='h-5 w-5 text-gray-400'
-                              aria-hidden='true'
-                            />
-                          </div>
-                          <div>testing</div>
-                        </Link>
+                        {searchKeysSuccess &&
+                          searchKeys.data &&
+                          map(searchKeys.data?.top, (k: any, i: number) => (
+                            <Link
+                              key={i}
+                              className='flex flex-row justify-start items-center gap-x-4 py-2 px-4 hover:bg-gray-50'
+                              href={`/${lang}/${params?.country}?search=${k.key}`}>
+                              <div>
+                                <MagnifyingGlassIcon
+                                  className='h-5 w-5 text-gray-400'
+                                  aria-hidden='true'
+                                />
+                              </div>
+                              <div>{k.key}</div>
+                            </Link>
+                          ))}
                       </div>
                       <img src='/solutions.jpg' alt='' />
                     </Popover.Panel>
