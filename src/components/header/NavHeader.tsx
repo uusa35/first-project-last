@@ -49,6 +49,7 @@ import CartMenu from "@/components/header/CartMenu";
 import { Popover } from "@headlessui/react";
 import { useLazyGetTopSearchKeysQuery } from "@/src/redux/api";
 import { map } from "lodash";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 type Props = {
   showMiddleNav: boolean;
@@ -76,7 +77,7 @@ export default function ({ showMiddleNav = false }: Props) {
   const [isSticky, setIsSticky] = useState<boolean>(false);
   const [
     triggerGetTopSearchKeys,
-    { data: searchKeys, isSuccess: searchKeysSuccess },
+    { data: searchKeys, isSuccess: searchKeysSuccess, isFetching },
   ] = useLazyGetTopSearchKeysQuery();
   const navigation: { name: string; href: string }[] = [
     { name: trans.landing, href: appLinks.landing(lang) },
@@ -140,6 +141,7 @@ export default function ({ showMiddleNav = false }: Props) {
   };
 
   let MyCustomButton = forwardRef<HTMLInputElement, any>(function (props, ref) {
+    // triggerGetTopSearchKeys();
     return (
       <div>
         <div className='pointer-events-auto absolute inset-y-0 left-0 flex items-center pl-3'>
@@ -157,7 +159,6 @@ export default function ({ showMiddleNav = false }: Props) {
           placeholder={trans.search}
           ref={ref}
           {...props}
-          onFocus={() => triggerGetTopSearchKeys()}
           onChange={(e) => console.log("e", e.target.value)}
         />
       </div>
@@ -240,10 +241,9 @@ export default function ({ showMiddleNav = false }: Props) {
                     <Popover.Button as={MyCustomButton}></Popover.Button>
                     <Popover.Panel
                       focus={false}
-                      className='absolute z-10 w-full py-4 bg-white border-4 border-blue-300'>
+                      className='absolute z-10 w-full py-4 bg-white'>
                       <div className='flex w-full flex-col gap-y-2  rounded-lg '>
-                        {searchKeysSuccess &&
-                          searchKeys.data &&
+                        {searchKeysSuccess && searchKeys.data ? (
                           map(searchKeys.data?.top, (k: any, i: number) => (
                             <Link
                               key={i}
@@ -257,7 +257,10 @@ export default function ({ showMiddleNav = false }: Props) {
                               </div>
                               <div>{k.key}</div>
                             </Link>
-                          ))}
+                          ))
+                        ) : (
+                          <LoadingSpinner isLoading={isFetching} />
+                        )}
                       </div>
                       <img src='/solutions.jpg' alt='' />
                     </Popover.Panel>
