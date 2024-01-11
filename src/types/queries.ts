@@ -61,18 +61,6 @@ export type Category = {
   [key: string]: string;
 };
 
-export type Branch = {
-  id: string;
-  name: string;
-  longitude: number;
-  latitude: number;
-  address: string;
-  phone: string;
-  delivery_type: string;
-  vendor_id: number | string;
-  [key: string]: string | number;
-};
-
 export type AppQueryResult<T> = {
   data: T;
   status: number;
@@ -100,6 +88,18 @@ export type Area = {
     en: string;
   };
   [key: string]: any;
+};
+
+export type Branch = {
+  id: number;
+  name: string;
+  longitude: number;
+  latitude: number;
+  address: string;
+  phone: string;
+  delivery_type: 'both' | 'delivery' | 'pickup',
+  vendor_id: number | string;
+  modalEnabled?: boolean;
 };
 
 export type User = {

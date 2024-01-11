@@ -13,6 +13,7 @@ import { areaSlice } from './areaSlice';
 import { countrySlice } from './countrySlice';
 import { authSlice } from './authSlice';
 import { productSlice } from './productSlice';
+import { branchSlice } from './branchSlice';
 
 
 
@@ -23,6 +24,7 @@ export const rootReducer = combineReducers({
   [countrySlice.name]: countrySlice.reducer,
   [authSlice.name]: authSlice.reducer,
   [productSlice.name]: productSlice.reducer,
+  [branchSlice.name]: branchSlice.reducer,
   [toastMessageSlice.name]: toastMessageSlice.reducer,
   [apiSlice.reducerPath]: apiSlice.reducer,
   [categoryApi.reducerPath]: categoryApi.reducer,

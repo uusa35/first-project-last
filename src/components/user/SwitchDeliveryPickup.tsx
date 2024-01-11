@@ -6,10 +6,10 @@ import { useContext, useState } from "react";
 import { MainContext } from "@/components/layouts/MainContentLayout";
 import { Locale } from "@/src/types";
 import BranchListModal from "../modals/vendor/BranchListModal";
+import { showBranchModal } from "@/src/redux/slices/branchSlice";
 
 export default function ({ vendor }: { vendor: any }) {
   const trans: { [key: string]: string } = useContext(MainContext);
-  const [showBranchModal, setShowBranchModal] = useState<boolean>(false);
   const {
     appSetting: { orderType },
   } = useAppSelector((state) => state);
@@ -54,14 +54,10 @@ export default function ({ vendor }: { vendor: any }) {
         <div className='flex flex-col w-full divide-y divide-gray-100 px-8'>
           {vendor.branch_name && vendor.branch_area && (
             <>
-              <BranchListModal
-                showBranchModal={showBranchModal}
-                setShowBranchModal={setShowBranchModal}
-                vendor_id={vendor?.id}
-              />
+              <BranchListModal vendor_id={vendor?.id} />
               <button
                 className='py-4 flex flex-row justify-start items-center gap-x-4'
-                onClick={() => setShowBranchModal(true)}>
+                onClick={() => dispatch(showBranchModal())}>
                 <div>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
@@ -85,8 +81,10 @@ export default function ({ vendor }: { vendor: any }) {
                     />
                   </svg>
                 </div>
-                <div className='flex-col justify-center items-center'>
-                  <div className='capitalize'>{vendor.branch_name}</div>
+                <div className='flex-col justify-start items-center'>
+                  <div className='capitalize ltr:text-left rtl:text-right'>
+                    {vendor.branch_name}
+                  </div>
                   <div className='text-sm text-gray-400'>
                     {vendor.branch_area}
                   </div>

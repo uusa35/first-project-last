@@ -340,6 +340,7 @@
     "delivery_fees": "delivery fees",
     "open_now": "open now",
     "closed_now": "closed now",
-    "select_branch": "select branch"
+    "select_branch": "select branch",
+    "start_order": "start order"
   }
 }

@@ -16,22 +16,18 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 import { EyeIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useLazyGetBranchesQuery } from "@/src/redux/api/vendorApi";
 import { map } from "lodash";
+import { hideBranchModal, setBranch } from "@/src/redux/slices/branchSlice";
 
 type Props = {
   vendor_id: string;
-  showBranchModal: boolean;
-  setShowBranchModal: (v: boolean) => void;
 };
-export default function ({
-  vendor_id,
-  showBranchModal,
-  setShowBranchModal,
-}: Props) {
+export default function ({ vendor_id }: Props) {
   const trans: { [key: string]: string } = useContext(MainContext);
   const {
     appSetting: { isLoading },
     locale: { lang },
     country: { code },
+    branch,
   } = useAppSelector((state) => state);
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -43,11 +39,11 @@ export default function ({
   }, [vendor_id]);
 
   return (
-    <Transition appear show={showBranchModal} as={Fragment}>
+    <Transition appear show={branch.modalEnabled} as={Fragment}>
       <Dialog
         as='div'
         className='relative z-50'
-        onClose={() => setShowBranchModal(false)}>
+        onClose={() => dispatch(hideBranchModal())}>
         <Transition.Child
           as={Fragment}
           enter='ease-out duration-300'
@@ -76,34 +72,77 @@ export default function ({
                     {trans.select_branch}
                     <XMarkIcon
                       className='absolute ltr:left-4 rtl:right-4 w-6 h-6 text-gray-600 cursor-pointer'
-                      onClick={() => setShowBranchModal(false)}
+                      onClick={() => dispatch(hideBranchModal())}
                     />
                   </div>
                 </Dialog.Title>
-                <div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm px-3'>
-                  <LoadingSpinner isLoading={isFetching} />
+                <div className='mt-4 w-full px-3'>
+                  <LoadingSpinner isLoading={!isSuccess} />
                   {isSuccess &&
                     data?.data &&
                     map(data?.data, (b, i) => (
-                      <div
-                        key={i}
-                        className='flex flex-row gap-x-4 py-4 border-b border-gray-200 '>
-                        <div>
-                          <svg
-                            xmlns='http://www.w3.org/2000/svg'
-                            width='15'
-                            height='19'
-                            viewBox='0 0 15 19'
-                            fill='none'>
-                            <path
-                              d='M7.03281 0.847658C5.17824 0.846504 3.3966 1.56993 2.06781 2.86366C1.41836 3.49573 0.901628 4.25109 0.547894 5.08545C0.194159 5.91982 0.0105444 6.81641 0.0078125 7.72266C0.0078125 13.6047 6.39381 18.0487 6.66581 18.2347C6.77387 18.3083 6.90157 18.3476 7.03231 18.3476C7.16305 18.3476 7.29076 18.3083 7.39881 18.2347C7.67081 18.0487 14.0568 13.6047 14.0568 7.72266C14.054 6.81642 13.8704 5.91985 13.5167 5.08549C13.1629 4.25113 12.6462 3.49576 11.9968 2.86366C10.6683 1.57017 8.88703 0.846765 7.03281 0.847658ZM7.03281 5.22266C7.53666 5.2222 8.02974 5.36849 8.45181 5.64366C8.86995 5.9159 9.19754 6.3065 9.39281 6.76566C9.5858 7.22132 9.63635 7.72472 9.53781 8.20966C9.43786 8.69677 9.19401 9.14267 8.83781 9.48966C8.47804 9.8406 8.0233 10.0784 7.52981 10.1737C7.03444 10.2703 6.52168 10.2209 6.05381 10.0317C5.58949 9.84414 5.19084 9.52376 4.90781 9.11066C4.67467 8.77088 4.53084 8.37786 4.4896 7.96786C4.44835 7.55785 4.51102 7.14406 4.67181 6.76466C4.80104 6.46035 4.98934 6.1847 5.22581 5.95366C5.4642 5.72071 5.74581 5.53659 6.05481 5.41166C6.36552 5.28587 6.69761 5.22236 7.03281 5.22266Z'
-                              fill='white'
-                            />
-                          </svg>
-                        </div>
-                        <div>{b.name}</div>
+                      <div key={i} className='flex flex-col  w-full gap-y-4'>
+                        <button
+                          onClick={() => dispatch(setBranch(b))}
+                          className='flex flex-row justify-between items-center  py-4 border-b border-gray-200 w-full'>
+                          <div className='flex w-full justify-start items-center gap-x-4'>
+                            <div>
+                              <svg
+                                xmlns='http://www.w3.org/2000/svg'
+                                width='37'
+                                height='37'
+                                viewBox='0 0 37 37'
+                                fill='none'>
+                                <path
+                                  d='M18.0312 36.5977C27.9724 36.5977 36.0312 28.5388 36.0312 18.5977C36.0312 8.65653 27.9724 0.597656 18.0312 0.597656C8.09012 0.597656 0.03125 8.65653 0.03125 18.5977C0.03125 28.5388 8.09012 36.5977 18.0312 36.5977Z'
+                                  fill='#FF8A59'
+                                />
+                                <path
+                                  d='M18.0328 9.84766C16.1782 9.8465 14.3966 10.5699 13.0678 11.8637C12.4184 12.4957 11.9016 13.2511 11.5479 14.0855C11.1942 14.9198 11.0105 15.8164 11.0078 16.7227C11.0078 22.6047 17.3938 27.0487 17.6658 27.2347C17.7739 27.3083 17.9016 27.3476 18.0323 27.3476C18.1631 27.3476 18.2908 27.3083 18.3988 27.2347C18.6708 27.0487 25.0568 22.6047 25.0568 16.7227C25.054 15.8164 24.8704 14.9198 24.5167 14.0855C24.1629 13.2511 23.6462 12.4958 22.9968 11.8637C21.6683 10.5702 19.887 9.84676 18.0328 9.84766ZM18.0328 14.2227C18.5367 14.2222 19.0297 14.3685 19.4518 14.6437C19.8699 14.9159 20.1975 15.3065 20.3928 15.7657C20.5858 16.2213 20.6364 16.7247 20.5378 17.2097C20.4379 17.6968 20.194 18.1427 19.8378 18.4897C19.478 18.8406 19.0233 19.0784 18.5298 19.1737C18.0344 19.2703 17.5217 19.2209 17.0538 19.0317C16.5895 18.8441 16.1908 18.5238 15.9078 18.1107C15.6747 17.7709 15.5308 17.3779 15.4896 16.9679C15.4484 16.5579 15.511 16.1441 15.6718 15.7647C15.801 15.4604 15.9893 15.1847 16.2258 14.9537C16.4642 14.7207 16.7458 14.5366 17.0548 14.4117C17.3655 14.2859 17.6976 14.2224 18.0328 14.2227Z'
+                                  fill='white'
+                                />
+                              </svg>
+                            </div>
+                            <div>{b.name}</div>
+                          </div>
+                          <div>
+                            {branch.id === b.id ? (
+                              <svg
+                                xmlns='http://www.w3.org/2000/svg'
+                                width='25'
+                                height='25'
+                                viewBox='0 0 25 25'
+                                fill='none'>
+                                <path
+                                  d='M12.7812 1.08203C18.8564 1.08203 23.7812 6.0069 23.7812 12.082C23.7812 18.1572 18.8564 23.082 12.7812 23.082C6.70612 23.082 1.78125 18.1572 1.78125 12.082C1.78125 6.0069 6.70612 1.08203 12.7812 1.08203ZM12.7812 3.08203C7.81069 3.08203 3.78125 7.11147 3.78125 12.082C3.78125 17.0526 7.81069 21.082 12.7812 21.082C17.7518 21.082 21.7812 17.0526 21.7812 12.082C21.7812 7.11147 17.7518 3.08203 12.7812 3.08203ZM12.7812 5.08203C16.6472 5.08203 19.7812 8.21604 19.7812 12.082C19.7812 15.948 16.6472 19.082 12.7812 19.082C8.91526 19.082 5.78125 15.948 5.78125 12.082C5.78125 8.21604 8.91526 5.08203 12.7812 5.08203Z'
+                                  fill='#02C9C0'
+                                />
+                              </svg>
+                            ) : (
+                              <svg
+                                xmlns='http://www.w3.org/2000/svg'
+                                width='25'
+                                height='25'
+                                viewBox='0 0 25 25'
+                                fill='none'>
+                                <path
+                                  d='M12.7812 1.96875C18.8564 1.96875 23.7812 6.89362 23.7812 12.9688C23.7812 19.0439 18.8564 23.9688 12.7812 23.9688C6.70612 23.9688 1.78125 19.0439 1.78125 12.9688C1.78125 6.89362 6.70612 1.96875 12.7812 1.96875ZM12.7812 3.96875C7.81069 3.96875 3.78125 7.99819 3.78125 12.9688C3.78125 17.9393 7.81069 21.9688 12.7812 21.9688C17.7518 21.9688 21.7812 17.9393 21.7812 12.9688C21.7812 7.99819 17.7518 3.96875 12.7812 3.96875Z'
+                                  fill='#98A1AE'
+                                />
+                              </svg>
+                            )}
+                          </div>
+                        </button>
                       </div>
                     ))}
+                  <button
+                    disabled={branch.id === 0}
+                    onClick={() => dispatch(hideBranchModal())}
+                    className={` ${
+                      branch.id === 0 && "opacity-60"
+                    } btn-default w-full mt-4`}>
+                    {trans.start_order}
+                  </button>
                 </div>
               </Dialog.Panel>
             </Transition.Child>
