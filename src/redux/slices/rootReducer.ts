@@ -4,6 +4,7 @@ import { apiSlice } from '../api';
 import { settingSlice } from '@/redux/slices/settingSlice';
 import { categoryApi } from '@/redux/api/categoryApi';
 import { productApi } from '@/redux/api/productApi';
+import { vendorApi } from '@/redux/api/vendorApi';
 import { authApi } from '@/redux/api/authApi';
 import { areaApi } from '@/redux/api/areaApi';
 import { countryApi } from '@/redux/api/countryApi';
@@ -26,6 +27,7 @@ export const rootReducer = combineReducers({
   [apiSlice.reducerPath]: apiSlice.reducer,
   [categoryApi.reducerPath]: categoryApi.reducer,
   [productApi.reducerPath]: productApi.reducer,
+  [vendorApi.reducerPath]: vendorApi.reducer,
   [authApi.reducerPath]: authApi.reducer,
   [areaApi.reducerPath]: areaApi.reducer,
   [countryApi.reducerPath]: countryApi.reducer,

@@ -77,7 +77,7 @@ export const settingSlice = createSlice({
         showForgetPasswordModal: false,
         showVerificationModal: false,
         sideMenuOpen: false,
-        showProductModal: { id: null, enabled: false },
+
         showCartMenu: false,
       };
     },
@@ -95,7 +95,7 @@ export const settingSlice = createSlice({
         showForgetPasswordModal: false,
         showVerificationModal: false,
         sideMenuOpen: false,
-        showProductModal: { id: null, enabled: false },
+
         showCartMenu: false,
       };
     },
@@ -113,7 +113,7 @@ export const settingSlice = createSlice({
         showRegisterModal: false,
         showVerificationModal: false,
         sideMenuOpen: false,
-        showProductModal: { id: null, enabled: false },
+
         showCartMenu: false,
       };
     },
@@ -131,7 +131,7 @@ export const settingSlice = createSlice({
         showRegisterModal: false,
         showForgetPasswordModal: false,
         sideMenuOpen: false,
-        showProductModal: { id: null, enabled: false },
+
         showCartMenu: false,
       };
     },
@@ -150,7 +150,7 @@ export const settingSlice = createSlice({
         showRegisterModal: false,
         showForgetPasswordModal: false,
         sideMenuOpen: false,
-        showProductModal: { id: null, enabled: false },
+
         showCartMenu: false,
       };
     },
@@ -166,7 +166,7 @@ export const settingSlice = createSlice({
         showLoginModal: false,
         showRegisterModal: false,
         showForgetPasswordModal: false,
-        showProductModal: { id: null, enabled: false },
+
         showCartMenu: false,
       };
     },
@@ -182,7 +182,7 @@ export const settingSlice = createSlice({
         showRegisterModal: false,
         showForgetPasswordModal: false,
         sideMenuOpen: false,
-        showProductModal: { id: null, enabled: false },
+
       };
     },
   },

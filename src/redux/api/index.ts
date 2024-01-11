@@ -29,8 +29,8 @@ export const apiSlice = createApi({
       if (country && country.id) {
         headers.set("X-Country", country.id);
       }
-      if (area && area.id) {
-        headers.set("X-AREA", area.id);
+      if (area && area.id !== 0) {
+      headers.set("X-AREA", area.id);
       }
       headers.set("X-TYPE", orderType);
       headers.set("RTK", "RTK");

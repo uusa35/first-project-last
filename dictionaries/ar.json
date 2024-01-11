@@ -336,6 +336,9 @@
     "more_areas": "مزيد من المناطق",
     "copy_right": "بيكس - جميع الحقوق محفوظة",
     "order_time": "مدة الطلب",
-    "delivery_fees": "رسوم التوصيل"
+    "delivery_fees": "رسوم التوصيل",
+    "open_now": "مفتوح الآن",
+    "closed_now": "مغلق الآن",
+    "select_branch": "اختيار الفرع"
   }
 }

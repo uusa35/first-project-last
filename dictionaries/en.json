@@ -337,6 +337,9 @@
     "more_areas": "more areas",
     "copy_right": "picks, Inc. All rights reserved.",
     "order_time": "order time",
-    "delivery_fees": "delivery fees"
+    "delivery_fees": "delivery fees",
+    "open_now": "open now",
+    "closed_now": "closed now",
+    "select_branch": "select branch"
   }
 }

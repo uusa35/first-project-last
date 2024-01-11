@@ -30,7 +30,7 @@ import { AppQueryResult, Area, Country } from "@/src/types/queries";
 import { first } from "lodash";
 import { toggleSideMenu } from "@/src/redux/slices/settingSlice";
 import CartMenu from "@/components/header/CartMenu";
-import ProductModal from "@/src/components/modals/ProductModal";
+import ProductModal from "@/src/components/modals/product/ProductModal";
 import { hideProductModal } from "@/src/redux/slices/productSlice";
 
 type Props = {

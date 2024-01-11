@@ -2,12 +2,14 @@
 import { setOrderType } from "@/app/actions";
 import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
 import { changeOrderType } from "@/src/redux/slices/settingSlice";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { MainContext } from "@/components/layouts/MainContentLayout";
 import { Locale } from "@/src/types";
+import BranchListModal from "../modals/vendor/BranchListModal";
 
 export default function ({ vendor }: { vendor: any }) {
   const trans: { [key: string]: string } = useContext(MainContext);
+  const [showBranchModal, setShowBranchModal] = useState<boolean>(false);
   const {
     appSetting: { orderType },
   } = useAppSelector((state) => state);
@@ -17,7 +19,7 @@ export default function ({ vendor }: { vendor: any }) {
       dispatch(changeOrderType(orderType))
     );
   };
-  console.log("vendor", vendor);
+
   return (
     <div className='col-span-full lg:col-span-1  '>
       <div className='flex flex-row p-2 rounded-full bg-gray-100 w-full max-w-20 '>
@@ -52,7 +54,14 @@ export default function ({ vendor }: { vendor: any }) {
         <div className='flex flex-col w-full divide-y divide-gray-100 px-8'>
           {vendor.branch_name && vendor.branch_area && (
             <>
-              <div className='py-4 flex flex-row justify-start items-center gap-x-4'>
+              <BranchListModal
+                showBranchModal={showBranchModal}
+                setShowBranchModal={setShowBranchModal}
+                vendor_id={vendor?.id}
+              />
+              <button
+                className='py-4 flex flex-row justify-start items-center gap-x-4'
+                onClick={() => setShowBranchModal(true)}>
                 <div>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
@@ -82,7 +91,7 @@ export default function ({ vendor }: { vendor: any }) {
                     {vendor.branch_area}
                   </div>
                 </div>
-              </div>
+              </button>
               <div className='py-4 flex flex-row justify-start items-center gap-x-4'>
                 <div>
                   <svg

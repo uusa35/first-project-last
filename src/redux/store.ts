@@ -24,6 +24,7 @@ import { authApi } from "@/redux/api/authApi";
 import { areaApi } from "@/redux/api/areaApi";
 import { countryApi } from "@/redux/api/countryApi";
 import { productApi } from "@/redux/api/productApi";
+import { vendorApi } from "@/redux/api/vendorApi";
 
 
 const persistConfig = {
@@ -66,6 +67,7 @@ let store: any = configureStore({
         categoryApi.middleware,
         authApi.middleware,
         productApi.middleware,
+        vendorApi.middleware,
         areaApi.middleware,
         countryApi.middleware,
         sagaMiddleware,
@@ -91,6 +93,7 @@ let store: any = configureStore({
         categoryApi.middleware,
         authApi.middleware,
         productApi.middleware,
+        vendorApi.middleware,
         areaApi.middleware,
         countryApi.middleware,
         sagaMiddleware,

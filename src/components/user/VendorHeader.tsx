@@ -1,29 +1,5 @@
 import Image from "next/image";
 
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/aspect-ratio'),
-    ],
-  }
-  ```
-*/
-const collections = [
-  {
-    name: "Women's",
-    href: "#",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/home-page-04-collection-01.jpg",
-    imageAlt: "Woman wearing an off-white cotton t-shirt.",
-  },
-];
-
 export default function ({
   title,
   logo,

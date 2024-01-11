@@ -61,6 +61,18 @@ export type Category = {
   [key: string]: string;
 };
 
+export type Branch = {
+  id: string;
+  name: string;
+  longitude: number;
+  latitude: number;
+  address: string;
+  phone: string;
+  delivery_type: string;
+  vendor_id: number | string;
+  [key: string]: string | number;
+};
+
 export type AppQueryResult<T> = {
   data: T;
   status: number;
