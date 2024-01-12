@@ -320,6 +320,27 @@
     "ratings": "التقييمات",
     "hide": "اخفاء",
     "show_more": "إظهار المزيد",
-    "off": "خصم"
+    "off": "خصم",
+    "why_us": "فلماذا",
+    "choose": "تختارنا",
+    "us": "؟",
+    "learn_about_the_most_important_features_of_the_Picks_app": "تعرف على أهم مميزات تطبيق بيكس",
+    "add_to_cart": "اضف لعربة التسوق",
+    "select_up_to": "اختيار بـ",
+    "max": "حد أقصى",
+    "min": "حد أدنى",
+    "and": "و",
+    "restaurants": "مطاعم",
+    "cuisines": "مطابخ",
+    "popular_areas": "أشهر المناطق",
+    "more_areas": "مزيد من المناطق",
+    "copy_right": "بيكس - جميع الحقوق محفوظة",
+    "order_time": "مدة الطلب",
+    "delivery_fees": "رسوم التوصيل",
+    "open_now": "مفتوح الآن",
+    "closed_now": "مغلق الآن",
+    "select_branch": "اختيار الفرع",
+    "start_order": "ابدأ الطلب",
+    "big_deals": "افضل العروض"
   }
 }

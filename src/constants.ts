@@ -97,7 +97,7 @@ export const getSlidesToShow = (
 export const categoriesSliderSettings: any = {
   dots: false,
   speed: 500,
-  infinite: false,
+  infinite: true,
   slidesToShow: 7,
   slidesToScroll: 1,
   arrows: true,
@@ -105,19 +105,19 @@ export const categoriesSliderSettings: any = {
     {
       breakpoint: 1024,
       settings: {
-        slidesToShow: 2,
+        slidesToShow: 6,
       },
     },
     {
       breakpoint: 600,
       settings: {
-        slidesToShow: 1,
+        slidesToShow: 4,
       },
     },
     {
       breakpoint: 480,
       settings: {
-        slidesToShow: 1,
+        slidesToShow: 3,
       },
     },
   ],
@@ -130,7 +130,7 @@ export const categoriesSliderSettings: any = {
 export const adsSliderSettings: any = {
   dots: false,
   speed: 500,
-  infinite: false,
+  infinite: true,
   slidesToShow: 3,
   slidesToScroll: 1,
   arrows: true,
@@ -138,13 +138,13 @@ export const adsSliderSettings: any = {
     {
       breakpoint: 1024,
       settings: {
-        slidesToShow: 2,
+        slidesToShow: 4,
       },
     },
     {
       breakpoint: 600,
       settings: {
-        slidesToShow: 1,
+        slidesToShow: 3,
       },
     },
     {
@@ -163,7 +163,7 @@ export const adsSliderSettings: any = {
 export const vendorSliderSettings: any = {
   dots: false,
   speed: 500,
-  infinite: false,
+  infinite: true,
   slidesToShow: 4,
   slidesToScroll: 1,
   arrows: false,

@@ -125,7 +125,7 @@ export async function getMainHeaders() {
     'Accept-Language': lang,
     'X-Localization': lang,
     'X-Country': country?.id,
-    // ...(area && area.id && { 'X-AREA': area.id }),
-    // ...(orderType && { 'X-TYPE': orderType })
+    ...(area && area.id && { 'X-AREA': area.id }),
+    ...(orderType && { 'X-TYPE': orderType })
   }
 }

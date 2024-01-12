@@ -29,8 +29,8 @@ export const apiSlice = createApi({
       if (country && country.id) {
         headers.set("X-Country", country.id);
       }
-      if (area && area.id) {
-        headers.set("X-AREA", area.id);
+      if (area && area.id !== 0) {
+      headers.set("X-AREA", area.id);
       }
       headers.set("X-TYPE", orderType);
       headers.set("RTK", "RTK");
@@ -64,11 +64,32 @@ export const apiSlice = createApi({
         validateStatus: (response, result) => result.status == 200 && result.success,
       }),
     }),
-    sendResturantReq: builder.query<Setting, ContactusForm>({
+    sendJoinus: builder.query<Setting, ContactusForm>({
       query: (body) => ({
-        url: `setting`,
+        url: `restaurant-request`,
         body,
         method: 'post',
+        validateStatus: (response, result) => result.status == 200 && result.success,
+      }),
+    }),
+    getTopSearchKeys: builder.query<any, void>({
+      query: () => ({
+        url: `search-history`,
+        method: 'get',
+        validateStatus: (response, result) => result.status == 200 && result.success,
+      }),
+    }),
+    getFooterPages: builder.query<any, void>({
+      query: () => ({
+        url: `footer`,
+        method: 'get',
+        validateStatus: (response, result) => result.status == 200 && result.success,
+      }),
+    }),
+    getFooterUrls: builder.query<any, void>({
+      query: () => ({
+        url: `about`,
+        method: 'get',
         validateStatus: (response, result) => result.status == 200 && result.success,
       }),
     }),
@@ -77,5 +98,8 @@ export const apiSlice = createApi({
 
 export const {
   useLazySendContactusQuery,
-  useLazySendResturantReqQuery
+  useLazySendJoinusQuery,
+  useGetFooterPagesQuery,
+  useGetFooterUrlsQuery,
+  useLazyGetTopSearchKeysQuery
 } = apiSlice;

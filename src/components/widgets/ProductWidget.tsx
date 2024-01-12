@@ -9,7 +9,7 @@ import Link from "next/link";
 import { appLinks } from "@/src/links";
 import { useParams, useRouter } from "next/navigation";
 import { useAppDispatch } from "@/src/redux/hooks";
-import { showProductModal } from "@/src/redux/slices/settingSlice";
+import { showProductModal } from "@/src/redux/slices/productSlice";
 
 type Props = {
   product: Product;

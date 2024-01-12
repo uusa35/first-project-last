@@ -47,7 +47,10 @@ export type Product = {
   vendor_id: number;
   stock: number;
   images?: string[]
-  groups? : []
+  groups?: []
+  vendor: {
+    id: number | string;
+  }
 };
 
 export type Category = {
@@ -85,6 +88,18 @@ export type Area = {
     en: string;
   };
   [key: string]: any;
+};
+
+export type Branch = {
+  id: number;
+  name: string;
+  longitude: number;
+  latitude: number;
+  address: string;
+  phone: string;
+  delivery_type: 'both' | 'delivery' | 'pickup',
+  vendor_id: number | string;
+  modalEnabled?: boolean;
 };
 
 export type User = {

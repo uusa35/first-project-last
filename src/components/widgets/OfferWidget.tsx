@@ -7,13 +7,12 @@ import FavouriteWidget from "@/components/widgets/FavouriteWidget";
 import { Locale, countriesList } from "@/src/types";
 import { MainContext } from "@/layouts/MainContentLayout";
 import Link from "next/link";
-import { appLinks } from "@/src/links";
-import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
+import { useAppDispatch } from "@/src/redux/hooks";
 import { useParams } from "next/navigation";
 import {
   hideProductModal,
   showProductModal,
-} from "@/src/redux/slices/settingSlice";
+} from "@/src/redux/slices/productSlice";
 import { useLazyGetProductQuery } from "@/src/redux/api/productApi";
 
 type Props = {
@@ -42,15 +41,7 @@ export default function OfferWidget({ product }: Props) {
   return (
     <div>
       <div className='relative rtl:text-right ltr:text-left'>
-        <div
-          onClick={() => handleClick(product.id)}
-          // href={appLinks.offer(
-          //   lang,
-          //   params?.country,
-          //   product.id.toString(),
-          //   product.name
-          // )}
-        >
+        <div onClick={() => handleClick(product.id)}>
           <Image
             alt={product.name || ""}
             src={product.image}

@@ -8,7 +8,7 @@ import { appLinks } from "@/src/links";
 import { Locale, countriesList } from "@/src/types";
 import { User } from "@/types/queries";
 import VendorWidget from "@/components/widgets/VendorWidget";
-import { MainContext } from "../layouts/MainContentLayout";
+import { MainContext } from "@/components/layouts/MainContentLayout";
 import { useParams } from "next/navigation";
 
 type Props = {
@@ -44,7 +44,7 @@ export default function ({ vendors, title }: Props) {
     <div className='my-5'>
       <div className='flex justify-between mb-3'>
         <p className='slider-title'>{trans[title]}</p>
-        <div className='flex items-center gap-x-3 text-sm'>
+        <div className='flex items-center gap-x-3 text-sm capitalize'>
           <p>{trans.see_all}</p>
           <RenderArrows />
         </div>

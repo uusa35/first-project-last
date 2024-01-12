@@ -1,5 +1,6 @@
 "use client";
 import {
+  getAreaCookie,
   setAreaCookie,
   setCountryCookie,
   setCountryNameCookie,
@@ -102,22 +103,38 @@ export default function ({ countries }: Props) {
     triggerGetAreas(country.id.toString(), false).then((r: any) => {
       if (r && r.data && r.data.success && r.data.data) {
         const serverArea: Area | undefined = first(r.data.data);
+        const cookieArea: any = getAreaCookie();
         let mappedAreas = r.data.data.map((itm: Area) => {
           return { label: itm.name, id: itm.id };
         });
         setAllAreas(mappedAreas);
-        setSelectedArea(
-          mappedAreas.filter(
-            (itm: { id: number; label: string }) => itm.id === area.id
-          )[0]
-        );
         if (
-          area.country.id !== country.id &&
-          serverArea !== undefined &&
-          serverArea.country
+          cookieArea &&
+          cookieArea.id &&
+          cookieArea.country.id === country.id
         ) {
+          dispatch(setArea(cookieArea));
+          setSelectedArea(
+            mappedAreas.filter(
+              (itm: { id: number; label: string }) => itm.id === cookieArea.id
+            )[0]
+          );
+        } else if (area.id !== 0 && area.country.id === country.id) {
+          dispatch(setArea(area));
+          setAreaCookie(JSON.stringify(area));
+          setSelectedArea(
+            mappedAreas.filter(
+              (itm: { id: number; label: string }) => itm.id === area.id
+            )[0]
+          );
+        } else if (serverArea && serverArea.country.id === country.id) {
           dispatch(setArea(serverArea));
           setAreaCookie(JSON.stringify(serverArea));
+          setSelectedArea(
+            mappedAreas.filter(
+              (itm: { id: number; label: string }) => itm.id === serverArea.id
+            )[0]
+          );
         }
       }
     });

@@ -1,3 +1,4 @@
+import { filter, find, first, flatten, isEmpty, isEqual, map } from "lodash";
 import * as yup from "yup";
 
 export const loginSchema = yup.object({
@@ -88,6 +89,73 @@ export const contactusSchema = yup.object().shape({
   phone: yup.string().min(6).max(460).required(),
   message: yup.string().required().max(9999),
 });
+
+export const addToCartSchema = (originalGroups: any, trans: any) => {
+  const originalAllChoices = map(
+    flatten(
+      map(filter(originalGroups, "choices"), "choices")
+    ),
+    "id"
+  );
+  const originalRequiredChoices = map(
+    flatten(
+      map(filter(filter(originalGroups, g => g.selection_type !== 'optional'), "choices"), "choices")
+    ),
+    "id"
+  )
+  const originalRequiredGroups = map(
+    flatten(
+      filter(originalGroups, g => g.selection_type !== 'optional')
+    ),
+    "id"
+  );
+  const allOrginalGroups = map(
+    flatten(originalGroups),
+    "id"
+  );
+  // console.log('all original groups', allOrginalGroups);
+  // console.log('originalAllChoices', originalAllChoices);
+  // console.log('required gorups', originalRequiredGroups)
+  return yup.lazy((values) => {
+    // console.log('values', values);
+    const currentRequiredChoices = map(
+      flatten(
+        map(filter(filter(values.groups, g => g.selection_type !== 'optional'), "choices"), "choices")
+      ),
+      "id"
+    )
+    const currentRequiredGroups = map(
+      flatten(
+        map(filter(values.groups, g => g.selection_type !== 'optional'))
+      ),
+      "id"
+    )
+    // console.log('currentRequiredGroups', currentRequiredGroups);
+    // console.log('currentRequiredChoices', currentRequiredChoices)
+    // console.log('isEqual=====>', isEqual(originalRequiredChoices, currentRequiredChoices))
+    return yup.object().shape({
+      vendor_id: yup.number().required(trans['required']),
+      offer_id: yup.number().required(trans['required']),
+      quantity: yup.number().required(trans['required']),
+      groups: yup.array().of(yup.object().shape({
+        choice_group_id: yup.number().oneOf(allOrginalGroups),
+        choices: yup.array().of(yup.object().shape({
+          quantity: yup.number(),
+          choice_id: yup.number(),
+        })).when('choice_group_id', (choice_group_id, schema) => {
+          const currentGroupId = first(filter(allOrginalGroups, g => g === choice_group_id[0]));
+          const currentGroup = first(filter(originalGroups, g => g.id === currentGroupId));
+          return currentGroupId ? schema.min(currentGroup.min_number, trans['min']).max(currentGroup.max_number, trans['max']) : schema;
+        }).when('choice_group_id', (choice_group_id, schema) => {
+          return find(originalRequiredGroups, choice_group_id[0]) ? schema.required(trans['required']) : schema;
+        })
+      })).when([], (_, schema) => {
+        return originalRequiredGroups.length > 0 ? schema.required(trans['required']) : schema;
+      })
+    });
+  }
+  )
+};
 
 export const ChangePasswordSchema = yup.object({
   phone: yup

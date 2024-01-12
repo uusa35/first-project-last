@@ -3,44 +3,32 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useContext, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
 import {
-  enableLoading,
+  decraseQty,
   hideProductModal,
-  toggleForgetPasswordModal,
-  toggleRegisterModal,
-  toggleVerficationModal,
-} from "@/src/redux/slices/settingSlice";
+  increaseQty,
+  setProductOriginalGroups,
+} from "@/src/redux/slices/productSlice";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
   showErrorToastMessage,
   showSuccessToastMessage,
 } from "@/src/redux/slices/toastMessageSlice";
-import { setAuth } from "@/app/actions";
-import { useRouter } from "next/navigation";
-import {
-  useLazyLoginQuery,
-  useLazyResendOtpQuery,
-} from "@/src/redux/api/authApi";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { MainContext } from "@/components/layouts/MainContentLayout";
 import LoadingSpinner from "@/components/LoadingSpinner";
-import { AppQueryResult, Country, Product } from "@/src/types/queries";
-import { useGetCountriesQuery } from "@/src/redux/api/countryApi";
+import { AppQueryResult, Product } from "@/src/types/queries";
 import Slider from "react-slick";
-import {
-  EyeIcon,
-  HeartIcon,
-  ShareIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
-import { setAuthentication } from "@/src/redux/slices/authSlice";
-import {
-  useGetProductQuery,
-  useLazyGetProductQuery,
-} from "@/src/redux/api/productApi";
+import { HeartIcon, ShareIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useGetProductQuery } from "@/src/redux/api/productApi";
 import Image from "next/image";
-import { map } from "lodash";
+import { map, capitalize } from "lodash";
 import CheckBoxInput from "@/components/modals/product/CheckBoxInput";
 import RadioInput from "@/components/modals/product/RadioInput";
+import { addToCartSchema } from "@/src/validations";
+import { RWebShare } from "react-web-share";
+import { appLinks } from "@/src/links";
+import { Locale, countriesList } from "@/src/types";
 
 type Inputs = {
   phone: string;
@@ -51,9 +39,13 @@ type Inputs = {
 
 export default function () {
   const trans: { [key: string]: string } = useContext(MainContext);
+  const params: { lang: Locale["lang"]; country?: countriesList } | any =
+    useParams!();
+  const pathName = usePathname()!;
+  const { lang } = params;
   const {
     appSetting: { showProductModal, isLoading, session_id },
-    locale: { lang },
+    product: { id, selections, quantity, enabled },
     country: { code },
   } = useAppSelector((state) => state);
   const router = useRouter();
@@ -62,7 +54,29 @@ export default function () {
     data: AppQueryResult<Product>;
     isSuccess: boolean;
     isFetching: boolean;
-  }>(showProductModal.id);
+  }>(id);
+  const {
+    handleSubmit,
+    register,
+    reset,
+    setValue,
+    getValue,
+    getValues,
+    formState: { errors },
+  }: any = useForm<any>({
+    resolver: yupResolver(addToCartSchema(data?.data?.groups, trans)),
+    defaultValues: {
+      offer_id: data?.data?.id,
+      quantity: 1,
+      vendor_id: data?.data?.vendor?.id,
+      notes: "hello",
+      groups: selections,
+    },
+  });
+
+  console.log("errors", errors);
+  // console.log("getValues", getValues());
+  // console.log("state sections", selections);
 
   const settings: any = {
     dots: true,
@@ -73,11 +87,23 @@ export default function () {
   };
 
   const onSubmit: SubmitHandler<Inputs> = async (body) => {
-    dispatch(enableLoading());
+    console.log("body", body);
+    reset();
+    // dispatch(enableLoading());
   };
 
+  useEffect(() => {
+    if (isSuccess && data?.data?.groups) {
+      dispatch(setProductOriginalGroups(data?.data?.groups));
+    }
+  }, []);
+
+  useEffect(() => {
+    setValue("groups", selections);
+  }, [selections]);
+
   return (
-    <Transition appear show={showProductModal.enabled} as={Fragment}>
+    <Transition appear show={enabled} as={Fragment}>
       <Dialog
         as='div'
         className='relative z-50'
@@ -93,7 +119,7 @@ export default function () {
           <div className='fixed inset-0 bg-black/25' />
         </Transition.Child>
         <div className='fixed inset-0 w-screen '>
-          <div className='flex h-full items-center justify-center pt-12 md:p-12'>
+          <div className='flex h-full items-center justify-center pt-12 md:p-12 '>
             <Transition.Child
               as={Fragment}
               enter='ease-out duration-300'
@@ -102,7 +128,7 @@ export default function () {
               leave='ease-in duration-200'
               leaveFrom='opacity-100 scale-100'
               leaveTo='opacity-0 scale-95'>
-              <Dialog.Panel className='w-full h-full  md:h-3/4 md:max-w-[80%] lg:max-w-[60vh] transform rounded-t-2xl md:rounded-2xl bg-white  py-6  text-left align-middle shadow-xl transition-all'>
+              <Dialog.Panel className='w-full h-full  md:h-3/4 md:max-w-[80%] lg:max-w-[60%] xxl:max-w-[40%] transform rounded-t-2xl md:rounded-2xl bg-white  py-6  text-left align-middle shadow-xl transition-all'>
                 <Dialog.Title
                   as='div'
                   className='flex flex-row w-full justify-between items-center  text-lg font-medium leading-6 text-gray-900 capitalize  pb-4 px-4'>
@@ -118,12 +144,27 @@ export default function () {
                       <HeartIcon className='w-6 h-6 text-black' />
                     </div>
                     <div>
-                      <ShareIcon className='w-6 h-6 text-black' />
+                      <RWebShare
+                        data={{
+                          text: data?.data?.name,
+                          url: `https://${
+                            window.location.hostname
+                          }${appLinks.vendor(
+                            lang,
+                            params?.country,
+                            data?.data?.vendor?.id?.toString(),
+                            data?.data?.name
+                          )}`,
+                          title: capitalize(trans.picks),
+                        }}>
+                        <ShareIcon className='w-6 h-6 text-black' />
+                      </RWebShare>
                     </div>
                   </div>
                 </Dialog.Title>
-
-                <div className=' relative sm:mx-auto overflow-x-auto w-full h-full md:h-[60vh] '>
+                <form
+                  onSubmit={handleSubmit(onSubmit)}
+                  className='relative sm:mx-auto overflow-x-auto w-full h-full bg-white  rounded-2xl'>
                   <LoadingSpinner isLoading={!isSuccess} />
                   {isSuccess && (
                     <div>
@@ -146,8 +187,10 @@ export default function () {
 
                         <div className='pt-4'>
                           <div className='flex flex-col gap-y-2'>
-                            <h1 className='text-2xl'>{data.data.name}</h1>
-                            <p className='text-md text-gray-400'>
+                            <h1 className='text-2xl ltr:text-left rtl:text-right'>
+                              {data.data.name} - {data.data.id}
+                            </h1>
+                            <p className='text-md text-gray-400 ltr:text-left rtl:text-right'>
                               {data.data.description}
                             </p>
                             <div className='flex flex-row justify-start items-center gap-x-4'>
@@ -157,12 +200,19 @@ export default function () {
                               <div className='line-through text-gray-400'>
                                 {data.data.price}
                               </div>
-                              <div>
-                                {data.data.percentage} {trans.off}
+                              <div className='text-orange-600 capitalize'>
+                                {data.data.percentage}
+                                <span className=''>{trans.off}</span>
                               </div>
                             </div>
                           </div>
                           <div className='flex flex-col   divide-y divide-gray-200 py-2 '>
+                            <ul className='flex flex-col gap-y-2 text-red-700'>
+                              {map(errors, (v) => (
+                                <li>{v.message}</li>
+                              ))}
+                            </ul>
+
                             {data.data.groups &&
                               map(data.data.groups, (g: any, i) => (
                                 <div key={i}>
@@ -176,20 +226,39 @@ export default function () {
                           </div>
                         </div>
                       </div>
-                      {/* footer */}
-                      <div
-                        className={`fixed bottom-0 w-full flex flex-row justify-between items-center   md:rounded-b-2xl p-4 border-t border-gray-200 bg-white`}>
-                        <div className={`flex flex-row gap-x-4`}>
-                          <div>+</div>
-                          <div>1</div>
-                          <div>-</div>
-                        </div>
-                        <button className='btn btn-default'>add to cart</button>
-                      </div>
                     </div>
                   )}
-                </div>
-                {/* footer  */}
+                  {/* footer */}
+                  {isSuccess && (
+                    <div
+                      className={`fixed bottom-0 md:-bottom-10 w-full flex flex-row justify-between items-center   rounded-b-2xl p-4 border-t border-gray-200 bg-white`}>
+                      <div className={`flex flex-row gap-x-2`}>
+                        <button
+                          disabled={quantity === 0}
+                          onClick={() => dispatch(decraseQty())}
+                          className={`${
+                            quantity === 0 && `opacity-60`
+                          } bg-picks-dark  flex justify-center items-center text-white w-6 h-6 rounded-full`}>
+                          -
+                        </button>
+                        <div className='flex justify-center items-center text-black w-6 h-6 rounded-full'>
+                          {quantity}
+                        </div>
+                        <button
+                          onClick={() => dispatch(increaseQty())}
+                          disabled={quantity === data.data.stock}
+                          className={`${
+                            quantity === data.data.stock && `opacity-60`
+                          } bg-picks-dark  flex justify-center items-center text-white w-6 h-6 rounded-full`}>
+                          +
+                        </button>
+                      </div>
+                      <button className='btn btn-default' type={"submit"}>
+                        {trans.add_to_cart}
+                      </button>
+                    </div>
+                  )}
+                </form>
               </Dialog.Panel>
             </Transition.Child>
           </div>
