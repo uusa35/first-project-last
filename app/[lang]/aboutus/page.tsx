@@ -14,6 +14,7 @@ import Order_faster from "@/appIcons/aboutus/order_faster.svg";
 import Order_tracking from "@/appIcons/aboutus/order_tracking.svg";
 import Order_ways from "@/appIcons/aboutus/order_ways.svg";
 import Payment_methods from "@/appIcons/aboutus/payment_methods.svg";
+import CustomerCarsoul from "@/src/components/aboutus/CustomerCarsoul";
 
 type Props = {
   params: { lang: Locale["lang"] };
@@ -126,6 +127,7 @@ export default async function ({ params: { lang } }: Props) {
                     }
                   </p>
                 </div>
+
                 <div className="mx-auto mt-12 grid max-w-sm grid-cols-1 gap-x-8 gap-y-10 sm:max-w-none lg:grid-cols-3">
                   <ChooseUsCard
                     icon={<Order_ways height={40} width={40} />}
@@ -188,7 +190,7 @@ export default async function ({ params: { lang } }: Props) {
         </div>
 
         {/* customers */}
-        <div className="bg-gray-50">
+        {/* <div className="bg-gray-50 -mx-8">
           <div className="mx-auto max-w-7xl py-24 sm:px-2 sm:py-32 lg:px-4">
             <div className="mx-auto max-w-2xl px-4 lg:max-w-none">
               <div className="grid grid-cols-1 items-center gap-x-16 gap-y-10 lg:grid-cols-2">
@@ -214,7 +216,8 @@ export default async function ({ params: { lang } }: Props) {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
+        <CustomerCarsoul />
 
         <DownloadAppSection />
       </div>

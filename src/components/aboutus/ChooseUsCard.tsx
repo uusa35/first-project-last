@@ -9,7 +9,7 @@ type Props = {
 };
 export default function ({icon,title,desc}: Props) {
   return (
-    <div className="text-center sm:flex sm:text-left lg:block lg:text-center border-2 border-[#D1D5DB] rounded-lg p-8">
+    <div className="text-center sm:flex sm:text-left lg:block lg:text-center border border-[#D1D5DB] rounded-lg p-8">
       <div className="sm:flex-shrink-0 flex justify-center items-center">
         <div className="bg-[#F5F5F5] rounded-full w-fit h-fit p-4">{icon}</div>
       </div>

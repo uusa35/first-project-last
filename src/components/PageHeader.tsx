@@ -16,7 +16,7 @@ export default function ({
         alt='testing'
         width={1000}
         height={400}
-        className='absolute inset-0 -z-10 h-[30vh] lg:h-[40vh] xl:h-[50vh] w-full object-cover'
+        className='absolute inset-0 -z-10 h-[30vh] lg:h-[45vh] xl:h-[50vh] w-full object-cover'
       />
       <div className='py-8 px-12 max-w-2xl  text-white flex flex-col  justify-end items-start h-[20vh] lg:h-[30vh] xl:h-[40vh]'>
         <h1 className='text-7xl  text-center  capitalize'>{title}</h1>
