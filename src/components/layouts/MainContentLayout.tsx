@@ -9,6 +9,7 @@ import { setLocale } from "@/redux/slices/localeSlice";
 import moment from "moment";
 import * as yup from "yup";
 import {
+  getAreaCookie,
   removeAreaCookie,
   setAreaCookie,
   setLang,
@@ -105,7 +106,7 @@ const MainContextLayout: FC<Props> = ({
         },
       });
     }
-  }, [lang]);
+  }, [lang, locale.lang]);
 
   // sets cookies if country changed from any page
   useEffect(() => {
@@ -128,12 +129,14 @@ const MainContextLayout: FC<Props> = ({
       triggerGetAreas(id, false).then((r: any) => {
         if (r && r.data && r.data.success && r.data.data) {
           const serverArea: Area | undefined = first(r.data.data);
+          const cookieArea: any = getAreaCookie();
           // if no area // if area.country.id !== currrent country
-          if (
-            area.country.id !== id &&
-            serverArea !== undefined &&
-            serverArea.country
-          ) {
+          if (cookieArea && cookieArea.id && cookieArea.country.id === id) {
+            dispatch(setArea(cookieArea));
+          } else if (area.id !== 0 && area.country.id === id) {
+            dispatch(setArea(area));
+            setAreaCookie(JSON.stringify(area));
+          } else if (serverArea && serverArea.country.id === id) {
             dispatch(setArea(serverArea));
             setAreaCookie(JSON.stringify(serverArea));
           }
