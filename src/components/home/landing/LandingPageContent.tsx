@@ -8,7 +8,7 @@ import {
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setArea } from "@/redux/slices/areaSlice";
 import { Area, Country } from "@/types/queries";
-import { Suspense, useContext, useEffect, useState } from "react";
+import {  useContext, useEffect, useState } from "react";
 import Search from "@/appIcons/landing/search.svg";
 import { Autocomplete, TextField } from "@mui/material";
 import { first, isEmpty } from "lodash";
@@ -90,7 +90,6 @@ export default function ({ countries }: Props) {
     let mappedCountries = countries.map((itm) => {
       return { label: itm.name, id: itm.id };
     });
-
     setAllCountries(mappedCountries);
     if (country.id && allCountries.length === 0) {
       setSelectedCountry(

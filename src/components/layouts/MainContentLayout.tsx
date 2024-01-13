@@ -106,7 +106,7 @@ const MainContextLayout: FC<Props> = ({
         },
       });
     }
-  }, [lang]);
+  }, [lang, locale.lang]);
 
   // sets cookies if country changed from any page
   useEffect(() => {
@@ -131,11 +131,7 @@ const MainContextLayout: FC<Props> = ({
           const serverArea: Area | undefined = first(r.data.data);
           const cookieArea: any = getAreaCookie();
           // if no area // if area.country.id !== currrent country
-          if (
-            cookieArea &&
-            cookieArea.id &&
-            cookieArea.country.id === id
-          ) {
+          if (cookieArea && cookieArea.id && cookieArea.country.id === id) {
             dispatch(setArea(cookieArea));
           } else if (area.id !== 0 && area.country.id === id) {
             dispatch(setArea(area));
