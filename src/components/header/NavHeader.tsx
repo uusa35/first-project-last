@@ -1,12 +1,5 @@
 "use client";
-import {
-  Fragment,
-  forwardRef,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { Fragment, forwardRef, useContext, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
