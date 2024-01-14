@@ -26,7 +26,7 @@ export default function CustomerCarsoul({}: Props) {
   };
 
   return (
-    <Carousel>
+    <Carousel className="h-[50vh]">
       <CarouselSlide />
       <CarouselSlide />
     </Carousel>
