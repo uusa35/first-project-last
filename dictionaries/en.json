@@ -327,7 +327,7 @@
     "us": "us?",
     "learn_about_the_most_important_features_of_the_Picks_app": "learn about the most important features of the Picks app",
     "add_to_cart": "add to cart",
-    "select_up_to": "select up to",
+    "select_up_to": "min order is {{min}} and the max {{max}}",
     "max": "max",
     "min": "min",
     "and": "and",

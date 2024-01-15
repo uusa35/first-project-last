@@ -22,13 +22,17 @@ type Props = {
   enabled: boolean;
   originalGroups: [];
   selections: Selection[] | undefined;
+  confirm: boolean;
+  session_id: string | null;
 };
 const initialState: Props = {
   id: null,
   quantity: 1,
   enabled: false,
   originalGroups: [],
-  selections: undefined
+  selections: undefined,
+  confirm: false,
+  session_id: null
 };
 
 export const productSlice = createSlice({
@@ -44,7 +48,6 @@ export const productSlice = createSlice({
         id: action.payload,
         enabled: true,
         selections: action.payload === state.id ? state.selections : initialState.selections,
-        // originalGroups: action.payload === state.id ? state.originalGroups : initialState.originalGroups
       };
     },
     hideProductModal: (
@@ -55,6 +58,33 @@ export const productSlice = createSlice({
         ...state,
         id: null,
         enabled: false,
+      };
+    },
+    enableConfirm: (
+      state: typeof initialState,
+      action: PayloadAction<void | undefined>
+    ) => {
+      return {
+        ...state,
+        confirm: true,
+      };
+    },
+    disableConfirm: (
+      state: typeof initialState,
+      action: PayloadAction<void | undefined>
+    ) => {
+      return {
+        ...state,
+        confirm: false,
+      };
+    },
+    setSessionId: (
+      state: typeof initialState,
+      action: PayloadAction<string | null>
+    ) => {
+      return {
+        ...state,
+        session_id: action.payload,
       };
     },
     setProductOriginalGroups: (
@@ -71,7 +101,24 @@ export const productSlice = createSlice({
       action: PayloadAction<{ group_id: number | string, choice_id: number | string, qty: number, multi: boolean, required: boolean, min: number, max: number }>
     ) => {
       const { group_id, choice_id, qty, multi, required, min, max } = action.payload;
+      console.log('qty-=------', qty)
       const currentGroup = find(state.selections, (g) => g.choice_group_id === group_id);
+      const filteredCurrentGroup = {
+        choice_group_id: group_id,
+        multi,
+        required,
+        min,
+        max,
+        choices: currentGroup && multi ? (!find(currentGroup.choices, (c) => c.choice_id === choice_id) ? [...filter(currentGroup.choices, c => c.choice_id !== choice_id), {
+          choice_id,
+          quantity: qty > min && qty <= max ? qty : 0
+        }] : [...filter(currentGroup.choices, c => c.choice_id !== choice_id)]) : [{
+          choice_id,
+          quantity: qty > min && qty <= max ? qty : 0
+        }]
+      }
+      const checkChoices = filter(filteredCurrentGroup.choices, c => c.quantity !== 0);
+      const filteredSelections = filter(state.selections, (g) => g.choice_group_id !== group_id);
       const currentSelections = isUndefined(state.selections) ? [{
         choice_group_id: group_id,
         choices: [{
@@ -82,24 +129,11 @@ export const productSlice = createSlice({
         required,
         min,
         max
-      }] :
+      }] : checkChoices.length > 0 ?
         [
-          ...filter(state.selections, (g) => g.choice_group_id !== group_id),
-          {
-            choice_group_id: group_id,
-            multi,
-            required,
-            min,
-            max,
-            choices: currentGroup && multi ? (!find(currentGroup.choices, (c) => c.choice_id === choice_id) ? [...filter(currentGroup.choices, c => c.choice_id !== choice_id), {
-              choice_id,
-              quantity: qty
-            }] : [...filter(currentGroup.choices, c => c.choice_id !== choice_id)]) : [{
-              choice_id,
-              quantity: qty
-            }]
-          }
-        ];
+          ...filteredSelections,
+          filteredCurrentGroup
+        ] : filteredSelections;
       return {
         ...state,
         selections: filter(currentSelections, (s) => s.choices.length !== 0)
@@ -156,5 +190,8 @@ export const {
   addProductChoice,
   removeProductChoice,
   increaseQty,
-  decraseQty
+  decraseQty,
+  enableConfirm,
+  disableConfirm,
+  setSessionId
 } = productSlice.actions;

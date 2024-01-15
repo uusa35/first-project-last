@@ -25,6 +25,7 @@ import Image from "next/image";
 import { map, capitalize, get, isEmpty } from "lodash";
 import CheckBoxInput from "@/components/modals/product/CheckBoxInput";
 import RadioInput from "@/components/modals/product/RadioInput";
+import MeterInput from "@/components/modals/product/MeterInput";
 import { addToCartSchema } from "@/src/validations";
 import { RWebShare } from "react-web-share";
 import { appLinks } from "@/src/links";
@@ -40,7 +41,6 @@ type Inputs = {
 
 export default function () {
   const { t } = useTranslation("trans");
-  const trans: { [key: string]: string } = useContext(MainContext);
   const params: { lang: Locale["lang"]; country?: countriesList } | any =
     useParams!();
   const pathName = usePathname()!;
@@ -67,7 +67,7 @@ export default function () {
     getValues,
     formState: { errors },
   }: any = useForm<any>({
-    resolver: yupResolver(addToCartSchema(data?.data?.groups, trans)),
+    resolver: yupResolver(addToCartSchema(data?.data?.groups, t)),
     defaultValues: {
       offer_id: data?.data?.id,
       quantity: 1,
@@ -102,8 +102,22 @@ export default function () {
     setValue("groups", selections);
   }, [selections]);
 
+  const groupElement = (g: any) => {
+    switch (g.input_type) {
+      case "radio":
+        return <RadioInput group={g} />;
+      case "checkbox":
+        return <CheckBoxInput group={g} />;
+      case "meter":
+        return <MeterInput group={g} />;
+      default:
+        return null;
+    }
+  };
+
+  console.log("errors", errors);
   return (
-    <Transition appear show={enabled} as={Fragment}>
+    <Transition appear show={true} as={Fragment}>
       <Dialog
         as='div'
         className='relative z-50'
@@ -155,13 +169,12 @@ export default function () {
                             data?.data?.vendor?.id?.toString(),
                             data?.data?.name
                           )}`,
-                          title: capitalize(trans.picks),
+                          title: capitalize(t("picks")),
                         }}>
                         <ShareIcon className='w-6 h-6 text-black' />
                       </RWebShare>
                     </div>
                   </div>
-                  <h1>{t("price")}</h1>
                 </Dialog.Title>
                 <form
                   onSubmit={handleSubmit(onSubmit)}
@@ -203,7 +216,7 @@ export default function () {
                               </div>
                               <div className='text-orange-600 capitalize'>
                                 {data.data.percentage}
-                                <span className=''>{trans.off}</span>
+                                <span className=''>{t("off")}</span>
                               </div>
                             </div>
                           </div>
@@ -216,13 +229,7 @@ export default function () {
 
                             {data.data.groups &&
                               map(data.data.groups, (g: any, i) => (
-                                <div key={i}>
-                                  {g.input_type === "radio" ? (
-                                    <RadioInput group={g} />
-                                  ) : (
-                                    <CheckBoxInput group={g} />
-                                  )}
-                                </div>
+                                <div key={i}>{groupElement(g)}</div>
                               ))}
                           </div>
                         </div>
@@ -255,7 +262,7 @@ export default function () {
                         </button>
                       </div>
                       <button className='btn btn-default' type={"submit"}>
-                        {trans.add_to_cart}
+                        {t("add_to_cart")}
                       </button>
                     </div>
                   )}

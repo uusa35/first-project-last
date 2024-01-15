@@ -326,7 +326,7 @@
     "us": "؟",
     "learn_about_the_most_important_features_of_the_Picks_app": "تعرف على أهم مميزات تطبيق بيكس",
     "add_to_cart": "اضف لعربة التسوق",
-    "select_up_to": "اختيار بـ",
+    "select_up_to": "اقل اختيار {{min}} واعلى اختيار {{max}}",
     "max": "حد أقصى",
     "min": "حد أدنى",
     "and": "و",

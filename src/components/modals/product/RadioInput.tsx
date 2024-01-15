@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
 import { addProductChoice } from "@/src/redux/slices/productSlice";
 import { filter, flatten, indexOf, map, pickBy } from "lodash";
 import { useContext } from "react";
+import { useTranslation } from "react-i18next";
 
 const notificationMethods = [
   { id: "email", title: "Email" },
@@ -14,7 +15,7 @@ type Props = {
   group: any;
 };
 export default function ({ group }: Props) {
-  const trans: { [key: string]: string } = useContext(MainContext);
+  const { t } = useTranslation("trans");
   const dispatch = useAppDispatch();
   const {
     product: { selections },
@@ -28,11 +29,14 @@ export default function ({ group }: Props) {
             {group.name} - {group.id}
           </label>
           <p className='text-sm text-gray-400 hidden'>
-            Select up to {group.max_number} & min {group.min_number}
+            {t("select_up_to", {
+              max: group.max_number,
+              min: group.min_number,
+            })}
           </p>
         </div>
         <div className='bg-gray-200 p-2 text-sm rounded-2xl text-gray-600 capitalize'>
-          {trans[group.selection_type]}
+          {t(group.selection_type)}
         </div>
       </div>
       <fieldset className='mt-4'>
@@ -49,7 +53,11 @@ export default function ({ group }: Props) {
                         group_id: group.id,
                         choice_id: c.id,
                         qty: 1,
-                        multi: group.input_type !== "radio",
+                        multi:
+                          (group.input_type === "checkbox" &&
+                            group.max_number > 1) ||
+                          (group.input_input_type !== "checkbox" &&
+                            group.max_number > 1),
                         required: group.selection_type !== "optional",
                         min: group.min_number,
                         max: group.max_number,

@@ -7,6 +7,7 @@ import ProductWidget from "@/components/widgets/ProductWidget";
 import { useContext } from "react";
 import { MainContext } from "@/components/layouts/MainContentLayout";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { useTranslation } from "react-i18next";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");

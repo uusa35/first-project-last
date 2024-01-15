@@ -3,10 +3,14 @@ import { useContext } from "react";
 import { MainContext } from "@/components/layouts/MainContentLayout";
 import { filter, flatten, indexOf, map } from "lodash";
 import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
-import { addProductChoice } from "@/src/redux/slices/productSlice";
+import {
+  addProductChoice,
+  removeProductChoice,
+} from "@/src/redux/slices/productSlice";
+import { useTranslation } from "react-i18next";
 
 export default function ({ group }: { group: any }) {
-  const trans: { [key: string]: string } = useContext(MainContext);
+  const { t } = useTranslation("trans");
   const dispatch = useAppDispatch();
   const {
     product: { selections },
@@ -20,12 +24,14 @@ export default function ({ group }: { group: any }) {
             {group.name} - {group.id}
           </label>
           <p className='text-sm text-gray-400 ltr:text-left rtl:text-right'>
-            {trans.select_up_to} {trans.max} {group.max_number} {trans.and}{" "}
-            {trans.min} {group.min_number}
+            {t("select_up_to", {
+              max: group.max_number,
+              min: group.min_number,
+            })}
           </p>
         </div>
         <div className='bg-gray-200 p-2 text-sm rounded-2xl text-gray-600 capitalize'>
-          {trans[group.selection_type]}
+          {t(group.selection_type)}
         </div>
       </div>
       {group.choices &&
@@ -37,20 +43,40 @@ export default function ({ group }: { group: any }) {
                   <input
                     id='comments'
                     aria-describedby='comments-description'
-                    name={group.id}
-                    onChange={(e) =>
-                      dispatch(
-                        addProductChoice({
-                          group_id: group.id,
-                          choice_id: c.id,
-                          qty: 1,
-                          multi: group.input_type !== "radio",
-                          required: group.selection_type !== "optional",
-                          min: group.min_number,
-                          max: group.max_number,
-                        })
-                      )
-                    }
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        dispatch(
+                          addProductChoice({
+                            group_id: group.id,
+                            choice_id: c.id,
+                            qty: 1,
+                            multi:
+                              (group.input_type === "checkbox" &&
+                                group.max_number > 1) ||
+                              (group.input_input_type !== "checkbox" &&
+                                group.max_number > 1),
+                            required: group.selection_type !== "optional",
+                            min: group.min_number,
+                            max: group.max_number,
+                          })
+                        );
+                      } else {
+                        dispatch(
+                          removeProductChoice({
+                            group_id: group.id,
+                            choice_id: c.id,
+                            multi:
+                              (group.input_type === "checkbox" &&
+                                group.max_number > 1) ||
+                              (group.input_input_type !== "checkbox" &&
+                                group.max_number > 1),
+                            required: group.selection_type !== "optional",
+                            min: group.min_number,
+                            max: group.max_number,
+                          })
+                        );
+                      }
+                    }}
                     type='checkbox'
                     checked={
                       indexOf(
