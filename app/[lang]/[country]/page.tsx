@@ -37,7 +37,7 @@ export default async function ({ params: { lang, country } }: Props) {
   ]);
 
   return (
-    <MainContextLayout trans={trans} showMiddleNav={true}>
+    <MainContextLayout showMiddleNav={true}>
       <HomeContent
         lang={lang}
         country={country}

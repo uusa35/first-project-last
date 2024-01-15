@@ -33,6 +33,7 @@ import TextTrans from "../TextTrans";
 import { randomFillSync } from "crypto";
 import { random, replace, snakeCase, trim } from "lodash";
 import { setAuthentication } from "@/src/redux/slices/authSlice";
+import { useTranslation } from "react-i18next";
 
 type Inputs = {
   phone: string;
@@ -45,7 +46,7 @@ type Inputs = {
 };
 
 export default function () {
-  const trans: { [key: string]: string } = useContext(MainContext);
+  const { t } = useTranslation("trans");
   const {
     appSetting: { showRegisterModal, isLoading, session_id },
     locale: { lang },
@@ -94,7 +95,7 @@ export default function () {
             token: null,
           })
         );
-        dispatch(showSuccessToastMessage({ content: trans.process_success }));
+        dispatch(showSuccessToastMessage({ content: t("process_success") }));
         // dispatch(toggleRegisterModal());
         dispatch(toggleVerficationModal());
         // toggle otp modal
@@ -107,74 +108,68 @@ export default function () {
   return (
     <Transition appear show={showRegisterModal} as={Fragment}>
       <Dialog
-        as="div"
-        className="relative z-50"
-        onClose={() => dispatch(toggleRegisterModal())}
-      >
+        as='div'
+        className='relative z-50'
+        onClose={() => dispatch(toggleRegisterModal())}>
         <Transition.Child
           as={Fragment}
-          enter="ease-out duration-300"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="ease-in duration-200"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-          <div className="fixed inset-0 bg-black/25" />
+          enter='ease-out duration-300'
+          enterFrom='opacity-0'
+          enterTo='opacity-100'
+          leave='ease-in duration-200'
+          leaveFrom='opacity-100'
+          leaveTo='opacity-0'>
+          <div className='fixed inset-0 bg-black/25' />
         </Transition.Child>
-        <div className="fixed inset-0 overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4 text-center">
+        <div className='fixed inset-0 overflow-y-auto'>
+          <div className='flex min-h-full items-center justify-center p-4 text-center'>
             <Transition.Child
               as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 scale-95"
-              enterTo="opacity-100 scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 scale-100"
-              leaveTo="opacity-0 scale-95"
-            >
-              <Dialog.Panel className="w-full max-w-lg transform overflow-hidden rounded-2xl bg-white py-6 px-7 lg:px-0 text-left align-middle shadow-xl transition-all">
+              enter='ease-out duration-300'
+              enterFrom='opacity-0 scale-95'
+              enterTo='opacity-100 scale-100'
+              leave='ease-in duration-200'
+              leaveFrom='opacity-100 scale-100'
+              leaveTo='opacity-0 scale-95'>
+              <Dialog.Panel className='w-full max-w-lg transform overflow-hidden rounded-2xl bg-white py-6 px-7 lg:px-0 text-left align-middle shadow-xl transition-all'>
                 <Dialog.Title
-                  as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900"
-                >
-                  <div className="capitalize flex flex-row justify-center items-center border-b border-gray-200 pb-4">
-                    {trans.signup}
+                  as='h3'
+                  className='text-lg font-medium leading-6 text-gray-900'>
+                  <div className='capitalize flex flex-row justify-center items-center border-b border-gray-200 pb-4'>
+                    {t("signup")}
                     <XMarkIcon
-                      className="absolute ltr:left-4 rtl:right-4 w-6 h-6 text-gray-600 cursor-pointer"
+                      className='absolute ltr:left-4 rtl:right-4 w-6 h-6 text-gray-600 cursor-pointer'
                       onClick={() => dispatch(toggleRegisterModal())}
                     />
                   </div>
                 </Dialog.Title>
-                <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm max-h-[70vh] overflow-y-auto scrollbar-hide">
+                <div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm max-h-[70vh] overflow-y-auto scrollbar-hide'>
                   <LoadingSpinner isLoading={isLoading} />
                   <form
                     onSubmit={handleSubmit(onSubmit)}
                     className={`space-y-4 text-justify ${
                       isLoading && "hidden"
-                    }`}
-                  >
+                    }`}>
                     <div>
-                      <p className="font-semibold mb-2 text-lg">
-                        {trans.welcome_to_picks}
+                      <p className='font-semibold mb-2 text-lg'>
+                        {t("welcome_to_picks")}
                       </p>
-                      <p className="text-picks-text-gray text-sm">
-                        {trans.enter_your_personal_information_to_continue}
+                      <p className='text-picks-text-gray text-sm'>
+                        {t("enter_your_personal_information_to_continue")}
                       </p>
                     </div>
                     <div>
                       <label
-                        htmlFor="name"
-                        className="ltr:text-left rtl:text-right block text-sm font-medium leading-6 text-gray-900 capitalize"
-                      >
-                        {trans.name}
+                        htmlFor='name'
+                        className='ltr:text-left rtl:text-right block text-sm font-medium leading-6 text-gray-900 capitalize'>
+                        {t("name")}
                       </label>
-                      <div className="mt-2">
+                      <div className='mt-2'>
                         <input
-                          id="first_name"
+                          id='first_name'
                           {...register("name")}
-                          type="text"
-                          className="block w-full rounded-md border-0 py-2.5 shadow-sm bg-stone-100 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6"
+                          type='text'
+                          className='block w-full rounded-md border-0 py-2.5 shadow-sm bg-stone-100 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6'
                         />
                         {errors?.name?.message && (
                           <span className={`text-red-700 text-xs capitalize`}>
@@ -185,20 +180,18 @@ export default function () {
                     </div>
                     <div>
                       <label
-                        htmlFor="phone_country_code"
-                        className="ltr:text-left rtl:text-right block text-sm font-medium leading-6 text-gray-900 capitalize"
-                      >
-                        {trans.phone_number}
+                        htmlFor='phone_country_code'
+                        className='ltr:text-left rtl:text-right block text-sm font-medium leading-6 text-gray-900 capitalize'>
+                        {t("phone_number")}
                       </label>
-                      <div className="mt-2">
-                        <div className="flex flex-row gap-x-3">
+                      <div className='mt-2'>
+                        <div className='flex flex-row gap-x-3'>
                           <select
-                            id="phone_country_code"
+                            id='phone_country_code'
                             defaultValue={code}
                             {...register("phone_country_code")}
-                            autoComplete="country-name"
-                            className="block w-1/3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                          >
+                            autoComplete='country-name'
+                            className='block w-1/3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:max-w-xs sm:text-sm sm:leading-6'>
                             {countriesSuccess &&
                               countries.data?.map((c: Country, i: number) => (
                                 <option value={c.code} key={i}>
@@ -207,11 +200,11 @@ export default function () {
                               ))}
                           </select>
                           <input
-                            id="phone"
+                            id='phone'
                             {...register("phone")}
                             // type="number"
-                            name="phone"
-                            className="block w-full rounded-md border-0 py-2.5 shadow-sm bg-stone-100 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6"
+                            name='phone'
+                            className='block w-full rounded-md border-0 py-2.5 shadow-sm bg-stone-100 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6'
                           />
                         </div>
                         {errors?.phone?.message && (
@@ -224,17 +217,16 @@ export default function () {
                     {/* email */}
                     <div>
                       <label
-                        htmlFor="email"
-                        className="ltr:text-left rtl:text-right block text-sm font-medium leading-6 text-gray-900 capitalize"
-                      >
-                        {trans.email} ({trans.optional})
+                        htmlFor='email'
+                        className='ltr:text-left rtl:text-right block text-sm font-medium leading-6 text-gray-900 capitalize'>
+                        {t("email")} ({t("optional")})
                       </label>
-                      <div className="mt-2">
+                      <div className='mt-2'>
                         <input
-                          id="email"
+                          id='email'
                           {...register("email")}
-                          type="text"
-                          className="block w-full rounded-md border-0 py-2.5 shadow-sm bg-stone-100 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6"
+                          type='text'
+                          className='block w-full rounded-md border-0 py-2.5 shadow-sm bg-stone-100 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6'
                         />
                         {errors?.email?.message && (
                           <span className={`text-red-700 text-xs capitalize`}>
@@ -246,17 +238,16 @@ export default function () {
                     {/* password */}
                     <div>
                       <label
-                        htmlFor="password"
-                        className="ltr:text-left rtl:text-right block text-sm font-medium leading-6 text-gray-900 capitalize"
-                      >
-                        {trans.password}
+                        htmlFor='password'
+                        className='ltr:text-left rtl:text-right block text-sm font-medium leading-6 text-gray-900 capitalize'>
+                        {t("password")}
                       </label>
-                      <div className="mt-2">
+                      <div className='mt-2'>
                         <input
-                          id="password"
+                          id='password'
                           {...register("password")}
-                          type="password"
-                          className="block w-full rounded-md border-0 py-2.5 shadow-sm bg-stone-100 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6"
+                          type='password'
+                          className='block w-full rounded-md border-0 py-2.5 shadow-sm bg-stone-100 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6'
                         />
                         {errors?.password?.message && (
                           <span className={`text-red-700 text-xs capitalize`}>
@@ -268,17 +259,16 @@ export default function () {
                     {/* password_confirmation */}
                     <div>
                       <label
-                        htmlFor="password_confirmation"
-                        className="ltr:text-left rtl:text-right block text-sm font-medium leading-6 text-gray-900 capitalize"
-                      >
-                        {trans.password_confirmation}
+                        htmlFor='password_confirmation'
+                        className='ltr:text-left rtl:text-right block text-sm font-medium leading-6 text-gray-900 capitalize'>
+                        {t("password_confirmation")}
                       </label>
-                      <div className="mt-2">
+                      <div className='mt-2'>
                         <input
-                          id="password_confirmation"
+                          id='password_confirmation'
                           {...register("password_confirmation")}
-                          type="password"
-                          className="block w-full rounded-md border-0 py-2.5 shadow-sm bg-stone-100 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6"
+                          type='password'
+                          className='block w-full rounded-md border-0 py-2.5 shadow-sm bg-stone-100 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6'
                         />
                         {errors?.password_confirmation?.message && (
                           <span className={`text-red-700 text-xs capitalize`}>
@@ -288,37 +278,35 @@ export default function () {
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between">
-                      <div className="text-sm leading-6">
-                        <p className="space-x-2 text-gray-600 text-center">
-                          <span>{trans.by_tapping_sign_up}</span>
+                    <div className='flex items-center justify-between'>
+                      <div className='text-sm leading-6'>
+                        <p className='space-x-2 text-gray-600 text-center'>
+                          <span>{t("by_tapping_sign_up")}</span>
                           <Link href={appLinks.terms(lang)}>
-                            {trans.terms_and_conditions}
+                            {t("terms_and_conditions")}
                           </Link>
-                          <span>{trans.and}</span>
+                          <span>{t("and")}</span>
                           <Link href={appLinks.terms(lang)}>
-                            {trans.policies}.
+                            {t("policies")}.
                           </Link>
                         </p>
                       </div>
                     </div>
                     <div>
                       <button
-                        type="submit"
-                        className="flex w-full justify-center btn-default capitalize"
-                      >
-                        {trans.sign_in}
+                        type='submit'
+                        className='flex w-full justify-center btn-default capitalize'>
+                        {t("sign_in")}
                       </button>
                     </div>
                   </form>
 
-                  <div className="capitalize mt-10 text-center text-sm text-gray-500">
-                    {trans.already_have_an_account}
+                  <div className='capitalize mt-10 text-center text-sm text-gray-500'>
+                    {t("already_have_an_account")}
                     <button
                       onClick={() => dispatch(toggleLoginModal())}
-                      className="capitalize px-2 font-semibold leading-6 text-picks-dark hover:text-gray-500"
-                    >
-                      {trans.login}
+                      className='capitalize px-2 font-semibold leading-6 text-picks-dark hover:text-gray-500'>
+                      {t("login")}
                     </button>
                     {/* <button
                       onClick={() => dispatch(toggleVerficationModal())}

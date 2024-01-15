@@ -76,7 +76,7 @@ export default function ({ group }: Props) {
                   {c.name}
                 </label>
               </div>
-              <div>{c.price}</div>
+              <div>{c.price_format}</div>
             </div>
           ))}
         </div>

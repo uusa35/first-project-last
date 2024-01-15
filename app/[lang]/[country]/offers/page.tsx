@@ -50,37 +50,17 @@ export default async function (props: Props) {
   ]);
 
   return (
-    <MainContextLayout
-      trans={trans}
-      
-      
-      showMiddleNav={true}>
+    <MainContextLayout showMiddleNav={true}>
       {categories?.data?.length > 0 && (
-        <CategoriesSlider
-          
-          
-          categories={categories.data}
-        />
+        <CategoriesSlider categories={categories.data} />
       )}
       <div className='px-2 md:px-8'>
-        {slides?.data?.length > 0 && (
-          <AdsSlider slides={slides.data} />
-        )}
+        {slides?.data?.length > 0 && <AdsSlider slides={slides.data} />}
         {products?.data?.length > 0 && (
-          <ProductsSlider
-            
-            
-            products={products.data}
-            title={"Top "}
-          />
+          <ProductsSlider products={products.data} title={"Top "} />
         )}
         {vendors?.data?.length > 0 && (
-          <CustomSlider
-            
-            
-            vendors={vendors.data}
-            title={"vendors"}
-          />
+          <CustomSlider vendors={vendors.data} title={"vendors"} />
         )}
         <Pagination links={products.pagination?.links} />
       </div>

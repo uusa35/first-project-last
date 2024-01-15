@@ -11,13 +11,15 @@ import { Locale, countriesList } from "@/src/types";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import { MainContext } from "../layouts/MainContentLayout";
 import { useParams } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   products: Product[];
 };
 
 export default function FlashOffers({ products }: Props) {
-  const trans: { [key: string]: string } = useContext(MainContext);
+  
+  const { t } = useTranslation('trans');
   const refSlider = useRef<Slider | null>(null);
   const params: { lang: Locale["lang"]; country?: countriesList } | any =
     useParams!();
@@ -85,7 +87,7 @@ export default function FlashOffers({ products }: Props) {
         <div className='flex gap-x-1 items-center'>
           <Flash1 className='w-8 h-8' />
           <p className='text-lg font-semibold capitalize'>
-            {trans["️flash_offers"]}
+            {t("️flash_offers")}
           </p>
         </div>
         <RenderArrows />

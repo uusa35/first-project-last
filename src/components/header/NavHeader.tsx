@@ -1,5 +1,12 @@
 "use client";
-import { Fragment, forwardRef, useContext, useEffect, useState } from "react";
+import {
+  Fragment,
+  forwardRef,
+  useContext,
+  useEffect,
+  useState,
+  useTransition,
+} from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
@@ -43,12 +50,14 @@ import { Popover } from "@headlessui/react";
 import { useLazyGetTopSearchKeysQuery } from "@/src/redux/api";
 import { map } from "lodash";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   showMiddleNav: boolean;
 };
 export default function ({ showMiddleNav = false }: Props) {
   const trans: { [key: string]: string } = useContext(MainContext);
+  const { t } = useTranslation("trans");
   const locales: Locale["lang"][] = ["ar", "en"];
   const {
     locale,
@@ -73,24 +82,23 @@ export default function ({ showMiddleNav = false }: Props) {
     { data: searchKeys, isSuccess: searchKeysSuccess, isFetching },
   ] = useLazyGetTopSearchKeysQuery();
   const navigation: { name: string; href: string }[] = [
-    { name: trans.landing, href: appLinks.landing(lang) },
+    { name: t("landing"), href: appLinks.landing(lang) },
     {
-      name: trans.home,
+      name: t("home"),
       href: appLinks.home(lang, country_code),
     },
     {
-      name: trans.offers,
+      name: t("offers"),
       href: appLinks.offers(lang, country_code, ""),
     },
-    { name: trans.aboutus, href: appLinks.aboutus(lang) },
-    { name: trans.contactus, href: appLinks.contactus(lang) },
-    { name: trans.joinus, href: appLinks.joinus(lang) },
-    { name: trans.faqs, href: appLinks.faqs(lang) },
+    { name: t("aboutus"), href: appLinks.aboutus(lang) },
+    { name: t("contactus"), href: appLinks.contactus(lang) },
+    { name: t("joinus"), href: appLinks.joinus(lang) },
+    { name: t("faqs"), href: appLinks.faqs(lang) },
   ];
   const handleClick = (item: Locale["lang"]) => {
-    dispatch(setLocale(item));
     return router.push(
-      `${changePathName(locale.lang, item, pathName)}?${
+      `${changePathName(lang, item, pathName)}?${
         searchParams && searchParams.toString()
       }`
     );
@@ -149,7 +157,7 @@ export default function ({ showMiddleNav = false }: Props) {
           id='search'
           // defaultValue={searchParams?.get("search") ?? ""}
           className='input-default ltr:pl-10 rtl:pr-10 '
-          placeholder={trans.search}
+          placeholder={t("search")}
           ref={ref}
           {...props}
           onChange={(e) => console.log("e", e.target.value)}
@@ -213,14 +221,14 @@ export default function ({ showMiddleNav = false }: Props) {
                     orderType === "pickup" ? "bg-white" : "bg-gray-100"
                   }`}
                   onClick={() => handleOrderType("pickup")}>
-                  {trans.pickup}
+                  {t("pickup")}
                 </button>
                 <button
                   className={`px-3 py-2 text-black rounded-md capitalize ${
                     orderType === "delivery" ? "bg-white" : "bg-gray-100"
                   }`}
                   onClick={() => handleOrderType("delivery")}>
-                  {trans.delivery}
+                  {t("delivery")}
                 </button>
               </div>
               {area.id !== 0 && <AreaDropDown />}
@@ -314,12 +322,12 @@ export default function ({ showMiddleNav = false }: Props) {
                 <button
                   className={`p-3 w-32 bg-white/80 rounded-lg capitalize text-lg text-black`}
                   onClick={handleRegisterClick}>
-                  {trans.signup}
+                  {t("signup")}
                 </button>
                 <button
                   className={`p-3 w-32 bg-white/30 rounded-lg capitalize text-lg`}
                   onClick={() => dispatch(toggleLoginModal())}>
-                  {trans.login}
+                  {t("login")}
                 </button>
               </>
             )}
@@ -328,7 +336,7 @@ export default function ({ showMiddleNav = false }: Props) {
               className='hidden sm:flex text-sm font-semibold pt-2'>
               <div className='flex flex-row justify-center items-center gap-x-3'>
                 <ArFlag className='w-8 h-8 ' />
-                <div>{lang === "ar" ? trans.english : trans.arabic}</div>
+                <div>{lang === "ar" ? t("english") : t("arabic")}</div>
               </div>
             </button>
           </div>
@@ -379,12 +387,12 @@ export default function ({ showMiddleNav = false }: Props) {
                       <button
                         className='btn-default'
                         onClick={() => dispatch(toggleLoginModal())}>
-                        {trans.login}
+                        {t("login")}
                       </button>
                       <button
                         className='btn-transparent'
                         onClick={() => dispatch(toggleRegisterModal())}>
-                        {trans.signup}
+                        {t("signup")}
                       </button>
                     </div>
                   )}
@@ -405,12 +413,12 @@ export default function ({ showMiddleNav = false }: Props) {
                       <Link
                         href={appLinks.aboutus(lang)}
                         className='-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-black  capitalize'>
-                        {trans.aboutus}
+                        {t("aboutus")}
                       </Link>
                       <Link
                         href={appLinks.joinus(lang)}
                         className='-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-black  capitalize'>
-                        {trans.add_ur_resturant}
+                        {t("add_ur_resturant")}
                       </Link>
                       <ul
                         role='list'

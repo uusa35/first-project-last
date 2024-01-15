@@ -14,7 +14,7 @@ export default async function NotFound() {
   ]);
 
   return (
-    <MainContextLayout trans={trans}>
+    <MainContextLayout >
       <div className='min-h-fit flex flex-col my-[10%] justify-start items-center '>
         <NotFoundImg className='w-[300px] h-auto' />
         <div className='flex flex-col gap-y-8'>

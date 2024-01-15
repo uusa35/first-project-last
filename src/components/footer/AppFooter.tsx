@@ -16,9 +16,11 @@ import Image from "next/image";
 import { useGetAreasQuery } from "@/src/redux/api/areaApi";
 import { map, take } from "lodash";
 import moment from "moment";
+import { useTranslation } from "react-i18next";
 
 export default function () {
-  const trans: { [key: string]: string } = useContext(MainContext);
+  
+  const { t } = useTranslation('trans');
   const params: { lang: Locale["lang"]; country?: countriesList } | any =
     useParams!();
   const { lang } = params;
@@ -39,35 +41,35 @@ export default function () {
             <Link
               href={appLinks.aboutus(lang)}
               className='text-sm font-medium text-white truncate capitalize'>
-              {trans.aboutus}
+              {t('aboutus')}
             </Link>
           </div>
           <div>
             <Link
               href={appLinks.faqs(lang)}
               className='text-sm font-medium text-white truncate capitalize'>
-              {trans.faqs}
+              {t('faqs')}
             </Link>
           </div>
           <div>
             <Link
               href={appLinks.terms(lang)}
               className='text-sm font-medium text-white truncate capitalize'>
-              {trans.privacy_policy}
+              {t('privacy_policy')}
             </Link>
           </div>
           <div>
             <Link
               href={appLinks.terms(lang)}
               className='text-sm font-medium text-white truncate capitalize'>
-              {trans.terms}
+              {t('terms')}
             </Link>
           </div>
           <div>
             <Link
               href={appLinks.contactus(lang)}
               className='text-sm font-medium text-white truncate capitalize'>
-              {trans.contactus}
+              {t('contactus')}
             </Link>
           </div>
         </div>
@@ -109,7 +111,7 @@ export default function () {
               </div>
               <div>
                 <h3 className='text-sm font-medium text-white capitalize'>
-                  {trans.restaurants}
+                  {t('restaurants')}
                 </h3>
                 <ul role='list' className='mt-6 space-y-6'>
                   {isSuccess &&
@@ -133,7 +135,7 @@ export default function () {
             <div className='space-y-12 md:grid md:grid-cols-2 md:gap-8 md:space-y-0'>
               <div>
                 <h3 className='text-sm font-medium text-white capitalize'>
-                  {trans.cuisines}
+                  {t('cuisines')}
                 </h3>
                 <ul role='list' className='mt-6 space-y-6'>
                   {isSuccess &&
@@ -154,7 +156,7 @@ export default function () {
               </div>
               <div>
                 <h3 className='text-sm font-medium text-white capitalize'>
-                  {trans.popular_areas}
+                  {t('popular_areas')}
                 </h3>
                 <ul role='list' className='mt-6 space-y-6'>
                   {params?.country &&
@@ -172,7 +174,7 @@ export default function () {
                     <Link
                       href={appLinks.home(lang, params?.country)}
                       className='text-gray-300 hover:text-white capitalize truncate'>
-                      {trans.more_areas}...
+                      {t('more_areas')}...
                     </Link>
                   </li>
                 </ul>
@@ -203,7 +205,7 @@ export default function () {
           </div>
           <div className='mt-8 md:order-1 md:mt-0'>
             <p className='text-center text-xs leading-5 text-gray-500'>
-              &copy; {moment().format("Y")} {trans.copy_right}
+              &copy; {moment().format("Y")} {t('copy_right')}
             </p>
           </div>
         </div>

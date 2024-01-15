@@ -78,7 +78,7 @@ export default function ({ group }: { group: any }) {
                   </span>
                 </div>
               </div>
-              <div>{c.price}</div>
+              <div>{c.price_format}</div>
             </div>
           </fieldset>
         ))}

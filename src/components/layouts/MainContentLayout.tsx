@@ -33,19 +33,22 @@ import { toggleSideMenu } from "@/src/redux/slices/settingSlice";
 import CartMenu from "@/components/header/CartMenu";
 import ProductModal from "@/src/components/modals/product/ProductModal";
 import { hideProductModal } from "@/src/redux/slices/productSlice";
+import { useTranslation } from "react-i18next";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 type Props = {
   children: React.ReactNode;
-  trans: { [key: string]: string };
+
   showMiddleNav?: boolean;
 };
 
 const MainContext = createContext({});
 const MainContextLayout: FC<Props> = ({
   children,
-  trans,
+
   showMiddleNav = false,
 }) => {
+  const [t, i18n] = useTranslation("trans");
   const {
     locale,
     country: { country_code, id },
@@ -65,44 +68,28 @@ const MainContextLayout: FC<Props> = ({
     data: AppQueryResult<Country[]>;
     isSuccess: boolean;
   }>();
-
   const [triggerGetAreas, { data: areas }] = useLazyGetAreasQuery();
-  const navigation = [
-    { name: trans.home, href: `/${lang}`, label: `home` },
-    {
-      name: trans.subscribers,
-      href: `/${lang}/user?membership=subscription`,
-      label: "subscription",
-    },
-    {
-      name: trans.sponsors,
-      href: `/${lang}/user?membership=sponsorship`,
-      label: "sponsorship",
-    },
-    { name: trans.posts, href: `/${lang}/post`, label: "post" },
-    { name: trans.aboutus, href: `/${lang}/aboutus`, label: "aboutus" },
-    { name: trans.contactus, href: `/${lang}/contactus`, label: "contactus" },
-  ];
 
   useEffect(() => {
     if (lang || lang !== locale.lang) {
       dispatch(setLocale(lang));
+      i18n.changeLanguage(lang);
       setLocaleCookie(lang);
       setLang(lang);
       moment.locale(lang);
       yup.setLocale({
         mixed: {
-          required: trans["validation.required"],
+          required: () => t("validation.required"),
         },
         number: {
-          min: ({ min }) => ({ key: trans["validation.min"], values: { min } }),
-          max: ({ max }) => ({ key: trans["validation.max"], values: { max } }),
+          min: ({ min }) => ({ key: t("validation.min"), values: { min } }),
+          max: ({ max }) => ({ key: t("validation.max"), values: { max } }),
         },
         string: {
-          email: trans["validation.email"],
-          min: ({ min }) => ({ key: trans["validation.min"], values: min }),
-          max: ({ max }) => ({ key: trans["validation.max"], values: max }),
-          matches: trans["validation.matches"],
+          email: () => t("validation.email"),
+          min: ({ min }) => ({ key: t("validation.min"), values: min }),
+          max: ({ max }) => ({ key: t("validation.max"), values: max }),
+          matches: () => t("validation.matches"),
         },
       });
     }
@@ -149,22 +136,20 @@ const MainContextLayout: FC<Props> = ({
   }, [id, lang]);
 
   return (
-    <MainContext.Provider value={trans}>
+    <>
       {/* nav */}
       <NavHeader showMiddleNav={showMiddleNav} />
-      <Suspense>
-        <LoginModal />
-        <RegisterModal />
-        <ForgetPasswordModal />
-        <VerificationModal />
-        <ChangePasswordModal />
-        <ProductModal />
-      </Suspense>
+      <LoginModal />
+      <RegisterModal />
+      <ForgetPasswordModal />
+      <VerificationModal />
+      <ChangePasswordModal />
+      <ProductModal />
       <div className='relative isolate overflow-hidden pt-14 py-8'>
         {children}
       </div>
       <AppFooter />
-    </MainContext.Provider>
+    </>
   );
 };
 

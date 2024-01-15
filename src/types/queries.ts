@@ -86,6 +86,7 @@ export type Area = {
   web_name: {
     ar: string;
     en: string;
+    [key: string]: string;
   };
   [key: string]: any;
 };

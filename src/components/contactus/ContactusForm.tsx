@@ -16,12 +16,14 @@ import InputError from "@/components/InputError";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { MainContext } from "@/components/layouts/MainContentLayout";
 import { useContext } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function () {
   const {
     appSetting: { isLoading },
   } = useAppSelector((state) => state);
-  const trans: { [key: string]: string } = useContext(MainContext);
+
+  const { t } = useTranslation("trans");
   const {
     handleSubmit,
     register,
@@ -62,7 +64,7 @@ export default function () {
             <label
               htmlFor='first_name'
               className='block text-sm font-semibold leading-6 text-gray-900 capitalize'>
-              {trans.first_name}
+              {t("first_name")}
             </label>
             <div className='mt-2.5'>
               <input
@@ -82,7 +84,7 @@ export default function () {
             <label
               htmlFor='last_name'
               className='block text-sm font-semibold leading-6 text-gray-900 capitalize'>
-              {trans.last_name}
+              {t("last_name")}
             </label>
             <div className='mt-2.5'>
               <input
@@ -102,7 +104,7 @@ export default function () {
             <label
               htmlFor='email'
               className='block text-sm font-semibold leading-6 text-gray-900 capitalize'>
-              {trans.email}
+              {t("email")}
             </label>
             <div className='mt-2.5'>
               <input
@@ -122,7 +124,7 @@ export default function () {
             <label
               htmlFor='phone'
               className='block text-sm font-semibold leading-6 text-gray-900 capitalize'>
-              {trans.phone}
+              {t("phone")}
             </label>
             <div className='relative mt-2.5'>
               <div className='absolute inset-y-0 left-0  items-center flex hidden'>
@@ -159,7 +161,7 @@ export default function () {
             <label
               htmlFor='message'
               className='block text-sm font-semibold leading-6 text-gray-900 capitalize'>
-              {trans.message}
+              {t("message")}
             </label>
             <div className='mt-2.5'>
               <textarea
@@ -178,7 +180,7 @@ export default function () {
         </div>
         <div className='mt-10'>
           <button type='submit' className='btn-default w-1/4 '>
-            {trans.let_us_talk}
+            {t("let_us_talk")}
           </button>
         </div>
       </form>

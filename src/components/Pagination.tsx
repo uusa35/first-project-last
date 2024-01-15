@@ -5,13 +5,14 @@ import { MainContext } from "@/layouts/MainContentLayout";
 import { useContext } from "react";
 import { convertSearchParamsToString } from "@/utils/helpers";
 import { useSearchParams } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   links: any;
 };
 
 export default function ({ links }: Props): React.ReactNode {
-  const trans: { [key: string]: string } = useContext(MainContext);
+  const { t } = useTranslation("trans");
   const searchParams: any = useSearchParams();
   function getClassName(active: boolean) {
     if (active) {

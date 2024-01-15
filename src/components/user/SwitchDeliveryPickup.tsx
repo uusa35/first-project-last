@@ -7,9 +7,10 @@ import { MainContext } from "@/components/layouts/MainContentLayout";
 import { Locale } from "@/src/types";
 import BranchListModal from "../modals/vendor/BranchListModal";
 import { showBranchModal } from "@/src/redux/slices/branchSlice";
+import { useTranslation } from "react-i18next";
 
 export default function ({ vendor }: { vendor: any }) {
-  const trans: { [key: string]: string } = useContext(MainContext);
+  const { t } = useTranslation("trans");
   const {
     appSetting: { orderType },
   } = useAppSelector((state) => state);
@@ -28,14 +29,14 @@ export default function ({ vendor }: { vendor: any }) {
             orderType === "pickup" ? "bg-white" : "bg-gray-100"
           }`}
           onClick={() => handleOrderType("pickup")}>
-          {trans.pickup}
+          {t("pickup")}
         </button>
         <button
           className={`w-1/2 px-6 py-4 text-black rounded-full capitalize ${
             orderType === "delivery" ? "bg-white" : "bg-gray-100"
           }`}
           onClick={() => handleOrderType("delivery")}>
-          {trans.delivery}
+          {t("delivery")}
         </button>
       </div>
       <div className='border rounded-xl mt-8'>
@@ -111,7 +112,7 @@ export default function ({ vendor }: { vendor: any }) {
                   </svg>
                 </div>
                 <div className='flex-col justify-center items-center'>
-                  <div className='capitalize'>{trans.order_time}</div>
+                  <div className='capitalize'>{t("order_time")}</div>
                   <div className='text-sm text-gray-400'>
                     {vendor.order_time}
                   </div>
@@ -138,7 +139,7 @@ export default function ({ vendor }: { vendor: any }) {
                   </svg>
                 </div>
                 <div className='flex-col justify-center items-center'>
-                  <div className='capitalize'>{trans.delivery_fees}</div>
+                  <div className='capitalize'>{t("delivery_fees")}</div>
                   <div className='text-sm text-gray-400'>
                     {vendor.delivery_fees}
                   </div>
