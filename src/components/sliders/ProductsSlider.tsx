@@ -7,6 +7,7 @@ import ProductWidget from "@/components/widgets/ProductWidget";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import { useParams } from "next/navigation";
 import { MainContext } from "@/components/layouts/MainContentLayout";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   products: Product[];
@@ -15,7 +16,8 @@ type Props = {
 };
 
 export default function ({ products, title }: Props) {
-  const trans: { [key: string]: string } = useContext(MainContext);
+  
+  const{t} = useTranslation('trans')
   const params: { lang: Locale["lang"]; country?: countriesList } | any =
     useParams!();
   const { lang } = params;
@@ -82,7 +84,7 @@ export default function ({ products, title }: Props) {
       <div className='flex justify-between mb-3'>
         <p className='capitalize'>{title}</p>
         <div className='flex items-center gap-x-3'>
-          <p className='capitalize'>{trans.see_all}</p>
+          <p className='capitalize'>{t('see_all')}</p>
           <RenderArrows />
         </div>
       </div>

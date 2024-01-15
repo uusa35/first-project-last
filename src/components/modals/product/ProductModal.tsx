@@ -22,13 +22,14 @@ import Slider from "react-slick";
 import { HeartIcon, ShareIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useGetProductQuery } from "@/src/redux/api/productApi";
 import Image from "next/image";
-import { map, capitalize } from "lodash";
+import { map, capitalize, get, isEmpty } from "lodash";
 import CheckBoxInput from "@/components/modals/product/CheckBoxInput";
 import RadioInput from "@/components/modals/product/RadioInput";
 import { addToCartSchema } from "@/src/validations";
 import { RWebShare } from "react-web-share";
 import { appLinks } from "@/src/links";
 import { Locale, countriesList } from "@/src/types";
+import { useTranslation } from "react-i18next";
 
 type Inputs = {
   phone: string;
@@ -38,6 +39,7 @@ type Inputs = {
 };
 
 export default function () {
+  const { t } = useTranslation("trans");
   const trans: { [key: string]: string } = useContext(MainContext);
   const params: { lang: Locale["lang"]; country?: countriesList } | any =
     useParams!();
@@ -50,11 +52,12 @@ export default function () {
   } = useAppSelector((state) => state);
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const { data, isSuccess, isFetching } = useGetProductQuery<{
+  const { data, isSuccess, isFetching, error } = useGetProductQuery<{
     data: AppQueryResult<Product>;
     isSuccess: boolean;
     isFetching: boolean;
-  }>(id);
+    error: any;
+  }>(190);
   const {
     handleSubmit,
     register,
@@ -74,10 +77,6 @@ export default function () {
     },
   });
 
-  console.log("errors", errors);
-  // console.log("getValues", getValues());
-  // console.log("state sections", selections);
-
   const settings: any = {
     dots: true,
     speed: 500,
@@ -87,9 +86,10 @@ export default function () {
   };
 
   const onSubmit: SubmitHandler<Inputs> = async (body) => {
-    console.log("body", body);
-    reset();
-    // dispatch(enableLoading());
+    if (isEmpty(errors)) {
+      reset();
+      // dispatch(enableLoading());
+    }
   };
 
   useEffect(() => {
@@ -161,6 +161,7 @@ export default function () {
                       </RWebShare>
                     </div>
                   </div>
+                  <h1>{t("price")}</h1>
                 </Dialog.Title>
                 <form
                   onSubmit={handleSubmit(onSubmit)}
@@ -209,7 +210,7 @@ export default function () {
                           <div className='flex flex-col   divide-y divide-gray-200 py-2 '>
                             <ul className='flex flex-col gap-y-2 text-red-700'>
                               {map(errors, (v) => (
-                                <li>{v.message}</li>
+                                <li className='capitalize'>{v.message}</li>
                               ))}
                             </ul>
 

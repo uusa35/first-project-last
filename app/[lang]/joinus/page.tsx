@@ -147,7 +147,7 @@ export default async function ({ params: { lang } }: Props) {
     await Promise.all([getDictionary(lang), getFaqs()]);
 
   return (
-    <MainContextLayout trans={trans}>
+    <MainContextLayout>
       <PageHeader
         img={JoinusImg.src}
         title={trans.join_us}

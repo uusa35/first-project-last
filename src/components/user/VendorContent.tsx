@@ -13,7 +13,7 @@ function classNames(...classes: any) {
 }
 
 export default function ({ products }: { products: any }) {
-  const trans: { [key: string]: string } = useContext(MainContext);
+  const { t } = useTranslation("trans");
 
   return (
     <div className='mx-auto'>
@@ -24,7 +24,7 @@ export default function ({ products }: { products: any }) {
             <div className='border-b border-gray-200 capitalize'>
               <div className='flex flex-row justify-between items-center'>
                 <div className='line-clamp-1'>
-                  <h1>{trans.full_menu}</h1>
+                  <h1>{t("full_menu")}</h1>
                 </div>
                 <div className='flex flex-row justify-end items-center w-3/5 sm:w-full max-w-sm '>
                   <div className='relative rounded-full shadow-sm me-4 w-full '>
@@ -39,7 +39,7 @@ export default function ({ products }: { products: any }) {
                       name='search'
                       id='search'
                       className='input-default ltr:pl-10 rtl:pr-10 rounded-full capitalize'
-                      placeholder={trans.search_in_menu}
+                      placeholder={t("search_in_menu")}
                     />
                   </div>
                 </div>

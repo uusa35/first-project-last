@@ -3,6 +3,7 @@ import { StarIcon } from "@heroicons/react/20/solid";
 import { useContext, useState } from "react";
 import { MainContext } from "@/components/layouts/MainContentLayout";
 import { keys, omit, take } from "lodash";
+import { useTranslation } from "react-i18next";
 const reviews = {
   average: 4,
   totalCount: 1624,
@@ -34,6 +35,7 @@ function classNames(...classes: any) {
 
 export default function ({ rate, ratings }: { rate: any; ratings: any }) {
   const trans: { [key: string]: string } = useContext(MainContext);
+  const { t } = useTranslation('trans');
   const [showMore, setShowMore] = useState<number>(1);
   
   return (
@@ -41,7 +43,7 @@ export default function ({ rate, ratings }: { rate: any; ratings: any }) {
       <div className=' w-full py-10 sm:pe-6  lg:grid lg:max-w-7xl lg:grid-cols-12 lg:gap-x-8 lg:pe-8 '>
         <div className='lg:col-span-12 w-2/3'>
           <h2 className='text-2xl capitalize font-bold tracking-tight text-gray-900'>
-            {trans.rating_and_reviews}
+            {t('rating_and_reviews')}
           </h2>
 
           <div className='mt-3 flex items-center'>
@@ -68,7 +70,7 @@ export default function ({ rate, ratings }: { rate: any; ratings: any }) {
                   ))}
                 </div>
                 <p className='text-xs text-gray-400 capitalize'>
-                  {rate.count} {trans.ratings}
+                  {rate.count} {t('ratings')}
                 </p>
               </div>
             </div>
@@ -152,7 +154,7 @@ export default function ({ rate, ratings }: { rate: any; ratings: any }) {
             <button
               onClick={() => setShowMore(showMore > 1 ? 1 : 2)}
               className='mt-3 inline-flex btn-gray '>
-              {showMore > 1 ? trans.hide : trans.show_more}
+              {showMore > 1 ? t('hide') : t('show_more')}
             </button>
           </div>
         )}

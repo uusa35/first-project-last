@@ -113,11 +113,7 @@ export const addToCartSchema = (originalGroups: any, trans: any) => {
     flatten(originalGroups),
     "id"
   );
-  // console.log('all original groups', allOrginalGroups);
-  // console.log('originalAllChoices', originalAllChoices);
-  // console.log('required gorups', originalRequiredGroups)
   return yup.lazy((values) => {
-    // console.log('values', values);
     const currentRequiredChoices = map(
       flatten(
         map(filter(filter(values.groups, g => g.selection_type !== 'optional'), "choices"), "choices")
@@ -126,13 +122,10 @@ export const addToCartSchema = (originalGroups: any, trans: any) => {
     )
     const currentRequiredGroups = map(
       flatten(
-        map(filter(values.groups, g => g.selection_type !== 'optional'))
+        filter(values.groups, g => g.required)
       ),
-      "id"
+      "choice_group_id"
     )
-    // console.log('currentRequiredGroups', currentRequiredGroups);
-    // console.log('currentRequiredChoices', currentRequiredChoices)
-    // console.log('isEqual=====>', isEqual(originalRequiredChoices, currentRequiredChoices))
     return yup.object().shape({
       vendor_id: yup.number().required(trans['required']),
       offer_id: yup.number().required(trans['required']),
@@ -149,8 +142,13 @@ export const addToCartSchema = (originalGroups: any, trans: any) => {
         }).when('choice_group_id', (choice_group_id, schema) => {
           return find(originalRequiredGroups, choice_group_id[0]) ? schema.required(trans['required']) : schema;
         })
-      })).when([], (_, schema) => {
-        return originalRequiredGroups.length > 0 ? schema.required(trans['required']) : schema;
+      })).when('offer_id', (_, schema) => {
+        // console.log('values', values.groups)
+        // console.log('original Groups', originalRequiredGroups)
+        // console.log('currentRequiredGroups', currentRequiredGroups)
+        // console.log('the result', originalRequiredGroups.length === currentRequiredGroups.length);
+        const currentRequiredGroupName: any = first(filter(originalGroups, g => g.id === first(originalRequiredGroups)));
+        return originalRequiredGroups.length === currentRequiredGroups.length && !currentRequiredGroupName ? schema.optional() : schema.required(`${trans.group} ${currentRequiredGroupName?.name} ${trans.required}`);
       })
     });
   }

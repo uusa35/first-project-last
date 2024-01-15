@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type Props = Country;
 const initialState: Props = {
-  id: 0,
+  id: 2,
   name: '',
   name_en: 'kuwait',
   country_code: 'kw',
