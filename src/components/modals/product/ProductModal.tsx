@@ -3,7 +3,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
 import {
-  decraseQty,
+  decreaseQty,
   hideProductModal,
   increaseQty,
   setProductOriginalGroups,
@@ -58,7 +58,7 @@ export default function () {
   const { lang } = params;
   const {
     appSetting: { showProductModal, isLoading, session_id },
-    product: { id, selections, quantity, enabled },
+    product: { id, selections, quantity, enabled, total },
     country: { code },
   } = useAppSelector((state) => state);
   const router = useRouter();
@@ -113,6 +113,12 @@ export default function () {
     setValue("groups", selections);
   }, [selections]);
 
+  useEffect(() => {
+    if (total === 0) {
+      reset();
+    }
+  }, [total]);
+
   const groupElement = (g: any) => {
     switch (g.input_type) {
       case "radio":
@@ -139,7 +145,7 @@ export default function () {
   }, [errors]);
 
   return (
-    <Transition appear show={true} as={Fragment}>
+    <Transition appear show={enabled} as={Fragment}>
       <Dialog
         as='div'
         className='relative z-50'
@@ -258,8 +264,9 @@ export default function () {
                       className={`fixed bottom-0 md:-bottom-10 w-full flex flex-row justify-between items-center   rounded-b-2xl p-4 border-t border-gray-200 bg-white`}>
                       <div className={`flex flex-row gap-x-2`}>
                         <button
+                          type='button'
                           disabled={quantity === 0}
-                          onClick={() => dispatch(decraseQty())}
+                          onClick={() => dispatch(decreaseQty())}
                           className={`${
                             quantity === 0 && `opacity-60`
                           } bg-picks-dark  flex justify-center items-center text-white w-6 h-6 rounded-full`}>
@@ -269,6 +276,7 @@ export default function () {
                           {quantity}
                         </div>
                         <button
+                          type='button'
                           onClick={() => dispatch(increaseQty())}
                           disabled={quantity === data.data.stock}
                           className={`${
@@ -277,8 +285,11 @@ export default function () {
                           +
                         </button>
                       </div>
-                      <button className='btn btn-default' type={"submit"}>
-                        {t("add_to_cart")}
+                      <button
+                        className='btn btn-default w-1/3 flex justify-between items-center gap-x-4 px-2'
+                        type={"submit"}>
+                        <div>{t("add_to_cart")}</div>
+                        {total > 0 && <div>{total}</div>}
                       </button>
                     </div>
                   )}

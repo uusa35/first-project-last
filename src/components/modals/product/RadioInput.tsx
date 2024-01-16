@@ -1,6 +1,9 @@
 "use client";
 import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
-import { addRadioChoice } from "@/src/redux/slices/productSlice";
+import {
+  addRadioChoice,
+  removeRadioChoice,
+} from "@/src/redux/slices/productSlice";
 import { filter, flatten, indexOf, map } from "lodash";
 import { useTranslation } from "react-i18next";
 
@@ -16,7 +19,7 @@ export default function ({ group }: Props) {
   const { t } = useTranslation("trans");
   const dispatch = useAppDispatch();
   const {
-    product: { selections },
+    product: { selections , quantity},
   } = useAppSelector((state) => state);
 
   return (
@@ -45,23 +48,42 @@ export default function ({ group }: Props) {
               <div className='flex flex-row justify-start items-center space-x-2'>
                 <input
                   id={c.id}
-                  onChange={(e) =>
-                    dispatch(
-                      addRadioChoice({
-                        group_id: group.id,
-                        choice_id: c.id,
-                        qty: 1,
-                        multi:
-                          (group.input_type === "checkbox" &&
-                            group.max_number > 1) ||
-                          (group.input_input_type !== "checkbox" &&
-                            group.max_number > 1),
-                        required: group.selection_type !== "optional",
-                        min: group.min_number,
-                        max: group.max_number,
-                      })
-                    )
-                  }
+                  disabled={quantity === 0}
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      dispatch(
+                        addRadioChoice({
+                          group_id: group.id,
+                          choice_id: c.id,
+                          qty: 1,
+                          price: c.price,
+                          multi:
+                            (group.input_type === "checkbox" &&
+                              group.max_number > 1) ||
+                            (group.input_input_type !== "checkbox" &&
+                              group.max_number > 1),
+                          required: group.selection_type !== "optional",
+                          min: group.min_number,
+                          max: group.max_number,
+                        })
+                      );
+                    } else {
+                      dispatch(
+                        removeRadioChoice({
+                          group_id: group.id,
+                          choice_id: c.id,
+                          multi:
+                            (group.input_type === "checkbox" &&
+                              group.max_number > 1) ||
+                            (group.input_input_type !== "checkbox" &&
+                              group.max_number > 1),
+                          required: group.selection_type !== "optional",
+                          min: group.min_number,
+                          max: group.max_number,
+                        })
+                      );
+                    }
+                  }}
                   name={
                     group.max_number === 1
                       ? `radio${group.id}`

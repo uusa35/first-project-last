@@ -11,7 +11,7 @@ export default function ({ group }: { group: any }) {
   const { t } = useTranslation("trans");
   const dispatch = useAppDispatch();
   const {
-    product: { selections },
+    product: { selections, quantity },
   } = useAppSelector((state) => state);
 
   return (
@@ -41,6 +41,7 @@ export default function ({ group }: { group: any }) {
                   <input
                     id='comments'
                     aria-describedby='comments-description'
+                    disabled={quantity === 0}
                     onChange={(e) => {
                       if (e.target.checked) {
                         dispatch(
@@ -48,6 +49,7 @@ export default function ({ group }: { group: any }) {
                             group_id: group.id,
                             choice_id: c.id,
                             qty: 1,
+                            price: c.price,
                             multi:
                               (group.input_type === "checkbox" &&
                                 group.max_number > 1) ||

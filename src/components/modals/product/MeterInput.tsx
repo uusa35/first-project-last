@@ -10,11 +10,9 @@ import { useState } from "react";
 
 export default function ({ group }: { group: any }) {
   const { t } = useTranslation("trans");
-  const [quantity, setQuantity] = useState<number>(0);
-
   const dispatch = useAppDispatch();
   const {
-    product: { selections },
+    product: { selections, quantity },
   } = useAppSelector((state) => state);
   // console.log("selections", selections);
 
@@ -26,7 +24,7 @@ export default function ({ group }: { group: any }) {
       return (
         <button
           type='button'
-          disabled={currentChoice?.quantity === 0}
+          disabled={currentChoice?.quantity === 0 || quantity === 0}
           onClick={() =>
             dispatch(
               decreaseMeterChoice({
@@ -35,6 +33,8 @@ export default function ({ group }: { group: any }) {
                   {
                     choice_id: c.id,
                     quantity: 1,
+                    price: c.price,
+                    total: c.price,
                   },
                 ],
                 multi: g.max_number > 1,
@@ -45,7 +45,7 @@ export default function ({ group }: { group: any }) {
             )
           }
           className={`${
-            currentChoice?.quantity === 0 && `bg-red-600`
+            currentChoice?.quantity === 0 || (quantity === 0 && `opacity-40`)
           } bg-picks-dark  flex justify-center items-center text-white w-6 h-6 rounded-full hover:bg-picks-light`}>
           -
         </button>
@@ -54,7 +54,7 @@ export default function ({ group }: { group: any }) {
       return (
         <button
           type='button'
-          disabled={currentChoice?.quantity >= c.max_number}
+          disabled={currentChoice?.quantity >= c.max_number || quantity === 0}
           onClick={() =>
             dispatch(
               increaseMeterChoice({
@@ -63,6 +63,8 @@ export default function ({ group }: { group: any }) {
                   {
                     choice_id: c.id,
                     quantity: 1,
+                    price: c.price,
+                    total: c.price,
                   },
                 ],
                 multi: g.max_number > 1,
@@ -72,7 +74,9 @@ export default function ({ group }: { group: any }) {
               })
             )
           }
-          className={`${currentChoice?.quantity === 0 && `bg-red-600`}
+          className={`${
+            currentChoice?.quantity === 0 || (quantity === 0 && `opacity-40`)
+          }
           } bg-picks-dark  flex justify-center items-center text-white w-6 h-6 rounded-full hover:bg-picks-light`}>
           +
         </button>

@@ -19,8 +19,7 @@ import moment from "moment";
 import { useTranslation } from "react-i18next";
 
 export default function () {
-  
-  const { t } = useTranslation('trans');
+  const { t } = useTranslation("trans");
   const params: { lang: Locale["lang"]; country?: countriesList } | any =
     useParams!();
   const { lang } = params;
@@ -41,35 +40,35 @@ export default function () {
             <Link
               href={appLinks.aboutus(lang)}
               className='text-sm font-medium text-white truncate capitalize'>
-              {t('aboutus')}
+              {t("aboutus")}
             </Link>
           </div>
           <div>
             <Link
               href={appLinks.faqs(lang)}
               className='text-sm font-medium text-white truncate capitalize'>
-              {t('faqs')}
+              {t("faqs")}
             </Link>
           </div>
           <div>
             <Link
               href={appLinks.terms(lang)}
               className='text-sm font-medium text-white truncate capitalize'>
-              {t('privacy_policy')}
+              {t("privacy_policy")}
             </Link>
           </div>
           <div>
             <Link
               href={appLinks.terms(lang)}
               className='text-sm font-medium text-white truncate capitalize'>
-              {t('terms')}
+              {t("terms")}
             </Link>
           </div>
           <div>
             <Link
               href={appLinks.contactus(lang)}
               className='text-sm font-medium text-white truncate capitalize'>
-              {t('contactus')}
+              {t("contactus")}
             </Link>
           </div>
         </div>
@@ -111,12 +110,12 @@ export default function () {
               </div>
               <div>
                 <h3 className='text-sm font-medium text-white capitalize'>
-                  {t('restaurants')}
+                  {t("restaurants")}
                 </h3>
                 <ul role='list' className='mt-6 space-y-6'>
                   {isSuccess &&
-                    pages?.data?.restaurants?.map((item: any) => (
-                      <li key={item.name} className='text-sm'>
+                    pages?.data?.restaurants?.map((item: any, i: number) => (
+                      <li key={i} className='text-sm'>
                         <Link
                           href={appLinks.vendor(
                             lang,
@@ -135,12 +134,12 @@ export default function () {
             <div className='space-y-12 md:grid md:grid-cols-2 md:gap-8 md:space-y-0'>
               <div>
                 <h3 className='text-sm font-medium text-white capitalize'>
-                  {t('cuisines')}
+                  {t("cuisines")}
                 </h3>
                 <ul role='list' className='mt-6 space-y-6'>
                   {isSuccess &&
-                    pages?.data?.cuisines?.map((item: any) => (
-                      <li key={item.name} className='text-sm'>
+                    pages?.data?.cuisines?.map((item: any, i: number) => (
+                      <li key={i} className='text-sm'>
                         <Link
                           href={appLinks.offers(
                             lang,
@@ -156,7 +155,7 @@ export default function () {
               </div>
               <div>
                 <h3 className='text-sm font-medium text-white capitalize'>
-                  {t('popular_areas')}
+                  {t("popular_areas")}
                 </h3>
                 <ul role='list' className='mt-6 space-y-6'>
                   {params?.country &&
@@ -174,7 +173,7 @@ export default function () {
                     <Link
                       href={appLinks.home(lang, params?.country)}
                       className='text-gray-300 hover:text-white capitalize truncate'>
-                      {t('more_areas')}...
+                      {t("more_areas")}...
                     </Link>
                   </li>
                 </ul>
@@ -186,9 +185,9 @@ export default function () {
           className={`mx-auto ${globalMaxWidth} px-4 py-8 mt-8 md:flex md:items-center md:justify-between lg:px-8 border-t border-opacity-20 border-gray-50`}>
           <div className='flex justify-center gap-x-6 md:order-2 '>
             {footerUrlsSuccess &&
-              footerUrls?.data?.links?.map((item: any) => (
+              footerUrls?.data?.links?.map((item: any, i: number) => (
                 <a
-                  key={item.key}
+                  key={i}
                   href={item.link}
                   className='text-gray-400 hover:text-gray-500'>
                   <span className='sr-only'>{item.name}</span>
@@ -205,7 +204,7 @@ export default function () {
           </div>
           <div className='mt-8 md:order-1 md:mt-0'>
             <p className='text-center text-xs leading-5 text-gray-500'>
-              &copy; {moment().format("Y")} {t('copy_right')}
+              &copy; {moment().format("Y")} {t("copy_right")}
             </p>
           </div>
         </div>

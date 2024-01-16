@@ -61,7 +61,7 @@ export default function ({ product }: Props) {
               //   product.id.toString(),
               //   product.name
               // )}
-              onClick={() => dispatch(showProductModal(product.id))}
+              onClick={() => dispatch(showProductModal(product))}
               className='flex items-center gap-x-1 rounded-full bg-[#232323] text-xs text-white px-2 py-px pt-1 w-fit'>
               <Flash />
               <p>Flash Offer</p>
@@ -69,7 +69,7 @@ export default function ({ product }: Props) {
           </div>
         </div>
         <button
-          onClick={() => dispatch(showProductModal(product.id))}
+          onClick={() => dispatch(showProductModal(product))}
           className='bg-white -mt-[10%] rounded-lg p-3 relative w-full'>
           <p className='card-title'>{product.name}</p>
           <p className='card-desc'>{product.description}</p>
