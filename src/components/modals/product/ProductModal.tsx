@@ -1,6 +1,6 @@
 "use client";
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useContext, useEffect, useState } from "react";
+import { Fragment, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
 import {
   decraseQty,
@@ -22,7 +22,18 @@ import Slider from "react-slick";
 import { HeartIcon, ShareIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useGetProductQuery } from "@/src/redux/api/productApi";
 import Image from "next/image";
-import { map, capitalize, get, isEmpty, flatten } from "lodash";
+import {
+  map,
+  capitalize,
+  get,
+  isEmpty,
+  flatten,
+  isArray,
+  take,
+  first,
+  remove,
+  values,
+} from "lodash";
 import CheckBoxInput from "@/components/modals/product/CheckBoxInput";
 import RadioInput from "@/components/modals/product/RadioInput";
 import MeterInput from "@/components/modals/product/MeterInput";
@@ -102,9 +113,6 @@ export default function () {
     setValue("groups", selections);
   }, [selections]);
 
-  console.log("selections", flatten(map(selections, "choices")));
-  console.log("errors", errors);
-
   const groupElement = (g: any) => {
     switch (g.input_type) {
       case "radio":
@@ -117,6 +125,18 @@ export default function () {
         return null;
     }
   };
+
+  useEffect(() => {
+    if (!isEmpty(errors)) {
+      if (errors && errors.groups && isArray(errors.groups)) {
+        const content: any = errors.groups[0].message;
+        dispatch(showErrorToastMessage({ content }));
+      } else {
+        const content: any = first(values(errors));
+        dispatch(showErrorToastMessage({ content: content.message }));
+      }
+    }
+  }, [errors]);
 
   return (
     <Transition appear show={true} as={Fragment}>
@@ -171,7 +191,7 @@ export default function () {
                             data?.data?.vendor?.id?.toString(),
                             data?.data?.name
                           )}`,
-                          title: capitalize(t("picks")),
+                          title: capitalize(`${t("picks")}`),
                         }}>
                         <ShareIcon className='w-6 h-6 text-black' />
                       </RWebShare>
@@ -182,7 +202,7 @@ export default function () {
                   onSubmit={handleSubmit(onSubmit)}
                   className='relative sm:mx-auto overflow-x-auto w-full h-full bg-white  rounded-2xl'>
                   <LoadingSpinner isLoading={!isSuccess} />
-                  {isSuccess && (
+                  {!isFetching && data?.data && (
                     <div>
                       <div className=' overflow-y-auto h-full md:h-[60%] px-4  pb-[20%] md:pb-[10%]'>
                         <div className='justify-center items-center '>
@@ -223,12 +243,6 @@ export default function () {
                             </div>
                           </div>
                           <div className='flex flex-col   divide-y divide-gray-200 py-2 '>
-                            <ul className='flex flex-col gap-y-2 text-red-700'>
-                              {map(errors, (v) => (
-                                <li className='capitalize'>{v.message}</li>
-                              ))}
-                            </ul>
-
                             {data.data.groups &&
                               map(data.data.groups, (g: any, i) => (
                                 <div key={i}>{groupElement(g)}</div>
@@ -239,7 +253,7 @@ export default function () {
                     </div>
                   )}
                   {/* footer */}
-                  {isSuccess && (
+                  {!isFetching && data?.data && (
                     <div
                       className={`fixed bottom-0 md:-bottom-10 w-full flex flex-row justify-between items-center   rounded-b-2xl p-4 border-t border-gray-200 bg-white`}>
                       <div className={`flex flex-row gap-x-2`}>

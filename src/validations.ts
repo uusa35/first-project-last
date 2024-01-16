@@ -1,4 +1,4 @@
-import { filter, find, first, flatten, isEmpty, isEqual, map } from "lodash";
+import { difference, filter, first, flatten, isEmpty, map } from "lodash";
 import * as yup from "yup";
 
 export const loginSchema = yup.object({
@@ -90,7 +90,7 @@ export const contactusSchema = yup.object().shape({
   message: yup.string().required().max(9999),
 });
 
-export const addToCartSchema = (originalGroups: any, trans: any) => {
+export const addToCartSchema = (originalGroups: any, t: any) => {
   const originalAllChoices = map(
     flatten(
       map(filter(originalGroups, "choices"), "choices")
@@ -109,6 +109,11 @@ export const addToCartSchema = (originalGroups: any, trans: any) => {
     ),
     "id"
   );
+  const originalRequiredGroupsByName = map(
+    flatten(
+      filter(originalGroups, g => g.selection_type !== 'optional')
+    ),
+  );
   const allOrginalGroups = map(
     flatten(originalGroups),
     "id"
@@ -126,32 +131,34 @@ export const addToCartSchema = (originalGroups: any, trans: any) => {
       ),
       "choice_group_id"
     )
+
     return yup.object().shape({
-      vendor_id: yup.number().required(trans['required']),
-      offer_id: yup.number().required(trans['required']),
-      quantity: yup.number().required(trans['required']),
+      vendor_id: yup.number().required(t('required')),
+      offer_id: yup.number().required(t('required')),
+      quantity: yup.number().required(t('required')),
       groups: yup.array().of(yup.object().shape({
-        choice_group_id: yup.number().oneOf(allOrginalGroups),
+        choice_group_id: yup.number().oneOf(allOrginalGroups).when('vendor_id', (groups, schema) => {
+          const remainingRequiredGroups = difference(originalRequiredGroups, currentRequiredGroups);
+          // cases are not done :
+          // 1- groups with max 2 or 3 (meters)
+          const remainingRequiredGroupsByNames = first(filter(originalRequiredGroupsByName, g => g.id === first(remainingRequiredGroups)));
+          return originalRequiredGroups.length > currentRequiredGroups.length && !isEmpty(remainingRequiredGroupsByNames) ? schema
+            .max(originalRequiredGroups.length, t('validation.group_required_max', { field: remainingRequiredGroupsByNames.name }))
+            : schema.optional();
+        }),
         choices: yup.array().of(yup.object().shape({
           quantity: yup.number(),
           choice_id: yup.number(),
-        })).required().when('choice_group_id', (choice_group_id, schema) => {
-          const currentGroupId = first(filter(allOrginalGroups, g => g === choice_group_id[0]));
-          const currentGroup = first(filter(originalGroups, g => g.id === currentGroupId));
-          return currentGroupId ? schema.min(currentGroup.min_number, trans['min']).max(currentGroup.max_number, trans['max']) : schema;
-        }).when('choice_group_id', (choice_group_id, schema) => {
-          return find(originalRequiredGroups, choice_group_id[0]) ? schema.required(trans['required']) : schema;
-        })
-      })).required()
-      // .when('offer_id', (_, schema) => {
-      // console.log('values', values.groups)
-      // console.log('original Groups', originalRequiredGroups)
-      // console.log('currentRequiredGroups', currentRequiredGroups)
-      // console.log('the result', originalRequiredGroups.length === currentRequiredGroups.length);
-      // const currentRequiredGroupName: any = first(filter(originalGroups, g => g.id === first(originalRequiredGroups)));
-      // console.log('originalRequiredGroups', originalRequiredGroups)
-      // return originalRequiredGroups.length === currentRequiredGroups.length && !currentRequiredGroupName ? schema.optional() : schema.required(`${trans.group} ${currentRequiredGroupName?.name} ${trans.required}`);
-      // })
+        }))
+        //   .when('choice_group_id', (choice_group_id, schema) => {
+        //   const currentGroupId = first(filter(allOrginalGroups, g => g === choice_group_id[0]));
+        //   const currentGroupByName = first(filter(originalRequiredGroupsByName, g => g.id === currentGroupId));
+        //   return currentGroupId ? schema.min(currentGroupByName.min_number, t('validation.group_required_min', { field: currentGroupByName.name }))
+        //     .max(currentGroupByName.max_number, t('validation.group_required_max', { field: currentGroupByName.name })) : schema;
+        // })
+      })).when('offer_id', (_, schema) => {
+        return originalRequiredGroupsByName.length > 0 ? schema.required(t('validation.required', { field: originalRequiredGroupsByName[0].name })) : schema;
+      })
     });
   }
   )

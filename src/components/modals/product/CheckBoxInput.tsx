@@ -1,13 +1,9 @@
 "use client";
-import { useContext } from "react";
-import { MainContext } from "@/components/layouts/MainContentLayout";
 import { filter, flatten, indexOf, map } from "lodash";
 import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
 import {
   addCheckoutChoice,
-  addProductChoice,
   removeCheckoutChoice,
-  removeProductChoice,
 } from "@/src/redux/slices/productSlice";
 import { useTranslation } from "react-i18next";
 

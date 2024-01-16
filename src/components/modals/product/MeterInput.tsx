@@ -1,10 +1,12 @@
 "use client";
-import { useContext, useState } from "react";
-import { MainContext } from "@/components/layouts/MainContentLayout";
 import { filter, first, flatten, indexOf, isUndefined, map } from "lodash";
 import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
-import { addProductChoice } from "@/src/redux/slices/productSlice";
 import { useTranslation } from "react-i18next";
+import {
+  decreaseMeterChoice,
+  increaseMeterChoice,
+} from "@/src/redux/slices/productSlice";
+import { useState } from "react";
 
 export default function ({ group }: { group: any }) {
   const { t } = useTranslation("trans");
@@ -20,23 +22,22 @@ export default function ({ group }: { group: any }) {
     const currentChoice = first(
       filter(map(selections, "choices"), (choice) => choice.id === c.id)
     );
-    // console.log("currentChoice", currentChoice);
-    // console.log("the choice", c);
     if (type === "sub") {
       return (
         <button
-          // disabled={!c || currentChoice?.quantity < c.quantity}
+          type='button'
+          disabled={currentChoice?.quantity === 0}
           onClick={() =>
             dispatch(
-              addProductChoice({
-                group_id: g.id,
-                choice_id: c.id,
-                qty: !isUndefined(currentChoice)
-                  ? currentChoice.quantity - 1 >= g.min_number
-                    ? currentChoice.quantity - 1
-                    : 1
-                  : 0,
-                multi: true,
+              decreaseMeterChoice({
+                choice_group_id: g.id,
+                choices: [
+                  {
+                    choice_id: c.id,
+                    quantity: 1,
+                  },
+                ],
+                multi: g.max_number > 1,
                 required: g.selection_type !== "optional",
                 min: g.min_number,
                 max: g.max_number,
@@ -44,44 +45,34 @@ export default function ({ group }: { group: any }) {
             )
           }
           className={`${
-            currentChoice?.quantity < c.quantity && `opacity-60`
+            currentChoice?.quantity === 0 && `bg-red-600`
           } bg-picks-dark  flex justify-center items-center text-white w-6 h-6 rounded-full hover:bg-picks-light`}>
           -
         </button>
       );
     } else {
-      console.log(
-        "adding",
-        c.id + !isUndefined(currentChoice) &&
-          currentChoice?.quantity >= g.max_number
-      );
       return (
         <button
-          disabled={
-            !isUndefined(currentChoice) &&
-            currentChoice?.quantity >= g.max_number
-          }
+          type='button'
+          disabled={currentChoice?.quantity >= c.max_number}
           onClick={() =>
             dispatch(
-              addProductChoice({
-                group_id: g.id,
-                choice_id: c.id,
-                qty: !isUndefined(currentChoice)
-                  ? currentChoice.quantity + 1 <= g.max_number
-                    ? currentChoice.quantity + 1
-                    : 1
-                  : 1,
-                multi: true,
+              increaseMeterChoice({
+                choice_group_id: g.id,
+                choices: [
+                  {
+                    choice_id: c.id,
+                    quantity: 1,
+                  },
+                ],
+                multi: g.max_number > 1,
                 required: g.selection_type !== "optional",
                 min: g.min_number,
                 max: g.max_number,
               })
             )
           }
-          className={`${
-            currentChoice &&
-            currentChoice?.quantity >= g.max_number &&
-            `bg-red-600`
+          className={`${currentChoice?.quantity === 0 && `bg-red-600`}
           } bg-picks-dark  flex justify-center items-center text-white w-6 h-6 rounded-full hover:bg-picks-light`}>
           +
         </button>
@@ -96,7 +87,7 @@ export default function ({ group }: { group: any }) {
           <label className='text-base text-gra)y-900 ltr:text-left rtl:text-right'>
             {group.name} - {group.id} - {group.input_type}
           </label>
-          <p className='text-sm text-gray-400 ltr:text-left rtl:text-right'>
+          <p className='text-sm text-gray-400 ltr:text-left rtl:text-right capitalize'>
             {t("select_up_to", {
               max: group.max_number,
               min: group.min_number,
