@@ -135,21 +135,23 @@ export const addToCartSchema = (originalGroups: any, trans: any) => {
         choices: yup.array().of(yup.object().shape({
           quantity: yup.number(),
           choice_id: yup.number(),
-        })).when('choice_group_id', (choice_group_id, schema) => {
+        })).required().when('choice_group_id', (choice_group_id, schema) => {
           const currentGroupId = first(filter(allOrginalGroups, g => g === choice_group_id[0]));
           const currentGroup = first(filter(originalGroups, g => g.id === currentGroupId));
           return currentGroupId ? schema.min(currentGroup.min_number, trans['min']).max(currentGroup.max_number, trans['max']) : schema;
         }).when('choice_group_id', (choice_group_id, schema) => {
           return find(originalRequiredGroups, choice_group_id[0]) ? schema.required(trans['required']) : schema;
         })
-      })).when('offer_id', (_, schema) => {
-        // console.log('values', values.groups)
-        // console.log('original Groups', originalRequiredGroups)
-        // console.log('currentRequiredGroups', currentRequiredGroups)
-        // console.log('the result', originalRequiredGroups.length === currentRequiredGroups.length);
-        const currentRequiredGroupName: any = first(filter(originalGroups, g => g.id === first(originalRequiredGroups)));
-        return originalRequiredGroups.length === currentRequiredGroups.length && !currentRequiredGroupName ? schema.optional() : schema.required(`${trans.group} ${currentRequiredGroupName?.name} ${trans.required}`);
-      })
+      })).required()
+      // .when('offer_id', (_, schema) => {
+      // console.log('values', values.groups)
+      // console.log('original Groups', originalRequiredGroups)
+      // console.log('currentRequiredGroups', currentRequiredGroups)
+      // console.log('the result', originalRequiredGroups.length === currentRequiredGroups.length);
+      // const currentRequiredGroupName: any = first(filter(originalGroups, g => g.id === first(originalRequiredGroups)));
+      // console.log('originalRequiredGroups', originalRequiredGroups)
+      // return originalRequiredGroups.length === currentRequiredGroups.length && !currentRequiredGroupName ? schema.optional() : schema.required(`${trans.group} ${currentRequiredGroupName?.name} ${trans.required}`);
+      // })
     });
   }
   )

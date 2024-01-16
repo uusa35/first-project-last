@@ -22,7 +22,7 @@ import Slider from "react-slick";
 import { HeartIcon, ShareIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useGetProductQuery } from "@/src/redux/api/productApi";
 import Image from "next/image";
-import { map, capitalize, get, isEmpty } from "lodash";
+import { map, capitalize, get, isEmpty, flatten } from "lodash";
 import CheckBoxInput from "@/components/modals/product/CheckBoxInput";
 import RadioInput from "@/components/modals/product/RadioInput";
 import MeterInput from "@/components/modals/product/MeterInput";
@@ -73,7 +73,7 @@ export default function () {
       quantity: 1,
       vendor_id: data?.data?.vendor?.id,
       notes: "hello",
-      groups: selections,
+      groups: [],
     },
   });
 
@@ -102,6 +102,9 @@ export default function () {
     setValue("groups", selections);
   }, [selections]);
 
+  console.log("selections", flatten(map(selections, "choices")));
+  console.log("errors", errors);
+
   const groupElement = (g: any) => {
     switch (g.input_type) {
       case "radio":
@@ -115,7 +118,6 @@ export default function () {
     }
   };
 
-  console.log("errors", errors);
   return (
     <Transition appear show={true} as={Fragment}>
       <Dialog

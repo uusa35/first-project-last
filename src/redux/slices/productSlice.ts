@@ -96,28 +96,12 @@ export const productSlice = createSlice({
         originalGroups: action.payload
       };
     },
-    addProductChoice: (
+    addRadioChoice: (
       state: typeof initialState,
       action: PayloadAction<{ group_id: number | string, choice_id: number | string, qty: number, multi: boolean, required: boolean, min: number, max: number }>
     ) => {
       const { group_id, choice_id, qty, multi, required, min, max } = action.payload;
-      console.log('qty-=------', qty)
       const currentGroup = find(state.selections, (g) => g.choice_group_id === group_id);
-      const filteredCurrentGroup = {
-        choice_group_id: group_id,
-        multi,
-        required,
-        min,
-        max,
-        choices: currentGroup && multi ? (!find(currentGroup.choices, (c) => c.choice_id === choice_id) ? [...filter(currentGroup.choices, c => c.choice_id !== choice_id), {
-          choice_id,
-          quantity: qty > min && qty <= max ? qty : 0
-        }] : [...filter(currentGroup.choices, c => c.choice_id !== choice_id)]) : [{
-          choice_id,
-          quantity: qty > min && qty <= max ? qty : 0
-        }]
-      }
-      const checkChoices = filter(filteredCurrentGroup.choices, c => c.quantity !== 0);
       const filteredSelections = filter(state.selections, (g) => g.choice_group_id !== group_id);
       const currentSelections = isUndefined(state.selections) ? [{
         choice_group_id: group_id,
@@ -129,11 +113,158 @@ export const productSlice = createSlice({
         required,
         min,
         max
-      }] : checkChoices.length > 0 ?
+      }] :
         [
           ...filteredSelections,
-          filteredCurrentGroup
-        ] : filteredSelections;
+          {
+            choice_group_id: group_id,
+            multi,
+            required,
+            min,
+            max,
+            choices: currentGroup && multi ? (!find(currentGroup.choices, (c) => c.choice_id === choice_id) ? [...filter(currentGroup.choices, c => c.choice_id !== choice_id), {
+              choice_id,
+              quantity: qty > min && qty <= max ? qty : 1
+            }] : [...filter(currentGroup.choices, c => c.choice_id !== choice_id)]) : [{
+              choice_id,
+              quantity: qty >= min && qty <= max ? qty : 1
+            }]
+          }
+        ];
+      return {
+        ...state,
+        selections: filter(currentSelections, (s) => s.choices.length !== 0)
+      };
+    },
+    removeRadioChoice: (
+      state: typeof initialState,
+      action: PayloadAction<{ group_id: number | string, choice_id: number | string, multi: boolean, required: boolean, min: number, max: number }>
+    ) => {
+      const { group_id, choice_id, multi, required, min, max } = action.payload;
+      const currentGroup = first(filter(state.selections, (g) => g.choice_group_id === group_id));
+      const currentSelections = currentGroup && currentGroup.multi ?
+        [
+          ...filter(state.selections, (g) => g.choice_group_id !== group_id),
+          currentGroup && currentGroup.multi && {
+            choice_group_id: group_id,
+            choices: filter(currentGroup.choices, (c) => c.choice_id !== choice_id),
+            multi,
+            required,
+            min,
+            max,
+          }
+        ] : filter(state.selections, (g) => g.choice_group_id !== group_id);
+      return {
+        ...state,
+        selections: currentSelections
+      };
+    },
+    addCheckoutChoice: (
+      state: typeof initialState,
+      action: PayloadAction<{ group_id: number | string, choice_id: number | string, qty: number, multi: boolean, required: boolean, min: number, max: number }>
+    ) => {
+      const { group_id, choice_id, qty, multi, required, min, max } = action.payload;
+      const currentGroup = find(state.selections, (g) => g.choice_group_id === group_id);
+      const filteredSelections = filter(state.selections, (g) => g.choice_group_id !== group_id);
+      const currentSelections = isUndefined(state.selections) ? [{
+        choice_group_id: group_id,
+        choices: [{
+          choice_id,
+          quantity: qty
+        }],
+        multi,
+        required,
+        min,
+        max
+      }] :
+        [
+          ...filteredSelections,
+          {
+            choice_group_id: group_id,
+            multi,
+            required,
+            min,
+            max,
+            choices: currentGroup && multi ? (!find(currentGroup.choices, (c) => c.choice_id === choice_id) ? [...filter(currentGroup.choices, c => c.choice_id !== choice_id), {
+              choice_id,
+              quantity: qty > min && qty <= max ? qty : 1
+            }] : [...filter(currentGroup.choices, c => c.choice_id !== choice_id)]) : [{
+              choice_id,
+              quantity: qty >= min && qty <= max ? qty : 1
+            }]
+          }
+        ];
+      return {
+        ...state,
+        selections: filter(currentSelections, (s) => s.choices.length !== 0)
+      };
+    },
+    removeCheckoutChoice: (
+      state: typeof initialState,
+      action: PayloadAction<{ group_id: number | string, choice_id: number | string, multi: boolean, required: boolean, min: number, max: number }>
+    ) => {
+      const { group_id, choice_id, multi, required, min, max } = action.payload;
+      const currentGroup = first(filter(state.selections, (g) => g.choice_group_id === group_id));
+      const currentSelections = currentGroup && currentGroup.multi ?
+        [
+          ...filter(state.selections, (g) => g.choice_group_id !== group_id),
+          currentGroup && currentGroup.multi && {
+            choice_group_id: group_id,
+            choices: filter(currentGroup.choices, (c) => c.choice_id !== choice_id),
+            multi,
+            required,
+            min,
+            max,
+          }
+        ] : filter(state.selections, (g) => g.choice_group_id !== group_id);
+      return {
+        ...state,
+        selections: currentSelections
+      };
+    },
+    addMeterChoice: (
+      state: typeof initialState,
+      action: PayloadAction<{ group_id: number | string, choice_id: number | string, qty: number, multi: boolean, required: boolean, min: number, max: number }>
+    ) => { },
+    removeMeterChoice: (
+      state: typeof initialState,
+      action: PayloadAction<{ group_id: number | string, choice_id: number | string, qty: number, multi: boolean, required: boolean, min: number, max: number }>
+    ) => { },
+    addProductChoice: (
+      state: typeof initialState,
+      action: PayloadAction<{ group_id: number | string, choice_id: number | string, qty: number, multi: boolean, required: boolean, min: number, max: number }>
+    ) => {
+      const { group_id, choice_id, qty, multi, required, min, max } = action.payload;
+      const currentGroup = find(state.selections, (g) => g.choice_group_id === group_id);
+      const filteredSelections = filter(state.selections, (g) => g.choice_group_id !== group_id);
+      const currentSelections = isUndefined(state.selections) ? [{
+        choice_group_id: group_id,
+        choices: [{
+          choice_id,
+          quantity: qty
+        }],
+        multi,
+        required,
+        min,
+        max
+      }] :
+        [
+          ...filteredSelections,
+          {
+            choice_group_id: group_id,
+            multi,
+            required,
+            min,
+            max,
+            choices: currentGroup && multi ? (!find(currentGroup.choices, (c) => c.choice_id === choice_id) ? [...filter(currentGroup.choices, c => c.choice_id !== choice_id), {
+              choice_id,
+              quantity: qty > min && qty <= max ? qty : 1
+            }] : [...filter(currentGroup.choices, c => c.choice_id !== choice_id)]) : [{
+              choice_id,
+              quantity: qty >= min && qty <= max ? qty : 1
+            }]
+          }
+        ];
       return {
         ...state,
         selections: filter(currentSelections, (s) => s.choices.length !== 0)
@@ -189,6 +320,12 @@ export const {
   setProductOriginalGroups,
   addProductChoice,
   removeProductChoice,
+  addRadioChoice,
+  removeRadioChoice,
+  addCheckoutChoice,
+  removeCheckoutChoice,
+  addMeterChoice,
+  removeMeterChoice,
   increaseQty,
   decraseQty,
   enableConfirm,

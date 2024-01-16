@@ -1,7 +1,10 @@
 "use client";
 import { MainContext } from "@/components/layouts/MainContentLayout";
 import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
-import { addProductChoice } from "@/src/redux/slices/productSlice";
+import {
+  addProductChoice,
+  addRadioChoice,
+} from "@/src/redux/slices/productSlice";
 import { filter, flatten, indexOf, map, pickBy } from "lodash";
 import { useContext } from "react";
 import { useTranslation } from "react-i18next";
@@ -26,9 +29,9 @@ export default function ({ group }: Props) {
       <div className='flex flex-1 justify-between items-center'>
         <div>
           <label className='text-base font-semibold text-gray-900'>
-            {group.name} - {group.id}
+            {group.name} - {group.id} - {group.input_type}
           </label>
-          <p className='text-sm text-gray-400 hidden'>
+          <p className='text-sm text-gray-400 ltr:text-left rtl:text-right capitalize'>
             {t("select_up_to", {
               max: group.max_number,
               min: group.min_number,
@@ -49,7 +52,7 @@ export default function ({ group }: Props) {
                   id={c.id}
                   onChange={(e) =>
                     dispatch(
-                      addProductChoice({
+                      addRadioChoice({
                         group_id: group.id,
                         choice_id: c.id,
                         qty: 1,
@@ -64,9 +67,13 @@ export default function ({ group }: Props) {
                       })
                     )
                   }
-                  name={group.id}
+                  name={
+                    group.max_number === 1
+                      ? `radio${group.id}`
+                      : `checkbox${group.id}[]`
+                  }
                   value={c.id}
-                  type='radio'
+                  type={group.max_number === 1 ? "radio" : `checkbox`}
                   defaultChecked={
                     indexOf(
                       map(
@@ -81,7 +88,7 @@ export default function ({ group }: Props) {
                 <label
                   htmlFor={c.id}
                   className='ps-2 block text-sm font-medium leading-6 text-gray-900'>
-                  {c.name}
+                  {c.name} - {c.id}
                 </label>
               </div>
               <div>{c.price_format}</div>

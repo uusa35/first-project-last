@@ -4,7 +4,9 @@ import { MainContext } from "@/components/layouts/MainContentLayout";
 import { filter, flatten, indexOf, map } from "lodash";
 import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
 import {
+  addCheckoutChoice,
   addProductChoice,
+  removeCheckoutChoice,
   removeProductChoice,
 } from "@/src/redux/slices/productSlice";
 import { useTranslation } from "react-i18next";
@@ -21,7 +23,7 @@ export default function ({ group }: { group: any }) {
       <div className='flex pb-2 flex-1 justify-between items-center'>
         <div className='flex flex-col '>
           <label className='text-base text-gray-900 ltr:text-left rtl:text-right'>
-            {group.name} - {group.id}
+            {group.name} - {group.id} - {group.input_type}
           </label>
           <p className='text-sm text-gray-400 ltr:text-left rtl:text-right'>
             {t("select_up_to", {
@@ -46,7 +48,7 @@ export default function ({ group }: { group: any }) {
                     onChange={(e) => {
                       if (e.target.checked) {
                         dispatch(
-                          addProductChoice({
+                          addCheckoutChoice({
                             group_id: group.id,
                             choice_id: c.id,
                             qty: 1,
@@ -62,7 +64,7 @@ export default function ({ group }: { group: any }) {
                         );
                       } else {
                         dispatch(
-                          removeProductChoice({
+                          removeCheckoutChoice({
                             group_id: group.id,
                             choice_id: c.id,
                             multi:
