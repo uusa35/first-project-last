@@ -16,7 +16,7 @@ export const apiSlice = createApi({
         locale,
         country,
         area,
-        appSetting: { orderType },
+        product: { orderType },
         auth: { token }
       } = getState() as RootState;
       headers.set("Access-Control-Allow-Origin", "*");
@@ -30,7 +30,7 @@ export const apiSlice = createApi({
         headers.set("X-Country", country.id);
       }
       if (area && area.id !== 0) {
-      headers.set("X-AREA", area.id);
+        headers.set("X-AREA", area.id);
       }
       headers.set("X-TYPE", orderType);
       headers.set("RTK", "RTK");

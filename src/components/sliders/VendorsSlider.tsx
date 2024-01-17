@@ -56,9 +56,9 @@ export default function ({ vendors, title }: Props) {
           ref={(c) => (refSlider.current = c)}
           rtl={lang === "ar"}>
           {vendors &&
-            vendors.map((itm) => (
+            vendors.map((itm, i) => (
               <Link
-                key={itm.id}
+                key={i}
                 href={appLinks.vendor(
                   lang,
                   params?.country,

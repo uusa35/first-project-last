@@ -8,6 +8,7 @@ import { useContext } from "react";
 import { MainContext } from "@/components/layouts/MainContentLayout";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { useTranslation } from "react-i18next";
+import OfferWidget from "@/components/widgets/OfferWidget";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
@@ -46,8 +47,9 @@ export default function ({ products }: { products: any }) {
                 </div>
               </div>
               <Tab.List className='-mb-px flex gap-x-8'>
-                {map(products, (c, i) => (
+                {map(products, (c, i: number) => (
                   <Tab
+                    key={i}
                     className={({ selected }) =>
                       classNames(
                         selected
@@ -67,7 +69,7 @@ export default function ({ products }: { products: any }) {
                   <div className='grid grid-cols-2 xl:grid-cols-3 my-4'>
                     {map(c.offers, (p, i) => (
                       <div className={"col-span-1 me-2"} key={i}>
-                        <ProductWidget product={p} />
+                        <OfferWidget product={p} />
                       </div>
                     ))}
                   </div>

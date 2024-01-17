@@ -25,13 +25,13 @@ import { MainContext } from "@/layouts/MainContentLayout";
 import { useRouter } from "next/navigation";
 import { setLocale } from "@/redux/slices/localeSlice";
 import {
-  changeOrderType,
   toggleCartMenu,
   toggleLoginModal,
   toggleRegisterModal,
   toggleSideMenu,
   toggleVerficationModal,
 } from "@/src/redux/slices/settingSlice";
+import { changeOrderType } from "@/src/redux/slices/productSlice";
 import { getAuth, getCountryNameCookie, setOrderType } from "@/app/actions";
 import LogoDark from "@/appImages/logo_dark.svg";
 import LogoLight from "@/appImages/logo_light.svg";
@@ -63,7 +63,8 @@ export default function ({ showMiddleNav = false }: Props) {
     locale,
     area,
     country: { country_code },
-    appSetting: { orderType, sideMenuOpen },
+    appSetting: { sideMenuOpen },
+    product: { orderType },
     auth: { token },
   } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
@@ -400,9 +401,9 @@ export default function ({ showMiddleNav = false }: Props) {
                 <div className='mt-6 flow-root '>
                   <div className='-my-6 '>
                     <div className='py-6 '>
-                      {navigation.map((item) => (
+                      {navigation.map((item, i: number) => (
                         <Link
-                          key={item.name}
+                          key={i}
                           href={item.href}
                           className='-mx-3 block border-b border-gray-200 p-3 py-4  text-base font-semibold leading-7 text-black hover:bg-gray-100 capitalize'>
                           {item.name}

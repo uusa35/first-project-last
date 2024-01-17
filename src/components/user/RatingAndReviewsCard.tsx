@@ -2,7 +2,7 @@
 import { StarIcon } from "@heroicons/react/20/solid";
 import { useContext, useState } from "react";
 import { MainContext } from "@/components/layouts/MainContentLayout";
-import { keys, omit, take } from "lodash";
+import { keys, omit, round, take } from "lodash";
 import { useTranslation } from "react-i18next";
 const reviews = {
   average: 4,
@@ -35,15 +35,17 @@ function classNames(...classes: any) {
 
 export default function ({ rate, ratings }: { rate: any; ratings: any }) {
   const trans: { [key: string]: string } = useContext(MainContext);
-  const { t } = useTranslation('trans');
+  const { t } = useTranslation("trans");
   const [showMore, setShowMore] = useState<number>(1);
-  
+
+  const handleClick = (k: number) => alert("rating");
+
   return (
     <div className='bg-white'>
       <div className=' w-full py-10 sm:pe-6  lg:grid lg:max-w-7xl lg:grid-cols-12 lg:gap-x-8 lg:pe-8 '>
         <div className='lg:col-span-12 w-2/3'>
           <h2 className='text-2xl capitalize font-bold tracking-tight text-gray-900'>
-            {t('rating_and_reviews')}
+            {t("rating_and_reviews")}
           </h2>
 
           <div className='mt-3 flex items-center'>
@@ -56,7 +58,7 @@ export default function ({ rate, ratings }: { rate: any; ratings: any }) {
             <h3 className='sr-only'>Review data</h3>
             <div className='col-span-1'>
               <div className='flex flex-col items-center gap-y-4'>
-                <h1 className='text-2xl sm:text-4xl'>{rate.avg}</h1>
+                <h1 className='text-2xl sm:text-4xl'>{round(rate.avg, 2)}</h1>
                 <div className='flex flex-row'>
                   {[0, 1, 2, 3, 4].map((rating, i) => (
                     <StarIcon
@@ -70,26 +72,29 @@ export default function ({ rate, ratings }: { rate: any; ratings: any }) {
                   ))}
                 </div>
                 <p className='text-xs text-gray-400 capitalize'>
-                  {rate.count} {t('ratings')}
+                  {rate.count} {t("ratings")}
                 </p>
               </div>
             </div>
 
             <dl className='col-span-2 space-y-3'>
               {keys(omit(rate, ["avg", "count"])).map((k, i) => (
-                <div key={i} className='flex items-center text-sm'>
+                <div key={i} className='flex items-center text-sm '>
                   <dt className='flex flex-1 items-center'>
-                    <p className='w-3 font-medium text-gray-900'>
+                    <button
+                      onClick={() => handleClick(k)}
+                      className='w-3 font-medium text-gray-900'>
                       {k}
                       <span className='sr-only'> star reviews</span>
-                    </p>
+                    </button>
                     <div
                       aria-hidden='true'
                       className='ml-1 flex flex-1 items-center'>
                       <StarIcon
+                        onClick={() => handleClick(k)}
                         className={classNames(
                           rate[k] > 0 ? "text-yellow-400" : "text-gray-300",
-                          "h-5 w-5 flex-shrink-0"
+                          "h-5 w-5 flex-shrink-0 hover:text-yellow-400"
                         )}
                         aria-hidden='true'
                       />
@@ -124,9 +129,9 @@ export default function ({ rate, ratings }: { rate: any; ratings: any }) {
                   </div>
                   <div className='flex flex-row items-center gap-x-4'>
                     <div className=' flex flex-row items-center'>
-                      {[0, 1, 2, 3, 4].map((rating) => (
+                      {[0, 1, 2, 3, 4].map((rating, i) => (
                         <StarIcon
-                          key={rating}
+                          key={i}
                           className={classNames(
                             element.rate > rating
                               ? "text-yellow-400"
@@ -149,12 +154,12 @@ export default function ({ rate, ratings }: { rate: any; ratings: any }) {
           </div>
         </div>
 
-        {ratings.length > 1 &&  (
+        {ratings.length > 1 && (
           <div className='col-span-full lg:mt-0'>
             <button
               onClick={() => setShowMore(showMore > 1 ? 1 : 2)}
               className='mt-3 inline-flex btn-gray '>
-              {showMore > 1 ? t('hide') : t('show_more')}
+              {showMore > 1 ? t("hide") : t("show_more")}
             </button>
           </div>
         )}

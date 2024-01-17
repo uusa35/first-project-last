@@ -18,8 +18,7 @@ type Props = {
 };
 
 export default function FlashOffers({ products }: Props) {
-  
-  const { t } = useTranslation('trans');
+  const { t } = useTranslation("trans");
   const refSlider = useRef<Slider | null>(null);
   const params: { lang: Locale["lang"]; country?: countriesList } | any =
     useParams!();
@@ -96,7 +95,7 @@ export default function FlashOffers({ products }: Props) {
       <div className='my-5'>
         <Slider {...settings} ref={(c) => (refSlider.current = c)}>
           {products &&
-            products.map((itm) => <OfferWidget product={itm} key={itm.id} />)}
+            products.map((itm, i) => <OfferWidget product={itm} key={i} />)}
         </Slider>
       </div>
 

@@ -30,7 +30,7 @@ import { vendorApi } from "@/redux/api/vendorApi";
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ['appSetting', 'branch', 'product'],
+  blacklist: ['appSetting'],
   // whitelist: [
   // ],
   // stateReconciler: hardSet,

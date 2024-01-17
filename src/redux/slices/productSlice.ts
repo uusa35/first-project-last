@@ -51,6 +51,7 @@ type Props = {
   originalGroups: [];
   selections: Selection[] | undefined;
   confirm: boolean;
+  orderType: "pickup" | "delivery";
   session_id: string | null;
 };
 const initialState: Props = {
@@ -62,9 +63,10 @@ const initialState: Props = {
   originalGroups: [],
   selections: undefined,
   confirm: false,
-  session_id: null,
   total: 0,
   price: 0,
+  orderType: 'pickup',
+  session_id: null,
 };
 
 export const productSlice = createSlice({
@@ -114,15 +116,6 @@ export const productSlice = createSlice({
       return {
         ...state,
         confirm: false,
-      };
-    },
-    setSessionId: (
-      state: typeof initialState,
-      action: PayloadAction<string | null>
-    ) => {
-      return {
-        ...state,
-        session_id: action.payload,
       };
     },
     setProductOriginalGroups: (
@@ -368,6 +361,24 @@ export const productSlice = createSlice({
     ) => {
       return initialState;
     },
+    changeOrderType: (
+      state: typeof initialState,
+      action: PayloadAction<Props["orderType"]>
+    ) => {
+      return {
+        ...state,
+        orderType: action.payload,
+      };
+    },
+    setSessionId: (
+      state: typeof initialState,
+      action: PayloadAction<Props["session_id"]>
+    ) => {
+      return {
+        ...state,
+        session_id: action.payload,
+      };
+    },
   },
   extraReducers: builder => {
     builder.addMatcher(isAnyOf(showProductModal, increaseMeterChoice,
@@ -400,7 +411,8 @@ export const {
   decreaseQty,
   enableConfirm,
   disableConfirm,
-  setSessionId,
   resetSelections,
-  resetProductModal
+  resetProductModal,
+  changeOrderType,
+  setSessionId,
 } = productSlice.actions;

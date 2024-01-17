@@ -77,7 +77,7 @@ export async function setOrderType(value: string) {
 
 export async function getOrderType() {
   const countryCookie = cookies().get('NEXT_X_TYPE');
-  return countryCookie?.value ?? null;
+  return countryCookie?.value ?? 'pickup';
 }
 
 // auth 

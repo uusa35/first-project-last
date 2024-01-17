@@ -19,8 +19,8 @@ export default function CategoriesSlider({ categories }: Props) {
     <div className='py-3 relative mt-14 page-padding bg-picks-gray border-b border-picks-border'>
       <Slider {...categoriesSliderSettings}>
         {categories &&
-          categories.map((itm: Category) => (
-            <CategoryWidget category={itm} key={itm.id} />
+          categories.map((itm: Category, i) => (
+            <CategoryWidget category={itm} key={i} />
           ))}
       </Slider>
     </div>

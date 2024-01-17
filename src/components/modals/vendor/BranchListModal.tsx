@@ -17,12 +17,13 @@ import { EyeIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useLazyGetBranchesQuery } from "@/src/redux/api/vendorApi";
 import { map } from "lodash";
 import { hideBranchModal, setBranch } from "@/src/redux/slices/branchSlice";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   vendor_id: string;
 };
 export default function ({ vendor_id }: Props) {
-  const trans: { [key: string]: string } = useContext(MainContext);
+  const { t } = useTranslation("trans");
   const {
     appSetting: { isLoading },
     locale: { lang },
@@ -69,7 +70,7 @@ export default function ({ vendor_id }: Props) {
                   as='h3'
                   className='text-lg font-medium leading-6 text-gray-900'>
                   <div className=' capitalize flex flex-row justify-center items-center border-b border-gray-200 pb-4'>
-                    {trans.select_branch}
+                    {t("select_branch")}
                     <XMarkIcon
                       className='absolute ltr:left-4 rtl:right-4 w-6 h-6 text-gray-600 cursor-pointer'
                       onClick={() => dispatch(hideBranchModal())}
@@ -141,7 +142,7 @@ export default function ({ vendor_id }: Props) {
                     className={` ${
                       branch.id === 0 && "opacity-60"
                     } btn-default w-full mt-4`}>
-                    {trans.start_order}
+                    {t("start_order")}
                   </button>
                 </div>
               </Dialog.Panel>

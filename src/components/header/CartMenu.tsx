@@ -18,12 +18,12 @@ import { MainContext } from "@/layouts/MainContentLayout";
 import { useRouter } from "next/navigation";
 import { setLocale } from "@/redux/slices/localeSlice";
 import {
-  changeOrderType,
   toggleLoginModal,
   toggleRegisterModal,
   toggleCartMenu,
   toggleVerficationModal,
 } from "@/src/redux/slices/settingSlice";
+import { changeOrderType } from "@/src/redux/slices/productSlice";
 import { getAuth, getCountryNameCookie, setOrderType } from "@/app/actions";
 import LogoDark from "@/appImages/logo_dark.svg";
 import LogoLight from "@/appImages/logo_light.svg";

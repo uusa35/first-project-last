@@ -1,7 +1,7 @@
 "use client";
 import { setOrderType } from "@/app/actions";
 import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
-import { changeOrderType } from "@/src/redux/slices/settingSlice";
+import { changeOrderType } from "@/src/redux/slices/productSlice";
 import { useContext, useState } from "react";
 import { MainContext } from "@/components/layouts/MainContentLayout";
 import { Locale } from "@/src/types";
@@ -12,13 +12,12 @@ import { useTranslation } from "react-i18next";
 export default function ({ vendor }: { vendor: any }) {
   const { t } = useTranslation("trans");
   const {
-    appSetting: { orderType },
+    product: { orderType },
   } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
   const handleOrderType = async (orderType: "pickup" | "delivery") => {
-    await setOrderType(orderType).then(() =>
-      dispatch(changeOrderType(orderType))
-    );
+    dispatch(changeOrderType(orderType));
+    await setOrderType(orderType);
   };
 
   return (
@@ -82,10 +81,8 @@ export default function ({ vendor }: { vendor: any }) {
                     />
                   </svg>
                 </div>
-                <div className='flex-col justify-start items-center'>
-                  <div className='capitalize ltr:text-left rtl:text-right'>
-                    {vendor.branch_name}
-                  </div>
+                <div className='flex-col justify-start items-center ltr:text-left rtl:text-right'>
+                  <div className='capitalize '>{vendor.branch_name}</div>
                   <div className='text-sm text-gray-400'>
                     {vendor.branch_area}
                   </div>
