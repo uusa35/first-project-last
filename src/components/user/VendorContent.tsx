@@ -40,7 +40,7 @@ export default function ({ products }: { products: any }) {
                       name='search'
                       id='search'
                       className='input-default ltr:pl-10 rtl:pr-10 rounded-full capitalize'
-                      placeholder={t("search_in_menu")}
+                      placeholder={`${t("search_in_menu")}`}
                     />
                   </div>
                 </div>

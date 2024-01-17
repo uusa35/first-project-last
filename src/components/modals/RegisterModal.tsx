@@ -173,7 +173,7 @@ export default function () {
                         />
                         {errors?.name?.message && (
                           <span className={`text-red-700 text-xs capitalize`}>
-                            {trans[errors?.name?.message]}
+                            {t(errors?.name?.message)}
                           </span>
                         )}
                       </div>
@@ -209,7 +209,7 @@ export default function () {
                         </div>
                         {errors?.phone?.message && (
                           <span className={`text-red-700 text-xs capitalize`}>
-                            {trans[errors?.phone?.message]}
+                            {t(errors?.phone?.message)}
                           </span>
                         )}
                       </div>
@@ -230,7 +230,7 @@ export default function () {
                         />
                         {errors?.email?.message && (
                           <span className={`text-red-700 text-xs capitalize`}>
-                            {trans[errors?.email?.message]}
+                            {t(errors?.email?.message)}
                           </span>
                         )}
                       </div>
@@ -251,7 +251,7 @@ export default function () {
                         />
                         {errors?.password?.message && (
                           <span className={`text-red-700 text-xs capitalize`}>
-                            {trans[errors?.password?.message]}
+                            {t(errors?.password?.message)}
                           </span>
                         )}
                       </div>
@@ -272,7 +272,7 @@ export default function () {
                         />
                         {errors?.password_confirmation?.message && (
                           <span className={`text-red-700 text-xs capitalize`}>
-                            {trans[errors?.password_confirmation?.message]}
+                            {t(errors?.password_confirmation?.message)}
                           </span>
                         )}
                       </div>
