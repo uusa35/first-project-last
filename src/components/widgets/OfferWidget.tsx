@@ -6,7 +6,6 @@ import React, { useContext } from "react";
 import FavouriteWidget from "@/components/widgets/FavouriteWidget";
 import { Locale, countriesList } from "@/src/types";
 import { MainContext } from "@/layouts/MainContentLayout";
-import Link from "next/link";
 import { useAppDispatch } from "@/src/redux/hooks";
 import { useParams } from "next/navigation";
 import {
