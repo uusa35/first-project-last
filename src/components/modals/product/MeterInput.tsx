@@ -104,22 +104,12 @@ export default function ({ group }: { group: any }) {
       </div>
       {group.choices &&
         map(group.choices, (c, i) => {
-          // console.log(
-          //   "reult",
-
-          //   first(
-          //     filter(
-          //       flatten(map(selections, "choices")),
-          //       (choice) => choice.choice_id === c.id
-          //     )
-          //   )
-          // );
           return (
             <fieldset key={i}>
               <div className='gap-y-4 py-1 flex justify-between items-center'>
                 <div className='relative flex items-start'>
                   <div className='flex items-center'>
-                    <div className={`flex flex-row gap-x-2`}>
+                    <div className={`flex flex-row gap-x-1`}>
                       {meterBtn(group, c, "add")}
                       <div className='flex justify-center items-center text-black w-6 h-6 rounded-full'>
                         {first(

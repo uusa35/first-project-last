@@ -1,11 +1,12 @@
 "use client";
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
 import {
   decreaseQty,
   hideProductModal,
   increaseQty,
+  resetProductModal,
   setProductOriginalGroups,
 } from "@/src/redux/slices/productSlice";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -58,7 +59,15 @@ export default function () {
   const { lang } = params;
   const {
     appSetting: { showProductModal, isLoading, session_id },
-    product: { id, selections, quantity, enabled, total },
+    product: {
+      id: offer_id,
+      vendor_id,
+      selections,
+      quantity,
+      enabled,
+      total,
+      currency,
+    },
     country: { code },
   } = useAppSelector((state) => state);
   const router = useRouter();
@@ -68,7 +77,7 @@ export default function () {
     isSuccess: boolean;
     isFetching: boolean;
     error: any;
-  }>(190);
+  }>(offer_id);
   const {
     handleSubmit,
     register,
@@ -79,13 +88,16 @@ export default function () {
     formState: { errors },
   }: any = useForm<any>({
     resolver: yupResolver(addToCartSchema(data?.data?.groups, t)),
-    defaultValues: {
-      offer_id: data?.data?.id,
-      quantity: 1,
-      vendor_id: data?.data?.vendor?.id,
-      notes: "hello",
-      groups: [],
-    },
+    defaultValues: useMemo(() => {
+      return {
+        offer_id,
+        user_id: null,
+        quantity,
+        vendor_id,
+        groups: null,
+        // notes: "hello",
+      };
+    }, [offer_id]),
   });
 
   const settings: any = {
@@ -98,8 +110,8 @@ export default function () {
 
   const onSubmit: SubmitHandler<Inputs> = async (body) => {
     if (isEmpty(errors)) {
-      reset();
-      // dispatch(enableLoading());
+      dispatch(showSuccessToastMessage({ content: t("done") }));
+      dispatch(resetProductModal());
     }
   };
 
@@ -114,10 +126,16 @@ export default function () {
   }, [selections]);
 
   useEffect(() => {
-    if (total === 0) {
-      reset();
+    if (offer_id !== getValues("offer_id") || total === 0) {
+      reset({
+        offer_id,
+        user_id: null,
+        quantity,
+        vendor_id,
+        groups: null,
+      });
     }
-  }, [total]);
+  }, [offer_id, total]);
 
   const groupElement = (g: any) => {
     switch (g.input_type) {
@@ -143,6 +161,8 @@ export default function () {
       }
     }
   }, [errors]);
+
+  useEffect(() => setValue("quantity", quantity), [quantity]);
 
   return (
     <Transition appear show={enabled} as={Fragment}>
@@ -237,10 +257,10 @@ export default function () {
                             </p>
                             <div className='flex flex-row justify-start items-center gap-x-4'>
                               <div className='bg-picks-dark text-white rounded-full px-4 py-2'>
-                                {data.data.new_price}
+                                {data.data.new_price_format}
                               </div>
                               <div className='line-through text-gray-400'>
-                                {data.data.price}
+                                {data.data.price_format}
                               </div>
                               <div className='text-orange-600 capitalize'>
                                 {data.data.percentage}
@@ -262,7 +282,7 @@ export default function () {
                   {!isFetching && data?.data && (
                     <div
                       className={`fixed bottom-0 md:-bottom-10 w-full flex flex-row justify-between items-center   rounded-b-2xl p-4 border-t border-gray-200 bg-white`}>
-                      <div className={`flex flex-row gap-x-2`}>
+                      <div className={`flex flex-row gap-x-1`}>
                         <button
                           type='button'
                           disabled={quantity === 0}
@@ -286,10 +306,14 @@ export default function () {
                         </button>
                       </div>
                       <button
-                        className='btn btn-default w-1/3 flex justify-between items-center gap-x-4 px-2'
+                        className='btn btn-default w-auto max-w-md flex justify-between items-center gap-x-4 px-2'
                         type={"submit"}>
                         <div>{t("add_to_cart")}</div>
-                        {total > 0 && <div>{total}</div>}
+                        {total > 0 && (
+                          <div>
+                            {total} <span className='text-xs'>{currency}</span>
+                          </div>
+                        )}
                       </button>
                     </div>
                   )}

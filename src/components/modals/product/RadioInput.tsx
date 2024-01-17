@@ -19,7 +19,7 @@ export default function ({ group }: Props) {
   const { t } = useTranslation("trans");
   const dispatch = useAppDispatch();
   const {
-    product: { selections , quantity},
+    product: { selections, quantity },
   } = useAppSelector((state) => state);
 
   return (
@@ -84,14 +84,8 @@ export default function ({ group }: Props) {
                       );
                     }
                   }}
-                  name={
-                    group.max_number === 1
-                      ? `radio${group.id}`
-                      : `checkbox${group.id}[]`
-                  }
-                  value={c.id}
-                  type={group.max_number === 1 ? "radio" : `checkbox`}
-                  defaultChecked={
+                  type='checkbox'
+                  checked={
                     indexOf(
                       map(
                         flatten(map(filter(selections, "choices"), "choices")),
@@ -100,6 +94,22 @@ export default function ({ group }: Props) {
                       c.id
                     ) >= 0
                   }
+                  // name={
+                  //   group.max_number === 1
+                  //     ? `radio${group.id}`
+                  //     : `checkbox${group.id}[]`
+                  // }
+                  // value={c.id}
+                  // type={group.max_number === 1 ? "radio" : `checkbox`}
+                  // defaultChecked={
+                  //   indexOf(
+                  //     map(
+                  //       flatten(map(filter(selections, "choices"), "choices")),
+                  //       "choice_id"
+                  //     ),
+                  //     c.id
+                  //   ) >= 0
+                  // }
                   className='h-4 w-4  border-gray-300 text-picks-dark focus:ring-picks-dark'
                 />
                 <label

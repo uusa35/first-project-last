@@ -75,7 +75,7 @@ export default function ({ product }: Props) {
           <p className='card-desc'>{product.description}</p>
           {/* price */}
           <div>
-            <p>{product.price}</p>
+            <p>{product.price_format}</p>
           </div>
         </button>
       </div>

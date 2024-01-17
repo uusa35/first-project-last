@@ -45,6 +45,7 @@ type Props = {
   user_id: null | string | number;
   quantity: number;
   price: number;
+  currency: string;
   total: number;
   enabled: boolean;
   originalGroups: [];
@@ -56,6 +57,7 @@ const initialState: Props = {
   id: null,
   user_id: null,
   quantity: 1,
+  currency: '',
   enabled: false,
   originalGroups: [],
   selections: undefined,
@@ -73,10 +75,15 @@ export const productSlice = createSlice({
       state: typeof initialState,
       action: PayloadAction<Product>
     ) => {
-      const price = action.payload.new_price ? parseFloat(split(action.payload.new_price, ' ')[0]) : parseFloat(split(action.payload.price, ' ')[0]);
+      const { id, vendor_id, new_price } = action.payload;
+      const currency = split(action.payload.price.toString(), ' ')[1];
+      const price = new_price ? parseFloat(split(new_price.toString(), ' ')[0]) : parseFloat(split(action.payload.price.toString(), ' ')[0]);
       return {
         ...state,
-        id: action.payload.id,
+        id,
+        offer_id: id,
+        currency,
+        vendor_id,
         price,
         enabled: true,
         selections: action.payload.id === state.id ? state.selections : initialState.selections,
@@ -88,7 +95,6 @@ export const productSlice = createSlice({
     ) => {
       return {
         ...state,
-        id: null,
         enabled: false,
       };
     },
@@ -356,6 +362,12 @@ export const productSlice = createSlice({
         selections: initialState.selections
       }
     },
+    resetProductModal: (
+      state: typeof initialState,
+      action: PayloadAction<void>
+    ) => {
+      return initialState;
+    },
   },
   extraReducers: builder => {
     builder.addMatcher(isAnyOf(showProductModal, increaseMeterChoice,
@@ -366,6 +378,7 @@ export const productSlice = createSlice({
         const total = (price * quantity) + (isEmpty(choices) ? 0 : (sumBy(choices, 'total') * quantity));
         return {
           ...current(state),
+          quantity,
           total,
           selections: total > 0 ? current(state).selections : initialState.selections
         }
@@ -388,5 +401,6 @@ export const {
   enableConfirm,
   disableConfirm,
   setSessionId,
-  resetSelections
+  resetSelections,
+  resetProductModal
 } = productSlice.actions;

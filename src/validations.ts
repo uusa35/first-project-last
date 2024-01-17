@@ -131,13 +131,13 @@ export const addToCartSchema = (originalGroups: any, t: any) => {
       ),
       "choice_group_id"
     )
-
+    console.log('values', values)
     return yup.object().shape({
-      vendor_id: yup.number().required(t('required')),
-      offer_id: yup.number().required(t('required')),
-      quantity: yup.number().required(t('required')),
+      vendor_id: yup.number().required(t('required', { field: t('vendor') })),
+      offer_id: yup.number().required(t('required', { field: t('product') })),
+      quantity: yup.number().min(1, t('validation.quantity')).required(t('required', { field: t('quantity') })),
       groups: yup.array().of(yup.object().shape({
-        choice_group_id: yup.number().oneOf(allOrginalGroups).when('vendor_id', (groups, schema) => {
+        choice_group_id: yup.number().oneOf(allOrginalGroups).when('offer_id', (_, schema) => {
           const remainingRequiredGroups = difference(originalRequiredGroups, currentRequiredGroups);
           // cases are not done :
           // 1- groups with max 2 or 3 (meters)
@@ -157,7 +157,9 @@ export const addToCartSchema = (originalGroups: any, t: any) => {
         //     .max(currentGroupByName.max_number, t('validation.group_required_max', { field: currentGroupByName.name })) : schema;
         // })
       })).when('offer_id', (_, schema) => {
-        return originalRequiredGroupsByName.length > 0 ? schema.required(t('validation.required', { field: originalRequiredGroupsByName[0].name })) : schema;
+        console.log('original', originalRequiredGroups)
+        console.log('current', currentRequiredGroups)
+        return originalRequiredGroups.length !== currentRequiredGroups.length ? schema.required(t('validation.required', { field: originalRequiredGroupsByName[0].name })) : schema;
       })
     });
   }
