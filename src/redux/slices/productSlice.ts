@@ -16,29 +16,7 @@ interface Selection {
   required: boolean;
   min: number;
   max: number;
-
 }
-// {
-//   "user_id": 11,
-//     "confirm": true,
-//       "offer_id": 73,
-//         "quantity": 1,
-//           "vendor_id": 11,
-//             "notes": "hello",
-//               "groups": [
-//                 {
-//                   "choice_group_id": 53,
-//                   "choices": [
-
-//                     {
-//                       "choice_id": 116,
-//                       "quantity": 1
-//                     }
-//                   ]
-//                 }
-//               ]
-
-// }
 
 type Props = {
   id: number | string | null;
@@ -88,7 +66,10 @@ export const productSlice = createSlice({
         vendor_id,
         price,
         enabled: true,
-        selections: action.payload.id === state.id ? state.selections : initialState.selections,
+        total: id === state.id ? state.total : initialState.total,
+        quantity: id === state.id ? state.quantity : initialState.quantity,
+        originalGroups: id === state.id ? state.originalGroups : initialState.originalGroups,
+        selections: id === state.id ? state.selections : initialState.selections,
       };
     },
     hideProductModal: (
