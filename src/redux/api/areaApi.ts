@@ -4,7 +4,7 @@ import { Locale } from "@/types/index";
 
 export const areaApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getAreas: builder.query<AppQueryResult<Area[]>, string | void | undefined>({
+    getAreas: builder.query<AppQueryResult<Area[]>, string | number | void | undefined>({
       query: (country_id) => ({
         url: `area`,
         headers: {

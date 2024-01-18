@@ -158,7 +158,7 @@ export const addToCartSchema = (originalGroups: any, t: any) => {
         // console.log('case of groups', originalRequiredGroups.length !== currentRequiredGroups.length
         const remainingRequiredGroups = difference(originalRequiredGroups, currentRequiredGroups);
         const remainingRequiredGroupsByNames = first(filter(originalRequiredGroupsByName, g => g.id === first(remainingRequiredGroups)));
-        return originalRequiredGroups.length !== currentRequiredGroups.length ? schema.required(t('validation.required', { field: remainingRequiredGroupsByNames.name })).length(remainingRequiredGroupsByNames.length, t('validation.group_required_max', { field: remainingRequiredGroupsByNames.name })) : schema;
+        return originalRequiredGroups.length !== currentRequiredGroups.length ? schema.required(t('validation.required', { field: remainingRequiredGroupsByNames.name })).length(remainingRequiredGroupsByNames.length, t('validation.group_required_max', { field: remainingRequiredGroupsByNames.name })) : schema.nullable();
       })
     });
   }

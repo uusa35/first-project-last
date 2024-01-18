@@ -9,6 +9,7 @@ import moment from "moment";
 import * as yup from "yup";
 import {
   getAreaCookie,
+  getCountryCookie,
   removeAreaCookie,
   setAreaCookie,
   setLang,
@@ -27,12 +28,13 @@ import ForgetPasswordModal from "@/src/components/modals/ForgetPasswordModal";
 import VerificationModal from "@/src/components/modals/VerificationModal";
 import ChangePasswordModal from "@/src/components/modals/ChangePasswordModal";
 import { AppQueryResult, Area, Country } from "@/src/types/queries";
-import { first } from "lodash";
+import { first, isUndefined } from "lodash";
 import { toggleSideMenu } from "@/src/redux/slices/settingSlice";
 import ProductModal from "@/src/components/modals/product/ProductModal";
 import { hideProductModal } from "@/src/redux/slices/productSlice";
 import { useTranslation } from "react-i18next";
 import dynamic from "next/dynamic";
+import { useCookies } from "react-cookie";
 
 const DynamicAppFooter = dynamic(
   () => import("@/components/footer/AppFooter"),
@@ -61,6 +63,7 @@ const MainContextLayout: FC<Props> = ({
   } = useAppSelector((state) => state);
   const params: { lang: Locale["lang"]; country?: countriesList } | any =
     useParams!();
+  const [cookies] = useCookies();
   const { lang } = params;
   const pathName = usePathname();
   const dispatch = useAppDispatch();
@@ -100,10 +103,11 @@ const MainContextLayout: FC<Props> = ({
 
   // sets cookies if country changed from any page
   useEffect(() => {
-    if (params?.country !== undefined) {
-      triggerGetCountryByName(params?.country, false).then((r: any) => {
+    if (params && params.country !== undefined) {
+      triggerGetCountryByName(params.country, false).then((r: any) => {
         if (r.data && r.data.data) {
           dispatch(setCountry(r.data.data));
+          // country cookie already set by Middleware
         }
       });
     }
@@ -115,26 +119,24 @@ const MainContextLayout: FC<Props> = ({
   }, []);
 
   useEffect(() => {
-    if (params?.country === country_code) {
+    const cookieArea = cookies.NEXT_AREA;
+    if (!cookieArea || area.id === 0) {
       triggerGetAreas(id, false).then((r: any) => {
         if (r && r.data && r.data.success && r.data.data) {
           const serverArea: Area | undefined = first(r.data.data);
-          const cookieArea: any = getAreaCookie();
+          const countryCookie = cookies.NEXT_COUNTRY;
           // if no area // if area.country.id !== currrent country
-          if (cookieArea && cookieArea.id && cookieArea.country.id === id) {
-            dispatch(setArea(cookieArea));
-          } else if (area.id !== 0 && area.country.id === id) {
-            dispatch(setArea(area));
-            setAreaCookie(JSON.stringify(area));
-          } else if (serverArea && serverArea.country.id === id) {
+          if (
+            countryCookie &&
+            countryCookie.id &&
+            countryCookie.id === id &&
+            serverArea
+          ) {
+            console.log("case 1 area");
             dispatch(setArea(serverArea));
-            setAreaCookie(JSON.stringify(serverArea));
           }
         }
       });
-    } else {
-      removeAreaCookie();
-      dispatch(resetArea());
     }
   }, [id, lang]);
 

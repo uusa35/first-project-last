@@ -30,6 +30,7 @@ import { setCountry } from "@/src/redux/slices/countrySlice";
 import LandingPageBgImage from "@/appImages/head.png";
 import { Locale, countriesList } from "@/src/types";
 import { useTranslation } from "react-i18next";
+import { useCookies } from "react-cookie";
 
 type Props = {
   countries: Country[];
@@ -45,6 +46,7 @@ type DropDownProps =
 export default function ({ countries }: Props) {
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const [cookies] = useCookies();
   const params: { lang: Locale["lang"]; country?: countriesList } | any =
     useParams!();
   const { lang } = params;
@@ -58,7 +60,11 @@ export default function ({ countries }: Props) {
   const [selectedCountry, setSelectedCountry] = useState<
     DropDownProps | undefined
   >();
-  const [selectedArea, setSelectedArea] = useState<DropDownProps | undefined>();
+  const [selectedArea, setSelectedArea] = useState<DropDownProps | undefined>({
+    id: area.id,
+    label: area.web_name[lang],
+    name: { en: area.web_name.en, ar: area.web_name.ar },
+  });
   const [triggerGetAreas, { data: areas, isSuccess: areaSuccess, isFetching }] =
     useLazyGetAreasQuery();
 
@@ -100,10 +106,10 @@ export default function ({ countries }: Props) {
   }, [countries]);
 
   useEffect(() => {
-    triggerGetAreas(country.id.toString(), false).then((r: any) => {
+    triggerGetAreas(country.id, false).then((r: any) => {
       if (r && r.data && r.data.success && r.data.data) {
         const serverArea: Area | undefined = first(r.data.data);
-        const cookieArea: any = getAreaCookie();
+        const cookieArea = cookies.NEXT_AREA;
         let mappedAreas = r.data.data.map((itm: Area) => {
           return {
             label: itm.web_name[lang],
@@ -112,26 +118,14 @@ export default function ({ countries }: Props) {
           };
         });
         setAllAreas(mappedAreas);
+        console.log('inside');
         if (
           cookieArea &&
           cookieArea.id &&
-          cookieArea.country.id === country.id
+          cookieArea.country.id !== country.id &&
+          serverArea
         ) {
-          dispatch(setArea(cookieArea));
-          setSelectedArea(
-            mappedAreas.filter(
-              (itm: { id: number; label: string }) => itm.id === cookieArea.id
-            )[0]
-          );
-        } else if (area.id !== 0 && area.country.id === country.id) {
-          dispatch(setArea(area));
-          setAreaCookie(JSON.stringify(area));
-          setSelectedArea(
-            mappedAreas.filter(
-              (itm: { id: number; label: string }) => itm.id === area.id
-            )[0]
-          );
-        } else if (serverArea && serverArea.country.id === country.id) {
+          console.log("case 1 area landing page");
           dispatch(setArea(serverArea));
           setAreaCookie(JSON.stringify(serverArea));
           setSelectedArea(
@@ -144,6 +138,8 @@ export default function ({ countries }: Props) {
     });
   }, [country]);
 
+  // console.log("allareas", allAreas);
+  // console.log("selectedArea", selectedArea);
   return (
     <>
       <Image
@@ -199,7 +195,7 @@ export default function ({ countries }: Props) {
                       <Search />
                       <Autocomplete
                         dir={lang === "ar" ? "rtl" : "ltr"}
-                        disabled={isFetching}
+                        disabled={!allAreas}
                         size='small'
                         className='outline-none font-picks-medium'
                         disablePortal

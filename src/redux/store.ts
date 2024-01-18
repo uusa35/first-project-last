@@ -16,7 +16,7 @@ import createSagaMiddleware from "redux-saga";
 import storage from "redux-persist/lib/storage";
 import rootSaga from "@/redux/sagas/rootSaga";
 import { setupListeners } from "@reduxjs/toolkit/query";
-import { HYDRATE, createWrapper } from "next-redux-wrapper";
+import { HYDRATE } from "next-redux-wrapper";
 import { apiSlice } from "@/redux/api";
 import { categoryApi } from "@/redux/api/categoryApi";
 import { isLocal } from "@/src/constants";
@@ -60,7 +60,7 @@ let store: any = configureStore({
             PURGE,
             REGISTER,
           ],
-          ignoredPaths: ['api.queries.uploadImage({}).originalArgs', 'api.queries.uploadImages({}).originalArgs'],
+          ignoredPaths: [],
         },
       }).concat([
         apiSlice.middleware,
@@ -86,7 +86,7 @@ let store: any = configureStore({
             REGISTER,
 
           ],
-          ignoredPaths: ['api.queries.uploadImage({}).originalArgs', 'api.queries.uploadImages({}).originalArgs'],
+          ignoredPaths: [],
         },
       }).concat([
         apiSlice.middleware,
@@ -112,16 +112,14 @@ export const initializeStore = (preloadedState: RootState) => {
     // Reset the current store
     store = undefined;
   }
-  // For SSG and SSR always create a new store
-  if (typeof window === "undefined") return _store;
-  // Create the store once in the client
+  // if (typeof window === "undefined") return _store;
   if (!store) store = _store;
   return _store;
 };
 setupListeners(store.dispatch);
 const makeStore = () => store;
 const persistor = persistStore(store);
-export const wrapper = createWrapper<AppStore>(makeStore, { debug: isLocal });
+// export const wrapper = createWrapper<AppStore>(makeStore, { debug: isLocal });
 export const useStore = (initialState: RootState) =>
   useMemo(() => initializeStore(initialState), [initialState]);
 export type RootState = ReturnType<typeof store.getState>;
