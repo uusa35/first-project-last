@@ -129,9 +129,7 @@ export default function () {
   //   setValues("code", enteredOtp);
   // };
 
-  
-
-  const ResendOtp = async () => {
+  const resendOtp = async () => {
     // let auth = await getAuth();
     await triggerResendOtp({
       phone_country_code: auth.user.phone_country_code,
@@ -186,7 +184,7 @@ export default function () {
                     {trans.verification_code}
                     <XMarkIcon
                       className='absolute ltr:left-4 rtl:right-4 w-6 h-6 text-gray-600 cursor-pointer'
-                      onClick={closeModal}
+                      onClick={() => closeModal}
                     />
                   </div>
                 </Dialog.Title>
@@ -281,7 +279,7 @@ export default function () {
                   <div className='capitalize mt-10 text-center text-sm text-gray-500'>
                     {trans.didnot_receive_the_code_yet}
                     <button
-                      onClick={ResendOtp}
+                      onClick={() => resendOtp()}
                       className='capitalize px-2 font-semibold leading-6 text-picks-dark hover:text-gray-500'>
                       {trans.resend}
                     </button>

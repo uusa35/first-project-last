@@ -150,16 +150,15 @@ export const addToCartSchema = (originalGroups: any, t: any) => {
           quantity: yup.number(),
           choice_id: yup.number(),
         }))
-        //   .when('choice_group_id', (choice_group_id, schema) => {
-        //   const currentGroupId = first(filter(allOrginalGroups, g => g === choice_group_id[0]));
-        //   const currentGroupByName = first(filter(originalRequiredGroupsByName, g => g.id === currentGroupId));
-        //   return currentGroupId ? schema.min(currentGroupByName.min_number, t('validation.group_required_min', { field: currentGroupByName.name }))
-        //     .max(currentGroupByName.max_number, t('validation.group_required_max', { field: currentGroupByName.name })) : schema;
-        // })
-      })).when('offer_id', (_, schema) => {
-        console.log('original', originalRequiredGroups)
-        console.log('current', currentRequiredGroups)
-        return originalRequiredGroups.length !== currentRequiredGroups.length ? schema.required(t('validation.required', { field: originalRequiredGroupsByName[0].name })) : schema;
+      })).when('quantity', (quantity, schema) => {
+        // console.log('original', originalRequiredGroups)
+        // console.log('current', currentRequiredGroups)
+        // console.log('groups of local', quantity);
+        // console.log('originalRequiredGroupsByName', originalRequiredGroupsByName)
+        // console.log('case of groups', originalRequiredGroups.length !== currentRequiredGroups.length
+        const remainingRequiredGroups = difference(originalRequiredGroups, currentRequiredGroups);
+        const remainingRequiredGroupsByNames = first(filter(originalRequiredGroupsByName, g => g.id === first(remainingRequiredGroups)));
+        return originalRequiredGroups.length !== currentRequiredGroups.length ? schema.required(t('validation.required', { field: remainingRequiredGroupsByNames.name })).length(remainingRequiredGroupsByNames.length, t('validation.group_required_max', { field: remainingRequiredGroupsByNames.name })) : schema;
       })
     });
   }

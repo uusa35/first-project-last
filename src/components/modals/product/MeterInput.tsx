@@ -6,7 +6,6 @@ import {
   decreaseMeterChoice,
   increaseMeterChoice,
 } from "@/src/redux/slices/productSlice";
-import { useState } from "react";
 
 export default function ({ group }: { group: any }) {
   const { t } = useTranslation("trans");

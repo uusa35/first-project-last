@@ -16,7 +16,6 @@ import {
   showSuccessToastMessage,
 } from "@/src/redux/slices/toastMessageSlice";
 import { useParams, usePathname, useRouter } from "next/navigation";
-import { MainContext } from "@/components/layouts/MainContentLayout";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { AppQueryResult, Product } from "@/src/types/queries";
 import Slider from "react-slick";
@@ -26,14 +25,11 @@ import Image from "next/image";
 import {
   map,
   capitalize,
-  get,
   isEmpty,
-  flatten,
   isArray,
-  take,
   first,
-  remove,
   values,
+  isObject,
 } from "lodash";
 import CheckBoxInput from "@/components/modals/product/CheckBoxInput";
 import RadioInput from "@/components/modals/product/RadioInput";
@@ -153,8 +149,10 @@ export default function () {
   useEffect(() => {
     if (!isEmpty(errors)) {
       if (errors && errors.groups && isArray(errors.groups)) {
-        const content: any = errors.groups[0].message;
-        dispatch(showErrorToastMessage({ content }));
+        const content: any = isObject(errors.groups[0])
+          ? first(values(errors.groups[0]))
+          : error.groups[0];
+        dispatch(showErrorToastMessage({ content: content?.message }));
       } else {
         const content: any = first(values(errors));
         dispatch(showErrorToastMessage({ content: content.message }));
@@ -164,6 +162,7 @@ export default function () {
 
   useEffect(() => setValue("quantity", quantity), [quantity]);
 
+  console.log("errors", errors);
   return (
     <Transition appear show={enabled} as={Fragment}>
       <Dialog
@@ -210,7 +209,7 @@ export default function () {
                         data={{
                           text: data?.data?.name,
                           url: `https://${
-                            window.location.hostname
+                            window?.location?.hostname
                           }${appLinks.vendor(
                             lang,
                             params?.country,

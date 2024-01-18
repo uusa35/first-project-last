@@ -38,7 +38,7 @@ export default function ({ rate, ratings }: { rate: any; ratings: any }) {
   const { t } = useTranslation("trans");
   const [showMore, setShowMore] = useState<number>(1);
 
-  const handleClick = (k: number) => alert("rating");
+  const handleClick = (k: number | string) => alert("rating");
 
   return (
     <div className='bg-white'>

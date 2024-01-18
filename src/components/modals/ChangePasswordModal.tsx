@@ -44,7 +44,6 @@ export default function () {
   } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
   const [triggerForgetPassword] = useLazyForgotPasswordQuery();
-
   const {
     handleSubmit,
     register,
@@ -160,7 +159,7 @@ export default function () {
                       {trans.new_password}
                       <XMarkIcon
                         className="absolute ltr:left-4 rtl:right-4 w-6 h-6 text-gray-600 cursor-pointer"
-                        onClick={closeModal}
+                        onClick={() => closeModal}
                       />
                     </div>
                   </Dialog.Title>

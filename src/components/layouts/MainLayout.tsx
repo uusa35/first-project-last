@@ -16,16 +16,14 @@ type Props = {
 };
 
 const MainLayout: FC<Props> = ({ lang, children }): React.ReactNode => {
-  const { locale } = useAppSelector((state) => state);
-  const dispatch = useAppDispatch();
-  
+  const { isRTL } = useAppSelector((state) => state.locale);
 
   return (
     <I18nextProvider i18n={i18n}>
       <div className={`w-full`}>
         {children}
         <ToastContainer
-          position={locale.isRTL ? "top-left" : "top-right"}
+          position={isRTL ? "top-left" : "top-right"}
           bodyClassName={() =>
             "flex flex-1 flex-row font-picks-medium items-center"
           }
@@ -34,7 +32,7 @@ const MainLayout: FC<Props> = ({ lang, children }): React.ReactNode => {
           hideProgressBar={false}
           newestOnTop={true}
           closeOnClick
-          rtl={locale.isRTL}
+          rtl={isRTL}
           pauseOnFocusLoss
           draggable
           pauseOnHover

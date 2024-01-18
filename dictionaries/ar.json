@@ -104,7 +104,7 @@
     "mandatory": "مطلوب",
     "optional": "اختياري",
     "send": "ارسال",
-    "validation.required": "الحقل مطلوب",
+    "validation.required": "{{field}} الحقل مطلوب",
     "validation.email": "البريد الإلكتروني غير صحيح",
     "validation.min": "الحقل يجب أن يكون اكبر من {{min}}",
     "validation.max": "الحقل يجب أن يكون أقل من   {{max}}",
