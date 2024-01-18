@@ -7,7 +7,7 @@ import {
   toggleForgetPasswordModal,
   toggleVerficationModal,
 } from "@/src/redux/slices/settingSlice";
-import { MainContext } from "../layouts/MainContentLayout";
+import { MainContext } from "@/layouts/MainContentLayout";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import ForgetPass from "@/appIcons/auth/forget_pass.svg";
 import { useGetCountriesQuery } from "@/src/redux/api/countryApi";
@@ -30,7 +30,7 @@ type Inputs = {
   phone: string;
   phone_country_code: string;
 };
-export default  function () {
+export default function () {
   const trans: { [key: string]: string } = useContext(MainContext);
   const {
     appSetting: { showForgetPasswordModal, isLoading },

@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useRef } from "react";
+import React, { useRef } from "react";
 import Slider from "react-slick";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import Flash3 from "@/appIcons/landing/picks_flash.svg";
@@ -8,8 +8,6 @@ import Flash1 from "@/appIcons/landing/yellow_flash.svg";
 import { Product } from "@/src/types/queries";
 import OfferWidget from "@/components/widgets/OfferWidget";
 import { Locale, countriesList } from "@/src/types";
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
-import { MainContext } from "../layouts/MainContentLayout";
 import { useParams } from "next/navigation";
 import { useTranslation } from "react-i18next";
 

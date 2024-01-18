@@ -162,7 +162,6 @@ export default function () {
 
   useEffect(() => setValue("quantity", quantity), [quantity]);
 
-  console.log("errors", errors);
   return (
     <Transition appear show={enabled} as={Fragment}>
       <Dialog

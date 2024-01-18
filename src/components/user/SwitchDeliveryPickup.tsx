@@ -2,10 +2,7 @@
 import { setOrderType } from "@/app/actions";
 import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
 import { changeOrderType } from "@/src/redux/slices/productSlice";
-import { useContext, useState } from "react";
-import { MainContext } from "@/components/layouts/MainContentLayout";
-import { Locale } from "@/src/types";
-import BranchListModal from "../modals/vendor/BranchListModal";
+import BranchListModal from "@/components/modals/vendor/BranchListModal";
 import { showBranchModal } from "@/src/redux/slices/branchSlice";
 import { useTranslation } from "react-i18next";
 

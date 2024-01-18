@@ -29,7 +29,6 @@ import {
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { appLinks } from "@/src/links";
 import Link from "next/link";
-import TextTrans from "../TextTrans";
 import { randomFillSync } from "crypto";
 import { random, replace, snakeCase, trim } from "lodash";
 import { setAuthentication } from "@/src/redux/slices/authSlice";
