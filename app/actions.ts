@@ -21,7 +21,7 @@ export async function setCountryNameCookie(value: string) {
 
 export async function getCountryNameCookie() {
   const countryCookie = cookies().get('NEXT_COUNTRY_NAME');
-  return countryCookie?.value ?? 'kw';
+  return countryCookie?.value ?? 'kw'; // default country starts here
 }
 
 export async function setCountryCookie(value: string) {

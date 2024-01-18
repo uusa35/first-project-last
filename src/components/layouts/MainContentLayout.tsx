@@ -7,21 +7,14 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setLocale } from "@/redux/slices/localeSlice";
 import moment from "moment";
 import * as yup from "yup";
-import {
-  getAreaCookie,
-  getCountryCookie,
-  removeAreaCookie,
-  setAreaCookie,
-  setLang,
-  setLocaleCookie,
-} from "@/app/actions";
+import { setAreaCookie, setLang, setLocaleCookie } from "@/app/actions";
 import { setCountry } from "@/redux/slices/countrySlice";
 import {
   useLazyGetCountriesQuery,
   useLazyGetCountryByNameQuery,
 } from "@/redux/api/countryApi";
 import { useLazyGetAreasQuery } from "@/redux/api/areaApi";
-import { resetArea, setArea } from "@/src/redux/slices/areaSlice";
+import { setArea } from "@/src/redux/slices/areaSlice";
 import LoginModal from "@/src/components/modals/LoginModal";
 import RegisterModal from "@/src/components/modals/RegisterModal";
 import ForgetPasswordModal from "@/src/components/modals/ForgetPasswordModal";
@@ -40,7 +33,6 @@ const DynamicAppFooter = dynamic(
   () => import("@/components/footer/AppFooter"),
   {
     ssr: false,
-    // loading: () => <LoadingSpinner isLoading={true} />,
   }
 );
 type Props = {
@@ -58,8 +50,7 @@ const MainContextLayout: FC<Props> = ({
   const [t, i18n] = useTranslation("trans");
   const {
     locale,
-    country: { country_code, id },
-    area,
+    country: { id: country_id, country_code },
   } = useAppSelector((state) => state);
   const params: { lang: Locale["lang"]; country?: countriesList } | any =
     useParams!();
@@ -107,9 +98,10 @@ const MainContextLayout: FC<Props> = ({
       triggerGetCountryByName(params.country, false).then((r: any) => {
         if (r.data && r.data.data) {
           dispatch(setCountry(r.data.data));
-          // country cookie already set by Middleware
         }
       });
+    } else if (cookies.NEXT_COUNTRY) {
+      dispatch(setCountry(cookies.NEXT_COUNTRY));
     }
   }, [params?.country]);
 
@@ -119,26 +111,23 @@ const MainContextLayout: FC<Props> = ({
   }, []);
 
   useEffect(() => {
-    const cookieArea = cookies.NEXT_AREA;
-    if (!cookieArea || area.id === 0) {
-      triggerGetAreas(id, false).then((r: any) => {
-        if (r && r.data && r.data.success && r.data.data) {
-          const serverArea: Area | undefined = first(r.data.data);
-          const countryCookie = cookies.NEXT_COUNTRY;
-          // if no area // if area.country.id !== currrent country
-          if (
-            countryCookie &&
-            countryCookie.id &&
-            countryCookie.id === id &&
-            serverArea
-          ) {
-            console.log("case 1 area");
-            dispatch(setArea(serverArea));
-          }
+    triggerGetAreas(country_id, false).then((r: any) => {
+      if (r && r.data && r.data.success && r.data.data) {
+        const serverArea: Area | undefined = first(r.data.data);
+        const cookieArea = cookies.NEXT_AREA;
+        if (cookieArea && country_id !== cookieArea.country.id && serverArea) {
+          dispatch(setArea(serverArea));
+          setAreaCookie(JSON.stringify(serverArea));
+        } else if (cookieArea && cookieArea.country.id === country_id) {
+          dispatch(setArea(cookieArea));
+          setAreaCookie(JSON.stringify(cookieArea));
+        } else if (serverArea) {
+          dispatch(setArea(serverArea));
+          setAreaCookie(JSON.stringify(serverArea));
         }
-      });
-    }
-  }, [id, lang]);
+      }
+    });
+  }, [country_id]);
 
   return (
     <>
