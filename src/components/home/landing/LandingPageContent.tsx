@@ -1,6 +1,5 @@
 "use client";
 import {
-  getAreaCookie,
   setAreaCookie,
   setCountryCookie,
   setCountryNameCookie,
@@ -8,22 +7,18 @@ import {
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setArea } from "@/redux/slices/areaSlice";
 import { Area, Country } from "@/types/queries";
-import { Suspense, useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Search from "@/appIcons/landing/search.svg";
 import { Autocomplete, TextField } from "@mui/material";
-import { first, isEmpty, isUndefined } from "lodash";
+import { first, isEmpty } from "lodash";
 import GetLocation from "@/appIcons/landing/get_location.svg";
 import RightArrow from "@/appIcons/landing/right_arrow.svg";
 import Avatar from "@/appIcons/landing/avatar.svg";
 import Image from "next/image";
-import { MainContext } from "@/components/layouts/MainContentLayout";
 import DownloadAppSection from "@/components/home/DownloadAppSection";
 import { useParams, useRouter } from "next/navigation";
 import { appLinks } from "@/src/links";
-import {
-  useGetAreasQuery,
-  useLazyGetAreasQuery,
-} from "@/src/redux/api/areaApi";
+import { useLazyGetAreasQuery } from "@/src/redux/api/areaApi";
 import AboutUsGetStarted from "@/components/home/AboutUsGetStarted";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { setCountry } from "@/src/redux/slices/countrySlice";
@@ -44,6 +39,7 @@ type DropDownProps =
     }
   | undefined;
 export default function ({ countries }: Props) {
+  const { t } = useTranslation("trans");
   const dispatch = useAppDispatch();
   const router = useRouter();
   const [cookies] = useCookies();
@@ -51,8 +47,6 @@ export default function ({ countries }: Props) {
     useParams!();
   const { lang } = params;
   const { country, area } = useAppSelector((state) => state);
-  // const t(' {') [key: string]: string } = useContext(MainContext);
-  const { t } = useTranslation("trans");
   const [allCountries, setAllCountries] = useState<
     { label: string; id: number }[]
   >([]);
@@ -115,7 +109,6 @@ export default function ({ countries }: Props) {
           };
         });
         setAllAreas(mappedAreas);
-        console.log("inside", serverArea);
         // country is different
         if (country.id !== cookieArea.country.id && serverArea) {
           dispatch(setArea(serverArea));
