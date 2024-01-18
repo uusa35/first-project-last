@@ -60,11 +60,9 @@ export default function ({ countries }: Props) {
   const [selectedCountry, setSelectedCountry] = useState<
     DropDownProps | undefined
   >();
-  const [selectedArea, setSelectedArea] = useState<DropDownProps | undefined>({
-    id: area.id,
-    label: area.web_name[lang],
-    name: { en: area.web_name.en, ar: area.web_name.ar },
-  });
+  const [selectedArea, setSelectedArea] = useState<DropDownProps | undefined>(
+    undefined
+  );
   const [triggerGetAreas, { data: areas, isSuccess: areaSuccess, isFetching }] =
     useLazyGetAreasQuery();
 
@@ -72,7 +70,6 @@ export default function ({ countries }: Props) {
     if (c && c.id && countries) {
       setSelectedCountry(c);
       const selectedCountry = countries.filter((itm) => itm.id === c?.id)[0];
-      await triggerGetAreas(selectedCountry.id.toString(), false);
       await setCountryCookie(JSON.stringify(selectedCountry));
       await setCountryNameCookie(selectedCountry.country_code);
       dispatch(setCountry(selectedCountry));
@@ -118,14 +115,9 @@ export default function ({ countries }: Props) {
           };
         });
         setAllAreas(mappedAreas);
-        console.log('inside');
-        if (
-          cookieArea &&
-          cookieArea.id &&
-          cookieArea.country.id !== country.id &&
-          serverArea
-        ) {
-          console.log("case 1 area landing page");
+        console.log("inside", serverArea);
+        // country is different
+        if (country.id !== cookieArea.country.id && serverArea) {
           dispatch(setArea(serverArea));
           setAreaCookie(JSON.stringify(serverArea));
           setSelectedArea(
@@ -133,13 +125,20 @@ export default function ({ countries }: Props) {
               (itm: { id: number; label: string }) => itm.id === serverArea.id
             )[0]
           );
+          // countriy is the same
+        } else if (cookieArea.country.id === country.id) {
+          dispatch(setArea(cookieArea));
+          setAreaCookie(JSON.stringify(cookieArea));
+          setSelectedArea(
+            mappedAreas.filter(
+              (itm: { id: number; label: string }) => itm.id === cookieArea.id
+            )[0]
+          );
         }
       }
     });
   }, [country]);
 
-  // console.log("allareas", allAreas);
-  // console.log("selectedArea", selectedArea);
   return (
     <>
       <Image
