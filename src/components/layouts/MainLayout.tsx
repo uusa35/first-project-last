@@ -1,13 +1,9 @@
 "use client";
-import React, { FC, ReactNode, useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import React, { FC, ReactNode } from "react";
+import { useAppSelector } from "@/redux/hooks";
 import type { Locale } from "@/i18n.config";
 import { Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { isNull } from "lodash";
-import { showWarningToastMessage } from "@/redux/slices/toastMessageSlice";
-import LoginModal from "@/src/components/modals/LoginModal";
-import RegisterModal from "@/src/components/modals/RegisterModal";
 import i18n from "@/i18n/i18next";
 import { I18nextProvider } from "react-i18next";
 type Props = {

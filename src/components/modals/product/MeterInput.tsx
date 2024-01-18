@@ -1,5 +1,5 @@
 "use client";
-import { filter, first, flatten, indexOf, isUndefined, map } from "lodash";
+import { filter, first, flatten, map } from "lodash";
 import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
 import { useTranslation } from "react-i18next";
 import {
@@ -13,7 +13,6 @@ export default function ({ group }: { group: any }) {
   const {
     product: { selections, quantity },
   } = useAppSelector((state) => state);
-  // console.log("selections", selections);
 
   const meterBtn = (g: any, c: any, type: string) => {
     const currentChoice = first(
