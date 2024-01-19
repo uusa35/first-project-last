@@ -1,6 +1,6 @@
 import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
-import { MainContextLayout } from "@/layouts/MainContentLayout";
+import ContentLayout from "@/layouts/MainContentLayout";
 import { cookies } from "next/headers";
 import { getCountryNameCookie } from "@/app/actions";
 import Image from "next/image";
@@ -86,78 +86,78 @@ export default async function ({ params: { lang } }: Props) {
   ]);
 
   return (
-    <MainContextLayout >
+    <ContentLayout>
       <PageHeader img={AboutusImg.src} title={trans.aboutus} />
-      <div className="mt-20 text-black px-4 md:px-8 min-h-screen">
-        <h1 className="capitalize text-2xl">
-          what is <span className="text-picks-dark">pick</span> App ?
+      <div className='mt-20 text-black px-4 md:px-8 min-h-screen'>
+        <h1 className='capitalize text-2xl'>
+          what is <span className='text-picks-dark'>pick</span> App ?
         </h1>
-        <p className="py-4 text-gray-500 leading-loose text-justify">
+        <p className='py-4 text-gray-500 leading-loose text-justify'>
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas
           delectus molestias impedit facere, nesciunt esse earum aspernatur
           ipsam tempora dignissimos excepturi laboriosam odit alias sed
           reprehenderit minima fuga quas aliquid?
         </p>
-        <p className="py-4 text-gray-500 leading-loose text-justify">
+        <p className='py-4 text-gray-500 leading-loose text-justify'>
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas
           delectus molestias impedit facere, nesciunt esse earum aspernatur
           ipsam tempora dignissimos excepturi laboriosam odit alias sed
           reprehenderit minima fuga quas aliquid?
         </p>
-        <p className="py-4 text-gray-500 leading-loose text-justify">
+        <p className='py-4 text-gray-500 leading-loose text-justify'>
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas
           delectus molestias impedit facere, nesciunt esse earum aspernatur
           ipsam tempora dignissimos excepturi laboriosam odit alias sed
           reprehenderit minima fuga quas aliquid?
         </p>
 
-        <div className="bg-white">
-          <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
-            <div className="rounded-2xl px-6 py-6 sm:p-16">
-              <div className="mx-auto max-w-xl lg:max-w-none">
-                <div className="text-center">
-                  <h2 className="text-2xl font-bold tracking-tight text-gray-900">
+        <div className='bg-white'>
+          <div className='mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8'>
+            <div className='rounded-2xl px-6 py-6 sm:p-16'>
+              <div className='mx-auto max-w-xl lg:max-w-none'>
+                <div className='text-center'>
+                  <h2 className='text-2xl font-bold tracking-tight text-gray-900'>
                     {trans.why_us}{" "}
-                    <span className="text-picks-dark">{trans.choose}</span>{" "}
+                    <span className='text-picks-dark'>{trans.choose}</span>{" "}
                     {trans.us}
                   </h2>
-                  <p className="text-picks-text-grey2">
+                  <p className='text-picks-text-grey2'>
                     {
                       trans.learn_about_the_most_important_features_of_the_Picks_app
                     }
                   </p>
                 </div>
 
-                <div className="mx-auto mt-12 grid max-w-sm grid-cols-1 gap-x-8 gap-y-10 sm:max-w-none lg:grid-cols-3">
+                <div className='mx-auto mt-12 grid max-w-sm grid-cols-1 gap-x-8 gap-y-10 sm:max-w-none lg:grid-cols-3'>
                   <ChooseUsCard
                     icon={<Order_ways height={40} width={40} />}
-                    title="Different ways to order"
-                    desc="You can have the order delivered to your address or pick it up from the store."
+                    title='Different ways to order'
+                    desc='You can have the order delivered to your address or pick it up from the store.'
                   />
                   <ChooseUsCard
                     icon={<Exclusive_offers height={40} width={40} />}
-                    title="Many exclusive offers"
-                    desc="Shop many offers and discounts on the most famous brands everywhere around you."
+                    title='Many exclusive offers'
+                    desc='Shop many offers and discounts on the most famous brands everywhere around you.'
                   />
                   <ChooseUsCard
                     icon={<Order_faster height={40} width={40} />}
-                    title="Order faster and easier"
-                    desc="Now you will be able to order whatever you want in quick and easy steps than before."
+                    title='Order faster and easier'
+                    desc='Now you will be able to order whatever you want in quick and easy steps than before.'
                   />
                   <ChooseUsCard
                     icon={<Customer_service height={40} width={40} />}
-                    title="Customer Service"
-                    desc="Help is available 24/7 through online chat or social accounts."
+                    title='Customer Service'
+                    desc='Help is available 24/7 through online chat or social accounts.'
                   />
                   <ChooseUsCard
                     icon={<Payment_methods height={40} width={40} />}
-                    title="Various payment methods"
-                    desc="We provide many different payment methods, such as cash upon delivery or online payment cards."
+                    title='Various payment methods'
+                    desc='We provide many different payment methods, such as cash upon delivery or online payment cards.'
                   />
                   <ChooseUsCard
                     icon={<Order_tracking height={40} width={40} />}
-                    title="Order tracking service"
-                    desc="You can track your order first until it reaches you online via the application or website."
+                    title='Order tracking service'
+                    desc='You can track your order first until it reaches you online via the application or website.'
                   />
                   {/* {incentives.map((incentive) => (
                     <div
@@ -221,6 +221,6 @@ export default async function ({ params: { lang } }: Props) {
 
         <DownloadAppSection />
       </div>
-    </MainContextLayout>
+    </ContentLayout>
   );
 }

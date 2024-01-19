@@ -1,6 +1,6 @@
 import { Locale, countriesList } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
-import { MainContextLayout } from "@/layouts/MainContentLayout";
+import ContentLayout from "@/layouts/MainContentLayout";
 import { getVendor } from "@/utils/user";
 import { AppQueryResult, User } from "@/src/types/queries";
 import { notFound } from "next/navigation";
@@ -24,7 +24,7 @@ export default async function ({ params: { lang, country, id } }: Props) {
 
   console.log("vendor=========>", vendor.data);
   return (
-    <MainContextLayout showMiddleNav={true}>
+    <ContentLayout showMiddleNav={true}>
       <div className='mt-8 px-4'>
         <Breadcrumbs title={store_name} />
         <VendorHeader title={store_name} logo={logo} bg={image} />
@@ -101,6 +101,6 @@ export default async function ({ params: { lang, country, id } }: Props) {
           <VendorContent products={vendor.data.items} />
         )}
       </div>
-    </MainContextLayout>
+    </ContentLayout>
   );
 }

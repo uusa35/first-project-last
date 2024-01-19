@@ -1,6 +1,6 @@
 import { Locale, countriesList } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
-import { MainContextLayout } from "@/layouts/MainContentLayout";
+import ContentLayout from "@/layouts/MainContentLayout";
 import {
   AppQueryResult,
   Category,
@@ -38,7 +38,7 @@ export default async function ({ params: { lang, country } }: Props) {
   ]);
 
   return (
-    <MainContextLayout showMiddleNav={true}>
+    <ContentLayout showMiddleNav={true}>
       <HomeContent
         lang={lang}
         country={country}
@@ -48,6 +48,6 @@ export default async function ({ params: { lang, country } }: Props) {
         vendors={vendors.data}
         featuredVendors={featuredVendors.data}
       />
-    </MainContextLayout>
+    </ContentLayout>
   );
 }

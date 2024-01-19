@@ -35,6 +35,7 @@ import { map, range } from "lodash";
 import OtpInput from "react18-input-otp";
 import { toEn } from "@/src/constants";
 import { setAuthentication } from "@/src/redux/slices/authSlice";
+import { useTranslation } from "react-i18next";
 
 type Inputs = {
   phone: string;
@@ -44,7 +45,7 @@ type Inputs = {
 };
 
 export default function () {
-  const trans: { [key: string]: string } = useContext(MainContext);
+  const { t } = useTranslation("trans");
   const {
     appSetting: { showVerificationModal, isLoading, session_id },
     locale: { lang },
@@ -181,7 +182,7 @@ export default function () {
                   as='h3'
                   className='text-lg font-medium leading-6 text-gray-900'>
                   <div className=' capitalize flex flex-row justify-center items-center border-b border-gray-200 pb-4 text-xl'>
-                    {trans.verification_code}
+                    {t("verification_code")}
                     <XMarkIcon
                       className='absolute ltr:left-4 rtl:right-4 w-6 h-6 text-gray-600 cursor-pointer'
                       onClick={() => closeModal}
@@ -195,12 +196,12 @@ export default function () {
                     className={`space-y-4 ${isLoading && "hidden"}`}>
                     <div>
                       <p className='font-semibold mb-3 text-xl'>
-                        {trans.verification_code}
+                        {t("verification_code")}
                       </p>
                       <p className='text-picks-text-gray text-base'>
-                        {
-                          trans.plz_enter_the_6_digits_code_that_was_sent_to_number
-                        }
+                        {t(
+                          "plz_enter_the_6_digits_code_that_was_sent_to_number"
+                        )}
                         <span className='text-black font-semibold px-1'>
                           {auth?.user?.phone_country_code} {auth?.user?.phone}
                         </span>
@@ -263,7 +264,7 @@ export default function () {
                           onClick={() => dispatch(toggleForgetPasswordModal())}
                           className="font-semibold text-expo-dark hover:text-green-700 capitalize"
                         >
-                          {trans.forgot_password}
+                          {t('forgot_password')}
                         </button>
                       </div>
                     </div> */}
@@ -272,16 +273,16 @@ export default function () {
                       <button
                         type='submit'
                         className='flex w-full justify-center btn-default capitalize'>
-                        {trans.confirm}
+                        {t("confirm")}
                       </button>
                     </div>
                   </form>
                   <div className='capitalize mt-10 text-center text-sm text-gray-500'>
-                    {trans.didnot_receive_the_code_yet}
+                    {t("didnot_receive_the_code_yet")}
                     <button
                       onClick={() => resendOtp()}
                       className='capitalize px-2 font-semibold leading-6 text-picks-dark hover:text-gray-500'>
-                      {trans.resend}
+                      {t("resend")}
                     </button>
                   </div>
                 </div>

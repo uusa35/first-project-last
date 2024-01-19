@@ -1,5 +1,5 @@
 "use client";
-import { MainContext } from "@/layouts/MainContentLayout";
+
 import { useContext } from "react";
 import ShowMore from "@/appIcons/green_left_arrow.svg";
 import { useAppSelector } from "@/redux/hooks";

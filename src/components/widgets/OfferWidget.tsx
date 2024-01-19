@@ -2,10 +2,8 @@
 import Flash from "@/appIcons/landing/flash.svg";
 import { Product } from "@/src/types/queries";
 import Image from "next/image";
-import React, { useContext } from "react";
 import FavouriteWidget from "@/components/widgets/FavouriteWidget";
 import { Locale, countriesList } from "@/src/types";
-import { MainContext } from "@/layouts/MainContentLayout";
 import { useAppDispatch } from "@/src/redux/hooks";
 import { useParams } from "next/navigation";
 import {
@@ -13,13 +11,14 @@ import {
   showProductModal,
 } from "@/src/redux/slices/productSlice";
 import { useLazyGetProductQuery } from "@/src/redux/api/productApi";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   product: Product;
 };
 
 export default function OfferWidget({ product }: Props) {
-  const trans: { [key: string]: string } = useContext(MainContext);
+  const { t } = useTranslation("trans");
   const dispatch = useAppDispatch();
   const params: { lang: Locale["lang"]; country?: countriesList } | any =
     useParams!();
@@ -69,7 +68,7 @@ export default function OfferWidget({ product }: Props) {
             {/* offer type */}
             <div className='flex items-center gap-x-1 rounded-full bg-[#232323] text-xs text-white px-2 py-px pt-1 w-fit'>
               <Flash />
-              <p>{trans["️flash_offer"]}</p>
+              <p>{t("flash_offer")}</p>
             </div>
           </div>
         </div>

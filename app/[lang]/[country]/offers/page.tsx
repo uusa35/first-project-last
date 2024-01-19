@@ -1,6 +1,6 @@
 import { Locale, countriesList } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
-import { MainContextLayout } from "@/layouts/MainContentLayout";
+import ContentLayout from "@/layouts/MainContentLayout";
 import { cookies } from "next/headers";
 import { getProducts } from "@/utils/product";
 import {
@@ -50,7 +50,7 @@ export default async function (props: Props) {
   ]);
 
   return (
-    <MainContextLayout showMiddleNav={true}>
+    <ContentLayout showMiddleNav={true}>
       {categories?.data?.length > 0 && (
         <CategoriesSlider categories={categories.data} />
       )}
@@ -64,6 +64,6 @@ export default async function (props: Props) {
         )}
         <Pagination links={products.pagination?.links} />
       </div>
-    </MainContextLayout>
+    </ContentLayout>
   );
 }

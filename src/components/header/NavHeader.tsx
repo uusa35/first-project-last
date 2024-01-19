@@ -21,7 +21,7 @@ import { useParams, usePathname, useSearchParams } from "next/navigation";
 import { changePathName, globalMaxWidth } from "@/utils/helpers";
 import { Locale, countriesList } from "@/types/index";
 import { appLinks } from "@/src/links";
-import { MainContext } from "@/layouts/MainContentLayout";
+
 import { useRouter } from "next/navigation";
 import { setLocale } from "@/redux/slices/localeSlice";
 import {
@@ -56,7 +56,6 @@ type Props = {
   showMiddleNav: boolean;
 };
 export default function ({ showMiddleNav = false }: Props) {
-  const trans: { [key: string]: string } = useContext(MainContext);
   const { t } = useTranslation("trans");
   const locales: Locale["lang"][] = ["ar", "en"];
   const {

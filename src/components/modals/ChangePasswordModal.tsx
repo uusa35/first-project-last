@@ -8,7 +8,7 @@ import {
   toggleForgetPasswordModal,
   toggleLoginModal,
 } from "@/src/redux/slices/settingSlice";
-import { MainContext } from "@/layouts/MainContentLayout";
+
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import ForgetPass from "@/appIcons/auth/forget_pass.svg";
 import { useGetCountriesQuery } from "@/src/redux/api/countryApi";
@@ -28,6 +28,7 @@ import {
 } from "@/src/redux/api/authApi";
 import LoadingSpinner from "../LoadingSpinner";
 import { setAuthentication } from "@/src/redux/slices/authSlice";
+import { useTranslation } from "react-i18next";
 type Inputs = {
   phone: string;
   phone_country_code: string;
@@ -35,7 +36,7 @@ type Inputs = {
   new_password_confirmation: string;
 };
 export default function () {
-  const trans: { [key: string]: string } = useContext(MainContext);
+  const { t } = useTranslation("trans");
   const {
     appSetting: { showChangePasswordModal, isLoading },
     locale: { lang },
@@ -153,7 +154,7 @@ export default function () {
                     as='h3'
                     className='text-lg font-medium leading-6 text-gray-900'>
                     <div className=' capitalize flex flex-row justify-center items-center border-b border-gray-200 pb-4 text-xl'>
-                      {trans.new_password}
+                      {t("new_password")}
                       <XMarkIcon
                         className='absolute ltr:left-4 rtl:right-4 w-6 h-6 text-gray-600 cursor-pointer'
                         onClick={() => closeModal}
@@ -168,12 +169,12 @@ export default function () {
                     <div className='sm:mx-auto sm:w-full sm:max-w-sm text-justify'>
                       <div className='mt-2'>
                         <p className='font-semibold text-xl'>
-                          {trans.new_password}
+                          {t("new_password")}
                         </p>
                         <p className='text-picks-text-gray text-sm mt-1'>
-                          {
-                            trans.enter_the_mobile_number_of_your_account_to_send_a_password_change_OTP_messsage
-                          }
+                          {t(
+                            "enter_the_mobile_number_of_your_account_to_send_a_password_change_OTP_messsage"
+                          )}
                         </p>
                       </div>
                     </div>
@@ -185,7 +186,7 @@ export default function () {
                           <label
                             htmlFor='new_password'
                             className='ltr:text-left rtl:text-right lable-default'>
-                            {trans.new_password}
+                            {t("new_password")}
                           </label>
                           <div className='mt-2'>
                             <div className='flex flex-row gap-x-3 rtl:flex-row-reverse'>
@@ -209,7 +210,7 @@ export default function () {
                           <label
                             htmlFor='new_password_confirmation'
                             className='ltr:text-left rtl:text-right lable-default'>
-                            {trans.new_password_comfirmation}
+                            {t("new_password_comfirmation")}
                           </label>
                           <div className='mt-2'>
                             <div className='flex flex-row gap-x-3 rtl:flex-row-reverse'>
@@ -236,7 +237,7 @@ export default function () {
 
                         <div className='mt-5'>
                           <button type='submit' className='btn-default w-full'>
-                            {trans.save}
+                            {t("save")}
                           </button>
                         </div>
                       </form>
