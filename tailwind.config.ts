@@ -20,6 +20,7 @@ const config: Config = {
         "picks-medium": "#22a8a2",
         "picks-green": "#E6F0EB",
         "picks-gray": "#F3F5F6",
+        "picks-gray2":"#0E1114",
         "picks-text-gray": "#6E7887",
         "picks-text-grey2": "#404F65",
         "picks-border": "#E2E5E9",

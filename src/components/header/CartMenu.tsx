@@ -101,11 +101,10 @@ export default function () {
                     <div className="overflow-y-scroll scrollbar-hide">
                       <div className="px-4 sm:px-6">
                         <div className="flex items-start justify-between">
-                         
                           <div className="ml-3 flex h-7 items-center">
                             <button
                               type="button"
-                              className="relative rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                              className="relative rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none"
                               onClick={() => dispatch(toggleCartMenu(false))}
                             >
                               <span className="absolute -inset-2.5" />
@@ -121,11 +120,13 @@ export default function () {
                       <div className="relative mt-6 flex-1 px-4 sm:px-6">
                         {/* vendor info */}
                         <div>
-                          <p>Your cart from</p>
+                          <p className="text-xs">Your cart from</p>
                           {/* should go to vendor details */}
-                          <Link href={"/"}>McDonald's</Link>
+                          <Link className="text-lg" href={"/"}>
+                            McDonald's
+                          </Link>
 
-                          <div className="flex justify-between items-center border-b">
+                          <div className="flex justify-between items-center border-b text-picks-text-gray text-sm py-2">
                             <p>1 item</p>
                             <p>Subtotal : 8.00 KD</p>
                           </div>
