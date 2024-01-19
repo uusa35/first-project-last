@@ -1,9 +1,12 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { filter, find, first, isUndefined } from 'lodash';
+import { Product } from '@/src/types/queries';
+import { createSlice, isAnyOf, PayloadAction, current } from '@reduxjs/toolkit';
+import { filter, find, first, flatten, isEmpty, isUndefined, map, split, sum, sumBy } from 'lodash';
 
 interface Choice {
   choice_id: number | string;
   quantity: number | string;
+  price: number;
+  total?: number;
 }
 
 interface Selection {
@@ -15,20 +18,33 @@ interface Selection {
   max: number;
 }
 
-
 type Props = {
   id: number | string | null;
+  user_id: null | string | number;
   quantity: number;
+  price: number;
+  currency: string;
+  total: number;
   enabled: boolean;
   originalGroups: [];
   selections: Selection[] | undefined;
+  confirm: boolean;
+  orderType: "pickup" | "delivery";
+  session_id: string | null;
 };
 const initialState: Props = {
   id: null,
+  user_id: null,
   quantity: 1,
+  currency: '',
   enabled: false,
   originalGroups: [],
-  selections: undefined
+  selections: undefined,
+  confirm: false,
+  total: 0,
+  price: 0,
+  orderType: 'pickup',
+  session_id: null,
 };
 
 export const productSlice = createSlice({
@@ -37,14 +53,23 @@ export const productSlice = createSlice({
   reducers: {
     showProductModal: (
       state: typeof initialState,
-      action: PayloadAction<number | string>
+      action: PayloadAction<Product>
     ) => {
+      const { id, vendor_id, new_price } = action.payload;
+      const currency = split(action.payload.price.toString(), ' ')[1];
+      const price = new_price ? parseFloat(split(new_price.toString(), ' ')[0]) : parseFloat(split(action.payload.price.toString(), ' ')[0]);
       return {
         ...state,
-        id: action.payload,
+        id,
+        offer_id: id,
+        currency,
+        vendor_id,
+        price,
         enabled: true,
-        selections: action.payload === state.id ? state.selections : initialState.selections,
-        // originalGroups: action.payload === state.id ? state.originalGroups : initialState.originalGroups
+        total: id === state.id ? state.total : initialState.total,
+        quantity: id === state.id ? state.quantity : initialState.quantity,
+        originalGroups: id === state.id ? state.originalGroups : initialState.originalGroups,
+        selections: id === state.id ? state.selections : initialState.selections,
       };
     },
     hideProductModal: (
@@ -53,8 +78,25 @@ export const productSlice = createSlice({
     ) => {
       return {
         ...state,
-        id: null,
         enabled: false,
+      };
+    },
+    enableConfirm: (
+      state: typeof initialState,
+      action: PayloadAction<void | undefined>
+    ) => {
+      return {
+        ...state,
+        confirm: true,
+      };
+    },
+    disableConfirm: (
+      state: typeof initialState,
+      action: PayloadAction<void | undefined>
+    ) => {
+      return {
+        ...state,
+        confirm: false,
       };
     },
     setProductOriginalGroups: (
@@ -66,17 +108,20 @@ export const productSlice = createSlice({
         originalGroups: action.payload
       };
     },
-    addProductChoice: (
+    addRadioChoice: (
       state: typeof initialState,
-      action: PayloadAction<{ group_id: number | string, choice_id: number | string, qty: number, multi: boolean, required: boolean, min: number, max: number }>
+      action: PayloadAction<{ group_id: number | string, choice_id: number | string, qty: number, multi: boolean, required: boolean, min: number, max: number, price: number }>
     ) => {
-      const { group_id, choice_id, qty, multi, required, min, max } = action.payload;
+      const { group_id, choice_id, qty, multi, required, min, max, price } = action.payload;
       const currentGroup = find(state.selections, (g) => g.choice_group_id === group_id);
+      const filteredSelections = filter(state.selections, (g) => g.choice_group_id !== group_id);
       const currentSelections = isUndefined(state.selections) ? [{
         choice_group_id: group_id,
         choices: [{
           choice_id,
-          quantity: qty
+          quantity: qty,
+          price,
+          total: price * qty
         }],
         multi,
         required,
@@ -84,7 +129,7 @@ export const productSlice = createSlice({
         max
       }] :
         [
-          ...filter(state.selections, (g) => g.choice_group_id !== group_id),
+          ...filteredSelections,
           {
             choice_group_id: group_id,
             multi,
@@ -93,10 +138,14 @@ export const productSlice = createSlice({
             max,
             choices: currentGroup && multi ? (!find(currentGroup.choices, (c) => c.choice_id === choice_id) ? [...filter(currentGroup.choices, c => c.choice_id !== choice_id), {
               choice_id,
-              quantity: qty
+              quantity: qty > min && qty <= max ? qty : 1,
+              price,
+              total: price * (qty > min && qty <= max ? qty : 1)
             }] : [...filter(currentGroup.choices, c => c.choice_id !== choice_id)]) : [{
               choice_id,
-              quantity: qty
+              quantity: qty >= min && qty <= max ? qty : 1,
+              price,
+              total: price * (qty >= min && qty <= max ? qty : 1)
             }]
           }
         ];
@@ -105,7 +154,7 @@ export const productSlice = createSlice({
         selections: filter(currentSelections, (s) => s.choices.length !== 0)
       };
     },
-    removeProductChoice: (
+    removeRadioChoice: (
       state: typeof initialState,
       action: PayloadAction<{ group_id: number | string, choice_id: number | string, multi: boolean, required: boolean, min: number, max: number }>
     ) => {
@@ -128,6 +177,138 @@ export const productSlice = createSlice({
         selections: currentSelections
       };
     },
+    addCheckoutChoice: (
+      state: typeof initialState,
+      action: PayloadAction<{ group_id: number | string, choice_id: number | string, qty: number, multi: boolean, required: boolean, min: number, max: number, price: number }>
+    ) => {
+      const { group_id, choice_id, qty, multi, required, min, max, price } = action.payload;
+      const currentGroup = find(state.selections, (g) => g.choice_group_id === group_id);
+      const filteredSelections = filter(state.selections, (g) => g.choice_group_id !== group_id);
+      const currentSelections = isUndefined(state.selections) ? [{
+        choice_group_id: group_id,
+        choices: [{
+          choice_id,
+          quantity: qty,
+          price,
+          total: qty * price
+        }],
+        multi,
+        required,
+        min,
+        max
+      }] :
+        [
+          ...filteredSelections,
+          {
+            choice_group_id: group_id,
+            multi,
+            required,
+            min,
+            max,
+            choices: currentGroup && multi ? (!find(currentGroup.choices, (c) => c.choice_id === choice_id) ? [...filter(currentGroup.choices, c => c.choice_id !== choice_id), {
+              choice_id,
+              quantity: qty > min && qty <= max ? qty : 1,
+              price,
+              total: price * (qty > min && qty <= max ? qty : 1)
+            }] : [...filter(currentGroup.choices, c => c.choice_id !== choice_id)]) : [{
+              choice_id,
+              quantity: qty >= min && qty <= max ? qty : 1,
+              price,
+              total: price * (qty >= min && qty <= max ? qty : 1)
+            }]
+          }
+        ];
+      return {
+        ...state,
+        selections: filter(currentSelections, (s) => s.choices.length !== 0)
+      };
+    },
+    removeCheckoutChoice: (
+      state: typeof initialState,
+      action: PayloadAction<{ group_id: number | string, choice_id: number | string, multi: boolean, required: boolean, min: number, max: number }>
+    ) => {
+      const { group_id, choice_id, multi, required, min, max } = action.payload;
+      const currentGroup = first(filter(state.selections, (g) => g.choice_group_id === group_id));
+      const currentSelections = currentGroup && currentGroup.multi ?
+        [
+          ...filter(state.selections, (g) => g.choice_group_id !== group_id),
+          currentGroup && currentGroup.multi && {
+            choice_group_id: group_id,
+            choices: filter(currentGroup.choices, (c) => c.choice_id !== choice_id),
+            multi,
+            required,
+            min,
+            max,
+          }
+        ] : filter(state.selections, (g) => g.choice_group_id !== group_id);
+      return {
+        ...state,
+        selections: currentSelections
+      };
+    },
+    increaseMeterChoice: (
+      state: typeof initialState,
+      action: PayloadAction<{ choice_group_id: number | string, choices: Choice[], multi: boolean, required: boolean, min: number, max: number }>
+    ) => {
+      const { multi, required, min, max } = action.payload;
+      const currentChoice: any = action.payload.choices;
+      const filteredSelections = filter(state.selections, (g) => g.choice_group_id !== action.payload.choice_group_id);
+      const oldCurrentChoices = filter(flatten(map(state.selections, 'choices')), c => c.choice_id !== currentChoice[0].choice_id);
+      const currentSelections = isUndefined(state.selections) ? [action.payload] :
+        [
+          ...filteredSelections,
+          {
+            ...action.payload,
+            choices: multi && sumBy(oldCurrentChoices, 'quantity') + 1 <= max ? [...oldCurrentChoices, {
+              choice_id: currentChoice[0].choice_id,
+              quantity: currentChoice[0].quantity + 1,
+              price: currentChoice[0].price,
+              total: currentChoice[0].price * (currentChoice[0].quantity + 1),
+
+            }] : [{
+              choice_id: currentChoice[0].choice_id,
+              quantity: 1,
+              price: currentChoice[0].price,
+              total: currentChoice[0].price,
+            }]
+          }
+        ];
+      return {
+        ...state,
+        selections: filter(currentSelections, (s) => s.choices.length !== 0)
+      };
+    },
+    decreaseMeterChoice: (
+      state: typeof initialState,
+      action: PayloadAction<{ choice_group_id: number | string, choices: Choice[], multi: boolean, required: boolean, min: number, max: number }>
+    ) => {
+      const { multi, required, min, max } = action.payload;
+      const currentChoice: any = action.payload.choices;
+      const filteredSelections = filter(state.selections, (g) => g.choice_group_id !== action.payload.choice_group_id);
+      const oldCurrentChoices = flatten(filter(map(state.selections, 'choices')));
+      const currentSelections = isUndefined(state.selections) ? [action.payload] :
+        [
+          ...filteredSelections,
+          {
+            ...action.payload,
+            choices: multi && sumBy(oldCurrentChoices, 'quantity') - 1 <= max ? [...oldCurrentChoices, {
+              choice_id: currentChoice[0].choice_id,
+              quantity: currentChoice[0].quantity - 1,
+              price: currentChoice[0].price,
+              total: currentChoice[0].price * (currentChoice[0].quantity - 1),
+            }] : currentChoice[0].quantity - 1 > 0 ? [{
+              choice_id: currentChoice[0].choice_id,
+              quantity: currentChoice[0].quantity - 1,
+              price: currentChoice[0].price,
+              total: currentChoice[0].price * (currentChoice[0].quantity - 1),
+            }] : []
+          }
+        ];
+      return {
+        ...state,
+        selections: filter(currentSelections, (s) => s.choices.length !== 0)
+      };
+    },
     increaseQty: (
       state: typeof initialState,
       action: PayloadAction<void>
@@ -137,7 +318,7 @@ export const productSlice = createSlice({
         quantity: state.quantity + 1
       }
     },
-    decraseQty: (
+    decreaseQty: (
       state: typeof initialState,
       action: PayloadAction<void>
     ) => {
@@ -145,16 +326,74 @@ export const productSlice = createSlice({
         ...state,
         quantity: state.quantity - 1 > 0 ? state.quantity - 1 : 0
       }
-    }
-  }
+    },
+    resetSelections: (
+      state: typeof initialState,
+      action: PayloadAction<void>
+    ) => {
+      return {
+        ...state,
+        selections: initialState.selections
+      }
+    },
+    resetProductModal: (
+      state: typeof initialState,
+      action: PayloadAction<void>
+    ) => {
+      return initialState;
+    },
+    changeOrderType: (
+      state: typeof initialState,
+      action: PayloadAction<Props["orderType"]>
+    ) => {
+      return {
+        ...state,
+        orderType: action.payload,
+      };
+    },
+    setSessionId: (
+      state: typeof initialState,
+      action: PayloadAction<Props["session_id"]>
+    ) => {
+      return {
+        ...state,
+        session_id: action.payload,
+      };
+    },
+  },
+  extraReducers: builder => {
+    builder.addMatcher(isAnyOf(showProductModal, increaseMeterChoice,
+      decreaseMeterChoice, addRadioChoice, removeRadioChoice, increaseQty,
+      decreaseQty, addCheckoutChoice, removeCheckoutChoice), (state, action) => {
+        const { price, quantity } = current(state);
+        const choices = flatten(map(current(state).selections, 'choices'));
+        const total = (price * quantity) + (isEmpty(choices) ? 0 : (sumBy(choices, 'total') * quantity));
+        return {
+          ...current(state),
+          quantity,
+          total,
+          selections: total > 0 ? current(state).selections : initialState.selections
+        }
+      })
+  },
 });
 
 export const {
   showProductModal,
   hideProductModal,
   setProductOriginalGroups,
-  addProductChoice,
-  removeProductChoice,
+  addRadioChoice,
+  removeRadioChoice,
+  addCheckoutChoice,
+  removeCheckoutChoice,
+  increaseMeterChoice,
+  decreaseMeterChoice,
   increaseQty,
-  decraseQty
+  decreaseQty,
+  enableConfirm,
+  disableConfirm,
+  resetSelections,
+  resetProductModal,
+  changeOrderType,
+  setSessionId,
 } = productSlice.actions;

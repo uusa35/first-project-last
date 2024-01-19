@@ -10,10 +10,9 @@ import React from "react";
 
 type Props = {
   category: Category;
-  
 };
 
-export default function ({ category,  }: Props) {
+export default function ({ category }: Props) {
   const searchParams = useSearchParams();
   const params: { lang: Locale["lang"]; country?: countriesList } | any =
     useParams!();
@@ -21,7 +20,11 @@ export default function ({ category,  }: Props) {
 
   return (
     <Link
-      href={appLinks.offers(lang, params?.country, `category_id=${category.id}`)}
+      href={appLinks.offers(
+        lang,
+        params?.country,
+        `category_id=${category.id}`
+      )}
       className='px-5'>
       <div
         className={`flex items-center gap-x-2 bg-white rounded-full py-2 px-3 w-fit ${
@@ -30,7 +33,7 @@ export default function ({ category,  }: Props) {
         }`}>
         <Image
           alt={category.name}
-          src={category.image}
+          src={category.image ?? `https://placehold.co/100x100`}
           width={1000}
           height={1000}
           className='w-5 h-5'

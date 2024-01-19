@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-  reactStrictMode: false,
+  reactStrictMode: true,
   experimental: {
     serverActions: {
       allowedOrigins: ["picks.testbedbynd.com", "localhost"],
@@ -77,6 +77,12 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "tailwindui.com",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "placehold.co",
         port: "",
         pathname: "/**",
       },

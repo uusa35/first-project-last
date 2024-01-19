@@ -1,5 +1,12 @@
 "use client";
-import { Fragment, forwardRef, useContext, useEffect, useState } from "react";
+import {
+  Fragment,
+  forwardRef,
+  useContext,
+  useEffect,
+  useState,
+  useTransition,
+} from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
@@ -18,13 +25,13 @@ import { MainContext } from "@/layouts/MainContentLayout";
 import { useRouter } from "next/navigation";
 import { setLocale } from "@/redux/slices/localeSlice";
 import {
-  changeOrderType,
   toggleCartMenu,
   toggleLoginModal,
   toggleRegisterModal,
   toggleSideMenu,
   toggleVerficationModal,
 } from "@/src/redux/slices/settingSlice";
+import { changeOrderType } from "@/src/redux/slices/productSlice";
 import { getAuth, getCountryNameCookie, setOrderType } from "@/app/actions";
 import LogoDark from "@/appImages/logo_dark.svg";
 import LogoLight from "@/appImages/logo_light.svg";
@@ -43,18 +50,21 @@ import { Popover } from "@headlessui/react";
 import { useLazyGetTopSearchKeysQuery } from "@/src/redux/api";
 import { map } from "lodash";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   showMiddleNav: boolean;
 };
 export default function ({ showMiddleNav = false }: Props) {
   const trans: { [key: string]: string } = useContext(MainContext);
+  const { t } = useTranslation("trans");
   const locales: Locale["lang"][] = ["ar", "en"];
   const {
     locale,
     area,
     country: { country_code },
-    appSetting: { orderType, sideMenuOpen },
+    appSetting: { sideMenuOpen },
+    product: { orderType },
     auth: { token },
   } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
@@ -73,24 +83,23 @@ export default function ({ showMiddleNav = false }: Props) {
     { data: searchKeys, isSuccess: searchKeysSuccess, isFetching },
   ] = useLazyGetTopSearchKeysQuery();
   const navigation: { name: string; href: string }[] = [
-    { name: trans.landing, href: appLinks.landing(lang) },
+    { name: t("landing"), href: appLinks.landing(lang) },
     {
-      name: trans.home,
+      name: t("home"),
       href: appLinks.home(lang, country_code),
     },
     {
-      name: trans.offers,
+      name: t("offers"),
       href: appLinks.offers(lang, country_code, ""),
     },
-    { name: trans.aboutus, href: appLinks.aboutus(lang) },
-    { name: trans.contactus, href: appLinks.contactus(lang) },
-    { name: trans.joinus, href: appLinks.joinus(lang) },
-    { name: trans.faqs, href: appLinks.faqs(lang) },
+    { name: t("aboutus"), href: appLinks.aboutus(lang) },
+    { name: t("contactus"), href: appLinks.contactus(lang) },
+    { name: t("joinus"), href: appLinks.joinus(lang) },
+    { name: t("faqs"), href: appLinks.faqs(lang) },
   ];
   const handleClick = (item: Locale["lang"]) => {
-    dispatch(setLocale(item));
     return router.push(
-      `${changePathName(locale.lang, item, pathName)}?${
+      `${changePathName(lang, item, pathName)}?${
         searchParams && searchParams.toString()
       }`
     );
@@ -149,7 +158,7 @@ export default function ({ showMiddleNav = false }: Props) {
           id='search'
           // defaultValue={searchParams?.get("search") ?? ""}
           className='input-default ltr:pl-10 rtl:pr-10 '
-          placeholder={trans.search}
+          placeholder={t("search")}
           ref={ref}
           {...props}
           onChange={(e) => console.log("e", e.target.value)}
@@ -213,14 +222,14 @@ export default function ({ showMiddleNav = false }: Props) {
                     orderType === "pickup" ? "bg-white" : "bg-gray-100"
                   }`}
                   onClick={() => handleOrderType("pickup")}>
-                  {trans.pickup}
+                  {t("pickup")}
                 </button>
                 <button
                   className={`px-3 py-2 text-black rounded-md capitalize ${
                     orderType === "delivery" ? "bg-white" : "bg-gray-100"
                   }`}
                   onClick={() => handleOrderType("delivery")}>
-                  {trans.delivery}
+                  {t("delivery")}
                 </button>
               </div>
               {area.id !== 0 && <AreaDropDown />}
@@ -281,8 +290,8 @@ export default function ({ showMiddleNav = false }: Props) {
                     fill='none'
                     xmlns='http://www.w3.org/2000/svg'>
                     <path
-                      fill-rule='evenodd'
-                      clip-rule='evenodd'
+                      fillRule='evenodd'
+                      clipRule='evenodd'
                       d='M6.01612 17H2.29083C1.55203 17 0.953125 16.4011 0.953125 15.6623V14.7893C0.953125 14.2839 1.1539 13.7992 1.51127 13.4419C2.43448 12.5187 2.95312 11.2665 2.95312 9.9609V7C2.95312 3.13401 6.08714 0 9.95312 0C13.8191 0 16.9531 3.13401 16.9531 7V9.9609C16.9531 11.2665 17.4718 12.5187 18.395 13.4419C18.7523 13.7992 18.9531 14.2839 18.9531 14.7893V15.6623C18.9531 16.4011 18.3542 17 17.6154 17H13.8901C13.8901 17.3646 13.8826 18.1575 13.4579 18.9285C12.7801 20.159 11.4662 21 9.95312 21C8.44002 21 7.12609 20.159 6.44827 18.9285C6.02358 18.1575 6.01612 17.3646 6.01612 17ZM14.9531 9.9609C14.9531 11.7839 15.6721 13.5327 16.9531 14.8283V15H2.95312V14.8283C4.23412 13.5327 4.95312 11.7839 4.95312 9.9609V7C4.95312 4.23858 7.1917 2 9.95312 2C12.7145 2 14.9531 4.23858 14.9531 7V9.9609ZM11.8901 17H8.01612C8.01612 17.332 8.03992 17.6728 8.20012 17.9636C8.53942 18.5796 9.19403 18.9975 9.94643 19H9.95312H9.95973C10.7122 18.9975 11.3668 18.5796 11.7061 17.9636C11.8663 17.6728 11.8901 17.332 11.8901 17Z'
                       fill='#0E1114'
                     />
@@ -314,12 +323,12 @@ export default function ({ showMiddleNav = false }: Props) {
                 <button
                   className={`p-3 w-32 bg-white/80 rounded-lg capitalize text-lg text-black`}
                   onClick={handleRegisterClick}>
-                  {trans.signup}
+                  {t("signup")}
                 </button>
                 <button
                   className={`p-3 w-32 bg-white/30 rounded-lg capitalize text-lg`}
                   onClick={() => dispatch(toggleLoginModal())}>
-                  {trans.login}
+                  {t("login")}
                 </button>
               </>
             )}
@@ -328,7 +337,7 @@ export default function ({ showMiddleNav = false }: Props) {
               className='hidden sm:flex text-sm font-semibold pt-2'>
               <div className='flex flex-row justify-center items-center gap-x-3'>
                 <ArFlag className='w-8 h-8 ' />
-                <div>{lang === "ar" ? trans.english : trans.arabic}</div>
+                <div>{lang === "ar" ? t("english") : t("arabic")}</div>
               </div>
             </button>
           </div>
@@ -379,12 +388,12 @@ export default function ({ showMiddleNav = false }: Props) {
                       <button
                         className='btn-default'
                         onClick={() => dispatch(toggleLoginModal())}>
-                        {trans.login}
+                        {t("login")}
                       </button>
                       <button
                         className='btn-transparent'
                         onClick={() => dispatch(toggleRegisterModal())}>
-                        {trans.signup}
+                        {t("signup")}
                       </button>
                     </div>
                   )}
@@ -392,9 +401,9 @@ export default function ({ showMiddleNav = false }: Props) {
                 <div className='mt-6 flow-root '>
                   <div className='-my-6 '>
                     <div className='py-6 '>
-                      {navigation.map((item) => (
+                      {navigation.map((item, i: number) => (
                         <Link
-                          key={item.name}
+                          key={i}
                           href={item.href}
                           className='-mx-3 block border-b border-gray-200 p-3 py-4  text-base font-semibold leading-7 text-black hover:bg-gray-100 capitalize'>
                           {item.name}
@@ -405,12 +414,12 @@ export default function ({ showMiddleNav = false }: Props) {
                       <Link
                         href={appLinks.aboutus(lang)}
                         className='-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-black  capitalize'>
-                        {trans.aboutus}
+                        {t("aboutus")}
                       </Link>
                       <Link
                         href={appLinks.joinus(lang)}
                         className='-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-black  capitalize'>
-                        {trans.add_ur_resturant}
+                        {t("add_ur_resturant")}
                       </Link>
                       <ul
                         role='list'

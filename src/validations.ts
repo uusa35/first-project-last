@@ -1,4 +1,4 @@
-import { filter, find, first, flatten, isEmpty, isEqual, map } from "lodash";
+import { difference, filter, first, flatten, isEmpty, map } from "lodash";
 import * as yup from "yup";
 
 export const loginSchema = yup.object({
@@ -90,7 +90,7 @@ export const contactusSchema = yup.object().shape({
   message: yup.string().required().max(9999),
 });
 
-export const addToCartSchema = (originalGroups: any, trans: any) => {
+export const addToCartSchema = (originalGroups: any, t: any) => {
   const originalAllChoices = map(
     flatten(
       map(filter(originalGroups, "choices"), "choices")
@@ -109,15 +109,16 @@ export const addToCartSchema = (originalGroups: any, trans: any) => {
     ),
     "id"
   );
+  const originalRequiredGroupsByName = map(
+    flatten(
+      filter(originalGroups, g => g.selection_type !== 'optional')
+    ),
+  );
   const allOrginalGroups = map(
     flatten(originalGroups),
     "id"
   );
-  // console.log('all original groups', allOrginalGroups);
-  // console.log('originalAllChoices', originalAllChoices);
-  // console.log('required gorups', originalRequiredGroups)
   return yup.lazy((values) => {
-    // console.log('values', values);
     const currentRequiredChoices = map(
       flatten(
         map(filter(filter(values.groups, g => g.selection_type !== 'optional'), "choices"), "choices")
@@ -126,31 +127,38 @@ export const addToCartSchema = (originalGroups: any, trans: any) => {
     )
     const currentRequiredGroups = map(
       flatten(
-        map(filter(values.groups, g => g.selection_type !== 'optional'))
+        filter(values.groups, g => g.required)
       ),
-      "id"
+      "choice_group_id"
     )
-    // console.log('currentRequiredGroups', currentRequiredGroups);
-    // console.log('currentRequiredChoices', currentRequiredChoices)
-    // console.log('isEqual=====>', isEqual(originalRequiredChoices, currentRequiredChoices))
+    console.log('values', values)
     return yup.object().shape({
-      vendor_id: yup.number().required(trans['required']),
-      offer_id: yup.number().required(trans['required']),
-      quantity: yup.number().required(trans['required']),
+      vendor_id: yup.number().required(t('required', { field: t('vendor') })),
+      offer_id: yup.number().required(t('required', { field: t('product') })),
+      quantity: yup.number().min(1, t('validation.quantity')).required(t('required', { field: t('quantity') })),
       groups: yup.array().of(yup.object().shape({
-        choice_group_id: yup.number().oneOf(allOrginalGroups),
+        choice_group_id: yup.number().oneOf(allOrginalGroups).when('offer_id', (_, schema) => {
+          const remainingRequiredGroups = difference(originalRequiredGroups, currentRequiredGroups);
+          // cases are not done :
+          // 1- groups with max 2 or 3 (meters)
+          const remainingRequiredGroupsByNames = first(filter(originalRequiredGroupsByName, g => g.id === first(remainingRequiredGroups)));
+          return originalRequiredGroups.length > currentRequiredGroups.length && !isEmpty(remainingRequiredGroupsByNames) ? schema
+            .max(originalRequiredGroups.length, t('validation.group_required_max', { field: remainingRequiredGroupsByNames.name }))
+            : schema.optional();
+        }),
         choices: yup.array().of(yup.object().shape({
           quantity: yup.number(),
           choice_id: yup.number(),
-        })).when('choice_group_id', (choice_group_id, schema) => {
-          const currentGroupId = first(filter(allOrginalGroups, g => g === choice_group_id[0]));
-          const currentGroup = first(filter(originalGroups, g => g.id === currentGroupId));
-          return currentGroupId ? schema.min(currentGroup.min_number, trans['min']).max(currentGroup.max_number, trans['max']) : schema;
-        }).when('choice_group_id', (choice_group_id, schema) => {
-          return find(originalRequiredGroups, choice_group_id[0]) ? schema.required(trans['required']) : schema;
-        })
-      })).when([], (_, schema) => {
-        return originalRequiredGroups.length > 0 ? schema.required(trans['required']) : schema;
+        }))
+      })).when('quantity', (quantity, schema) => {
+        // console.log('original', originalRequiredGroups)
+        // console.log('current', currentRequiredGroups)
+        // console.log('groups of local', quantity);
+        // console.log('originalRequiredGroupsByName', originalRequiredGroupsByName)
+        // console.log('case of groups', originalRequiredGroups.length !== currentRequiredGroups.length
+        const remainingRequiredGroups = difference(originalRequiredGroups, currentRequiredGroups);
+        const remainingRequiredGroupsByNames = first(filter(originalRequiredGroupsByName, g => g.id === first(remainingRequiredGroups)));
+        return originalRequiredGroups.length !== currentRequiredGroups.length ? schema.required(t('validation.required', { field: remainingRequiredGroupsByNames.name })).length(remainingRequiredGroupsByNames.length, t('validation.group_required_max', { field: remainingRequiredGroupsByNames.name })) : schema.nullable();
       })
     });
   }

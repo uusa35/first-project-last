@@ -7,13 +7,15 @@ import ProductWidget from "@/components/widgets/ProductWidget";
 import { useContext } from "react";
 import { MainContext } from "@/components/layouts/MainContentLayout";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { useTranslation } from "react-i18next";
+import OfferWidget from "@/components/widgets/OfferWidget";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function ({ products }: { products: any }) {
-  const trans: { [key: string]: string } = useContext(MainContext);
+  const { t } = useTranslation("trans");
 
   return (
     <div className='mx-auto'>
@@ -24,7 +26,7 @@ export default function ({ products }: { products: any }) {
             <div className='border-b border-gray-200 capitalize'>
               <div className='flex flex-row justify-between items-center'>
                 <div className='line-clamp-1'>
-                  <h1>{trans.full_menu}</h1>
+                  <h1>{t("full_menu")}</h1>
                 </div>
                 <div className='flex flex-row justify-end items-center w-3/5 sm:w-full max-w-sm '>
                   <div className='relative rounded-full shadow-sm me-4 w-full '>
@@ -39,14 +41,15 @@ export default function ({ products }: { products: any }) {
                       name='search'
                       id='search'
                       className='input-default ltr:pl-10 rtl:pr-10 rounded-full capitalize'
-                      placeholder={trans.search_in_menu}
+                      placeholder={`${t("search_in_menu")}`}
                     />
                   </div>
                 </div>
               </div>
               <Tab.List className='-mb-px flex gap-x-8'>
-                {map(products, (c, i) => (
+                {map(products, (c, i: number) => (
                   <Tab
+                    key={i}
                     className={({ selected }) =>
                       classNames(
                         selected
@@ -66,7 +69,7 @@ export default function ({ products }: { products: any }) {
                   <div className='grid grid-cols-2 xl:grid-cols-3 my-4'>
                     {map(c.offers, (p, i) => (
                       <div className={"col-span-1 me-2"} key={i}>
-                        <ProductWidget product={p} />
+                        <OfferWidget product={p} />
                       </div>
                     ))}
                   </div>

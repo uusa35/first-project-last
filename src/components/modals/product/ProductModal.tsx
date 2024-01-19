@@ -1,11 +1,12 @@
 "use client";
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useContext, useEffect, useState } from "react";
+import { Fragment, useEffect, useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
 import {
-  decraseQty,
+  decreaseQty,
   hideProductModal,
   increaseQty,
+  resetProductModal,
   setProductOriginalGroups,
 } from "@/src/redux/slices/productSlice";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -15,20 +16,29 @@ import {
   showSuccessToastMessage,
 } from "@/src/redux/slices/toastMessageSlice";
 import { useParams, usePathname, useRouter } from "next/navigation";
-import { MainContext } from "@/components/layouts/MainContentLayout";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { AppQueryResult, Product } from "@/src/types/queries";
 import Slider from "react-slick";
 import { HeartIcon, ShareIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useGetProductQuery } from "@/src/redux/api/productApi";
 import Image from "next/image";
-import { map, capitalize } from "lodash";
+import {
+  map,
+  capitalize,
+  isEmpty,
+  isArray,
+  first,
+  values,
+  isObject,
+} from "lodash";
 import CheckBoxInput from "@/components/modals/product/CheckBoxInput";
 import RadioInput from "@/components/modals/product/RadioInput";
+import MeterInput from "@/components/modals/product/MeterInput";
 import { addToCartSchema } from "@/src/validations";
 import { RWebShare } from "react-web-share";
 import { appLinks } from "@/src/links";
 import { Locale, countriesList } from "@/src/types";
+import { useTranslation } from "react-i18next";
 
 type Inputs = {
   phone: string;
@@ -38,23 +48,32 @@ type Inputs = {
 };
 
 export default function () {
-  const trans: { [key: string]: string } = useContext(MainContext);
+  const { t } = useTranslation("trans");
   const params: { lang: Locale["lang"]; country?: countriesList } | any =
     useParams!();
   const pathName = usePathname()!;
   const { lang } = params;
   const {
     appSetting: { showProductModal, isLoading, session_id },
-    product: { id, selections, quantity, enabled },
+    product: {
+      id: offer_id,
+      vendor_id,
+      selections,
+      quantity,
+      enabled,
+      total,
+      currency,
+    },
     country: { code },
   } = useAppSelector((state) => state);
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const { data, isSuccess, isFetching } = useGetProductQuery<{
+  const { data, isSuccess, isFetching, error } = useGetProductQuery<{
     data: AppQueryResult<Product>;
     isSuccess: boolean;
     isFetching: boolean;
-  }>(id);
+    error: any;
+  }>(offer_id);
   const {
     handleSubmit,
     register,
@@ -64,19 +83,18 @@ export default function () {
     getValues,
     formState: { errors },
   }: any = useForm<any>({
-    resolver: yupResolver(addToCartSchema(data?.data?.groups, trans)),
-    defaultValues: {
-      offer_id: data?.data?.id,
-      quantity: 1,
-      vendor_id: data?.data?.vendor?.id,
-      notes: "hello",
-      groups: selections,
-    },
+    resolver: yupResolver(addToCartSchema(data?.data?.groups, t)),
+    defaultValues: useMemo(() => {
+      return {
+        offer_id,
+        user_id: null,
+        quantity,
+        vendor_id,
+        groups: null,
+        // notes: "hello",
+      };
+    }, [offer_id]),
   });
-
-  console.log("errors", errors);
-  // console.log("getValues", getValues());
-  // console.log("state sections", selections);
 
   const settings: any = {
     dots: true,
@@ -87,9 +105,10 @@ export default function () {
   };
 
   const onSubmit: SubmitHandler<Inputs> = async (body) => {
-    console.log("body", body);
-    reset();
-    // dispatch(enableLoading());
+    if (isEmpty(errors)) {
+      dispatch(showSuccessToastMessage({ content: t("done") }));
+      dispatch(resetProductModal());
+    }
   };
 
   useEffect(() => {
@@ -101,6 +120,47 @@ export default function () {
   useEffect(() => {
     setValue("groups", selections);
   }, [selections]);
+
+  useEffect(() => {
+    if (offer_id !== getValues("offer_id") || total === 0) {
+      reset({
+        offer_id,
+        user_id: null,
+        quantity,
+        vendor_id,
+        groups: null,
+      });
+    }
+  }, [offer_id, total]);
+
+  const groupElement = (g: any) => {
+    switch (g.input_type) {
+      case "radio":
+        return <RadioInput group={g} />;
+      case "checkbox":
+        return <CheckBoxInput group={g} />;
+      case "meter":
+        return <MeterInput group={g} />;
+      default:
+        return null;
+    }
+  };
+
+  useEffect(() => {
+    if (!isEmpty(errors)) {
+      if (errors && errors.groups && isArray(errors.groups)) {
+        const content: any = isObject(errors.groups[0])
+          ? first(values(errors.groups[0]))
+          : error.groups[0];
+        dispatch(showErrorToastMessage({ content: content?.message }));
+      } else {
+        const content: any = first(values(errors));
+        dispatch(showErrorToastMessage({ content: content.message }));
+      }
+    }
+  }, [errors]);
+
+  useEffect(() => setValue("quantity", quantity), [quantity]);
 
   return (
     <Transition appear show={enabled} as={Fragment}>
@@ -148,14 +208,14 @@ export default function () {
                         data={{
                           text: data?.data?.name,
                           url: `https://${
-                            window.location.hostname
+                            window?.location?.hostname
                           }${appLinks.vendor(
                             lang,
                             params?.country,
                             data?.data?.vendor?.id?.toString(),
                             data?.data?.name
                           )}`,
-                          title: capitalize(trans.picks),
+                          title: capitalize(`${t("picks")}`),
                         }}>
                         <ShareIcon className='w-6 h-6 text-black' />
                       </RWebShare>
@@ -166,7 +226,7 @@ export default function () {
                   onSubmit={handleSubmit(onSubmit)}
                   className='relative sm:mx-auto overflow-x-auto w-full h-full bg-white  rounded-2xl'>
                   <LoadingSpinner isLoading={!isSuccess} />
-                  {isSuccess && (
+                  {!isFetching && data?.data && (
                     <div>
                       <div className=' overflow-y-auto h-full md:h-[60%] px-4  pb-[20%] md:pb-[10%]'>
                         <div className='justify-center items-center '>
@@ -195,33 +255,21 @@ export default function () {
                             </p>
                             <div className='flex flex-row justify-start items-center gap-x-4'>
                               <div className='bg-picks-dark text-white rounded-full px-4 py-2'>
-                                {data.data.new_price}
+                                {data.data.new_price_format}
                               </div>
                               <div className='line-through text-gray-400'>
-                                {data.data.price}
+                                {data.data.price_format}
                               </div>
                               <div className='text-orange-600 capitalize'>
                                 {data.data.percentage}
-                                <span className=''>{trans.off}</span>
+                                <span className=''>{t("off")}</span>
                               </div>
                             </div>
                           </div>
                           <div className='flex flex-col   divide-y divide-gray-200 py-2 '>
-                            <ul className='flex flex-col gap-y-2 text-red-700'>
-                              {map(errors, (v) => (
-                                <li>{v.message}</li>
-                              ))}
-                            </ul>
-
                             {data.data.groups &&
                               map(data.data.groups, (g: any, i) => (
-                                <div key={i}>
-                                  {g.input_type === "radio" ? (
-                                    <RadioInput group={g} />
-                                  ) : (
-                                    <CheckBoxInput group={g} />
-                                  )}
-                                </div>
+                                <div key={i}>{groupElement(g)}</div>
                               ))}
                           </div>
                         </div>
@@ -229,13 +277,14 @@ export default function () {
                     </div>
                   )}
                   {/* footer */}
-                  {isSuccess && (
+                  {!isFetching && data?.data && (
                     <div
                       className={`fixed bottom-0 md:-bottom-10 w-full flex flex-row justify-between items-center   rounded-b-2xl p-4 border-t border-gray-200 bg-white`}>
-                      <div className={`flex flex-row gap-x-2`}>
+                      <div className={`flex flex-row gap-x-1`}>
                         <button
+                          type='button'
                           disabled={quantity === 0}
-                          onClick={() => dispatch(decraseQty())}
+                          onClick={() => dispatch(decreaseQty())}
                           className={`${
                             quantity === 0 && `opacity-60`
                           } bg-picks-dark  flex justify-center items-center text-white w-6 h-6 rounded-full`}>
@@ -245,6 +294,7 @@ export default function () {
                           {quantity}
                         </div>
                         <button
+                          type='button'
                           onClick={() => dispatch(increaseQty())}
                           disabled={quantity === data.data.stock}
                           className={`${
@@ -253,8 +303,15 @@ export default function () {
                           +
                         </button>
                       </div>
-                      <button className='btn btn-default' type={"submit"}>
-                        {trans.add_to_cart}
+                      <button
+                        className='btn btn-default w-auto max-w-md flex justify-between items-center gap-x-4 px-2'
+                        type={"submit"}>
+                        <div>{t("add_to_cart")}</div>
+                        {total > 0 && (
+                          <div>
+                            {total} <span className='text-xs'>{currency}</span>
+                          </div>
+                        )}
                       </button>
                     </div>
                   )}

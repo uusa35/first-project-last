@@ -1,6 +1,5 @@
 "use client";
 import {
-  getAreaCookie,
   setAreaCookie,
   setCountryCookie,
   setCountryNameCookie,
@@ -8,7 +7,7 @@ import {
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setArea } from "@/redux/slices/areaSlice";
 import { Area, Country } from "@/types/queries";
-import {  useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Search from "@/appIcons/landing/search.svg";
 import { Autocomplete, TextField } from "@mui/material";
 import { first, isEmpty } from "lodash";
@@ -16,67 +15,62 @@ import GetLocation from "@/appIcons/landing/get_location.svg";
 import RightArrow from "@/appIcons/landing/right_arrow.svg";
 import Avatar from "@/appIcons/landing/avatar.svg";
 import Image from "next/image";
-import { MainContext } from "@/components/layouts/MainContentLayout";
 import DownloadAppSection from "@/components/home/DownloadAppSection";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { appLinks } from "@/src/links";
-import {
-  useGetAreasQuery,
-  useLazyGetAreasQuery,
-} from "@/src/redux/api/areaApi";
+import { useLazyGetAreasQuery } from "@/src/redux/api/areaApi";
 import AboutUsGetStarted from "@/components/home/AboutUsGetStarted";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { setCountry } from "@/src/redux/slices/countrySlice";
 import LandingPageBgImage from "@/appImages/head.png";
+import { Locale, countriesList } from "@/src/types";
+import { useTranslation } from "react-i18next";
+import { useCookies } from "react-cookie";
 
 type Props = {
   countries: Country[];
 };
+
+type DropDownProps =
+  | {
+      label: string;
+      id: number;
+      name?: { en: string; ar: string };
+    }
+  | undefined;
 export default function ({ countries }: Props) {
+  const { t } = useTranslation("trans");
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const {
-    locale: { lang },
-    country,
-    area,
-  } = useAppSelector((state) => state);
-  const trans: { [key: string]: string } = useContext(MainContext);
+  const [cookies] = useCookies();
+  const params: { lang: Locale["lang"]; country?: countriesList } | any =
+    useParams!();
+  const { lang } = params;
+  const { country, area } = useAppSelector((state) => state);
   const [allCountries, setAllCountries] = useState<
     { label: string; id: number }[]
   >([]);
   const [allAreas, setAllAreas] = useState<{ label: string; id: number }[]>([]);
   const [selectedCountry, setSelectedCountry] = useState<
-    | {
-        label: string;
-        id: number;
-      }
-    | undefined
+    DropDownProps | undefined
   >();
-  const [selectedArea, setSelectedArea] = useState<
-    | {
-        label: string;
-        id: number;
-      }
-    | undefined
-    | ""
-  >();
+  const [selectedArea, setSelectedArea] = useState<DropDownProps | undefined>(
+    undefined
+  );
   const [triggerGetAreas, { data: areas, isSuccess: areaSuccess, isFetching }] =
     useLazyGetAreasQuery();
 
-  const handleSetCountry = async (c: { label: string; id: number } | null) => {
+  const handleSetCountry = async (c: DropDownProps | null) => {
     if (c && c.id && countries) {
       setSelectedCountry(c);
       const selectedCountry = countries.filter((itm) => itm.id === c?.id)[0];
-      await triggerGetAreas(selectedCountry.id.toString(), false);
       await setCountryCookie(JSON.stringify(selectedCountry));
       await setCountryNameCookie(selectedCountry.country_code);
       dispatch(setCountry(selectedCountry));
     }
   };
 
-  const handleSetArea = async (
-    a: { label: string; id: number } | null | ""
-  ) => {
+  const handleSetArea = async (a: DropDownProps | null | "") => {
     setSelectedArea(a || undefined);
     if (a && a.id && areas && areas?.data) {
       const selectedArea = areas?.data.filter((itm) => itm.id === a?.id)[0];
@@ -88,7 +82,11 @@ export default function ({ countries }: Props) {
 
   useEffect(() => {
     let mappedCountries = countries.map((itm) => {
-      return { label: itm.name, id: itm.id };
+      return {
+        label: itm.name,
+        name: { ar: itm.web_name.ar, en: itm.web_name.en },
+        id: itm.id,
+      };
     });
     setAllCountries(mappedCountries);
     if (country.id && allCountries.length === 0) {
@@ -99,39 +97,34 @@ export default function ({ countries }: Props) {
   }, [countries]);
 
   useEffect(() => {
-    triggerGetAreas(country.id.toString(), false).then((r: any) => {
+    triggerGetAreas(country.id, false).then((r: any) => {
       if (r && r.data && r.data.success && r.data.data) {
         const serverArea: Area | undefined = first(r.data.data);
-        const cookieArea: any = getAreaCookie();
+        const cookieArea = cookies.NEXT_AREA;
         let mappedAreas = r.data.data.map((itm: Area) => {
-          return { label: itm.name, id: itm.id };
+          return {
+            label: itm.web_name[lang],
+            name: { ar: itm.web_name.ar, en: itm.web_name.en },
+            id: itm.id,
+          };
         });
         setAllAreas(mappedAreas);
-        if (
-          cookieArea &&
-          cookieArea.id &&
-          cookieArea.country.id === country.id
-        ) {
-          dispatch(setArea(cookieArea));
-          setSelectedArea(
-            mappedAreas.filter(
-              (itm: { id: number; label: string }) => itm.id === cookieArea.id
-            )[0]
-          );
-        } else if (area.id !== 0 && area.country.id === country.id) {
-          dispatch(setArea(area));
-          setAreaCookie(JSON.stringify(area));
-          setSelectedArea(
-            mappedAreas.filter(
-              (itm: { id: number; label: string }) => itm.id === area.id
-            )[0]
-          );
-        } else if (serverArea && serverArea.country.id === country.id) {
+        // country is different
+        if (country.id !== cookieArea.country.id && serverArea) {
           dispatch(setArea(serverArea));
           setAreaCookie(JSON.stringify(serverArea));
           setSelectedArea(
             mappedAreas.filter(
               (itm: { id: number; label: string }) => itm.id === serverArea.id
+            )[0]
+          );
+          // countriy is the same
+        } else if (cookieArea.country.id === country.id) {
+          dispatch(setArea(cookieArea));
+          setAreaCookie(JSON.stringify(cookieArea));
+          setSelectedArea(
+            mappedAreas.filter(
+              (itm: { id: number; label: string }) => itm.id === cookieArea.id
             )[0]
           );
         }
@@ -152,9 +145,9 @@ export default function ({ countries }: Props) {
         {!isEmpty(allCountries) && areaSuccess ? (
           <>
             <p className='mb-5 text-3xl font-semibold text-center px-5 capitalize'>
-              {trans.landing_title1}
+              {t("landing_title1")}
               <span className='text-picks-dark capitalize'>
-                {trans.delivered}
+                {t("delivered")}
               </span>
             </p>
             {/* select country*/}
@@ -170,6 +163,7 @@ export default function ({ countries }: Props) {
                       disablePortal
                       id='combo-box-demo'
                       options={allCountries}
+                      getOptionLabel={(option: any) => option.name[lang]}
                       value={selectedCountry}
                       onChange={(e, newval) => {
                         handleSetCountry(newval);
@@ -178,7 +172,7 @@ export default function ({ countries }: Props) {
                       renderInput={(params) => (
                         <TextField
                           {...params}
-                          label={trans.select_country}
+                          label={t("select_country")}
                           className='font-picks-medium capitalize text-left'
                         />
                       )}
@@ -193,12 +187,13 @@ export default function ({ countries }: Props) {
                       <Search />
                       <Autocomplete
                         dir={lang === "ar" ? "rtl" : "ltr"}
-                        disabled={isFetching}
+                        disabled={!allAreas}
                         size='small'
                         className='outline-none font-picks-medium'
                         disablePortal
                         id='combo-box-demo'
                         options={allAreas}
+                        getOptionLabel={(option: any) => option.name[lang]}
                         value={selectedArea}
                         onChange={(e, newval) => {
                           handleSetArea(newval);
@@ -207,7 +202,7 @@ export default function ({ countries }: Props) {
                         renderInput={(params) => (
                           <TextField
                             {...params}
-                            label={trans.select_area}
+                            label={t("select_area")}
                             className='font-picks-medium capitalize text-left'
                           />
                         )}
@@ -228,7 +223,7 @@ export default function ({ countries }: Props) {
                 }
                 className='col-span-1 flex w-1/2 sm:w-auto items-center gap-x-2 rounded-lg bg-picks-dark hover:bg-picks-medium px-4 py-5'>
                 <span className='whitespace-nowrap capitalize'>
-                  {trans.lets_go}
+                  {t("lets_go")}
                 </span>
                 <RightArrow className='rtl:rotate-180' />
               </button>
@@ -243,9 +238,9 @@ export default function ({ countries }: Props) {
           <div className='flex items-center gap-x-2'>
             <Avatar />
             <p>
-              {trans.or}{" "}
-              <span className='text-picks-dark capitalize'>{trans.log_in}</span>{" "}
-              {trans.for_your_saved_addresses}
+              {t("or")}{" "}
+              <span className='text-picks-dark capitalize'>{t("log_in")}</span>{" "}
+              {t("for_your_saved_addresses")}
             </p>
           </div>
         </div>

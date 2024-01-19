@@ -1,23 +1,20 @@
 "use client";
 import { setOrderType } from "@/app/actions";
 import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
-import { changeOrderType } from "@/src/redux/slices/settingSlice";
-import { useContext, useState } from "react";
-import { MainContext } from "@/components/layouts/MainContentLayout";
-import { Locale } from "@/src/types";
-import BranchListModal from "../modals/vendor/BranchListModal";
+import { changeOrderType } from "@/src/redux/slices/productSlice";
+import BranchListModal from "@/components/modals/vendor/BranchListModal";
 import { showBranchModal } from "@/src/redux/slices/branchSlice";
+import { useTranslation } from "react-i18next";
 
 export default function ({ vendor }: { vendor: any }) {
-  const trans: { [key: string]: string } = useContext(MainContext);
+  const { t } = useTranslation("trans");
   const {
-    appSetting: { orderType },
+    product: { orderType },
   } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
   const handleOrderType = async (orderType: "pickup" | "delivery") => {
-    await setOrderType(orderType).then(() =>
-      dispatch(changeOrderType(orderType))
-    );
+    dispatch(changeOrderType(orderType));
+    await setOrderType(orderType);
   };
 
   return (
@@ -28,14 +25,14 @@ export default function ({ vendor }: { vendor: any }) {
             orderType === "pickup" ? "bg-white" : "bg-gray-100"
           }`}
           onClick={() => handleOrderType("pickup")}>
-          {trans.pickup}
+          {t("pickup")}
         </button>
         <button
           className={`w-1/2 px-6 py-4 text-black rounded-full capitalize ${
             orderType === "delivery" ? "bg-white" : "bg-gray-100"
           }`}
           onClick={() => handleOrderType("delivery")}>
-          {trans.delivery}
+          {t("delivery")}
         </button>
       </div>
       <div className='border rounded-xl mt-8'>
@@ -81,10 +78,8 @@ export default function ({ vendor }: { vendor: any }) {
                     />
                   </svg>
                 </div>
-                <div className='flex-col justify-start items-center'>
-                  <div className='capitalize ltr:text-left rtl:text-right'>
-                    {vendor.branch_name}
-                  </div>
+                <div className='flex-col justify-start items-center ltr:text-left rtl:text-right'>
+                  <div className='capitalize '>{vendor.branch_name}</div>
                   <div className='text-sm text-gray-400'>
                     {vendor.branch_area}
                   </div>
@@ -103,15 +98,15 @@ export default function ({ vendor }: { vendor: any }) {
                       fill='#02C9C0'
                     />
                     <path
-                      fill-rule='evenodd'
-                      clip-rule='evenodd'
+                      fillRule='evenodd'
+                      clipRule='evenodd'
                       d='M22.8828 12.4609C22.8828 17.9837 18.4056 22.4609 12.8828 22.4609C7.35996 22.4609 2.88281 17.9837 2.88281 12.4609C2.88281 6.93809 7.35996 2.46094 12.8828 2.46094C18.4056 2.46094 22.8828 6.93809 22.8828 12.4609ZM20.8828 12.4609C20.8828 16.8792 17.3011 20.4609 12.8828 20.4609C8.46453 20.4609 4.88281 16.8792 4.88281 12.4609C4.88281 8.04266 8.46453 4.46094 12.8828 4.46094C17.3011 4.46094 20.8828 8.04266 20.8828 12.4609Z'
                       fill='#02C9C0'
                     />
                   </svg>
                 </div>
                 <div className='flex-col justify-center items-center'>
-                  <div className='capitalize'>{trans.order_time}</div>
+                  <div className='capitalize'>{t("order_time")}</div>
                   <div className='text-sm text-gray-400'>
                     {vendor.order_time}
                   </div>
@@ -130,15 +125,15 @@ export default function ({ vendor }: { vendor: any }) {
                       fill='#02C9C0'
                     />
                     <path
-                      fill-rule='evenodd'
-                      clip-rule='evenodd'
+                      fillRule='evenodd'
+                      clipRule='evenodd'
                       d='M22.8828 12.4609C22.8828 17.9837 18.4056 22.4609 12.8828 22.4609C7.35996 22.4609 2.88281 17.9837 2.88281 12.4609C2.88281 6.93809 7.35996 2.46094 12.8828 2.46094C18.4056 2.46094 22.8828 6.93809 22.8828 12.4609ZM20.8828 12.4609C20.8828 16.8792 17.3011 20.4609 12.8828 20.4609C8.46453 20.4609 4.88281 16.8792 4.88281 12.4609C4.88281 8.04266 8.46453 4.46094 12.8828 4.46094C17.3011 4.46094 20.8828 8.04266 20.8828 12.4609Z'
                       fill='#02C9C0'
                     />
                   </svg>
                 </div>
                 <div className='flex-col justify-center items-center'>
-                  <div className='capitalize'>{trans.delivery_fees}</div>
+                  <div className='capitalize'>{t("delivery_fees")}</div>
                   <div className='text-sm text-gray-400'>
                     {vendor.delivery_fees}
                   </div>

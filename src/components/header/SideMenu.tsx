@@ -56,8 +56,8 @@ export default function () {
         <ul role='list' className='flex flex-1 flex-col gap-y-7'>
           <li>
             <ul role='list' className='-mx-2 space-y-1'>
-              {navigation.map((item, i) => (
-                <li key={item.name}>
+              {navigation.map((item, i: number) => (
+                <li key={i}>
                   {!item.children ? (
                     <a
                       key={i}
@@ -97,8 +97,8 @@ export default function () {
                             />
                           </Disclosure.Button>
                           <Disclosure.Panel as='ul' className='mt-1 px-2'>
-                            {item.children.map((subItem) => (
-                              <li key={subItem.name}>
+                            {item.children.map((subItem, i) => (
+                              <li key={i}>
                                 {/* 44px */}
                                 <Disclosure.Button
                                   as='a'

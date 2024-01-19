@@ -39,8 +39,10 @@ export type Product = {
   name_en: string;
   description: string;
   favorite: boolean;
-  price: string;
-  new_price: string;
+  price: number;
+  price_format: string;
+  new_price: number;
+  new_price_format: string;
   percentage: string;
   logo: string;
   image: string;
@@ -86,6 +88,7 @@ export type Area = {
   web_name: {
     ar: string;
     en: string;
+    [key: string]: string;
   };
   [key: string]: any;
 };

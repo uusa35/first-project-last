@@ -18,12 +18,12 @@ import { MainContext } from "@/layouts/MainContentLayout";
 import { useRouter } from "next/navigation";
 import { setLocale } from "@/redux/slices/localeSlice";
 import {
-  changeOrderType,
   toggleLoginModal,
   toggleRegisterModal,
   toggleCartMenu,
   toggleVerficationModal,
 } from "@/src/redux/slices/settingSlice";
+import { changeOrderType } from "@/src/redux/slices/productSlice";
 import { getAuth, getCountryNameCookie, setOrderType } from "@/app/actions";
 import LogoDark from "@/appImages/logo_dark.svg";
 import LogoLight from "@/appImages/logo_light.svg";
@@ -77,16 +77,15 @@ export default function () {
 
   return (
     // showCartMenu
-    <Transition.Root show={true} as={Fragment}>
+    <Transition.Root show={false} as={Fragment}>
       <Dialog
-        as="div"
-        className="relative z-50"
-        onClose={() => dispatch(toggleCartMenu(false))}
-      >
-        <div className="fixed inset-0" />
-        <div className="fixed inset-0 overflow-hidden">
-          <div className="absolute inset-0 overflow-hidden">
-            <div className="pointer-events-none fixed inset-y-0 ltr:right-0 rtl:left-0 flex max-w-full ltr:pl-10 rtl:pr-10">
+        as='div'
+        className='relative z-50'
+        onClose={() => dispatch(toggleCartMenu(false))}>
+        <div className='fixed inset-0' />
+        <div className='fixed inset-0 overflow-hidden'>
+          <div className='absolute inset-0 overflow-hidden'>
+            <div className='pointer-events-none fixed inset-y-0 ltr:right-0 rtl:left-0 flex max-w-full ltr:pl-10 rtl:pr-10'>
               <Transition.Child
                 as={Fragment}
                 enter="transition-opacity ease-linear duration-300"
@@ -110,14 +109,14 @@ export default function () {
                               <span className="absolute -inset-2.5" />
                               <span className="sr-only">Close panel</span>
                               <XMarkIcon
-                                className="h-6 w-6"
-                                aria-hidden="true"
+                                className='h-6 w-6'
+                                aria-hidden='true'
                               />
                             </button>
                           </div>
                         </div>
                       </div>
-                      <div className="relative mt-6 flex-1 px-4 sm:px-6">
+                      <div className='relative mt-6 flex-1 px-4 sm:px-6'>
                         {/* vendor info */}
                         <div>
                           <p className="text-xs">Your cart from</p>
@@ -132,19 +131,19 @@ export default function () {
                           </div>
                         </div>
                         {/*products */}
-                        <div className="border-b">
+                        <div className='border-b'>
                           <ProductCart />
                         </div>
 
                         {/* payment summary */}
                         <div>
                           <PaymentSummary />
-                          <div className="h-52 w-full"></div>
+                          <div className='h-52 w-full'></div>
                         </div>
                       </div>
                     </div>
 
-                    <div className="absolute bottom-0 right-0 left-0">
+                    <div className='absolute bottom-0 right-0 left-0'>
                       <CheckoutBtn />
                     </div>
                   </div>

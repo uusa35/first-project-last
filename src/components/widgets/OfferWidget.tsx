@@ -6,7 +6,6 @@ import React, { useContext } from "react";
 import FavouriteWidget from "@/components/widgets/FavouriteWidget";
 import { Locale, countriesList } from "@/src/types";
 import { MainContext } from "@/layouts/MainContentLayout";
-import Link from "next/link";
 import { useAppDispatch } from "@/src/redux/hooks";
 import { useParams } from "next/navigation";
 import {
@@ -31,7 +30,7 @@ export default function OfferWidget({ product }: Props) {
   const handleClick = async (id: number) => {
     await triggerGetProduct(id, true).then((r) => {
       if (r.data && r.data.success) {
-        dispatch(showProductModal(id));
+        dispatch(showProductModal(product));
       } else {
         dispatch(hideProductModal());
       }

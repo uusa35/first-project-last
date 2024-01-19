@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useRef } from "react";
+import React, { useRef } from "react";
 import Slider from "react-slick";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import Flash3 from "@/appIcons/landing/picks_flash.svg";
@@ -8,16 +8,15 @@ import Flash1 from "@/appIcons/landing/yellow_flash.svg";
 import { Product } from "@/src/types/queries";
 import OfferWidget from "@/components/widgets/OfferWidget";
 import { Locale, countriesList } from "@/src/types";
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
-import { MainContext } from "../layouts/MainContentLayout";
 import { useParams } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   products: Product[];
 };
 
 export default function FlashOffers({ products }: Props) {
-  const trans: { [key: string]: string } = useContext(MainContext);
+  const { t } = useTranslation("trans");
   const refSlider = useRef<Slider | null>(null);
   const params: { lang: Locale["lang"]; country?: countriesList } | any =
     useParams!();
@@ -85,7 +84,7 @@ export default function FlashOffers({ products }: Props) {
         <div className='flex gap-x-1 items-center'>
           <Flash1 className='w-8 h-8' />
           <p className='text-lg font-semibold capitalize'>
-            {trans["️flash_offers"]}
+            {t("️flash_offers")}
           </p>
         </div>
         <RenderArrows />
@@ -94,7 +93,7 @@ export default function FlashOffers({ products }: Props) {
       <div className='my-5'>
         <Slider {...settings} ref={(c) => (refSlider.current = c)}>
           {products &&
-            products.map((itm) => <OfferWidget product={itm} key={itm.id} />)}
+            products.map((itm, i) => <OfferWidget product={itm} key={i} />)}
         </Slider>
       </div>
 

@@ -16,12 +16,14 @@ import InputError from "@/components/InputError";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { MainContext } from "@/components/layouts/MainContentLayout";
 import { useContext } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function () {
   const {
     appSetting: { isLoading },
   } = useAppSelector((state) => state);
-  const trans: { [key: string]: string } = useContext(MainContext);
+
+  const { t } = useTranslation("trans");
   const {
     handleSubmit,
     register,
@@ -65,7 +67,7 @@ export default function () {
                 id='first_name'
                 autoComplete='first_name'
                 className='input-default py-4 capitalize'
-                placeholder={trans.first_name}
+                placeholder={t("first_name")}
               />
             </div>
             <InputError
@@ -81,7 +83,7 @@ export default function () {
                 id='last-name'
                 autoComplete='last-name'
                 className={`input-default capitalize py-4`}
-                placeholder={trans.last_name}
+                placeholder={t("last_name")}
               />
             </div>
             <InputError
@@ -97,7 +99,7 @@ export default function () {
                 id='email'
                 autoComplete='email'
                 className={`input-default capitalize py-4`}
-                placeholder={trans.email}
+                placeholder={t("email")}
               />
             </div>
             <InputError
@@ -133,7 +135,7 @@ export default function () {
                 id='phone'
                 autoComplete='tel'
                 className={`input-default ps-32 capitalize py-4`}
-                placeholder={trans.phone}
+                placeholder={t("phone")}
               />
             </div>
             <InputError
@@ -143,7 +145,7 @@ export default function () {
           </div>
           <div className='mt-2'>
             <button type='submit' className='btn-default w-full '>
-              {trans.let_us_talk}
+              {t("let_us_talk")}
             </button>
           </div>
         </div>

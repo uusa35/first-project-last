@@ -14,6 +14,7 @@ import { getSlides } from "@/utils/slide";
 import { getProducts } from "@/utils/product";
 import { getVendorFeatured, getVendors } from "@/utils/user";
 import HomeContent from "@/src/components/home/HomeContent";
+import LoadingSpinner from "@/src/components/LoadingSpinner";
 
 type Props = {
   params: { lang: Locale["lang"]; country: countriesList };
@@ -37,7 +38,7 @@ export default async function ({ params: { lang, country } }: Props) {
   ]);
 
   return (
-    <MainContextLayout trans={trans} showMiddleNav={true}>
+    <MainContextLayout showMiddleNav={true}>
       <HomeContent
         lang={lang}
         country={country}

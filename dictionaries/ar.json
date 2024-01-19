@@ -104,7 +104,7 @@
     "mandatory": "مطلوب",
     "optional": "اختياري",
     "send": "ارسال",
-    "validation.required": "الحقل مطلوب",
+    "validation.required": "{{field}} الحقل مطلوب",
     "validation.email": "البريد الإلكتروني غير صحيح",
     "validation.min": "الحقل يجب أن يكون اكبر من {{min}}",
     "validation.max": "الحقل يجب أن يكون أقل من   {{max}}",
@@ -326,7 +326,7 @@
     "us": "؟",
     "learn_about_the_most_important_features_of_the_Picks_app": "تعرف على أهم مميزات تطبيق بيكس",
     "add_to_cart": "اضف لعربة التسوق",
-    "select_up_to": "اختيار بـ",
+    "select_up_to": "اقل اختيار {{min}} واعلى اختيار {{max}}",
     "max": "حد أقصى",
     "min": "حد أدنى",
     "and": "و",
@@ -341,6 +341,7 @@
     "closed_now": "مغلق الآن",
     "select_branch": "اختيار الفرع",
     "start_order": "ابدأ الطلب",
-    "big_deals": "افضل العروض"
+    "big_deals": "افضل العروض",
+    "group": " خيار"
   }
 }

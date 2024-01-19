@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useRef } from "react";
+import React, { useRef } from "react";
 import Slider from "react-slick";
 import { vendorSliderSettings } from "@/src/constants";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
@@ -10,6 +10,7 @@ import { User } from "@/types/queries";
 import VendorWidget from "@/components/widgets/VendorWidget";
 import { MainContext } from "@/components/layouts/MainContentLayout";
 import { useParams } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   vendors: User[];
@@ -18,7 +19,7 @@ type Props = {
 };
 
 export default function ({ vendors, title }: Props) {
-  const trans: { [key: string]: string } = useContext(MainContext);
+  const { t } = useTranslation("trans");
   const params: { lang: Locale["lang"]; country?: countriesList } | any =
     useParams!();
   const { lang } = params;
@@ -43,9 +44,9 @@ export default function ({ vendors, title }: Props) {
   return (
     <div className='my-5'>
       <div className='flex justify-between mb-3'>
-        <p className='slider-title'>{trans[title]}</p>
+        <p className='slider-title'>{t(title)}</p>
         <div className='flex items-center gap-x-3 text-sm capitalize'>
-          <p>{trans.see_all}</p>
+          <p>{t("see_all")}</p>
           <RenderArrows />
         </div>
       </div>
@@ -55,9 +56,9 @@ export default function ({ vendors, title }: Props) {
           ref={(c) => (refSlider.current = c)}
           rtl={lang === "ar"}>
           {vendors &&
-            vendors.map((itm) => (
+            vendors.map((itm, i) => (
               <Link
-                key={itm.id}
+                key={i}
                 href={appLinks.vendor(
                   lang,
                   params?.country,

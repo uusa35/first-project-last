@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useAppSelector } from "@/src/redux/hooks";
 import { useContext } from "react";
 import { MainContext } from "@/components/layouts/MainContentLayout";
+import { useTranslation } from "react-i18next";
 
 const pages = [
   { name: "Projects", href: "#", current: false },
@@ -11,7 +12,7 @@ const pages = [
 ];
 
 export default function ({ title }: { title?: string }) {
-  const trans: { [key: string]: string } = useContext(MainContext);
+  const { t } = useTranslation("trans");
   const {
     locale: { lang },
     country: { name },
@@ -24,7 +25,7 @@ export default function ({ title }: { title?: string }) {
             href={`/${lang}`}
             className='flex flex-row items-center gap-x-4 text-gray-400 hover:text-gray-500'>
             <HomeIcon className='h-5 w-5 flex-shrink-0' aria-hidden='true' />
-            <span className='text-gray-500 capitalize'>{trans.home}</span>
+            <span className='text-gray-500 capitalize'>{t("home")}</span>
           </Link>
         </li>
         <li>

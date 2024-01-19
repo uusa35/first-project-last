@@ -13,7 +13,7 @@ export default function ({
     <div className={"flex justify-start items-end"}>
       <Image
         src={`${img}`}
-        alt='testing'
+        alt='picks'
         width={1000}
         height={400}
         className='absolute inset-0 -z-10 h-[30vh] lg:h-[45vh] xl:h-[50vh] w-full object-cover'

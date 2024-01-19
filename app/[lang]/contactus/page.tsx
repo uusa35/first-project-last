@@ -33,7 +33,7 @@ export default async function ({ params: { lang } }: Props) {
   ]);
 
   return (
-    <MainContextLayout trans={trans} showMiddleNav={false}>
+    <MainContextLayout showMiddleNav={false}>
       <PageHeader img={ContactusImg.src} title={trans.contactus} />
       <div className='mt-20 text-black px-4 md:px-8 min-h-screen'>
         <ContactusForm />

@@ -8,7 +8,7 @@ import {
   toggleForgetPasswordModal,
   toggleLoginModal,
 } from "@/src/redux/slices/settingSlice";
-import { MainContext } from "../layouts/MainContentLayout";
+import { MainContext } from "@/layouts/MainContentLayout";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import ForgetPass from "@/appIcons/auth/forget_pass.svg";
 import { useGetCountriesQuery } from "@/src/redux/api/countryApi";
@@ -44,7 +44,6 @@ export default function () {
   } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
   const [triggerForgetPassword] = useLazyForgotPasswordQuery();
-
   const {
     handleSubmit,
     register,
@@ -74,37 +73,37 @@ export default function () {
         );
         if (r.error.data.status === "301") {
           //   user not verified
-        //    await triggerResendOtp({
-        //      phone: body.phone,
-        //      phone_country_code: body.phone_country_code,
-        //      type: "register",
-        //    }).then((r: any) => {
-        //      // console.log({ r });
-        //      if (r && r.error?.data) {
-        //        dispatch(
-        //          showErrorToastMessage({
-        //            content: `${r.error?.data?.message}`,
-        //          })
-        //        );
-        //      } else {
-        //        dispatch(
-        //          showSuccessToastMessage({
-        //            content: `${r?.data?.message}`,
-        //          })
-        //        );
-        //        dispatch(
-        //          setAuthentication({
-        //            user: {
-        //              phone_country_code: body.phone_country_code,
-        //              phone: body.phone,
-        //              type: "register",
-        //            },
-        //            token: null,
-        //          })
-        //        );
-        //        dispatch(toggleVerficationModal());
-        //      }
-        //    });
+          //    await triggerResendOtp({
+          //      phone: body.phone,
+          //      phone_country_code: body.phone_country_code,
+          //      type: "register",
+          //    }).then((r: any) => {
+          //      // console.log({ r });
+          //      if (r && r.error?.data) {
+          //        dispatch(
+          //          showErrorToastMessage({
+          //            content: `${r.error?.data?.message}`,
+          //          })
+          //        );
+          //      } else {
+          //        dispatch(
+          //          showSuccessToastMessage({
+          //            content: `${r?.data?.message}`,
+          //          })
+          //        );
+          //        dispatch(
+          //          setAuthentication({
+          //            user: {
+          //              phone_country_code: body.phone_country_code,
+          //              phone: body.phone,
+          //              type: "register",
+          //            },
+          //            token: null,
+          //          })
+          //        );
+          //        dispatch(toggleVerficationModal());
+          //      }
+          //    });
         }
       } else {
         dispatch(
@@ -127,40 +126,37 @@ export default function () {
   return (
     <>
       <Transition appear show={showChangePasswordModal} as={Fragment}>
-        <Dialog as="div" className="relative z-50" onClose={closeModal}>
+        <Dialog as='div' className='relative z-50' onClose={closeModal}>
           <Transition.Child
             as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-black/25" />
+            enter='ease-out duration-300'
+            enterFrom='opacity-0'
+            enterTo='opacity-100'
+            leave='ease-in duration-200'
+            leaveFrom='opacity-100'
+            leaveTo='opacity-0'>
+            <div className='fixed inset-0 bg-black/25' />
           </Transition.Child>
 
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
+          <div className='fixed inset-0 overflow-y-auto'>
+            <div className='flex min-h-full items-center justify-center p-4 text-center'>
               <Transition.Child
                 as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                enter='ease-out duration-300'
+                enterFrom='opacity-0 scale-95'
+                enterTo='opacity-100 scale-100'
+                leave='ease-in duration-200'
+                leaveFrom='opacity-100 scale-100'
+                leaveTo='opacity-0 scale-95'>
+                <Dialog.Panel className='w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all'>
                   <Dialog.Title
-                    as="h3"
-                    className="text-lg font-medium leading-6 text-gray-900"
-                  >
-                    <div className=" capitalize flex flex-row justify-center items-center border-b border-gray-200 pb-4 text-xl">
+                    as='h3'
+                    className='text-lg font-medium leading-6 text-gray-900'>
+                    <div className=' capitalize flex flex-row justify-center items-center border-b border-gray-200 pb-4 text-xl'>
                       {trans.new_password}
                       <XMarkIcon
-                        className="absolute ltr:left-4 rtl:right-4 w-6 h-6 text-gray-600 cursor-pointer"
-                        onClick={closeModal}
+                        className='absolute ltr:left-4 rtl:right-4 w-6 h-6 text-gray-600 cursor-pointer'
+                        onClick={() => closeModal}
                       />
                     </div>
                   </Dialog.Title>
@@ -168,40 +164,37 @@ export default function () {
                   <div
                     className={`flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 max-h-[70vh] overflow-y-auto scrollbar-hide ${
                       isLoading && "hidden"
-                    }`}
-                  >
-                    <div className="sm:mx-auto sm:w-full sm:max-w-sm text-justify">
-                      <div className="mt-2">
-                        <p className="font-semibold text-xl">
+                    }`}>
+                    <div className='sm:mx-auto sm:w-full sm:max-w-sm text-justify'>
+                      <div className='mt-2'>
+                        <p className='font-semibold text-xl'>
                           {trans.new_password}
                         </p>
-                        <p className="text-picks-text-gray text-sm mt-1">
+                        <p className='text-picks-text-gray text-sm mt-1'>
                           {
                             trans.enter_the_mobile_number_of_your_account_to_send_a_password_change_OTP_messsage
                           }
                         </p>
                       </div>
                     </div>
-                    <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+                    <div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
                       <form
                         onSubmit={handleSubmit(onSubmit)}
-                        className={`space-y-6 text-justify`}
-                      >
+                        className={`space-y-6 text-justify`}>
                         <div>
                           <label
-                            htmlFor="new_password"
-                            className="ltr:text-left rtl:text-right lable-default"
-                          >
+                            htmlFor='new_password'
+                            className='ltr:text-left rtl:text-right lable-default'>
                             {trans.new_password}
                           </label>
-                          <div className="mt-2">
-                            <div className="flex flex-row gap-x-3 rtl:flex-row-reverse">
+                          <div className='mt-2'>
+                            <div className='flex flex-row gap-x-3 rtl:flex-row-reverse'>
                               <input
-                                type="password"
-                                id="new_password"
+                                type='password'
+                                id='new_password'
                                 {...register("new_password")}
                                 // type="number"
-                                className="input-default"
+                                className='input-default'
                               />
                             </div>
                             {errors?.new_password?.message && (
@@ -214,20 +207,19 @@ export default function () {
 
                         <div>
                           <label
-                            htmlFor="new_password_confirmation"
-                            className="ltr:text-left rtl:text-right lable-default"
-                          >
+                            htmlFor='new_password_confirmation'
+                            className='ltr:text-left rtl:text-right lable-default'>
                             {trans.new_password_comfirmation}
                           </label>
-                          <div className="mt-2">
-                            <div className="flex flex-row gap-x-3 rtl:flex-row-reverse">
+                          <div className='mt-2'>
+                            <div className='flex flex-row gap-x-3 rtl:flex-row-reverse'>
                               <input
-                                type="password"
-                                id="new_password_confirmation"
+                                type='password'
+                                id='new_password_confirmation'
                                 {...register("new_password_confirmation")}
                                 // type="number"
-                                name="new_password_confirmation"
-                                className="input-default"
+                                name='new_password_confirmation'
+                                className='input-default'
                               />
                             </div>
                             {errors?.new_password_confirmation?.message && (
@@ -242,8 +234,8 @@ export default function () {
                           </div>
                         </div>
 
-                        <div className="mt-5">
-                          <button type="submit" className="btn-default w-full">
+                        <div className='mt-5'>
+                          <button type='submit' className='btn-default w-full'>
                             {trans.save}
                           </button>
                         </div>
