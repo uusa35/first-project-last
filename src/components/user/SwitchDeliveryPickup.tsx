@@ -20,22 +20,26 @@ export default function ({ vendor }: { vendor: any }) {
   const searchParams: any = useSearchParams()!;
 
   const handleOrderType = async (orderType: "pickup" | "delivery") => {
+    console.log(
+      "click",
+      orderType === "pickup" && searchParams?.has("branch_id")
+        ? searchParams.get("branch_id")
+        : `000`
+    );
     dispatch(changeOrderType(orderType));
     await setOrderType(orderType);
-    return router.replace(
+    router.replace(
       appLinks.vendor(
         params?.lang,
         params?.country,
         params?.id,
-        searchParams.has("slug"),
+        searchParams.get("slug"),
         orderType === "pickup" && searchParams?.has("branch_id")
           ? searchParams.get("branch_id")
           : ``
       )
     );
   };
-
-  console.log("params", params);
 
   return (
     <div className='col-span-full lg:col-span-1  '>

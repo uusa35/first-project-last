@@ -1,15 +1,7 @@
 "use client";
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useContext, useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
-import {
-  enableLoading,
-  toggleLoginModal,
-} from "@/src/redux/slices/settingSlice";
-import {
-  showErrorToastMessage,
-  showSuccessToastMessage,
-} from "@/src/redux/slices/toastMessageSlice";
 import { useRouter } from "next/navigation";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { EyeIcon, XMarkIcon } from "@heroicons/react/24/outline";
@@ -32,20 +24,16 @@ type Props = {
 export default function ({ vendor_id }: Props) {
   const { t } = useTranslation("trans");
   const {
-    appSetting: { isLoading },
     locale: { lang },
     country: { country_code },
     product: { orderType },
-    branch,
+    branch: { modalEnabled },
   } = useAppSelector((state) => state);
   const router = useRouter();
   const dispatch = useAppDispatch();
   const searchParams: any = useSearchParams()!;
-  const [currentBranchId, setCurrentBranchId] = useState<number | string>(
-    searchParams.get("branch_id") ?? 0
-  );
-  const [triggerGetBranches, { data, isSuccess, isFetching }] =
-    useLazyGetBranchesQuery();
+  const [currentBranchId, setCurrentBranchId] = useState<number | string>(0);
+  const [triggerGetBranches, { data, isSuccess }] = useLazyGetBranchesQuery();
 
   useEffect(() => {
     triggerGetBranches(vendor_id);
@@ -55,10 +43,18 @@ export default function ({ vendor_id }: Props) {
     if (currentBranchId == 0 && orderType === "pickup") {
       dispatch(showBranchModal());
     }
-  }, []);
+  }, [orderType]);
+
+  useEffect(() => {
+    if (searchParams.has("branch_id")) {
+      setCurrentBranchId(searchParams.get("branch_id"));
+    } else {
+      setCurrentBranchId(0);
+    }
+  }, [searchParams.has("branch_id")]);
 
   return (
-    <Transition appear show={branch.modalEnabled} as={Fragment}>
+    <Transition appear show={modalEnabled} as={Fragment}>
       <Dialog
         as='div'
         className='relative z-50'

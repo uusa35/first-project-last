@@ -33,6 +33,7 @@ export default async function ({
   if (!vendor || !vendor.data.vendor) notFound();
   const { logo, store_name, description, image, category } = vendor.data.vendor;
 
+  console.log("the vendor====>", vendor.data);
   return (
     <ContentLayout showMiddleNav={true}>
       <div className='mt-8 px-4'>
