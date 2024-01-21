@@ -250,7 +250,7 @@ export default function () {
                         </div>
                         {errors?.code?.message && (
                           <span className={`text-red-700 text-xs capitalize`}>
-                            {trans[errors?.password?.message]}
+                            {t(`${errors?.password?.message}`)}
                           </span>
                         )}
                       </div>

@@ -1,9 +1,9 @@
+'use client';
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { HYDRATE } from "next-redux-wrapper";
 import { apiUrl } from "@/src/constants";
 import { RootState } from "@/redux/store";
-import { isNull, isUndefined } from "lodash";
-import { ContactusForm, Locale } from "@/types/index";
+import { isNull } from "lodash";
+import { ContactusForm } from "@/types/index";
 import { Setting } from '@/types/queries';
 import { revalidate } from "@/utils/helpers";
 
@@ -50,11 +50,6 @@ export const apiSlice = createApi({
   }),
   keepUnusedDataFor: revalidate.max,
   refetchOnReconnect: true,
-  extractRehydrationInfo(action, { reducerPath }) {
-    if (action.type === HYDRATE) {
-      return action.payload[reducerPath];
-    }
-  },
   endpoints: (builder) => ({
     sendContactus: builder.query<Setting, ContactusForm>({
       query: (body) => ({

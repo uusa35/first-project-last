@@ -74,7 +74,6 @@
     "next-images": "^1.8.4",
     "next-intl": "^2.19.1",
     "next-plugin-svgr": "^1.1.4",
-    "next-redux-wrapper": "^8.1.0",
     "nextjs-progressbar": "^0.0.16",
     "pluralize": "^8.0.0",
     "postcss": "8.4.27",

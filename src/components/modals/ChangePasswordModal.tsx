@@ -1,6 +1,6 @@
 "use client";
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useContext } from "react";
+import { Fragment } from "react";
 import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
 import {
   enableLoading,
@@ -69,7 +69,7 @@ export default function () {
       if (r.error && r.error?.data) {
         dispatch(
           showErrorToastMessage({
-            content: trans[`${snakeCase(r.error?.data?.message)}`],
+            content: t(`${snakeCase(r.error?.data?.message)}`),
           })
         );
         if (r.error.data.status === "301") {
@@ -109,7 +109,7 @@ export default function () {
       } else {
         dispatch(
           showSuccessToastMessage({
-            content: trans[`${snakeCase(r.data?.message)}`],
+            content: t(`${snakeCase(r.data?.message)}`),
           })
         );
         dispatch(toggleLoginModal());
@@ -200,7 +200,7 @@ export default function () {
                             </div>
                             {errors?.new_password?.message && (
                               <span className={`error`}>
-                                {trans[errors?.new_password?.message]}
+                                {t(`${errors?.new_password?.message}`)}
                               </span>
                             )}
                           </div>
@@ -225,11 +225,9 @@ export default function () {
                             </div>
                             {errors?.new_password_confirmation?.message && (
                               <span className={`error`}>
-                                {
-                                  trans[
-                                    errors?.new_password_confirmation?.message
-                                  ]
-                                }
+                                {t(
+                                  `${errors?.new_password_confirmation?.message}`
+                                )}
                               </span>
                             )}
                           </div>

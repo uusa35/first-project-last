@@ -5,20 +5,37 @@ import { changeOrderType } from "@/src/redux/slices/productSlice";
 import BranchListModal from "@/components/modals/vendor/BranchListModal";
 import { showBranchModal } from "@/src/redux/slices/branchSlice";
 import { useTranslation } from "react-i18next";
-import { useSearchParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { appLinks } from "@/src/links";
 
 export default function ({ vendor }: { vendor: any }) {
   const { t } = useTranslation("trans");
   const {
     product: { orderType },
   } = useAppSelector((state) => state);
+  const router = useRouter();
   const dispatch = useAppDispatch();
-  const searchParams = useSearchParams()!;
+  const params: any = useParams()!;
+  const searchParams: any = useSearchParams()!;
 
   const handleOrderType = async (orderType: "pickup" | "delivery") => {
     dispatch(changeOrderType(orderType));
     await setOrderType(orderType);
+    return router.replace(
+      appLinks.vendor(
+        params?.lang,
+        params?.country,
+        params?.id,
+        searchParams.has("slug"),
+        orderType === "pickup" && searchParams?.has("branch_id")
+          ? searchParams.get("branch_id")
+          : ``
+      )
+    );
   };
+
+  console.log("params", params);
 
   return (
     <div className='col-span-full lg:col-span-1  '>

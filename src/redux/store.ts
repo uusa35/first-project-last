@@ -1,3 +1,4 @@
+'use client';
 import { useMemo } from "react";
 import { configureStore } from "@reduxjs/toolkit";
 import { createLogger } from "redux-logger";
@@ -16,7 +17,6 @@ import createSagaMiddleware from "redux-saga";
 import storage from "redux-persist/lib/storage";
 import rootSaga from "@/redux/sagas/rootSaga";
 import { setupListeners } from "@reduxjs/toolkit/query";
-import { HYDRATE } from "next-redux-wrapper";
 import { apiSlice } from "@/redux/api";
 import { categoryApi } from "@/redux/api/categoryApi";
 import { isLocal } from "@/src/constants";
@@ -53,7 +53,6 @@ let store: any = configureStore({
         serializableCheck: {
           ignoredActions: [
             FLUSH,
-            HYDRATE,
             REHYDRATE,
             PAUSE,
             PERSIST,
@@ -78,7 +77,6 @@ let store: any = configureStore({
         serializableCheck: {
           ignoredActions: [
             FLUSH,
-            HYDRATE,
             REHYDRATE,
             PAUSE,
             PERSIST,
