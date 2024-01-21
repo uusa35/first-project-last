@@ -15,8 +15,16 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 import { EyeIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useLazyGetBranchesQuery } from "@/src/redux/api/vendorApi";
 import { map } from "lodash";
-import { hideBranchModal, setBranch } from "@/src/redux/slices/branchSlice";
+import {
+  hideBranchModal,
+  setBranch,
+  showBranchModal,
+} from "@/src/redux/slices/branchSlice";
 import { useTranslation } from "react-i18next";
+import { useSearchParams } from "next/navigation";
+import { Branch } from "@/src/types/queries";
+import Link from "next/link";
+import { appLinks } from "@/src/links";
 
 type Props = {
   vendor_id: string;
@@ -26,17 +34,28 @@ export default function ({ vendor_id }: Props) {
   const {
     appSetting: { isLoading },
     locale: { lang },
-    country: { code },
+    country: { country_code },
+    product: { orderType },
     branch,
   } = useAppSelector((state) => state);
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const searchParams: any = useSearchParams()!;
+  const [currentBranchId, setCurrentBranchId] = useState<number | string>(
+    searchParams.get("branch_id") ?? 0
+  );
   const [triggerGetBranches, { data, isSuccess, isFetching }] =
     useLazyGetBranchesQuery();
 
   useEffect(() => {
     triggerGetBranches(vendor_id);
   }, [vendor_id]);
+
+  useEffect(() => {
+    if (currentBranchId == 0 && orderType === "pickup") {
+      dispatch(showBranchModal());
+    }
+  }, []);
 
   return (
     <Transition appear show={branch.modalEnabled} as={Fragment}>
@@ -80,10 +99,10 @@ export default function ({ vendor_id }: Props) {
                   <LoadingSpinner isLoading={!isSuccess} />
                   {isSuccess &&
                     data?.data &&
-                    map(data?.data, (b, i) => (
-                      <div key={i} className='flex flex-col  w-full gap-y-4'>
+                    map(data?.data, (b: Branch, i: number) => (
+                      <div key={i} className='flex flex-col w-full gap-y-4'>
                         <button
-                          onClick={() => dispatch(setBranch(b))}
+                          onClick={() => setCurrentBranchId(b.id.toString())}
                           className='flex flex-row justify-between items-center  py-4 border-b border-gray-200 w-full'>
                           <div className='flex w-full justify-start items-center gap-x-4'>
                             <div>
@@ -106,7 +125,7 @@ export default function ({ vendor_id }: Props) {
                             <div>{b.name}</div>
                           </div>
                           <div>
-                            {branch.id === b.id ? (
+                            {currentBranchId == b.id ? (
                               <svg
                                 xmlns='http://www.w3.org/2000/svg'
                                 width='25'
@@ -136,10 +155,21 @@ export default function ({ vendor_id }: Props) {
                       </div>
                     ))}
                   <button
-                    disabled={branch.id === 0}
-                    onClick={() => dispatch(hideBranchModal())}
+                    disabled={currentBranchId == 0}
+                    onClick={() => {
+                      router.replace(
+                        appLinks.vendor(
+                          lang,
+                          country_code,
+                          vendor_id,
+                          searchParams.get("slug"),
+                          currentBranchId.toString()
+                        )
+                      );
+                      dispatch(hideBranchModal());
+                    }}
                     className={` ${
-                      branch.id === 0 && "opacity-60"
+                      currentBranchId == 0 && "opacity-60"
                     } btn-default w-full mt-4`}>
                     {t("start_order")}
                   </button>

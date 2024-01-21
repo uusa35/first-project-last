@@ -22,7 +22,7 @@ export const appLinks = {
         `/${lang}/${country}/offer/${id}?slug=${slug ? addDashs(slug) : ``}`,
     vendors: (lang: Locale['lang'], country: countriesList, search?: string) =>
         `/${lang}/${country}/vendors?${search}`,
-    vendor: (lang: Locale['lang'], country: countriesList, id: string, slug?: string) =>
-        `/${lang}/${country}/vendor/${id}?slug=${slug ? addDashs(slug) : ``}`,
+    vendor: (lang: Locale['lang'], country: countriesList, id: string, slug?: string, branch_id?: string) =>
+        `/${lang}/${country}/vendor/${id}?${slug ? `slug=${addDashs(slug)}` : ``}${branch_id ? `&branch_id=${branch_id}` : ``}`,
 
 }

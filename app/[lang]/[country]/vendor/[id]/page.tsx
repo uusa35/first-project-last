@@ -12,12 +12,23 @@ import ProductsSlider from "@/src/components/sliders/ProductsSlider";
 import SwitchDeliveryPickup from "@/src/components/user/SwitchDeliveryPickup";
 
 type Props = {
-  params: { lang: Locale["lang"]; country: countriesList; id: string };
+  params: {
+    id: string;
+    lang: Locale["lang"];
+    country: countriesList;
+  };
+  searchParams: { slug?: string; branch_id?: string };
 };
 
-export default async function ({ params: { lang, country, id } }: Props) {
+export default async function ({
+  params: { lang, country, id },
+  searchParams,
+}: Props) {
   const [{ trans }, vendor]: [{ trans: any }, AppQueryResult<User>] =
-    await Promise.all([getDictionary(lang), getVendor(id)]);
+    await Promise.all([
+      getDictionary(lang),
+      getVendor({ id, branch_id: searchParams?.branch_id ?? `` }),
+    ]);
 
   if (!vendor || !vendor.data.vendor) notFound();
   const { logo, store_name, description, image, category } = vendor.data.vendor;
