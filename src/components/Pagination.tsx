@@ -1,8 +1,6 @@
 "use client";
 import { has, isEmpty, isNull, map } from "lodash";
 import Link from "next/link";
-
-import { useContext } from "react";
 import { convertSearchParamsToString } from "@/utils/helpers";
 import { useSearchParams } from "next/navigation";
 import { useTranslation } from "react-i18next";

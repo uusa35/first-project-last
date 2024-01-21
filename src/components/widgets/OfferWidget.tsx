@@ -17,7 +17,7 @@ type Props = {
   product: Product;
 };
 
-export default function OfferWidget({ product }: Props) {
+export default function OfferWidget({ product }: Props): React.ReactNode {
   const { t } = useTranslation("trans");
   const dispatch = useAppDispatch();
   const params: { lang: Locale["lang"]; country?: countriesList } | any =

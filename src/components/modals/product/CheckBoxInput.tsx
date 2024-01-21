@@ -6,8 +6,9 @@ import {
   removeCheckoutChoice,
 } from "@/src/redux/slices/productSlice";
 import { useTranslation } from "react-i18next";
+import React from "react";
 
-export default function ({ group }: { group: any }) {
+export default function ({ group }: { group: any }): React.ReactNode {
   const { t } = useTranslation("trans");
   const dispatch = useAppDispatch();
   const {

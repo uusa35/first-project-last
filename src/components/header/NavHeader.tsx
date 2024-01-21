@@ -55,7 +55,7 @@ import { useTranslation } from "react-i18next";
 type Props = {
   showMiddleNav: boolean;
 };
-export default function ({ showMiddleNav = false }: Props) {
+export default function ({ showMiddleNav = false }: Props): React.ReactNode {
   const { t } = useTranslation("trans");
   const locales: Locale["lang"][] = ["ar", "en"];
   const {

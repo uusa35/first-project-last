@@ -13,8 +13,18 @@ export const productApi = apiSlice.injectEndpoints({
 
       }),
     }),
+    addToCart: builder.query<
+      AppQueryResult<Category[]>, { body: any }
+    >({
+      query: ({ body }) => ({
+        url: `cart`,
+        method: "post",
+        validateStatus: (response, result) => result.status == "200",
+        body,
+      }),
+    }),
 
   }),
 });
 
-export const { useGetProductQuery, useLazyGetProductQuery } = productApi;
+export const { useGetProductQuery, useLazyGetProductQuery, useLazyAddToCartQuery } = productApi;

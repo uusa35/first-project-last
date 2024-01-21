@@ -7,7 +7,7 @@ import {
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setArea } from "@/redux/slices/areaSlice";
 import { Area, Country } from "@/types/queries";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Search from "@/appIcons/landing/search.svg";
 import { Autocomplete, TextField } from "@mui/material";
 import { first, isEmpty } from "lodash";
@@ -38,7 +38,7 @@ type DropDownProps =
       name?: { en: string; ar: string };
     }
   | undefined;
-export default function ({ countries }: Props) {
+export default function ({ countries }: Props): React.ReactNode {
   const { t } = useTranslation("trans");
   const dispatch = useAppDispatch();
   const router = useRouter();

@@ -5,6 +5,7 @@ import {
   removeRadioChoice,
 } from "@/src/redux/slices/productSlice";
 import { filter, flatten, indexOf, map } from "lodash";
+import React from "react";
 import { useTranslation } from "react-i18next";
 
 const notificationMethods = [
@@ -15,7 +16,7 @@ const notificationMethods = [
 type Props = {
   group: any;
 };
-export default function ({ group }: Props) {
+export default function ({ group }: Props): React.ReactNode {
   const { t } = useTranslation("trans");
   const dispatch = useAppDispatch();
   const {

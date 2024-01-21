@@ -6,7 +6,6 @@ import { Product } from "@/types/queries";
 import ProductWidget from "@/components/widgets/ProductWidget";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import { useParams } from "next/navigation";
-import { MainContext } from "@/components/layouts/MainContentLayout";
 import { useTranslation } from "react-i18next";
 
 type Props = {

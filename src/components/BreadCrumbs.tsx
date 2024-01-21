@@ -2,8 +2,7 @@
 import { ChevronRightIcon, HomeIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
 import { useAppSelector } from "@/src/redux/hooks";
-import { useContext } from "react";
-import { MainContext } from "@/components/layouts/MainContentLayout";
+
 import { useTranslation } from "react-i18next";
 
 const pages = [

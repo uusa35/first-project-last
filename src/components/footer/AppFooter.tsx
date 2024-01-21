@@ -1,7 +1,4 @@
 "use client";
-
-import { useContext } from "react";
-import { MainContext } from "@/components/layouts/MainContentLayout";
 import { appLinks } from "@/src/links";
 import { Locale, countriesList } from "@/src/types";
 import { useParams } from "next/navigation";
@@ -18,7 +15,7 @@ import { map, take } from "lodash";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
 
-export default function () {
+export default function (): React.ReactNode {
   const { t } = useTranslation("trans");
   const params: { lang: Locale["lang"]; country?: countriesList } | any =
     useParams!();

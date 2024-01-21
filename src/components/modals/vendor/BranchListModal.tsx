@@ -11,7 +11,6 @@ import {
   showSuccessToastMessage,
 } from "@/src/redux/slices/toastMessageSlice";
 import { useRouter } from "next/navigation";
-import { MainContext } from "@/components/layouts/MainContentLayout";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { EyeIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useLazyGetBranchesQuery } from "@/src/redux/api/vendorApi";

@@ -4,10 +4,13 @@ import { Fragment, useEffect, useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
 import {
   decreaseQty,
+  disableConfirm,
+  enableConfirm,
   hideProductModal,
   increaseQty,
   resetProductModal,
   setProductOriginalGroups,
+  setSessionId,
 } from "@/src/redux/slices/productSlice";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -20,7 +23,10 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 import { AppQueryResult, Product } from "@/src/types/queries";
 import Slider from "react-slick";
 import { HeartIcon, ShareIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { useGetProductQuery } from "@/src/redux/api/productApi";
+import {
+  useGetProductQuery,
+  useLazyAddToCartQuery,
+} from "@/src/redux/api/productApi";
 import Image from "next/image";
 import {
   map,
@@ -30,6 +36,7 @@ import {
   first,
   values,
   isObject,
+  isNull,
 } from "lodash";
 import CheckBoxInput from "@/components/modals/product/CheckBoxInput";
 import RadioInput from "@/components/modals/product/RadioInput";
@@ -39,13 +46,6 @@ import { RWebShare } from "react-web-share";
 import { appLinks } from "@/src/links";
 import { Locale, countriesList } from "@/src/types";
 import { useTranslation } from "react-i18next";
-
-type Inputs = {
-  phone: string;
-  phone_country_code: string;
-  password: string;
-  session_id?: string;
-};
 
 export default function () {
   const { t } = useTranslation("trans");
@@ -63,7 +63,9 @@ export default function () {
       enabled,
       total,
       currency,
+      confirm,
     },
+    auth: { user },
     country: { code },
   } = useAppSelector((state) => state);
   const router = useRouter();
@@ -74,6 +76,7 @@ export default function () {
     isFetching: boolean;
     error: any;
   }>(offer_id);
+  const [triggerAddToCart] = useLazyAddToCartQuery();
   const {
     handleSubmit,
     register,
@@ -87,10 +90,11 @@ export default function () {
     defaultValues: useMemo(() => {
       return {
         offer_id,
-        user_id: null,
+        user_id: !isNull(user) && user.id ? user.id : null,
         quantity,
         vendor_id,
         groups: null,
+        confirm,
         // notes: "hello",
       };
     }, [offer_id]),
@@ -104,10 +108,22 @@ export default function () {
     arrows: true,
   };
 
-  const onSubmit: SubmitHandler<Inputs> = async (body) => {
+  const onSubmit: SubmitHandler<any> = async (body) => {
     if (isEmpty(errors)) {
-      dispatch(showSuccessToastMessage({ content: t("done") }));
-      dispatch(resetProductModal());
+      await triggerAddToCart({ body }).then((r: any) => {
+        if (r.data && r.data.data && r.data?.data?.session_id) {
+          dispatch(setSessionId(r.data?.data?.session_id));
+          
+          dispatch(
+            showSuccessToastMessage({
+              content: t("added_to_cart_successfully"),
+            })
+          );
+          dispatch(resetProductModal());
+        } else {
+          dispatch(showErrorToastMessage({ content: r.data.data.message }));
+        }
+      });
     }
   };
 
@@ -118,17 +134,20 @@ export default function () {
   }, []);
 
   useEffect(() => {
-    setValue("groups", selections);
+    if (!isEmpty(selections) && getValues("offer_id")) {
+      setValue("groups", selections);
+    }
   }, [selections]);
 
   useEffect(() => {
     if (offer_id !== getValues("offer_id") || total === 0) {
       reset({
         offer_id,
-        user_id: null,
+        user_id: !isNull(user) && user.id ? user.id : null,
         quantity,
         vendor_id,
         groups: null,
+        confirm,
       });
     }
   }, [offer_id, total]);

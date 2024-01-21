@@ -3,7 +3,6 @@ import RightArrow from "@/appIcons/landing/right_arrow.svg";
 import about_us from "@/appImages/about_us.png";
 import get_started from "@/appImages/get_started.jpg";
 import React, { useContext } from "react";
-import { MainContext } from "@/components/layouts/MainContentLayout";
 import { useTranslation } from "react-i18next";
 
 type Props = {};

@@ -333,14 +333,19 @@ export const productSlice = createSlice({
     ) => {
       return {
         ...state,
-        selections: initialState.selections
+        selections: initialState.selections,
       }
     },
     resetProductModal: (
       state: typeof initialState,
       action: PayloadAction<void>
     ) => {
-      return initialState;
+      return {
+        ...initialState,
+        confirm: state.confirm,
+        session_id: state.session_id,
+        orderType: state.orderType
+      };
     },
     changeOrderType: (
       state: typeof initialState,
@@ -358,6 +363,7 @@ export const productSlice = createSlice({
       return {
         ...state,
         session_id: action.payload,
+        confirm: true
       };
     },
   },
