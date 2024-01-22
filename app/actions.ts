@@ -128,6 +128,6 @@ export async function getMainHeaders() {
     'X-Country': country?.id,
     ...(area && area.id && { 'X-AREA': area.id }),
     ...(orderType && { 'X-TYPE': orderType }),
-    ...(auth.token && { 'Authorization': `Bearer ${auth.token}` })
+    ...(auth && auth.token !== null && { 'Authorization': `Bearer ${auth.token}` })
   }
 }

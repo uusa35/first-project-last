@@ -17,6 +17,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import {
   showErrorToastMessage,
   showSuccessToastMessage,
+  showWarningToastMessage,
 } from "@/src/redux/slices/toastMessageSlice";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import LoadingSpinner from "@/components/LoadingSpinner";
@@ -47,6 +48,7 @@ import { appLinks } from "@/src/links";
 import { Locale, countriesList } from "@/src/types";
 import { useTranslation } from "react-i18next";
 import { useLazyAddToWishListQuery } from "@/src/redux/api";
+import { isAuthenticated } from "@/src/redux/slices/authSlice";
 
 export default function () {
   const { t } = useTranslation("trans");
@@ -69,14 +71,16 @@ export default function () {
     auth: { user },
     country: { code },
   } = useAppSelector((state) => state);
+  const isAuth = useAppSelector(isAuthenticated);
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const { data, isSuccess, isFetching, error } = useGetProductQuery<{
+  const { data, isSuccess, isFetching, error, refetch } = useGetProductQuery<{
     data: AppQueryResult<Product>;
     isSuccess: boolean;
     isFetching: boolean;
     error: any;
-  }>(197);
+    refetch: () => void;
+  }>(offer_id, { refetchOnMountOrArgChange: true });
   const [triggerAddToCart] = useLazyAddToCartQuery();
   const [triggerAddToWishList] = useLazyAddToWishListQuery();
   const {
@@ -183,10 +187,25 @@ export default function () {
 
   useEffect(() => setValue("quantity", quantity), [quantity]);
 
-  const handleAddToWishList = async () => {};
+  const handleAddToWishList = async (body: {
+    action: "active" | "inactive";
+    type: "offer" | "vendor";
+    item_id: string;
+  }) => {
+    await triggerAddToWishList(body).then((r: any) => {
+      if (isAuth) {
+        if (r.data?.success) {
+          refetch();
+          dispatch(showSuccessToastMessage({ content: t("process_success") }));
+        }
+      } else {
+        dispatch(showWarningToastMessage({ content: t("unauthenticated") }));
+      }
+    });
+  };
 
   return (
-    <Transition appear show={true} as={Fragment}>
+    <Transition appear show={enabled} as={Fragment}>
       <Dialog
         as='div'
         className='relative z-50'
@@ -225,8 +244,20 @@ export default function () {
                     className={`flex  flex-row justify-between items-center w-auto gap-x-4  ltr:right-4 ltr:left-4`}>
                     <div>
                       <HeartIcon
-                        onClick={() => handleAddToWishList()}
-                        className='w-6 h-6 text-black hover:text-red-600 hover:fill-red-600'
+                        onClick={() =>
+                          handleAddToWishList({
+                            action: data?.data?.favorite
+                              ? "inactive"
+                              : "active",
+                            type: "offer",
+                            item_id: data.data.id.toString(),
+                          })
+                        }
+                        className={`w-6 h-6  ${
+                          data?.data?.favorite
+                            ? `text-red-600 fill-red-600 hover:fill-white hover:text-black`
+                            : `text-black  hover:text-red-600 hover:fill-red-600`
+                        }`}
                       />
                     </div>
                     <div>
@@ -235,7 +266,7 @@ export default function () {
                           text: data?.data?.name,
                           url: `https://${
                             window?.location?.hostname
-                          }${appLinks.vendor(
+                          }${appLinks.offer(
                             lang,
                             params?.country,
                             data?.data?.vendor?.id?.toString(),

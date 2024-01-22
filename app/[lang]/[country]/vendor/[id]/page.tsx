@@ -31,14 +31,21 @@ export default async function ({
     ]);
 
   if (!vendor || !vendor.data.vendor) notFound();
-  const { logo, store_name, description, image, category } = vendor.data.vendor;
+  const { logo, store_name, description, image, category, favorite } =
+    vendor.data.vendor;
 
   console.log("the vendor====>", vendor.data);
   return (
     <ContentLayout showMiddleNav={true}>
       <div className='mt-8 px-4'>
         <Breadcrumbs title={store_name} />
-        <VendorHeader title={store_name} logo={logo} bg={image} />
+        <VendorHeader
+          id={id}
+          favorite={favorite}
+          title={store_name}
+          logo={logo}
+          bg={image}
+        />
         <div className='px-4 grid grid-cols-1 md:grid-cols-3 mt-12'>
           <div className='col-span-full lg:col-span-2'>
             <h1 className='text-3xl pb-4'>{store_name}</h1>
