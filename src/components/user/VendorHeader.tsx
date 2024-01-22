@@ -23,7 +23,7 @@ export default function ({
   id: string;
   favorite: boolean;
 }) {
-  const params = useParams()!;
+  const params: any = useParams()!;
   const dispatch = useAppDispatch();
   const { t } = useTranslation("trans");
   const [triggerAddToWishList] = useLazyAddToWishListQuery();
@@ -59,7 +59,7 @@ export default function ({
                 onClick={() =>
                   handleAddToWishList({
                     action: favorite ? "inactive" : "active",
-                    type: "offer",
+                    type: "vendor",
                     item_id: id.toString(),
                   })
                 }
