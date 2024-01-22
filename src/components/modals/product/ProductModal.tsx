@@ -77,7 +77,7 @@ export default function () {
     isFetching: boolean;
     error: any;
     refetch: () => void;
-  }>(198);
+  }>(offer_id, { refetchOnMountOrArgChange: true });
   const [triggerAddToCart] = useLazyAddToCartQuery();
   const [triggerAddToWishList] = useLazyAddToWishListQuery();
   const {
@@ -259,7 +259,7 @@ export default function () {
                           text: data?.data?.name,
                           url: `https://${
                             window?.location?.hostname
-                          }${appLinks.vendor(
+                          }${appLinks.offer(
                             lang,
                             params?.country,
                             data?.data?.vendor?.id?.toString(),
