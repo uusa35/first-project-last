@@ -19,7 +19,6 @@ import {
 import { setAuth } from "@/app/actions";
 import { useRouter } from "next/navigation";
 import { useLazyRegisterQuery } from "@/src/redux/api/authApi";
-import { MainContext } from "@/components/layouts/MainContentLayout";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { AppQueryResult, Country } from "@/src/types/queries";
 import {

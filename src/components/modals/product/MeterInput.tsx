@@ -7,7 +7,7 @@ import {
   increaseMeterChoice,
 } from "@/src/redux/slices/productSlice";
 
-export default function ({ group }: { group: any }) {
+export default function ({ group }: { group: any }): React.ReactNode {
   const { t } = useTranslation("trans");
   const dispatch = useAppDispatch();
   const {

@@ -5,16 +5,40 @@ import { changeOrderType } from "@/src/redux/slices/productSlice";
 import BranchListModal from "@/components/modals/vendor/BranchListModal";
 import { showBranchModal } from "@/src/redux/slices/branchSlice";
 import { useTranslation } from "react-i18next";
+import { useParams, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { appLinks } from "@/src/links";
 
 export default function ({ vendor }: { vendor: any }) {
   const { t } = useTranslation("trans");
   const {
     product: { orderType },
   } = useAppSelector((state) => state);
+  const router = useRouter();
   const dispatch = useAppDispatch();
+  const params: any = useParams()!;
+  const searchParams: any = useSearchParams()!;
+
   const handleOrderType = async (orderType: "pickup" | "delivery") => {
+    console.log(
+      "click",
+      orderType === "pickup" && searchParams?.has("branch_id")
+        ? searchParams.get("branch_id")
+        : `000`
+    );
     dispatch(changeOrderType(orderType));
     await setOrderType(orderType);
+    router.replace(
+      appLinks.vendor(
+        params?.lang,
+        params?.country,
+        params?.id,
+        searchParams.get("slug"),
+        orderType === "pickup" && searchParams?.has("branch_id")
+          ? searchParams.get("branch_id")
+          : ``
+      )
+    );
   };
 
   return (
@@ -48,10 +72,10 @@ export default function ({ vendor }: { vendor: any }) {
             }}
             loading='lazy'></iframe>
         </div>
+        <BranchListModal vendor_id={vendor?.id} />
         <div className='flex flex-col w-full divide-y divide-gray-100 px-8'>
           {vendor.branch_name && vendor.branch_area && (
             <>
-              <BranchListModal vendor_id={vendor?.id} />
               <button
                 className='py-4 flex flex-row justify-start items-center gap-x-4'
                 onClick={() => dispatch(showBranchModal())}>

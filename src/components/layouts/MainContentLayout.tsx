@@ -9,10 +9,7 @@ import moment from "moment";
 import * as yup from "yup";
 import { setAreaCookie, setLang, setLocaleCookie } from "@/app/actions";
 import { setCountry } from "@/redux/slices/countrySlice";
-import {
-  useLazyGetCountriesQuery,
-  useLazyGetCountryByNameQuery,
-} from "@/redux/api/countryApi";
+import { useLazyGetCountryByNameQuery } from "@/redux/api/countryApi";
 import { useLazyGetAreasQuery } from "@/redux/api/areaApi";
 import { setArea } from "@/src/redux/slices/areaSlice";
 import LoginModal from "@/src/components/modals/LoginModal";
@@ -20,8 +17,8 @@ import RegisterModal from "@/src/components/modals/RegisterModal";
 import ForgetPasswordModal from "@/src/components/modals/ForgetPasswordModal";
 import VerificationModal from "@/src/components/modals/VerificationModal";
 import ChangePasswordModal from "@/src/components/modals/ChangePasswordModal";
-import { AppQueryResult, Area, Country } from "@/src/types/queries";
-import { first, isUndefined } from "lodash";
+import { Area } from "@/src/types/queries";
+import { first } from "lodash";
 import { toggleSideMenu } from "@/src/redux/slices/settingSlice";
 import ProductModal from "@/src/components/modals/product/ProductModal";
 import { hideProductModal } from "@/src/redux/slices/productSlice";
@@ -35,22 +32,20 @@ const DynamicAppFooter = dynamic(
     ssr: false,
   }
 );
+
 type Props = {
   children: React.ReactNode;
-
   showMiddleNav?: boolean;
 };
 
-const MainContext = createContext({});
-const MainContextLayout: FC<Props> = ({
+const ContentLayout: FC<Props> = ({
   children,
-
   showMiddleNav = false,
-}) => {
+}): React.ReactNode => {
   const [t, i18n] = useTranslation("trans");
   const {
     locale,
-    country: { id: country_id, country_code },
+    country: { id: country_id },
   } = useAppSelector((state) => state);
   const params: { lang: Locale["lang"]; country?: countriesList } | any =
     useParams!();
@@ -58,16 +53,8 @@ const MainContextLayout: FC<Props> = ({
   const { lang } = params;
   const pathName = usePathname();
   const dispatch = useAppDispatch();
-  const [triggerGetCountryByName, { data, isSuccess }] =
-    useLazyGetCountryByNameQuery();
-  const [
-    triggerGetCountries,
-    { data: countries, isSuccess: countriesSuccess },
-  ] = useLazyGetCountriesQuery<{
-    data: AppQueryResult<Country[]>;
-    isSuccess: boolean;
-  }>();
-  const [triggerGetAreas, { data: areas }] = useLazyGetAreasQuery();
+  const [triggerGetCountryByName] = useLazyGetCountryByNameQuery();
+  const [triggerGetAreas] = useLazyGetAreasQuery();
 
   useEffect(() => {
     dispatch(setLocale(lang));
@@ -147,4 +134,4 @@ const MainContextLayout: FC<Props> = ({
   );
 };
 
-export { MainContextLayout, MainContext };
+export default ContentLayout;

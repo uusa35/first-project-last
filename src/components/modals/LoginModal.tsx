@@ -22,7 +22,6 @@ import {
   useLazyLoginQuery,
   useLazyResendOtpQuery,
 } from "@/src/redux/api/authApi";
-import { MainContext } from "@/components/layouts/MainContentLayout";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { Country } from "@/src/types/queries";
 import { useGetCountriesQuery } from "@/src/redux/api/countryApi";

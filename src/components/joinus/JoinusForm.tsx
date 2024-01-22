@@ -14,15 +14,12 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 import { get } from "lodash";
 import InputError from "@/components/InputError";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
-import { MainContext } from "@/components/layouts/MainContentLayout";
-import { useContext } from "react";
 import { useTranslation } from "react-i18next";
 
 export default function () {
   const {
     appSetting: { isLoading },
   } = useAppSelector((state) => state);
-
   const { t } = useTranslation("trans");
   const {
     handleSubmit,

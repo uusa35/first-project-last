@@ -21,7 +21,7 @@ import { useParams, usePathname, useSearchParams } from "next/navigation";
 import { changePathName, globalMaxWidth } from "@/utils/helpers";
 import { Locale, countriesList } from "@/types/index";
 import { appLinks } from "@/src/links";
-import { MainContext } from "@/layouts/MainContentLayout";
+
 import { useRouter } from "next/navigation";
 import { setLocale } from "@/redux/slices/localeSlice";
 import {
@@ -55,8 +55,7 @@ import { useTranslation } from "react-i18next";
 type Props = {
   showMiddleNav: boolean;
 };
-export default function ({ showMiddleNav = false }: Props) {
-  const trans: { [key: string]: string } = useContext(MainContext);
+export default function ({ showMiddleNav = false }: Props): React.ReactNode {
   const { t } = useTranslation("trans");
   const locales: Locale["lang"][] = ["ar", "en"];
   const {

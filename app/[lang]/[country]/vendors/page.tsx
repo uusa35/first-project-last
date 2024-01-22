@@ -1,6 +1,6 @@
 import { Locale, countriesList } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
-import { MainContextLayout } from "@/layouts/MainContentLayout";
+import ContentLayout from "@/layouts/MainContentLayout";
 import { cookies } from "next/headers";
 import { getVendors } from "@/utils/user";
 import { ElementPagination, User } from "@/src/types/queries";
@@ -29,7 +29,7 @@ export default async function (props: Props) {
     ]);
 
   return (
-    <MainContextLayout>
+    <ContentLayout>
       <h1 className='text-7xl'>Vendors {country}</h1>
       {/* vendors */}
       <div className='flex w-full flex-col flex-wrap justify-between items-center'>
@@ -55,6 +55,6 @@ export default async function (props: Props) {
         ))}
       </div>
       <Pagination links={vendors.pagination?.links} />
-    </MainContextLayout>
+    </ContentLayout>
   );
 }

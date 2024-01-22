@@ -1,6 +1,6 @@
 import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
-import { MainContextLayout } from "@/layouts/MainContentLayout";
+import ContentLayout from "@/layouts/MainContentLayout";
 import { cookies } from "next/headers";
 import { getCountryNameCookie } from "@/app/actions";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
@@ -33,11 +33,11 @@ export default async function ({ params: { lang } }: Props) {
   ]);
 
   return (
-    <MainContextLayout showMiddleNav={false}>
+    <ContentLayout showMiddleNav={false}>
       <PageHeader img={ContactusImg.src} title={trans.contactus} />
       <div className='mt-20 text-black px-4 md:px-8 min-h-screen'>
         <ContactusForm />
       </div>
-    </MainContextLayout>
+    </ContentLayout>
   );
 }

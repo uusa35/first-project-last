@@ -3,11 +3,11 @@ import React from "react";
 
 type Props = {};
 
-export default function CheckoutBtn({}: Props) {
+export default function CheckoutBtn({}: Props): React.ReactNode {
   return (
-    <div className="bg-white">
+    <div className='bg-white'>
       <LinearProgress
-        variant="determinate"
+        variant='determinate'
         // classes={{
         //   root: `!picks-dark`,
         // }}
@@ -24,13 +24,12 @@ export default function CheckoutBtn({}: Props) {
       />
 
       {/* // opacity-50 */}
-      <div className="p-5 pt-3 text-center">
-        <p className="py-2">
+      <div className='p-5 pt-3 text-center'>
+        <p className='py-2'>
           Add <span>5.00 KD</span> to Start order
         </p>
         <div
-          className={`bg-picks-dark w-full p-3 flex justify-between items-center rounded-lg text-white`}
-        >
+          className={`bg-picks-dark w-full p-3 flex justify-between items-center rounded-lg text-white`}>
           <p>Checkout</p>
           <p>11.00 KD</p>
         </div>

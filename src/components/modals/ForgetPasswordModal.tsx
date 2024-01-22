@@ -7,7 +7,7 @@ import {
   toggleForgetPasswordModal,
   toggleVerficationModal,
 } from "@/src/redux/slices/settingSlice";
-import { MainContext } from "@/layouts/MainContentLayout";
+
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import ForgetPass from "@/appIcons/auth/forget_pass.svg";
 import { useGetCountriesQuery } from "@/src/redux/api/countryApi";
@@ -26,15 +26,15 @@ import {
 } from "@/src/redux/api/authApi";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { setAuthentication } from "@/src/redux/slices/authSlice";
+import { useTranslation } from "react-i18next";
 type Inputs = {
   phone: string;
   phone_country_code: string;
 };
 export default function () {
-  const trans: { [key: string]: string } = useContext(MainContext);
+  const { t } = useTranslation("trans");
   const {
     appSetting: { showForgetPasswordModal, isLoading },
-    locale: { lang },
     country: { code },
   } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
@@ -68,7 +68,7 @@ export default function () {
       if (r.error && r.error?.data) {
         dispatch(
           showErrorToastMessage({
-            content: trans[`${snakeCase(r.error?.data?.message)}`],
+            content: t(`${snakeCase(r.error?.data?.message)}`),
           })
         );
       } else {
@@ -78,7 +78,7 @@ export default function () {
         );
         dispatch(
           showSuccessToastMessage({
-            content: trans[`${snakeCase(r.data?.message)}`],
+            content: t(`${snakeCase(r.data?.message)}`),
           })
         );
         // dispatch(toggleForgetPasswordModal());
@@ -107,7 +107,6 @@ export default function () {
             leaveTo='opacity-0'>
             <div className='fixed inset-0 bg-black/25' />
           </Transition.Child>
-
           <div className='fixed inset-0 overflow-y-auto'>
             <div className='flex min-h-full items-center justify-center p-4 text-center'>
               <Transition.Child
@@ -123,7 +122,7 @@ export default function () {
                     as='h3'
                     className='text-lg font-medium leading-6 text-gray-900'>
                     <div className=' capitalize flex flex-row justify-center items-center border-b border-gray-200 pb-4 text-xl'>
-                      {trans.forget_password}
+                      {t("forget_password")}
                       <XMarkIcon
                         className='absolute ltr:left-4 rtl:right-4 w-6 h-6 text-gray-600 cursor-pointer'
                         onClick={() => closeModal}
@@ -141,12 +140,12 @@ export default function () {
                       </div>
                       <div className='text-center mt-2'>
                         <p className='font-semibold text-xl'>
-                          {trans.enter_account_phone_number}
+                          {t("enter_account_phone_number")}
                         </p>
                         <p className='text-picks-text-gray text-sm mt-1'>
-                          {
-                            trans.enter_the_mobile_number_of_your_account_to_send_a_password_change_OTP_messsage
-                          }
+                          {t(
+                            "enter_the_mobile_number_of_your_account_to_send_a_password_change_OTP_messsage"
+                          )}
                         </p>
                       </div>
                     </div>
@@ -158,7 +157,7 @@ export default function () {
                           <label
                             htmlFor='phone_country_code'
                             className='ltr:text-left rtl:text-right lable-default'>
-                            {trans.phone_number}
+                            {t("phone_number")}
                           </label>
                           <div className='mt-2'>
                             <div className='flex flex-row gap-x-3 rtl:flex-row-reverse'>
@@ -187,14 +186,14 @@ export default function () {
                             </div>
                             {errors?.phone?.message && (
                               <span className={`error`}>
-                                {trans[errors?.phone?.message]}
+                                {t(errors?.phone?.message)}
                               </span>
                             )}
                           </div>
                         </div>
                         <div className='mt-5'>
                           <button type='submit' className='btn-default w-full'>
-                            {trans.send_otp}
+                            {t("send_otp")}
                           </button>
                         </div>
                       </form>

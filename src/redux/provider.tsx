@@ -7,7 +7,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-const Providers: FC<Props> = ({ children }) => {
+const Providers: FC<Props> = ({ children }): React.ReactNode => {
   return <Provider store={store}> {children} </Provider>;
 };
 

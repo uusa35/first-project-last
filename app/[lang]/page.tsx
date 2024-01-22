@@ -1,6 +1,6 @@
 import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
-import { MainContextLayout } from "@/layouts/MainContentLayout";
+import ContentLayout from "@/layouts/MainContentLayout";
 import { getCountries } from "@/utils/country";
 import { cookies } from "next/headers";
 import { AppQueryResult, Country } from "@/types/queries";
@@ -18,8 +18,8 @@ export default async function ({ params: { lang } }: Props) {
   const [{ trans }, countries]: [{ trans: any }, AppQueryResult<Country[]>] =
     await Promise.all([getDictionary(lang), getCountries()]);
   return (
-    <MainContextLayout>
+    <ContentLayout>
       <LandingPageContent countries={countries.data} />
-    </MainContextLayout>
+    </ContentLayout>
   );
 }

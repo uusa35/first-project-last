@@ -1,6 +1,6 @@
 import { Locale, countriesList } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
-import { MainContextLayout } from "@/layouts/MainContentLayout";
+import ContentLayout from "@/layouts/MainContentLayout";
 import { getVendor } from "@/utils/user";
 import { AppQueryResult, User } from "@/src/types/queries";
 import { notFound } from "next/navigation";
@@ -12,19 +12,30 @@ import ProductsSlider from "@/src/components/sliders/ProductsSlider";
 import SwitchDeliveryPickup from "@/src/components/user/SwitchDeliveryPickup";
 
 type Props = {
-  params: { lang: Locale["lang"]; country: countriesList; id: string };
+  params: {
+    id: string;
+    lang: Locale["lang"];
+    country: countriesList;
+  };
+  searchParams: { slug?: string; branch_id?: string };
 };
 
-export default async function ({ params: { lang, country, id } }: Props) {
+export default async function ({
+  params: { lang, country, id },
+  searchParams,
+}: Props) {
   const [{ trans }, vendor]: [{ trans: any }, AppQueryResult<User>] =
-    await Promise.all([getDictionary(lang), getVendor(id)]);
+    await Promise.all([
+      getDictionary(lang),
+      getVendor({ id, branch_id: searchParams?.branch_id ?? `` }),
+    ]);
 
   if (!vendor || !vendor.data.vendor) notFound();
   const { logo, store_name, description, image, category } = vendor.data.vendor;
 
-  console.log("vendor=========>", vendor.data);
+  console.log("the vendor====>", vendor.data);
   return (
-    <MainContextLayout showMiddleNav={true}>
+    <ContentLayout showMiddleNav={true}>
       <div className='mt-8 px-4'>
         <Breadcrumbs title={store_name} />
         <VendorHeader title={store_name} logo={logo} bg={image} />
@@ -101,6 +112,6 @@ export default async function ({ params: { lang, country, id } }: Props) {
           <VendorContent products={vendor.data.items} />
         )}
       </div>
-    </MainContextLayout>
+    </ContentLayout>
   );
 }

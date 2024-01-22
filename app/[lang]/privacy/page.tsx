@@ -1,6 +1,6 @@
 import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
-import { MainContextLayout } from "@/layouts/MainContentLayout";
+import ContentLayout from "@/layouts/MainContentLayout";
 import { cookies } from "next/headers";
 import { getCountryNameCookie } from "@/app/actions";
 import Image from "next/image";
@@ -77,7 +77,7 @@ export default async function ({ params: { lang } }: Props) {
   ]);
 
   return (
-    <MainContextLayout >
+    <ContentLayout>
       <PageHeader img={PrivacyImg.src} title={trans.privacy_policy} />
       <div className='mt-20 text-black px-4 md:px-8 min-h-screen'>
         <h1 className='capitalize text-2xl'>
@@ -102,6 +102,6 @@ export default async function ({ params: { lang } }: Props) {
           reprehenderit minima fuga quas aliquid?
         </p>
       </div>
-    </MainContextLayout>
+    </ContentLayout>
   );
 }

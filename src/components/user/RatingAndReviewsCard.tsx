@@ -1,7 +1,7 @@
 "use client";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { useContext, useState } from "react";
-import { MainContext } from "@/components/layouts/MainContentLayout";
+
 import { keys, omit, round, take } from "lodash";
 import { useTranslation } from "react-i18next";
 const reviews = {
@@ -34,7 +34,6 @@ function classNames(...classes: any) {
 }
 
 export default function ({ rate, ratings }: { rate: any; ratings: any }) {
-  const trans: { [key: string]: string } = useContext(MainContext);
   const { t } = useTranslation("trans");
   const [showMore, setShowMore] = useState<number>(1);
 

@@ -1,15 +1,15 @@
 "use client";
-import { MainContext } from "@/layouts/MainContentLayout";
-import { useContext } from "react";
+
 import ShowMore from "@/appIcons/green_left_arrow.svg";
 import { useAppSelector } from "@/redux/hooks";
 import { useRouter } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 export default function (): React.ReactNode {
   const {
     locale: { lang },
   } = useAppSelector((state) => state);
-  const trans: { [key: string]: string } = useContext(MainContext);
+  const { t } = useTranslation("trans");
   const router = useRouter();
 
   return (
@@ -20,7 +20,7 @@ export default function (): React.ReactNode {
         className={`w-6 h-6 text-expo-dark ${lang === "ar" && "rotate-180"}`}
       />
       <div className='text-black text-sm lg:text-md capitalize  '>
-        {trans.back}
+        {t("back")}
       </div>
     </button>
   );

@@ -14,7 +14,7 @@ import { useParams, usePathname, useSearchParams } from "next/navigation";
 import { changePathName, globalMaxWidth } from "@/utils/helpers";
 import { Locale, countriesList } from "@/types/index";
 import { appLinks } from "@/src/links";
-import { MainContext } from "@/layouts/MainContentLayout";
+
 import { useRouter } from "next/navigation";
 import { setLocale } from "@/redux/slices/localeSlice";
 import {
@@ -39,9 +39,10 @@ import { ShoppingBagIcon } from "@heroicons/react/20/solid";
 import ProductCart from "../cart/ProductCart";
 import PaymentSummary from "../PaymentSummary";
 import CheckoutBtn from "../CheckoutBtn";
+import { useTranslation } from "react-i18next";
 
 export default function () {
-  const trans: { [key: string]: string } = useContext(MainContext);
+  const { t } = useTranslation("trans");
   const locales: Locale["lang"][] = ["ar", "en"];
   const {
     locale,
@@ -59,20 +60,20 @@ export default function () {
   const pathName = usePathname()!;
   const [isSticky, setIsSticky] = useState<boolean>(false);
   const navigation: { name: string; href: string }[] = [
-    { name: trans.landing, href: appLinks.landing(lang) },
+    { name: t("landing"), href: appLinks.landing(lang) },
     {
-      name: trans.home,
+      name: t("home"),
       href: appLinks.home(lang, country_code),
     },
     {
-      name: trans.offers,
+      name: t("offers"),
       href: appLinks.offers(lang, country_code, ""),
     },
-    // { name: trans.terms, href: appLinks.terms(lang) },
-    { name: trans.aboutus, href: appLinks.aboutus(lang) },
-    { name: trans.contactus, href: appLinks.contactus(lang) },
-    { name: trans.joinus, href: appLinks.joinus(lang) },
-    { name: trans.faqs, href: appLinks.faqs(lang) },
+    // { name: t('terms'), href: appLinks.terms(lang) },
+    { name: t("aboutus"), href: appLinks.aboutus(lang) },
+    { name: t("contactus"), href: appLinks.contactus(lang) },
+    { name: t("joinus"), href: appLinks.joinus(lang) },
+    { name: t("faqs"), href: appLinks.faqs(lang) },
   ];
 
   return (

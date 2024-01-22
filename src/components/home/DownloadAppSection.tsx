@@ -8,7 +8,6 @@ import Tracking_orders from "@/appIcons/landing/tracking_orders.svg";
 import GooglePlay from "@/appIcons/landing/download_google_play.svg";
 import AppleStore from "@/appIcons/landing/download_apple_store.svg";
 import AppGallery from "@/appIcons/landing/download_app_gallery.svg";
-import { MainContext } from "@/components/layouts/MainContentLayout";
 import { useTranslation } from "react-i18next";
 type Props = {};
 

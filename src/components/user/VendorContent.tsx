@@ -4,8 +4,6 @@ import { StarIcon } from "@heroicons/react/20/solid";
 import { Tab } from "@headlessui/react";
 import { first, map } from "lodash";
 import ProductWidget from "@/components/widgets/ProductWidget";
-import { useContext } from "react";
-import { MainContext } from "@/components/layouts/MainContentLayout";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { useTranslation } from "react-i18next";
 import OfferWidget from "@/components/widgets/OfferWidget";

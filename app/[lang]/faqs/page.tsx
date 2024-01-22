@@ -1,6 +1,6 @@
 import { Locale } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
-import { MainContextLayout } from "@/layouts/MainContentLayout";
+import ContentLayout from "@/layouts/MainContentLayout";
 import { getCountryNameCookie } from "@/app/actions";
 import { AppQueryResult, Faq } from "@/src/types/queries";
 import { getFaqs } from "@/utils/faq";
@@ -38,7 +38,7 @@ export default async function ({ params: { lang } }: Props) {
     await Promise.all([getDictionary(lang), getFaqs()]);
 
   return (
-    <MainContextLayout>
+    <ContentLayout>
       <PageHeader img={FaqImg.src} title={`faqs`} />
       <div className='bg-white'>
         <div className='mx-auto max-w-7xl px-6 py-14 sm:py-22 lg:px-8 lg:py-40'>
@@ -54,6 +54,6 @@ export default async function ({ params: { lang } }: Props) {
           </div>
         </div>
       </div>
-    </MainContextLayout>
+    </ContentLayout>
   );
 }

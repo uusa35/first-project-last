@@ -15,8 +15,8 @@ export async function getVendors(search?: string) {
     return res.json()
 }
 
-export async function getVendor(id: string) {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}vendor/${id}`, {
+export async function getVendor({ id, branch_id }: { id: string, branch_id?: string }) {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}vendor/${id}${branch_id ? `?branch_id=${branch_id}` : ``}`, {
         cache: "no-store",
         headers: await getMainHeaders()
     });
