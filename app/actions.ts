@@ -118,6 +118,7 @@ export async function getMainHeaders() {
   const lang = await getLang();
   const area = await getAreaCookie();
   const orderType = await getOrderType();
+  const auth = await getAuth();
   return {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
@@ -126,6 +127,7 @@ export async function getMainHeaders() {
     'X-Localization': lang,
     'X-Country': country?.id,
     ...(area && area.id && { 'X-AREA': area.id }),
-    ...(orderType && { 'X-TYPE': orderType })
+    ...(orderType && { 'X-TYPE': orderType }),
+    ...(auth.token && { 'Authorization': `Bearer ${auth.token}` })
   }
 }

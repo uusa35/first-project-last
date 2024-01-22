@@ -20,5 +20,5 @@ export const authSlice = createSlice({
 
 export const { setAuthentication, resetAuthentication } = authSlice.actions;
 export const isAuthenticated = (state: RootState) =>
-  !isNull(state.auth.token);
+  !isNull(state.token);
 

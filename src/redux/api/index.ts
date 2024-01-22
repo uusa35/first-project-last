@@ -88,6 +88,14 @@ export const apiSlice = createApi({
         validateStatus: (response, result) => result.status == 200 && result.success,
       }),
     }),
+    addToWishList: builder.query<any, { action: 'active' | 'inactive', type: 'offer' | 'vendor', vendor_id?: string; offer_id?: string }>({
+      query: (body) => ({
+        url: `wishlist`,
+        method: 'post',
+        body,
+        validateStatus: (response, result) => result.status == 200 && result.success,
+      }),
+    }),
   }),
 });
 
@@ -96,5 +104,6 @@ export const {
   useLazySendJoinusQuery,
   useGetFooterPagesQuery,
   useGetFooterUrlsQuery,
-  useLazyGetTopSearchKeysQuery
+  useLazyGetTopSearchKeysQuery,
+  useLazyAddToWishListQuery
 } = apiSlice;

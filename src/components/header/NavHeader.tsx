@@ -21,9 +21,7 @@ import { useParams, usePathname, useSearchParams } from "next/navigation";
 import { changePathName, globalMaxWidth } from "@/utils/helpers";
 import { Locale, countriesList } from "@/types/index";
 import { appLinks } from "@/src/links";
-
 import { useRouter } from "next/navigation";
-import { setLocale } from "@/redux/slices/localeSlice";
 import {
   toggleCartMenu,
   toggleLoginModal,
@@ -32,7 +30,12 @@ import {
   toggleVerficationModal,
 } from "@/src/redux/slices/settingSlice";
 import { changeOrderType } from "@/src/redux/slices/productSlice";
-import { getAuth, getCountryNameCookie, setOrderType } from "@/app/actions";
+import {
+  getAuth,
+  getCountryNameCookie,
+  removeAuth,
+  setOrderType,
+} from "@/app/actions";
 import LogoDark from "@/appImages/logo_dark.svg";
 import LogoLight from "@/appImages/logo_light.svg";
 import LogoSmall from "@/appImages/logo_small.png";
@@ -48,9 +51,11 @@ import { ShoppingBagIcon } from "@heroicons/react/20/solid";
 import CartMenu from "@/components/header/CartMenu";
 import { Popover } from "@headlessui/react";
 import { useLazyGetTopSearchKeysQuery } from "@/src/redux/api";
-import { map } from "lodash";
+import { isNull, map } from "lodash";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { useTranslation } from "react-i18next";
+import { resetAuthentication } from "@/src/redux/slices/authSlice";
+import { showWarningToastMessage } from "@/src/redux/slices/toastMessageSlice";
 
 type Props = {
   showMiddleNav: boolean;
@@ -64,7 +69,7 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
     country: { country_code },
     appSetting: { sideMenuOpen },
     product: { orderType },
-    auth: { token },
+    auth: { token, user },
   } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -139,6 +144,13 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
     // } else {
     //   dispatch(toggleRegisterModal());
     // }
+  };
+
+  const handleLogout = async () => {
+    await removeAuth();
+    dispatch(resetAuthentication());
+    dispatch(showWarningToastMessage({ content: t("logout") }));
+    dispatch(toggleLoginModal(false));
   };
 
   let MyCustomButton = forwardRef<HTMLInputElement, any>(function (props, ref) {
@@ -319,16 +331,20 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
               </div>
             ) : (
               <>
-                <button
-                  className={`p-3 w-32 bg-white/80 rounded-lg capitalize text-lg text-black`}
-                  onClick={handleRegisterClick}>
-                  {t("signup")}
-                </button>
-                <button
-                  className={`p-3 w-32 bg-white/30 rounded-lg capitalize text-lg`}
-                  onClick={() => dispatch(toggleLoginModal())}>
-                  {t("login")}
-                </button>
+                {isNull(token) && (
+                  <>
+                    <button
+                      className={`p-3 w-32 bg-white/80 rounded-lg capitalize text-lg text-black`}
+                      onClick={handleRegisterClick}>
+                      {t("signup")}
+                    </button>
+                    <button
+                      className={`p-3 w-32 bg-white/30 rounded-lg capitalize text-lg`}
+                      onClick={() => dispatch(toggleLoginModal())}>
+                      {t("login")}
+                    </button>
+                  </>
+                )}
               </>
             )}
             <button
@@ -367,34 +383,45 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
                 </div>
                 <div className='flex items-center justify-between'>
                   {token ? (
-                    <Link
-                      href='#'
-                      className='flex items-center gap-x-4  py-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-50 w-full'>
-                      <img
-                        className='h-8 w-8 rounded-full bg-gray-50'
-                        src='https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
-                        alt=''
-                      />
-                      <span className='sr-only'>Your profile</span>
-                      <span aria-hidden='true'>Tom Cook</span>
-                    </Link>
-                  ) : (
-                    <div className='flex flex-col gap-y-4'>
-                      <h2>Welcome Back,</h2>
-                      <p className='text-sm text-gray-500 leading-3 mb-2'>
-                        lorem ipsum dolor sit amet, consectetur adip
-                      </p>
-                      <button
-                        className='btn-default'
-                        onClick={() => dispatch(toggleLoginModal())}>
-                        {t("login")}
-                      </button>
-                      <button
-                        className='btn-transparent'
-                        onClick={() => dispatch(toggleRegisterModal())}>
-                        {t("signup")}
-                      </button>
+                    <div>
+                      <div className='flex items-center gap-x-4  py-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-50 w-full'>
+                        <img
+                          className='h-8 w-8 rounded-full bg-gray-50'
+                          src='https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
+                          alt=''
+                        />
+                        <span className='sr-only'>Your profile</span>
+                        <span aria-hidden='true'>{user.name}</span>
+                      </div>
+                      <div>
+                        <button
+                          className='btn-transparent'
+                          onClick={() => handleLogout()}>
+                          {t("logout")}
+                        </button>
+                      </div>
                     </div>
+                  ) : (
+                    <>
+                      {isNull(token) && (
+                        <div className='flex flex-col gap-y-4'>
+                          <h2>Welcome Back,</h2>
+                          <p className='text-sm text-gray-500 leading-3 mb-2'>
+                            lorem ipsum dolor sit amet, consectetur adip
+                          </p>
+                          <button
+                            className='btn-default'
+                            onClick={() => dispatch(toggleLoginModal())}>
+                            {t("login")}
+                          </button>
+                          <button
+                            className='btn-transparent'
+                            onClick={() => dispatch(toggleRegisterModal())}>
+                            {t("signup")}
+                          </button>
+                        </div>
+                      )}
+                    </>
                   )}
                 </div>
                 <div className='mt-6 flow-root '>
