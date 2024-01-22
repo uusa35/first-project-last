@@ -17,6 +17,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import {
   showErrorToastMessage,
   showSuccessToastMessage,
+  showWarningToastMessage,
 } from "@/src/redux/slices/toastMessageSlice";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import LoadingSpinner from "@/components/LoadingSpinner";
@@ -47,6 +48,7 @@ import { appLinks } from "@/src/links";
 import { Locale, countriesList } from "@/src/types";
 import { useTranslation } from "react-i18next";
 import { useLazyAddToWishListQuery } from "@/src/redux/api";
+import { isAuthenticated } from "@/src/redux/slices/authSlice";
 
 export default function () {
   const { t } = useTranslation("trans");
@@ -69,6 +71,7 @@ export default function () {
     auth: { user },
     country: { code },
   } = useAppSelector((state) => state);
+  const isAuth = useAppSelector(isAuthenticated);
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { data, isSuccess, isFetching, error, refetch } = useGetProductQuery<{
@@ -190,9 +193,13 @@ export default function () {
     item_id: string;
   }) => {
     await triggerAddToWishList(body).then((r: any) => {
-      if (r.data?.success) {
-        refetch();
-        dispatch(showSuccessToastMessage({ content: t("process_success") }));
+      if (isAuth) {
+        if (r.data?.success) {
+          refetch();
+          dispatch(showSuccessToastMessage({ content: t("process_success") }));
+        }
+      } else {
+        dispatch(showWarningToastMessage({ content: t("unauthenticated") }));
       }
     });
   };

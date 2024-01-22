@@ -5,10 +5,14 @@ import { capitalize } from "lodash";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { RWebShare } from "react-web-share";
-import { useAppDispatch } from "@/src/redux/hooks";
-import { showSuccessToastMessage } from "@/src/redux/slices/toastMessageSlice";
+import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
+import {
+  showSuccessToastMessage,
+  showWarningToastMessage,
+} from "@/src/redux/slices/toastMessageSlice";
 import { useTranslation } from "react-i18next";
 import { appLinks } from "@/src/links";
+import { isAuthenticated } from "@/src/redux/slices/authSlice";
 
 export default function ({
   title,
@@ -25,6 +29,7 @@ export default function ({
 }) {
   const params: any = useParams()!;
   const dispatch = useAppDispatch();
+  const isAuth = useAppSelector(isAuthenticated);
   const { t } = useTranslation("trans");
   const [triggerAddToWishList] = useLazyAddToWishListQuery();
 
@@ -33,14 +38,18 @@ export default function ({
     type: "offer" | "vendor";
     item_id: string;
   }) => {
-    await triggerAddToWishList(body).then((r: any) => {
-      if (r.data?.success) {
-        // refetch();
-        dispatch(showSuccessToastMessage({ content: t("process_success") }));
-      }
-    });
+    if (isAuth) {
+      await triggerAddToWishList(body).then((r: any) => {
+        if (r.data?.success) {
+          dispatch(showSuccessToastMessage({ content: t("process_success") }));
+        }
+      });
+    } else {
+      dispatch(showWarningToastMessage({ content: t("unauthenticated") }));
+    }
   };
 
+  console.log("isAuth", isAuth);
   return (
     <div className=''>
       <div className='relative bg-white'>
