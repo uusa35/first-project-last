@@ -88,11 +88,14 @@ export const apiSlice = createApi({
         validateStatus: (response, result) => result.status == 200 && result.success,
       }),
     }),
-    addToWishList: builder.query<any, { action: 'active' | 'inactive', type: 'offer' | 'vendor', vendor_id?: string; offer_id?: string }>({
+    addToWishList: builder.query<any, { action: 'active' | 'inactive', type: 'offer' | 'vendor', item_id: string | number; }>({
       query: (body) => ({
         url: `wishlist`,
         method: 'post',
-        body,
+        body: {
+          ...body,
+          ...(body.type === 'offer' ? { 'offer_id': body.item_id } : { 'vendor_id': body.item_id }),
+        },
         validateStatus: (response, result) => result.status == 200 && result.success,
       }),
     }),

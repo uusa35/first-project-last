@@ -71,12 +71,13 @@ export default function () {
   } = useAppSelector((state) => state);
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const { data, isSuccess, isFetching, error } = useGetProductQuery<{
+  const { data, isSuccess, isFetching, error, refetch } = useGetProductQuery<{
     data: AppQueryResult<Product>;
     isSuccess: boolean;
     isFetching: boolean;
     error: any;
-  }>(197);
+    refetch: () => void;
+  }>(198);
   const [triggerAddToCart] = useLazyAddToCartQuery();
   const [triggerAddToWishList] = useLazyAddToWishListQuery();
   const {
@@ -183,10 +184,21 @@ export default function () {
 
   useEffect(() => setValue("quantity", quantity), [quantity]);
 
-  const handleAddToWishList = async () => {};
+  const handleAddToWishList = async (body: {
+    action: "active" | "inactive";
+    type: "offer" | "vendor";
+    item_id: string;
+  }) => {
+    await triggerAddToWishList(body).then((r: any) => {
+      if (r.data?.success) {
+        refetch();
+        dispatch(showSuccessToastMessage({ content: t("process_success") }));
+      }
+    });
+  };
 
   return (
-    <Transition appear show={true} as={Fragment}>
+    <Transition appear show={enabled} as={Fragment}>
       <Dialog
         as='div'
         className='relative z-50'
@@ -225,8 +237,20 @@ export default function () {
                     className={`flex  flex-row justify-between items-center w-auto gap-x-4  ltr:right-4 ltr:left-4`}>
                     <div>
                       <HeartIcon
-                        onClick={() => handleAddToWishList()}
-                        className='w-6 h-6 text-black hover:text-red-600 hover:fill-red-600'
+                        onClick={() =>
+                          handleAddToWishList({
+                            action: data?.data?.favorite
+                              ? "inactive"
+                              : "active",
+                            type: "offer",
+                            item_id: data.data.id.toString(),
+                          })
+                        }
+                        className={`w-6 h-6  ${
+                          data?.data?.favorite
+                            ? `text-red-600 fill-red-600 hover:fill-white hover:text-black`
+                            : `text-black  hover:text-red-600 hover:fill-red-600`
+                        }`}
                       />
                     </div>
                     <div>
