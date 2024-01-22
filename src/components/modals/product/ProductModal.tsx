@@ -46,6 +46,7 @@ import { RWebShare } from "react-web-share";
 import { appLinks } from "@/src/links";
 import { Locale, countriesList } from "@/src/types";
 import { useTranslation } from "react-i18next";
+import { useLazyAddToWishListQuery } from "@/src/redux/api";
 
 export default function () {
   const { t } = useTranslation("trans");
@@ -75,8 +76,9 @@ export default function () {
     isSuccess: boolean;
     isFetching: boolean;
     error: any;
-  }>(offer_id);
+  }>(197);
   const [triggerAddToCart] = useLazyAddToCartQuery();
+  const [triggerAddToWishList] = useLazyAddToWishListQuery();
   const {
     handleSubmit,
     register,
@@ -113,7 +115,7 @@ export default function () {
       await triggerAddToCart({ body }).then((r: any) => {
         if (r.data && r.data.data && r.data?.data?.session_id) {
           dispatch(setSessionId(r.data?.data?.session_id));
-          
+
           dispatch(
             showSuccessToastMessage({
               content: t("added_to_cart_successfully"),
@@ -181,8 +183,10 @@ export default function () {
 
   useEffect(() => setValue("quantity", quantity), [quantity]);
 
+  const handleAddToWishList = async () => {};
+
   return (
-    <Transition appear show={enabled} as={Fragment}>
+    <Transition appear show={true} as={Fragment}>
       <Dialog
         as='div'
         className='relative z-50'
@@ -220,7 +224,10 @@ export default function () {
                   <div
                     className={`flex  flex-row justify-between items-center w-auto gap-x-4  ltr:right-4 ltr:left-4`}>
                     <div>
-                      <HeartIcon className='w-6 h-6 text-black' />
+                      <HeartIcon
+                        onClick={() => handleAddToWishList()}
+                        className='w-6 h-6 text-black hover:text-red-600 hover:fill-red-600'
+                      />
                     </div>
                     <div>
                       <RWebShare

@@ -72,8 +72,9 @@ export default function () {
 
   const onSubmit: SubmitHandler<Inputs> = async (body) => {
     dispatch(enableLoading());
+
     await triggerLogin(body, false).then(async (r: any) => {
-      if (r && r.error.data) {
+      if (r && r.error?.data) {
         // user not verified
         dispatch(
           showErrorToastMessage({
@@ -116,12 +117,11 @@ export default function () {
             }
           });
         }
-      } else {
+      } else if (r.data && r.data?.data && r.data?.data?.token) {
         setAuth(JSON.stringify(r.data.data));
         dispatch(setAuthentication(r.data.data));
         dispatch(showSuccessToastMessage({ content: t("process_success") }));
         dispatch(toggleLoginModal(undefined));
-        return router.replace(`/${lang}`);
       }
     });
   };
