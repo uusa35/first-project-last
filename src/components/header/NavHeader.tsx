@@ -51,13 +51,7 @@ import { ShoppingBag } from "@mui/icons-material";
 import { ShoppingBagIcon } from "@heroicons/react/20/solid";
 import CartMenu from "@/components/header/CartMenu";
 import { Popover } from "@headlessui/react";
-
-import {
-  useGetTopSearchQuery,
-  useLazyGetTopSearchQuery,
-  useGetFooterPagesQuery,
-  useGetFooterUrlsQuery,
-} from "@/src/redux/api";
+import { useGetTopSearchQuery } from "@/src/redux/api";
 import { isNull, map } from "lodash";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { useTranslation } from "react-i18next";

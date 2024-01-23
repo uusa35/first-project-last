@@ -24,9 +24,8 @@ export default function (): React.ReactNode {
     locale: { lang },
     country: { country_code },
   } = useAppSelector((state) => state);
-  const { data: pages, isSuccess } = useGetFooterPagesQuery();
-  const { data: footerUrls, isSuccess: footerUrlsSuccess } =
-    useGetFooterUrlsQuery();
+  const { data: pages } = useGetFooterPagesQuery();
+  const { data: footerUrls } = useGetFooterUrlsQuery();
   const { data: areas, isSuccess: areasSuccess } = useGetAreasQuery();
 
   return (
@@ -115,21 +114,20 @@ export default function (): React.ReactNode {
                   {t("restaurants")}
                 </h3>
                 <ul role='list' className='mt-6 space-y-6'>
-                  {isSuccess &&
-                    pages?.data?.restaurants?.map((item: any, i: number) => (
-                      <li key={i} className='text-sm'>
-                        <Link
-                          href={appLinks.vendor(
-                            lang,
-                            country_code,
-                            item.id,
-                            item.store_name.en
-                          )}
-                          className='text-gray-300 hover:text-white capitalize'>
-                          {item.store_name[lang]}
-                        </Link>
-                      </li>
-                    ))}
+                  {pages?.data?.restaurants?.map((item: any, i: number) => (
+                    <li key={i} className='text-sm'>
+                      <Link
+                        href={appLinks.vendor(
+                          lang,
+                          country_code,
+                          item.id,
+                          item.store_name.en
+                        )}
+                        className='text-gray-300 hover:text-white capitalize'>
+                        {item.store_name[lang]}
+                      </Link>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>
@@ -139,20 +137,19 @@ export default function (): React.ReactNode {
                   {t("cuisines")}
                 </h3>
                 <ul role='list' className='mt-6 space-y-6'>
-                  {isSuccess &&
-                    pages?.data?.cuisines?.map((item: any, i: number) => (
-                      <li key={i} className='text-sm'>
-                        <Link
-                          href={appLinks.offers(
-                            lang,
-                            country_code,
-                            `category_id=${item.id}`
-                          )}
-                          className='text-gray-300 hover:text-white capitalize'>
-                          {item.name[lang]}
-                        </Link>
-                      </li>
-                    ))}
+                  {pages?.data?.cuisines?.map((item: any, i: number) => (
+                    <li key={i} className='text-sm'>
+                      <Link
+                        href={appLinks.offers(
+                          lang,
+                          country_code,
+                          `category_id=${item.id}`
+                        )}
+                        className='text-gray-300 hover:text-white capitalize'>
+                        {item.name[lang]}
+                      </Link>
+                    </li>
+                  ))}
                 </ul>
               </div>
               <div>
@@ -186,23 +183,22 @@ export default function (): React.ReactNode {
         <div
           className={`mx-auto ${globalMaxWidth} px-4 py-8 mt-8 md:flex md:items-center md:justify-between lg:px-8 border-t border-opacity-20 border-gray-50`}>
           <div className='flex justify-center gap-x-6 md:order-2 '>
-            {footerUrlsSuccess &&
-              footerUrls?.data?.links?.map((item: any, i: number) => (
-                <a
-                  key={i}
-                  href={item.link}
-                  className='text-gray-400 hover:text-gray-500'>
-                  <span className='sr-only'>{item.name}</span>
-                  <Image
-                    className='h-6 w-6'
-                    src={item.icon}
-                    width={10}
-                    height={10}
-                    aria-hidden='true'
-                    alt={item.name}
-                  />
-                </a>
-              ))}
+            {footerUrls?.data?.links?.map((item: any, i: number) => (
+              <a
+                key={i}
+                href={item.link}
+                className='text-gray-400 hover:text-gray-500'>
+                <span className='sr-only'>{item.name}</span>
+                <Image
+                  className='h-6 w-6'
+                  src={item.icon}
+                  width={10}
+                  height={10}
+                  aria-hidden='true'
+                  alt={item.name}
+                />
+              </a>
+            ))}
           </div>
           <div className='mt-8 md:order-1 md:mt-0'>
             <p className='text-center text-xs leading-5 text-gray-500'>

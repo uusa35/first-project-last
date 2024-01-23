@@ -4,8 +4,6 @@ import { Fragment, useEffect, useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
 import {
   decreaseQty,
-  disableConfirm,
-  enableConfirm,
   hideProductModal,
   increaseQty,
   resetProductModal,
@@ -57,7 +55,6 @@ export default function () {
   const pathName = usePathname()!;
   const { lang } = params;
   const {
-    appSetting: { showProductModal, isLoading, session_id },
     product: {
       id: offer_id,
       vendor_id,
@@ -69,7 +66,6 @@ export default function () {
       confirm,
     },
     auth: { user },
-    country: { code },
   } = useAppSelector((state) => state);
   const isAuth = useAppSelector(isAuthenticated);
   const router = useRouter();
@@ -81,7 +77,6 @@ export default function () {
     error: any;
     refetch: () => void;
   }>(offer_id, { refetchOnMountOrArgChange: true });
-
   const [triggerAddToCart] = useLazyAddToCartQuery();
   const [triggerAddToWishList] = useLazyAddToWishListQuery();
   const {
@@ -147,6 +142,7 @@ export default function () {
   }, [selections]);
 
   useEffect(() => {
+    // trigggerGetProduct(offer_id, false);
     if (offer_id !== getValues("offer_id") || total === 0) {
       refetch();
       reset({
@@ -197,6 +193,7 @@ export default function () {
     await triggerAddToWishList(body).then((r: any) => {
       if (isAuth) {
         if (r.data?.success) {
+          // trigggerGetProduct(offer_id, false);
           refetch();
           dispatch(showSuccessToastMessage({ content: t("process_success") }));
         }
@@ -285,7 +282,7 @@ export default function () {
                   onSubmit={handleSubmit(onSubmit)}
                   className='relative sm:mx-auto overflow-x-auto w-full h-full bg-white  rounded-2xl'>
                   <LoadingSpinner isLoading={isFetching} />
-                  {!isFetching && data?.data && (
+                  {!isFetching && isSuccess && data?.data && (
                     <div>
                       <div className=' overflow-y-auto h-full md:h-[60%] px-4  pb-[20%] md:pb-[10%]'>
                         <div className='justify-center items-center '>
@@ -336,7 +333,7 @@ export default function () {
                     </div>
                   )}
                   {/* footer */}
-                  {!isFetching && data?.data && (
+                  {!isFetching && isSuccess && data?.data && (
                     <div
                       className={`fixed bottom-0 md:-bottom-10 w-full flex flex-row justify-between items-center   rounded-b-2xl p-4 border-t border-gray-200 bg-white`}>
                       <div className={`flex flex-row gap-x-1`}>

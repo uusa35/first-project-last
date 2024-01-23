@@ -1,6 +1,5 @@
 import { apiSlice } from './index';
-import { AppQueryResult, Category, Product } from '@/types/queries';
-import { Locale } from '@/types/index';
+import { AppQueryResult, Category } from '@/types/queries';
 
 export const productApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -9,9 +8,9 @@ export const productApi = apiSlice.injectEndpoints({
     >({
       query: (id) => ({
         url: `offer/${id}`,
-        validateStatus: (response, result) => result.status == "200",
-
+        validateStatus: (response, result) => result.status == "200" && result.success,
       }),
+      keepUnusedDataFor: 0
     }),
     addToCart: builder.query<
       AppQueryResult<Category[]>, { body: any }
@@ -19,7 +18,7 @@ export const productApi = apiSlice.injectEndpoints({
       query: ({ body }) => ({
         url: `cart`,
         method: "post",
-        validateStatus: (response, result) => result.status == "200",
+        validateStatus: (response, result) => result.status == "200" && result.success,
         body,
       }),
     }),
