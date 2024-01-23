@@ -4,6 +4,7 @@ import Link from "next/link";
 import { convertSearchParamsToString } from "@/utils/helpers";
 import { useSearchParams } from "next/navigation";
 import { useTranslation } from "react-i18next";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 
 type Props = {
   links: any;
@@ -21,25 +22,29 @@ export default function ({ links }: Props): React.ReactNode {
   }
 
   return (
-    !isEmpty(links) && (
-      <div className='bg-white my-6 rounded-md flex justify-center items-center capitalize'>
-        <div className='flex flex-wrap  px-2 py-4 '>
-          {links && (
-            <>
-              <Link
-                scroll={false}
-                href={`${convertSearchParamsToString(searchParams)}`}>
-                next
-              </Link>
-              <Link
-                scroll={false}
-                href={`${convertSearchParamsToString(searchParams)}`}>
-                previous
-              </Link>
-            </>
-          )}
+    <div className='bg-white my-6 rounded-md flex justify-center items-center capitalize'>
+      {!isEmpty(links) && links && (
+        <div className='flex flex-row justify-center items-center p-3 gap-x-6'>
+          <Link
+            scroll={false}
+            href={`?${links.web_previous}`}
+            className='flex flex-row gap-x-2 btn-transparent md:w-28 justify-center items-center text-xs'>
+            <div>
+              <ChevronLeftIcon className='w-4 h-4 pt-1 rtl:rotate-180 ' />
+            </div>
+            <div>{t("previous")}</div>
+          </Link>
+          <Link
+            scroll={false}
+            className='flex flex-row gap-x-2 btn-transparent md:w-28 justify-center items-cente text-xs'
+            href={`?${links.web_next}`}>
+            <div>{t("next")}</div>
+            <div>
+              <ChevronRightIcon className='w-4 h-4 pt-1  rtl:rotate-180' />
+            </div>
+          </Link>
         </div>
-      </div>
-    )
+      )}
+    </div>
   );
 }

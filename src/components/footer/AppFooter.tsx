@@ -14,16 +14,21 @@ import { useGetAreasQuery } from "@/src/redux/api/areaApi";
 import { map, take } from "lodash";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
+import { useAppSelector } from "@/src/redux/hooks";
 
 export default function (): React.ReactNode {
   const { t } = useTranslation("trans");
   const params: { lang: Locale["lang"]; country?: countriesList } | any =
     useParams!();
-  const { lang } = params;
+  const {
+    locale: { lang },
+    country: { country_code },
+  } = useAppSelector((state) => state);
   const { data: pages, isSuccess } = useGetFooterPagesQuery();
   const { data: footerUrls, isSuccess: footerUrlsSuccess } =
     useGetFooterUrlsQuery();
   const { data: areas, isSuccess: areasSuccess } = useGetAreasQuery();
+
   return (
     <footer
       aria-labelledby='footer-heading'
@@ -116,7 +121,7 @@ export default function (): React.ReactNode {
                         <Link
                           href={appLinks.vendor(
                             lang,
-                            params?.country,
+                            country_code,
                             item.id,
                             item.store_name.en
                           )}
@@ -140,7 +145,7 @@ export default function (): React.ReactNode {
                         <Link
                           href={appLinks.offers(
                             lang,
-                            params?.country,
+                            country_code,
                             `category_id=${item.id}`
                           )}
                           className='text-gray-300 hover:text-white capitalize'>
