@@ -81,6 +81,7 @@ export default function () {
     error: any;
     refetch: () => void;
   }>(offer_id, { refetchOnMountOrArgChange: true });
+
   const [triggerAddToCart] = useLazyAddToCartQuery();
   const [triggerAddToWishList] = useLazyAddToWishListQuery();
   const {
@@ -147,6 +148,7 @@ export default function () {
 
   useEffect(() => {
     if (offer_id !== getValues("offer_id") || total === 0) {
+      refetch();
       reset({
         offer_id,
         user_id: !isNull(user) && user.id ? user.id : null,
@@ -282,7 +284,7 @@ export default function () {
                 <form
                   onSubmit={handleSubmit(onSubmit)}
                   className='relative sm:mx-auto overflow-x-auto w-full h-full bg-white  rounded-2xl'>
-                  <LoadingSpinner isLoading={!isSuccess} />
+                  <LoadingSpinner isLoading={isFetching} />
                   {!isFetching && data?.data && (
                     <div>
                       <div className=' overflow-y-auto h-full md:h-[60%] px-4  pb-[20%] md:pb-[10%]'>

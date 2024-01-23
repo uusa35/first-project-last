@@ -4,6 +4,7 @@ import {
   forwardRef,
   useContext,
   useEffect,
+  useRef,
   useState,
   useTransition,
 } from "react";
@@ -50,7 +51,13 @@ import { ShoppingBag } from "@mui/icons-material";
 import { ShoppingBagIcon } from "@heroicons/react/20/solid";
 import CartMenu from "@/components/header/CartMenu";
 import { Popover } from "@headlessui/react";
-import { useLazyGetTopSearchKeysQuery } from "@/src/redux/api";
+
+import {
+  useGetTopSearchQuery,
+  useLazyGetTopSearchQuery,
+  useGetFooterPagesQuery,
+  useGetFooterUrlsQuery,
+} from "@/src/redux/api";
 import { isNull, map } from "lodash";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { useTranslation } from "react-i18next";
@@ -82,10 +89,13 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
     `absolute ${showMiddleNav ? "text-black" : "text-white"}`
   );
   const [isSticky, setIsSticky] = useState<boolean>(false);
-  const [
-    triggerGetTopSearchKeys,
-    { data: searchKeys, isSuccess: searchKeysSuccess, isFetching },
-  ] = useLazyGetTopSearchKeysQuery();
+  const {
+    data: searchKeys,
+    isSuccess: searchKeysSuccess,
+    isFetching,
+    error,
+  } = useGetTopSearchQuery();
+  const btnRef = useRef<any>();
   const navigation: { name: string; href: string }[] = [
     { name: t("landing"), href: appLinks.landing(lang) },
     {
@@ -154,7 +164,6 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
   };
 
   let MyCustomButton = forwardRef<HTMLInputElement, any>(function (props, ref) {
-    // triggerGetTopSearchKeys();
     return (
       <div>
         <div className='pointer-events-auto absolute inset-y-0 left-0 flex items-center pl-3'>
@@ -167,12 +176,13 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
           type='text'
           name='search'
           id='search'
-          // defaultValue={searchParams?.get("search") ?? ""}
+          defaultValue={
+            searchParams?.has("search") ? searchParams.get("search") : ""
+          }
           className='input-default ltr:pl-10 rtl:pr-10 '
           placeholder={t("search")}
           ref={ref}
           {...props}
-          onChange={(e) => console.log("e", e.target.value)}
         />
       </div>
     );
@@ -251,14 +261,18 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
               <div className='flex flex-row w-full justify-end items-center'>
                 <div className='relative rounded-md shadow-sm me-4 lg:w-3/5 xl:w-[350px]'>
                   <Popover as='nav'>
-                    <Popover.Button as={MyCustomButton}></Popover.Button>
+                    <Popover.Button
+                      as={MyCustomButton}
+                      ref={btnRef}></Popover.Button>
                     <Popover.Panel
-                      focus={false}
+                      // aria-expanded={false}
+                      // focus={false}
                       className='absolute z-10 w-full py-4 bg-white'>
                       <div className='flex w-full flex-col gap-y-2  rounded-lg '>
                         {searchKeysSuccess && searchKeys.data ? (
                           map(searchKeys.data?.top, (k: any, i: number) => (
                             <Link
+                              onClick={() => btnRef.current?.click()}
                               key={i}
                               className='flex flex-row justify-start items-center gap-x-4 py-2 px-4 hover:bg-gray-50'
                               href={`/${lang}/${params?.country}?search=${k.key}`}>

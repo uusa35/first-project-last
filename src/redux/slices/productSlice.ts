@@ -53,6 +53,25 @@ export const productSlice = createSlice({
   reducers: {
     showProductModal: (
       state: typeof initialState,
+      action: PayloadAction<number>
+    ) => {
+      return {
+        ...state,
+        id: action.payload,
+        enabled: true,
+      };
+    },
+    hideProductModal: (
+      state: typeof initialState,
+      action: PayloadAction<void | undefined>
+    ) => {
+      return {
+        ...state,
+        enabled: false,
+      };
+    },
+    setProduct: (
+      state: typeof initialState,
       action: PayloadAction<Product>
     ) => {
       const { id, vendor_id, new_price } = action.payload;
@@ -70,15 +89,6 @@ export const productSlice = createSlice({
         quantity: id === state.id ? state.quantity : initialState.quantity,
         originalGroups: id === state.id ? state.originalGroups : initialState.originalGroups,
         selections: id === state.id ? state.selections : initialState.selections,
-      };
-    },
-    hideProductModal: (
-      state: typeof initialState,
-      action: PayloadAction<void | undefined>
-    ) => {
-      return {
-        ...state,
-        enabled: false,
       };
     },
     enableConfirm: (
@@ -368,7 +378,7 @@ export const productSlice = createSlice({
     },
   },
   extraReducers: builder => {
-    builder.addMatcher(isAnyOf(showProductModal, increaseMeterChoice,
+    builder.addMatcher(isAnyOf(setProduct, increaseMeterChoice,
       decreaseMeterChoice, addRadioChoice, removeRadioChoice, increaseQty,
       decreaseQty, addCheckoutChoice, removeCheckoutChoice), (state, action) => {
         const { price, quantity } = current(state);
@@ -387,6 +397,7 @@ export const productSlice = createSlice({
 export const {
   showProductModal,
   hideProductModal,
+  setProduct,
   setProductOriginalGroups,
   addRadioChoice,
   removeRadioChoice,

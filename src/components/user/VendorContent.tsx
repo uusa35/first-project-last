@@ -62,11 +62,11 @@ export default function ({ products }: { products: any }) {
               </Tab.List>
             </div>
             <Tab.Panels as={Fragment}>
-              {map(products, (c: any, i) => (
-                <Tab.Panel className='my-4'>
+              {map(products, (c: any, i: number) => (
+                <Tab.Panel className='my-4' key={i}>
                   <div className='grid grid-cols-2 xl:grid-cols-3 my-4'>
-                    {map(c.offers, (p, i) => (
-                      <div className={"col-span-1 me-2"} key={i}>
+                    {map(c.offers, (p, k: number) => (
+                      <div className={"col-span-1 me-2"} key={k}>
                         <OfferWidget product={p} />
                       </div>
                     ))}

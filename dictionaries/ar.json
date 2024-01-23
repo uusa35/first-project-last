@@ -342,6 +342,8 @@
     "select_branch": "اختيار الفرع",
     "start_order": "ابدأ الطلب",
     "big_deals": "افضل العروض",
-    "group": " خيار"
+    "group": " خيار",
+    "flash_offer": "عروض سريعة",
+    "policies": "السياسات"
   }
 }
