@@ -23,7 +23,7 @@ export default function ({ links }: Props): React.ReactNode {
 
   return (
     <div className='bg-white my-6 rounded-md flex justify-center items-center capitalize'>
-      {!isEmpty(links) && links && (
+      {!isEmpty(links) && links && links.web_next &&  (
         <div className='flex flex-row justify-center items-center p-3 gap-x-6'>
           <Link
             scroll={false}
