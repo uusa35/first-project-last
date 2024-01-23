@@ -39,7 +39,7 @@ import {
 } from "@/app/actions";
 import LogoDark from "@/appImages/logo_dark.svg";
 import LogoLight from "@/appImages/logo_light.svg";
-import LogoSmall from "@/appImages/logo_small.png";
+import LogoSmall from "@/appImages/logo_small.svg";
 import LogoOnly from "@/appImages/logo_only.svg";
 import ArFlag from "@/appIcons/ar.svg";
 import MarkerImg from "@/appIcons/marker.svg";
@@ -222,12 +222,12 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
               {country_code || isSticky ? (
                 <>
                   <LogoDark className='hidden sm:flex h-8 w-auto sm:w-36 ' />
-                  {/* <LogoSmall className='flex sm:hidden h-8 w-auto' /> */}
+                  <LogoSmall className='flex sm:hidden h-10 w-auto' />
                 </>
               ) : (
                 <>
                   <LogoLight className='hidden:sm flex h-8 w-auto sm:w-36 ' />
-                  {/* <LogoSmall className='flex sm:hidden h-8 w-auto' /> */}
+                  <LogoSmall className='flex sm:hidden h-10 w-auto' />
                 </>
               )}
             </Link>
