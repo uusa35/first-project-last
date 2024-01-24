@@ -263,7 +263,7 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
                       // focus={false}
                       className='absolute z-10 w-full py-4 bg-white'>
                       <div className='flex w-full flex-col gap-y-2  rounded-lg '>
-                        {searchKeysSuccess && searchKeys.data ? (
+                        {searchKeys?.data ? (
                           map(searchKeys.data?.top, (k: any, i: number) => (
                             <Link
                               onClick={() => btnRef.current?.click()}

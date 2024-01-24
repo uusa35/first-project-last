@@ -15,12 +15,24 @@ import { getProducts } from "@/utils/product";
 import { getVendorFeatured, getVendors } from "@/utils/user";
 import HomeContent from "@/src/components/home/HomeContent";
 import LoadingSpinner from "@/src/components/LoadingSpinner";
+import pThrottle from "p-throttle";
 
 type Props = {
   params: { lang: Locale["lang"]; country: countriesList };
 };
+// const limit = pLimit(2);
+const throttle = pThrottle({
+  limit: 2,
+  interval: 1000,
+});
 
 export default async function ({ params: { lang, country } }: Props) {
+  const transFn = throttle(() => getDictionary(lang));
+  const categoriesFn = throttle(() => getCategories());
+  const slidersFn = throttle(() => getSlides(`screen_type=home&limit=10`));
+  const productsFn = throttle(() => getProducts(`limit=10`));
+  const vendorsFn = throttle(() => getVendors(`limit=10`));
+  const featuredVendorsFn = throttle(() => getVendorFeatured(`limit=10`));
   const [{ trans }, categories, sliders, products, vendors, featuredVendors]: [
     { trans: any },
     AppQueryResult<Category[]>,
@@ -29,12 +41,12 @@ export default async function ({ params: { lang, country } }: Props) {
     AppQueryResult<User[]>,
     AppQueryResult<User[]>
   ] = await Promise.all([
-    getDictionary(lang),
-    getCategories(),
-    getSlides(`screen_type=home&limit=10`),
-    getProducts(`limit=10`),
-    getVendors(`limit=10`),
-    getVendorFeatured(`limit=10`),
+    transFn(),
+    categoriesFn(),
+    slidersFn(),
+    productsFn(),
+    vendorsFn(),
+    featuredVendorsFn(),
   ]);
 
   return (

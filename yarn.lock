@@ -4748,6 +4748,11 @@ p-map@^4.0.0:
   dependencies:
     aggregate-error "^3.0.0"
 
+p-throttle@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/p-throttle/-/p-throttle-6.1.0.tgz#6bed43e9aa8e715abc1da1097279a7c16c077747"
+  integrity sha512-eQMdGTxk2+047La67wefUtt0tEHh7D+C8Jl7QXoFCuIiNYeQ9zWs2AZiJdIAs72rSXZ06t11me2bgalRNdy3SQ==
+
 parent-module@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/parent-module/-/parent-module-1.0.1.tgz#691d2709e78c79fae3a156622452d00762caaaa2"
