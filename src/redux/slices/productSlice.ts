@@ -1,6 +1,6 @@
 import { Product } from '@/src/types/queries';
 import { createSlice, isAnyOf, PayloadAction, current } from '@reduxjs/toolkit';
-import { filter, find, first, flatten, isEmpty, isUndefined, map, split, sum, sumBy } from 'lodash';
+import { filter, find, first, flatten, isEmpty, isUndefined, map, sumBy } from 'lodash';
 
 interface Choice {
   choice_id: number | string;
@@ -53,18 +53,12 @@ export const productSlice = createSlice({
   reducers: {
     showProductModal: (
       state: typeof initialState,
-      action: PayloadAction<Product>
+      action: PayloadAction<number>
     ) => {
-      const { id, vendor_id, new_price } = action.payload;
-      const currency = split(action.payload.price.toString(), ' ')[1];
-      const price = new_price ? parseFloat(split(new_price.toString(), ' ')[0]) : parseFloat(split(action.payload.price.toString(), ' ')[0]);
+      const id = action.payload;
       return {
         ...state,
-        id,
-        offer_id: id,
-        currency,
-        vendor_id,
-        price,
+        id: id,
         enabled: true,
         total: id === state.id ? state.total : initialState.total,
         quantity: id === state.id ? state.quantity : initialState.quantity,
@@ -79,6 +73,25 @@ export const productSlice = createSlice({
       return {
         ...state,
         enabled: false,
+      };
+    },
+    setProduct: (
+      state: typeof initialState,
+      action: PayloadAction<Product>
+    ) => {
+      const { id, vendor, new_price, price, currency } = action.payload;
+      return {
+        ...state,
+        id,
+        offer_id: id,
+        currency,
+        vendor_id: vendor.id,
+        price: new_price && new_price > 0 ? new_price : price,
+        enabled: true,
+        total: id === state.id ? state.total : initialState.total,
+        quantity: id === state.id ? state.quantity : initialState.quantity,
+        originalGroups: id === state.id ? state.originalGroups : initialState.originalGroups,
+        selections: id === state.id ? state.selections : initialState.selections,
       };
     },
     enableConfirm: (
@@ -368,7 +381,7 @@ export const productSlice = createSlice({
     },
   },
   extraReducers: builder => {
-    builder.addMatcher(isAnyOf(showProductModal, increaseMeterChoice,
+    builder.addMatcher(isAnyOf(setProduct, increaseMeterChoice,
       decreaseMeterChoice, addRadioChoice, removeRadioChoice, increaseQty,
       decreaseQty, addCheckoutChoice, removeCheckoutChoice), (state, action) => {
         const { price, quantity } = current(state);
@@ -387,6 +400,7 @@ export const productSlice = createSlice({
 export const {
   showProductModal,
   hideProductModal,
+  setProduct,
   setProductOriginalGroups,
   addRadioChoice,
   removeRadioChoice,

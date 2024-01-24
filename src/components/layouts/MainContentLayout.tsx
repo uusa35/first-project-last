@@ -117,7 +117,9 @@ const ContentLayout: FC<Props> = ({
   }, [country_id]);
 
   return (
-    <>
+    <div
+      className={`font-expo-medium`}
+      dir={params.lang === "ar" ? "rtl" : "ltr"}>
       {/* nav */}
       <NavHeader showMiddleNav={showMiddleNav} />
       <LoginModal />
@@ -130,7 +132,7 @@ const ContentLayout: FC<Props> = ({
         {children}
       </div>
       <DynamicAppFooter />
-    </>
+    </div>
   );
 };
 

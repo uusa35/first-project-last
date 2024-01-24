@@ -1,4 +1,4 @@
-
+import pThrottle from "p-throttle";
 
 export const convertSearchParamsToString = (search: { [key: string]: string } | string): string => {
     if (typeof search === 'object' &&
@@ -67,3 +67,9 @@ export const revalidate = {
 }
 
 export const globalMaxWidth = 'max-w-8xl';
+
+
+export const throttleLimit = pThrottle({
+    limit: 2,
+    interval: 1000,
+});

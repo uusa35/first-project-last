@@ -75,6 +75,7 @@
     "next-intl": "^2.19.1",
     "next-plugin-svgr": "^1.1.4",
     "nextjs-progressbar": "^0.0.16",
+    "p-throttle": "^6.1.0",
     "pluralize": "^8.0.0",
     "postcss": "8.4.27",
     "query-string": "^8.1.0",

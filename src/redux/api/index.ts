@@ -4,7 +4,7 @@ import { apiUrl } from "@/src/constants";
 import { RootState } from "@/redux/store";
 import { isNull } from "lodash";
 import { ContactusForm } from "@/types/index";
-import { Setting } from "@/types/queries";
+import { AppQueryResult, Setting } from '@/types/queries';
 import { revalidate } from "@/utils/helpers";
 
 export const apiSlice = createApi({
@@ -70,28 +70,22 @@ export const apiSlice = createApi({
           result.status == 200 && result.success,
       }),
     }),
-    getTopSearchKeys: builder.query<any, void>({
+    getTopSearch: builder.query<AppQueryResult<any>, void>({
       query: () => ({
         url: `search-history`,
-        method: "get",
-        validateStatus: (response, result) =>
-          result.status == 200 && result.success,
+        validateStatus: (response, result) => result.status == 200 && result.success,
       }),
     }),
-    getFooterPages: builder.query<any, void>({
+    getFooterPages: builder.query<AppQueryResult<any>, void>({
       query: () => ({
         url: `footer`,
-        method: "get",
-        validateStatus: (response, result) =>
-          result.status == 200 && result.success,
+        validateStatus: (response, result) => result.status == 200 && result.success,
       }),
     }),
     getFooterUrls: builder.query<any, void>({
       query: () => ({
         url: `about`,
-        method: "get",
-        validateStatus: (response, result) =>
-          result.status == 200 && result.success,
+        validateStatus: (response, result) => result.status == 200 && result.success,
       }),
     }),
     addToWishList: builder.query<
@@ -123,6 +117,7 @@ export const {
   useLazySendJoinusQuery,
   useGetFooterPagesQuery,
   useGetFooterUrlsQuery,
-  useLazyGetTopSearchKeysQuery,
-  useLazyAddToWishListQuery,
+  useLazyGetTopSearchQuery,
+  useGetTopSearchQuery,
+  useLazyAddToWishListQuery
 } = apiSlice;

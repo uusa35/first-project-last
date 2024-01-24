@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
 import { useRouter } from "next/navigation";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { EyeIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { useLazyGetBranchesQuery } from "@/src/redux/api/vendorApi";
+import { useGetBranchesQuery } from "@/src/redux/api/vendorApi";
 import { map } from "lodash";
 import {
   hideBranchModal,
@@ -33,11 +33,9 @@ export default function ({ vendor_id }: Props) {
   const dispatch = useAppDispatch();
   const searchParams: any = useSearchParams()!;
   const [currentBranchId, setCurrentBranchId] = useState<number | string>(0);
-  const [triggerGetBranches, { data, isSuccess }] = useLazyGetBranchesQuery();
-
-  useEffect(() => {
-    triggerGetBranches(vendor_id);
-  }, [vendor_id]);
+  const { data, isSuccess } = useGetBranchesQuery(vendor_id, {
+    refetchOnMountOrArgChange: true,
+  });
 
   useEffect(() => {
     if (currentBranchId == 0 && orderType === "pickup") {

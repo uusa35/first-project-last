@@ -345,6 +345,10 @@
     "select_branch": "select branch",
     "start_order": "start order",
     "big_deals": "big deals",
-    "group": "group"
+    "group": "group",
+    "flash_offer": "flash offer",
+    "policies": "policies",
+    "added_to_cart_successfully": "added to cart successfully",
+    "unauthenticated": "please login first or register."
   }
 }

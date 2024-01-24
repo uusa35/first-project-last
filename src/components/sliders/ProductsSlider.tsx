@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useRef } from "react";
+import React, { useRef } from "react";
 import Slider from "react-slick";
 import { Locale, countriesList } from "@/src/types";
 import { Product } from "@/types/queries";
@@ -15,8 +15,7 @@ type Props = {
 };
 
 export default function ({ products, title }: Props) {
-  
-  const{t} = useTranslation('trans')
+  const { t } = useTranslation("trans");
   const params: { lang: Locale["lang"]; country?: countriesList } | any =
     useParams!();
   const { lang } = params;
@@ -83,7 +82,7 @@ export default function ({ products, title }: Props) {
       <div className='flex justify-between mb-3'>
         <p className='capitalize'>{title}</p>
         <div className='flex items-center gap-x-3'>
-          <p className='capitalize'>{t('see_all')}</p>
+          <p className='capitalize'>{t("see_all")}</p>
           <RenderArrows />
         </div>
       </div>

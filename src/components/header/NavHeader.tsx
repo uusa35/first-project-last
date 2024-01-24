@@ -4,6 +4,7 @@ import {
   forwardRef,
   useContext,
   useEffect,
+  useRef,
   useState,
   useTransition,
 } from "react";
@@ -38,7 +39,7 @@ import {
 } from "@/app/actions";
 import LogoDark from "@/appImages/logo_dark.svg";
 import LogoLight from "@/appImages/logo_light.svg";
-import LogoSmall from "@/appImages/logo_small.png";
+import LogoSmall from "@/appImages/logo_small.svg";
 import LogoOnly from "@/appImages/logo_only.svg";
 import ArFlag from "@/appIcons/ar.svg";
 import MarkerImg from "@/appIcons/marker.svg";
@@ -50,7 +51,7 @@ import { ShoppingBag } from "@mui/icons-material";
 import { ShoppingBagIcon } from "@heroicons/react/20/solid";
 import CartMenu from "@/components/header/CartMenu";
 import { Popover } from "@headlessui/react";
-import { useLazyGetTopSearchKeysQuery } from "@/src/redux/api";
+import { useGetTopSearchQuery } from "@/src/redux/api";
 import { isNull, map } from "lodash";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { useTranslation } from "react-i18next";
@@ -82,10 +83,13 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
     `absolute ${showMiddleNav ? "text-black" : "text-white"}`
   );
   const [isSticky, setIsSticky] = useState<boolean>(false);
-  const [
-    triggerGetTopSearchKeys,
-    { data: searchKeys, isSuccess: searchKeysSuccess, isFetching },
-  ] = useLazyGetTopSearchKeysQuery();
+  const {
+    data: searchKeys,
+    isSuccess: searchKeysSuccess,
+    isFetching,
+    error,
+  } = useGetTopSearchQuery();
+  const btnRef = useRef<any>();
   const navigation: { name: string; href: string }[] = [
     { name: t("landing"), href: appLinks.landing(lang) },
     {
@@ -154,7 +158,6 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
   };
 
   let MyCustomButton = forwardRef<HTMLInputElement, any>(function (props, ref) {
-    // triggerGetTopSearchKeys();
     return (
       <div>
         <div className="pointer-events-auto absolute inset-y-0 left-0 flex items-center pl-3">
@@ -164,15 +167,16 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
           />
         </div>
         <input
-          type="text"
-          name="search"
-          id="search"
-          // defaultValue={searchParams?.get("search") ?? ""}
-          className="input-default ltr:pl-10 rtl:pr-10 "
+          type='text'
+          name='search'
+          id='search'
+          defaultValue={
+            searchParams?.has("search") ? searchParams.get("search") : ""
+          }
+          className='input-default ltr:pl-10 rtl:pr-10 '
           placeholder={t("search")}
           ref={ref}
           {...props}
-          onChange={(e) => console.log("e", e.target.value)}
         />
       </div>
     );
@@ -215,13 +219,13 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
               <span className="sr-only">Your Company</span>
               {country_code || isSticky ? (
                 <>
-                  <LogoDark className="hidden sm:flex h-8 w-auto sm:w-36 " />
-                  {/* <LogoSmall className='flex sm:hidden h-8 w-auto' /> */}
+                  <LogoDark className='hidden sm:flex h-8 w-auto sm:w-36 ' />
+                  <LogoSmall className='flex sm:hidden h-10 w-auto' />
                 </>
               ) : (
                 <>
-                  <LogoLight className="hidden:sm flex h-8 w-auto sm:w-36 " />
-                  {/* <LogoSmall className='flex sm:hidden h-8 w-auto' /> */}
+                  <LogoLight className='hidden:sm flex h-8 w-auto sm:w-36 ' />
+                  <LogoSmall className='flex sm:hidden h-10 w-auto' />
                 </>
               )}
             </Link>
@@ -255,18 +259,21 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
           </div>
           <div className="flex sm:flex-1 sm:justify-end gap-x-4 ">
             {params?.country ? (
-              <div className="flex flex-row w-full justify-end items-center">
-                <div className="relative rounded-md shadow-sm me-4 lg:w-3/5 xl:w-[350px]">
-                  <Popover as="nav">
-                    <Popover.Button as={MyCustomButton}></Popover.Button>
+              <div className='flex flex-row w-full justify-end items-center'>
+                <div className='relative rounded-md shadow-sm me-4 lg:w-3/5 xl:w-[350px]'>
+                  <Popover as='nav'>
+                    <Popover.Button
+                      as={MyCustomButton}
+                      ref={btnRef}></Popover.Button>
                     <Popover.Panel
-                      focus={false}
-                      className="absolute z-10 w-full py-4 bg-white"
-                    >
-                      <div className="flex w-full flex-col gap-y-2  rounded-lg ">
-                        {searchKeysSuccess && searchKeys.data ? (
+                      // aria-expanded={false}
+                      // focus={false}
+                      className='absolute z-10 w-full py-4 bg-white'>
+                      <div className='flex w-full flex-col gap-y-2  rounded-lg '>
+                        {searchKeys?.data ? (
                           map(searchKeys.data?.top, (k: any, i: number) => (
                             <Link
+                              onClick={() => btnRef.current?.click()}
                               key={i}
                               className="flex flex-row justify-start items-center gap-x-4 py-2 px-4 hover:bg-gray-50"
                               href={`/${lang}/${params?.country}?search=${k.key}`}
@@ -347,15 +354,13 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
                 {isNull(token) && (
                   <>
                     <button
-                      className={`p-3 w-32 bg-white/80 rounded-lg capitalize text-lg text-black`}
-                      onClick={handleRegisterClick}
-                    >
+                      className={`p-3 w-32 bg-white/80 rounded-lg capitalize text-sm text-black`}
+                      onClick={handleRegisterClick}>
                       {t("signup")}
                     </button>
                     <button
-                      className={`p-3 w-32 bg-white/30 rounded-lg capitalize text-lg`}
-                      onClick={() => dispatch(toggleLoginModal())}
-                    >
+                      className={`p-3 w-32 bg-white/30 rounded-lg capitalize text-sm`}
+                      onClick={() => dispatch(toggleLoginModal())}>
                       {t("login")}
                     </button>
                   </>

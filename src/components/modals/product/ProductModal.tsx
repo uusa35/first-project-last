@@ -4,11 +4,10 @@ import { Fragment, useEffect, useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
 import {
   decreaseQty,
-  disableConfirm,
-  enableConfirm,
   hideProductModal,
   increaseQty,
   resetProductModal,
+  setProduct,
   setProductOriginalGroups,
   setSessionId,
 } from "@/src/redux/slices/productSlice";
@@ -57,7 +56,6 @@ export default function () {
   const pathName = usePathname()!;
   const { lang } = params;
   const {
-    appSetting: { showProductModal, isLoading, session_id },
     product: {
       id: offer_id,
       vendor_id,
@@ -69,7 +67,6 @@ export default function () {
       confirm,
     },
     auth: { user },
-    country: { code },
   } = useAppSelector((state) => state);
   const isAuth = useAppSelector(isAuthenticated);
   const router = useRouter();
@@ -103,7 +100,7 @@ export default function () {
         confirm,
         // notes: "hello",
       };
-    }, [offer_id]),
+    }, [data?.data?.id]),
   });
 
   const settings: any = {
@@ -119,7 +116,6 @@ export default function () {
       await triggerAddToCart({ body }).then((r: any) => {
         if (r.data && r.data.data && r.data?.data?.session_id) {
           dispatch(setSessionId(r.data?.data?.session_id));
-
           dispatch(
             showSuccessToastMessage({
               content: t("added_to_cart_successfully"),
@@ -134,29 +130,27 @@ export default function () {
   };
 
   useEffect(() => {
-    if (isSuccess && data?.data?.groups) {
-      dispatch(setProductOriginalGroups(data?.data?.groups));
-    }
-  }, []);
-
-  useEffect(() => {
     if (!isEmpty(selections) && getValues("offer_id")) {
       setValue("groups", selections);
     }
   }, [selections]);
 
   useEffect(() => {
-    if (offer_id !== getValues("offer_id") || total === 0) {
+    if (isSuccess && data?.data) {
+      dispatch(setProduct(data?.data));
       reset({
-        offer_id,
+        offer_id: data?.data?.id,
         user_id: !isNull(user) && user.id ? user.id : null,
         quantity,
-        vendor_id,
+        vendor_id: data?.data?.vendor?.id,
         groups: null,
         confirm,
       });
+      if (data?.data?.groups) {
+        dispatch(setProductOriginalGroups(data?.data?.groups));
+      }
     }
-  }, [offer_id, total]);
+  }, [data?.data?.id]);
 
   const groupElement = (g: any) => {
     switch (g.input_type) {
@@ -195,6 +189,7 @@ export default function () {
     await triggerAddToWishList(body).then((r: any) => {
       if (isAuth) {
         if (r.data?.success) {
+          // trigggerGetProduct(offer_id, false);
           refetch();
           dispatch(showSuccessToastMessage({ content: t("process_success") }));
         }
@@ -282,8 +277,8 @@ export default function () {
                 <form
                   onSubmit={handleSubmit(onSubmit)}
                   className='relative sm:mx-auto overflow-x-auto w-full h-full bg-white  rounded-2xl'>
-                  <LoadingSpinner isLoading={!isSuccess} />
-                  {!isFetching && data?.data && (
+                  <LoadingSpinner isLoading={isFetching && !isSuccess} />
+                  {data?.data.id === offer_id && (
                     <div>
                       <div className=' overflow-y-auto h-full md:h-[60%] px-4  pb-[20%] md:pb-[10%]'>
                         <div className='justify-center items-center '>
@@ -334,7 +329,7 @@ export default function () {
                     </div>
                   )}
                   {/* footer */}
-                  {!isFetching && data?.data && (
+                  {data?.data?.id === offer_id && (
                     <div
                       className={`fixed bottom-0 md:-bottom-10 w-full flex flex-row justify-between items-center   rounded-b-2xl p-4 border-t border-gray-200 bg-white`}>
                       <div className={`flex flex-row gap-x-1`}>

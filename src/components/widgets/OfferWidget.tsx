@@ -27,14 +27,7 @@ export default function OfferWidget({ product }: Props): React.ReactNode {
     useLazyGetProductQuery();
 
   const handleClick = async (id: number) => {
-    console.log("jsdhjfgjksgk");
-    await triggerGetProduct(id, true).then((r) => {
-      if (r.data && r.data.success) {
-        dispatch(showProductModal(product));
-      } else {
-        dispatch(hideProductModal());
-      }
-    });
+    dispatch(showProductModal(id));
   };
 
   return (

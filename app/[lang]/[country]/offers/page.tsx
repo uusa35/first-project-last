@@ -11,7 +11,7 @@ import {
   Slide,
   User,
 } from "@/src/types/queries";
-import { convertSearchParamsToString } from "@/utils/helpers";
+import { convertSearchParamsToString, throttleLimit } from "@/utils/helpers";
 import Pagination from "@/src/components/Pagination";
 import { getCategories } from "@/utils/category";
 import { getVendors } from "@/utils/user";
@@ -35,6 +35,17 @@ export default async function (props: Props) {
   }: any = props;
   if (!searchParams && !searchParams?.category_id) return notFound();
   const token: any = cookieStore.get("token");
+  const transFn = throttleLimit(() => getDictionary(lang));
+  const categoriesFn = throttleLimit(() => getCategories());
+  const slidesFn = throttleLimit(() =>
+    getSlides(`category_id=${searchParams?.category_id}&screen_type=category`)
+  );
+  const productsFn = throttleLimit(() =>
+    getProducts(convertSearchParamsToString(searchParams))
+  );
+  const vendorsFn = throttleLimit(() =>
+    getVendors(convertSearchParamsToString(searchParams))
+  );
   const [{ trans }, categories, slides, products, vendors]: [
     { trans: any },
     AppQueryResult<Category[]>,
@@ -42,11 +53,11 @@ export default async function (props: Props) {
     ElementPagination<Product[]>,
     ElementPagination<User[]>
   ] = await Promise.all([
-    getDictionary(lang),
-    getCategories(),
-    getSlides(`category_id=${searchParams?.category_id}&screen_type=category`),
-    getProducts(convertSearchParamsToString(searchParams)),
-    getVendors(convertSearchParamsToString(searchParams)),
+    transFn(),
+    categoriesFn(),
+    slidesFn(),
+    productsFn(),
+    vendorsFn(),
   ]);
 
   return (
