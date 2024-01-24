@@ -55,10 +55,15 @@ export const productSlice = createSlice({
       state: typeof initialState,
       action: PayloadAction<number>
     ) => {
+      const id = action.payload;
       return {
         ...state,
-        id: action.payload,
+        id: id,
         enabled: true,
+        total: id === state.id ? state.total : initialState.total,
+        quantity: id === state.id ? state.quantity : initialState.quantity,
+        originalGroups: id === state.id ? state.originalGroups : initialState.originalGroups,
+        selections: id === state.id ? state.selections : initialState.selections,
       };
     },
     hideProductModal: (
