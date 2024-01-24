@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useRef } from "react";
+import React, { useRef } from "react";
 import Slider from "react-slick";
 import { Locale, countriesList } from "@/src/types";
 import { Product } from "@/types/queries";
@@ -7,7 +7,6 @@ import ProductWidget from "@/components/widgets/ProductWidget";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import { useParams } from "next/navigation";
 import { useTranslation } from "react-i18next";
-import OfferWidget from "../widgets/OfferWidget";
 
 type Props = {
   products: Product[];
@@ -91,7 +90,7 @@ export default function ({ products, title }: Props) {
         <Slider {...settings} ref={(c) => (refSlider.current = c)}>
           {products &&
             products.map((itm: Product, i: number) => (
-              <OfferWidget product={itm} key={i} />
+              <ProductWidget product={itm} key={i} />
             ))}
         </Slider>
       </div>

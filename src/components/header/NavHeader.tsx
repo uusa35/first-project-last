@@ -342,12 +342,12 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
                 {isNull(token) && (
                   <>
                     <button
-                      className={`p-3 w-32 bg-white/80 rounded-lg capitalize text-lg text-black`}
+                      className={`p-3 w-32 bg-white/80 rounded-lg capitalize text-sm text-black`}
                       onClick={handleRegisterClick}>
                       {t("signup")}
                     </button>
                     <button
-                      className={`p-3 w-32 bg-white/30 rounded-lg capitalize text-lg`}
+                      className={`p-3 w-32 bg-white/30 rounded-lg capitalize text-sm`}
                       onClick={() => dispatch(toggleLoginModal())}>
                       {t("login")}
                     </button>

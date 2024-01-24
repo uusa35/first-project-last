@@ -50,7 +50,7 @@ export const apiSlice = createApi({
   }),
   keepUnusedDataFor: revalidate.max,
   refetchOnReconnect: true,
-  
+
   endpoints: (builder) => ({
     sendContactus: builder.query<Setting, ContactusForm>({
       query: (body) => ({

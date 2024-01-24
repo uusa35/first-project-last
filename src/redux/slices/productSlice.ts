@@ -1,6 +1,6 @@
 import { Product } from '@/src/types/queries';
 import { createSlice, isAnyOf, PayloadAction, current } from '@reduxjs/toolkit';
-import { filter, find, first, flatten, isEmpty, isUndefined, map, split, sum, sumBy } from 'lodash';
+import { filter, find, first, flatten, isEmpty, isUndefined, map, sumBy } from 'lodash';
 
 interface Choice {
   choice_id: number | string;

@@ -8,12 +8,11 @@ export const vendorApi = apiSlice.injectEndpoints({
     >({
       query: (id) => ({
         url: `branches?vendor_id=${id}`,
-        validateStatus: (response, result) => result.status == "200",
-
+        validateStatus: (response, result) => result.status == 200,
       }),
     }),
 
   }),
 });
 
-export const { useLazyGetBranchesQuery } = vendorApi;
+export const { useLazyGetBranchesQuery, useGetBranchesQuery } = vendorApi;
