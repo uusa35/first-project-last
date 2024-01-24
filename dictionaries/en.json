@@ -348,6 +348,7 @@
     "group": "group",
     "flash_offer": "flash offer",
     "policies": "policies",
-    "added_to_cart_successfully": "added to cart successfully"
+    "added_to_cart_successfully": "added to cart successfully",
+    "unauthenticated": "please login first or register."
   }
 }
