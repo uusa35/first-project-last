@@ -48,11 +48,11 @@ export type Product = {
   image: string;
   vendor_id: number;
   stock: number;
-  images?: string[]
-  groups?: []
+  images?: string[];
+  groups?: [];
   vendor: {
     id: number | string;
-  }
+  };
 };
 
 export type Category = {
@@ -100,7 +100,7 @@ export type Branch = {
   latitude: number;
   address: string;
   phone: string;
-  delivery_type: 'both' | 'delivery' | 'pickup',
+  delivery_type: "both" | "delivery" | "pickup";
   vendor_id: number | string;
   modalEnabled?: boolean;
 };
@@ -179,4 +179,48 @@ export type Slide = {
 export type Faq = {
   question: string;
   answer: string;
+};
+
+export type Offer = {
+  id: number;
+  name: string;
+  name_en: string;
+  favorite: boolean;
+  stock: number;
+};
+export type Choice = {
+  id: number;
+  name: string;
+  price: string;
+  quantity: number;
+  subtotal: string;
+};
+export type CartProduct = {
+  choices: Choice[];
+  id: number;
+  image: string;
+  notes: null | string;
+  offer: Offer;
+  price: string;
+  quantity: number;
+  subtotal: string;
+  total_choices: string;
+};
+export type Vendor = {
+  id: number;
+  items: number;
+  logo: string;
+  name: string;
+  name_en: string;
+};
+export type Cart = {
+  delivery_fee: null | string;
+  id: number;
+  items: CartProduct[];
+  session_id: string | null;
+  subtotal: string;
+  tax: number;
+  total: string;
+  user_id: null | number;
+  vendor: Vendor;
 };

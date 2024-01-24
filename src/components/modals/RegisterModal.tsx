@@ -46,7 +46,8 @@ type Inputs = {
 export default function () {
   const { t } = useTranslation("trans");
   const {
-    appSetting: { showRegisterModal, isLoading, session_id },
+    appSetting: { showRegisterModal, isLoading },
+    product: { session_id },
     locale: { lang },
     country: { code },
   } = useAppSelector((state) => state);

@@ -1,10 +1,10 @@
-'use client';
+"use client";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { apiUrl } from "@/src/constants";
 import { RootState } from "@/redux/store";
 import { isNull } from "lodash";
 import { ContactusForm } from "@/types/index";
-import { Setting } from '@/types/queries';
+import { Setting } from "@/types/queries";
 import { revalidate } from "@/utils/helpers";
 
 export const apiSlice = createApi({
@@ -17,7 +17,7 @@ export const apiSlice = createApi({
         country,
         area,
         product: { orderType },
-        auth: { token }
+        auth: { token },
       } = getState() as RootState;
       headers.set("Access-Control-Allow-Origin", "*");
       headers.set(
@@ -38,7 +38,7 @@ export const apiSlice = createApi({
         "Access-Control-Allow-Methods",
         "GET,PUT,POST,DELETE,PATCH,OPTIONS"
       );
-      headers.set('Content-Type', 'application/json');
+      headers.set("Content-Type", "application/json");
       headers.set("Accept", "application/json");
       // headers.set("Cache-Control", "no-store");
       if (!isNull(token)) {
@@ -48,55 +48,71 @@ export const apiSlice = createApi({
     },
     credentials: "same-origin",
   }),
-  keepUnusedDataFor: revalidate.max,
+  keepUnusedDataFor: 0,
   refetchOnReconnect: true,
+  tagTypes: ["cart"],
   endpoints: (builder) => ({
     sendContactus: builder.query<Setting, ContactusForm>({
       query: (body) => ({
         url: `contact`,
         body,
-        method: 'post',
-        validateStatus: (response, result) => result.status == 200 && result.success,
+        method: "post",
+        validateStatus: (response, result) =>
+          result.status == 200 && result.success,
       }),
     }),
     sendJoinus: builder.query<Setting, ContactusForm>({
       query: (body) => ({
         url: `restaurant-request`,
         body,
-        method: 'post',
-        validateStatus: (response, result) => result.status == 200 && result.success,
+        method: "post",
+        validateStatus: (response, result) =>
+          result.status == 200 && result.success,
       }),
     }),
     getTopSearchKeys: builder.query<any, void>({
       query: () => ({
         url: `search-history`,
-        method: 'get',
-        validateStatus: (response, result) => result.status == 200 && result.success,
+        method: "get",
+        validateStatus: (response, result) =>
+          result.status == 200 && result.success,
       }),
     }),
     getFooterPages: builder.query<any, void>({
       query: () => ({
         url: `footer`,
-        method: 'get',
-        validateStatus: (response, result) => result.status == 200 && result.success,
+        method: "get",
+        validateStatus: (response, result) =>
+          result.status == 200 && result.success,
       }),
     }),
     getFooterUrls: builder.query<any, void>({
       query: () => ({
         url: `about`,
-        method: 'get',
-        validateStatus: (response, result) => result.status == 200 && result.success,
+        method: "get",
+        validateStatus: (response, result) =>
+          result.status == 200 && result.success,
       }),
     }),
-    addToWishList: builder.query<any, { action: 'active' | 'inactive', type: 'offer' | 'vendor', item_id: string | number; }>({
+    addToWishList: builder.query<
+      any,
+      {
+        action: "active" | "inactive";
+        type: "offer" | "vendor";
+        item_id: string | number;
+      }
+    >({
       query: (body) => ({
         url: `wishlist`,
-        method: 'post',
+        method: "post",
         body: {
           ...body,
-          ...(body.type === 'offer' ? { 'offer_id': body.item_id } : { 'vendor_id': body.item_id }),
+          ...(body.type === "offer"
+            ? { offer_id: body.item_id }
+            : { vendor_id: body.item_id }),
         },
-        validateStatus: (response, result) => result.status == 200 && result.success,
+        validateStatus: (response, result) =>
+          result.status == 200 && result.success,
       }),
     }),
   }),
@@ -108,5 +124,5 @@ export const {
   useGetFooterPagesQuery,
   useGetFooterUrlsQuery,
   useLazyGetTopSearchKeysQuery,
-  useLazyAddToWishListQuery
+  useLazyAddToWishListQuery,
 } = apiSlice;

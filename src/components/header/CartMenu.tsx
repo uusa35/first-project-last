@@ -1,92 +1,57 @@
 "use client";
-import { Fragment, useContext, useEffect, useMemo, useState } from "react";
+import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import {
-  Bars3Icon,
-  BellIcon,
-  MagnifyingGlassCircleIcon,
-  MagnifyingGlassIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import Link from "next/link";
-import { useParams, usePathname, useSearchParams } from "next/navigation";
-import { changePathName, globalMaxWidth } from "@/utils/helpers";
+import { useParams } from "next/navigation";
 import { Locale, countriesList } from "@/types/index";
-import { appLinks } from "@/src/links";
 
 import { useRouter } from "next/navigation";
-import { setLocale } from "@/redux/slices/localeSlice";
-import {
-  toggleLoginModal,
-  toggleRegisterModal,
-  toggleCartMenu,
-  toggleVerficationModal,
-} from "@/src/redux/slices/settingSlice";
-import { changeOrderType } from "@/src/redux/slices/productSlice";
-import { getAuth, getCountryNameCookie, setOrderType } from "@/app/actions";
-import LogoDark from "@/appImages/logo_dark.svg";
-import LogoLight from "@/appImages/logo_light.svg";
-import LogoOnly from "@/appImages/logo_only.svg";
-import ArFlag from "@/appIcons/ar.svg";
-import MarkerImg from "@/appIcons/marker.svg";
-import AreaDropDown from "@/components/home/AreaDropDown";
-import GooglePlay from "@/appIcons/landing/download_google_play.svg";
-import AppleStore from "@/appIcons/landing/download_apple_store.svg";
-import AppGallery from "@/appIcons/landing/download_app_gallery.svg";
-import { ShoppingBag } from "@mui/icons-material";
-import { ShoppingBagIcon } from "@heroicons/react/20/solid";
+import { toggleCartMenu } from "@/src/redux/slices/settingSlice";
 import ProductCart from "../cart/ProductCart";
 import PaymentSummary from "../PaymentSummary";
 import CheckoutBtn from "../CheckoutBtn";
 import { useTranslation } from "react-i18next";
+import { useGetCartProductsQuery } from "@/src/redux/api/cartApi";
+import { isAuthenticated } from "@/src/redux/slices/authSlice";
+import EmptyCart from "../cart/EmptyCart";
+import Warning from "@/appIcons/cart/warning.svg";
 
 export default function () {
   const { t } = useTranslation("trans");
-  const locales: Locale["lang"][] = ["ar", "en"];
   const {
-    locale,
-    area,
-    country: { country_code },
-    appSetting: { orderType, showCartMenu },
-    auth: { token },
+    appSetting: { showCartMenu },
+    product: { session_id },
+    auth: { user },
   } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const searchParams = useSearchParams();
   const params: { lang: Locale["lang"]; country?: countriesList } | any =
     useParams!();
-  const { lang } = params;
-  const pathName = usePathname()!;
-  const [isSticky, setIsSticky] = useState<boolean>(false);
-  const navigation: { name: string; href: string }[] = [
-    { name: t("landing"), href: appLinks.landing(lang) },
+  const isAuth = useAppSelector(isAuthenticated);
+
+  const { data, isLoading } = useGetCartProductsQuery(
     {
-      name: t("home"),
-      href: appLinks.home(lang, country_code),
+      ...(isAuth ? { user_id: user?.id } : { session_id: session_id }),
     },
-    {
-      name: t("offers"),
-      href: appLinks.offers(lang, country_code, ""),
-    },
-    // { name: t('terms'), href: appLinks.terms(lang) },
-    { name: t("aboutus"), href: appLinks.aboutus(lang) },
-    { name: t("contactus"), href: appLinks.contactus(lang) },
-    { name: t("joinus"), href: appLinks.joinus(lang) },
-    { name: t("faqs"), href: appLinks.faqs(lang) },
-  ];
+    { refetchOnMountOrArgChange: true }
+  );
+
+  console.log({ data });
 
   return (
     // showCartMenu
-    <Transition.Root show={false} as={Fragment}>
+    <Transition.Root show={true} as={Fragment}>
       <Dialog
-        as='div'
-        className='relative z-50'
-        onClose={() => dispatch(toggleCartMenu(false))}>
-        <div className='fixed inset-0' />
-        <div className='fixed inset-0 overflow-hidden'>
-          <div className='absolute inset-0 overflow-hidden'>
-            <div className='pointer-events-none fixed inset-y-0 ltr:right-0 rtl:left-0 flex max-w-full ltr:pl-10 rtl:pr-10'>
+        as="div"
+        className="relative z-50"
+        onClose={() => dispatch(toggleCartMenu(false))}
+      >
+        <div className="fixed inset-0" />
+        <div className="fixed inset-0 overflow-hidden">
+          <div className="absolute inset-0 overflow-hidden">
+            <div className="pointer-events-none fixed inset-y-0 ltr:right-0 rtl:left-0 flex max-w-full ltr:pl-10 rtl:pr-10">
               <Transition.Child
                 as={Fragment}
                 enter="transition-opacity ease-linear duration-300"
@@ -98,54 +63,83 @@ export default function () {
               >
                 <Dialog.Panel className="pointer-events-auto w-screen max-w-md">
                   <div className="flex h-full flex-col bg-white py-6 shadow-xl relative">
-                    <div className="overflow-y-scroll scrollbar-hide">
-                      <div className="px-4 sm:px-6">
-                        <div className="flex items-start justify-between">
-                          <div className="ml-3 flex h-7 items-center">
-                            <button
-                              type="button"
-                              className="relative rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none"
-                              onClick={() => dispatch(toggleCartMenu(false))}
-                            >
-                              <span className="absolute -inset-2.5" />
-                              <span className="sr-only">Close panel</span>
-                              <XMarkIcon
-                                className='h-6 w-6'
-                                aria-hidden='true'
+                    <div className="overflow-y-scroll scrollbar-hide h-full px-6 sm:px-10">
+                      {/* close btn */}
+                      <div className="flex items-start justify-between">
+                        <div className="flex h-7 items-center">
+                          <button
+                            type="button"
+                            className="relative rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none"
+                            onClick={() => dispatch(toggleCartMenu(false))}
+                          >
+                            <span className="absolute -inset-2.5" />
+                            <span className="sr-only">Close panel</span>
+                            <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* out of stock items */}
+                      <div className="flex items-center gap-x-3 bg-picks-orange bg-opacity-20 text-picks-orange px-6 sm:px-10 py-3 text-sm -mx-6 sm:-mx-10 mt-5">
+                        <Warning className="w-8 h-8" />
+                        <p>
+                          Check the store before ordering; this request might
+                          already be fulfilled.
+                        </p>
+                      </div>
+
+                      {/* items */}
+                      {data && data.data ? (
+                        <>
+                          <div className="relative mt-6 flex-1">
+                            {/* vendor info */}
+                            <div>
+                              <p className="text-xs">Your cart from</p>
+                              {/* should go to vendor details */}
+                              <Link className="text-lg" href={"/"}>
+                                {data.data.vendor?.name}
+                              </Link>
+
+                              <div className="flex justify-between items-center border-b text-picks-text-gray text-sm py-2">
+                                <p>{data.data.items?.length} item/s</p>
+                                <p>
+                                  Subtotal : <span>{data.data.subtotal}</span>
+                                </p>
+                              </div>
+                            </div>
+                            {/*products */}
+                            <div className="border-b">
+                              {data.data.items?.map((item) => (
+                                <ProductCart key={item.id} product={item} />
+                              ))}
+                            </div>
+
+                            {/* payment summary */}
+                            <div>
+                              <PaymentSummary
+                                summary={{
+                                  subtotal: data.data.subtotal,
+                                  tax: data.data.tax,
+                                  total: data.data.total,
+                                  delivery_fee: data.data.delivery_fee,
+                                }}
                               />
-                            </button>
+                              <div className="h-52 w-full"></div>
+                            </div>
                           </div>
-                        </div>
-                      </div>
-                      <div className='relative mt-6 flex-1 px-4 sm:px-6'>
-                        {/* vendor info */}
-                        <div>
-                          <p className="text-xs">Your cart from</p>
-                          {/* should go to vendor details */}
-                          <Link className="text-lg" href={"/"}>
-                            McDonald's
-                          </Link>
 
-                          <div className="flex justify-between items-center border-b text-picks-text-gray text-sm py-2">
-                            <p>1 item</p>
-                            <p>Subtotal : 8.00 KD</p>
+                          <div className="absolute bottom-0 right-0 left-0">
+                            <CheckoutBtn
+                              total={data.data.total}
+                              // disabled={
+                              //   data.data.quantity > product.offer.stock
+                              // }
+                            />
                           </div>
-                        </div>
-                        {/*products */}
-                        <div className='border-b'>
-                          <ProductCart />
-                        </div>
-
-                        {/* payment summary */}
-                        <div>
-                          <PaymentSummary />
-                          <div className='h-52 w-full'></div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className='absolute bottom-0 right-0 left-0'>
-                      <CheckoutBtn />
+                        </>
+                      ) : (
+                        <EmptyCart />
+                      )}
                     </div>
                   </div>
                 </Dialog.Panel>
