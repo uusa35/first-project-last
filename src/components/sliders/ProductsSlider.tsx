@@ -7,6 +7,7 @@ import ProductWidget from "@/components/widgets/ProductWidget";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import { useParams } from "next/navigation";
 import { useTranslation } from "react-i18next";
+import OfferWidget from "../widgets/OfferWidget";
 
 type Props = {
   products: Product[];
@@ -15,8 +16,7 @@ type Props = {
 };
 
 export default function ({ products, title }: Props) {
-  
-  const{t} = useTranslation('trans')
+  const { t } = useTranslation("trans");
   const params: { lang: Locale["lang"]; country?: countriesList } | any =
     useParams!();
   const { lang } = params;
@@ -83,7 +83,7 @@ export default function ({ products, title }: Props) {
       <div className='flex justify-between mb-3'>
         <p className='capitalize'>{title}</p>
         <div className='flex items-center gap-x-3'>
-          <p className='capitalize'>{t('see_all')}</p>
+          <p className='capitalize'>{t("see_all")}</p>
           <RenderArrows />
         </div>
       </div>
@@ -91,7 +91,7 @@ export default function ({ products, title }: Props) {
         <Slider {...settings} ref={(c) => (refSlider.current = c)}>
           {products &&
             products.map((itm: Product, i: number) => (
-              <ProductWidget product={itm} key={i} />
+              <OfferWidget product={itm} key={i} />
             ))}
         </Slider>
       </div>
