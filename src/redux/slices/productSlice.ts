@@ -74,16 +74,14 @@ export const productSlice = createSlice({
       state: typeof initialState,
       action: PayloadAction<Product>
     ) => {
-      const { id, vendor, new_price } = action.payload;
-      const currency = split(action.payload.price.toString(), ' ')[1];
-      const price = new_price ? parseFloat(split(new_price.toString(), ' ')[0]) : parseFloat(split(action.payload.price.toString(), ' ')[0]);
+      const { id, vendor, new_price, price, currency } = action.payload;
       return {
         ...state,
         id,
         offer_id: id,
         currency,
         vendor_id: vendor.id,
-        price,
+        price: new_price && new_price > 0 ? new_price : price,
         enabled: true,
         total: id === state.id ? state.total : initialState.total,
         quantity: id === state.id ? state.quantity : initialState.quantity,

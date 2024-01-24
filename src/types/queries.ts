@@ -48,7 +48,8 @@ export type Product = {
   image: string;
   vendor_id: number;
   stock: number;
-  images?: string[]
+  images?: string[];
+  currency: string;
   groups?: []
   vendor: {
     id: number | string;

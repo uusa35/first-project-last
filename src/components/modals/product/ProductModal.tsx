@@ -100,7 +100,7 @@ export default function () {
         confirm,
         // notes: "hello",
       };
-    }, [offer_id, vendor_id]),
+    }, [data?.data?.id]),
   });
 
   const settings: any = {
@@ -130,29 +130,26 @@ export default function () {
   };
 
   useEffect(() => {
-    if (isSuccess && data?.data) {
-      dispatch(setProduct(data?.data));
-      if (data?.data?.groups) {
-        dispatch(setProductOriginalGroups(data?.data?.groups));
-      }
-    }
-  }, []);
-
-  useEffect(() => {
     if (!isEmpty(selections) && getValues("offer_id")) {
       setValue("groups", selections);
     }
   }, [selections]);
 
   useEffect(() => {
-    reset({
-      offer_id,
-      user_id: !isNull(user) && user.id ? user.id : null,
-      quantity,
-      vendor_id,
-      groups: null,
-      confirm,
-    });
+    if (isSuccess && data?.data) {
+      dispatch(setProduct(data?.data));
+      reset({
+        offer_id: data?.data?.id,
+        user_id: !isNull(user) && user.id ? user.id : null,
+        quantity,
+        vendor_id: data?.data?.vendor?.id,
+        groups: null,
+        confirm,
+      });
+      if (data?.data?.groups) {
+        dispatch(setProductOriginalGroups(data?.data?.groups));
+      }
+    }
   }, [data?.data?.id]);
 
   const groupElement = (g: any) => {
@@ -201,9 +198,6 @@ export default function () {
       }
     });
   };
-
-  console.log("isFetching", isFetching);
-  console.log("isSuccess", isSuccess);
 
   return (
     <Transition appear show={enabled} as={Fragment}>
