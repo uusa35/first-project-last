@@ -7,6 +7,8 @@ import ProductWidget from "@/components/widgets/ProductWidget";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import { useParams } from "next/navigation";
 import { useTranslation } from "react-i18next";
+import Link from "next/link";
+import { appLinks } from "@/src/links";
 
 type Props = {
   products: Product[];
@@ -18,7 +20,7 @@ export default function ({ products, title }: Props) {
   const { t } = useTranslation("trans");
   const params: { lang: Locale["lang"]; country?: countriesList } | any =
     useParams!();
-  const { lang } = params;
+  const { lang, country } = params;
   const refSlider = useRef<Slider | null>(null);
 
   const settings: any = {
@@ -82,7 +84,11 @@ export default function ({ products, title }: Props) {
       <div className='flex justify-between mb-3'>
         <p className='capitalize'>{title}</p>
         <div className='flex items-center gap-x-3'>
-          <p className='capitalize'>{t("see_all")}</p>
+          <Link
+            href={appLinks.offers(lang, country, "")}
+            className='capitalize'>
+            {t("see_all")}
+          </Link>
           <RenderArrows />
         </div>
       </div>

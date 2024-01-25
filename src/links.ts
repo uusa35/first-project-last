@@ -17,13 +17,13 @@ export const appLinks = {
     terms: (lang: Locale['lang']) =>
         `/${lang}/terms`,
     offers: (lang: Locale['lang'], country: countriesList, search?: string) =>
-        `/${lang}/${country}/offers?${search}`,
+        `/${lang}/${country}/offers?${search ?? ``}`,
     search: (lang: Locale['lang'], country: countriesList, search: string) =>
         `/${lang}/${country}/search/${search}`,
     offer: (lang: Locale['lang'], country: countriesList, id: string, slug?: string) =>
         `/${lang}/${country}/offer/${id}?slug=${slug ? addDashs(slug) : ``}`,
     vendors: (lang: Locale['lang'], country: countriesList, search?: string) =>
-        `/${lang}/${country}/vendors?${search}`,
+        `/${lang}/${country}/vendors?${search ?? ``}`,
     vendor: (lang: Locale['lang'], country: countriesList, id: string, slug?: string, branch_id?: string) =>
         `/${lang}/${country}/vendor/${id}?${slug ? `slug=${addDashs(slug)}` : ``}${branch_id ? `&branch_id=${branch_id}` : ``}`,
 

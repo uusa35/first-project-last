@@ -26,23 +26,6 @@ export default function ({ products }: { products: any }) {
                 <div className='line-clamp-1'>
                   <h1>{t("full_menu")}</h1>
                 </div>
-                <div className='flex flex-row justify-end items-center w-3/5 sm:w-full max-w-sm '>
-                  <div className='relative rounded-full shadow-sm me-4 w-full '>
-                    <div className='pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3'>
-                      <MagnifyingGlassIcon
-                        className='h-5 w-5 text-gray-400'
-                        aria-hidden='true'
-                      />
-                    </div>
-                    <input
-                      type='text'
-                      name='search'
-                      id='search'
-                      className='input-default ltr:pl-10 rtl:pr-10 rounded-full capitalize'
-                      placeholder={`${t("search_in_menu")}`}
-                    />
-                  </div>
-                </div>
               </div>
               <Tab.List className='-mb-px flex gap-x-8'>
                 {map(products, (c, i: number) => (
@@ -64,7 +47,7 @@ export default function ({ products }: { products: any }) {
             <Tab.Panels as={Fragment}>
               {map(products, (c: any, i: number) => (
                 <Tab.Panel className='my-4' key={i}>
-                  <div className='grid grid-cols-2 xl:grid-cols-3 my-4'>
+                  <div className='grid grid-cols-2 md:grid-cols-3 gap-4 lg:grid-cols-4 my-4'>
                     {map(c.offers, (p, k: number) => (
                       <div className={"col-span-1 me-2"} key={k}>
                         <OfferWidget product={p} />

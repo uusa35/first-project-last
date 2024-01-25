@@ -49,7 +49,7 @@ export default function ({
     }
   };
 
-  console.log("isAuth", isAuth);
+
   return (
     <div className=''>
       <div className='relative bg-white'>

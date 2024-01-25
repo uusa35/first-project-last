@@ -2,13 +2,27 @@ import { Locale, countriesList } from "@/types/index";
 import { getDictionary } from "@/lib/dictionary";
 import ContentLayout from "@/layouts/MainContentLayout";
 import { cookies } from "next/headers";
-import { getVendors } from "@/utils/user";
-import { ElementPagination, User } from "@/src/types/queries";
-import Image from "next/image";
-import Link from "next/link";
-import { appLinks } from "@/src/links";
+import { getProducts } from "@/utils/product";
+import {
+  AppQueryResult,
+  Category,
+  ElementPagination,
+  Product,
+  Slide,
+  User,
+} from "@/src/types/queries";
+import { convertSearchParamsToString, throttleLimit } from "@/utils/helpers";
 import Pagination from "@/src/components/Pagination";
-import { convertSearchParamsToString } from "@/utils/helpers";
+import { getCategories } from "@/utils/category";
+import { getVendors } from "@/utils/user";
+import { getSlides } from "@/utils/slide";
+import { notFound } from "next/navigation";
+import CategoriesSlider from "@/src/components/sliders/CategoriesSlider";
+import AdsSlider from "@/src/components/sliders/AdsSlider";
+import CustomSlider from "@/src/components/sliders/VendorsSlider";
+import ProductsSlider from "@/src/components/sliders/ProductsSlider";
+import VendorsList from "@/src/components/lists/VendorsList";
+import ProductsList from "@/src/components/lists/ProductsList";
 
 type Props = {
   params: { lang: Locale["lang"]; country: countriesList; search: string };
@@ -16,45 +30,43 @@ type Props = {
 };
 
 export default async function (props: Props) {
+  const cookieStore = cookies();
   const {
     params: { lang, country },
     searchParams,
-  } = props;
-  const cookieStore = cookies();
+  }: any = props;
   const token: any = cookieStore.get("token");
-  const [{ trans }, vendors]: [{ trans: any }, ElementPagination<User[]>] =
-    await Promise.all([
-      getDictionary(lang),
-      getVendors(convertSearchParamsToString(searchParams ?? undefined)),
-    ]);
+  const transFn = throttleLimit(() => getDictionary(lang));
+  const categoriesFn = throttleLimit(() => getCategories());
+  const slidesFn = throttleLimit(() =>
+    getSlides(`category_id=${searchParams?.category_id}&screen_type=category`)
+  );
+  const vendorsFn = throttleLimit(() =>
+    getVendors(convertSearchParamsToString(searchParams))
+  );
+  const [{ trans }, categories, slides, vendors]: [
+    { trans: any },
+    AppQueryResult<Category[]>,
+    AppQueryResult<Slide[]>,
+    ElementPagination<User[]>
+  ] = await Promise.all([transFn(), categoriesFn(), slidesFn(), vendorsFn()]);
 
   return (
-    <ContentLayout>
-      <h1 className='text-7xl'>Vendors {country}</h1>
-      {/* vendors */}
-      <div className='flex w-full flex-col flex-wrap justify-between items-center'>
-        <h1>Vendors</h1>
-        {vendors.data?.map((s: User, i) => (
-          <Link
-            key={i}
-            href={appLinks.vendor(
-              lang,
-              country,
-              s.id.toString(),
-              s.store_name ?? s.name
-            )}>
-            <div>{s.store_name ?? s.name}</div>
-            <Image
-              alt={s.description}
-              key={i}
-              src={s.logo}
-              width='100'
-              height='100'
-            />
-          </Link>
-        ))}
+    <ContentLayout showMiddleNav={true}>
+      {categories?.data?.length > 0 && (
+        <CategoriesSlider categories={categories.data} />
+      )}
+      <div className='px-2 md:px-8'>
+        {slides?.data?.length > 0 && <AdsSlider slides={slides.data} />}
+
+        {/* {vendors?.data?.length > 0 && (
+          <CustomSlider vendors={vendors.data} title={"vendors"} />
+        )} */}
+        {vendors?.data?.length > 0 && (
+          <VendorsList elements={vendors.data} title={trans.vendors} />
+        )}
+        <Pagination links={vendors.pagination?.links} />
       </div>
-      <Pagination links={vendors.pagination?.links} />
     </ContentLayout>
   );
 }

@@ -10,6 +10,7 @@ import RatingAndReviewsCard from "@/src/components/user/RatingAndReviewsCard";
 import Breadcrumbs from "@/components/BreadCrumbs";
 import ProductsSlider from "@/src/components/sliders/ProductsSlider";
 import SwitchDeliveryPickup from "@/src/components/user/SwitchDeliveryPickup";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 type Props = {
   params: {
@@ -46,8 +47,8 @@ export default async function ({
           logo={logo}
           bg={image}
         />
-        <div className='px-4 grid grid-cols-1 md:grid-cols-3 mt-12'>
-          <div className='col-span-full lg:col-span-2'>
+        <div className='px-4 grid grid-cols-1 md:grid-cols-3 mt-12 gap-y-4 w-full'>
+          <div className='col-span-full lg:col-span-2 '>
             <h1 className='text-3xl pb-4'>{store_name}</h1>
             <div className='flex flex-1 mb-3'>
               <p className='text-gray-400 rtl:pl-2 ltr:pr-2 ltr:border-r rtl:border-l border-gray-400'>
@@ -101,14 +102,32 @@ export default async function ({
                 </div>
               </div>
             )}
-            <RatingAndReviewsCard
+
+            {/* <RatingAndReviewsCard
               rate={vendor.data.vendor.rate}
               ratings={vendor.data.vendor.ratings}
-            />
+            /> */}
           </div>
-          {/* delivery & pickup & branch */}
-          <SwitchDeliveryPickup vendor={vendor.data.vendor} />
+          <div className='col-span-full lg:col-span-1 flex flex-row justify-end items-center w-full '>
+            <div className='relative w-full rounded-full shadow-sm me-4'>
+              <div className='pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3'>
+                <MagnifyingGlassIcon
+                  className='h-5 w-5 text-gray-400'
+                  aria-hidden='true'
+                />
+              </div>
+              <input
+                type='text'
+                name='search'
+                id='search'
+                className='input-default ltr:pl-10 rtl:pr-10 rounded-full capitalize w-full'
+                placeholder={`${trans.search_in_menu}`}
+              />
+            </div>
+          </div>
         </div>
+        {/* delivery & pickup & branch */}
+        <SwitchDeliveryPickup vendor={vendor.data.vendor} />
         {vendor.data.items && vendor.data.items?.length > 0 && (
           <ProductsSlider
             products={vendor.data.items}

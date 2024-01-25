@@ -21,7 +21,7 @@ export default function ({ vendors, title }: Props) {
   const { t } = useTranslation("trans");
   const params: { lang: Locale["lang"]; country?: countriesList } | any =
     useParams!();
-  const { lang } = params;
+  const { lang, country } = params;
   const refSlider = useRef<Slider | null>(null);
 
   const RenderArrows = () => {
@@ -45,7 +45,7 @@ export default function ({ vendors, title }: Props) {
       <div className='flex justify-between mb-3'>
         <p className='slider-title'>{t(title)}</p>
         <div className='flex items-center gap-x-3 text-sm capitalize'>
-          <p>{t("see_all")}</p>
+          <Link href={appLinks.vendors(lang, country)}>{t("see_all")}</Link>
           <RenderArrows />
         </div>
       </div>
