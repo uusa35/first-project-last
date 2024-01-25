@@ -10,8 +10,7 @@ export const areaApi = apiSlice.injectEndpoints({
         headers: {
           ...(country_id && { "X-COUNTRY": country_id }),
         },
-        validateStatus: (response, result) =>
-          result.status == 200 && result.success,
+        validateStatus: (response, result) => result.status == "200" && result.success,
       }),
     }),
   }),

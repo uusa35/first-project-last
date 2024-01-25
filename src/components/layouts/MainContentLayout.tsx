@@ -20,7 +20,7 @@ import ChangePasswordModal from "@/src/components/modals/ChangePasswordModal";
 import { Area } from "@/src/types/queries";
 import { first } from "lodash";
 import { toggleSideMenu } from "@/src/redux/slices/settingSlice";
-import ProductModal from "@/src/components/modals/product/ProductModal";
+// import ProductModal from "@/src/components/modals/product/ProductModal";
 import { hideProductModal } from "@/src/redux/slices/productSlice";
 import { useTranslation } from "react-i18next";
 import dynamic from "next/dynamic";
@@ -28,6 +28,13 @@ import { useCookies } from "react-cookie";
 
 const DynamicAppFooter = dynamic(
   () => import("@/components/footer/AppFooter"),
+  {
+    ssr: false,
+  }
+);
+
+const DyanamicProductModal = dynamic(
+  () => import("@/src/components/modals/product/ProductModal"),
   {
     ssr: false,
   }
@@ -127,7 +134,8 @@ const ContentLayout: FC<Props> = ({
       <ForgetPasswordModal />
       <VerificationModal />
       <ChangePasswordModal />
-      <ProductModal />
+      {/* <ProductModal /> */}
+      <DyanamicProductModal />
       <div className='relative isolate overflow-hidden pt-14 py-8'>
         {children}
       </div>

@@ -349,6 +349,10 @@
     "flash_offer": "flash offer",
     "policies": "policies",
     "added_to_cart_successfully": "added to cart successfully",
-    "unauthenticated": "please login first or register."
+    "unauthenticated": "please login first or register.",
+    "popular_search": "popular search",
+    "history_search": "history search",
+    "results_not_found": "no results found",
+    "results_not_found_message": "we couldn't find any results. check the speling or try searching again."
   }
 }

@@ -346,6 +346,11 @@
     "flash_offer": "عروض سريعة",
     "policies": "السياسات",
     "added_to_cart_successfully": "تمت الإضافة لعربة التسوق بنجاح",
-    "unauthenticated": "يجب عليك تسجيل الدخول أولا"
+    "unauthenticated": "يجب عليك تسجيل الدخول أولا",
+    "popular_search": "اكثر كلمات البحث",
+    "history_search": "بحث قديم",
+    "browse_picks": "تصفح الموقع",
+    "results_not_found": "لا يوجد نتائح لعملية البحث",
+    "results_not_found_message": "لم يتم العثور على اية نتائج يرجى التأكد من كلمات البحث أو اعادة عملية البحث مرة اخرى."
   }
 }

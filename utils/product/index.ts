@@ -22,3 +22,15 @@ export async function getProduct(id: string) {
     // if (!res.ok) throw notFound();
     return res.json()
 }
+
+
+export async function getSearchItems(search?: string) {
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}search?${search ?? ``}`, {
+        cache: "no-store",
+        headers: await getMainHeaders()
+    });
+    if (!res.ok) throw process.env.NODE_ENV === 'production' ? notFound() : new Error(res.statusText);
+    // if (!res.ok) throw notFound();
+    return res.json()
+}

@@ -14,8 +14,7 @@ export const cartApi = apiSlice.injectEndpoints({
           ...(session_id ? { session_id: session_id } : {}),
           ...(user_id ? { user_id: user_id } : {}),
         },
-        validateStatus: (response, result) =>
-          result.status == 200 && result.success,
+        validateStatus: (response, result) => result.status == "200" && result.success,
       }),
       providesTags: ["cart"],
       keepUnusedDataFor: 0,
@@ -41,8 +40,7 @@ export const cartApi = apiSlice.injectEndpoints({
           quantity,
           type,
         },
-        validateStatus: (response, result) =>
-          result.status == 200 && result.success,
+        validateStatus: (response, result) => result.status == "200" && result.success,
       }),
       invalidatesTags: ["cart"],
     }),
@@ -63,8 +61,7 @@ export const cartApi = apiSlice.injectEndpoints({
           ...(user_id ? { user_id: user_id } : {}),
           cart_item_id,
         },
-        validateStatus: (response, result) =>
-          result.status == 200 && result.success,
+        validateStatus: (response, result) => result.status == "200" && result.success,
       }),
       invalidatesTags: ["cart"],
     }),

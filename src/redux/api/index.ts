@@ -57,8 +57,7 @@ export const apiSlice = createApi({
         url: `contact`,
         body,
         method: "post",
-        validateStatus: (response, result) =>
-          result.status == 200 && result.success,
+        validateStatus: (response, result) => result.status == "200" && result.success,
       }),
     }),
     sendJoinus: builder.query<Setting, ContactusForm>({
@@ -66,14 +65,13 @@ export const apiSlice = createApi({
         url: `restaurant-request`,
         body,
         method: "post",
-        validateStatus: (response, result) =>
-          result.status == 200 && result.success,
+        validateStatus: (response, result) => result.status == "200" && result.success,
       }),
     }),
     getTopSearch: builder.query<AppQueryResult<any>, void>({
       query: () => ({
         url: `search-history`,
-        validateStatus: (response, result) => result.status == 200 && result.success,
+        validateStatus: (response, result) => result.status == "200" && result.success,
       }),
     }),
     getFooterPages: builder.query<AppQueryResult<any>, void>({
@@ -85,7 +83,7 @@ export const apiSlice = createApi({
     getFooterUrls: builder.query<any, void>({
       query: () => ({
         url: `about`,
-        validateStatus: (response, result) => result.status == 200 && result.success,
+        validateStatus: (response, result) => result.status == "200" && result.success,
       }),
     }),
     addToWishList: builder.query<
@@ -105,8 +103,7 @@ export const apiSlice = createApi({
             ? { offer_id: body.item_id }
             : { vendor_id: body.item_id }),
         },
-        validateStatus: (response, result) =>
-          result.status == 200 && result.success,
+        validateStatus: (response, result) => result.status == "200" && result.success,
       }),
     }),
   }),

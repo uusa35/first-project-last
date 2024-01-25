@@ -87,7 +87,6 @@ export const productSlice = createSlice({
         currency,
         vendor_id: vendor.id,
         price: new_price && new_price > 0 ? new_price : price,
-        enabled: true,
         total: id === state.id ? state.total : initialState.total,
         quantity: id === state.id ? state.quantity : initialState.quantity,
         originalGroups: id === state.id ? state.originalGroups : initialState.originalGroups,

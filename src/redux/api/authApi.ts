@@ -17,7 +17,7 @@ export const authApi = apiSlice.injectEndpoints({
         url: `login`,
         body: { ...body, platform: "web", device_token: "1234" },
         method: "post",
-        validateStatus: (response, result) => result.status == "200",
+        validateStatus: (response, result) => result.status == "200" && result.success,
       }),
     }),
     register: builder.query<
@@ -45,7 +45,7 @@ export const authApi = apiSlice.injectEndpoints({
       query: () => ({
         url: `logout`,
         method: "post",
-        validateStatus: (response, result) => result.status == 200,
+        validateStatus: (response, result) => result.status == "200" && result.success,
       }),
     }),
     verify: builder.query<

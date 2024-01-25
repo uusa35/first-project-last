@@ -16,10 +16,9 @@ export default async function NotFound() {
     <ContentLayout>
       <div className='min-h-fit flex flex-col my-[10%] justify-start items-center '>
         <NotFoundImg className='w-[300px] h-auto' />
-        <div className='flex flex-col gap-y-8'>
-          <p>{trans.not_found}</p>
-          <p>{trans.not_found}</p>
-          <Link href={`/${lang}`} className='btn-gray'>
+        <div className='flex flex-col justify-center items-center  gap-y-8'>
+          <p className='capitalize'>{trans.not_found}</p>
+          <Link href={`/${lang}`} className='btn-gray w-32'>
             browse picks
           </Link>
         </div>
