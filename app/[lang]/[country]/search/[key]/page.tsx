@@ -21,6 +21,8 @@ import CategoriesSlider from "@/src/components/sliders/CategoriesSlider";
 import AdsSlider from "@/src/components/sliders/AdsSlider";
 import CustomSlider from "@/src/components/sliders/VendorsSlider";
 import ProductsSlider from "@/src/components/sliders/ProductsSlider";
+import ProductsList from "@/src/components/lists/ProductsList";
+import VendorsList from "@/src/components/lists/VendorsList";
 
 type Props = {
   params: { lang: Locale["lang"]; country: countriesList; key: string };
@@ -33,6 +35,7 @@ export default async function (props: Props) {
     params: { lang, country, key },
     searchParams,
   }: any = props;
+  console.log("key =======>", key);
   const transFn = throttleLimit(() => getDictionary(lang));
   const categoriesFn = throttleLimit(() => getCategories());
   const slidesFn = throttleLimit(() =>
@@ -45,7 +48,7 @@ export default async function (props: Props) {
     AppQueryResult<Slide[]>,
     ElementPagination<any>
   ] = await Promise.all([transFn(), categoriesFn(), slidesFn(), itemsFn()]);
-  console.log("items ------>", items);
+  console.log("items ------>", items?.data?.store?.data);
   console.log(
     "case =====>",
     items?.data?.offer?.count === 0 && items?.data?.store?.count === 0
@@ -59,11 +62,23 @@ export default async function (props: Props) {
       )}
       <div className='px-2 md:px-8'>
         {slides?.data?.length > 0 && <AdsSlider slides={slides.data} />}
-        {items?.data?.offer?.data?.length > 0 && (
+        {items?.data?.offer?.data?.length > 1 && (
           <ProductsSlider products={items?.data?.offer?.data} title={"Top "} />
         )}
-        {items?.data?.store?.data?.length > 0 && (
-          <CustomSlider vendors={items.data.store.data} title={"vendors"} />
+        {items?.data?.offer?.data.length > 0 && (
+          <ProductsList
+            elements={items?.data?.offer?.data}
+            title={trans.offers}
+          />
+        )}
+        {items?.data?.store?.data.length > 1 && (
+          <CustomSlider vendors={items?.data?.store?.data} title={"vendors"} />
+        )}
+        {items?.data?.store?.data.length > 0 && (
+          <VendorsList
+            elements={items?.data?.store?.data}
+            title={trans.vendors}
+          />
         )}
       </div>
     </ContentLayout>

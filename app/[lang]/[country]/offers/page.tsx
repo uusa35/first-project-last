@@ -21,6 +21,8 @@ import CategoriesSlider from "@/src/components/sliders/CategoriesSlider";
 import AdsSlider from "@/src/components/sliders/AdsSlider";
 import CustomSlider from "@/src/components/sliders/VendorsSlider";
 import ProductsSlider from "@/src/components/sliders/ProductsSlider";
+import VendorsList from "@/src/components/lists/VendorsList";
+import ProductsList from "@/src/components/lists/ProductsList";
 
 type Props = {
   params: { lang: Locale["lang"]; country: countriesList; search: string };
@@ -33,7 +35,7 @@ export default async function (props: Props) {
     params: { lang, country },
     searchParams,
   }: any = props;
-  if (!searchParams || !searchParams?.category_id) return notFound();
+  // if (!searchParams || !searchParams?.category_id) return notFound();
   const token: any = cookieStore.get("token");
   const transFn = throttleLimit(() => getDictionary(lang));
   const categoriesFn = throttleLimit(() => getCategories());
@@ -67,11 +69,18 @@ export default async function (props: Props) {
       )}
       <div className='px-2 md:px-8'>
         {slides?.data?.length > 0 && <AdsSlider slides={slides.data} />}
+
         {products?.data?.length > 0 && (
           <ProductsSlider products={products.data} title={"Top "} />
         )}
+        {products?.data?.length > 0 && (
+          <ProductsList elements={products.data} title={trans.offers} />
+        )}
         {vendors?.data?.length > 0 && (
           <CustomSlider vendors={vendors.data} title={"vendors"} />
+        )}
+        {vendors?.data?.length > 0 && (
+          <VendorsList elements={vendors.data} title={trans.vendors} />
         )}
         <Pagination links={products.pagination?.links} />
       </div>

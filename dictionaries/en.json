@@ -20,7 +20,7 @@
     "search": "search",
     "subscriptions": "subscriptions",
     "news": "news",
-    "sponsors": "sponsors",
+    "vendors": "vendors",
     "sponsorships": "sponsorships",
     "gallery": "gallery",
     "subscribers": "subscribers",
@@ -352,6 +352,7 @@
     "unauthenticated": "please login first or register.",
     "popular_search": "popular search",
     "history_search": "history search",
+    "browse_picks": "browse picks",
     "results_not_found": "no results found",
     "results_not_found_message": "we couldn't find any results. check the speling or try searching again."
   }
