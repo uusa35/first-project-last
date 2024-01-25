@@ -293,7 +293,10 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
                         }}
                       />
                     </form>
-                    <div className='absolute z-10 w-full py-4 bg-white'>
+                    <div
+                      className={`${
+                        visible ? `absolute` : `hidden`
+                      } z-10 w-full py-4 bg-white`}>
                       <div className='flex w-full flex-col gap-y-2  rounded-lg '>
                         {visible && searchKeys?.data && (
                           <div className='flex flex-col text-black'>
