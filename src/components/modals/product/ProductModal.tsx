@@ -136,7 +136,7 @@ export default function () {
   }, [selections]);
 
   useEffect(() => {
-    if (isSuccess && data?.data) {
+    if (isSuccess && data?.data && enabled) {
       dispatch(setProduct(data?.data));
       reset({
         offer_id: data?.data?.id,
@@ -150,7 +150,7 @@ export default function () {
         dispatch(setProductOriginalGroups(data?.data?.groups));
       }
     }
-  }, [data?.data?.id]);
+  }, [data?.data?.id, enabled]);
 
   const groupElement = (g: any) => {
     switch (g.input_type) {

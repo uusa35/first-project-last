@@ -24,9 +24,8 @@ export async function getProduct(id: string) {
 }
 
 
-export async function getSearchItems(search?: string) {
-
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}search?${search ?? ``}`, {
+export async function getSearchItems(search: string) {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}search?key=${search}`, {
         cache: "no-store",
         headers: await getMainHeaders()
     });

@@ -130,14 +130,13 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
 
   useEffect(() => {
     window.addEventListener("scroll", stickNavbar);
-    document.addEventListener("mousedown", handleDropDown, false);
+
     if (searchParams.has("search")) {
       setSearchValue(searchParams.get("search"));
     } else if (searchParams.has("key")) {
       setSearchValue(searchParams.get("key"));
     }
     return () => {
-      document.removeEventListener("mousedown", handleDropDown, false);
       window.removeEventListener("scroll", stickNavbar);
     };
   }, []);
@@ -173,35 +172,8 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
     dispatch(toggleLoginModal(false));
   };
 
-  let MyCustomButton = forwardRef<HTMLInputElement, any>(function (props, ref) {
-    return (
-      <div>
-        <div className='pointer-events-auto absolute inset-y-0 left-0 flex items-center pl-3'>
-          <MagnifyingGlassIcon
-            className='h-5 w-5 text-gray-400'
-            aria-hidden='true'
-          />
-        </div>
-        <input
-          type='text'
-          name='search'
-          aria-invalid='false'
-          // autocomplete='off'
-          // defaultValue={searchItem}
-          className='input-default ltr:pl-10 rtl:pr-10'
-          placeholder={`${t("search")}`}
-          // onChange={(e) => setSearchItem(e.target.value)}
-          // ref={ref}
-        />
-      </div>
-    );
-  });
-
   const handleChange = (e: any) => {
     setSearchValue(e.target.value);
-    if (!visible) {
-      setVisible(true);
-    }
   };
 
   const handleDropDown = (e: any) => {
@@ -295,7 +267,7 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
                     <form onSubmit={handleSubmit}>
                       <button
                         type='submit'
-                        className='pointer-events-auto absolute inset-y-0 left-0 flex items-center pl-3'>
+                        className='pointer-events-auto absolute inset-y-0 rtl:left-0 ltr:right-0 flex items-center rtl:pl-3 ltr:pr-3'>
                         <MagnifyingGlassIcon
                           className='h-5 w-5 text-gray-400'
                           aria-hidden='true'
@@ -305,9 +277,8 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
                         type='text'
                         name='search'
                         aria-invalid='false'
-                        // autocomplete='off'
                         defaultValue={searchValue}
-                        className='input-default ltr:pl-10 rtl:pr-10'
+                        className='input-default rtl:pl-10 ltr:pr-10'
                         placeholder={`${t("search")}`}
                         value={searchValue}
                         onChange={handleChange}
@@ -316,13 +287,12 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
                           setVisible(true);
                           // };
                         }}
+                        onBlur={() => {
+                          setTimeout(() => setVisible(false), 1000);
+                        }}
                       />
                     </form>
-                    <div
-                      // aria-expanded={false}
-                      // focus={false}
-                      ref={dropdownRef}
-                      className='absolute z-10 w-full py-4 bg-white'>
+                    <div className='absolute z-10 w-full py-4 bg-white'>
                       <div className='flex w-full flex-col gap-y-2  rounded-lg '>
                         {visible && searchKeys?.data && (
                           <div className='flex flex-col text-black'>
@@ -331,7 +301,6 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
                             </h1>
                             {map(searchKeys.data?.top, (k: any, i: number) => (
                               <Link
-                                // onClick={() => btnRef.current?.click()}
                                 key={i}
                                 className='flex flex-row justify-start items-center gap-x-4 py-2 px-4 hover:bg-gray-50'
                                 href={`${appLinks.search(
@@ -357,7 +326,6 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
                                   searchKeys.data?.history,
                                   (k: any, i: number) => (
                                     <Link
-                                      // onClick={() => btnRef.current?.click()}
                                       key={i}
                                       className='flex flex-row justify-start items-center gap-x-4 py-2 px-4 hover:bg-gray-50'
                                       href={`${appLinks.search(

@@ -18,8 +18,8 @@ export const appLinks = {
         `/${lang}/terms`,
     offers: (lang: Locale['lang'], country: countriesList, search?: string) =>
         `/${lang}/${country}/offers?${search}`,
-    search: (lang: Locale['lang'], country: countriesList, search?: string) =>
-        `/${lang}/${country}/search?key=${search}`,
+    search: (lang: Locale['lang'], country: countriesList, search: string) =>
+        `/${lang}/${country}/search/${search}`,
     offer: (lang: Locale['lang'], country: countriesList, id: string, slug?: string) =>
         `/${lang}/${country}/offer/${id}?slug=${slug ? addDashs(slug) : ``}`,
     vendors: (lang: Locale['lang'], country: countriesList, search?: string) =>

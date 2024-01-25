@@ -23,14 +23,14 @@ import CustomSlider from "@/src/components/sliders/VendorsSlider";
 import ProductsSlider from "@/src/components/sliders/ProductsSlider";
 
 type Props = {
-  params: { lang: Locale["lang"]; country: countriesList; search: string };
+  params: { lang: Locale["lang"]; country: countriesList; key: string };
   searchParams: { [key: string]: string } | string;
 };
 
 export default async function (props: Props) {
   const cookieStore = cookies();
   const {
-    params: { lang, country },
+    params: { lang, country, key },
     searchParams,
   }: any = props;
   const transFn = throttleLimit(() => getDictionary(lang));
@@ -38,21 +38,19 @@ export default async function (props: Props) {
   const slidesFn = throttleLimit(() =>
     getSlides(`category_id=${searchParams?.category_id}&screen_type=category`)
   );
-  const itemsFn = throttleLimit(() =>
-    getSearchItems(convertSearchParamsToString(searchParams))
-  );
+  const itemsFn = throttleLimit(() => getSearchItems(key));
   const [{ trans }, categories, slides, items]: [
     { trans: any },
     AppQueryResult<Category[]>,
     AppQueryResult<Slide[]>,
     ElementPagination<any>
   ] = await Promise.all([transFn(), categoriesFn(), slidesFn(), itemsFn()]);
-
-  if (
-    (items?.data?.offer?.count === 0 && items?.data?.store?.count === 0) ||
-    !searchParams ||
-    !searchParams.key
-  )
+  console.log("items ------>", items);
+  console.log(
+    "case =====>",
+    items?.data?.offer?.count === 0 && items?.data?.store?.count === 0
+  );
+  if (items?.data?.offer?.count === 0 && items?.data?.store?.count === 0)
     return notFound();
   return (
     <ContentLayout showMiddleNav={true}>
