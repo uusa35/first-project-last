@@ -35,7 +35,6 @@ export default async function ({
   const { logo, store_name, description, image, category, favorite } =
     vendor.data.vendor;
 
-  console.log("the vendor====>", vendor.data);
   return (
     <ContentLayout showMiddleNav={true}>
       <div className='mt-8 px-4'>
