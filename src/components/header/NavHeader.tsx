@@ -130,11 +130,12 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
 
   useEffect(() => {
     window.addEventListener("scroll", stickNavbar);
-
     if (searchParams.has("search")) {
       setSearchValue(searchParams.get("search"));
     } else if (searchParams.has("key")) {
       setSearchValue(searchParams.get("key"));
+    } else if (params?.key) {
+      setSearchValue(params?.key);
     }
     return () => {
       window.removeEventListener("scroll", stickNavbar);
@@ -256,7 +257,7 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
                   {t("delivery")}
                 </button>
               </div>
-              {area.id !== 0 && <AreaDropDown />}
+              {area.id !== 0 && orderType !== "pickup" && <AreaDropDown />}
             </div>
           </div>
           <div className='flex sm:flex-1 sm:justify-end gap-x-4 '>

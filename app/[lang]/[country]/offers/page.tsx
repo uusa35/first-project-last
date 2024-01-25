@@ -70,15 +70,15 @@ export default async function (props: Props) {
       <div className='px-2 md:px-8'>
         {slides?.data?.length > 0 && <AdsSlider slides={slides.data} />}
 
-        {products?.data?.length > 0 && (
+        {/* {products?.data?.length > 0 && (
           <ProductsSlider products={products.data} title={"Top "} />
-        )}
+        )} */}
         {products?.data?.length > 0 && (
           <ProductsList elements={products.data} title={trans.offers} />
         )}
-        {vendors?.data?.length > 0 && (
+        {/* {vendors?.data?.length > 0 && (
           <CustomSlider vendors={vendors.data} title={"vendors"} />
-        )}
+        )} */}
         {vendors?.data?.length > 0 && (
           <VendorsList elements={vendors.data} title={trans.vendors} />
         )}

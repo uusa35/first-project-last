@@ -53,7 +53,11 @@ export default async function (props: Props) {
     "case =====>",
     items?.data?.offer?.count === 0 && items?.data?.store?.count === 0
   );
-  if (items?.data?.offer?.count === 0 && items?.data?.store?.count === 0)
+  if (
+    items?.data?.offer?.count === 0 &&
+    items?.data?.store?.count === 0 &&
+    !key
+  )
     return notFound();
   return (
     <ContentLayout showMiddleNav={true}>
@@ -62,18 +66,18 @@ export default async function (props: Props) {
       )}
       <div className='px-2 md:px-8'>
         {slides?.data?.length > 0 && <AdsSlider slides={slides.data} />}
-        {items?.data?.offer?.data?.length > 1 && (
+        {/* {items?.data?.offer?.data?.length > 1 && (
           <ProductsSlider products={items?.data?.offer?.data} title={"Top "} />
-        )}
+        )} */}
         {items?.data?.offer?.data.length > 0 && (
           <ProductsList
             elements={items?.data?.offer?.data}
             title={trans.offers}
           />
         )}
-        {items?.data?.store?.data.length > 1 && (
+        {/* {items?.data?.store?.data.length > 1 && (
           <CustomSlider vendors={items?.data?.store?.data} title={"vendors"} />
-        )}
+        )} */}
         {items?.data?.store?.data.length > 0 && (
           <VendorsList
             elements={items?.data?.store?.data}

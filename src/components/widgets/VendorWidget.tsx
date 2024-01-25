@@ -10,12 +10,14 @@ import Delivery from "@/appIcons/landing/delivery.svg";
 import Clock from "@/appIcons/landing/clock.svg";
 import Star from "@/appIcons/landing/star.svg";
 import { useParams } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   vendor: User;
 };
 
 export default function ({ vendor }: Props) {
+  const { t } = useTranslation("trans");
   const params: { lang: Locale["lang"]; country?: countriesList } | any =
     useParams!();
   const { lang } = params;
@@ -49,15 +51,15 @@ export default function ({ vendor }: Props) {
             {vendor.status ? (
               vendor.status === "open" ? (
                 <p className='rounded-xl px-2 py-1 bg-picks-dark h-fit text-xs font-light text-white'>
-                  Open Now
+                  {t("open_now")}
                 </p>
               ) : vendor.status === "closed" ? (
                 <p className='rounded-xl px-2 py-1 bg-[#F04438] h-fit text-xs font-light text-white'>
-                  Closes Now
+                  {t("closed_now")}
                 </p>
               ) : (
                 <p className='rounded-xl px-2 py-1 bg-[#FF8A59] h-fit text-xs font-light text-white'>
-                  Not Available
+                  {t("not_available")}
                 </p>
               )
             ) : null}
@@ -76,9 +78,9 @@ export default function ({ vendor }: Props) {
         <p className='card-title'>
           {vendor.store_name}{" "}
           {vendor.rating ? (
-            <p className="flex items-center gap-x-1 text-xs mt-1">
+            <p className='flex items-center gap-x-1 text-xs mt-1'>
               <Star />
-              <span className="mt-1">{vendor.rating}</span>
+              <span className='mt-1'>{vendor.rating}</span>
             </p>
           ) : null}
         </p>
