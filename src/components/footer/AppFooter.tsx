@@ -26,9 +26,7 @@ export default function (): React.ReactNode {
   } = useAppSelector((state) => state);
   const { data: pages } = useGetFooterPagesQuery();
   const { data: footerUrls } = useGetFooterUrlsQuery();
-  const { data: areas, isSuccess: areasSuccess } = useGetAreasQuery(undefined, {
-    refetchOnMountOrArgChange: true,
-  });
+  const { data: areas, isSuccess: areasSuccess } = useGetAreasQuery(undefined);
 
   return (
     <footer
@@ -166,7 +164,7 @@ export default function (): React.ReactNode {
                           <Link
                             href={appLinks.home(lang, params?.country)}
                             className='text-gray-300 hover:text-white capitalize'>
-                            {item.name}
+                            {item.web_name[lang]}
                           </Link>
                         </li>
                       ))}
