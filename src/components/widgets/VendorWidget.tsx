@@ -9,7 +9,7 @@ import FavouriteWidget from "./FavouriteWidget";
 import Delivery from "@/appIcons/landing/delivery.svg";
 import Clock from "@/appIcons/landing/clock.svg";
 import Star from "@/appIcons/landing/star.svg";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 
 type Props = {
@@ -21,60 +21,52 @@ export default function ({ vendor }: Props) {
   const params: { lang: Locale["lang"]; country?: countriesList } | any =
     useParams!();
   const { lang } = params;
+  const router = useRouter();
+
+  const handleClick = () => {
+    return router.push(
+      appLinks.vendor(lang, params?.country, vendor.id.toString(), vendor.name)
+    );
+  };
   return (
     <div className='relative rtl:text-right ltr:text-left'>
-      <Link
-        href={appLinks.vendor(
-          lang,
-          params?.country,
-          vendor.id.toString(),
-          vendor.name
-        )}>
+      <div onClick={handleClick}>
         <Image
           alt={vendor.name || ""}
           src={vendor.image}
           width={1000}
           height={1000}
-          className='w-full h-auto aspect-[2/1] object-cover rounded-lg'
+          className='  w-full h-auto aspect-[2/1] object-cover rounded-lg'
         />
-      </Link>
+      </div>
 
       <div className='w-full h-auto aspect-[2/1] absolute bg-black bg-opacity-20 top-0 bottom-0 left-0 right-0 rounded-lg py-3 px-2'>
         <div className='flex justify-between items-center'>
-          <Link
-            href={appLinks.vendor(
-              lang,
-              params?.country,
-              vendor.id.toString(),
-              vendor.name
-            )}>
+          <div onClick={handleClick} className=' '>
             {vendor.status ? (
               vendor.status === "open" ? (
-                <p className='rounded-xl px-2 py-1 bg-picks-dark h-fit text-xs font-light text-white'>
+                <p className='rounded-xl px-2 py-1 bg-picks-dark h-fit text-xs font-light text-white capitalize'>
                   {t("open_now")}
                 </p>
               ) : vendor.status === "closed" ? (
-                <p className='rounded-xl px-2 py-1 bg-[#F04438] h-fit text-xs font-light text-white'>
+                <p className='rounded-xl px-2 py-1 bg-[#F04438] h-fit text-xs font-light text-white capitalize'>
                   {t("closed_now")}
                 </p>
               ) : (
-                <p className='rounded-xl px-2 py-1 bg-[#FF8A59] h-fit text-xs font-light text-white'>
+                <p className='rounded-xl px-2 py-1 bg-[#FF8A59] h-fit text-xs font-light text-white capitalize'>
                   {t("not_available")}
                 </p>
               )
             ) : null}
-          </Link>
-          <FavouriteWidget isFav={vendor.favorite} />
+          </div>
+          <FavouriteWidget
+            isFav={vendor.favorite}
+            id={vendor.id}
+            type={"vendor"}
+          />
         </div>
       </div>
-      <Link
-        href={appLinks.vendor(
-          lang,
-          params?.country,
-          vendor.id.toString(),
-          vendor.name
-        )}
-        className='mt-2 space-y-1 '>
+      <div onClick={handleClick} className='mt-2 space-y-1 '>
         <p className='card-title'>
           {vendor.store_name}{" "}
           {vendor.rating ? (
@@ -93,7 +85,6 @@ export default function ({ vendor }: Props) {
                 <p>{vendor.delivery_time}</p>
               </div>
             ) : null}
-
             {vendor.delivery_fees ? (
               <div className='flex gap-x-1'>
                 <Delivery />
@@ -102,7 +93,7 @@ export default function ({ vendor }: Props) {
             ) : null}
           </div>
         ) : null}
-      </Link>
+      </div>
     </div>
   );
 }

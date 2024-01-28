@@ -55,18 +55,7 @@ export default function ({ vendors, title }: Props) {
           ref={(c) => (refSlider.current = c)}
           rtl={lang === "ar"}>
           {vendors &&
-            vendors.map((itm, i) => (
-              <Link
-                key={i}
-                href={appLinks.vendor(
-                  lang,
-                  params?.country,
-                  itm.id.toString(),
-                  itm.store_name_en
-                )}>
-                <VendorWidget vendor={itm} />
-              </Link>
-            ))}
+            vendors.map((itm, i) => <VendorWidget vendor={itm} key={i} />)}
         </Slider>
       </div>
     </div>

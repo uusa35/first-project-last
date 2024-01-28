@@ -354,6 +354,7 @@
     "history_search": "history search",
     "browse_picks": "browse picks",
     "results_not_found": "no results found",
-    "results_not_found_message": "we couldn't find any results. check the speling or try searching again."
+    "results_not_found_message": "we couldn't find any results. check the speling or try searching again.",
+    "not_available": "not available"
   }
 }

@@ -158,26 +158,27 @@ export default function (): React.ReactNode {
                 <h3 className='text-sm font-medium text-white capitalize'>
                   {t("popular_areas")}
                 </h3>
-                <ul role='list' className='mt-6 space-y-6'>
-                  {params?.country &&
-                    areasSuccess &&
-                    map(take(areas.data, 4), (item: any, i: number) => (
-                      <li key={i} className='text-sm'>
-                        <Link
-                          href={appLinks.home(lang, params?.country)}
-                          className='text-gray-300 hover:text-white capitalize'>
-                          {item.name}
-                        </Link>
-                      </li>
-                    ))}
-                  <li className='text-sm'>
-                    <Link
-                      href={appLinks.home(lang, params?.country)}
-                      className='text-gray-300 hover:text-white capitalize truncate'>
-                      {t("more_areas")}...
-                    </Link>
-                  </li>
-                </ul>
+                {params?.country && (
+                  <ul role='list' className='mt-6 space-y-6'>
+                    {areasSuccess &&
+                      map(take(areas.data, 4), (item: any, i: number) => (
+                        <li key={i} className='text-sm'>
+                          <Link
+                            href={appLinks.home(lang, params?.country)}
+                            className='text-gray-300 hover:text-white capitalize'>
+                            {item.name}
+                          </Link>
+                        </li>
+                      ))}
+                    <li className='text-sm'>
+                      <Link
+                        href={appLinks.home(lang, params?.country)}
+                        className='text-gray-300 hover:text-white capitalize truncate'>
+                        {t("more_areas")}...
+                      </Link>
+                    </li>
+                  </ul>
+                )}
               </div>
             </div>
           </div>
