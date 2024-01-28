@@ -26,7 +26,9 @@ export default function (): React.ReactNode {
   } = useAppSelector((state) => state);
   const { data: pages } = useGetFooterPagesQuery();
   const { data: footerUrls } = useGetFooterUrlsQuery();
-  const { data: areas, isSuccess: areasSuccess } = useGetAreasQuery();
+  const { data: areas, isSuccess: areasSuccess } = useGetAreasQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+  });
 
   return (
     <footer

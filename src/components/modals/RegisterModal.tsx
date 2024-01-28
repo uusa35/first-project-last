@@ -43,7 +43,7 @@ type Inputs = {
   session_id?: string;
 };
 
-export default function () {
+export default function (): React.ReactNode {
   const { t } = useTranslation("trans");
   const {
     appSetting: { showRegisterModal, isLoading },

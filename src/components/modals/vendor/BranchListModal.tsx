@@ -21,7 +21,7 @@ import { appLinks } from "@/src/links";
 type Props = {
   vendor_id: string;
 };
-export default function ({ vendor_id }: Props) {
+export default function ({ vendor_id }: Props): React.ReactNode {
   const { t } = useTranslation("trans");
   const {
     locale: { lang },
