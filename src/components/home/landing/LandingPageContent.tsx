@@ -232,7 +232,6 @@ export default function ({ countries }: Props): React.ReactNode {
         ) : (
           <LoadingSpinner isLoading={!areaSuccess} />
         )}
-
         {/* login */}
         <div className='my-8'>
           <div className='flex items-center gap-x-2'>
@@ -245,7 +244,6 @@ export default function ({ countries }: Props): React.ReactNode {
           </div>
         </div>
       </div>
-
       <div className='bg-white p-2 md:p-10'>
         <DownloadAppSection />
         <AboutUsGetStarted />
