@@ -1,7 +1,6 @@
 "use client";
 import React, { useRef } from "react";
 import Slider from "react-slick";
-import { vendorSliderSettings } from "@/src/constants";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import Link from "next/link";
 import { appLinks } from "@/src/links";
@@ -23,6 +22,46 @@ export default function ({ vendors, title }: Props) {
     useParams!();
   const { lang, country } = params;
   const refSlider = useRef<Slider | null>(null);
+
+  const settings: any = {
+    dots: false,
+    speed: 500,
+    infinite: false,
+    slidesToScroll: 1,
+    arrows: false,
+    responsive: [
+      {
+        breakpoint: 5000,
+        settings: {
+          slidesToShow: 4,
+        },
+      },
+      {
+        breakpoint: 1250,
+        settings: {
+          slidesToShow: 3,
+        },
+      },
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
+  };
 
   const RenderArrows = () => {
     return (
@@ -51,7 +90,7 @@ export default function ({ vendors, title }: Props) {
       </div>
       <div>
         <Slider
-          {...vendorSliderSettings}
+          {...settings}
           ref={(c) => (refSlider.current = c)}
           rtl={lang === "ar"}>
           {vendors &&
