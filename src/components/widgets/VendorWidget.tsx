@@ -40,7 +40,7 @@ export default function ({ vendor }: Props) {
         />
       </div>
 
-      <div className='w-full h-auto aspect-[2/1] absolute bg-black bg-opacity-20 top-0 bottom-0 left-0 right-0 rounded-lg py-3 px-2'>
+      <div className='w-full h-auto aspect-[2/1] absolute bg-black bg-opacity-20 top-0 bottom-0  rounded-lg py-3 px-2'>
         <div className='flex justify-between items-center'>
           <div onClick={handleClick} className=' '>
             {vendor.status ? (

@@ -44,33 +44,30 @@ export default function OfferWidget({ product }: Props): React.ReactNode {
             className='w-full h-auto aspect-[2/1] object-cover rounded-lg'
           />
         </div>
-        <div className='w-full h-auto aspect-[2/1] absolute bg-black bg-opacity-20 top-0 bottom-0 rounded-lg py-3 px-2'>
-          <div className='flex flex-col justify-between items-end h-[80%]'>
-            <div className='flex justify-between items-center w-full'>
-              <div className='relative ltr:left-0 rtl:right-0'>
-                <div>
-                  {/* timer */}
-                  {/* <p>{product.}</p> */}
-                </div>
-                <div>
-                  <p className='rounded-full bg-[#FF8A59] text-xs text-white px-2 py-px pt-1'>
-                    {product.percentage}
-                  </p>
-                </div>
+        <div className='w-full h-auto aspect-[2/1] absolute bg-black bg-opacity-20 top-0 bottom-0  rounded-lg py-3 px-2'>
+          <div className='relative flex justify-between items-center'>
+            <div className='border-4 border-green-500 absolute right-0'>
+              <div>
+                {/* timer */}
+                {/* <p>{product.}</p> */}
               </div>
-              <FavouriteWidget
-                isFav={product.favorite}
-                id={product.id}
-                type={"offer"}
-              />
+              <div>
+                <p className='rounded-full bg-[#FF8A59] text-xs text-white px-2 py-px pt-1'>
+                  {product.percentage}
+                </p>
+              </div>
             </div>
-
-            {/* offer type */}
-            <div className='flex items-center gap-x-1 rounded-full bg-[#232323] text-xs text-white px-2 py-px pt-1 w-fit'>
-              <Flash />
-              <p>{t("flash_offer")}</p>
-            </div>
+            <FavouriteWidget
+              isFav={product.favorite}
+              id={product.id}
+              type={"offer"}
+            />
           </div>
+        </div>
+        {/* offer type */}
+        <div className='flex items-center gap-x-1 rounded-full bg-[#232323] text-xs text-white px-2 py-px pt-1 w-fit'>
+          <Flash />
+          <p>{t("flash_offer")}</p>
         </div>
         <div onClick={() => handleClick(product.id)}>
           <div className='bg-white -mt-[10%] rounded-lg p-3 relative w-full space-y-2'>
