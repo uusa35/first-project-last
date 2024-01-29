@@ -23,6 +23,8 @@ import AddresseIcon from "@/appIcons/menu/addresses.svg";
 import FavoriteIcon from "@/appIcons/menu/favorites.svg";
 import LogoutIcon from "@/appIcons/menu/logout.svg";
 import UserIcon from "@/appIcons/menu/user.svg";
+import BarsWhite from "@/appIcons/menu/bars_white.svg";
+import BarsBlack from "@/appIcons/menu/bars_black.svg";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import Link from "next/link";
 import { useParams, usePathname, useSearchParams } from "next/navigation";
@@ -234,18 +236,11 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
                 className='-m-2.5 hidden sm:inline-flex items-center justify-center rounded-md p-2.5 text-gray-400'
                 onClick={() => dispatch(toggleSideMenu())}>
                 <span className='sr-only'>Open main menu</span>
-                <svg
-                  className='h-6 w-6 cursor-pointer'
-                  width='24'
-                  height='24'
-                  viewBox='0 0 24 24'
-                  fill='none'
-                  xmlns='http://www.w3.org/2000/svg'>
-                  <path
-                    d='M23.0008 4H1V7H23.0008V4ZM23.0008 11.0008H1V14.0008H23.0008V11.0008ZM1 18.0004H23.0008V21.0004H1V18.0004Z'
-                    fill='#0E1114'
-                  />
-                </svg>
+                {isSticky ? (
+                  <BarsBlack className='w-8 h-8' />
+                ) : (
+                  <BarsWhite className='w-8 h-8' />
+                )}
               </button>
             </div>
             <Link
@@ -257,13 +252,13 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
                   {isSticky ? (
                     <LogoDark className='hidden sm:flex h-8 w-auto sm:w-36 ' />
                   ) : (
-                    <LogoLight className='hidden:sm flex h-8 w-auto sm:w-36 ' />
+                    <LogoLight className='hidden sm:flex h-8 w-auto sm:w-36 ' />
                   )}
                   <LogoSmall className='flex sm:hidden h-10 w-auto' />
                 </>
               ) : (
                 <>
-                  <LogoDark className='hidden sm:flex h-8 w-auto sm:w-36 ' />
+                  <LogoDark className='flex h-8 w-auto sm:w-36 ' />
                   <LogoSmall className='flex sm:hidden h-10 w-auto' />
                 </>
               )}
@@ -271,8 +266,8 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
           </div>
           <div
             className={`hidden ${
-              showMiddleNav && `lg:flex`
-            } lg:gap-x-12 overflow-hidden`}>
+              showMiddleNav && `absolute bottom-10 md:flex`
+            } border-4 border-pink-800 lg:gap-x-12 overflow-hidden`}>
             <div className='flex flex-row justify-evenly items-start gap-x-2'>
               <div className='flex flex-row p-1 rounded-md bg-gray-100 '>
                 <button
@@ -441,7 +436,7 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
                 </div>
               </div>
             ) : (
-              <>
+              <div className='hidden md:flex gap-x-4'>
                 {isNull(token) && (
                   <>
                     <button
@@ -456,8 +451,9 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
                     </button>
                   </>
                 )}
-              </>
+              </div>
             )}
+            {/* change lang */}
             <button
               onClick={() => handleClick(lang === "ar" ? "en" : "ar")}
               className='hidden sm:flex text-sm font-semibold pt-2'>
@@ -466,6 +462,19 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
                 <div>{lang === "ar" ? t("english") : t("arabic")}</div>
               </div>
             </button>
+            <div className=''>
+              <button
+                type='button'
+                className='-m-2.5 inline-flex sm:hidden items-center justify-center rounded-md p-2.5'
+                onClick={() => dispatch(toggleSideMenu())}>
+                <span className='sr-only'>Open main menu</span>
+                {isSticky ? (
+                  <BarsBlack className='w-8 h-8' />
+                ) : (
+                  <BarsWhite className='w-8 h-8' />
+                )}
+              </button>
+            </div>
           </div>
         </nav>
         {/* mobile nav */}

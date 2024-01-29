@@ -46,7 +46,7 @@ export default function OfferWidget({ product }: Props): React.ReactNode {
         </div>
         <div className='w-full h-auto aspect-[2/1] absolute bg-black bg-opacity-20 top-0 bottom-0  rounded-lg py-3 px-2'>
           <div className='relative flex justify-between items-center'>
-            <div className='border-4 border-green-500 absolute right-0'>
+            <div className=' absolute right-0'>
               <div>
                 {/* timer */}
                 {/* <p>{product.}</p> */}

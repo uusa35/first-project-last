@@ -50,7 +50,11 @@ export default function ({ product }: Props) {
                   </p>
                 </div>
               </div>
-              <FavouriteWidget isFav={product.favorite} />
+              <FavouriteWidget
+                isFav={product.favorite}
+                id={product.id}
+                type='offer'
+              />
             </div>
 
             {/* offer type */}
