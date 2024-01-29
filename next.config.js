@@ -23,7 +23,63 @@ const nextConfig = {
     ];
   },
   async redirects() {
-    return [];
+    return [
+      {
+        source: "/:lang/:path/orders",
+        missing: [
+          {
+            type: "cookie",
+            key: "NEXT_AUTH",
+          },
+        ],
+        permanent: false,
+        destination: "/:lang/:path",
+      },
+      {
+        source: "/:lang/:path/account",
+        missing: [
+          {
+            type: "cookie",
+            key: "NEXT_AUTH",
+          },
+        ],
+        permanent: false,
+        destination: "/:lang/:path",
+      },
+      {
+        source: "/:lang/:path/favorites",
+        missing: [
+          {
+            type: "cookie",
+            key: "NEXT_AUTH",
+          },
+        ],
+        permanent: false,
+        destination: "/:lang/:path",
+      },
+      {
+        source: "/:lang/:path/promotions",
+        missing: [
+          {
+            type: "cookie",
+            key: "NEXT_AUTH",
+          },
+        ],
+        permanent: false,
+        destination: "/:lang/:path",
+      },
+      {
+        source: "/:lang/:path/addresses",
+        missing: [
+          {
+            type: "cookie",
+            key: "NEXT_AUTH",
+          },
+        ],
+        permanent: false,
+        destination: "/:lang/:path",
+      },
+    ];
   },
   async headers() {
     return [];

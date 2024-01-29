@@ -352,6 +352,9 @@
     "browse_picks": "تصفح الموقع",
     "results_not_found": "لا يوجد نتائح لعملية البحث",
     "results_not_found_message": "لم يتم العثور على اية نتائج يرجى التأكد من كلمات البحث أو اعادة عملية البحث مرة اخرى.",
-    "not_available": "غير متاح"
+    "not_available": "غير متاح",
+    "login_or_signup_to_continue": "اشترك الآن او سجل دخولك لحفظ بياناتك",
+    "discover_the_new_picks_app": "اكتشف تطبيق بيكس الجديد",
+    "download_now": "حمل الآن"
   }
 }

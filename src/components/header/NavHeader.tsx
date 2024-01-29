@@ -69,7 +69,6 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
   const { t } = useTranslation("trans");
   const locales: Locale["lang"][] = ["ar", "en"];
   const {
-    locale,
     area,
     country: { country_code },
     appSetting: { sideMenuOpen },
@@ -114,6 +113,7 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
     { name: t("joinus"), href: appLinks.joinus(lang) },
     { name: t("faqs"), href: appLinks.faqs(lang) },
   ];
+
   const handleClick = (item: Locale["lang"]) => {
     return router.push(
       `${changePathName(lang, item, pathName)}?${
@@ -190,7 +190,7 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
 
   return (
     <div>
-      <header className={`${stickyClass}  top-0 z-50 ${globalMaxWidth} w-full`}>
+      <header className={`${stickyClass} top-0 z-50 ${globalMaxWidth} w-full`}>
         <nav
           className=' flex items-center justify-between p-6 lg:px-8 '
           aria-label='Global'>
@@ -481,10 +481,10 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
                   ) : (
                     <>
                       {isNull(token) && (
-                        <div className='flex flex-col gap-y-4'>
-                          <h2>Welcome Back,</h2>
-                          <p className='text-sm text-gray-500 leading-3 mb-2'>
-                            lorem ipsum dolor sit amet, consectetur adip
+                        <div className='flex flex-col gap-y-4 capitalize'>
+                          <h2>{t("welcome_back")}</h2>
+                          <p className='text-sm text-gray-500 leading-6 mb-2'>
+                            {t("login_or_signup_to_continue")}
                           </p>
                           <button
                             className='btn-default'
@@ -533,7 +533,10 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
                             className='text-gray-300 hover:text-white'>
                             <LogoOnly className='w-[4vh] h-[5vh]' />
                           </Link>
-                          <p>lorem ipsum dolor sit amet, consectetur adip</p>
+                          <div className='capitalize'>
+                            <p>{t("discover_the_new_picks_app")}</p>
+                            <p>{t("download_now")}</p>
+                          </div>
                         </li>
                         <li className='text-sm'>
                           <Link

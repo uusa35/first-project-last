@@ -20,8 +20,8 @@ export default function (): React.ReactNode {
   const { t } = useTranslation("trans");
   const params: { lang: Locale["lang"]; country?: countriesList } | any =
     useParams!();
+  const { lang } = params;
   const {
-    locale: { lang },
     country: { country_code },
   } = useAppSelector((state) => state);
   const { data: pages } = useGetFooterPagesQuery();
