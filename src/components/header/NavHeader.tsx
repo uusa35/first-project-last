@@ -203,6 +203,7 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
     dispatch(resetAuthentication());
     dispatch(showWarningToastMessage({ content: t("logout") }));
     dispatch(toggleLoginModal(false));
+    router.replace(appLinks.home(lang, country_code));
   };
 
   const handleChange = (e: any) => {
@@ -309,19 +310,20 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
                       <input
                         type='text'
                         name='search'
-                        aria-invalid='false'
+                        autoComplete='off'
+                        autoCorrect='off'
+                        autoCapitalize='off'
+                        spellCheck='false'
                         defaultValue={searchValue}
                         className='input-default rtl:pl-10 ltr:pr-10'
                         placeholder={`${t("search")}`}
                         value={searchValue}
                         onChange={handleChange}
                         onFocus={() => {
-                          // if (searchValue) {
                           setVisible(true);
-                          // };
                         }}
                         onBlur={() => {
-                          setTimeout(() => setVisible(false), 1000);
+                          setTimeout(() => setVisible(false), 500);
                         }}
                       />
                     </form>
@@ -491,7 +493,7 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
                   </button>
                 </div>
                 <div className='flex items-center justify-between'>
-                  {token ? (
+                  {isAuth ? (
                     <div>
                       <div className='flex items-center gap-x-4  py-3 text-sm font-semibold leading-6 text-gray-900 w-full'>
                         <UserIcon className='w-14 h-14' />
@@ -507,26 +509,22 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
                       <div></div>
                     </div>
                   ) : (
-                    <>
-                      {isNull(token) && (
-                        <div className='flex flex-col gap-y-4 capitalize'>
-                          <h2>{t("welcome_back")}</h2>
-                          <p className='text-sm text-gray-500 leading-6 mb-2'>
-                            {t("login_or_signup_to_continue")}
-                          </p>
-                          <button
-                            className='btn-default'
-                            onClick={() => dispatch(toggleLoginModal())}>
-                            {t("login")}
-                          </button>
-                          <button
-                            className='btn-transparent'
-                            onClick={() => dispatch(toggleRegisterModal())}>
-                            {t("signup")}
-                          </button>
-                        </div>
-                      )}
-                    </>
+                    <div className='flex flex-col gap-y-4 capitalize'>
+                      <h2>{t("welcome_back")}</h2>
+                      <p className='text-sm text-gray-500 leading-6 mb-2'>
+                        {t("login_or_signup_to_continue")}
+                      </p>
+                      <button
+                        className='btn-default'
+                        onClick={() => dispatch(toggleLoginModal())}>
+                        {t("login")}
+                      </button>
+                      <button
+                        className='btn-transparent'
+                        onClick={() => dispatch(toggleRegisterModal())}>
+                        {t("signup")}
+                      </button>
+                    </div>
                   )}
                 </div>
                 <div className='mt-6 flow-root '>
