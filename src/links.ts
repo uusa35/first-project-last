@@ -16,6 +16,16 @@ export const appLinks = {
         `/${lang}/faqs`,
     terms: (lang: Locale['lang']) =>
         `/${lang}/terms`,
+    orders: (lang: Locale['lang'], country: countriesList) =>
+        `/${lang}/${country}/orders`,
+    account: (lang: Locale['lang'], country: countriesList) =>
+        `/${lang}/${country}/account`,
+    favorites: (lang: Locale['lang'], country: countriesList) =>
+        `/${lang}/${country}/favorites`,
+    addresses: (lang: Locale['lang'], country: countriesList) =>
+        `/${lang}/${country}/addresses`,
+    promotions: (lang: Locale['lang'], country: countriesList) =>
+        `/${lang}/${country}/promotions`,
     offers: (lang: Locale['lang'], country: countriesList, search?: string) =>
         `/${lang}/${country}/offers?${search ?? ``}`,
     search: (lang: Locale['lang'], country: countriesList, search: string) =>

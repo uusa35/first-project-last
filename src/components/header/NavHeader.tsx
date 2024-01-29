@@ -1,5 +1,5 @@
 "use client";
-import {
+import React, {
   Fragment,
   forwardRef,
   useContext,
@@ -17,6 +17,11 @@ import {
   MagnifyingGlassIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
+import PromotionIcon from "@/appIcons/menu/promotions.svg";
+import AccountIcon from "@/appIcons/menu/account.svg";
+import AddresseIcon from "@/appIcons/menu/addresses.svg";
+import FavoriteIcon from "@/appIcons/menu/favorites.svg";
+import LogoutIcon from "@/appIcons/menu/logout.svg";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import Link from "next/link";
 import { useParams, usePathname, useSearchParams } from "next/navigation";
@@ -48,7 +53,7 @@ import AreaDropDown from "@/components/home/AreaDropDown";
 import GooglePlay from "@/appIcons/landing/download_google_play.svg";
 import AppleStore from "@/appIcons/landing/download_apple_store.svg";
 import AppGallery from "@/appIcons/landing/download_app_gallery.svg";
-import { ShoppingBag } from "@mui/icons-material";
+import { PersonRemoveAlt1Outlined, ShoppingBag } from "@mui/icons-material";
 import { ShoppingBagIcon } from "@heroicons/react/20/solid";
 import CartMenu from "@/components/header/CartMenu";
 import { Popover } from "@headlessui/react";
@@ -112,6 +117,32 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
     { name: t("contactus"), href: appLinks.contactus(lang) },
     { name: t("joinus"), href: appLinks.joinus(lang) },
     { name: t("faqs"), href: appLinks.faqs(lang) },
+  ];
+  const authNavigation: {
+    name: string;
+    href: string;
+    icon: React.ReactNode;
+  }[] = [
+    {
+      name: t("account"),
+      href: appLinks.account(lang, country_code),
+      icon: <AccountIcon className='w-6 h-6' />,
+    },
+    {
+      name: t("addresses"),
+      href: appLinks.addresses(lang, country_code),
+      icon: <AddresseIcon className='w-6 h-6' />,
+    },
+    {
+      name: t("favorites"),
+      href: appLinks.favorites(lang, country_code),
+      icon: <FavoriteIcon className='w-6 h-6' />,
+    },
+    {
+      name: t("promotions"),
+      href: appLinks.promotions(lang, country_code),
+      icon: <PromotionIcon className='w-6 h-6' />,
+    },
   ];
 
   const handleClick = (item: Locale["lang"]) => {
@@ -188,6 +219,7 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
     }
   };
 
+  console.log("isAuth", isAuth);
   return (
     <div>
       <header className={`${stickyClass} top-0 z-50 ${globalMaxWidth} w-full`}>
@@ -504,14 +536,32 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
                 <div className='mt-6 flow-root '>
                   <div className='-my-6 '>
                     <div className='py-6 '>
-                      {navigation.map((item, i: number) => (
-                        <Link
-                          key={i}
-                          href={item.href}
-                          className='-mx-3 block border-b border-gray-200 p-3 py-4  text-base font-semibold leading-7 text-black hover:bg-gray-100 capitalize'>
-                          {item.name}
-                        </Link>
-                      ))}
+                      {!isAuth
+                        ? navigation.map((item, i: number) => (
+                            <Link
+                              key={i}
+                              href={item.href}
+                              className='-mx-3 block border-b border-gray-200 p-3 py-4  text-base font-semibold leading-7 text-black hover:bg-gray-100 capitalize'>
+                              {item.name}
+                            </Link>
+                          ))
+                        : authNavigation.map((item, i: number) => (
+                            <Link
+                              key={i}
+                              href={item.href}
+                              className='flex flex-row justify-start items-center space-x-4 -mx-3 border-b border-gray-200 p-3 py-4  text-base font-semibold leading-7 text-black hover:bg-gray-100 capitalize'>
+                              {item.icon}
+                              <span>{item.name}</span>
+                            </Link>
+                          ))}
+                      {isAuth && (
+                        <button
+                          onClick={handleLogout}
+                          className='flex flex-row justify-start items-center w-[107%] space-x-4 -mx-3 border-b border-gray-200 p-3 py-4  text-base font-semibold leading-7 text-black hover:bg-gray-100 capitalize'>
+                          <LogoutIcon className='w-6 h-6' />
+                          <span>{t("logout")}</span>
+                        </button>
+                      )}
                     </div>
                     <div className='py-6 '>
                       <Link
