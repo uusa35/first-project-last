@@ -358,6 +358,10 @@
     "not_available": "not available",
     "login_or_signup_to_continue": "login or Sign up to continue to your account data",
     "discover_the_new_picks_app": "discover the new Picks",
-    "download_now": "download now"
+    "download_now": "download now",
+    "favorites": "favorites",
+    "account": "account",
+    "promotions": "promotions",
+    "addresses": "addresses"
   }
 }

@@ -52,6 +52,7 @@ const ContentLayout: FC<Props> = ({
   const {
     locale,
     country: { id: country_id },
+    appSetting: { isLoading },
   } = useAppSelector((state) => state);
   const params: { lang: Locale["lang"]; country?: countriesList } | any =
     useParams!();
@@ -134,7 +135,10 @@ const ContentLayout: FC<Props> = ({
       <VerificationModal />
       <ChangePasswordModal />
       <DyanamicProductModal />
-      <div className='relative isolate overflow-hidden pt-14 py-8'>
+      <div
+        className={`relative isolate overflow-hidden ${
+          !isLoading && `mt-[8vh] sm:mt-[5vh]`
+        } py-8 `}>
         {children}
       </div>
       <DynamicAppFooter />

@@ -355,6 +355,10 @@
     "not_available": "غير متاح",
     "login_or_signup_to_continue": "اشترك الآن او سجل دخولك لحفظ بياناتك",
     "discover_the_new_picks_app": "اكتشف تطبيق بيكس الجديد",
-    "download_now": "حمل الآن"
+    "download_now": "حمل الآن",
+    "favorites": "المفضلة",
+    "account": "الحساب",
+    "promotions": "العروض",
+    "addresses": "العناوين"
   }
 }

@@ -25,7 +25,7 @@ export default function () {
 
   return (
     <div className='relative  w-28'>
-      <div className='fixed  w-auto text-right '>
+      <div className='fixed -mt-6 lg:-mt-0 w-auto text-right'>
         <Menu as='div' className='relative inline-block text-left'>
           <div className=''>
             <Menu.Button className='inline-flex gap-x-4 w-full justify-center items-center rounded-md bg-gray-100 p-3  text-md font-medium text-black hover:bg-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 capitalize'>
