@@ -30,18 +30,17 @@ export default function ({ vendor }: Props) {
   };
   return (
     <div className='relative rtl:text-right ltr:text-left'>
-      <div onClick={handleClick}>
-        <Image
-          alt={vendor.name || ""}
-          src={vendor.image}
-          width={1000}
-          height={1000}
-          className='  w-full h-auto aspect-[2/1] object-cover rounded-lg'
-        />
-      </div>
+      <Image
+        onClick={handleClick}
+        alt={vendor.name || ""}
+        src={vendor.image}
+        width={1000}
+        height={1000}
+        className='  w-full h-auto aspect-[2/1] object-cover rounded-lg'
+      />
 
-      <div className='w-full h-auto aspect-[2/1] absolute bg-black bg-opacity-20 top-0 bottom-0  rounded-lg py-3 px-2'>
-        <div className='flex justify-between items-center'>
+      <div className='w-full h-auto aspect-[2/1] absolute bg-black bg-opacity-20 top-0 bottom-0  rounded-lg py-3 px-2 hover:cursor-pointer'>
+        <div className='flex justify-between items-center mt-3'>
           <div onClick={handleClick} className=' '>
             {vendor.status ? (
               vendor.status === "open" ? (
@@ -65,8 +64,11 @@ export default function ({ vendor }: Props) {
             type={"vendor"}
           />
         </div>
+        <div className='h-5/6 w-full ' onClick={handleClick}></div>
       </div>
-      <div onClick={handleClick} className='mt-2 space-y-1 '>
+      <div
+        onClick={handleClick}
+        className='mt-2 space-y-1 hover:cursor-pointer'>
         <p className='card-title'>
           {vendor.store_name}{" "}
           {vendor.rating ? (

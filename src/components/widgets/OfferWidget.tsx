@@ -26,15 +26,13 @@ export default function OfferWidget({ product }: Props): React.ReactNode {
   const [triggerGetProduct, { data, isSuccess, isFetching }] =
     useLazyGetProductQuery();
 
-  const handleClick = async (id: number) => {
-    dispatch(showProductModal(id));
+  const handleClick = async () => {
+    dispatch(showProductModal(product.id));
   };
 
   return (
     <div>
-      <div
-        className='relative rtl:text-right ltr:text-left cursor-pointer'
-        onClick={() => handleClick(product.id)}>
+      <div className='relative rtl:text-right ltr:text-left cursor-pointer'>
         <div>
           <Image
             alt={product.name || ""}
@@ -44,9 +42,10 @@ export default function OfferWidget({ product }: Props): React.ReactNode {
             className='w-full h-auto aspect-[2/1] object-cover rounded-lg'
           />
         </div>
-        <div className='w-full h-auto aspect-[2/1] absolute bg-black bg-opacity-20 top-0 bottom-0  rounded-lg py-3 px-2'>
+
+        <div className='w-full h-auto aspect-[2/1] absolute bg-black bg-opacity-20 top-0 bottom-0  rounded-lg py-3 px-2 hover:cursor-pointer'>
           <div className='relative flex justify-between items-center mt-3'>
-            <div className=' absolute w-auto rtl:right-0'>
+            <div className=' absolute w-auto rtl:right-0' onClick={handleClick}>
               <div>
                 {/* timer */}
                 {/* <p>{product.}</p> */}
@@ -63,13 +62,14 @@ export default function OfferWidget({ product }: Props): React.ReactNode {
               type={"offer"}
             />
           </div>
+          <div className='h-36 w-full' onClick={handleClick}></div>
         </div>
         {/* offer type */}
         <div className='flex items-center gap-x-1 rounded-full bg-[#232323] text-xs text-white px-2 py-px pt-1 w-fit'>
           <Flash />
           <p>{t("flash_offer")}</p>
         </div>
-        <div onClick={() => handleClick(product.id)}>
+        <div onClick={handleClick} className='hover:cursor-pointer'>
           <div className='bg-white -mt-[10%] rounded-lg p-3 relative w-full space-y-2'>
             <p className='card-title'>{product.name}</p>
             <p className='card-desc'>{product.description}</p>

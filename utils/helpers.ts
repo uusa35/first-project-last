@@ -61,9 +61,9 @@ export const mainHeaders = {
 };
 
 export const revalidate = {
-    min: 60,
-    mid: 120,
-    max: 180
+    min: 120,
+    mid: 180,
+    max: 240
 }
 
 export const globalMaxWidth = 'max-w-8xl';
@@ -71,5 +71,5 @@ export const globalMaxWidth = 'max-w-8xl';
 
 export const throttleLimit = pThrottle({
     limit: 2,
-    interval: 1000,
+    interval: 500,
 });

@@ -28,7 +28,7 @@ export default function ({ isFav, id, type }: Props) {
     <button
       key={id}
       onClick={() => handleFavourite()}
-      className='absolute ltr:right-0 rtl:left-0 z-40 px-2'>
+      className='absolute ltr:right-0 rtl:left-0 z-50 px-2'>
       {isFavourite ? (
         <Favourite className='h-7 w-7' />
       ) : (

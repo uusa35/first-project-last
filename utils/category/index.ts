@@ -6,7 +6,7 @@ import { getMainHeaders } from '@/app/actions';
 
 export async function getCategories() {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}category`, {
-        next: { revalidate: revalidate.min },
+        next: { revalidate: revalidate.mid },
         headers: await getMainHeaders()
     });
     if (!res.ok) throw process.env.NODE_ENV === 'production' ? notFound() : new Error('get categories error');

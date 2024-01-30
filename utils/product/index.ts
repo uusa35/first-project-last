@@ -5,7 +5,8 @@ import { revalidate } from '@/utils/helpers';
 
 export async function getProducts(search?: string) {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}offers?${search ?? ``}`, {
-        cache: "no-store",
+        // cache: "no-store",
+        next: { revalidate: revalidate.mid },
         headers: await getMainHeaders()
     });
     if (!res.ok) throw process.env.NODE_ENV === 'production' ? notFound() : new Error(res.statusText);
