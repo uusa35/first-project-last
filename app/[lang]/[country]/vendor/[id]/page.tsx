@@ -37,7 +37,7 @@ export default async function ({
 
   return (
     <ContentLayout showMiddleNav={true}>
-      <div className='mt-8 px-4'>
+      <div className='px-4'>
         <Breadcrumbs title={store_name} />
         <VendorHeader
           id={id}

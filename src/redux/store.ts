@@ -38,6 +38,15 @@ const persistConfig = {
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 const sagaMiddleware = createSagaMiddleware();
+const middlewares = [
+  apiSlice.middleware,
+categoryApi.middleware,
+authApi.middleware,
+productApi.middleware,
+vendorApi.middleware,
+areaApi.middleware,
+countryApi.middleware,
+  sagaMiddleware];
 const appLogger = createLogger({
   collapsed: isLocal,
   duration: isLocal,
@@ -62,14 +71,7 @@ let store: any = configureStore({
           ignoredPaths: [],
         },
       }).concat([
-        apiSlice.middleware,
-        categoryApi.middleware,
-        authApi.middleware,
-        productApi.middleware,
-        vendorApi.middleware,
-        areaApi.middleware,
-        countryApi.middleware,
-        sagaMiddleware,
+        ...middlewares,
         appLogger,
       ])
     : (gDM) =>
@@ -86,16 +88,7 @@ let store: any = configureStore({
           ],
           ignoredPaths: [],
         },
-      }).concat([
-        apiSlice.middleware,
-        categoryApi.middleware,
-        authApi.middleware,
-        productApi.middleware,
-        vendorApi.middleware,
-        areaApi.middleware,
-        countryApi.middleware,
-        sagaMiddleware,
-      ]),
+      }).concat(middlewares),
 });
 sagaMiddleware.run(rootSaga);
 export const initializeStore = (preloadedState: RootState) => {

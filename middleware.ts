@@ -28,7 +28,7 @@ export default async function middleware(request: NextRequest, response: NextRes
   const pathnameIsMissingLocale = await i18n.locales.every(
     locale => !pathName.startsWith(`/${locale}/`) && pathName !== `/${locale}`
   )
-  const token = request.cookies.get('token');
+  const auth: any = request.cookies.get('NEXT_AUTH')?.value;
   const res = NextResponse.next()
   if (pathnameIsMissingLocale) {
     const locale = getLocale(request);
@@ -38,10 +38,12 @@ export default async function middleware(request: NextRequest, response: NextRes
         request.url
       ))
   } else {
-    if (token &&
+    if (auth.token &&
       (request.nextUrl.pathname.includes('login') ||
+        request.nextUrl.pathname.includes('offer') ||
         request.nextUrl.pathname.includes('register'))
     ) {
+      console.log('token case ====>')
       return NextResponse.redirect(new URL(`/${currentRequestedLocale}`, request.url))
     }
     if (!request.nextUrl.pathname.includes('terms')
@@ -61,10 +63,12 @@ export default async function middleware(request: NextRequest, response: NextRes
           console.log('case 2');
           const serverCountry: { data: Country } = await getCountry(country);
           if (serverCountry?.data?.country_code?.toLowerCase()) {
+            console.log('case 2.1')
             res.cookies.set('NEXT_COUNTRY', JSON.stringify(serverCountry.data));
             res.cookies.set('NEXT_COUNTRY_NAME', country)
             return res;
           } else {
+            console.log('case 2.2')
             return NextResponse.redirect(new URL(`/${currentRequestedLocale}`, request.url))
           }
         }

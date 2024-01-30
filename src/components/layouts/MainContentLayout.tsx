@@ -137,7 +137,7 @@ const ContentLayout: FC<Props> = ({
       <DyanamicProductModal />
       <div
         className={`relative isolate overflow-hidden ${
-          !isLoading && `mt-[8vh] sm:mt-[5vh]`
+          params?.country ? `mt-[20vh] sm:mt-[16vh] lg:mt-[10vh]` : ``
         } py-8 `}>
         {children}
       </div>

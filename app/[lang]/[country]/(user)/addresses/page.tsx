@@ -18,7 +18,10 @@ export default async function ({ params: { lang, country } }: Props) {
   ]);
 
   return (
-    <ContentLayout>
+    <ContentLayout showMiddleNav={true}>
+      <h1>Addresses </h1>
+      <h1>Addresses </h1>
+      <h1>Addresses </h1>
       <h1>Addresses </h1>
     </ContentLayout>
   );

@@ -28,7 +28,7 @@ export default function () {
   const router = useRouter();
   const params: { lang: Locale["lang"]; country?: countriesList } | any =
     useParams!();
-  const isAuth = useAppSelector(isAuthenticated);
+    const isAuth = useAppSelector((rootState) => isAuthenticated(rootState));
   const { data, isLoading } = useGetCartProductsQuery(
     {
       ...(isAuth ? { user_id: user?.id } : { session_id: session_id }),

@@ -18,7 +18,7 @@ export default function ({ title }: { title?: string }) {
   } = useAppSelector((state) => state);
   const params = useParams()!;
   return (
-    <nav className='flex m-4 pt-6' aria-label='Breadcrumb'>
+    <nav className='flex pb-4' aria-label='Breadcrumb'>
       <ol role='list' className='flex items-center gap-x-4'>
         <li>
           <Link

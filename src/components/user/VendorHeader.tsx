@@ -29,7 +29,7 @@ export default function ({
 }) {
   const params: any = useParams()!;
   const dispatch = useAppDispatch();
-  const isAuth = useAppSelector(isAuthenticated);
+    const isAuth = useAppSelector((rootState) => isAuthenticated(rootState));
   const { t } = useTranslation("trans");
   const [triggerAddToWishList] = useLazyAddToWishListQuery();
 

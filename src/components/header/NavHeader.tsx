@@ -92,9 +92,11 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
     useParams!();
   const { lang } = params;
   const pathName = usePathname()!;
-  const isAuth = useAppSelector(isAuthenticated);
+  const isAuth = useAppSelector((rootState) => isAuthenticated(rootState));
   const [stickyClass, setStickyClass] = useState(
-    `absolute bg-white ${showMiddleNav ? "text-black" : "text-white"}`
+    `absolute ${params?.country && `bg-white`} ${
+      showMiddleNav ? "text-black" : "text-white"
+    }`
   );
   const [isSticky, setIsSticky] = useState<boolean>(false);
   const {
@@ -182,7 +184,9 @@ export default function ({ showMiddleNav = false }: Props): React.ReactNode {
         setIsSticky(true);
       } else {
         setStickyClass(
-          `absolute bg-white ${showMiddleNav ? "text-black" : "text-white"}`
+          `absolute ${params?.country && `bg-white`} ${
+            showMiddleNav ? "text-black" : "text-white"
+          }`
         );
         setIsSticky(false);
       }

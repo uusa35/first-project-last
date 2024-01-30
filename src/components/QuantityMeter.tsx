@@ -30,7 +30,9 @@ export default function quantityMeter({
   } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const isAuth = useAppSelector(isAuthenticated);
+  const isAuth = useAppSelector(
+    (rootState) => isAuthenticated(rootState)
+  );
   const [triggerUpdateCartProduct] = useUpdateCartProductMutation();
   const [triggerDeleteCartProduct] = useDeleteCartProductMutation();
 

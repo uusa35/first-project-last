@@ -16,7 +16,7 @@ export default function CategoriesSlider({ categories }: Props) {
     useParams!();
   const { lang } = params;
   return (
-    <div className='py-3 relative mt-14 page-padding bg-picks-gray border-b border-picks-border'>
+    <div className='py-3 relative page-padding bg-picks-gray border-b border-picks-border'>
       <Slider {...categoriesSliderSettings}>
         {categories &&
           categories.map((itm: Category, i) => (

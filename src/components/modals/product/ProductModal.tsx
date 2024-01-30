@@ -68,7 +68,7 @@ export default function () {
     },
     auth: { user },
   } = useAppSelector((state) => state);
-  const isAuth = useAppSelector(isAuthenticated);
+    const isAuth = useAppSelector((rootState) => isAuthenticated(rootState));
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { data, isSuccess, isFetching, error, refetch } = useGetProductQuery<{
