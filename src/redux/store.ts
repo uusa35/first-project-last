@@ -38,43 +38,30 @@ const persistConfig = {
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 const sagaMiddleware = createSagaMiddleware();
-const middlewares = [
-  apiSlice.middleware,
-categoryApi.middleware,
-authApi.middleware,
-productApi.middleware,
-vendorApi.middleware,
-areaApi.middleware,
-countryApi.middleware,
-  sagaMiddleware];
 const appLogger = createLogger({
   collapsed: isLocal,
   duration: isLocal,
   diff: isLocal,
 });
+const middlewares = [
+  apiSlice.middleware,
+  categoryApi.middleware,
+  authApi.middleware,
+  productApi.middleware,
+  vendorApi.middleware,
+  areaApi.middleware,
+  countryApi.middleware,
+  sagaMiddleware
+];
+if (process.env.NODE_ENV === `development`) {
+  /* @ts-ignore */
+  middlewares.push(appLogger);
+}
 let store: any = configureStore({
   reducer: persistedReducer,
   // Adding the api middleware enables caching, invalidation, polling,
   // and other useful features of `rtk-query`.
-  middleware: isLocal
-    ? (gDM) =>
-      gDM({
-        serializableCheck: {
-          ignoredActions: [
-            FLUSH,
-            REHYDRATE,
-            PAUSE,
-            PERSIST,
-            PURGE,
-            REGISTER,
-          ],
-          ignoredPaths: [],
-        },
-      }).concat([
-        ...middlewares,
-        appLogger,
-      ])
-    : (gDM) =>
+  middleware: (gDM) =>
       gDM({
         serializableCheck: {
           ignoredActions: [
