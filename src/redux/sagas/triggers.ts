@@ -17,10 +17,11 @@ import {
 import { localeSlice } from '@/redux/slices/localeSlice';
 import { toastMessageSlice } from '../slices/toastMessageSlice';
 import { settingSlice } from '../slices/settingSlice';
-import { versionSlice } from '../slices/versionSlice';
 
 export function* triggerResetEntireApp() {
-  yield takeLatest(versionSlice.actions.resetApp, startResetEnireAppSceanrio);
+  yield takeLatest(['REHYDRATE',
+    '__NEXT_REDUX_WRAPPER_HYDRATE__'
+  ], startResetEnireAppSceanrio);
 }
 
 
