@@ -6,10 +6,18 @@ import { startCase } from 'lodash';
 import { persistor } from '@/redux/store';
 import { toastMessageSlice } from '@/redux/slices/toastMessageSlice';
 import { settingSlice } from '@/redux/slices/settingSlice';
+import { versionSlice } from '../slices/versionSlice';
 
 
 export function* startResetEnireAppSceanrio() {
-  persistor.purge();
+  yield delay(1000);
+  persistor.pause()
+  persistor.flush().then(() => { return persistor.purge() })
+  yield delay(8000)
+  yield put({
+    type: `${versionSlice.actions.setVersionApp}`,
+    payload: process.env.NEXT_PUBLIC_APP_VERSION
+  });
 }
 
 export function* startEnableLoadingScenario(action: PayloadAction) {

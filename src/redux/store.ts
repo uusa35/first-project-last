@@ -38,7 +38,7 @@ const persistConfig = {
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 const sagaMiddleware = createSagaMiddleware();
-const appLogger = createLogger({
+const appLogger: any = createLogger({
   collapsed: isLocal,
   duration: isLocal,
   diff: isLocal,
@@ -53,8 +53,7 @@ const middlewares = [
   countryApi.middleware,
   sagaMiddleware
 ];
-if (process.env.NODE_ENV === `development`) {
-  /* @ts-ignore */
+if (isLocal) {
   middlewares.push(appLogger);
 }
 let store: any = configureStore({
@@ -62,20 +61,19 @@ let store: any = configureStore({
   // Adding the api middleware enables caching, invalidation, polling,
   // and other useful features of `rtk-query`.
   middleware: (gDM) =>
-      gDM({
-        serializableCheck: {
-          ignoredActions: [
-            FLUSH,
-            REHYDRATE,
-            PAUSE,
-            PERSIST,
-            PURGE,
-            REGISTER,
-
-          ],
-          ignoredPaths: [],
-        },
-      }).concat(middlewares),
+    gDM({
+      serializableCheck: {
+        ignoredActions: [
+          FLUSH,
+          REHYDRATE,
+          PAUSE,
+          PERSIST,
+          PURGE,
+          REGISTER,
+        ],
+        ignoredPaths: [],
+      },
+    }).concat(middlewares),
 });
 sagaMiddleware.run(rootSaga);
 export const initializeStore = (preloadedState: RootState) => {

@@ -4,7 +4,7 @@ import {
   triggerChangeLang,
   triggerEnableLoading,
   triggerShowToastMessage,
-  // triggerResetEntireApp,
+  triggerResetEntireApp,
   // triggerSetAuthScenario,
 
 } from './triggers';
@@ -14,7 +14,7 @@ export default function* rootSaga() {
     fork(triggerEnableLoading),
     fork(triggerShowToastMessage),
     fork(triggerChangeLang),
-    // fork(triggerResetEntireApp),
+    fork(triggerResetEntireApp),
 
   ]);
   yield take(REHYDRATE); // Wait for rehydrate to prevent sagas from running with empty store

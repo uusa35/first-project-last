@@ -14,8 +14,7 @@ import { countrySlice } from './countrySlice';
 import { authSlice } from './authSlice';
 import { productSlice } from './productSlice';
 import { branchSlice } from './branchSlice';
-
-
+import { versionSlice } from './versionSlice';
 
 export const rootReducer = combineReducers({
   [localeSlice.name]: localeSlice.reducer,
@@ -26,5 +25,6 @@ export const rootReducer = combineReducers({
   [productSlice.name]: productSlice.reducer,
   [branchSlice.name]: branchSlice.reducer,
   [toastMessageSlice.name]: toastMessageSlice.reducer,
+  [versionSlice.name]: versionSlice.reducer,
   [apiSlice.reducerPath]: apiSlice.reducer
 });

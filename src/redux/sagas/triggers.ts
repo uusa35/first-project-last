@@ -12,16 +12,15 @@ import {
   startEnableLoadingScenario,
   startShowToastMessageScenario,
   startResetEnireAppSceanrio,
-
   startSetAuthScenario,
-
 } from './appSaga';
 import { localeSlice } from '@/redux/slices/localeSlice';
 import { toastMessageSlice } from '../slices/toastMessageSlice';
 import { settingSlice } from '../slices/settingSlice';
+import { versionSlice } from '../slices/versionSlice';
 
 export function* triggerResetEntireApp() {
-  yield takeLatest(`resetEntireApp`, startResetEnireAppSceanrio);
+  yield takeLatest(versionSlice.actions.resetApp, startResetEnireAppSceanrio);
 }
 
 

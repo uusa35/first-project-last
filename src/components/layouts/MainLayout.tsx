@@ -1,18 +1,32 @@
 "use client";
-import React, { FC, ReactNode } from "react";
-import { useAppSelector } from "@/redux/hooks";
+import React, { FC, ReactNode, useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import type { Locale } from "@/i18n.config";
 import { Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import i18n from "@/i18n/i18next";
 import { I18nextProvider } from "react-i18next";
+import { resetApp } from "@/src/redux/slices/versionSlice";
 type Props = {
   children: ReactNode | undefined;
   lang: Locale;
 };
 
 const MainLayout: FC<Props> = ({ lang, children }): React.ReactNode => {
-  const { isRTL } = useAppSelector((state) => state.locale);
+  const {
+    locale: { isRTL },
+    version,
+  } = useAppSelector((state) => state);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (
+      process.env.NEXT_PUBLIC_APP_VERSION &&
+      version !== process.env.NEXT_PUBLIC_APP_VERSION
+    ) {
+      dispatch(resetApp());
+    }
+  }, []);
 
   return (
     <I18nextProvider i18n={i18n}>
